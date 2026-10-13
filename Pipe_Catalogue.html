@@ -270,6 +270,13 @@ function initMat(){
   MAT.pvcL  = new THREE.MeshStandardMaterial({color:0x767f89,metalness:.05,roughness:.55,side:THREE.DoubleSide});
   MAT.epdm  = new THREE.MeshStandardMaterial({color:0x1c1e22,metalness:.02,roughness:.92,side:THREE.DoubleSide});
   MAT.blk   = new THREE.MeshStandardMaterial({color:0x24262a,metalness:.15,roughness:.70,side:THREE.DoubleSide});
+  /* generic valve finishes: painted cast iron, operators, brass, lined bodies */
+  MAT.paint = new THREE.MeshStandardMaterial({color:0x2a64c8,metalness:.30,roughness:.42,side:THREE.DoubleSide});
+  MAT.hand  = new THREE.MeshStandardMaterial({color:0x2f6ad6,metalness:.25,roughness:.40,side:THREE.DoubleSide});
+  MAT.red   = new THREE.MeshStandardMaterial({color:0xc4302b,metalness:.20,roughness:.45,side:THREE.DoubleSide});
+  MAT.green = new THREE.MeshStandardMaterial({color:0x2f9e4a,metalness:.20,roughness:.48,side:THREE.DoubleSide});
+  MAT.brass = new THREE.MeshStandardMaterial({color:0xd8ad55,metalness:.55,roughness:.34,side:THREE.DoubleSide});
+  MAT.ss    = new THREE.MeshStandardMaterial({color:0xbcc5cf,metalness:.55,roughness:.30,side:THREE.DoubleSide});
   for(var k in MAT) MAT[k].clippingPlanes=[];
 }
 var SEG=64;
@@ -329,17 +336,17 @@ function studs(bc,nb,hd,y0,y1){
 }
 /* Raised-face flange on the end of a run, gasket face at yf, growing
    in direction dir. Uses the class raised-face convention. */
-function rfFlange(cl,n,yf,dir,bore){
+function rfFlange(cl,n,yf,dir,bore,mat){
   var f=flg(cl,n),O=f[0],X=f[2],bc=f[4],nb=f[5],hd=f[6],rf=f[7];
   var rh=rfh(cl), tf=flgT(cl,n), Y=flgY(cl,n);
   var g=new THREE.Group(), ri=(bore!=null?bore/2:RI(n)), ro=RO(n);
   var y=function(t){return yf+dir*t;};
   g.add(solid([[ri,y(0)],[rf/2,y(0)],[rf/2,y(rh)],[ri,y(rh)]],MAT.face));
-  var pl=boltPlate(O,tf-rh,ri,bc,nb,hd,0,MAT.steel);
+  var pl=boltPlate(O,tf-rh,ri,bc,nb,hd,0,mat||MAT.steel);
   pl.rotation.x=(dir>0)?-Math.PI/2:Math.PI/2;
   pl.position.y=y(rh); g.add(pl);
   var yh=Math.max(Y,tf+0.35);
-  g.add(solid([[ri,y(tf)],[X/2,y(tf)],[X/2,y(tf+0.12)],[ro,y(yh)],[ri,y(yh)]],MAT.steel));
+  g.add(solid([[ri,y(tf)],[X/2,y(tf)],[X/2,y(tf+0.12)],[ro,y(yh)],[ri,y(yh)]],mat||MAT.steel));
   return {g:g,Y:yh,O:O,tf:tf,bc:bc,nb:nb,hd:hd,rf:rf,X:X};
 }
 /* Hex prism about Y. */
@@ -347,30 +354,34 @@ function hex(across,h,y,mat){
   var m=new THREE.Mesh(new THREE.CylinderGeometry(across/2/Math.cos(Math.PI/6),across/2/Math.cos(Math.PI/6),h,6),mat||MAT.steel);
   m.position.y=y+h/2; m.rotation.y=Math.PI/6; return m;
 }
-/* Handwheel: rim, spokes, hub. */
-function handwheel(dia,y){
-  var g=new THREE.Group(), R=dia/2, t=Math.max(dia*0.045,0.18);
-  var rim=new THREE.Mesh(new THREE.TorusGeometry(R-t,t,12,48),MAT.op);
+/* Rim thickness of a handwheel of diameter dia. */
+function hwT(dia){return Math.max(dia*0.045,0.12);}
+/* Handwheel: rim centred at y, five spokes dished down to the hub. */
+function handwheel(dia,y,mat){
+  mat=mat||MAT.hand;
+  var g=new THREE.Group(), R=dia/2, t=hwT(dia), dish=dia*0.07, hr=Math.max(R*0.15,0.2);
+  var rim=new THREE.Mesh(new THREE.TorusGeometry(R-t,t,14,64),mat);
   rim.rotation.x=Math.PI/2; rim.position.y=y; g.add(rim);
-  var hub=new THREE.Mesh(new THREE.CylinderGeometry(R*0.16,R*0.16,t*2.4,20),MAT.op);
-  hub.position.y=y; g.add(hub);
-  for(var i=0;i<5;i++){
-    var a=i*Math.PI*2/5;
-    var sp=new THREE.Mesh(new THREE.CylinderGeometry(t*0.5,t*0.5,R-t,10),MAT.op);
-    sp.position.set(Math.cos(a)*(R-t)/2,y,Math.sin(a)*(R-t)/2);
-    sp.rotation.z=Math.PI/2; sp.rotation.y=-a; g.add(sp);
-  }
+  g.add(solid([[0,y-dish-t*1.4],[hr,y-dish-t*1.4],[hr*1.12,y-dish],[hr,y-dish+t*1.4],[0,y-dish+t*1.4]],mat,28));
+  for(var i=0;i<5;i++) g.add(spoke(hr*0.9,y-dish,R-t*1.2,y,i*Math.PI*2/5+0.3,t*0.62,mat));
   return g;
 }
-/* Lever handle lying in the XZ plane. */
-function lever(len,y){
-  var g=new THREE.Group(), t=Math.max(len*0.05,0.22);
-  var b=new THREE.Mesh(new THREE.CylinderGeometry(t,t,len,14),MAT.op);
-  b.rotation.x=Math.PI/2; b.position.set(0,y,len/2); g.add(b);
-  var k=new THREE.Mesh(new THREE.SphereGeometry(t*1.7,18,14),MAT.op);
-  k.position.set(0,y,len); g.add(k);
-  var boss=new THREE.Mesh(new THREE.CylinderGeometry(t*2.0,t*2.0,t*2.2,18),MAT.op);
-  boss.position.y=y; g.add(boss);
+/* Lever handle from a stem at height y, pointing along +Z: flat bar,
+   cranked up over its outer part, with a moulded grip and a stem nut. */
+function lever(len,y,mat){
+  mat=mat||MAT.hand;
+  var g=new THREE.Group(), w=Math.max(len*0.075,0.3), th=Math.max(len*0.022,0.09);
+  var l1=len*0.42, l2=len-l1, k=0.26;
+  var head=new THREE.Mesh(new THREE.BoxGeometry(w*1.5,th,w*1.5),mat); head.position.y=y; g.add(head);
+  var b1=new THREE.Mesh(new THREE.BoxGeometry(w,th,l1),mat); b1.position.set(0,y,l1/2); g.add(b1);
+  var arm=new THREE.Group(); arm.position.set(0,y,l1); arm.rotation.x=-k;
+  var b2=new THREE.Mesh(new THREE.BoxGeometry(w,th,l2),mat); b2.position.z=l2/2; arm.add(b2);
+  var grip=new THREE.Mesh(new THREE.BoxGeometry(w*1.25,th*3.2,l2*0.62),mat);
+  grip.position.set(0,0,l2*0.66); arm.add(grip);
+  var end=new THREE.Mesh(new THREE.CylinderGeometry(th*1.6,th*1.6,w*1.25,16),mat);
+  end.rotation.z=Math.PI/2; end.position.z=l2*0.97; arm.add(end);
+  g.add(arm);
+  g.add(hex(w*0.9,th*1.6,y+th/2,MAT.face));
   return g;
 }
 /* Yoke: two legs from bonnet up to a top plate. */
@@ -1287,29 +1298,52 @@ function genInlineInstr(cl,n){
   return {g:g,std:'Inline instrument, flanged Class '+cl+' (SKEY IIBW/FE)',dims:[['Line size',fnps(n)],
     ['Class',cl],['Face to face',fx(L)+'"'],['Body','Flanged spool'],['Head','Transmitter with local dial']]};
 }
-/* Spring-loaded pressure relief valve, angle body, flanged. */
+/* Spring-loaded pressure relief valve, angle body, flanged. Built
+   upright: inlet flange faces down, outlet flange faces +X. */
 function genReliefValve(n){
-  var cl=150, no=nextFlgNPS(n), g=G();
-  g.add(rfFlange(cl,n,0,-1).g);                          /* inlet flange, faces down */
-  var ro=RO(n)*1.5;
-  g.add(tube(RI(n),RO(n),0,ro*1.4));                     /* inlet neck */
-  var body=new THREE.Mesh(new THREE.SphereGeometry(ro*1.35,28,20),MAT.steel);
-  body.scale.set(1,1.25,1); body.position.y=ro*1.4+ro*0.7; g.add(body);
-  /* outlet: side nozzle + flange pointing +X, one size up */
-  var oy=ro*1.4+ro*0.5, olen=RO(no)*2.4;
-  var out=G();
-  out.add(tube(RI(no),RO(no),0,olen));
-  var ofl=rfFlange(cl,no,olen,1); out.add(ofl.g);
-  out.rotation.z=-Math.PI/2; out.position.y=oy; g.add(out);   /* lay nozzle along +X */
-  /* spring bonnet, cap and open lifting lever up top */
-  var by=ro*1.4+ro*1.9;
-  g.add(solid([[0,by-ro*0.5],[ro*0.95,by-ro*0.5],[ro*0.8,by],[ro*0.8,by+ro*2.2],[0,by+ro*2.2]],MAT.steel,28));
-  var cap=new THREE.Mesh(new THREE.CylinderGeometry(ro*0.5,ro*0.85,ro*0.7,20),MAT.steel);
-  cap.position.y=by+ro*2.2+ro*0.35; g.add(cap);
-  var lift=new THREE.Mesh(new THREE.CylinderGeometry(ro*0.12,ro*0.12,ro*1.6,12),MAT.op);
-  lift.rotation.z=Math.PI/2; lift.position.set(ro*0.8,by+ro*2.6,0); g.add(lift);
+  var cl=150, no=nextFlgNPS(n), g=G(), M=MAT.ss;
+  var fi=rfFlange(cl,n,0,1,null,M); g.add(fi.g);                /* inlet flange, face down */
+  var Rb=Math.max(RO(n)*1.7,RO(no)*1.3), yb0=fi.Y+RO(n)*0.6, yb1=yb0+Rb*2.0;
+  var bf=Rb*0.88, bt=Math.max(Rb*0.14,0.15);
+  g.add(tube(RI(n),RO(n),fi.Y-0.05,yb0+0.05,M));          /* inlet neck */
+  /* cast angle body ending in the bonnet joint flange */
+  g.add(solid([[RI(n),yb0],[RO(n)*1.15,yb0],[Rb*0.92,yb0+Rb*0.45],[Rb,yb0+Rb*0.9],[Rb,yb1-Rb*0.5],
+    [Rb*0.8,yb1-bt],[bf,yb1-bt],[bf,yb1],[0,yb1],[0,yb0+Rb*0.5],[RI(n),yb0+Rb*0.4]],M,48));
+  /* outlet nozzle and flange, one size up, laid along +X */
+  var oy=yb0+Rb*0.95, oY=flgY(cl,no), ox=Rb+RO(no)*1.2+oY;
+  var out=G(); out.add(tube(RI(no),RO(no),Rb*0.5,ox-oY+0.05,M)); out.add(rfFlange(cl,no,ox,-1,null,M).g);
+  out.rotation.z=-Math.PI/2; out.position.y=oy; g.add(out);
+  /* bonnet base flange */
+  g.add(solid([[0,yb1],[bf,yb1],[bf,yb1+bt],[0,yb1+bt]],M,40));
+  ringStuds(6,bf*0.8,bf*0.8,Math.max(Rb*0.04,0.05),yb1-bt,yb1+bt,g);
+  /* open bonnet: two posts, spring exposed between its washers */
+  var ys0=yb1+bt, ys1=ys0+Rb*2.3, rs=Rb*0.42, pw=Math.max(Rb*0.09,0.08), ww=Rb*0.06;
+  g.add(solid([[0,ys0],[rs*1.35,ys0],[rs*1.2,ys0+Rb*0.18],[0,ys0+Rb*0.18]],M,32));
+  [-1,1].forEach(function(s){
+    var p=new THREE.Mesh(new THREE.CylinderGeometry(pw,pw,ys1-ys0,14),M);
+    p.position.set(s*bf*0.72,(ys0+ys1)/2,0); g.add(p);
+  });
+  g.add(oval([[0,ys1],[1,ys1],[1,ys1+bt],[0,ys1+bt]],bf*0.86,rs*1.05,M,40));
+  var w0=ys0+Rb*0.18, w1=ys1-ww;
+  [w0,w1].forEach(function(y){g.add(solid([[0,y],[rs*1.22,y],[rs*1.22,y+ww],[0,y+ww]],MAT.face,32));});
+  g.add(coil(rs,rs*0.13,w0+ww+rs*0.13,w1-rs*0.13,6,MAT.bolt));
+  var sp=new THREE.Mesh(new THREE.CylinderGeometry(rs*0.16,rs*0.16,ys1-ys0,12),MAT.face);
+  sp.position.y=(ys0+ys1)/2; g.add(sp);
+  /* adjusting screw and lock nut, cap, lifting lever */
+  var ya=ys1+bt, yc=ya+Rb*0.32;
+  var sc=new THREE.Mesh(new THREE.CylinderGeometry(rs*0.26,rs*0.26,yc-ya+0.05,14),MAT.face);
+  sc.position.y=(ya+yc)/2; g.add(sc);
+  g.add(hex(rs*0.75,Rb*0.1,ya+Rb*0.04,MAT.bolt));
+  var cr=rs*0.62, chh=Rb*0.7;
+  g.add(solid([[0,yc],[cr,yc],[cr,yc+chh*0.8],[cr*0.75,yc+chh],[0,yc+chh]],M,32));
+  var lv=G(), ll=Rb*1.2;
+  var arm=new THREE.Mesh(new THREE.BoxGeometry(ll,pw*0.9,pw*0.9),MAT.hand); arm.position.x=ll/2; lv.add(arm);
+  var kn=new THREE.Mesh(new THREE.SphereGeometry(pw*1.2,14,10),MAT.hand); kn.position.x=ll; lv.add(kn);
+  lv.position.set(cr,yc+chh*0.55,0); lv.rotation.z=-0.7; g.add(lv);
+  var pv=new THREE.Mesh(new THREE.CylinderGeometry(pw*0.9,pw*0.9,cr*0.5,12),MAT.face);
+  pv.rotation.x=Math.PI/2; pv.position.set(cr,yc+chh*0.55,0); g.add(pv);
   return {g:g,noRot:true,std:'Spring-loaded pressure relief valve, flanged (SKEY RAFL/PSV), API 526',
-    dims:[['Inlet',fnps(n)],['Outlet',fnps(no)],['Body','Angle, spring bonnet'],
+    dims:[['Inlet',fnps(n)],['Outlet',fnps(no)],['Body','Angle, open spring bonnet'],
     ['Inlet end','Flanged RF, Class '+cl],['Outlet end','Flanged RF, Class '+cl],
     ['Operation','Spring, with lifting lever']],note:'Inlet one size below outlet, per API convention'};
 }
@@ -1341,6 +1375,9 @@ function genCoupling(n,half){
 /* ============================================================
    VALVES.  Every dimension below is read from VLV; nothing is
    proportional unless the catalogue leaves the cell empty.
+   Bodies follow the generic catalogue look: painted cast gate,
+   check and butterfly bodies, stainless globe, ball and plug
+   bodies, blue handwheels and levers.
    ============================================================ */
 function opFallback(kind,cl,n){return {H:stemH(n,cl),W:wheelDia(n,cl),est:true};}
 function opOf(t,cl,n){
@@ -1351,17 +1388,17 @@ function opOf(t,cl,n){
    end: 'FL' raised-face flange, 'BW' butt-weld bevel, 'SW' socket weld,
    'TH' threaded NPT. Returns the inset (how far the body starts from yf). */
 function endNm(e){return {FL:'Flanged RF',BW:'Butt weld',SW:'Socket weld',TH:'Threaded NPT'}[e||'FL'];}
-function vEndX(cl,n,yf,dir,d,end,g){
-  var ri=(d!=null?d/2:RI(n)), ro=RO(n);
+function vEndX(cl,n,yf,dir,d,end,g,mat){
+  var ri=(d!=null?d/2:RI(n)), ro=RO(n), m=mat||MAT.steel;
   if(end==='SW'){
     var sb=ro+0.03, band=ro+Math.max(WALL(n)*1.3,0.14)+0.05,
         J=Math.min(Math.max(OD(n)*0.55,0.4),1.1), bl=J*1.45;
-    var s=socketBand(band,sb,ri,J,bl); if(dir<0) s.rotation.x=Math.PI; s.position.y=yf; g.add(s);
+    var s=socketBand(band,sb,ri,J,bl); s.material=m; if(dir<0) s.rotation.x=Math.PI; s.position.y=yf; g.add(s);
     return bl;
   }
   if(end==='TH'){
     var stub=Math.max(OD(n)*0.75,0.9);
-    g.add(tube(ri,ro,Math.min(yf,yf+dir*stub),Math.max(yf,yf+dir*stub)));
+    g.add(tube(ri,ro,Math.min(yf,yf+dir*stub),Math.max(yf,yf+dir*stub),m));
     for(var i=0;i<4;i++){var yy=yf+dir*(0.14+i*0.15);
       var tr=new THREE.Mesh(new THREE.TorusGeometry(ro*0.98,Math.max(ro*0.035,0.02),6,32),MAT.face);
       tr.rotation.x=Math.PI/2; tr.position.y=yy; g.add(tr);}
@@ -1369,76 +1406,178 @@ function vEndX(cl,n,yf,dir,d,end,g){
   }
   if(end==='BW'){
     var Lb=Math.max(OD(n)*0.45,0.6), land=Math.max(WALL(n)*0.35,0.05), bv=Math.min((ro-ri)*0.85,Lb*0.6);
-    g.add(solid([[ri,yf],[ri+land,yf],[ro,yf+dir*bv],[ro,yf+dir*Lb],[ri,yf+dir*Lb]]));
+    g.add(solid([[ri,yf],[ri+land,yf],[ro,yf+dir*bv],[ro,yf+dir*Lb],[ri,yf+dir*Lb]],m));
     return Lb;
   }
-  g.add(rfFlange(cl,n,yf,dir,d).g);           /* FL default */
+  g.add(rfFlange(cl,n,yf,dir,d,m).g);         /* FL default */
   return flgY(cl,n);
 }
 /* Both ends facing inward, port bore d, end type applied to each. */
-function vEnds(cl,n,L,d,g,end){
-  var e1=vEndX(cl,n,-L/2,1,d,end,g);
-  vEndX(cl,n,L/2,-1,d,end,g);
+function vEnds(cl,n,L,d,g,end,mat){
+  var e1=vEndX(cl,n,-L/2,1,d,end,g,mat);
+  vEndX(cl,n,L/2,-1,d,end,g,mat);
   return e1;
 }
 /* Flow passage between the flange hubs, wall scaled off the port. */
-function vRunner(d,L,e,g){
+function vRunner(d,L,e,g,mat){
   var ri=d/2, ro=ri+Math.max(d*0.10,0.16), y=L/2-e;
-  if(y>0.05) g.add(tube(ri,ro,-y,y));
+  if(y>0.05) g.add(tube(ri,ro,-y,y,mat));
   return ro;
 }
-/* Rising stem, packing boss and handwheel, built along +Y from the
-   body crown at y0 up to the catalogue open height H. */
-function vStem(n,y0,H,W,g){
-  /* H is centre to top with the valve open, so the rim tops out at H */
-  var sr=Math.max(n*0.05,0.13), t=Math.max(W*0.045,0.18), yw=H-t;
-  g.add(solid([[0,y0],[Math.max(n*0.20,0.45),y0],[Math.max(n*0.17,0.38),y0+Math.max(n*0.22,0.5)],[0,y0+Math.max(n*0.22,0.5)]]));
-  var st=new THREE.Mesh(new THREE.CylinderGeometry(sr,sr,Math.max(yw-y0,0.4),18),MAT.trim);
-  st.position.y=(y0+yw)/2; g.add(st);
+/* Half length along the flow a body may take without cutting into the
+   end connections: inside the flange plate, or inside the weld end. */
+function vRoom(cl,n,L,e,end){return L/2-((end&&end!=='FL')?e:flgT(cl,n)+0.08);}
+/* Lathe about +Y with the profile radius normalised to 1, stretched to
+   half widths ax along the flow (top-group X) and az across it (Z). */
+function oval(pts,ax,az,mat,seg){var m=solid(pts,mat,seg||48);m.scale.set(ax,1,az);return m;}
+/* Box with rounded vertical edges, w along X, d along Z, from y0 up h. */
+function rbox(w,d,h,y0,r,mat){
+  var sh=new THREE.Shape(), x=w/2, z=d/2; r=Math.min(r,x*0.99,z*0.99);
+  sh.moveTo(-x+r,-z); sh.lineTo(x-r,-z); sh.absarc(x-r,-z+r,r,-Math.PI/2,0,false);
+  sh.lineTo(x,z-r); sh.absarc(x-r,z-r,r,0,Math.PI/2,false);
+  sh.lineTo(-x+r,z); sh.absarc(-x+r,z-r,r,Math.PI/2,Math.PI,false);
+  sh.lineTo(-x,-z+r); sh.absarc(-x+r,-z+r,r,Math.PI,Math.PI*1.5,false);
+  var m=new THREE.Mesh(new THREE.ExtrudeGeometry(sh,{depth:h,bevelEnabled:false,curveSegments:10}),mat||MAT.steel);
+  m.rotation.x=-Math.PI/2; m.position.y=y0; return m;
+}
+/* Hexagon prism along +Y from y, with an optional round bore. */
+function hexTube(across,bore,y,h,mat){
+  var sh=new THREE.Shape(), R=across/2/Math.cos(Math.PI/6), i;
+  for(i=0;i<6;i++){var a=i*Math.PI/3;
+    if(i===0) sh.moveTo(R*Math.cos(a),R*Math.sin(a)); else sh.lineTo(R*Math.cos(a),R*Math.sin(a));}
+  sh.closePath();
+  if(bore>0){var hp=new THREE.Path(); hp.absarc(0,0,bore,0,Math.PI*2,true); sh.holes.push(hp);}
+  var m=new THREE.Mesh(new THREE.ExtrudeGeometry(sh,{depth:h,bevelEnabled:false,curveSegments:32}),mat||MAT.steel);
+  m.rotation.x=-Math.PI/2; m.position.y=y; return m;
+}
+/* Studs through a bolted joint y0..y1, nut each end, on an ellipse. */
+function ringStuds(k,ax,az,rs,y0,y1,g){
+  for(var i=0;i<k;i++){
+    var a=(i+0.5)*Math.PI*2/k, x=Math.cos(a)*ax, z=Math.sin(a)*az;
+    var st=new THREE.Mesh(new THREE.CylinderGeometry(rs,rs,y1-y0+rs*4.4,10),MAT.bolt);
+    st.position.set(x,(y0+y1)/2,z); g.add(st);
+    var n1=hex(rs*3,rs*1.6,y1,MAT.bolt); n1.position.x=x; n1.position.z=z; g.add(n1);
+    var n2=hex(rs*3,rs*1.6,y0-rs*1.6,MAT.bolt); n2.position.x=x; n2.position.z=z; g.add(n2);
+  }
+}
+/* Bulb about the flow axis: wall swells from ro at +-hb to Rc mid body. */
+function bulb(ro,Rc,hb,bore,mat,g){
+  var p=[],i,N=20;
+  for(i=0;i<=N;i++){var y=-hb+2*hb*i/N;
+    p.push([ro+(Rc-ro)*Math.sqrt(Math.max(1-(y/hb)*(y/hb),0)),y]);}
+  p.push([bore,hb],[bore,-hb]);
+  g.add(solid(p,mat,56));
+}
+/* Bonnet, packing gland, open yoke and handwheel, from the bonnet
+   flange top at y0. The stem top is at H (centre to top, open) and the
+   handwheel sits one stroke below it. rb is the bonnet base radius. */
+function vTop(n,y0,H,W,stroke,rb,mat,g){
+  var t=hwT(W), dish=W*0.07, yw=H-stroke-t, hh=Math.max(n*0.10,0.28);
+  var yh=yw-dish-t*1.4;
+  if(yh-hh-y0<0.8){yh=y0+0.8+hh; yw=yh+dish+t*1.4;}
+  var sp=yh-hh-y0, yb=y0+sp*0.42, rn=Math.max(Math.min(rb*0.5,n*0.30+0.3),0.22);
+  /* bonnet: shoulder over the flange, tapering into the packing neck */
+  g.add(solid([[0,y0],[rb,y0],[rb,y0+sp*0.05],[rb*0.84,y0+sp*0.16],[rn*1.3,yb-sp*0.08],[rn,yb-sp*0.04],[rn,yb],[0,yb]],mat,40));
+  /* packing gland flange and its two bolts */
+  var gt=Math.max(sp*0.035,0.1), gx=rn*1.7;
+  g.add(oval([[0,yb],[1,yb],[1,yb+gt],[0,yb+gt]],gx,rn*1.05,mat,32));
+  [-1,1].forEach(function(s){
+    var b=new THREE.Mesh(new THREE.CylinderGeometry(rn*0.14,rn*0.14,gt*4,10),MAT.bolt);
+    b.position.set(s*gx*0.78,yb+gt,0); g.add(b);
+    var nu=hex(rn*0.4,gt*1.1,yb+gt,MAT.bolt); nu.position.x=s*gx*0.78; g.add(nu);
+  });
+  /* yoke: two arms along the flow, open window for the stem */
+  var ya=yb+gt, yt=yh-hh, ax=gx*1.05, aw=Math.max(rn*0.45,0.12), ad=Math.max(rn*0.9,0.2);
+  [-1,1].forEach(function(s){
+    var arm=new THREE.Mesh(new THREE.BoxGeometry(aw,yt-ya,ad),mat);
+    arm.position.set(s*ax,(ya+yt)/2,0); g.add(arm);
+  });
+  g.add(oval([[0,yt],[1,yt],[1,yh],[0,yh]],ax+aw/2,ad*0.75,mat,32));
+  /* rising stem from inside the bonnet to H, yoke nut over the hub */
+  var sr=Math.max(n*0.045,0.08);
+  var st=new THREE.Mesh(new THREE.CylinderGeometry(sr,sr,H-y0+0.2,16),MAT.face);
+  st.position.y=(y0-0.2+H)/2; g.add(st);
   g.add(handwheel(W,yw));
+  g.add(hex(Math.max(W*0.11,sr*3),t*1.6,yw-dish+t*1.4,MAT.face));
 }
 function genGate(cl,n,end){
   var t=vlv('gate',cl,n); if(!t) return null;
-  var L=t[0],d=t[1],op=opOf(t,cl,n),g=G();
-  var e=vEnds(cl,n,L,d,g,end), ro=vRunner(d,L,e,g);
+  var L=t[0],d=t[1],op=opOf(t,cl,n),g=G(),M=MAT.paint;
+  var e=vEnds(cl,n,L,d,g,end,M), ro=vRunner(d,L,e,g,M);
   var fr=flg(cl,n)[0]/2, top=G();
-  /* flattened wedge body, wide across the flow, slim on the face */
-  var slab=new THREE.Mesh(new THREE.CylinderGeometry(ro*1.02,ro*1.62,fr*1.80,44),MAT.steel);
-  slab.scale.z=0.54; slab.position.y=fr*1.80/2-fr*0.80; top.add(slab);
-  vStem(n,fr*1.00,op.H,op.W,top);
+  /* flat wedge body: rounded bottom, oval in plan, tapering up to the
+     bolted bonnet joint */
+  var hx=Math.min(fr*0.80,vRoom(cl,n,L,e,end)), az=Math.max(fr*0.58,ro*1.15);
+  var Rb=Math.max(fr*0.62,ro*1.15), yb=Math.max(fr*1.05,ro*1.6);
+  top.add(oval([[0,-Rb],[0.5,-Rb*0.96],[0.86,-Rb*0.74],[1,-Rb*0.30],[1,Rb*0.10],[0.84,yb*0.62],[0.72,yb],[0,yb]],hx,az,M));
+  var tb=Math.max(flgT(cl,n)*0.55,0.16);
+  top.add(oval([[0,yb-tb],[0.88,yb-tb],[0.88,yb],[0,yb]],hx,az,M));
+  top.add(oval([[0,yb],[0.86,yb],[0.86,yb+tb],[0,yb+tb]],hx,az,M));
+  ringStuds(n<2?4:8,hx*0.79,az*0.79,Math.max(hx*0.035,0.05),yb-tb,yb+tb,top);
+  vTop(n,yb+tb,op.H,op.W,Math.min(d*0.95,op.H*0.22),Math.min(hx,az)*0.55,M,top);
   top.rotation.z=Math.PI/2; g.add(top);
   return {g:g,std:'COTESO Series 30 / API 6D, ASME B16.10 and B16.5 Class '+cl,
     dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
       ['Height, open',fx(op.H)+'"'],['Handwheel',fx(op.W)+'"'],
-      ['Connection',endNm(end)],['Body','Solid or flexible wedge, OS&Y']],
+      ['Connection',endNm(end)],['Body','Solid or flexible wedge, bolted bonnet, OS&Y']],
     note:op.est?'Height and handwheel estimated, no catalogue value at this size':null};
+}
+/* Globe body: bulb over the seat, round neck, bolted bonnet joint.
+   Returns the bonnet flange top y and the bonnet base radius. */
+function globeBody(cl,n,L,e,end,ro,M,top){
+  var fr=flg(cl,n)[0]/2, room=vRoom(cl,n,L,e,end), Rg=Math.max(ro*1.55,fr*0.70);
+  var hx=Math.min(Rg*1.12,room), az=Math.min(Rg*0.92,room), p=[],i,N=16,a1=Math.PI*0.28;
+  for(i=0;i<=N;i++){var a=-Math.PI/2+i/N*(a1+Math.PI/2); p.push([Math.cos(a),Rg*Math.sin(a)]);}
+  p.push([0,Rg*Math.sin(a1)]);
+  top.add(oval(p,hx,az,M));
+  var rf=Math.min(Rg*0.78,room*0.95), rn=rf*0.68, yn=Rg*0.5, yb=Rg*1.08, tb=Math.max(flgT(cl,n)*0.5,0.15);
+  top.add(solid([[0,yn],[rn,yn],[rn*0.92,yb-tb],[0,yb-tb]],M,40));
+  top.add(solid([[0,yb-tb],[rf,yb-tb],[rf,yb],[0,yb]],M,40));
+  top.add(solid([[0,yb],[rf*0.97,yb],[rf*0.97,yb+tb],[0,yb+tb]],M,40));
+  ringStuds(n<2?4:(n<6?6:8),rf*0.83,rf*0.83,Math.max(rf*0.045,0.05),yb-tb,yb+tb,top);
+  return {y:yb+tb,rb:rf*0.62};
 }
 function genGlobe(cl,n,end){
   var t=vlv('globe',cl,n); if(!t) return null;
-  var L=t[0],d=t[1],op=opOf(t,cl,n),g=G();
-  var e=vEnds(cl,n,L,d,g,end), ro=vRunner(d,L,e,g);
-  var top=G(), R=ro*1.55;
-  var pot=new THREE.Mesh(new THREE.SphereGeometry(R,40,28),MAT.steel);
-  pot.scale.set(0.86,0.94,1.10); pot.position.y=-ro*0.12; top.add(pot);
-  vStem(n,R*0.80,op.H,op.W,top);
+  var L=t[0],d=t[1],op=opOf(t,cl,n),g=G(),M=MAT.ss;
+  var e=vEnds(cl,n,L,d,g,end,M), ro=vRunner(d,L,e,g,M), top=G();
+  var b=globeBody(cl,n,L,e,end,ro,M,top);
+  vTop(n,b.y,op.H,op.W,Math.min(d*0.35,op.H*0.12),b.rb,M,top);
   top.rotation.z=Math.PI/2; g.add(top);
   return {g:g,std:'COTESO Series 38 / BS 1873, ASME B16.10 and B16.5 Class '+cl,
     dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
-      ['Height, open',fx(op.H)+'"'],['Handwheel',fx(op.W)+'"'],['Connection',endNm(end)],['Body','Globe, tee pattern']],
+      ['Height, open',fx(op.H)+'"'],['Handwheel',fx(op.W)+'"'],['Connection',endNm(end)],['Body','Globe, tee pattern, bolted bonnet, OS&Y']],
     note:op.est?'Height and handwheel estimated, no catalogue value at this size':null};
 }
 function genCheck(cl,n,end){
   var t=vlv('check',cl,n); if(!t) return null;
-  var L=t[0],d=t[1],H=t[2],g=G();
-  var e=vEnds(cl,n,L,d,g,end), ro=vRunner(d,L,e,g);
-  var top=G(), cd=Math.max(d*0.62,ro*0.95);
-  /* body swells over the seat, then a bolted cover up to H */
-  var bh=Math.max(H*0.62,ro*1.15);
-  top.add(solid([[0,bh],[cd,bh],[cd*1.02,bh*0.55],[ro*1.30,ro*0.10],[0,ro*0.10]]));
-  var ct=Math.max((H-bh)*0.55,0.20);
-  top.add(boltPlate(cd*2.05,ct,0.0001,cd*1.72,8,Math.max(n*0.075,0.34),bh));
-  var dome=new THREE.Mesh(new THREE.SphereGeometry(cd*0.66,28,18),MAT.steel);
-  dome.scale.y=Math.max((H-bh-ct)/(cd*0.66),0.25); dome.position.y=bh+ct; top.add(dome);
+  var L=t[0],d=t[1],H=t[2],g=G(),M=MAT.paint;
+  var e=vEnds(cl,n,L,d,g,end,M), ro=vRunner(d,L,e,g,M);
+  var fr=flg(cl,n)[0]/2, room=vRoom(cl,n,L,e,end);
+  /* body swells round the disc chamber */
+  var Rc=Math.min(Math.max(ro*1.30,fr*0.62),H*0.62), hb=room*0.92;
+  bulb(ro,Rc,hb,d/2,M,g);
+  /* neck up to a bolted, slightly domed cover; H is centre to cover top */
+  var top=G(), ct=Math.max(H*0.06,0.14), dm=Math.max(H*0.07,0.12), yj=H-dm-ct;
+  var nx=Math.min(hb*0.78,Rc*1.05), nz=Rc*0.72, fx2=Math.min(nx*1.18,room), fz=nz*1.22;
+  top.add(oval([[0,Rc*0.2],[1,Rc*0.2],[0.96,yj-ct],[0,yj-ct]],nx,nz,M));
+  top.add(oval([[0,yj-ct],[1,yj-ct],[1,yj],[0,yj]],fx2,fz,M));
+  top.add(oval([[0,yj],[0.98,yj],[0.98,yj+ct],[0,yj+ct]],fx2,fz,M));
+  top.add(oval([[0,yj+ct],[0.74,yj+ct],[0.58,yj+ct+dm*0.7],[0.3,yj+ct+dm],[0,yj+ct+dm]],fx2,fz,M));
+  ringStuds(n<1.5?4:(n<6?6:8),fx2*0.86,fz*0.86,Math.max(fz*0.05,0.05),yj-ct,yj+ct,top);
+  /* hinge pin bosses either side, upstream of the seat */
+  var hy=Rc*0.2+(yj-ct-Rc*0.2)*0.7, hr=Math.max(nz*0.16,0.1);
+  [-1,1].forEach(function(s){
+    var bo=new THREE.Mesh(new THREE.CylinderGeometry(hr,hr,hr*1.2,20),M);
+    bo.rotation.x=Math.PI/2; bo.position.set(-nx*0.4,hy,s*(nz*0.92+hr*0.5)); top.add(bo);
+    var pl=hex(hr*1.1,hr*0.5,0,MAT.bolt); pl.rotation.x=Math.PI/2; pl.position.set(-nx*0.4,hy,s*(nz*0.92+hr*1.2)); top.add(pl);
+  });
+  /* cast flow arrow on the side */
+  var ar=G(), al=Rc*0.75;
+  var sh=new THREE.Mesh(new THREE.BoxGeometry(al,Rc*0.09,Rc*0.05),M); sh.position.x=-al*0.12; ar.add(sh);
+  var hd=new THREE.Mesh(new THREE.CylinderGeometry(0,Rc*0.13,Rc*0.24,3),M);
+  hd.rotation.z=-Math.PI/2; hd.scale.z=0.35; hd.position.x=al*0.45; ar.add(hd);
+  ar.position.set(0,0,-Rc-Rc*0.015); top.add(ar);
   top.rotation.z=Math.PI/2; g.add(top);
   return {g:g,std:'COTESO Series 48 / 53, API 6D, ASME B16.10 and B16.5 Class '+cl,
     dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
@@ -1447,58 +1586,102 @@ function genCheck(cl,n,end){
 }
 function genBallFlanged(cl,n,end){
   var t=vlv('gate',cl,n); if(!t) return null;      /* B16.10 long pattern shares gate length */
-  var L=t[0],d=t[1],g=G();
-  var e=vEnds(cl,n,L,d,g,end), ro=vRunner(d,L,e,g);
-  var R=ro*1.42, top=G(), P=Math.max(d*2.2,6);
-  var body=new THREE.Mesh(new THREE.CylinderGeometry(R,R,Math.max(L*0.42,d*1.5),44),MAT.steel);
-  body.rotation.z=Math.PI/2; g.add(body);
-  var ball=new THREE.Mesh(new THREE.SphereGeometry(d*0.60,32,22),MAT.trim); g.add(ball);
-  top.add(solid([[0,R*0.94],[R*0.42,R*0.94],[R*0.36,R*0.94+R*0.42],[0,R*0.94+R*0.42]]));
-  var st=new THREE.Mesh(new THREE.CylinderGeometry(Math.max(n*0.05,0.14),Math.max(n*0.05,0.14),R*0.85,16),MAT.trim);
-  st.position.y=R*1.15; top.add(st);
-  top.add(lever(P,R*1.45)); top.rotation.z=Math.PI/2; g.add(top);
+  var L=t[0],d=t[1],g=G(),M=MAT.ss,i;
+  var e=vEnds(cl,n,L,d,g,end,M), ro=vRunner(d,L,e,g,M);
+  var fr=flg(cl,n)[0]/2, room=vRoom(cl,n,L,e,end), P=Math.max(d*2.2,6);
+  /* three-piece body about the flow axis: centre body, two end caps with
+     collars, four long body bolts through all three */
+  var Rb=Math.max(fr*0.66,ro*1.30), Lc=Math.min(L*0.30,room*0.8), ct=Math.max(Lc*0.12,0.15), Re=Rb*0.84;
+  g.add(solid([[d/2,-Lc/2],[Rb*0.95,-Lc/2],[Rb,-Lc/2+Lc*0.08],[Rb,Lc/2-Lc*0.08],[Rb*0.95,Lc/2],[d/2,Lc/2]],M));
+  [-1,1].forEach(function(s){
+    var y=function(v){return s*v;}, a=Lc/2;
+    g.add(solid([[d/2,y(a)],[Rb*1.12,y(a)],[Rb*1.12,y(a+ct)],[Re,y(a+ct*1.3)],
+      [Re,y(room-(room-a)*0.3)],[ro,y(room)],[d/2,y(room)]],M));
+  });
+  var rB=Rb*1.02, br=Math.max(Rb*0.06,0.06), yl=Lc/2+ct;
+  for(i=0;i<4;i++){
+    var a=Math.PI/4+i*Math.PI/2, x=Math.cos(a)*rB, z=Math.sin(a)*rB;
+    var bt=new THREE.Mesh(new THREE.CylinderGeometry(br,br,yl*2+br*4,10),MAT.bolt);
+    bt.position.set(x,0,z); g.add(bt);
+    [-1,1].forEach(function(s){
+      var nu=hex(br*3,br*1.6,s>0?yl:-yl-br*1.6,MAT.bolt); nu.position.x=x; nu.position.z=z; g.add(nu);
+    });
+  }
+  g.add(new THREE.Mesh(new THREE.SphereGeometry(Math.min(d*0.62,Rb*0.9),32,22),MAT.trim));
+  /* square mounting pad, gland nut, stem and a lever along the pipe (open) */
+  var top=G(), y0=Rb*0.9, pt=Math.max(Rb*0.16,0.15), yn=y0+pt+Rb*0.32;
+  top.add(rbox(Rb*0.95,Rb*0.95,pt,y0,Rb*0.1,M));
+  top.add(solid([[0,y0+pt],[Rb*0.24,y0+pt],[Rb*0.2,yn],[0,yn]],M,28));
+  top.add(hex(Rb*0.42,Rb*0.11,yn,M));
+  var sr=Math.max(n*0.05,0.1), ylv=yn+Rb*0.11+Rb*0.1;
+  var st=new THREE.Mesh(new THREE.CylinderGeometry(sr,sr,ylv-y0+0.1,16),MAT.face);
+  st.position.y=(y0+ylv)/2; top.add(st);
+  var lv=lever(P,ylv); lv.rotation.y=Math.PI/2; top.add(lv);
+  top.rotation.z=Math.PI/2; g.add(top);
   return {g:g,std:'ASME B16.10 long pattern, Class '+cl+', '+endNm(end)+' ends',
     dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
-      ['Lever length',fx(P)+'"'],['Connection',endNm(end)],['Body','Floating ball, long pattern'],['Operator','Hand lever']],
+      ['Lever length',fx(P)+'"'],['Connection',endNm(end)],['Body','Floating ball, three piece bolted'],['Operator','Hand lever, shown open']],
     note:'Lever length is proportional; the catalogue tabulates it only for forged sizes'};
 }
 function genButterfly(cl,n,lug){
   var t=vlv('bfly',cl,n); if(!t) return null;
-  var L=t[0],H1=t[1],Do=t[2],g=G();
-  var f=flg(cl,n), d=RI(n);
+  var L=t[0],H1=t[1],Do=t[2],g=G(),M=MAT.paint,i;
+  var f=flg(cl,n), rb=RI(n), lt=Math.max(rb*0.06,0.12);
   var R=lug?(f[4]/2-f[6]*0.55):(f[7]/2);
-  g.add(solid([[d/2,-L/2],[R,-L/2],[R,L/2],[d/2,L/2]]));
+  /* body ring with chamfered edges, rubber liner lapped onto both faces */
+  var c=Math.min(L*0.12,0.25);
+  g.add(solid([[rb+lt,-L/2],[R-c,-L/2],[R,-L/2+c],[R,L/2-c],[R-c,L/2],[rb+lt,L/2]],M,72));
+  var lf=Math.max(L*0.03,0.03), lr=Math.min(f[7]/2,R)*0.9;
+  g.add(solid([[rb,-L/2-lf],[lr,-L/2-lf],[lr,-L/2],[rb+lt,-L/2],[rb+lt,L/2],[lr,L/2],[lr,L/2+lf],[rb,L/2+lf]],MAT.blk,72));
   if(lug){
-    for(var i=0;i<f[5];i++){var a=(i+0.5)*Math.PI*2/f[5];
-      var lu=new THREE.Mesh(new THREE.CylinderGeometry(f[6]*0.80,f[6]*0.80,L,18),MAT.steel);
-      lu.position.set(Math.cos(a)*f[4]/2,0,Math.sin(a)*f[4]/2); g.add(lu);}
+    for(i=0;i<f[5];i++){var a=(i+0.5)*Math.PI*2/f[5], bc=f[4]/2;
+      var lu=tube(f[6]/2,f[6]*0.85,-L/2*0.96,L/2*0.96,M);
+      lu.position.set(Math.cos(a)*bc,0,Math.sin(a)*bc); g.add(lu);
+      var wl=bc-R*0.9, wb=new THREE.Mesh(new THREE.BoxGeometry(wl,L*0.9,f[6]*1.1),M);
+      wb.position.set(Math.cos(a)*(R*0.9+wl/2),0,Math.sin(a)*(R*0.9+wl/2)); wb.rotation.y=-a; g.add(wb);}
   }
-  var disc=new THREE.Mesh(new THREE.CylinderGeometry(d*0.48,d*0.48,Math.max(L*0.16,0.14),48),MAT.face);
-  disc.rotation.x=0.20; g.add(disc);
-  var geared=(n>=8), top=G(), y0=R*0.96, lv=BFLY_LEV[n];
+  var top=G(), y0=R*0.96, lv=BFLY_LEV[n], geared=(n>=8);
   var E=geared?Math.max((H1-Do/2-Do*0.15-y0)/0.85,R*0.35):(lv?lv[0]:R*0.55);
-  var stem=new THREE.Mesh(new THREE.CylinderGeometry(Math.max(n*0.04,0.12),Math.max(n*0.04,0.12),d*0.5+y0+E*0.9,16),MAT.trim);
-  stem.position.y=(y0+E*0.9-d*0.5)/2; top.add(stem);
-  top.add(solid([[0,y0],[R*0.30,y0],[R*0.26,y0+E*0.75],[R*0.30,y0+E*0.75],[R*0.30,y0+E*0.85],[0,y0+E*0.85]]));
+  /* disc shut across the bore, on a through stem */
+  var disc=new THREE.Mesh(new THREE.SphereGeometry(rb*0.97,40,24),MAT.face);
+  disc.scale.x=Math.max(L*0.16,0.10)/(rb*0.97); top.add(disc);
+  var hub=new THREE.Mesh(new THREE.CylinderGeometry(rb*0.11,rb*0.11,rb*1.9,16),MAT.face); top.add(hub);
+  var sr=Math.max(n*0.04,0.12);
+  var stem=new THREE.Mesh(new THREE.CylinderGeometry(sr,sr,y0+E+rb,16),MAT.face);
+  stem.position.y=(E+y0-rb)/2+0.05; top.add(stem);
+  /* neck, ISO top pad, bottom trunnion boss */
+  top.add(solid([[0,R*0.85],[R*0.30,R*0.85],[R*0.24,y0+E*0.25],[R*0.22,y0+E*0.78],[0,y0+E*0.78]],M,32));
+  top.add(rbox(R*0.62,R*0.62,E*0.08,y0+E*0.78,R*0.06,M));
+  top.add(solid([[0,-R*1.05],[R*0.2,-R*1.05],[R*0.24,-R*0.85],[0,-R*0.85]],M,28));
   var opTxt;
   if(geared){
     var gy=H1-Do/2;
-    var gb=new THREE.Mesh(new THREE.BoxGeometry(Do*0.34,Do*0.30,Do*0.30),MAT.steel);
-    gb.position.y=gy; top.add(gb);
+    var gb=rbox(Do*0.36,Do*0.30,Do*0.30,gy-Do*0.15,Do*0.04,M); top.add(gb);
+    var ind=new THREE.Mesh(new THREE.CylinderGeometry(Do*0.08,Do*0.08,Do*0.05,24),MAT.pvcL);
+    ind.position.y=gy+Do*0.175; top.add(ind);
     var hw=handwheel(Do,0); hw.rotation.x=Math.PI/2;
-    hw.position.set(0,gy,Do*0.30); top.add(hw);
-    var sh=new THREE.Mesh(new THREE.CylinderGeometry(Do*0.028,Do*0.028,Do*0.30,12),MAT.trim);
+    hw.position.set(0,gy,Do*0.32); top.add(hw);
+    var sh=new THREE.Mesh(new THREE.CylinderGeometry(Do*0.028,Do*0.028,Do*0.32,12),MAT.face);
     sh.rotation.x=Math.PI/2; sh.position.set(0,gy,Do*0.16); top.add(sh);
     opTxt=['Operator','Worm gear, '+fx(Do)+'" handwheel'];
   }else{
-    var P=lv?lv[1]:leverL(n);
-    top.add(lever(P,y0+E*0.92));
-    opTxt=['Operator','Hand lever, '+fx(P)+'" long'];
+    var P=lv?lv[1]:leverL(n), yp=y0+E*0.86, pr=P*0.3;
+    /* notched throttle plate under the lever */
+    var qs=new THREE.Shape(); qs.moveTo(0,0); qs.lineTo(pr,0); qs.absarc(0,0,pr,0,Math.PI/2,false); qs.lineTo(0,0);
+    var qp=new THREE.Mesh(new THREE.ExtrudeGeometry(qs,{depth:0.08,bevelEnabled:false,curveSegments:24}),MAT.face);
+    qp.rotation.x=Math.PI/2; qp.position.y=yp; top.add(qp);
+    for(i=0;i<=6;i++){var ta=i*Math.PI/12;
+      var tt=new THREE.Mesh(new THREE.BoxGeometry(0.1,0.12,0.06),MAT.face);
+      tt.position.set(Math.cos(ta)*pr*0.94,yp+0.06,Math.sin(ta)*pr*0.94); tt.rotation.y=-ta; top.add(tt);}
+    top.add(lever(P,yp+0.16,MAT.blk));
+    var tg=new THREE.Mesh(new THREE.BoxGeometry(P*0.05,0.06,P*0.34),MAT.face);
+    tg.position.set(0,yp+0.04,P*0.36); top.add(tg);
+    opTxt=['Operator','Hand lever with notch plate, '+fx(P)+'" long'];
   }
   top.rotation.z=Math.PI/2; g.add(top);
   var dims=[['Nominal size',fnps(n)],['Class',cl],['Body thickness',fx(L)+'"'],
     ['Body outside dia',fx(R*2)+'"'],['Bolt circle',fx(f[4])+'"'],
-    ['Type',lug?'Lugged, '+f[5]+' bosses':'Wafer'],opTxt];
+    ['Type',lug?'Lugged, '+f[5]+' bosses':'Wafer'],['Seat','Rubber lined, disc shown shut'],opTxt];
   if(geared) dims.push(['Overall height',fx(H1)+'"']);
   return {g:g,std:'COTESO Series 85 / 88 / 98, API 609, Class '+cl,dims:dims};
 }
@@ -1523,8 +1706,9 @@ function genForged(kind,n,sw){
   }else{
     var body=new THREE.Mesh(new THREE.CylinderGeometry(R*1.18,R*1.55,fr*1.15,36),MAT.steel);
     body.scale.z=0.62; body.position.y=fr*1.15/2-fr*0.52; top.add(body);
-    top.add(boltPlate(fr*1.55,Math.max(n*0.14,0.22),0.0001,fr*1.24,4,Math.max(n*0.11,0.20),fr*0.62));
-    vStem(n,fr*0.78,H,W,top);
+    var bt=Math.max(n*0.14,0.22);
+    top.add(boltPlate(fr*1.55,bt,0.0001,fr*1.24,4,Math.max(n*0.11,0.20),fr*0.62));
+    vTop(n,fr*0.62+bt,H,W,kind==='gate'?Math.min(d,H*0.2):d*0.35,fr*0.5,MAT.steel,top);
   }
   top.rotation.z=Math.PI/2; g.add(top);
   var nm={gate:'Gate',globe:'Globe',check:'Swing check'}[kind];
@@ -1549,9 +1733,9 @@ function genBallForged(n,sw){
   top.add(solid([[0,y0],[D*0.26,y0],[D*0.22,H*0.72],[0,H*0.72]]));
   var st=new THREE.Mesh(new THREE.CylinderGeometry(D*0.07,D*0.07,Math.max(yb-y0,0.3),14),MAT.trim);
   st.position.y=(y0+yb)/2; top.add(st);
-  var bar=new THREE.Mesh(new THREE.BoxGeometry(Math.max(W*0.045,0.18),W*0.038,W),MAT.op);
+  var bar=new THREE.Mesh(new THREE.BoxGeometry(Math.max(W*0.045,0.18),W*0.038,W),MAT.hand);
   bar.position.set(0,yb,W/2-D*0.3); top.add(bar);
-  var grip=new THREE.Mesh(new THREE.CylinderGeometry(W*0.026,W*0.026,W*0.26,14),MAT.op);
+  var grip=new THREE.Mesh(new THREE.CylinderGeometry(W*0.026,W*0.026,W*0.26,14),MAT.hand);
   grip.rotation.x=Math.PI/2; grip.position.set(0,yb,W-D*0.3-W*0.13); top.add(grip);
   top.rotation.z=Math.PI/2; g.add(top);
   return {g:g,std:'COTESO Series 60 floating ball, Class 800',
@@ -1560,29 +1744,198 @@ function genBallForged(n,sw){
       ['Ends',sw?'Socket weld':'Female NPT'],['Body','Floating ball, two piece']]};
 }
 function genPlugValve(cl,n,end,op){
-  var t=vlv('gate',cl||150,n); if(!t) return null;
-  var L=t[0],d=t[1],g=G(),ro=RO(n),R=ro*1.55+0.35;
-  var e=vEnds(cl||150,n,L,d,g,end);                    /* real end connections */
-  vRunner(d,L,e,g);                                    /* flow bore between ends */
-  /* tapered plug body */
-  g.add(solid([[ro*0.98,-(L/2-e)],[ro*1.1,-(L/2-e)],[R,-L*0.16],[R,L*0.16],[ro*1.1,L/2-e],[ro*0.98,L/2-e]]));
-  var top=G(), y0=R*0.92;
-  top.add(solid([[0,y0],[R*0.78,y0],[R*0.62,y0+R*0.42],[0,y0+R*0.42]]));   /* plug top cover */
+  cl=cl||150; var t=vlv('gate',cl,n); if(!t) return null;
+  var L=t[0],d=t[1],g=G(),M=MAT.ss,i;
+  var e=vEnds(cl,n,L,d,g,end,M), ro=vRunner(d,L,e,g,M);
+  var fr=flg(cl,n)[0]/2, room=vRoom(cl,n,L,e,end);
+  var Rp=Math.min(Math.max(ro*1.25,fr*0.62),room/1.12);
+  g.add(tube(d/2,ro*1.12,-room,room,M));
+  /* tapered plug housing, wide end up, bottom adjuster boss */
+  var top=G(), yt=Rp*1.05, yb=-Rp*0.95;
+  top.add(solid([[0,yb],[Rp*0.60,yb],[Rp*0.72,yb+Rp*0.2],[Rp*0.94,yt-Rp*0.15],[Rp,yt],[0,yt]],M,48));
+  top.add(solid([[0,yb-Rp*0.18],[Rp*0.28,yb-Rp*0.18],[Rp*0.28,yb+0.01],[0,yb+0.01]],M,24));
+  /* square top cover with four cap screws */
+  var cs=Rp*2.1, ct=Math.max(Rp*0.16,0.14), yc=yt+ct;
+  top.add(rbox(cs,cs,ct,yt,cs*0.14,M));
+  for(i=0;i<4;i++){var a=Math.PI/4+i*Math.PI/2, bx=Math.cos(a)*cs*0.54, bz=Math.sin(a)*cs*0.54;
+    var hd=hex(Math.max(Rp*0.16,0.14),Math.max(Rp*0.09,0.08),yc,MAT.bolt); hd.position.x=bx; hd.position.z=bz; top.add(hd);}
+  top.add(solid([[0,yc],[Rp*0.42,yc],[Rp*0.36,yc+Rp*0.28],[0,yc+Rp*0.28]],M,28));
+  var y0=yc+Rp*0.28, sr=Math.max(n*0.06,0.14);
   if(op==='lever'){
-    var P=Math.max(d*3.0,7);
-    var stub=new THREE.Mesh(new THREE.CylinderGeometry(Math.max(n*0.06,0.14),Math.max(n*0.06,0.14),R*0.5,16),MAT.trim);
-    stub.position.y=y0+R*0.55; top.add(stub);
-    top.add(lever(P,y0+R*0.75));
+    var P=Math.max(d*3.0,7), yl=y0+Rp*0.22;
+    var stub=new THREE.Mesh(new THREE.CylinderGeometry(sr,sr,yl-y0+0.1,16),MAT.face);
+    stub.position.y=(y0+yl)/2; top.add(stub);
+    var lv=lever(P,yl); lv.rotation.y=Math.PI/2; top.add(lv);
   }else{
-    var W=wheelDia(n,150)*0.78, H=stemH(n,150)*0.62;
-    var st=new THREE.Mesh(new THREE.CylinderGeometry(n*0.06+0.13,n*0.06+0.13,H-y0,16),MAT.trim);
+    var W=wheelDia(n,150)*0.78, H=Math.max(stemH(n,150)*0.62,y0+1);
+    var st=new THREE.Mesh(new THREE.CylinderGeometry(sr,sr,H-y0,16),MAT.face);
     st.position.y=(y0+H)/2; top.add(st); top.add(handwheel(W,H));
   }
   top.rotation.z=Math.PI/2; g.add(top);
-  return {g:g,std:'Plug valve, ASME B16.10 end to end, Class '+(cl||150)+', '+endNm(end)+' ends',
-    dims:[['Nominal size',fnps(n)],['Class',cl||150],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
-      ['Connection',endNm(end)],['Operator',op==='lever'?'Hand lever':'Handwheel'],['Body','Lubricated / sleeved plug']],
+  return {g:g,std:'Plug valve, ASME B16.10 end to end, Class '+cl+', '+endNm(end)+' ends',
+    dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
+      ['Connection',endNm(end)],['Operator',op==='lever'?'Hand lever, shown open':'Handwheel'],['Body','Lubricated / sleeved plug, bolted cover']],
     note:'Operator envelope proportional; body per B16.10 face-to-face'};
+}
+/* ---------- generic valves without a catalogue table ----------
+   Needle, diaphragm, control, solenoid and three-way valves. Ends and
+   face to face come from the tables above where one applies; the rest
+   of the envelope is proportional and says so in the note. */
+/* Female NPT port at yf, boss growing inward by dir: hex boss with
+   thread crests inside the tapped bore. */
+function femPort(n,yf,dir,across,len,mat,g){
+  var rt=RO(n)*0.99, i;
+  g.add(hexTube(across,rt,dir>0?yf:yf-len,len,mat));
+  for(i=0;i<4;i++){
+    var tr=new THREE.Mesh(new THREE.TorusGeometry(rt,Math.max(rt*0.035,0.015),6,32),MAT.face);
+    tr.rotation.x=Math.PI/2; tr.position.y=yf+dir*len*(0.12+i*0.17); g.add(tr);
+  }
+  var yfl=yf+dir*len*0.86;
+  g.add(solid([[RI(n),yfl],[rt,yfl],[rt,yfl+dir*0.02],[RI(n),yfl+dir*0.02]],mat));
+}
+/* Coil spring as a swept tube. */
+function coil(rad,wire,y0,y1,turns,mat){
+  var pts=[],N=turns*24,i;
+  for(i=0;i<=N;i++){var a=i/N*turns*Math.PI*2;
+    pts.push(new THREE.Vector3(rad*Math.cos(a),y0+(y1-y0)*i/N,rad*Math.sin(a)));}
+  return new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),N*2,wire,8,false),mat||MAT.bolt);
+}
+function genNeedle(n){
+  var b=OD(n)*1.25+0.35, L=b*2.0, H=b*2.9, W=b*1.2, pl=L*0.24, g=G(), M=MAT.ss;
+  femPort(n,-L/2,1,b*0.92,pl,M,g); femPort(n,L/2,-1,b*0.92,pl,M,g);
+  g.add(new THREE.Mesh(new THREE.BoxGeometry(b,L-pl*2+0.02,b),M));
+  /* bonnet hex, barrel, packing nut, stem and a small round handwheel */
+  var top=G(), y0=b/2, t=hwT(W);
+  top.add(hexTube(b*0.66,0,y0,b*0.30,M));
+  top.add(solid([[0,y0+b*0.30],[b*0.22,y0+b*0.30],[b*0.22,y0+b*0.72],[0,y0+b*0.72]],M,28));
+  top.add(hexTube(b*0.38,0,y0+b*0.72,b*0.18,M));
+  var yw=H-t, sr=b*0.07;
+  var st=new THREE.Mesh(new THREE.CylinderGeometry(sr,sr,yw-y0-b*0.5,14),MAT.face);
+  st.position.y=(y0+b*0.5+yw)/2; top.add(st);
+  top.add(handwheel(W,yw,MAT.red));
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'Generic bar-stock needle valve, female NPT ends (ASME B1.20.1)',
+    dims:[['Nominal size',fnps(n)],['End to end',fx(L)+'"'],['Body',fx(b)+'" square bar stock'],
+      ['Height, open',fx(H)+'"'],['Handwheel',fx(W)+'"'],['Ends','Female NPT'],['Seat','Integral needle, regulating']],
+    note:'Envelope proportional to pipe OD; no catalogue table'};
+}
+/* Flanged weir diaphragm valve face to face, mm (EN 558 / MSS SP-88 pattern) */
+var DIA_FF={0.5:108,0.75:117,1:127,1.5:159,2:190,2.5:216,3:254,4:305,6:406,8:521};
+function genDiaphragm(n){
+  var mm=DIA_FF[n]; if(!mm) return null;
+  var cl=150,L=mm/25.4,d=RI(n)*2,g=G(),M=MAT.green;
+  var e=vEnds(cl,n,L,d,g,'FL',M), ro=vRunner(d,L,e,g,M);
+  var fr=flg(cl,n)[0]/2, room=vRoom(cl,n,L,e,'FL');
+  /* lined body swelling over the weir, square bonnet seat on top */
+  var Rw=Math.max(ro*1.25,fr*0.62), hb=room*0.95;
+  bulb(ro,Rw,hb,d/2,M,g);
+  var top=G(), sx=Math.min(hb,Rw*1.15), sz=Rw*1.12, ys=Rw*0.80, st=Math.max(Rw*0.14,0.14);
+  top.add(oval([[0,0],[1,0],[0.9,ys],[0,ys]],sx*0.9,sz*0.8,M));
+  top.add(rbox(sx*2,sz*2,st,ys,sx*0.25,M));
+  /* black bonnet: flange plate and domed cover, four corner studs */
+  var yb=ys+st, bp=st*0.8, bh=Rw*0.95, yd=yb+bp+bh;
+  top.add(rbox(sx*2,sz*2,bp,yb,sx*0.25,MAT.blk));
+  top.add(oval([[0,yb+bp],[1,yb+bp],[0.96,yb+bp+bh*0.35],[0.78,yb+bp+bh*0.75],[0.48,yd],[0,yd]],sx*0.88,sz*0.84,MAT.blk));
+  var rs=Math.max(Rw*0.05,0.06), i;
+  for(i=0;i<4;i++){var a=Math.PI/4+i*Math.PI/2, x=Math.cos(a)*sx*1.08, z=Math.sin(a)*sz*1.08;
+    var sd=new THREE.Mesh(new THREE.CylinderGeometry(rs,rs,st+bp+rs*4,10),MAT.bolt);
+    sd.position.set(x,ys+(st+bp)/2,z); top.add(sd);
+    var nu=hex(rs*3,rs*1.6,yb+bp,MAT.bolt); nu.position.x=x; nu.position.z=z; top.add(nu);}
+  /* stem with a position indicator collar, black handwheel */
+  var W=Math.max(fr*1.3,2.5), t=hwT(W), H=yd+Rw*0.55+t*2.4, yw=H-t;
+  var col=new THREE.Mesh(new THREE.CylinderGeometry(Rw*0.14,Rw*0.14,Rw*0.22,20),M);
+  col.position.y=yd+Rw*0.11; top.add(col);
+  var sm=new THREE.Mesh(new THREE.CylinderGeometry(Rw*0.07,Rw*0.07,yw-yd,14),MAT.face);
+  sm.position.y=(yd+yw)/2; top.add(sm);
+  top.add(handwheel(W,yw,MAT.blk));
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'Weir diaphragm valve, flanged Class 150 RF, face to face '+mm+' mm',
+    dims:[['Nominal size',fnps(n)],['Class',cl],['Face to face',fmm(mm)],['Bore',fx(d)+'"'],
+      ['Height to handwheel',fx(H)+'"'],['Handwheel',fx(W)+'"'],['Body','Weir type, lined'],
+      ['Diaphragm','EPDM or PTFE faced'],['Connection','Flanged RF']],
+    note:'Face to face as typically published for flanged weir diaphragm valves; bonnet and handwheel proportional'};
+}
+function genControl(n){
+  var cl=150, t=vlv('globe',cl,n); if(!t) return null;
+  var L=t[0],d=t[1],g=G(),M=MAT.ss,i;
+  var e=vEnds(cl,n,L,d,g,'FL',M), ro=vRunner(d,L,e,g,M), top=G();
+  var b=globeBody(cl,n,L,e,'FL',ro,M,top), rb=b.rb, y0=b.y;
+  var Da=Math.round((7.5+3.2*Math.pow(n,0.75))*2)/2, R=Da/2;
+  /* bonnet up to the yoke clamp, two round yoke pillars */
+  var ybn=y0+Math.max(rb*1.2,1.2), ya=ybn+Da*0.55, px=Math.max(rb*0.95,0.6), pr=Math.max(rb*0.13,0.14);
+  top.add(solid([[0,y0],[rb,y0],[rb*0.9,y0+(ybn-y0)*0.3],[rb*0.6,ybn-(ybn-y0)*0.2],[rb*0.6,ybn],[0,ybn]],M,36));
+  top.add(oval([[0,ybn],[1,ybn],[1,ybn+pr*1.6],[0,ybn+pr*1.6]],px+pr*1.6,pr*2.2,M,32));
+  [-1,1].forEach(function(s){
+    var p=new THREE.Mesh(new THREE.CylinderGeometry(pr,pr,ya-ybn,16),M);
+    p.position.set(s*px,(ybn+ya)/2,0); top.add(p);
+  });
+  top.add(oval([[0,ya-pr*1.6],[1,ya-pr*1.6],[1,ya],[0,ya]],px+pr*1.6,pr*2.6,M,32));
+  /* stem, stem connector and travel scale */
+  var sr=Math.max(n*0.045,0.1);
+  var sm=new THREE.Mesh(new THREE.CylinderGeometry(sr,sr,ya-y0,14),MAT.face); sm.position.y=(y0+ya)/2; top.add(sm);
+  var ym=(ybn+ya)/2, cn=new THREE.Mesh(new THREE.BoxGeometry(px*0.7,Da*0.07,pr*2.2),MAT.face);
+  cn.position.y=ym; top.add(cn);
+  var sc=new THREE.Mesh(new THREE.BoxGeometry(pr*0.3,Da*0.18,pr*1.4),MAT.face); sc.position.set(px-pr*1.1,ym,0); top.add(sc);
+  /* spring diaphragm actuator: lower casing, bolted rim, domed upper casing */
+  var A=MAT.paint, hc=Da*0.15, rt=Math.max(Da*0.018,0.12), yr=ya+hc;
+  top.add(solid([[0,ya],[R*0.36,ya],[R*0.92,ya+hc*0.75],[R,yr],[0,yr]],A,64));
+  top.add(solid([[0,yr],[R*1.07,yr],[R*1.07,yr+rt*2],[0,yr+rt*2]],A,64));
+  ringStuds(Math.max(12,Math.round(Da*1.4)),R*1.0,R*1.0,Math.max(Da*0.01,0.05),yr,yr+rt*2,top);
+  var yu=yr+rt*2, H=yu+hc*1.45;
+  top.add(solid([[0,yu],[R,yu],[R*0.96,yu+hc*0.5],[R*0.75,yu+hc*1.1],[R*0.4,yu+hc*1.4],[0,H]],A,64));
+  top.add(hex(Da*0.07,Da*0.04,H-0.02,MAT.face));
+  /* positioner on the front of the yoke, two gauges, feedback arm */
+  var pw=Da*0.24, ph=Da*0.28, pd=Da*0.15, pz=-(pr*2.2+pd/2+Da*0.03);
+  var ps=rbox(pw,pd,ph,ym-ph/2,Da*0.02,MAT.blk); ps.position.z=pz; top.add(ps);
+  var br=new THREE.Mesh(new THREE.BoxGeometry(pw*0.5,ph*0.4,-pz-pd/2),M); br.position.set(0,ym,(pz+pd/2)/2); top.add(br);
+  [-1,1].forEach(function(s){
+    var gq=new THREE.Mesh(new THREE.CylinderGeometry(pw*0.14,pw*0.14,pd*0.3,20),MAT.face);
+    gq.rotation.x=Math.PI/2; gq.position.set(s*pw*0.24,ym+ph*0.22,pz-pd*0.62); top.add(gq);
+  });
+  var fa=new THREE.Mesh(new THREE.BoxGeometry(pw*0.06,pw*0.06,-pz),MAT.face); fa.position.set(px*0.3,ym-ph*0.38,pz/2); top.add(fa);
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'Globe body per COTESO Series 38, ASME B16.10 and B16.5 Class 150',
+    dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
+      ['Actuator','Spring diaphragm, '+fx(Da)+'" casing'],['Overall height',fx(H)+'"'],
+      ['Positioner','Yoke mounted, with gauges'],['Body','Globe, plug or cage trim'],['Connection','Flanged RF']],
+    note:'Actuator, yoke and positioner proportional; actuator size comes from the valve maker'};
+}
+function genSolenoid(n){
+  var b=OD(n)*1.05+0.55, L=1.0+2.2*OD(n), pl=L*0.26, g=G(), M=MAT.brass;
+  femPort(n,-L/2,1,b*0.95,pl,M,g); femPort(n,L/2,-1,b*0.95,pl,M,g);
+  g.add(new THREE.Mesh(new THREE.BoxGeometry(b,L-pl*2+0.02,b*1.05),M));
+  /* bonnet nut, armature tube through a black coil, DIN plug on the side */
+  var top=G(), y0=b/2, yc0=y0+b*0.22, ch=b*1.05, yc1=yc0+ch, cw=b*0.95;
+  top.add(hexTube(b*0.8,0,y0,b*0.16,M));
+  var tu=new THREE.Mesh(new THREE.CylinderGeometry(b*0.17,b*0.17,yc1-y0+b*0.12,20),MAT.face);
+  tu.position.y=(y0+yc1+b*0.12)/2; top.add(tu);
+  top.add(rbox(cw,cw,ch,yc0,b*0.12,MAT.blk));
+  top.add(hex(b*0.36,b*0.12,yc1+0.01,MAT.face));
+  var din=rbox(b*0.5,b*0.5,b*0.62,yc0+ch*0.2,b*0.05,MAT.blk); din.position.x=cw/2+b*0.25; top.add(din);
+  var scw=new THREE.Mesh(new THREE.CylinderGeometry(b*0.06,b*0.06,b*0.05,12),MAT.face);
+  scw.position.set(cw/2+b*0.25,yc0+ch*0.2+b*0.645,0); top.add(scw);
+  top.rotation.z=Math.PI/2; g.add(top);
+  var H=yc1+b*0.13;
+  return {g:g,std:'Generic 2/2-way solenoid valve, brass body, female NPT ends (ASME B1.20.1)',
+    dims:[['Nominal size',fnps(n)],['End to end',fx(L)+'"'],['Height',fx(H)+'"'],['Body','Forged brass'],
+      ['Ends','Female NPT'],['Coil','Encapsulated, DIN 43650 plug'],['Function','2/2-way, normally closed']],
+    note:'Envelope proportional to pipe OD; no catalogue table'};
+}
+function genThreeWay(n){
+  var cl=150, t=vlv('globe',cl,n); if(!t) return null;
+  var L=t[0],d=t[1],op=opOf(t,cl,n),g=G(),M=MAT.ss;
+  var e=vEnds(cl,n,L,d,g,'FL',M), ro=vRunner(d,L,e,g,M);
+  /* third port, same centre to face as the run, laid along -Z (front) */
+  var br=G(); vEndX(cl,n,L/2,-1,d,'FL',br,M); br.add(tube(d/2,ro,0,L/2-e+0.05,M));
+  br.rotation.x=-Math.PI/2; g.add(br);
+  var top=G(), b=globeBody(cl,n,L,e,'FL',ro,M,top);
+  vTop(n,b.y,op.H,op.W,Math.min(d*0.35,op.H*0.12),b.rb,M,top);
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'Globe pattern body, run per COTESO Series 38 / ASME B16.10, Class 150 RF',
+    dims:[['Nominal size',fnps(n)],['Class',cl],['Run end to end',fx(L)+'"'],['Branch centre to face',fx(L/2)+'"'],
+      ['Port bore',fx(d)+'"'],['Height, open',fx(op.H)+'"'],['Handwheel',fx(op.W)+'"'],
+      ['Pattern','T-port, mixing or diverting'],['Connection','Flanged RF, three ports']],
+    note:'Branch centre to face set equal to the run'+(op.est?'; height and handwheel estimated':'')};
 }
 /* ============================================================ CATALOG */
 function sizesOf(o){return Object.keys(o).map(parseFloat).sort(function(a,b){return a-b;});}
@@ -1640,11 +1993,16 @@ var CAT=[
  {grp:'Valves, flanged',id:'VTSCc',skey:'VTSC',name:'Gate, Class 150 threaded',sz:S1([0.5,0.75,1,1.5,2],function(n){return genGate(150,n,'TH');})},
  {grp:'Valves, flanged',id:'VGFL150',skey:'VGFL',name:'Globe, Class 150 RF',sz:S1(sizesOf(VLV.globe[150]),function(n){return genGlobe(150,n);})},
  {grp:'Valves, flanged',id:'VGFL300',skey:'VGFL',name:'Globe, Class 300 RF',sz:S1(sizesOf(VLV.globe[300]),function(n){return genGlobe(300,n);})},
+ {grp:'Valves, flanged',id:'VCFL150',skey:'VCFL',name:'Check, swing, Class 150 RF',sz:S1(sizesOf(VLV.check[150]),function(n){return genCheck(150,n);})},
+ {grp:'Valves, flanged',id:'VCFL300',skey:'VCFL',name:'Check, swing, Class 300 RF',sz:S1(sizesOf(VLV.check[300]),function(n){return genCheck(300,n);})},
  {grp:'Valves, flanged',id:'VBFL150',skey:'VBFL',name:'Ball, Class 150 RF',sz:S1(sizesOf(VLV.gate[150]),function(n){return genBallFlanged(150,n);})},
  {grp:'Valves, flanged',id:'VBFL300',skey:'VBFL',name:'Ball, Class 300 RF',sz:S1(sizesOf(VLV.gate[300]),function(n){return genBallFlanged(300,n);})},
  {grp:'Valves, flanged',id:'VPBW',skey:'VPBW',name:'Plug, butt weld, lever',sz:S1([1,1.5,2,2.5,3,4,6,8],function(n){return genPlugValve(150,n,'BW','lever');})},
  {grp:'Valves, flanged',id:'VPFL',skey:'VPFL',name:'Plug, flanged, lever',sz:S1([1,1.5,2,2.5,3,4,6,8],function(n){return genPlugValve(150,n,'FL','lever');})},
  {grp:'Manufacturer models',id:'MVPFL',skey:'VPFL',name:'Plug, Nordstrom Fig 143',sz:S1([1,1.5,2,2.5,3,4],genPlugNordstrom)},
+ {grp:'Valves, flanged',id:'VDFL',skey:'VDFL',name:'Diaphragm, Class 150 RF',sz:S1(sizesOf(DIA_FF),genDiaphragm)},
+ {grp:'Valves, flanged',id:'CVFL',skey:'',name:'Control valve, globe',sz:S1([1,1.5,2,3,4,6,8],genControl)},
+ {grp:'Valves, flanged',id:'V3FL',skey:'V3FL',name:'Three-way, Class 150 RF',sz:S1([1,1.5,2,3,4,6],genThreeWay)},
  {grp:'Valves, flanged',id:'RAFL',skey:'RAFL',name:'Relief valve, spring',sz:S1([1,1.5,2,3,4,6],genReliefValve)},
  {grp:'Valves, flanged',id:'IIBW',skey:'IIBW',name:'Inline instrument',sz:S1([1,1.5,2,3,4,6,8],function(n){return genInlineInstr(150,n);})},
 
@@ -1657,6 +2015,9 @@ var CAT=[
  {grp:'Valves, forged Class 800',id:'VGSW',skey:'VGSW',name:'Globe, socket weld',sz:S1(sizesOf(VLV.globe[800]),function(n){return genForged('globe',n,true);})},
  {grp:'Valves, forged Class 800',id:'VBSW',skey:'VBSW',name:'Ball, socket weld',sz:S1(sizesOf(VLV.ball800),function(n){return genBallForged(n,true);})},
  {grp:'Valves, forged Class 800',id:'VBSC',skey:'VBSC',name:'Ball, threaded',sz:S1(sizesOf(VLV.ball800),function(n){return genBallForged(n,false);})},
+
+ {grp:'Valves, threaded small bore',id:'VNSC',skey:'VNSC',name:'Needle, female NPT',sz:S1([0.5,0.75,1],genNeedle)},
+ {grp:'Valves, threaded small bore',id:'SOLV',skey:'',name:'Solenoid, brass, NPT',sz:S1([0.5,0.75,1,1.5,2],genSolenoid)},
 
  {grp:'Manufacturer models',id:'MVTFL',skey:'VTFL',name:'Gate, AVK resilient seat',sz:[100,150,200,250,300].map(function(dn){return {lab:'DN'+dn,f:function(){return genGateAVK(dn);}};})},
  {grp:'Manufacturer models',id:'MVGFL',skey:'VGFL',name:'Globe, Bonney Forge 1-31 RF',sz:S1([2,2.5,3,4,6,8],genGlobeBF)},
