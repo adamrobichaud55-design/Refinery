@@ -1735,12 +1735,11 @@ function genBallFlanged(cl,n,end){
     });
   }
   g.add(new THREE.Mesh(new THREE.SphereGeometry(Math.min(d*0.62,Rb*0.9),32,22),MAT.trim));
-  /* mounting pad, gland boss, stem nut and a lever along the pipe */
-  var top=G(), y0=Rb*0.95;
-  top.add(solid([[0,y0],[u*0.24,y0],[u*0.24,u*0.50],[0,u*0.50]],M,40));
-  ringStuds(4,u*0.19,u*0.19,u*0.014,u*0.47,u*0.50,top);
-  top.add(solid([[0,u*0.50],[u*0.12,u*0.50],[u*0.12,u*0.60],[0,u*0.60]],M,28));
-  top.add(hex(u*0.20,u*0.06,u*0.60,M));
+  /* neck boss, bolted top flange, gland nut, stem nut, lever along the pipe */
+  var top=G(), y0=Rb*0.95, yf=Math.max(u*0.46,y0+u*0.04);
+  top.add(solid([[0,y0],[u*0.20,y0],[u*0.16,yf],[0,yf]],M,40));
+  topFlange(u,yf,yf+u*0.15,M,top);
+  top.add(hex(u*0.20,u*0.05,yf+u*0.15,M));
   var st=new THREE.Mesh(new THREE.CylinderGeometry(u*0.05,u*0.05,u*0.82-y0,16),MAT.face);
   st.position.y=(y0+u*0.82)/2; top.add(st);
   var yl2=u*0.76, lv=lever(P,yl2,MAT.hand,0.28); lv.rotation.y=-Math.PI/2+0.25; top.add(lv);
@@ -1850,8 +1849,9 @@ function genBallForged(n,sw){
     g.add(solid([[ri,y0],[ro*1.28,y0],[ro*1.28,y1],[sw?ro:ri,y1],[sw?ro:ri,s>0?y1-bl*0.6:y0+bl*0.6],[ri,s>0?y1-bl*0.6:y0+bl*0.6]]));
   });
   var ball=new THREE.Mesh(new THREE.SphereGeometry(d*0.62,30,20),MAT.trim); g.add(ball);
-  var top=G(), y0=D/2, yb=H-W*0.019;
-  top.add(solid([[0,y0],[D*0.26,y0],[D*0.22,H*0.72],[0,H*0.72]]));
+  var top=G(), y0=D/2, yb=H-W*0.019, uf=D*2.05, yf=H*0.55;
+  top.add(solid([[0,y0],[D*0.26,y0],[D*0.22,yf],[0,yf]]));
+  topFlange(uf,yf,Math.min(yb-W*0.03,yf+uf*0.16),MAT.steel,top);
   var st=new THREE.Mesh(new THREE.CylinderGeometry(D*0.07,D*0.07,Math.max(yb-y0,0.3),14),MAT.trim);
   st.position.y=(y0+yb)/2; top.add(st);
   var bar=new THREE.Mesh(new THREE.BoxGeometry(Math.max(W*0.045,0.18),W*0.038,W),MAT.hand);
