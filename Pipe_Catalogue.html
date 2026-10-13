@@ -1444,13 +1444,35 @@ function vRoom(cl,n,L,e,end){return L/2-((end&&end!=='FL')?e:flgT(cl,n)+0.08);}
 /* Lathe about +Y with the profile radius normalised to 1, stretched to
    half widths ax along the flow (top-group X) and az across it (Z). */
 function oval(pts,ax,az,mat,seg){var m=solid(pts,mat,seg||48);m.scale.set(ax,1,az);return m;}
-/* Box with rounded vertical edges, w along X, d along Z, from y0 up h. */
-function rbox(w,d,h,y0,r,mat){
+/* Rounded rectangle outline, w along X, d along Z once laid flat. */
+function rrShape(w,d,r){
   var sh=new THREE.Shape(), x=w/2, z=d/2; r=Math.min(r,x*0.99,z*0.99);
   sh.moveTo(-x+r,-z); sh.lineTo(x-r,-z); sh.absarc(x-r,-z+r,r,-Math.PI/2,0,false);
   sh.lineTo(x,z-r); sh.absarc(x-r,z-r,r,0,Math.PI/2,false);
   sh.lineTo(-x+r,z); sh.absarc(-x+r,z-r,r,Math.PI/2,Math.PI,false);
   sh.lineTo(-x,-z+r); sh.absarc(-x+r,-z+r,r,Math.PI,Math.PI*1.5,false);
+  return sh;
+}
+/* Oblong bolted flange plate, from y up t, drilled at pts ([x,z]). */
+function rectFlange(w,d,r,pts,hd,t,y,mat){
+  var sh=rrShape(w,d,r);
+  pts.forEach(function(p){var h=new THREE.Path(); h.absarc(p[0],-p[1],hd/2,0,Math.PI*2,true); sh.holes.push(h);});
+  var m=new THREE.Mesh(new THREE.ExtrudeGeometry(sh,{depth:t,bevelEnabled:false,curveSegments:16}),mat||MAT.steel);
+  m.rotation.x=-Math.PI/2; m.position.y=y; return m;
+}
+/* Bolted top flange where the handwheel mounts: drilled flange on the
+   yoke or column top, operator flange over it, four studs through the
+   holes, then a bearing sleeve up to y2 carrying the handwheel. */
+function topFlange(u,y0,y2,M,top){
+  var O=u*0.44, t=u*0.045, bc=u*0.33, hd=u*0.05;
+  top.add(boltPlate(O,t,u*0.05,bc,4,hd,y0,M));
+  top.add(boltPlate(O*0.94,t,u*0.05,bc,4,hd,y0+t,M));
+  ringStuds(4,bc/2,bc/2,hd*0.4,y0,y0+t*2,top);
+  top.add(solid([[u*0.05,y0+t*2],[u*0.12,y0+t*2],[u*0.12,y2-u*0.015],[u*0.105,y2],[u*0.05,y2]],M,32));
+}
+/* Box with rounded vertical edges, w along X, d along Z, from y0 up h. */
+function rbox(w,d,h,y0,r,mat){
+  var sh=rrShape(w,d,r);
   var m=new THREE.Mesh(new THREE.ExtrudeGeometry(sh,{depth:h,bevelEnabled:false,curveSegments:10}),mat||MAT.steel);
   m.rotation.x=-Math.PI/2; m.position.y=y0; return m;
 }
@@ -1573,20 +1595,21 @@ function genGate(cl,n,end){
   });
   /* body and bonnet flanges, rounded oblong, eight studs */
   var fw=Math.min(u*1.0,L*0.9), fd=u*0.64, ft=u*0.07, y1=yt;
-  top.add(rbox(fw,fd,ft,y1,u*0.14,M)); top.add(rbox(fw*0.98,fd*0.98,ft,y1+ft,u*0.14,M));
-  studsAt(rectPts(fw,fd,u*0.07),u*0.022,y1,y1+ft*2,top);
+  var sp=rectPts(fw,fd,u*0.07);
+  top.add(rectFlange(fw,fd,u*0.14,sp,u*0.05,ft,y1,M)); top.add(rectFlange(fw*0.98,fd*0.98,u*0.14,sp,u*0.05,ft,y1+ft,M));
+  studsAt(sp,u*0.022,y1,y1+ft*2,top);
   /* upper bonnet and gland flange */
   var yb=y1+ft*2, yg=u*0.79, gt=u*0.05;
   top.add(solid([[0,yb],[u*0.30,yb],[u*0.25,yg],[0,yg]],M,40));
-  top.add(solid([[0,yg],[u*0.27,yg],[u*0.27,yg+gt],[0,yg+gt]],M,40));
+  top.add(boltPlate(u*0.54,gt,0.0001,u*0.42,4,u*0.042,yg,M));
   ringStuds(4,u*0.21,u*0.21,u*0.018,yg,yg+gt,top);
   /* slotted stem column, threaded stem, handwheel */
-  var yc=yg+gt, yk=u*1.50;
+  var yc=yg+gt, yk=u*1.40;
   [-1,1].forEach(function(s){
     var p=new THREE.Mesh(new THREE.BoxGeometry(u*0.10,yk-yc,u*0.17),M);
     p.position.set(s*u*0.10,(yc+yk)/2,0); top.add(p);
   });
-  top.add(rbox(u*0.32,u*0.19,u*0.05,yk-u*0.05,u*0.03,M));
+  topFlange(u,yk,u*1.57,M,top);
   var Wd=op.W, tw=hwT(Wd), Hs=u*1.9, yw=Hs-tw, yhub=yw-Wd*0.07;
   thread(u*0.045,yc,yhub,MAT.bolt,top);
   top.add(handwheel(Wd,yw));
@@ -1605,8 +1628,8 @@ function globeBody(cl,n,L,e,end,ro,M,top){
   var hx=Math.min(u*0.42,room), az=Math.max(Math.min(u*0.40,room),ro*1.08);
   top.add(oval([[0,-u*0.47],[0.6,-u*0.45],[0.9,-u*0.33],[1,-u*0.12],[0.97,u*0.12],[0.85,u*0.35],[0.72,u*0.55],[0,u*0.55]],hx,az,M));
   var rf=u*0.47, ft=u*0.105, y1=u*0.55;
-  top.add(solid([[0,y1],[rf,y1],[rf,y1+ft],[0,y1+ft]],M,48));
-  top.add(solid([[0,y1+ft],[rf*0.98,y1+ft],[rf*0.98,y1+ft*2],[0,y1+ft*2]],M,48));
+  top.add(boltPlate(rf*2,ft,u*0.05,rf*1.7,8,u*0.05,y1,M));
+  top.add(boltPlate(rf*1.96,ft,u*0.05,rf*1.7,8,u*0.05,y1+ft,M));
   ringStuds(8,rf*0.85,rf*0.85,u*0.022,y1,y1+ft*2,top);
   return y1+ft*2;
 }
@@ -1627,9 +1650,9 @@ function globeYoke(u,y0,Hs,Wd,M,top){
   ringStuds(2,u*0.09,u*0.09,u*0.012,yg,yg+u*0.065,top);
   var st=new THREE.Mesh(new THREE.CylinderGeometry(u*0.035,u*0.035,yh-y0,16),MAT.face);
   st.position.y=(y0+yh)/2; top.add(st);
-  top.add(hex(u*0.14,u*0.06,yh,MAT.ss));
+  topFlange(u,yh,u*1.55,M,top);
   var tw=hwT(Wd), yw=Hs-tw, yhub=yw-Wd*0.07;
-  thread(u*0.045,yh+u*0.06,yhub,MAT.bolt,top);
+  thread(u*0.045,yh,yhub,MAT.bolt,top);
   top.add(handwheel(Wd,yw));
   top.add(hex(u*0.08,tw*1.2,yhub+tw*1.4,MAT.ss));
 }
