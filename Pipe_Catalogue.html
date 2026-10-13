@@ -1,0 +1,1765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SmartWeld Piping Component Catalog</title>
+<style>
+:root{
+  --bg:#0d1117; --panel:#161b22; --edge:#222b36; --edge2:#2f3a47;
+  --ink:#c9d4e0; --dim:#7c8b9c; --hot:#e8532b; --ok:#3fb950; --acc:#4a9eda;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--ink);font-family:var(--mono);font-size:12px;overflow:hidden}
+#wrap{display:flex;height:100%}
+#side{width:262px;flex:0 0 262px;background:var(--panel);border-right:1px solid var(--edge);display:flex;flex-direction:column}
+#brand{padding:12px 14px;border-bottom:1px solid var(--edge)}
+#brand b{display:block;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink)}
+#brand span{display:block;margin-top:3px;color:var(--dim);font-size:10px;letter-spacing:.06em}
+#list{flex:1;overflow-y:auto;padding:6px 0}
+.grp{padding:9px 14px 4px;color:var(--dim);font-size:9.5px;letter-spacing:.16em;text-transform:uppercase}
+.it{display:flex;align-items:baseline;gap:8px;padding:5px 14px;cursor:pointer;border-left:2px solid transparent;color:var(--ink)}
+.it:hover{background:#1c2430}
+.it.on{background:#1f2a38;border-left-color:var(--hot)}
+.it .sk{color:var(--dim);font-size:9.5px;min-width:38px}
+.it .nm{font-size:11px}
+#main{flex:1;position:relative;display:flex;flex-direction:column;min-width:0}
+#bar{display:flex;align-items:center;gap:14px;padding:9px 14px;border-bottom:1px solid var(--edge);background:var(--panel);flex-wrap:wrap}
+#bar .lbl{color:var(--dim);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase}
+.chip{background:#1c2430;border:1px solid var(--edge2);color:var(--ink);padding:3px 8px;border-radius:2px;cursor:pointer;font-family:var(--mono);font-size:11px}
+.chip:hover{border-color:var(--acc)}
+.chip.on{background:var(--hot);border-color:var(--hot);color:#fff}
+.chip:focus-visible{outline:2px solid var(--acc);outline-offset:1px}
+#view{flex:1;position:relative;min-height:0}
+#cv{display:block;width:100%;height:100%}
+#info{display:none;position:absolute;left:14px;bottom:14px;background:rgba(13,17,23,.9);border:1px solid var(--edge2);padding:10px 12px;max-width:min(560px,60%);line-height:1.65}
+#info h4{margin:0 0 6px;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink);font-weight:600}
+#info table{border-collapse:collapse;font-size:11px}
+#info td{padding:1px 12px 1px 0;color:var(--dim);white-space:nowrap}
+#info td.v{color:var(--ink)}
+#src{margin-top:7px;padding-top:6px;border-top:1px solid var(--edge);color:var(--dim);font-size:10px}
+#src b{color:var(--acc);font-weight:400}
+#hint{position:absolute;right:14px;bottom:14px;color:var(--dim);font-size:10px;text-align:right;line-height:1.6}
+#sizes{display:flex;gap:5px;flex-wrap:wrap}
+@media(max-width:820px){#side{width:190px;flex-basis:190px}#info{max-width:75%}}
+</style>
+</head>
+<body>
+<div id="wrap">
+  <div id="side">
+    <div id="brand"><b>Piping Catalog</b><span>parametric solids, ASME dimensions</span></div>
+    <div id="list"></div>
+  </div>
+  <div id="main">
+    <div id="bar">
+      <span class="lbl">Size</span><span id="sizes"></span>
+      <span style="flex:1"></span>
+      <button class="chip" id="bCut">Section cut</button>
+      <button class="chip" id="bWire">Wireframe</button>
+      <button class="chip on" id="bSpin">Rotate</button>
+      <button class="chip" id="bFit">Fit view</button>
+    </div>
+    <div id="view"><canvas id="cv"></canvas>
+      <div id="info"></div>
+      <div id="hint">drag orbit &middot; wheel zoom<br>right-drag pan</div>
+    </div>
+  </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ============================================================
+   DIMENSION TABLES
+   Values in this block are published dimensional data from the
+   ASME B16 and B36.10M standards. The gate, globe, ball and
+   butterfly valves and the weldolet further down are instead
+   measured from supplied vendor 3D CAD models (see the MEASURED
+   VENDOR MODELS section).
+     PIPE   ASME B36.10M   outside diameter, Sch 40 wall
+     FLG    ASME B16.5     Class 150 / 300 raised face
+     B169   ASME B16.9     elbow, tee, reducer, cap
+     B1611  ASME B16.11    socket weld / threaded, Class 3000
+     B1610  ASME B16.10    valve face-to-face
+   ============================================================ */
+var NPS = [0.5,0.75,1,1.25,1.5,2,2.5,3,4,5,6,8,10,12,14,16,18,20,24];
+function nkey(n){return String(n);}
+function fnps(n){var m={0.5:'1/2',0.75:'3/4',1:'1',1.25:'1-1/4',1.5:'1-1/2',2:'2',2.5:'2-1/2',3:'3',4:'4',6:'6',8:'8',10:'10',12:'12',14:'14',16:'16',18:'18',20:'20',24:'24'};return (m[n]||n)+'"';}
+
+/* B36.10M : [outside diameter, Sch 40 nominal wall] */
+var PIPE={0.5:[0.840,0.109],0.75:[1.050,0.113],1:[1.315,0.133],1.25:[1.660,0.140],1.5:[1.900,0.145],
+2:[2.375,0.154],2.5:[2.875,0.203],3:[3.500,0.216],4:[4.500,0.237],5:[5.563,0.258],6:[6.625,0.280],
+8:[8.625,0.322],10:[10.750,0.365],12:[12.750,0.406],14:[14.000,0.437],16:[16.000,0.500],
+18:[18.000,0.562],20:[20.000,0.593],24:[24.000,0.687]};
+function OD(n){return PIPE[n][0];}
+function WALL(n){return PIPE[n][1];}
+function RO(n){return OD(n)/2;}
+function RI(n){return OD(n)/2-WALL(n);}
+
+/* B16.5 raised face flanges
+   [O outside dia, tf thickness, X hub dia at base, Y length thru hub,
+    BC bolt circle, n bolts, hd bolt hole dia, R raised face dia] */
+var FLG={
+150:{0.5:[3.50,0.44,1.19,1.88,2.38,4,0.62,1.38], 0.75:[3.88,0.50,1.50,2.06,2.75,4,0.62,1.69],
+1:[4.25,0.56,1.94,2.19,3.12,4,0.62,2.00], 1.5:[5.00,0.69,2.56,2.44,3.88,4,0.62,2.88],
+2:[6.00,0.75,3.06,2.50,4.75,4,0.75,3.62], 2.5:[7.00,0.88,3.56,2.75,5.50,4,0.75,4.12],
+3:[7.50,0.94,4.25,2.75,6.00,4,0.75,5.00], 4:[9.00,0.94,5.31,3.00,7.50,8,0.75,6.19],
+6:[11.00,1.00,7.56,3.50,9.50,8,0.88,8.50], 8:[13.50,1.12,9.69,4.00,11.75,8,0.88,10.62],
+10:[16.00,1.19,12.00,4.00,14.25,12,1.00,12.75], 12:[19.00,1.25,14.38,4.50,17.00,12,1.00,15.00],
+14:[21.00,1.38,15.75,5.00,18.75,12,1.12,16.25], 16:[23.50,1.44,18.00,5.00,21.25,16,1.12,18.50],
+18:[25.00,1.56,19.88,5.50,22.75,16,1.25,21.00], 20:[27.50,1.69,22.00,5.62,25.00,20,1.25,23.00],
+24:[32.00,1.88,26.12,6.00,29.50,20,1.38,27.25]},
+300:{0.5:[3.75,0.56,1.50,2.06,2.62,4,0.62,1.38], 0.75:[4.62,0.62,1.88,2.25,3.25,4,0.75,1.69],
+1:[4.88,0.69,2.12,2.44,3.50,4,0.75,2.00], 1.5:[6.12,0.81,2.88,2.69,4.50,4,0.88,2.88],
+2:[6.50,0.88,3.62,2.75,5.00,8,0.75,3.62], 2.5:[7.50,1.00,4.12,3.00,5.88,8,0.88,4.12],
+3:[8.25,1.12,5.00,3.12,6.62,8,0.88,5.00], 4:[10.00,1.25,6.19,3.38,7.88,8,0.88,6.19],
+6:[12.50,1.44,8.50,3.88,10.62,12,0.88,8.50], 8:[15.00,1.62,10.62,4.38,13.00,12,1.00,10.62],
+10:[17.50,1.88,12.75,4.62,15.25,16,1.12,12.75], 12:[20.50,2.00,15.00,5.12,17.75,16,1.25,15.00],
+14:[23.00,2.12,16.25,5.62,20.25,20,1.25,16.25], 16:[25.50,2.25,18.50,5.75,22.50,20,1.38,18.50],
+18:[28.00,2.38,21.00,6.25,24.75,24,1.38,21.00], 20:[30.50,2.50,23.00,6.38,27.00,24,1.38,23.00],
+24:[36.00,2.75,27.25,6.62,32.00,24,1.62,27.25]},
+600:{0.5:[3.75,0.56,1.50,2.06,2.62,4,0.62,1.38], 0.75:[4.62,0.62,1.88,2.25,3.25,4,0.75,1.69],
+1:[4.88,0.69,2.12,2.44,3.50,4,0.75,2.00], 1.5:[6.12,0.88,2.88,2.69,4.50,4,0.88,2.88],
+2:[6.50,1.00,3.62,2.75,5.00,8,0.75,3.62], 2.5:[7.50,1.12,4.12,3.00,5.88,8,0.88,4.12],
+3:[8.25,1.25,5.00,3.12,6.62,8,0.88,5.00], 4:[10.75,1.50,6.19,4.00,8.50,8,1.00,6.19],
+6:[14.00,1.88,8.50,4.62,11.50,12,1.12,8.50], 8:[16.50,2.19,10.62,5.25,13.75,12,1.25,10.62],
+10:[20.00,2.50,12.75,6.00,17.00,16,1.38,12.75], 12:[22.00,2.62,15.00,6.12,19.25,20,1.38,15.00],
+14:[23.75,2.75,16.25,6.50,20.75,20,1.50,16.25], 16:[27.00,3.00,18.50,7.00,23.75,20,1.62,18.50],
+18:[29.25,3.25,21.00,7.25,25.75,20,1.75,21.00], 20:[32.00,3.50,23.00,7.50,28.50,24,1.75,23.00],
+24:[37.00,4.00,27.25,8.00,33.00,24,2.00,27.25]}};
+/* Class 150 and 300 carry a 1/16" raised face included in the tabulated
+   thickness and length; Class 600 carries 1/4" added to them. */
+var RFH=0.0625;
+function rfh(cl){return cl>=400?0.25:0.0625;}
+function rfInc(cl){return cl<400;}
+function flgT(cl,n){var f=FLG[cl][n];return rfInc(cl)?f[1]:f[1]+rfh(cl);}
+function flgY(cl,n){var f=FLG[cl][n];return rfInc(cl)?f[3]:f[3]+rfh(cl);}
+function flg(cl,n){return FLG[cl][n];}
+
+/* B16.9 butt weld fittings */
+function ELL90(n){return 1.5*n;}                    /* centre to face, long radius */
+var ELL45={0.5:0.31,0.75:0.44,1:0.62,1.5:0.94,2:1.25,2.5:1.56,3:2.00,4:2.50,6:3.75,
+8:5.00,10:6.25,12:7.50,14:8.75,16:10.00,18:11.25,20:12.50,24:15.00};   /* centre to face */
+var TEE_C={0.5:1.00,0.75:1.12,1:1.50,1.5:1.88,2:2.50,2.5:2.75,3:3.38,4:4.12,6:5.62,
+8:7.00,10:8.50,12:10.00,14:11.00,16:12.00,18:13.50,20:15.00,24:17.00}; /* centre to end, run */
+var RED_H={0.75:1.50,1:2.00,1.5:2.50,2:3.00,2.5:3.50,3:3.50,4:4.00,6:5.50,8:6.00,
+10:7.00,12:8.00,14:13.00,16:14.00,18:15.00,20:20.00,24:20.00};         /* length, by larger end */
+var CAP_E={0.5:1.00,0.75:1.00,1:1.50,1.5:1.50,2:1.50,2.5:1.50,3:2.50,4:2.50,6:3.50,
+8:4.00,10:5.00,12:6.00,14:6.50,16:7.00,18:8.00,20:9.00,24:10.50};      /* overall length */
+
+/* B16.11 Class 3000 socket weld, from the 2009 table (converted mm to inch)
+   A  centre to bottom of socket, 90 elbow / tee / cross
+   A45 centre to bottom of socket, 45 elbow
+   B  socket bore diameter        D  fitting through bore
+   C  socket wall thickness       G  body wall thickness
+   J  socket depth, minimum */
+var SW3000={
+0.5:{A:0.610,A45:0.433,B:0.858,D:0.622,C:0.184,G:0.147,J:0.374},
+0.75:{A:0.748,A45:0.512,B:1.071,D:0.827,C:0.193,G:0.154,J:0.492},
+1:{A:0.886,A45:0.551,B:1.335,D:1.051,C:0.224,G:0.179,J:0.492},
+1.25:{A:1.063,A45:0.689,B:1.681,D:1.382,C:0.239,G:0.191,J:0.492},
+1.5:{A:1.260,A45:0.807,B:1.921,D:1.610,C:0.250,G:0.200,J:0.492},
+2:{A:1.496,A45:1.004,B:2.409,D:2.067,C:0.273,G:0.218,J:0.630}};
+function swBandR(n){var d=SW3000[n];return d.B/2+d.C;}   /* socket band outside radius */
+function swBodyR(n){var d=SW3000[n];return d.D/2+d.G;}   /* body outside radius */
+
+/* Fallback operator envelope where a catalogue gives no H or W. */
+function wheelDia(n,cl){var d=(cl>=300?5.36*Math.pow(n,0.711):6.25*Math.pow(n,0.576));return Math.round(d*4)/4;}
+function stemH(n,cl){var h=(cl>=300?9.60*Math.pow(n,0.730):9.80*Math.pow(n,0.700));return Math.round(h*4)/4;}
+function leverL(n){return Math.round(4.60*Math.pow(n,0.45)*4)/4;}
+
+/* B16.5 length through hub, slip-on and socket weld pattern */
+var SO_Y={
+150:{0.5:0.62,0.75:0.62,1:0.69,1.5:0.81,2:1.00,2.5:1.12,3:1.19,4:1.31,6:1.56,
+8:1.75,10:1.94,12:2.19,14:2.25,16:2.50,18:2.69,20:2.88,24:3.25},
+300:{0.5:0.88,0.75:1.00,1:1.06,1.5:1.19,2:1.31,2.5:1.50,3:1.69,4:1.88,6:2.06,
+8:2.44,10:2.62,12:2.88,14:3.00,16:3.25,18:3.50,20:3.75,24:4.19}};
+
+/* ============================================================
+   VALVE DIMENSIONS
+   Face to face and end to end are ASME B16.10 as published in the
+   manufacturer catalogues below; bore, open height and handwheel
+   diameter are manufacturer standard and vary between makers.
+     gate / globe          COTESO Series 30 (API 6D) and 38 (BS 1873)
+     swing check           COTESO Series 48 / 53 (API 6D)
+     high performance bfly COTESO Series 85 / 88 / 98 (API 609)
+     forged Class 800      Neway E-FSV forged steel, API 602
+     forged ball Class 800 COTESO Series 60
+   Entry format [L, d, H, W]: L end to end, d port bore,
+   H centre to top with the valve open, W handwheel or lever.
+   ============================================================ */
+var VLV={};
+VLV.gate={
+150:{0.5:[4.25,0.39,6.18,3.94],0.75:[4.61,0.48,6.18,3.94],1:[5.00,0.71,7.28,4.72],
+ 1.5:[6.50,1.14,9.49,6.30],2:[7.01,2.01,15.00,8.00],2.5:[7.52,2.44,null,null],
+ 3:[7.99,2.91,21.75,11.75],4:[9.02,3.94,27.00,11.75],6:[10.51,5.91,33.25,15.75],
+ 8:[11.50,7.91,42.00,19.50],10:[12.99,9.92,49.75,23.50],12:[14.02,11.93,null,null],
+ 14:[15.00,13.15,null,null],16:[15.98,15.16,null,null],18:[17.01,17.17,null,null],
+ 20:[17.99,19.17,null,null],24:[20.00,23.19,null,null]},
+300:{0.5:[5.51,0.39,6.18,3.94],0.75:[5.98,0.48,6.18,3.94],1:[6.50,0.71,7.28,4.72],
+ 1.5:[7.48,1.14,9.49,6.30],2:[8.50,1.93,10.75,8.66],2.5:[9.49,2.44,null,null],
+ 3:[11.14,2.91,21.50,11.75],4:[12.01,3.94,27.00,15.75],6:[15.87,5.91,36.00,19.50],
+ 8:[16.50,7.91,43.00,23.50],10:[17.99,9.92,49.00,23.50],12:[19.76,11.93,59.25,31.50],
+ 14:[30.00,13.15,null,null],16:[33.00,15.16,null,null],18:[35.98,17.17,null,null],
+ 20:[39.02,19.17,null,null],24:[45.00,23.19,null,null]},
+600:{2:[11.50,1.93,null,null],2.5:[12.99,2.44,null,null],3:[14.02,2.91,null,null],
+ 4:[17.01,3.94,null,null],6:[22.01,5.91,null,null],8:[25.98,7.91,null,null],
+ 10:[30.98,9.92,null,null],12:[33.00,11.93,null,null],14:[35.00,13.15,null,null],
+ 16:[39.02,15.16,null,null],18:[42.99,17.17,null,null],20:[47.01,19.17,null,null],
+ 24:[55.00,23.19,null,null]},
+800:{0.5:[3.11,0.51,6.18,3.94],0.75:[3.62,0.51,6.18,3.94],1:[4.37,0.71,7.28,4.72],
+ 1.25:[4.72,0.94,8.90,6.30],1.5:[4.72,1.14,9.49,6.30],2:[5.51,1.44,10.75,8.66]}};
+VLV.globe={
+150:{0.5:[4.25,0.37,6.57,3.94],0.75:[4.61,0.51,6.57,3.94],1:[5.00,0.69,7.72,4.72],
+ 1.5:[6.50,1.12,9.92,6.30],2:[7.99,2.01,12.99,7.87],2.5:[8.50,2.52,14.17,9.84],
+ 3:[9.49,2.99,15.35,11.02],4:[11.50,4.02,17.52,11.81],6:[15.98,5.98,20.47,13.78],
+ 8:[19.49,7.99,23.62,15.75],10:[24.49,10.00,30.43,17.72],12:[27.48,12.01,null,null],
+ 14:[30.98,13.27,null,null],16:[35.98,15.24,null,null]},
+300:{0.5:[5.98,0.37,6.57,3.94],0.75:[7.01,0.51,6.57,3.94],1:[7.99,0.69,7.72,4.72],
+ 1.5:[9.02,1.12,9.92,6.30],2:[10.51,2.01,11.10,8.66],2.5:[11.50,2.52,null,null],
+ 3:[12.52,2.99,20.25,11.75],4:[14.02,4.02,23.50,15.75],6:[17.48,5.98,27.75,23.50],
+ 8:[22.01,7.99,31.50,31.50],10:[24.49,10.00,37.00,31.50],12:[27.99,12.01,41.00,31.50]},
+600:{2:[11.50,2.01,null,null],2.5:[12.99,2.52,null,null],3:[14.02,2.99,null,null],
+ 4:[17.01,4.02,null,null],6:[22.01,5.98,null,null],8:[25.98,7.87,null,null]},
+800:{0.5:[3.11,0.37,6.57,3.94],0.75:[3.62,0.51,6.57,3.94],1:[4.37,0.69,7.72,4.72],
+ 1.25:[4.72,0.93,9.29,6.30],1.5:[5.98,1.12,9.92,6.30],2:[6.77,1.44,11.10,8.66]}};
+/* swing check: no operator, H is centre to top of the bolted cover */
+VLV.check={
+150:{0.5:[4.25,0.37,1.97,0],0.75:[4.61,0.50,2.13,0],1:[5.00,0.69,2.68,0],
+ 1.5:[6.50,1.13,3.07,0],2:[7.99,1.93,5.20,0],2.5:[8.50,2.44,5.79,0],3:[9.49,2.91,6.93,0],
+ 4:[11.50,3.94,7.80,0],6:[14.02,5.91,12.60,0],8:[19.49,7.91,14.96,0],10:[24.49,9.92,17.32,0],
+ 12:[27.52,11.93,18.90,0],14:[30.98,13.15,20.87,0],16:[34.02,15.16,22.83,0],
+ 18:[38.50,17.17,24.33,0],20:[38.50,19.17,25.87,0],24:[50.98,23.19,29.92,0]},
+300:{0.5:[5.98,0.37,1.97,0],0.75:[7.01,0.50,2.13,0],1:[8.50,0.69,2.68,0],
+ 1.5:[9.49,1.13,3.07,0],2:[10.51,1.93,5.67,0],2.5:[11.50,2.44,6.65,0],3:[12.52,2.91,8.27,0],
+ 4:[14.02,3.94,10.24,0],6:[17.52,5.91,12.83,0],8:[20.98,7.91,14.96,0],10:[24.49,9.92,17.32,0],
+ 12:[27.99,11.93,20.47,0],14:[33.00,13.15,21.26,0],16:[34.02,15.16,23.15,0],
+ 18:[38.50,17.17,26.38,0],20:[40.00,19.17,28.35,0],24:[53.00,23.19,33.46,0]},
+600:{2:[11.50,1.93,6.69,0],3:[14.02,2.91,9.69,0],4:[17.01,3.94,11.42,0],6:[22.01,5.91,14.17,0],
+ 8:[25.98,7.91,16.93,0],10:[30.98,9.92,19.76,0],12:[33.00,11.93,21.81,0]},
+800:{0.5:[2.99,0.37,1.91,0],0.75:[3.39,0.50,2.05,0],1:[4.02,0.69,2.64,0],
+ 1.25:[4.65,0.94,3.46,0],1.5:[4.65,1.13,3.46,0],2:[5.20,1.44,3.98,0]}};
+/* forged floating ball, threaded or socket weld: [L, d, body dia, H, lever] */
+VLV.ball800={0.5:[2.83,0.55,1.26,2.36,4.92],0.75:[3.39,0.75,1.46,2.87,5.51],
+ 1:[3.94,0.98,1.81,2.95,5.91],1.25:[4.72,1.26,2.20,3.15,7.09],
+ 1.5:[5.12,1.50,2.52,4.92,9.84],2:[5.51,2.01,3.39,6.38,13.78]};
+/* high performance butterfly: [L body, H1 gear overall height, Do1 gear handwheel] */
+VLV.bfly={
+150:{3:[1.93,12.60,6.30],4:[2.13,13.46,6.30],6:[2.24,16.34,11.81],8:[2.52,20.08,15.75],
+ 10:[2.80,22.32,15.75],12:[3.19,26.18,23.62],14:[3.62,29.09,23.62],16:[4.02,32.48,23.62],
+ 18:[4.49,35.83,31.50],20:[5.00,38.98,31.50],24:[6.06,47.64,31.50]},
+300:{3:[1.93,12.60,6.30],4:[2.13,13.46,6.30],6:[2.32,16.34,11.81],8:[2.87,20.08,15.75],
+ 10:[3.27,22.32,15.75],12:[3.62,26.18,23.62],14:[4.61,29.09,23.62],16:[5.24,32.48,23.62],
+ 18:[5.87,35.83,31.50],20:[6.26,38.98,31.50],24:[7.13,47.64,31.50]},
+600:{6:[3.07,16.34,11.81],8:[4.02,20.08,15.75],10:[4.61,22.32,15.75],12:[5.51,26.18,23.62],
+ 14:[6.10,29.09,23.62],16:[7.01,32.48,23.62],18:[7.87,35.83,31.50],20:[8.50,38.98,31.50],
+ 24:[9.13,47.64,31.50]}};
+/* lever operated wafer butterfly, 2 to 6 inch: [neck height, lever length] */
+var BFLY_LEV={2:[2.25,9.25],2.5:[2.25,9.25],3:[2.25,9.25],4:[2.75,10.43],6:[2.75,10.43]};
+function vlv(kind,cl,n){var t=VLV[kind]&&VLV[kind][cl];return t?t[n]:null;}
+/* ---------- materials ---------- */
+var MAT={};
+function initMat(){
+  MAT.steel = new THREE.MeshStandardMaterial({color:0x8d97a3,metalness:.72,roughness:.42,side:THREE.DoubleSide});
+  MAT.face  = new THREE.MeshStandardMaterial({color:0xc2cad4,metalness:.85,roughness:.20,side:THREE.DoubleSide});
+  MAT.bolt  = new THREE.MeshStandardMaterial({color:0x5f6874,metalness:.80,roughness:.38,side:THREE.DoubleSide});
+  MAT.trim  = new THREE.MeshStandardMaterial({color:0xa8843c,metalness:.85,roughness:.32,side:THREE.DoubleSide});
+  MAT.op    = new THREE.MeshStandardMaterial({color:0x9c3b2a,metalness:.45,roughness:.55,side:THREE.DoubleSide});
+  MAT.ctx   = new THREE.MeshStandardMaterial({color:0x39424e,metalness:.35,roughness:.75,side:THREE.DoubleSide,transparent:true,opacity:.55});
+  MAT.blue  = new THREE.MeshStandardMaterial({color:0x2456a8,metalness:.35,roughness:.48,side:THREE.DoubleSide});
+  MAT.pvc   = new THREE.MeshStandardMaterial({color:0x474d55,metalness:.05,roughness:.62,side:THREE.DoubleSide});
+  MAT.pvcL  = new THREE.MeshStandardMaterial({color:0x767f89,metalness:.05,roughness:.55,side:THREE.DoubleSide});
+  MAT.epdm  = new THREE.MeshStandardMaterial({color:0x1c1e22,metalness:.02,roughness:.92,side:THREE.DoubleSide});
+  MAT.blk   = new THREE.MeshStandardMaterial({color:0x24262a,metalness:.15,roughness:.70,side:THREE.DoubleSide});
+  for(var k in MAT) MAT[k].clippingPlanes=[];
+}
+var SEG=64;
+
+/* Revolve a closed profile of [radius, y] pairs about the Y axis. */
+function solid(pts,mat,seg){
+  var v=[],i;
+  for(i=0;i<pts.length;i++) v.push(new THREE.Vector2(Math.max(pts[i][0],1e-4),pts[i][1]));
+  if(v[0].x!==v[v.length-1].x||v[0].y!==v[v.length-1].y) v.push(v[0].clone());
+  return new THREE.Mesh(new THREE.LatheGeometry(v,seg||SEG),mat||MAT.steel);
+}
+/* Straight hollow run: bore ri, outside ro, from y0 to y1. */
+function tube(ri,ro,y0,y1,mat){
+  return solid([[ri,y0],[ro,y0],[ro,y1],[ri,y1]],mat||MAT.steel);
+}
+/* Bend: circular arc of centreline radius R through ang radians,
+   swept in the XY plane starting on +X, hollow wall ri..ro. */
+function bend(R,ri,ro,ang,mat,noCaps){
+  var g=new THREE.Group();
+  var o=new THREE.Mesh(new THREE.TorusGeometry(R,ro,28,72,ang),mat||MAT.steel);
+  var n=new THREE.Mesh(new THREE.TorusGeometry(R,ri,28,72,ang),mat||MAT.steel);
+  g.add(o);g.add(n);
+  if(!noCaps)[0,ang].forEach(function(a){
+    var r=new THREE.Mesh(new THREE.RingGeometry(ri,ro,SEG),mat||MAT.steel);
+    r.position.set(R*Math.cos(a),R*Math.sin(a),0);
+    r.lookAt(new THREE.Vector3(R*Math.cos(a)-Math.sin(a),R*Math.sin(a)+Math.cos(a),0));
+    g.add(r);
+  });
+  return g;
+}
+/* Flange plate carrying real bolt holes, extruded along Y. */
+function boltPlate(O,tf,bore,bc,nb,hd,y,mat){ /* extrudes +Y from y */
+  var sh=new THREE.Shape();
+  sh.absarc(0,0,O/2,0,Math.PI*2,false);
+  var h=new THREE.Path(); h.absarc(0,0,Math.max(bore,1e-3),0,Math.PI*2,true); sh.holes.push(h);
+  for(var i=0;i<nb;i++){
+    var a=(i+0.5)*Math.PI*2/nb, p=new THREE.Path();
+    p.absarc(Math.cos(a)*bc/2,Math.sin(a)*bc/2,hd/2,0,Math.PI*2,true); sh.holes.push(p);
+  }
+  var m=new THREE.Mesh(new THREE.ExtrudeGeometry(sh,{depth:tf,bevelEnabled:false,curveSegments:48}),mat||MAT.steel);
+  m.rotation.x=-Math.PI/2; m.position.y=y;
+  return m;
+}
+/* Studs through the bolt circle. */
+function studs(bc,nb,hd,y0,y1){
+  var g=new THREE.Group();
+  for(var i=0;i<nb;i++){
+    var a=(i+0.5)*Math.PI*2/nb;
+    var s=new THREE.Mesh(new THREE.CylinderGeometry(hd/2*0.82,hd/2*0.82,y1-y0,14),MAT.bolt);
+    s.position.set(Math.cos(a)*bc/2,(y0+y1)/2,Math.sin(a)*bc/2); g.add(s);
+    [y0,y1].forEach(function(yy){
+      var nut=new THREE.Mesh(new THREE.CylinderGeometry(hd*0.62,hd*0.62,hd*0.55,6),MAT.bolt);
+      nut.position.set(Math.cos(a)*bc/2,yy+(yy===y0?-1:1)*hd*0.28,Math.sin(a)*bc/2); g.add(nut);
+    });
+  }
+  return g;
+}
+/* Raised-face flange on the end of a run, gasket face at yf, growing
+   in direction dir. Uses the class raised-face convention. */
+function rfFlange(cl,n,yf,dir,bore){
+  var f=flg(cl,n),O=f[0],X=f[2],bc=f[4],nb=f[5],hd=f[6],rf=f[7];
+  var rh=rfh(cl), tf=flgT(cl,n), Y=flgY(cl,n);
+  var g=new THREE.Group(), ri=(bore!=null?bore/2:RI(n)), ro=RO(n);
+  var y=function(t){return yf+dir*t;};
+  g.add(solid([[ri,y(0)],[rf/2,y(0)],[rf/2,y(rh)],[ri,y(rh)]],MAT.face));
+  var pl=boltPlate(O,tf-rh,ri,bc,nb,hd,0,MAT.steel);
+  pl.rotation.x=(dir>0)?-Math.PI/2:Math.PI/2;
+  pl.position.y=y(rh); g.add(pl);
+  var yh=Math.max(Y,tf+0.35);
+  g.add(solid([[ri,y(tf)],[X/2,y(tf)],[X/2,y(tf+0.12)],[ro,y(yh)],[ri,y(yh)]],MAT.steel));
+  return {g:g,Y:yh,O:O,tf:tf,bc:bc,nb:nb,hd:hd,rf:rf,X:X};
+}
+/* Hex prism about Y. */
+function hex(across,h,y,mat){
+  var m=new THREE.Mesh(new THREE.CylinderGeometry(across/2/Math.cos(Math.PI/6),across/2/Math.cos(Math.PI/6),h,6),mat||MAT.steel);
+  m.position.y=y+h/2; m.rotation.y=Math.PI/6; return m;
+}
+/* Handwheel: rim, spokes, hub. */
+function handwheel(dia,y){
+  var g=new THREE.Group(), R=dia/2, t=Math.max(dia*0.045,0.18);
+  var rim=new THREE.Mesh(new THREE.TorusGeometry(R-t,t,12,48),MAT.op);
+  rim.rotation.x=Math.PI/2; rim.position.y=y; g.add(rim);
+  var hub=new THREE.Mesh(new THREE.CylinderGeometry(R*0.16,R*0.16,t*2.4,20),MAT.op);
+  hub.position.y=y; g.add(hub);
+  for(var i=0;i<5;i++){
+    var a=i*Math.PI*2/5;
+    var sp=new THREE.Mesh(new THREE.CylinderGeometry(t*0.5,t*0.5,R-t,10),MAT.op);
+    sp.position.set(Math.cos(a)*(R-t)/2,y,Math.sin(a)*(R-t)/2);
+    sp.rotation.z=Math.PI/2; sp.rotation.y=-a; g.add(sp);
+  }
+  return g;
+}
+/* Lever handle lying in the XZ plane. */
+function lever(len,y){
+  var g=new THREE.Group(), t=Math.max(len*0.05,0.22);
+  var b=new THREE.Mesh(new THREE.CylinderGeometry(t,t,len,14),MAT.op);
+  b.rotation.x=Math.PI/2; b.position.set(0,y,len/2); g.add(b);
+  var k=new THREE.Mesh(new THREE.SphereGeometry(t*1.7,18,14),MAT.op);
+  k.position.set(0,y,len); g.add(k);
+  var boss=new THREE.Mesh(new THREE.CylinderGeometry(t*2.0,t*2.0,t*2.2,18),MAT.op);
+  boss.position.y=y; g.add(boss);
+  return g;
+}
+/* Yoke: two legs from bonnet up to a top plate. */
+function yoke(w,y0,y1,th){
+  var g=new THREE.Group();
+  [-1,1].forEach(function(s){
+    var L=new THREE.Mesh(new THREE.BoxGeometry(th,y1-y0,th*1.6),MAT.steel);
+    L.position.set(s*w/2,(y0+y1)/2,0); g.add(L);
+  });
+  var top=new THREE.Mesh(new THREE.CylinderGeometry(w*0.36,w*0.36,th*1.3,24),MAT.steel);
+  top.position.y=y1; g.add(top);
+  return g;
+}
+
+/* ---------- true cylinder-cylinder tee ----------
+   Run along X (outer Ro, bore Ri, half length C).
+   Branch along +Y (outer rb, bore rbi, centre to end M).
+   The run surfaces are cut at the saddle curve where the branch
+   meets them; the exposed wall ring is closed with a collar. */
+function teeMesh(Ro,Ri,C,rb,rbi,M,noCaps){
+  var g=new THREE.Group(), NT=96, NX=72;
+  function mesh(P,F){var geo=new THREE.BufferGeometry();
+    geo.setAttribute('position',new THREE.Float32BufferAttribute(P,3));
+    geo.setIndex(F); geo.computeVertexNormals();
+    return new THREE.Mesh(geo,MAT.steel);}
+  /* run cylinder of radius R with a hole of radius holeR on top */
+  function runSurf(R,holeR){
+    var P=[],F=[],i,j;
+    for(i=0;i<=NX;i++)for(j=0;j<=NT;j++){
+      var x=-C+2*C*i/NX, th=j/NT*Math.PI*2, y=R*Math.cos(th), z=R*Math.sin(th);
+      if(y>0 && x*x+z*z<holeR*holeR){
+        var rr=Math.sqrt(x*x+z*z)||1e-6, s=holeR/rr;
+        x*=s; z=Math.max(-R+1e-4,Math.min(R-1e-4,z*s));
+        y=Math.sqrt(Math.max(R*R-z*z,0));
+      }
+      P.push(x,y,z);
+    }
+    function ins(i2,j2){var x=-C+2*C*i2/NX,th=j2/NT*Math.PI*2,y=R*Math.cos(th),z=R*Math.sin(th);
+      return y>0&&x*x+z*z<holeR*holeR;}
+    for(i=0;i<NX;i++)for(j=0;j<NT;j++){
+      if(ins(i,j)&&ins(i+1,j)&&ins(i,j+1)&&ins(i+1,j+1)) continue;
+      var a=i*(NT+1)+j,b=(i+1)*(NT+1)+j,c=(i+1)*(NT+1)+j+1,d=i*(NT+1)+j+1;
+      F.push(a,b,c,a,c,d);
+    }
+    return mesh(P,F);
+  }
+  g.add(runSurf(Ro,rb)); g.add(runSurf(Ri,rbi));
+  /* branch tubes rise from their saddle curves */
+  function saddle(r,R,ph){var z=r*Math.sin(ph);return Math.sqrt(Math.max(R*R-z*z,0));}
+  function branch(r,R){
+    var P=[],F=[],j;
+    for(j=0;j<=NT;j++){var ph=j/NT*Math.PI*2,x=r*Math.cos(ph),z=r*Math.sin(ph);
+      P.push(x,saddle(r,R,ph),z); P.push(x,M,z);}
+    for(j=0;j<NT;j++){var a=2*j,b=2*j+1,c=2*j+3,d=2*j+2;F.push(a,b,c,a,c,d);}
+    return mesh(P,F);
+  }
+  g.add(branch(rb,Ro)); g.add(branch(rbi,Ri));
+  /* collar closing the cut wall of the run around the hole */
+  (function(){var P=[],F=[],j;
+    for(j=0;j<=NT;j++){var ph=j/NT*Math.PI*2;
+      P.push(rb*Math.cos(ph),saddle(rb,Ro,ph),rb*Math.sin(ph));
+      P.push(rbi*Math.cos(ph),saddle(rbi,Ri,ph),rbi*Math.sin(ph));}
+    for(j=0;j<NT;j++){var a=2*j,b=2*j+1,c=2*j+3,d=2*j+2;F.push(a,b,c,a,c,d);}
+    g.add(mesh(P,F));})();
+  /* end faces */
+  if(!noCaps)[-C,C].forEach(function(x){
+    var r=new THREE.Mesh(new THREE.RingGeometry(Ri,Ro,SEG),MAT.steel);
+    r.rotation.y=Math.PI/2; r.position.x=x; g.add(r);
+  });
+  if(!noCaps){
+    var top=new THREE.Mesh(new THREE.RingGeometry(rbi,rb,SEG),MAT.steel);
+    top.rotation.x=-Math.PI/2; top.position.y=M; g.add(top);
+  }
+  return g;
+}
+
+/* Socket end band: raised collar with an open counterbore.
+   Face at y=0, body toward +Y. B2 band radius, RO socket bore radius,
+   RI through bore radius, J socket depth, bl band length. */
+function socketBand(B2,RO,RI,J,bl){
+  return solid([[RI,bl],[B2,bl],[B2,0],[RO,0],[RO,J],[RI,J]]);
+}
+/* ============================================================
+   GENERATORS.  Each returns {g, dims, std}.  Local build axis is Y.
+   ============================================================ */
+function G(){return new THREE.Group();}
+function fx(v,d){return (Math.round(v*(d||100))/(d||100)).toFixed(d===1000?3:2);}
+
+function genPipe(n){
+  var L=Math.max(OD(n)*4,10), g=G();
+  g.add(tube(RI(n),RO(n),-L/2,L/2));
+  return {g:g,std:'ASME B36.10M',dims:[['Outside diameter',fx(OD(n))+'"'],['Wall, Sch 40',fx(WALL(n),1000)+'"'],['Bore',fx(RI(n)*2)+'"'],['Length shown',fx(L)+'"']]};
+}
+function genElbow(n,deg){
+  var A=(deg===90)?ELL90(n):ELL45[n], th=deg*Math.PI/180;
+  var R=A/Math.tan(th/2), g=G();
+  var b=bend(R,RI(n),RO(n),th); b.position.x=-R; g.add(b);
+  return {g:g,std:'ASME B16.9',dims:[['Nominal size',fnps(n)],['Centre to face',fx(A)+'"'],
+    ['Bend radius',fx(R,1000)+'"'],['Outside diameter',fx(OD(n))+'"'],['Angle',deg+'\u00b0']]};
+}
+function genElbowSW(n,deg){
+  var d=SW3000[n]; if(!d) return null;
+  deg=deg||90;
+  var A=(deg===90)?d.A:d.A45, th=deg*Math.PI/180, R=A/Math.tan(th/2);
+  var g=G(), core=swBodyR(n), band=swBandR(n), J=d.J, bl=J*1.45, ri=d.D/2, rs=d.B/2;
+  var b=bend(R,ri,core,th); b.position.x=-R; g.add(b);
+  /* sockets extend beyond the socket bottom planes by J */
+  var s1=socketBand(band,rs,ri,J,bl); s1.position.y=-J-0.002; g.add(s1);
+  var s2=socketBand(band,rs,ri,J,bl);
+  var px=R*Math.cos(th)-R, py=R*Math.sin(th);
+  var ux=-Math.sin(th), uy=Math.cos(th);       /* outboard tangent at the far end */
+  s2.position.set(px+ux*(J+0.002),py+uy*(J+0.002),0);
+  s2.rotation.z=Math.atan2(uy,ux)+Math.PI/2;
+  g.add(s2);
+  return {g:g,std:'ASME B16.11, Class 3000',dims:[['Nominal size',fnps(n)],
+    ['Centre to socket bottom',fx(A,1000)+'"'],['Centre to end',fx(A+J,1000)+'"'],
+    ['Socket bore',fx(d.B,1000)+'"'],['Socket depth',fx(J,1000)+'"'],
+    ['Band diameter',fx(swBandR(n)*2,1000)+'"'],['Through bore',fx(d.D,1000)+'"'],['Angle',deg+'\u00b0']]};
+}
+function genTee(n,nb){
+  nb=nb||n; var C=TEE_C[n], M=TEE_C[n], g=G();
+  g.add(teeMesh(RO(n),RI(n),C,RO(nb),RI(nb),M));
+  var d=[['Run size',fnps(n)],['Branch size',fnps(nb)],['Centre to end, run',fx(C)+'"'],
+         ['Centre to end, branch',fx(M)+'"'],['Run outside diameter',fx(OD(n))+'"'],
+         ['Branch outside diameter',fx(OD(nb))+'"']];
+  return {g:g,std:'ASME B16.9',dims:d};
+}
+function genTeeSW(n){
+  var d=SW3000[n]; if(!d) return null;
+  var A=d.A,g=G(),core=swBodyR(n),band=swBandR(n),J=d.J,bl=J*1.45,ri=d.D/2,rs=d.B/2;
+  g.add(teeMesh(core,ri,A,core*0.999,ri,A,true));
+  var e1=socketBand(band,rs,ri,J,bl); e1.rotation.z=Math.PI/2;  e1.position.x=A+J;  g.add(e1);
+  var e2=socketBand(band,rs,ri,J,bl); e2.rotation.z=-Math.PI/2; e2.position.x=-A-J; g.add(e2);
+  var e3=socketBand(band,rs,ri,J,bl); e3.rotation.x=Math.PI;    e3.position.y=A+J;  g.add(e3);
+  return {g:g,std:'ASME B16.11, Class 3000',dims:[['Nominal size',fnps(n)],
+    ['Centre to socket bottom',fx(A,1000)+'"'],['Centre to end',fx(A+J,1000)+'"'],
+    ['Socket bore',fx(d.B,1000)+'"'],['Socket depth',fx(J,1000)+'"'],
+    ['Band diameter',fx(swBandR(n)*2,1000)+'"'],['Through bore',fx(d.D,1000)+'"']]};
+}
+function genReducer(n1,n2,ecc){
+  var big=Math.max(n1,n2),sml=Math.min(n1,n2),H=RED_H[big],g=G();
+  var R1=RO(big),r1=RI(big),R2=RO(sml),r2=RI(sml),t1=0.5,t2=0.5;
+  if(!ecc){
+    g.add(solid([[r1,0],[R1,0],[R1,t1],[R2,H-t2],[R2,H],[r2,H],[r2,H-t2],[r1,t1]]));
+  }else{
+    var off=R1-R2, pos=[],idx=[],ring=48,i,k;
+    var lev=[[R1,r1,0,0],[R1,r1,t1,0],[R2,r2,H-t2,off],[R2,r2,H,off]];
+    for(k=0;k<lev.length;k++)for(i=0;i<=ring;i++){var a=i/ring*Math.PI*2;
+      pos.push(Math.cos(a)*lev[k][0],lev[k][2],Math.sin(a)*lev[k][0]+0);}
+    for(k=0;k<lev.length;k++)for(i=0;i<=ring;i++){var a2=i/ring*Math.PI*2;
+      pos.push(Math.cos(a2)*lev[k][1],lev[k][2],Math.sin(a2)*lev[k][1]);}
+    var geo=new THREE.BufferGeometry();
+    var P=[],N=lev.length,S=ring+1;
+    for(k=0;k<N;k++)for(i=0;i<S;i++){var a3=i/ring*Math.PI*2;P.push(Math.cos(a3)*lev[k][0],lev[k][2],Math.sin(a3)*lev[k][0]+lev[k][3]);}
+    for(k=0;k<N;k++)for(i=0;i<S;i++){var a4=i/ring*Math.PI*2;P.push(Math.cos(a4)*lev[k][1],lev[k][2],Math.sin(a4)*lev[k][1]+lev[k][3]);}
+    var F=[];
+    function quad(a,b,c,d){F.push(a,b,c,a,c,d);}
+    for(k=0;k<N-1;k++)for(i=0;i<ring;i++){quad(k*S+i,k*S+i+1,(k+1)*S+i+1,(k+1)*S+i);}
+    var o=N*S;
+    for(k=0;k<N-1;k++)for(i=0;i<ring;i++){quad(o+(k+1)*S+i,o+(k+1)*S+i+1,o+k*S+i+1,o+k*S+i);}
+    for(i=0;i<ring;i++){quad(0+i,o+i,o+i+1,0+i+1);}
+    var lb=(N-1)*S;
+    for(i=0;i<ring;i++){quad(lb+i+1,o+lb+i+1,o+lb+i,lb+i);}
+    geo.setAttribute('position',new THREE.Float32BufferAttribute(P,3));
+    geo.setIndex(F); geo.computeVertexNormals();
+    g.add(new THREE.Mesh(geo,MAT.steel));
+  }
+  return {g:g,std:'ASME B16.9',dims:[['Large end',fnps(big)],['Small end',fnps(sml)],
+    ['Length',fx(H)+'"'],['Large OD',fx(OD(big))+'"'],['Small OD',fx(OD(sml))+'"'],
+    ['Type',ecc?'Eccentric, flat side':'Concentric']]};
+}
+function genCap(n){
+  var E=CAP_E[n],ro=RO(n),ri=RI(n),t=WALL(n),g=G(),p=[],i,st=Math.min(E*0.28,0.6),N=14;
+  p.push([ri,0],[ro,0],[ro,st]);
+  for(i=1;i<=N;i++){var a=i/N*Math.PI/2; p.push([ro*Math.cos(a),st+(E-st)*Math.sin(a)]);}
+  for(i=N;i>=1;i--){var b=i/N*Math.PI/2; p.push([(ro-t)*Math.cos(b),st+(E-st-t)*Math.sin(b)]);}
+  p.push([ri,st]);
+  g.add(solid(p));
+  return {g:g,std:'ASME B16.9',dims:[['Nominal size',fnps(n)],['Overall length',fx(E)+'"'],
+    ['Outside diameter',fx(OD(n))+'"'],['Wall',fx(t,1000)+'"']]};
+}
+function genSwage(n1,n2){
+  var big=Math.max(n1,n2),sml=Math.min(n1,n2),H=3.0,g=G();
+  g.add(solid([[RI(big),0],[RO(big),0],[RO(big),0.75],[RO(sml),H-0.75],[RO(sml),H],[RI(sml),H],[RI(sml),H-0.75],[RI(big),0.75]]));
+  return {g:g,std:'MSS SP-95',dims:[['Large end',fnps(big)],['Small end',fnps(sml)],['Length',fx(H)+'"'],['Ends','Plain, bevelled']]};
+}
+function genNipple(n){
+  var L=4.0,g=G(),ro=RO(n),ri=RI(n);
+  g.add(tube(ri,ro,0,L));
+  for(var e=0;e<2;e++){var y=e?L-0.9:0.0;
+    g.add(solid([[ro*0.94,y+(e?0:0.9)],[ro,y+(e?0.9:0)],[ro,y+(e?0.9:0)],[ro*0.94,y+(e?0:0.9)]],MAT.face));}
+  return {g:g,std:'ASME B1.20.1 threads',dims:[['Nominal size',fnps(n)],['Length',fx(L)+'"'],
+    ['Outside diameter',fx(OD(n))+'"'],['Ends','Male taper thread']]};
+}
+function genPlug(n){
+  var d=SW3000[n]||{B:OD(n)*1.5}, hw=OD(n)*1.35, hh=OD(n)*0.62, sh=OD(n)*0.85, g=G();
+  g.add(hex(hw,hh,0,MAT.steel));
+  g.add(solid([[0,hh],[RO(n)*0.97,hh],[RO(n)*0.88,hh+sh],[0,hh+sh]],MAT.steel));
+  return {g:g,std:'ASME B16.11',dims:[['Nominal size',fnps(n)],['Across flats',fx(hw)+'"'],
+    ['Head height',fx(hh)+'"'],['Thread length',fx(sh)+'"'],['End','Male taper thread']]};
+}
+/* ---------- flanges ---------- */
+function genWN(cl,n){
+  var d=flg(cl,n),O=d[0],tf=d[1],X=d[2],Y=d[3],bc=d[4],nb=d[5],hd=d[6],rf=d[7];
+  var g=G(),ri=RI(n),ro=RO(n),rh=rfh(cl);
+  tf=flgT(cl,n); Y=flgY(cl,n);
+  g.add(solid([[ri,0],[rf/2,0],[rf/2,rh],[ri,rh]],MAT.face));
+  g.add(boltPlate(O,tf-rh,ri,bc,nb,hd,rh));
+  g.add(solid([[ri,tf],[X/2,tf],[X/2,tf+0.10],[ro,Y-0.35],[ro,Y],[ri,Y]]));
+  return {g:g,std:'ASME B16.5, Class '+cl+', RF',dims:[['Nominal size',fnps(n)],
+    ['Flange outside dia',fx(O)+'"'],['Flange thickness',fx(tf)+'"'],['Length thru hub',fx(Y)+'"'],
+    ['Hub dia at base',fx(X)+'"'],['Weld end OD',fx(OD(n))+'"'],['Bolt circle',fx(bc)+'"'],
+    ['Bolting',nb+' \u00d7 '+fx(hd)+'" holes'],['Raised face',fx(rf)+'" \u00d7 '+fx(RFH,1000)+'" high']]};
+}
+function genSO(cl,n,sw){
+  var d=flg(cl,n),O=d[0],X=d[2],bc=d[4],nb=d[5],hd=d[6],rf=d[7],rh=rfh(cl);
+  var tf=flgT(cl,n);
+  var Y=(SO_Y[cl]?SO_Y[cl][n]:null)||flgY(cl,n); var g=G(), ri=RI(n), ro=RO(n);
+  if(!rfInc(cl)) Y+=rh;
+  var rb=sw?ri:(ro+0.03);          /* slip-on bores full OD; socket weld bores ID with a socket */
+  var sd=sw?(SW3000[n]?SW3000[n].J:0.50):0;
+  g.add(solid([[rb,0],[rf/2,0],[rf/2,rh],[rb,rh]],MAT.face));
+  var ys=Y-sd;                      /* socket shoulder position */
+  if(sw&&ys<tf){
+    g.add(boltPlate(O,ys-rh,ri,bc,nb,hd,rh));
+    g.add(boltPlate(O,tf-ys,ro,bc,nb,hd,ys));
+  }else{
+    g.add(boltPlate(O,tf-rh,rb,bc,nb,hd,rh));
+  }
+  /* short cylindrical hub with an end chamfer */
+  var hb=sw?((ys>=tf)?[[ri,tf],[X/2,tf],[X/2,Y-0.08],[X/2-0.08,Y],[ro,Y],[ro,ys],[ri,ys]]
+                     :[[ro,tf],[X/2,tf],[X/2,Y-0.08],[X/2-0.08,Y],[ro,Y]])
+           :[[rb,tf],[X/2,tf],[X/2,Y-0.08],[X/2-0.08,Y],[rb,Y]];
+  g.add(solid(hb));
+  var dims=[['Nominal size',fnps(n)],['Flange outside dia',fx(O)+'"'],['Flange thickness',fx(tf)+'"'],
+    ['Length thru hub',fx(Y)+'"'],['Hub diameter',fx(X)+'"'],['Bolt circle',fx(bc)+'"'],
+    ['Bolting',nb+' \u00d7 '+fx(hd)+'" holes']];
+  if(sw){dims.push(['Socket bore',fx(OD(n))+'"'],['Socket depth',fx(sd)+'"']);}
+  else{dims.push(['Bore, slip fit',fx(rb*2)+'"']);}
+  return {g:g,std:'ASME B16.5, Class '+cl+', RF '+(sw?'socket weld':'slip-on'),dims:dims};
+}
+function genSWflange(cl,n){return genSO(cl,n,true);}
+function genBlind(cl,n){
+  var d=flg(cl,n),g=G(),rh=rfh(cl),tf=flgT(cl,n);
+  g.add(solid([[0,0],[d[7]/2,0],[d[7]/2,rh],[0,rh]],MAT.face));
+  g.add(boltPlate(d[0],tf-rh,0.0001,d[4],d[5],d[6],rh));
+  return {g:g,std:'ASME B16.5, Class '+cl+', RF blind',dims:[['Nominal size',fnps(n)],
+    ['Flange outside dia',fx(d[0])+'"'],['Flange thickness',fx(tf)+'"'],
+    ['Bolt circle',fx(d[4])+'"'],['Bolting',d[5]+' \u00d7 '+fx(d[6])+'" holes'],['Bore','None']]};
+}
+/* ---------- branch connections ---------- */
+function genOlet(kind,nr,nb){
+  var g=G(), Rr=RO(nr), rb=RO(nb), rbi=RI(nb);
+  var H=(kind==='weldolet')?(rb*2.6):(rb*2.0+0.55);
+  var base=Math.min(rb*2.3,Rr*1.55), y0=Rr*0.72;
+  var ctx=tube(RI(nr),Rr,-Rr*2.2,Rr*2.2,MAT.ctx); ctx.rotation.z=Math.PI/2; g.add(ctx);
+  var p;
+  if(kind==='weldolet'){
+    p=[[rbi,y0],[base/2,y0],[base/2*0.86,y0+H*0.30],[rb,y0+H*0.72],[rb,y0+H],[rbi,y0+H]];
+  }else{
+    p=[[rbi,y0],[base/2,y0],[base/2,y0+H*0.55],[rb*1.32,y0+H*0.62],[rb*1.32,y0+H],[rbi,y0+H]];
+  }
+  g.add(solid(p));
+  if(kind!=='weldolet'){
+    var d=SW3000[nb]||{J:0.5};
+    g.add(solid([[rbi,y0+H-d.J],[rb,y0+H-d.D],[rb,y0+H],[rbi,y0+H]],MAT.face));
+  }
+  var std=(kind==='weldolet')?'MSS SP-97':'ASME B16.11, Class 3000';
+  var dm=[['Run size',fnps(nr)],['Branch size',fnps(nb)],['Height above run',fx(H)+'"'],
+          ['Run outside dia',fx(OD(nr))+'"'],['Branch outlet',(kind==='weldolet')?'Butt weld':(kind==='sockolet'?'Socket weld':'Female thread')]];
+  return {g:g,noRot:true,std:std,dims:dm,note:'Saddle is cut to the run outside diameter; run shown for reference'};
+}
+/* ============================================================
+   MEASURED VENDOR MODELS
+   The five components below are rebuilt from the supplied vendor
+   3D CAD models (TraceParts DWG -> ACIS solids). Every dimension
+   was measured from the analytic surfaces of those solids, in mm,
+   and is reproduced here at native size; other size chips scale
+   the measured geometry proportionally.
+     GF Piping CR4W030          316 SS weldolet   (PVDF insert removed)
+     AVK 02-200-66-003          gate valve, DN200 PN10, EN 558-2 S.15
+     Bonney Forge 1-31-RF WCB   globe valve, 3 in Class 150 RF
+     Bonney Forge 1-61-RF WCB   swing check valve, 10 in Class 150 RF
+     Andrex DP-3k DN150         welded-body flanged ball valve
+     Comer BUT10110             uPVC wafer butterfly valve, d110
+   ============================================================ */
+function fmm(v){return Math.round(v)+' mm ('+fx(v/25.4)+'")';}
+/* Lathe about +Y whose lower edge is clamped to a run-pipe saddle.
+   prof = outer profile [r,y] bottom->top (mm); bore = inner radius;
+   run axis is along X at height yAxis, radius Rrun. */
+function saddleLathe(prof,bore,Rrun,yAxis,mat){
+  var pts=prof.slice();
+  if(bore!=null){
+    pts.push([bore,prof[prof.length-1][1]]);
+    pts.push([bore,prof[0][1]]);
+  }
+  var NT=88,rows=pts.length,P=[],F=[],k,j;
+  for(k=0;k<rows;k++)for(j=0;j<=NT;j++){
+    var a=j/NT*Math.PI*2,r=pts[k][0],x=r*Math.cos(a),z=r*Math.sin(a);
+    var ys=yAxis+Math.sqrt(Math.max(Rrun*Rrun-z*z,0));
+    P.push(x,Math.max(pts[k][1],ys),z);
+  }
+  for(k=0;k<rows-1;k++)for(j=0;j<NT;j++){
+    var a1=k*(NT+1)+j,b1=(k+1)*(NT+1)+j;
+    F.push(a1,b1,b1+1,a1,b1+1,a1+1);
+  }
+  var geo=new THREE.BufferGeometry();
+  geo.setAttribute('position',new THREE.Float32BufferAttribute(P,3));
+  geo.setIndex(F); geo.computeVertexNormals();
+  return new THREE.Mesh(geo,mat||MAT.steel);
+}
+/* Sample a convex blend arc r(y)=rc+sqrt(R^2-(y-yc)^2) between y0..y1. */
+function blendArc(rc,R,yc,y0,y1,N){
+  var p=[],i;
+  for(i=0;i<=N;i++){var y=y0+(y1-y0)*i/N;
+    p.push([rc+Math.sqrt(Math.max(R*R-(y-yc)*(y-yc),0)),y]);}
+  return p;
+}
+/* Spoke cylinder from (r0,y0) to (r1,y1) at azimuth a about +Y. */
+function spoke(r0,y0,r1,y1,a,rad,mat){
+  var dr=r1-r0,dy=y1-y0,L=Math.sqrt(dr*dr+dy*dy);
+  var m=new THREE.Mesh(new THREE.CylinderGeometry(rad,rad,L,10),mat||MAT.steel);
+  var g=new THREE.Group(); m.position.y=L/2; g.add(m);
+  g.rotation.z=-Math.atan2(dr,dy);
+  var h=new THREE.Group(); h.add(g);
+  h.position.set(r0*Math.cos(a),y0,r0*Math.sin(a));
+  h.rotation.y=-a;
+  return h;
+}
+/* ----- GF CR4W030 weldolet, PVDF insert removed ----- */
+function genWeldoletGF(nr,nb){
+  var sb=RO(nb)*25.4/21.08;         /* scale so outlet OD matches branch pipe */
+  var Rrun=RO(nr)*25.4;             /* saddle follows the selected run, mm */
+  var g=G(),M=G(),i;
+  var yAxis=-34.29*sb-Rrun;         /* run centreline below the shoulder datum */
+  /* outer profile measured from the solid, mm, scaled by sb */
+  var prof=[];
+  blendArc(3.45,28.96,-28.99,-43.1,-29.97,7).forEach(function(p){prof.push(p);});
+  prof.push([32.38,-10.92]);
+  blendArc(12.63,19.81,-12.42,-10.92,0,7).forEach(function(p){prof.push(p);});
+  prof.push([28.07,0],[21.08,0],[21.08,20.57]);
+  for(i=0;i<prof.length;i++){prof[i]=[prof[i][0]*sb,prof[i][1]*sb];}
+  prof[0][1]=yAxis;                  /* bottom edge clamps up onto the saddle */
+  M.add(saddleLathe(prof,18.29*sb,Rrun,yAxis));
+  /* reference run pipe */
+  var ctx=tube(RI(nr)*25.4,Rrun,-Rrun*2.4,Rrun*2.4,MAT.ctx);
+  ctx.rotation.z=Math.PI/2; ctx.position.y=yAxis; M.add(ctx);
+  g.add(M); g.scale.setScalar(1/25.4);
+  return {g:g,noRot:true,std:'Measured from GF Piping CR4W030 3D model (TraceParts) — 316 SS weldolet, PVDF insert removed',
+    dims:[['Run size',fnps(nr)],['Branch size',fnps(nb)],['Outlet OD',fmm(42.16*sb)],
+      ['Metal bore',fmm(36.58*sb)],['Base diameter',fmm(64.76*sb)],
+      ['Height above run crown',fmm(54.86*sb)],['Outlet end','Butt weld'],
+      ['Insert','PVDF insert removed']],
+    note:'Body profile measured at native size and scaled to the branch; saddle is cut to the selected run OD'};
+}
+/* ----- Sockolet 4x1 Class 3000, measured from the supplied DWG (ASM solid) -----
+   Native profile in inches, y measured from the run crown. */
+function genSockoletM(nr,nb){
+  var sb=RO(nb)/0.6565, Rrun=RO(nr), g=G(), M=G();
+  var p=[];
+  /* outer: base cone 31deg up to the band, band, 9deg socket taper */
+  p.push([1.063+0.60*(0.348+0.90),-0.90]);        /* deep start, clamps to saddle */
+  p.push([1.063+0.60*0.10,0.248]);
+  p.push([1.063,0.348],[1.063,0.427]);
+  p.push([0.906,1.392]);
+  /* across the top, down the socket, floor, then the through bore */
+  p.push([0.667,1.392],[0.667,0.900],[0.5236,0.900]);
+  p.push([0.5236,0.071]);
+  p.push([0.7185,-0.124],[0.7185,-0.90]);
+  for(var i=0;i<p.length;i++){p[i]=[p[i][0]*sb,p[i][1]*sb];}
+  M.add(saddleLathe(p,null,Rrun,-Rrun));
+  var ctx=tube(RI(nr),Rrun,-Rrun*2.4,Rrun*2.4,MAT.ctx);
+  ctx.rotation.z=Math.PI/2; ctx.position.y=-Rrun; M.add(ctx);
+  g.add(M);
+  return {g:g,noRot:true,std:'Measured from supplied SOCKOLET 4x1-3000 DWG model (ASM solid) — ASME B16.11 Class 3000 pattern',
+    dims:[['Run size',fnps(nr)],['Branch size',fnps(nb)],['Band diameter',fx(2.126*sb)+'"'],
+      ['Socket bore',fx(1.334*sb)+'"'],['Socket depth',fx(0.492*sb)+'"'],['Through bore',fx(1.047*sb)+'"'],
+      ['Height above run crown',fx(1.392*sb)+'"'],['Outlet','Socket weld']],
+    note:(nr===4&&nb===1)?null:'Measured at 4"x1" and scaled; saddle is cut to the selected run OD'};
+}
+/* ----- Threadolet 2", measured from the supplied STEP model ----- */
+function genThreadoletM(nr,nb){
+  var sb=RO(nb)/1.1875, Rrun=RO(nr), g=G(), M=G(), i;
+  var p=[];
+  /* outer: 12deg cone with a mid ring, chamfered top */
+  p.push([1.60+0.212*(0.16+1.00),-1.00]);
+  p.push([1.605,0.16],[1.625,0.165],[1.625,0.185],[1.605,0.19]);
+  p.push([1.50,1.08],[1.48,1.13]);
+  /* top ring, female NPT taper, bore, entry flare */
+  p.push([1.17,1.13],[1.11,0.51],[1.11,0.13]);
+  p.push([1.37,-0.78],[1.37,-1.00]);
+  for(i=0;i<p.length;i++){p[i]=[p[i][0]*sb,p[i][1]*sb];}
+  M.add(saddleLathe(p,null,Rrun,-Rrun));
+  /* thread crest rings in the outlet */
+  for(i=0;i<5;i++){
+    var yy=(0.58+i*0.115)*sb, rr=(1.115+0.06*(yy/sb-0.51)/0.62)*sb;
+    var t=new THREE.Mesh(new THREE.TorusGeometry(rr,0.016*sb,6,40),MAT.face);
+    t.rotation.x=Math.PI/2; t.position.y=yy; M.add(t);
+  }
+  var ctx=tube(RI(nr),Rrun,-Rrun*2.4,Rrun*2.4,MAT.ctx);
+  ctx.rotation.z=Math.PI/2; ctx.position.y=-Rrun; M.add(ctx);
+  g.add(M);
+  return {g:g,noRot:true,std:'Measured from supplied 2" threadolet STEP model — ASME B16.11 Class 3000 pattern',
+    dims:[['Run size',fnps(nr)],['Branch size',fnps(nb)],['Base diameter',fx(3.46*sb)+'"'],
+      ['Top diameter',fx(2.96*sb)+'"'],['Thread',fnps(nb).replace('"','')+'" NPT female'],
+      ['Height above run crown',fx(1.13*sb)+'"'],['Outlet','Taper thread']],
+    note:(nr===4&&nb===2)?null:'Measured at 4"x2" and scaled; saddle is cut to the selected run OD'};
+}
+/* ----- Weldolet STD, measured from the supplied STEP model ----- */
+function genWeldoletM(nr,nb){
+  var sb=RI(nb)/1.53, Rrun=RO(nr), g=G(), M=G();
+  var p=[];
+  /* outer: 10deg skirt, 28deg body cone, 60deg weld bevel, top land */
+  p.push([2.40+0.176*(0.05+1.00),-1.00]);
+  p.push([2.40,0.05],[2.39,0.11]);
+  p.push([1.84,1.13],[1.81,1.17]);
+  p.push([1.58,1.30],[1.57,1.30],[1.53,1.30]);
+  p.push([1.53,-1.00]);
+  for(var i=0;i<p.length;i++){p[i]=[p[i][0]*sb,p[i][1]*sb];}
+  M.add(saddleLathe(p,null,Rrun,-Rrun));
+  var ctx=tube(RI(nr),Rrun,-Rrun*2.4,Rrun*2.4,MAT.ctx);
+  ctx.rotation.z=Math.PI/2; ctx.position.y=-Rrun; M.add(ctx);
+  g.add(M);
+  return {g:g,noRot:true,std:'Measured from supplied WELDOLET STD STEP model — MSS SP-97 pattern, butt weld outlet',
+    dims:[['Run size',fnps(nr)],['Branch size',fnps(nb)],['Base diameter',fx(4.85*sb)+'"'],
+      ['Bore',fx(3.06*sb)+'"'],['Height above run crown',fx(1.30*sb)+'"'],
+      ['Outlet','Butt weld, 30° bevel with land']],
+    note:(nr===5&&nb===3)?null:'Measured at ~5"x3" and scaled; saddle is cut to the selected run OD'};
+}
+/* ----- Nordstrom Figure 143 iron plug valve, flanged, wrench operated -----
+   The supplied SLDPRT uses SolidWorks' compressed format with no readable
+   geometry, so this is rebuilt from the published Flowserve dimension table
+   (B end-to-end, C flange dia, E centre to stem top, F centre to body bottom)
+   and the catalogue outline drawing. */
+var NORD143={1:[5.5,4.3,3.8,1.9,1.06,0.81,0.9],1.5:[6.5,5.0,4.1,2.1,1.38,1.00,1.0],
+ 2:[7.0,6.0,4.7,2.4,1.38,1.00,1.0],2.5:[7.5,7.0,4.7,2.4,1.38,1.00,1.0],
+ 3:[8.0,7.5,5.6,3.4,1.75,1.25,1.3],4:[9.0,9.0,6.3,4.0,1.75,1.25,1.3],
+ 5:[10.0,10.0,6.3,4.0,1.75,1.25,1.3]};
+function genPlugNordstrom(n){
+  var t=NORD143[n]; if(!t) return null;
+  var B=t[0],C=t[1],E=t[2],F=t[3],K=t[4],J=t[5],L=t[6];
+  var f=flg(150,n), bc=f[4], nbolt=f[5], hd=f[6];
+  var g=G(), M=G(), ri=RI(n), tf=flgT(150,n)-0.06;
+  [-1,1].forEach(function(sg){
+    var y0=sg*B/2, d=(sg>0)?1:-1;
+    var pl=boltPlate(C,tf,ri,bc,nbolt,hd,0,MAT.steel);
+    pl.rotation.x=(sg>0)?-Math.PI/2:Math.PI/2; pl.position.y=y0; M.add(pl);
+    M.add(solid([[ri,y0-d*tf],[C/2*0.62,y0-d*tf],[C/2*0.50,y0-d*tf-d*B*0.16],[ri,y0-d*tf-d*B*0.16]],MAT.steel));
+  });
+  /* body pot: tapered plug chamber, wide at the top, rounded bottom */
+  var rt=C/2*0.60, rb=rt*0.74, top=G();
+  top.add(solid([[0,-F],[rb*0.72,-F],[rb,-F+rb*0.5],[rt*0.98,B*0.20],[rt,B*0.26],[rt*0.88,B*0.28],[0,B*0.28]],MAT.steel,44));
+  /* two-bolt cover plate and bolts */
+  top.add(solid([[0,B*0.28],[rt*0.80,B*0.28],[rt*0.80,B*0.28+0.30],[K/2+0.22,B*0.28+0.42],[0,B*0.28+0.42]],MAT.steel,36));
+  [-1,1].forEach(function(zs){
+    var bo=new THREE.Mesh(new THREE.CylinderGeometry(hd*0.42,hd*0.42,0.9,12),MAT.bolt);
+    bo.position.set(0,B*0.28+0.05,zs*rt*0.62); top.add(bo);
+    var nu=hex(hd*0.95,hd*0.5,B*0.28+0.42,MAT.bolt);
+    nu.position.z=zs*rt*0.62; top.add(nu);
+  });
+  /* stem with square wrench flats and the sealant fitting on top */
+  var st=new THREE.Mesh(new THREE.CylinderGeometry(K/2,K/2,E-L-B*0.28-0.42+0.1,20),MAT.trim);
+  st.position.y=(B*0.28+0.42+E-L)/2; top.add(st);
+  var sq=new THREE.Mesh(new THREE.BoxGeometry(J,L,J),MAT.trim);
+  sq.position.y=E-L/2; top.add(sq);
+  var sf=new THREE.Mesh(new THREE.CylinderGeometry(0.16,0.16,0.28,10),MAT.bolt);
+  sf.position.y=E+0.14; top.add(sf);
+  top.add(hex(0.44,0.22,E+0.28,MAT.bolt));
+  top.rotation.z=Math.PI/2; M.add(top);
+  g.add(M);
+  return {g:g,std:'Nordstrom Figure 143 (Flowserve) — two-bolt cover iron plug valve, ASME B16.1 Class 125 FF, 200 CWP',
+    dims:[['Nominal size',fnps(n)],['End to end',fx(B)+'"'],['Flange dia',fx(C)+'"'],
+      ['Bolt circle',fx(bc)+'"'],['Bolting',nbolt+' × '+fx(hd)+'" holes'],
+      ['Centre to stem top',fx(E)+'"'],['Centre to body bottom',fx(F)+'"'],
+      ['Stem',fx(K)+'" dia, '+fx(J)+'" square flats'],
+      ['Operator','Wrench (not shown), lubricated plug']],
+    note:'Supplied SLDPRT is a sealed SolidWorks format; rebuilt from the published Flowserve dimension table'};
+}
+/* ----- AVK 02-200-66-003 resilient-seat gate valve, DN200 PN10 ----- */
+function genGateAVK(dn){
+  var s=dn/200, g=G(), M=G();
+  /* flanges, flow along local Y, faces at y=+-200 */
+  [-1,1].forEach(function(sg){
+    var pl=boltPlate(340,10,107.5,295,8,23,0,MAT.blue);
+    pl.rotation.x=(sg>0)?-Math.PI/2:Math.PI/2; pl.position.y=sg*200; M.add(pl);
+    /* gasket face rings measured on the model face */
+    var y0=sg*200, d=(sg>0)?1:-1;
+    M.add(solid([[100,y0],[132,y0],[132,y0-d*1.2],[100,y0-d*1.2]],MAT.face));
+    [110.1,121.9].forEach(function(rr){
+      M.add(solid([[rr-1,y0],[rr+1,y0],[rr+1,y0-d*2],[rr-1,y0-d*2]],MAT.blue));
+    });
+    /* hub: flange back to body, cone 135 -> 107.5 */
+    M.add(solid([[100,y0-d*10],[135,y0-d*10],[107.5,y0-d*20],[107.5,y0-d*88],[100,y0-d*88]],MAT.blue));
+    var hb=tube(100,107.5,Math.min(y0-d*20,y0-d*112),Math.max(y0-d*20,y0-d*112),MAT.blue);
+    M.add(hb);
+  });
+  /* oval slab body, outline in the flow/vertical plane, extruded across */
+  (function(){
+    var sh=new THREE.Shape(), W=112, T=168, B=-203, R=74;
+    sh.moveTo(-W+R,T);
+    sh.lineTo(W-R,T); sh.absarc(W-R,T-R,R,Math.PI/2,0,true);
+    sh.lineTo(W,B+R); sh.absarc(W-R,B+R,R,0,-Math.PI/2,true);
+    sh.lineTo(-W+R,B); sh.absarc(-W+R,B+R,R,-Math.PI/2,-Math.PI,true);
+    sh.lineTo(-W,T-R); sh.absarc(-W+R,T-R,R,Math.PI,Math.PI/2,true);
+    var geo=new THREE.ExtrudeGeometry(sh,{depth:80,bevelEnabled:true,bevelThickness:20,bevelSize:17,bevelSegments:5,curveSegments:36});
+    var m=new THREE.Mesh(geo,MAT.blue);
+    /* shape x -> flow (local Y), shape y -> up (local -X), extrude -> across (Z) */
+    m.rotation.set(0,0,Math.PI/2); m.position.set(0,0,-40);
+    M.add(m);
+  })();
+  /* vertical stack, built about +Y then swung to local -X (global up).
+     Base starts at y=150 so the bonnet flange plugs into the body top
+     (body crown reaches y~168) instead of floating above it. */
+  var top=G();
+  top.add(solid([[0,150],[150,150],[150,234],[145,244],[126,289],[104,300],[88,308],[60,321],[50,340],[50,428],[33,428],[33,497],[31.7,497],[31.7,501],[18,501],[18,537],[26,540],[40,545],[40,567],[36,577],[0,577]],MAT.blue,48));
+  /* 8 bonnet bolt bosses */
+  for(var i=0;i<8;i++){
+    var a=(i+0.5)*Math.PI/4;
+    var bo=new THREE.Mesh(new THREE.CylinderGeometry(14.3,14.3,70,16),MAT.blue);
+    bo.position.set(Math.cos(a)*127,222,Math.sin(a)*127); top.add(bo);
+    var cap=new THREE.Mesh(new THREE.SphereGeometry(14.3,16,10),MAT.blue);
+    cap.position.set(Math.cos(a)*127,257,Math.sin(a)*127); top.add(cap);
+  }
+  /* handwheel: rim 358 OD, slightly dished, 8 bead spokes, top nut */
+  top.add(solid([[152,567],[179,567.6],[179,578.4],[152,577.9],[152,567]],MAT.blk,56));
+  for(i=0;i<8;i++) top.add(spoke(38,549,163,571,i*Math.PI/4,4.5,MAT.blk));
+  top.add(hex(20,8.4,569,MAT.steel));
+  var stn=new THREE.Mesh(new THREE.CylinderGeometry(8,8,6.4,14),MAT.steel);
+  stn.position.y=574.2; top.add(stn);
+  top.rotation.z=Math.PI/2; M.add(top);
+  g.add(M); g.scale.setScalar(s/25.4);
+  var d1=function(v){return fmm(v*s);};
+  return {g:g,std:'Measured from AVK 02-200-66-003 3D model (TraceParts) — EN 558-2 S.15 / DIN F5, flange drilling PN10',
+    dims:[['Nominal size','DN'+dn],['Face to face',d1(400)],['Bore',d1(200)],
+      ['Flange OD',d1(340)],['Bolt circle',d1(295)],['Bolting','8 × '+d1(23)+' holes'],
+      ['Height to wheel',d1(578)],['Handwheel',d1(358)],
+      ['Body','Resilient seated, position indicator column']],
+    note:dn===200?null:'Measured at DN200 and scaled proportionally'};
+}
+/* ----- Bonney Forge 3" 1-31-RF WCB globe valve, Class 150 ----- */
+function genGlobeBF(n){
+  var s=n/3, g=G(), M=G(), i;
+  var C=120.65;                       /* half of the 241.3 face to face */
+  [-1,1].forEach(function(sg){
+    var y0=sg*C, d=(sg>0)?1:-1;
+    /* raised face 127 OD x 1.52, flange 190.5 OD x 22.4, 4 x 19 on 152.4 BC */
+    M.add(solid([[45.34,y0],[63.5,y0],[63.5,y0-d*1.52],[45.34,y0-d*1.52]],MAT.face));
+    var pl=boltPlate(190.5,22.36,45.34,152.4,4,19,0,MAT.steel);
+    pl.rotation.x=(sg>0)?-Math.PI/2:Math.PI/2; pl.position.y=y0-d*1.52; M.add(pl);
+    /* hub blend into the run */
+    M.add(solid([[45.34,y0-d*23.88],[56.2,y0-d*23.88],[54,y0-d*28],[45.88,y0-d*38.3],[45.34,y0-d*38.3]],MAT.steel));
+  });
+  M.add(tube(45.34,45.88,-C+38.3,C-38.3));
+  var top=G();
+  /* spherical belly, measured sphere R303 reaching 95 below the run axis */
+  var pot=new THREE.Mesh(new THREE.SphereGeometry(82,40,28),MAT.steel);
+  pot.scale.set(0.95,1.0,0.9); pot.position.y=-14; top.add(pot);
+  /* neck 105.2 OD, bonnet flange 193 OD, bonnet 138 OD */
+  top.add(solid([[0,58],[52.6,61.6],[52.6,124],[96.5,124],[96.5,141.1],[69,141.1],[69,165.9],[50,180],[35,200],[0,200]],MAT.steel,48));
+  /* 8 bonnet studs with nuts */
+  for(i=0;i<8;i++){
+    var a=(i+0.5)*Math.PI/4;
+    var st=new THREE.Mesh(new THREE.CylinderGeometry(6.3,6.3,34,12),MAT.bolt);
+    st.position.set(Math.cos(a)*80,132,Math.sin(a)*80); top.add(st);
+    var nu=hex(19,10,143,MAT.bolt); nu.position.x=Math.cos(a)*80; nu.position.z=Math.sin(a)*80; top.add(nu);
+  }
+  /* yoke arms up to the yoke head */
+  [-1,1].forEach(function(zs){
+    var arm=new THREE.Mesh(new THREE.BoxGeometry(42,168,13),MAT.steel);
+    arm.position.set(0,252,zs*33); arm.rotation.x=zs*0.115; top.add(arm);
+  });
+  top.add(solid([[0,333.8],[42.57,333.8],[42.57,350],[10.7,350],[0,350]],MAT.steel,36));
+  /* gland flange and packing boss */
+  top.add(solid([[24.3,228.7],[24.3,245.7],[48.65,245.7],[48.65,262.6],[25.54,262.6],[25.54,308.6],[24.3,308.6]],MAT.steel,36));
+  /* stem */
+  var stem=new THREE.Mesh(new THREE.CylinderGeometry(10.7,10.7,258,18),MAT.trim);
+  stem.position.y=150+129; top.add(stem);
+  /* handwheel: flat ring 254 OD, 6 spokes, hub, stem nut */
+  top.add(solid([[112.4,385.6],[127,385.6],[127,391],[112.4,391]],MAT.op,56));
+  top.add(solid([[0,388.1],[19,388.1],[17,395.7],[0,395.7]],MAT.op,28));
+  for(i=0;i<6;i++) top.add(spoke(16,393,116,388.6,i*Math.PI/3,4.2,MAT.op));
+  top.add(solid([[0,395.7],[11.43,395.7],[11.43,407.5],[8,411],[0,411]],MAT.trim,24));
+  top.rotation.z=Math.PI/2; M.add(top);
+  g.add(M); g.scale.setScalar(s/25.4);
+  var d2=function(v){return fx(v*s/25.4)+'"';};
+  return {g:g,std:'Measured from Bonney Forge 3" 1-31-RF WCB globe 3D model (TraceParts) — Class 150, flanged RF',
+    dims:[['Nominal size',fnps(n)],['Class',150],['End to end',d2(241.3)],
+      ['Flange OD',d2(190.5)],['Raised face',d2(127)],['Bolting','4 × '+d2(19)+' on '+d2(152.4)+' BC'],
+      ['Height, open',d2(411)],['Handwheel',d2(254)],
+      ['Body','WCB globe, bolted bonnet, OS&Y']],
+    note:n===3?null:'Measured at 3" and scaled proportionally'};
+}
+/* ----- Bonney Forge 10" 1-61-RF WCB swing check valve, Class 150 ----- */
+function genCheckBF(n){
+  var s=n/10, g=G(), M=G(), i;
+  var C=311.15;                       /* half of the 622.3 face to face */
+  [-1,1].forEach(function(sg){
+    var y0=sg*C, d=(sg>0)?1:-1;
+    /* raised face 323.8 OD x 1.52, flange 406.4 OD x 28.7, 12 x 25.4 on 362 BC */
+    M.add(solid([[138.18,y0],[161.92,y0],[161.92,y0-d*1.52],[138.18,y0-d*1.52]],MAT.face));
+    var pl=boltPlate(406.4,28.7,138.18,362,12,25.4,0,MAT.steel);
+    pl.rotation.x=(sg>0)?-Math.PI/2:Math.PI/2; pl.position.y=y0-d*1.52; M.add(pl);
+    /* hub: blend from the flange back into the run tube */
+    M.add(solid([[138.18,y0-d*30.2],[159.1,y0-d*30.2],[152.4,y0-d*36.9],[152.4,y0-d*60],[129.54,y0-d*75],[138.18,y0-d*75]],MAT.steel));
+    /* end counterbore: bore 276.4 for the first 49.3, then the seat step */
+    M.add(solid([[125,y0-d*49.3],[138.18,y0-d*49.3],[138.18,y0-d*51.3],[125,y0-d*51.3]],MAT.steel));
+  });
+  /* run tube and the mid-body bulge, both about the flow axis:
+     crown arc r(y) = -75 + sqrt(280^2 - y^2), tube r 129.54 */
+  (function(){
+    var p=[],N=26,i;
+    p.push([129.54,-C+72]);
+    for(i=0;i<=N;i++){
+      var y=-239+478*i/N;
+      var rc=-75+Math.sqrt(Math.max(280*280-y*y,0));
+      p.push([Math.max(129.54,rc),y]);
+    }
+    p.push([129.54,C-72]);
+    p.push([125,C-72]); p.push([125,-C+72]);
+    M.add(solid(p,MAT.steel,56));
+  })();
+  /* vertical barrel, shoulder, neck, bolted cover with domed dish */
+  var top=G();
+  top.add(solid([[0,60],[205,60],[205,210.4],[161.9,253.4],[143.5,253.4],[143.5,298.2],[0,298.2]],MAT.steel,48));
+  /* body flange, raised joint face, then the bolted cover flange.
+     Plain cylinders: cap and side normals stay split, so the flange
+     rims render as sharp square edges. */
+  [[248.9,298.2,340.7],[183.2,340.7,348.2],[248.9,348.2,409.4],[178,409.4,416.35]].forEach(function(f){
+    var c=new THREE.Mesh(new THREE.CylinderGeometry(f[0],f[0],f[2]-f[1],56),MAT.steel);
+    c.position.y=(f[1]+f[2])/2; top.add(c);
+  });
+  /* spherical dish R816 rising to the centre plug boss */
+  (function(){
+    var p=[[0,416.3]],N=14,i;
+    for(i=0;i<=N;i++){
+      var r=161.75-(161.75-24.9)*i/N;
+      p.push([r,-383.6+Math.sqrt(Math.max(816.2*816.2-r*r,0))]);
+    }
+    p.push([24.9,434.9],[0,434.9]);
+    top.add(solid(p,MAT.steel,48));
+  })();
+  /* 12 cover studs with washers and nuts, on a 423 BC */
+  for(i=0;i<12;i++){
+    var a=(i+0.5)*Math.PI/6;
+    var st=new THREE.Mesh(new THREE.CylinderGeometry(13,13,180,12),MAT.bolt);
+    st.position.set(Math.cos(a)*211.5,355,Math.sin(a)*211.5); top.add(st);
+    var wa=new THREE.Mesh(new THREE.CylinderGeometry(20,20,13.6,14),MAT.bolt);
+    wa.position.set(Math.cos(a)*211.5,416.2,Math.sin(a)*211.5); top.add(wa);
+    var nu=hex(42,22,423,MAT.bolt);
+    nu.position.x=Math.cos(a)*211.5; nu.position.z=Math.sin(a)*211.5; top.add(nu);
+  }
+  top.rotation.z=Math.PI/2; M.add(top);
+  g.add(M); g.scale.setScalar(s/25.4);
+  var d5=function(v){return fx(v*s/25.4)+'"';};
+  return {g:g,std:'Measured from Bonney Forge 10" 1-61-RF WCB swing check 3D model (TraceParts) — Class 150, flanged RF',
+    dims:[['Nominal size',fnps(n)],['Class',150],['End to end',d5(622.3)],
+      ['Flange OD',d5(406.4)],['Raised face',d5(323.8)],['Bolting','12 × '+d5(25.4)+' on '+d5(362)+' BC'],
+      ['Height to cover bolts',d5(445)],['Cover flange',d5(497.8)],
+      ['Body','WCB swing check, bolted cover'],['Operator','None']],
+    note:n===10?null:'Measured at 10" and scaled proportionally'};
+}
+/* ----- Andrex DP-3k DN150 welded-body flanged ball valve ----- */
+function genBallDP(dn){
+  var s=dn/150, g=G(), M=G(), i;
+  var C=240;                          /* half of the 480 face to face */
+  [-1,1].forEach(function(sg){
+    var y0=sg*C, d=(sg>0)?1:-1;
+    M.add(solid([[75,y0],[106,y0],[106,y0-d*2],[75,y0-d*2]],MAT.face));
+    var pl=boltPlate(285,26,90,244,8,22,0,MAT.steel);
+    pl.rotation.x=(sg>0)?-Math.PI/2:Math.PI/2; pl.position.y=y0-d*2; M.add(pl);
+    /* bore entry taper 150 -> 130 */
+    M.add(solid([[65,y0-d*10],[75,y0],[75,y0-d*0.5],[65,y0-d*10.5]],MAT.steel));
+    /* weld seams */
+    [28,163].forEach(function(x){
+      var w=new THREE.Mesh(new THREE.TorusGeometry(x<100?92:110,1.6,8,48),MAT.face);
+      w.rotation.x=Math.PI/2; w.position.y=y0-d*(x<100?28:163); M.add(w);
+    });
+  });
+  /* necks and centre barrel over the through bore */
+  M.add(tube(65,90,-C+28,-C+163)); M.add(tube(65,90,C-163,C-28));
+  M.add(solid([[65,-77],[110,-77],[110,77],[65,77]],MAT.steel));
+  var ball=new THREE.Mesh(new THREE.SphereGeometry(103,36,24),MAT.trim); M.add(ball);
+  /* 4 gusset webs per side at the diagonals */
+  [-1,1].forEach(function(sg){
+    for(i=0;i<4;i++){
+      var a=Math.PI/4+i*Math.PI/2;
+      var wb=new THREE.Mesh(new THREE.BoxGeometry(46,110,8),MAT.steel);
+      wb.position.set(Math.cos(a)*106,sg*(C-108),Math.sin(a)*106);
+      wb.rotation.y=-a;
+      M.add(wb);
+    }
+  });
+  /* stem tower and long lever, built about +Y then swung up */
+  var top=G();
+  top.add(solid([[0,108],[25,110],[25,135],[29.5,135],[29.5,156],[24,156],[24,168],[17,168],[17,172],[0,172]],MAT.steel,32));
+  var stm=new THREE.Mesh(new THREE.CylinderGeometry(17,17,84,18),MAT.trim);
+  stm.position.y=150; top.add(stm);
+  top.add(hex(29,14,186,MAT.steel));
+  top.rotation.z=Math.PI/2; M.add(top);
+  /* handle: mounting plate + flat bar along the pipe + declined grip */
+  var hp=new THREE.Mesh(new THREE.BoxGeometry(8,60,44),MAT.op);
+  hp.position.set(-172,0,0); M.add(hp);
+  var bar=new THREE.Mesh(new THREE.BoxGeometry(10,362,40),MAT.op);
+  bar.position.set(-181,166,0); M.add(bar);
+  var grip=new THREE.Mesh(new THREE.CylinderGeometry(12,12,120,14),MAT.op);
+  grip.position.set(-176,406,0); grip.rotation.z=-0.09; M.add(grip);
+  var knob=new THREE.Mesh(new THREE.SphereGeometry(13,14,10),MAT.op);
+  knob.position.set(-171,465,0); M.add(knob);
+  g.add(M); g.scale.setScalar(s/25.4);
+  var d3=function(v){return fmm(v*s);};
+  return {g:g,std:'Measured from Andrex DP-3k-DN150-C2-T10-ZGZ 3D model (TraceParts) — welded body flanged ball valve, PN25',
+    dims:[['Nominal size','DN'+dn],['Face to face',d3(480)],['Port bore',d3(130)],
+      ['Flange OD',d3(285)],['Bolt circle',d3(244)],['Bolting','8 × '+d3(22)+' holes'],
+      ['Body OD',d3(220)],['Lever reach',d3(465)],
+      ['Body','Monoblock welded, gusset ribs, lever parallel to pipe']],
+    note:dn===150?null:'Measured at DN150 and scaled proportionally'};
+}
+/* ----- Comer BUT10110 uPVC wafer butterfly valve, d110 ----- */
+function genBflyComer(dmm){
+  var s=dmm/110, g=G(), M=G(), i;
+  /* wafer ring: 218.8 OD x 50 wide, 8 bolt bosses 38 OD on a 180 BC */
+  M.add(solid([[76.3,-25],[109.4,-25],[109.4,25],[76.3,25]],MAT.pvc));
+  for(i=0;i<8;i++){
+    var a=(i+0.5)*Math.PI/4;
+    var bo=tube(9.5,19,-25,25,MAT.pvc);
+    bo.position.set(Math.cos(a)*90,0,Math.sin(a)*90);
+    bo.rotation.x=Math.PI/2; M.add(bo);
+  }
+  /* EPDM seat, proud of both faces */
+  M.add(solid([[48.5,-29.65],[76.4,-29.65],[76.4,29.65],[48.5,29.65]],MAT.epdm));
+  /* disc: squashed lens, closed */
+  var disc=new THREE.Mesh(new THREE.SphereGeometry(44.5,36,24),MAT.pvcL);
+  disc.scale.set(1,1,0.45); M.add(disc);
+  /* everything vertical, built about +Y then swung up */
+  var top=G();
+  var stem=new THREE.Mesh(new THREE.CylinderGeometry(10.5,10.5,262,16),MAT.trim);
+  stem.position.y=31; top.add(stem);
+  var cap=new THREE.Mesh(new THREE.CylinderGeometry(16,16,24,20),MAT.pvc);
+  cap.position.y=-94.5; top.add(cap);
+  /* neck and ISO top pad, 63 across the flow x 101 wide */
+  var nk=new THREE.Mesh(new THREE.BoxGeometry(58,40,96),MAT.pvc);
+  nk.position.y=111; top.add(nk);
+  var pad=new THREE.Mesh(new THREE.BoxGeometry(63,10.5,101),MAT.pvc);
+  pad.position.y=136.2; top.add(pad);
+  var bs=new THREE.Mesh(new THREE.CylinderGeometry(31.5,31.5,10.5,24),MAT.pvc);
+  bs.position.y=136.2; top.add(bs);
+  /* handle assembly, perpendicular to the flow as in the source model */
+  var hnd=G();
+  /* ratchet throttle quarter-plate with teeth */
+  (function(){
+    var sh=new THREE.Shape();
+    sh.moveTo(0,0); sh.lineTo(59.4,0); sh.absarc(0,0,59.4,0,-Math.PI/2,true); sh.lineTo(0,0);
+    var m=new THREE.Mesh(new THREE.ExtrudeGeometry(sh,{depth:6,bevelEnabled:false,curveSegments:24}),MAT.blk);
+    m.rotation.x=Math.PI/2; m.position.y=137; hnd.add(m);
+    for(var k=0;k<7;k++){
+      var a=-k*Math.PI/2/6;
+      var t=new THREE.Mesh(new THREE.BoxGeometry(5,8,3),MAT.blk);
+      t.position.set(Math.cos(a)*56,135,Math.sin(a)*56);
+      t.rotation.y=-a; hnd.add(t);
+    }
+  })();
+  var hub=new THREE.Mesh(new THREE.CylinderGeometry(14,14,27,18),MAT.blk);
+  hub.position.y=148.5; hnd.add(hub);
+  var lev=new THREE.Mesh(new THREE.BoxGeometry(215,16,24),MAT.blk);
+  lev.position.set(118,153,0); hnd.add(lev);
+  var kb=new THREE.Mesh(new THREE.SphereGeometry(13,14,10),MAT.blk);
+  kb.position.set(228,153,0); hnd.add(kb);
+  var trg=new THREE.Mesh(new THREE.BoxGeometry(105,6,13),MAT.op);
+  trg.position.set(165,141.5,0); hnd.add(trg);
+  hnd.rotation.y=-Math.PI/2; top.add(hnd);
+  top.rotation.z=Math.PI/2; M.add(top);
+  g.add(M); g.scale.setScalar(s/25.4);
+  var d4=function(v){return fmm(v*s);};
+  return {g:g,std:'Measured from Comer BUT10110 3D model (TraceParts) — uPVC wafer butterfly valve, EPDM O-ring',
+    dims:[['Pipe size','Ø'+dmm+' mm'],['Body OD',d4(218.8)],['Face to face',d4(50)],
+      ['Seat width over faces',d4(59.3)],['Seat bore',d4(97)],['Disc',d4(89)],
+      ['Bolting','8 × '+d4(19)+' on '+d4(180)+' BC'],['Lever reach',d4(239)],
+      ['Materials','uPVC body and disc, EPDM seat, SS stem']],
+    note:dmm===110?null:'Measured at Ø110 and scaled proportionally'};
+}
+/* ---------- plates ---------- */
+function genSpecBlind(cl,n){
+  var f=flg(cl,n), t=Math.max(f[1]*0.55,0.25), R=f[4]/2-f[6]/2-0.10, g=G(), C=R*2.05;
+  var d1=new THREE.Mesh(new THREE.CylinderGeometry(R,R,t,56),MAT.steel); d1.position.x=-C/2; g.add(d1);
+  var d2=solid([[RI(n),-t/2],[R,-t/2],[R,t/2],[RI(n),t/2]]); d2.position.x=C/2; g.add(d2);
+  var web=new THREE.Mesh(new THREE.BoxGeometry(C,t,R*0.42),MAT.steel); g.add(web);
+  return {g:g,std:'ASME B16.48, Class '+cl,dims:[['Nominal size',fnps(n)],['Class',cl],
+    ['Plate thickness',fx(t)+'"'],['Plate diameter',fx(R*2)+'"'],['Spacing',fx(C)+'"'],
+    ['Pattern','Solid plate and spacer ring']]};
+}
+function genOrificePlate(cl,n){
+  var f=flg(cl,n), t=0.125+n*0.012, R=f[4]/2-f[6]/2-0.10, bore=OD(n)*0.55, g=G();
+  g.add(solid([[bore/2,-t/2],[R,-t/2],[R,t/2],[bore/2,t/2]]));
+  var tab=new THREE.Mesh(new THREE.BoxGeometry(R*0.55,t,R*0.62),MAT.steel);
+  tab.position.x=R+R*0.26; g.add(tab);
+  return {g:g,std:'ASME B16.36 / ISO 5167 bore',dims:[['Nominal size',fnps(n)],['Class',cl],
+    ['Plate thickness',fx(t,1000)+'"'],['Plate diameter',fx(R*2)+'"'],['Bore shown',fx(bore)+'"'],
+    ['Handle','Tab, stamped']],note:'Bore diameter is set by flow calculation, shown here nominal'};
+}
+/* ============================================================
+   GENERIC PLANT COMPONENTS
+   Added so the catalogue covers every component family that
+   appears on a piping isometric (matched against the plant
+   model inventory): gaskets, pipe-support dummy legs, inline
+   instruments, relief valves, equipment nozzles, couplings.
+   All parametric across the full NPS range.
+   ============================================================ */
+function nextNPS(n){var i=NPS.indexOf(n);return NPS[Math.min(i+1,NPS.length-1)];}
+/* next larger size that actually has a Class-150 flange defined */
+var FLGN=Object.keys(FLG[150]).map(Number).sort(function(a,b){return a-b;});
+function nextFlgNPS(n){for(var i=0;i<FLGN.length;i++){if(FLGN[i]>n+1e-6)return FLGN[i];}return FLGN[FLGN.length-1];}
+/* Spiral-wound gasket, RF: inner ring, winding band, centring ring. */
+function genGasket(cl,n){
+  var f=flg(cl,n), ID=OD(n)*0.96, rf=f[7], bc=f[4], hd=f[6];
+  var wOD=rf-0.12, cOD=bc-hd-0.10, t=0.175, g=G();
+  g.add(solid([[ID/2,-t*0.30],[ID/2+0.14,-t*0.30],[ID/2+0.14,t*0.30],[ID/2,t*0.30]],MAT.steel));
+  g.add(solid([[ID/2+0.14,-t/2],[wOD/2,-t/2],[wOD/2,t/2],[ID/2+0.14,t/2]],MAT.trim,72));
+  g.add(solid([[wOD/2+0.06,-t*0.35],[cOD/2,-t*0.35],[cOD/2,t*0.35],[wOD/2+0.06,t*0.35]],MAT.steel));
+  return {g:g,std:'ASME B16.20 spiral wound, Class '+cl+', RF',dims:[['Nominal size',fnps(n)],
+    ['Class',cl],['Inner dia',fx(ID)+'"'],['Winding OD',fx(wOD)+'"'],['Centring ring OD',fx(cOD)+'"'],
+    ['Thickness',fx(t,1000)+'"'],['Windings','316SS / flexible graphite']]};
+}
+/* Pipe-support dummy leg: a capped pipe stub welded to the run. */
+function genDummyLeg(n){
+  var g=G(), ro=RO(n), ri=RI(n), L=Math.max(OD(n)*7,9);
+  g.add(tube(ri,ro,0,L));
+  g.add(genCap(n).g);                                  /* welded cap on the foot */
+  var runR=RO(nextNPS(nextNPS(n)));
+  var run=tube(runR-WALL(n),runR,-runR*3,runR*3,MAT.ctx);
+  run.rotation.x=Math.PI/2; run.position.y=L+ro*0.6; g.add(run);
+  return {g:g,noRot:true,std:'Pipe support, welded dummy leg (SKEY DUCK)',dims:[['Leg size',fnps(n)],
+    ['Leg length',fx(L)+'"'],['Outside diameter',fx(OD(n))+'"'],['Foot','Butt-weld cap'],
+    ['Attach','Welded to run pipe (shown)']],note:'Run pipe shown for reference'};
+}
+/* Welded pipe shoe / rest support: run pipe on a T-shoe and base bar. */
+function genPipeShoe(n){
+  var g=G(), ro=RO(n), L=Math.max(OD(n)*4,10), H=Math.max(OD(n)*0.9,2.2);
+  var run=tube(RI(n),ro,-L/2,L/2,MAT.steel); run.rotation.z=Math.PI/2; g.add(run);
+  var web=new THREE.Mesh(new THREE.BoxGeometry(L*0.66,H,0.42),MAT.steel); web.position.y=-ro-H/2; g.add(web);
+  var base=new THREE.Mesh(new THREE.BoxGeometry(L*0.66,0.5,ro*2.0),MAT.steel); base.position.y=-ro-H-0.25; g.add(base);
+  return {g:g,noRot:true,std:'Pipe support, welded shoe / rest (SKEY 01HG)',dims:[['Line size',fnps(n)],
+    ['Shoe height',fx(H)+'"'],['Shoe length',fx(L*0.66)+'"'],['Type','Welded tee shoe on base'],
+    ['Attach','Welded to run, rests on steel']],note:'Run pipe shown for reference'};
+}
+/* Anchor / stanchion: pipe clamped to a stub column and base plate. */
+function genAnchor(n){
+  var g=G(), ro=RO(n), L=Math.max(OD(n)*3,7), H=Math.max(OD(n)*1.6,4);
+  var run=tube(RI(n),ro,-L/2,L/2,MAT.steel); run.rotation.z=Math.PI/2; g.add(run);
+  var band=new THREE.Mesh(new THREE.TorusGeometry(ro+0.16,0.24,10,32),MAT.blk); band.rotation.y=Math.PI/2; g.add(band);
+  var col=new THREE.Mesh(new THREE.CylinderGeometry(ro*0.6,ro*0.6,H,20),MAT.steel); col.position.y=-ro-H/2; g.add(col);
+  var base=new THREE.Mesh(new THREE.BoxGeometry(ro*2.4,0.5,ro*2.4),MAT.steel); base.position.y=-ro-H-0.25; g.add(base);
+  return {g:g,noRot:true,std:'Pipe anchor / stanchion (SKEY ANCH)',dims:[['Line size',fnps(n)],
+    ['Column height',fx(H)+'"'],['Clamp','U-band around pipe'],['Base','Bolted base plate'],
+    ['Type','Fixed anchor / vertical stanchion']],note:'Run pipe shown for reference'};
+}
+/* Variable spring hanger: pipe clamp, hanger rod, spring can, top bracket. */
+function genSpringHanger(n){
+  var g=G(), ro=RO(n), L=Math.max(OD(n)*3,7), rodH=Math.max(OD(n)*3.2,7);
+  var run=tube(RI(n),ro,-L/2,L/2,MAT.steel); run.rotation.z=Math.PI/2; g.add(run);
+  var band=new THREE.Mesh(new THREE.TorusGeometry(ro+0.13,0.2,10,32),MAT.blk); band.rotation.y=Math.PI/2; g.add(band);
+  var rod=new THREE.Mesh(new THREE.CylinderGeometry(0.18,0.18,rodH,12),MAT.trim); rod.position.y=ro+rodH/2; g.add(rod);
+  var can=new THREE.Mesh(new THREE.CylinderGeometry(ro*0.95,ro*0.95,ro*2.0,24),MAT.steel); can.position.y=ro+rodH+ro; g.add(can);
+  var brk=new THREE.Mesh(new THREE.BoxGeometry(ro*2.4,0.4,ro*1.5),MAT.ctx); brk.position.y=ro+rodH+ro*2.2; g.add(brk);
+  return {g:g,noRot:true,std:'Variable spring hanger (SKEY SPRG)',dims:[['Line size',fnps(n)],
+    ['Rod length',fx(rodH)+'"'],['Spring can',fx(ro*1.9)+'" dia'],['Clamp','Pipe clamp'],
+    ['Attach','Hung from steel above (shown)']],note:'Support steel shown for reference'};
+}
+/* Stud bolt set: studs and nuts on the flange bolt circle for a joint. */
+function genStudBolts(cl,n){
+  var f=flg(cl,n), bc=f[4], nb=f[5], hd=f[6];
+  var span=flgT(cl,n)*2+0.18+hd*1.1;                   /* two flange thicknesses + gasket + thread stick-out */
+  var g=G();
+  g.add(studs(bc,nb,hd,-span/2,span/2));
+  /* faint gasket ring at the joint to read as an assembled set */
+  g.add(solid([[f[7]/2*0.7,-0.02],[f[7]/2,-0.02],[f[7]/2,0.02],[f[7]/2*0.7,0.02]],MAT.ctx));
+  return {g:g,std:'ASME B16.5 stud bolt set, Class '+cl+' joint',
+    dims:[['Flange size',fnps(n)],['Class',cl],['Quantity',nb+' studs'],
+      ['Stud dia',fx(hd-0.12)+'" (through '+fx(hd)+'" holes)'],['Bolt circle',fx(bc)+'"'],
+      ['Length',fx(span)+'"'],['Ends','Two heavy hex nuts']],
+    note:'Stud length covers two flanges plus gasket at this class'};
+}
+/* Pipe clamp / U-bolt support on a welded base — simple rest support. */
+function genPipeClamp(n){
+  var g=G(), ro=RO(n), L=Math.max(OD(n)*3,7), H=Math.max(OD(n)*0.7,1.8);
+  var run=tube(RI(n),ro,-L/2,L/2,MAT.steel); run.rotation.z=Math.PI/2; g.add(run);
+  /* U-bolt over the pipe */
+  var u=new THREE.Mesh(new THREE.TorusGeometry(ro+0.14,0.14,10,28,Math.PI),MAT.bolt);
+  u.rotation.y=Math.PI/2; g.add(u);
+  [-1,1].forEach(function(s){
+    var leg=new THREE.Mesh(new THREE.CylinderGeometry(0.14,0.14,ro+H,10),MAT.bolt);
+    leg.position.set(0,-(ro+H)/2+ro,s*(ro+0.14)); g.add(leg);
+    var nut=new THREE.Mesh(new THREE.CylinderGeometry(0.22,0.22,0.2,6),MAT.bolt);
+    nut.position.set(0,-ro-H*0.4,s*(ro+0.14)); g.add(nut);
+  });
+  /* base bar / channel the pipe rests on */
+  var base=new THREE.Mesh(new THREE.BoxGeometry(L*0.5,0.5,ro*2.6),MAT.steel);
+  base.position.y=-ro-H*0.5; g.add(base);
+  return {g:g,noRot:true,std:'Pipe clamp / U-bolt rest support (SKEY 20BL)',
+    dims:[['Line size',fnps(n)],['Clamp','U-bolt with nuts'],['Base','Welded channel / bar'],
+      ['Type','Simple rest / hold-down'],['Attach','Bolted to steel']],note:'Support steel shown for reference'};
+}
+/* Inline instrument: flanged spool with a transmitter head and dial. */
+function genInlineInstr(cl,n){
+  var L=Math.max(OD(n)*3.5,7), d=RI(n)*2, g=G();
+  var e=vEnds(cl,n,L,d,g), ro=vRunner(d,L,e,g);
+  var top=G();
+  var neck=new THREE.Mesh(new THREE.CylinderGeometry(ro*0.55,ro*0.7,ro*0.9,20),MAT.steel);
+  neck.position.y=ro*0.9/2+ro*0.4; top.add(neck);
+  var can=new THREE.Mesh(new THREE.CylinderGeometry(ro*0.85,ro*0.85,ro*1.4,24),MAT.steel);
+  can.position.y=ro*1.4/2+ro*1.25; top.add(can);
+  var dial=new THREE.Mesh(new THREE.CylinderGeometry(ro*0.7,ro*0.7,0.2,28),MAT.face);
+  dial.rotation.x=Math.PI/2; dial.position.set(0,ro*1.95,ro*0.86); top.add(dial);
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'Inline instrument, flanged Class '+cl+' (SKEY IIBW/FE)',dims:[['Line size',fnps(n)],
+    ['Class',cl],['Face to face',fx(L)+'"'],['Body','Flanged spool'],['Head','Transmitter with local dial']]};
+}
+/* Spring-loaded pressure relief valve, angle body, flanged. */
+function genReliefValve(n){
+  var cl=150, no=nextFlgNPS(n), g=G();
+  g.add(rfFlange(cl,n,0,-1).g);                          /* inlet flange, faces down */
+  var ro=RO(n)*1.5;
+  g.add(tube(RI(n),RO(n),0,ro*1.4));                     /* inlet neck */
+  var body=new THREE.Mesh(new THREE.SphereGeometry(ro*1.35,28,20),MAT.steel);
+  body.scale.set(1,1.25,1); body.position.y=ro*1.4+ro*0.7; g.add(body);
+  /* outlet: side nozzle + flange pointing +X, one size up */
+  var oy=ro*1.4+ro*0.5, olen=RO(no)*2.4;
+  var out=G();
+  out.add(tube(RI(no),RO(no),0,olen));
+  var ofl=rfFlange(cl,no,olen,1); out.add(ofl.g);
+  out.rotation.z=-Math.PI/2; out.position.y=oy; g.add(out);   /* lay nozzle along +X */
+  /* spring bonnet, cap and open lifting lever up top */
+  var by=ro*1.4+ro*1.9;
+  g.add(solid([[0,by-ro*0.5],[ro*0.95,by-ro*0.5],[ro*0.8,by],[ro*0.8,by+ro*2.2],[0,by+ro*2.2]],MAT.steel,28));
+  var cap=new THREE.Mesh(new THREE.CylinderGeometry(ro*0.5,ro*0.85,ro*0.7,20),MAT.steel);
+  cap.position.y=by+ro*2.2+ro*0.35; g.add(cap);
+  var lift=new THREE.Mesh(new THREE.CylinderGeometry(ro*0.12,ro*0.12,ro*1.6,12),MAT.op);
+  lift.rotation.z=Math.PI/2; lift.position.set(ro*0.8,by+ro*2.6,0); g.add(lift);
+  return {g:g,noRot:true,std:'Spring-loaded pressure relief valve, flanged (SKEY RAFL/PSV), API 526',
+    dims:[['Inlet',fnps(n)],['Outlet',fnps(no)],['Body','Angle, spring bonnet'],
+    ['Inlet end','Flanged RF, Class '+cl],['Outlet end','Flanged RF, Class '+cl],
+    ['Operation','Spring, with lifting lever']],note:'Inlet one size below outlet, per API convention'};
+}
+/* Equipment nozzle: weld-neck flange on a set-on stub off a vessel shell. */
+function genNozzle(cl,n){
+  var g=G(), proj=Math.max(OD(n)*1.6,5), shellR=Math.max(OD(n)*3.2,14);
+  var wn=genWN(cl,n).g; wn.rotation.x=Math.PI; wn.position.y=proj; g.add(wn);
+  g.add(tube(RI(n),RO(n),0,proj));
+  var pts=[],N=24,i;
+  for(i=0;i<=N;i++){var a=-Math.PI/2+Math.PI*i/N; pts.push([shellR*Math.cos(a)*0+RO(n),0]);}
+  var shell=new THREE.Mesh(new THREE.CylinderGeometry(shellR,shellR,shellR*2.2,48,1,true),MAT.ctx);
+  shell.rotation.x=Math.PI/2; shell.position.y=-shellR+RO(n)*0.3; g.add(shell);
+  return {g:g,noRot:true,std:'Equipment nozzle, weld-neck flange Class '+cl+' (SKEY nozzle/N)',
+    dims:[['Nozzle size',fnps(n)],['Class',cl],['Projection',fx(proj)+'"'],
+    ['Flange','Weld neck RF, drilled'],['Shell','Set-on, vessel wall shown']],note:'Vessel shell shown for reference'};
+}
+/* Coupling, Class 3000, socket weld or threaded; full or half. */
+function genCoupling(n,half){
+  var d=SW3000[n]||{B:OD(n)*1.15,J:OD(n)*0.5,D:OD(n)*0.86,C:0.2,G:0.16};
+  var ro=d.B/2+d.C+0.06, ri=d.D/2, J=d.J, L=half?J+0.35:J*2+0.4, g=G();
+  g.add(solid([[ri,0],[ro,0],[ro,L],[ri,L]]));           /* body outer wall */
+  g.add(solid([[d.B/2,0],[ri,0],[ri,J],[d.B/2,J]],MAT.face));            /* lower socket bore */
+  if(!half) g.add(solid([[d.B/2,L],[ri,L],[ri,L-J],[d.B/2,L-J]],MAT.face)); /* upper socket bore */
+  return {g:g,std:'ASME B16.11 Class 3000 '+(half?'half ':'full ')+'coupling',
+    dims:[['Nominal size',fnps(n)],[half?'Half coupling':'Full coupling',half?'One socket':'Two sockets'],
+    ['Socket bore',fx(d.B,1000)+'"'],['Socket depth',fx(J,1000)+'"'],['Outside dia',fx(ro*2)+'"'],
+    ['Ends',half?'Socket weld / run weld':'Socket weld both ends']]};
+}
+/* ============================================================
+   VALVES.  Every dimension below is read from VLV; nothing is
+   proportional unless the catalogue leaves the cell empty.
+   ============================================================ */
+function opFallback(kind,cl,n){return {H:stemH(n,cl),W:wheelDia(n,cl),est:true};}
+function opOf(t,cl,n){
+  if(t[2]!=null&&t[3]!=null) return {H:t[2],W:t[3],est:false};
+  return opFallback(null,cl,n);
+}
+/* One valve end at yf, hub/socket growing inward by dir (+1 or -1).
+   end: 'FL' raised-face flange, 'BW' butt-weld bevel, 'SW' socket weld,
+   'TH' threaded NPT. Returns the inset (how far the body starts from yf). */
+function endNm(e){return {FL:'Flanged RF',BW:'Butt weld',SW:'Socket weld',TH:'Threaded NPT'}[e||'FL'];}
+function vEndX(cl,n,yf,dir,d,end,g){
+  var ri=(d!=null?d/2:RI(n)), ro=RO(n);
+  if(end==='SW'){
+    var sb=ro+0.03, band=ro+Math.max(WALL(n)*1.3,0.14)+0.05,
+        J=Math.min(Math.max(OD(n)*0.55,0.4),1.1), bl=J*1.45;
+    var s=socketBand(band,sb,ri,J,bl); if(dir<0) s.rotation.x=Math.PI; s.position.y=yf; g.add(s);
+    return bl;
+  }
+  if(end==='TH'){
+    var stub=Math.max(OD(n)*0.75,0.9);
+    g.add(tube(ri,ro,Math.min(yf,yf+dir*stub),Math.max(yf,yf+dir*stub)));
+    for(var i=0;i<4;i++){var yy=yf+dir*(0.14+i*0.15);
+      var tr=new THREE.Mesh(new THREE.TorusGeometry(ro*0.98,Math.max(ro*0.035,0.02),6,32),MAT.face);
+      tr.rotation.x=Math.PI/2; tr.position.y=yy; g.add(tr);}
+    return stub*0.6;
+  }
+  if(end==='BW'){
+    var Lb=Math.max(OD(n)*0.45,0.6), land=Math.max(WALL(n)*0.35,0.05), bv=Math.min((ro-ri)*0.85,Lb*0.6);
+    g.add(solid([[ri,yf],[ri+land,yf],[ro,yf+dir*bv],[ro,yf+dir*Lb],[ri,yf+dir*Lb]]));
+    return Lb;
+  }
+  g.add(rfFlange(cl,n,yf,dir,d).g);           /* FL default */
+  return flgY(cl,n);
+}
+/* Both ends facing inward, port bore d, end type applied to each. */
+function vEnds(cl,n,L,d,g,end){
+  var e1=vEndX(cl,n,-L/2,1,d,end,g);
+  vEndX(cl,n,L/2,-1,d,end,g);
+  return e1;
+}
+/* Flow passage between the flange hubs, wall scaled off the port. */
+function vRunner(d,L,e,g){
+  var ri=d/2, ro=ri+Math.max(d*0.10,0.16), y=L/2-e;
+  if(y>0.05) g.add(tube(ri,ro,-y,y));
+  return ro;
+}
+/* Rising stem, packing boss and handwheel, built along +Y from the
+   body crown at y0 up to the catalogue open height H. */
+function vStem(n,y0,H,W,g){
+  /* H is centre to top with the valve open, so the rim tops out at H */
+  var sr=Math.max(n*0.05,0.13), t=Math.max(W*0.045,0.18), yw=H-t;
+  g.add(solid([[0,y0],[Math.max(n*0.20,0.45),y0],[Math.max(n*0.17,0.38),y0+Math.max(n*0.22,0.5)],[0,y0+Math.max(n*0.22,0.5)]]));
+  var st=new THREE.Mesh(new THREE.CylinderGeometry(sr,sr,Math.max(yw-y0,0.4),18),MAT.trim);
+  st.position.y=(y0+yw)/2; g.add(st);
+  g.add(handwheel(W,yw));
+}
+function genGate(cl,n,end){
+  var t=vlv('gate',cl,n); if(!t) return null;
+  var L=t[0],d=t[1],op=opOf(t,cl,n),g=G();
+  var e=vEnds(cl,n,L,d,g,end), ro=vRunner(d,L,e,g);
+  var fr=flg(cl,n)[0]/2, top=G();
+  /* flattened wedge body, wide across the flow, slim on the face */
+  var slab=new THREE.Mesh(new THREE.CylinderGeometry(ro*1.02,ro*1.62,fr*1.80,44),MAT.steel);
+  slab.scale.z=0.54; slab.position.y=fr*1.80/2-fr*0.80; top.add(slab);
+  vStem(n,fr*1.00,op.H,op.W,top);
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'COTESO Series 30 / API 6D, ASME B16.10 and B16.5 Class '+cl,
+    dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
+      ['Height, open',fx(op.H)+'"'],['Handwheel',fx(op.W)+'"'],
+      ['Connection',endNm(end)],['Body','Solid or flexible wedge, OS&Y']],
+    note:op.est?'Height and handwheel estimated, no catalogue value at this size':null};
+}
+function genGlobe(cl,n,end){
+  var t=vlv('globe',cl,n); if(!t) return null;
+  var L=t[0],d=t[1],op=opOf(t,cl,n),g=G();
+  var e=vEnds(cl,n,L,d,g,end), ro=vRunner(d,L,e,g);
+  var top=G(), R=ro*1.55;
+  var pot=new THREE.Mesh(new THREE.SphereGeometry(R,40,28),MAT.steel);
+  pot.scale.set(0.86,0.94,1.10); pot.position.y=-ro*0.12; top.add(pot);
+  vStem(n,R*0.80,op.H,op.W,top);
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'COTESO Series 38 / BS 1873, ASME B16.10 and B16.5 Class '+cl,
+    dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
+      ['Height, open',fx(op.H)+'"'],['Handwheel',fx(op.W)+'"'],['Connection',endNm(end)],['Body','Globe, tee pattern']],
+    note:op.est?'Height and handwheel estimated, no catalogue value at this size':null};
+}
+function genCheck(cl,n,end){
+  var t=vlv('check',cl,n); if(!t) return null;
+  var L=t[0],d=t[1],H=t[2],g=G();
+  var e=vEnds(cl,n,L,d,g,end), ro=vRunner(d,L,e,g);
+  var top=G(), cd=Math.max(d*0.62,ro*0.95);
+  /* body swells over the seat, then a bolted cover up to H */
+  var bh=Math.max(H*0.62,ro*1.15);
+  top.add(solid([[0,bh],[cd,bh],[cd*1.02,bh*0.55],[ro*1.30,ro*0.10],[0,ro*0.10]]));
+  var ct=Math.max((H-bh)*0.55,0.20);
+  top.add(boltPlate(cd*2.05,ct,0.0001,cd*1.72,8,Math.max(n*0.075,0.34),bh));
+  var dome=new THREE.Mesh(new THREE.SphereGeometry(cd*0.66,28,18),MAT.steel);
+  dome.scale.y=Math.max((H-bh-ct)/(cd*0.66),0.25); dome.position.y=bh+ct; top.add(dome);
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'COTESO Series 48 / 53, API 6D, ASME B16.10 and B16.5 Class '+cl,
+    dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
+      ['Centre to top of cover',fx(H)+'"'],['Flange outside dia',fx(flg(cl,n)[0])+'"'],
+      ['Connection',endNm(end)],['Body','Swing check, bolted cover'],['Operator','None']]};
+}
+function genBallFlanged(cl,n,end){
+  var t=vlv('gate',cl,n); if(!t) return null;      /* B16.10 long pattern shares gate length */
+  var L=t[0],d=t[1],g=G();
+  var e=vEnds(cl,n,L,d,g,end), ro=vRunner(d,L,e,g);
+  var R=ro*1.42, top=G(), P=Math.max(d*2.2,6);
+  var body=new THREE.Mesh(new THREE.CylinderGeometry(R,R,Math.max(L*0.42,d*1.5),44),MAT.steel);
+  body.rotation.z=Math.PI/2; g.add(body);
+  var ball=new THREE.Mesh(new THREE.SphereGeometry(d*0.60,32,22),MAT.trim); g.add(ball);
+  top.add(solid([[0,R*0.94],[R*0.42,R*0.94],[R*0.36,R*0.94+R*0.42],[0,R*0.94+R*0.42]]));
+  var st=new THREE.Mesh(new THREE.CylinderGeometry(Math.max(n*0.05,0.14),Math.max(n*0.05,0.14),R*0.85,16),MAT.trim);
+  st.position.y=R*1.15; top.add(st);
+  top.add(lever(P,R*1.45)); top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'ASME B16.10 long pattern, Class '+cl+', '+endNm(end)+' ends',
+    dims:[['Nominal size',fnps(n)],['Class',cl],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
+      ['Lever length',fx(P)+'"'],['Connection',endNm(end)],['Body','Floating ball, long pattern'],['Operator','Hand lever']],
+    note:'Lever length is proportional; the catalogue tabulates it only for forged sizes'};
+}
+function genButterfly(cl,n,lug){
+  var t=vlv('bfly',cl,n); if(!t) return null;
+  var L=t[0],H1=t[1],Do=t[2],g=G();
+  var f=flg(cl,n), d=RI(n);
+  var R=lug?(f[4]/2-f[6]*0.55):(f[7]/2);
+  g.add(solid([[d/2,-L/2],[R,-L/2],[R,L/2],[d/2,L/2]]));
+  if(lug){
+    for(var i=0;i<f[5];i++){var a=(i+0.5)*Math.PI*2/f[5];
+      var lu=new THREE.Mesh(new THREE.CylinderGeometry(f[6]*0.80,f[6]*0.80,L,18),MAT.steel);
+      lu.position.set(Math.cos(a)*f[4]/2,0,Math.sin(a)*f[4]/2); g.add(lu);}
+  }
+  var disc=new THREE.Mesh(new THREE.CylinderGeometry(d*0.48,d*0.48,Math.max(L*0.16,0.14),48),MAT.face);
+  disc.rotation.x=0.20; g.add(disc);
+  var geared=(n>=8), top=G(), y0=R*0.96, lv=BFLY_LEV[n];
+  var E=geared?Math.max((H1-Do/2-Do*0.15-y0)/0.85,R*0.35):(lv?lv[0]:R*0.55);
+  var stem=new THREE.Mesh(new THREE.CylinderGeometry(Math.max(n*0.04,0.12),Math.max(n*0.04,0.12),d*0.5+y0+E*0.9,16),MAT.trim);
+  stem.position.y=(y0+E*0.9-d*0.5)/2; top.add(stem);
+  top.add(solid([[0,y0],[R*0.30,y0],[R*0.26,y0+E*0.75],[R*0.30,y0+E*0.75],[R*0.30,y0+E*0.85],[0,y0+E*0.85]]));
+  var opTxt;
+  if(geared){
+    var gy=H1-Do/2;
+    var gb=new THREE.Mesh(new THREE.BoxGeometry(Do*0.34,Do*0.30,Do*0.30),MAT.steel);
+    gb.position.y=gy; top.add(gb);
+    var hw=handwheel(Do,0); hw.rotation.x=Math.PI/2;
+    hw.position.set(0,gy,Do*0.30); top.add(hw);
+    var sh=new THREE.Mesh(new THREE.CylinderGeometry(Do*0.028,Do*0.028,Do*0.30,12),MAT.trim);
+    sh.rotation.x=Math.PI/2; sh.position.set(0,gy,Do*0.16); top.add(sh);
+    opTxt=['Operator','Worm gear, '+fx(Do)+'" handwheel'];
+  }else{
+    var P=lv?lv[1]:leverL(n);
+    top.add(lever(P,y0+E*0.92));
+    opTxt=['Operator','Hand lever, '+fx(P)+'" long'];
+  }
+  top.rotation.z=Math.PI/2; g.add(top);
+  var dims=[['Nominal size',fnps(n)],['Class',cl],['Body thickness',fx(L)+'"'],
+    ['Body outside dia',fx(R*2)+'"'],['Bolt circle',fx(f[4])+'"'],
+    ['Type',lug?'Lugged, '+f[5]+' bosses':'Wafer'],opTxt];
+  if(geared) dims.push(['Overall height',fx(H1)+'"']);
+  return {g:g,std:'COTESO Series 85 / 88 / 98, API 609, Class '+cl,dims:dims};
+}
+/* ---------- forged Class 800, socket weld or threaded ---------- */
+function fEnds(n,L,g,sw){
+  var ro=RO(n),ri=RI(n),sd=(SW3000[n]?SW3000[n].J:0.5),bl=Math.max(sd*1.5,0.5);
+  [-1,1].forEach(function(s){
+    var y0=s>0?L/2-bl:-L/2, y1=s>0?L/2:-L/2+bl;
+    g.add(solid([[ri,y0],[ro*1.30,y0],[ro*1.30,y1],[sw?ro:ri,y1],[sw?ro:ri,s>0?y1-sd:y0+sd],[ri,s>0?y1-sd:y0+sd]]));
+  });
+  return bl;
+}
+function genForged(kind,n,sw){
+  var t=vlv(kind,800,n); if(!t) return null;
+  var L=t[0],d=t[1],H=t[2],W=t[3],g=G();
+  var bl=fEnds(n,L,g,sw), R=Math.max(d*0.5+0.30,RO(n)*1.15);
+  g.add(tube(d/2,R,-L/2+bl*0.9,L/2-bl*0.9));
+  var top=G(), fr=R*1.75;
+  if(kind==='check'){
+    top.add(solid([[0,H],[fr*0.86,H*0.72],[fr*0.94,H*0.30],[R*1.05,R*0.10],[0,R*0.10]]));
+    top.add(boltPlate(fr*1.62,Math.max(H*0.16,0.18),0.0001,fr*1.30,4,Math.max(n*0.14,0.26),H*0.72));
+  }else{
+    var body=new THREE.Mesh(new THREE.CylinderGeometry(R*1.18,R*1.55,fr*1.15,36),MAT.steel);
+    body.scale.z=0.62; body.position.y=fr*1.15/2-fr*0.52; top.add(body);
+    top.add(boltPlate(fr*1.55,Math.max(n*0.14,0.22),0.0001,fr*1.24,4,Math.max(n*0.11,0.20),fr*0.62));
+    vStem(n,fr*0.78,H,W,top);
+  }
+  top.rotation.z=Math.PI/2; g.add(top);
+  var nm={gate:'Gate',globe:'Globe',check:'Swing check'}[kind];
+  var dims=[['Nominal size',fnps(n)],['Class',800],['End to end',fx(L)+'"'],['Bore',fx(d)+'"'],
+    ['Ends',sw?'Socket weld, ASME B16.11':'NPT threaded, ASME B1.20.1']];
+  if(kind==='check') dims.push(['Centre to top of cover',fx(H)+'"'],['Operator','None']);
+  else dims.push(['Height, open',fx(H)+'"'],['Handwheel',fx(W)+'"']);
+  dims.push(['Body',nm+', bolted bonnet']);
+  return {g:g,std:'Neway E-FSV forged steel, API 602, Class 800',dims:dims};
+}
+function genBallForged(n,sw){
+  var t=VLV.ball800[n]; if(!t) return null;
+  var L=t[0],d=t[1],D=t[2],H=t[3],W=t[4],g=G();
+  var ro=RO(n),ri=RI(n),bl=Math.max((SW3000[n]?SW3000[n].J:0.5)*1.5,0.5);
+  g.add(solid([[d/2,-L*0.28],[D/2,-L*0.28],[D/2,L*0.28],[d/2,L*0.28]]));
+  [-1,1].forEach(function(s){
+    var y0=s>0?L*0.28:-L/2, y1=s>0?L/2:-L*0.28;
+    g.add(solid([[ri,y0],[ro*1.28,y0],[ro*1.28,y1],[sw?ro:ri,y1],[sw?ro:ri,s>0?y1-bl*0.6:y0+bl*0.6],[ri,s>0?y1-bl*0.6:y0+bl*0.6]]));
+  });
+  var ball=new THREE.Mesh(new THREE.SphereGeometry(d*0.62,30,20),MAT.trim); g.add(ball);
+  var top=G(), y0=D/2, yb=H-W*0.019;
+  top.add(solid([[0,y0],[D*0.26,y0],[D*0.22,H*0.72],[0,H*0.72]]));
+  var st=new THREE.Mesh(new THREE.CylinderGeometry(D*0.07,D*0.07,Math.max(yb-y0,0.3),14),MAT.trim);
+  st.position.y=(y0+yb)/2; top.add(st);
+  var bar=new THREE.Mesh(new THREE.BoxGeometry(Math.max(W*0.045,0.18),W*0.038,W),MAT.op);
+  bar.position.set(0,yb,W/2-D*0.3); top.add(bar);
+  var grip=new THREE.Mesh(new THREE.CylinderGeometry(W*0.026,W*0.026,W*0.26,14),MAT.op);
+  grip.rotation.x=Math.PI/2; grip.position.set(0,yb,W-D*0.3-W*0.13); top.add(grip);
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'COTESO Series 60 floating ball, Class 800',
+    dims:[['Nominal size',fnps(n)],['Class',800],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
+      ['Body diameter',fx(D)+'"'],['Centre to top',fx(H)+'"'],['Lever length',fx(W)+'"'],
+      ['Ends',sw?'Socket weld':'Female NPT'],['Body','Floating ball, two piece']]};
+}
+function genPlugValve(cl,n,end,op){
+  var t=vlv('gate',cl||150,n); if(!t) return null;
+  var L=t[0],d=t[1],g=G(),ro=RO(n),R=ro*1.55+0.35;
+  var e=vEnds(cl||150,n,L,d,g,end);                    /* real end connections */
+  vRunner(d,L,e,g);                                    /* flow bore between ends */
+  /* tapered plug body */
+  g.add(solid([[ro*0.98,-(L/2-e)],[ro*1.1,-(L/2-e)],[R,-L*0.16],[R,L*0.16],[ro*1.1,L/2-e],[ro*0.98,L/2-e]]));
+  var top=G(), y0=R*0.92;
+  top.add(solid([[0,y0],[R*0.78,y0],[R*0.62,y0+R*0.42],[0,y0+R*0.42]]));   /* plug top cover */
+  if(op==='lever'){
+    var P=Math.max(d*3.0,7);
+    var stub=new THREE.Mesh(new THREE.CylinderGeometry(Math.max(n*0.06,0.14),Math.max(n*0.06,0.14),R*0.5,16),MAT.trim);
+    stub.position.y=y0+R*0.55; top.add(stub);
+    top.add(lever(P,y0+R*0.75));
+  }else{
+    var W=wheelDia(n,150)*0.78, H=stemH(n,150)*0.62;
+    var st=new THREE.Mesh(new THREE.CylinderGeometry(n*0.06+0.13,n*0.06+0.13,H-y0,16),MAT.trim);
+    st.position.y=(y0+H)/2; top.add(st); top.add(handwheel(W,H));
+  }
+  top.rotation.z=Math.PI/2; g.add(top);
+  return {g:g,std:'Plug valve, ASME B16.10 end to end, Class '+(cl||150)+', '+endNm(end)+' ends',
+    dims:[['Nominal size',fnps(n)],['Class',cl||150],['End to end',fx(L)+'"'],['Port bore',fx(d)+'"'],
+      ['Connection',endNm(end)],['Operator',op==='lever'?'Hand lever':'Handwheel'],['Body','Lubricated / sleeved plug']],
+    note:'Operator envelope proportional; body per B16.10 face-to-face'};
+}
+/* ============================================================ CATALOG */
+function sizesOf(o){return Object.keys(o).map(parseFloat).sort(function(a,b){return a-b;});}
+function S1(list,f){return list.map(function(n){return {lab:fnps(n),f:function(){return f(n);}};});}
+function S2(pairs,f){return pairs.map(function(p){return {lab:fnps(p[0])+'\u00d7'+fnps(p[1]),f:function(){return f(p[0],p[1]);}};});}
+var RED_P=[[3,2],[4,3],[6,4],[8,6],[8,4],[10,8],[10,6],[12,10],[12,8],[14,12],[14,10],[16,12],[20,16],[24,20]];
+var TEER_P=[[4,3],[6,4],[8,6],[8,4],[8,3],[10,8],[10,6],[10,4],[12,10],[12,8],[16,12],[24,16]];
+var OLET_S=[[4,0.5],[4,0.75],[6,0.5],[6,0.75],[8,0.5],[8,0.75],[8,1],[10,0.5],[10,1],[12,1]];
+var OLET_W=[[8,4],[12,4],[16,4],[16,6]];
+
+var CAT=[
+ {grp:'Pipe',id:'PIPE',skey:'',name:'Pipe, seamless',sz:S1(sizesOf(PIPE),genPipe)},
+
+ {grp:'Butt weld fittings',id:'ELBW90',skey:'ELBW',name:'Elbow 90\u00b0 long radius',sz:S1([1,1.5,2,2.5,3,4,6,8,10,12,14,16,18,20,24],function(n){return genElbow(n,90);})},
+ {grp:'Butt weld fittings',id:'ELBW45',skey:'ELBW',name:'Elbow 45\u00b0 long radius',sz:S1(sizesOf(ELL45),function(n){return genElbow(n,45);})},
+ {grp:'Butt weld fittings',id:'TEBW',skey:'TEBW',name:'Tee, equal',sz:S1(sizesOf(TEE_C),function(n){return genTee(n,n);})},
+ {grp:'Butt weld fittings',id:'TEBWR',skey:'TEBW',name:'Tee, reducing',sz:S2(TEER_P,genTee)},
+ {grp:'Butt weld fittings',id:'RCBW',skey:'RCBW',name:'Reducer, concentric',sz:S2(RED_P,function(a,b){return genReducer(a,b,false);})},
+ {grp:'Butt weld fittings',id:'REBW',skey:'REBW',name:'Reducer, eccentric',sz:S2(RED_P,function(a,b){return genReducer(a,b,true);})},
+ {grp:'Butt weld fittings',id:'KABW',skey:'KABW',name:'Cap',sz:S1(sizesOf(CAP_E),genCap)},
+ {grp:'Butt weld fittings',id:'CSBW',skey:'CSBW',name:'Swage, concentric',sz:S2([[0.75,0.5],[1,0.5],[1,0.75],[1.5,0.75],[1.5,1],[2,1],[2,1.5],[2.5,1.5],[2.5,2],[3,1.5],[3,2]],genSwage)},
+
+ {grp:'Flanges',id:'FLWN150',skey:'FLWN',name:'Weld neck, Class 150 RF',sz:S1(sizesOf(FLG[150]),function(n){return genWN(150,n);})},
+ {grp:'Flanges',id:'FLWN300',skey:'FLWN',name:'Weld neck, Class 300 RF',sz:S1(sizesOf(FLG[300]),function(n){return genWN(300,n);})},
+ {grp:'Flanges',id:'FLWN600',skey:'FLWN',name:'Weld neck, Class 600 RF',sz:S1(sizesOf(FLG[600]),function(n){return genWN(600,n);})},
+ {grp:'Flanges',id:'FLSO150',skey:'FLSO',name:'Slip-on, Class 150 RF',sz:S1(sizesOf(FLG[150]),function(n){return genSO(150,n,false);})},
+ {grp:'Flanges',id:'FLSO300',skey:'FLSO',name:'Slip-on, Class 300 RF',sz:S1(sizesOf(FLG[300]),function(n){return genSO(300,n,false);})},
+ {grp:'Flanges',id:'FLSW150',skey:'FLSW',name:'Socket weld, Class 150 RF',sz:S1([0.5,0.75,1,1.5,2],function(n){return genSWflange(150,n);})},
+ {grp:'Flanges',id:'FLBL150',skey:'FLBL',name:'Blind, Class 150 RF',sz:S1(sizesOf(FLG[150]),function(n){return genBlind(150,n);})},
+ {grp:'Flanges',id:'FLBL300',skey:'FLBL',name:'Blind, Class 300 RF',sz:S1(sizesOf(FLG[300]),function(n){return genBlind(300,n);})},
+ {grp:'Flanges',id:'GKGA150',skey:'GKGA',name:'Gasket, spiral wound 150',sz:S1(sizesOf(FLG[150]),function(n){return genGasket(150,n);})},
+ {grp:'Flanges',id:'GKGA300',skey:'GKGA',name:'Gasket, spiral wound 300',sz:S1(sizesOf(FLG[300]),function(n){return genGasket(300,n);})},
+ {grp:'Flanges',id:'NZFL150',skey:'FOWN',name:'Equipment nozzle, 150',sz:S1(sizesOf(FLG[150]),function(n){return genNozzle(150,n);})},
+ {grp:'Flanges',id:'NZFL300',skey:'FOWN',name:'Equipment nozzle, 300',sz:S1(sizesOf(FLG[300]),function(n){return genNozzle(300,n);})},
+ {grp:'Flanges',id:'SBLT150',skey:'BLT',name:'Stud bolt set, Class 150',sz:S1(sizesOf(FLG[150]),function(n){return genStudBolts(150,n);})},
+ {grp:'Flanges',id:'SBLT300',skey:'BLT',name:'Stud bolt set, Class 300',sz:S1(sizesOf(FLG[300]),function(n){return genStudBolts(300,n);})},
+
+ {grp:'Socket weld and threaded',id:'ELSW',skey:'ELSW',name:'Elbow 90\u00b0, Class 3000 SW',sz:S1(sizesOf(SW3000),function(n){return genElbowSW(n,90);})},
+ {grp:'Socket weld and threaded',id:'ELSW45',skey:'ELSW',name:'Elbow 45\u00b0, Class 3000 SW',sz:S1(sizesOf(SW3000),function(n){return genElbowSW(n,45);})},
+ {grp:'Socket weld and threaded',id:'TESW',skey:'TESW',name:'Tee, Class 3000 SW',sz:S1(sizesOf(SW3000),genTeeSW)},
+ {grp:'Socket weld and threaded',id:'CO30',skey:'CPLG',name:'Coupling, full Class 3000',sz:S1(sizesOf(SW3000),function(n){return genCoupling(n,false);})},
+ {grp:'Socket weld and threaded',id:'HC30',skey:'HCPL',name:'Coupling, half Class 3000',sz:S1(sizesOf(SW3000),function(n){return genCoupling(n,true);})},
+ {grp:'Socket weld and threaded',id:'NRSC',skey:'NRSC',name:'Nipple, threaded',sz:S1([0.5,0.75,1,1.5,2],genNipple)},
+ {grp:'Socket weld and threaded',id:'PLUG',skey:'PL',name:'Plug, hex head',sz:S1([0.5,0.75,1,1.5,2],genPlug)},
+
+ {grp:'Branch connections',id:'THSW',skey:'THSW',name:'Sockolet, Class 3000',sz:S2([[4,1]].concat(OLET_S),genSockoletM)},
+ {grp:'Branch connections',id:'THSC',skey:'THSC',name:'Threadolet, Class 3000',sz:S2([[4,2]].concat(OLET_S),genThreadoletM)},
+ {grp:'Branch connections',id:'WTBW2',skey:'WTBW',name:'Weldolet, buttweld STD',sz:S2([[5,3]].concat(OLET_W),genWeldoletM)},
+
+ {grp:'Valves, flanged',id:'VTFL150',skey:'VTFL',name:'Gate, Class 150 RF',sz:S1(sizesOf(VLV.gate[150]),function(n){return genGate(150,n);})},
+ {grp:'Valves, flanged',id:'VTFL300',skey:'VTFL',name:'Gate, Class 300 RF',sz:S1(sizesOf(VLV.gate[300]),function(n){return genGate(300,n);})},
+ {grp:'Valves, flanged',id:'VTFL600',skey:'VTFL',name:'Gate, Class 600 RF',sz:S1(sizesOf(VLV.gate[600]),function(n){return genGate(600,n,'FL');})},
+ {grp:'Valves, flanged',id:'VTBW',skey:'VTBW',name:'Gate, Class 150 butt weld',sz:S1(sizesOf(VLV.gate[150]),function(n){return genGate(150,n,'BW');})},
+ {grp:'Valves, flanged',id:'VTSWc',skey:'VTSW',name:'Gate, Class 150 socket weld',sz:S1([0.5,0.75,1,1.5,2],function(n){return genGate(150,n,'SW');})},
+ {grp:'Valves, flanged',id:'VTSCc',skey:'VTSC',name:'Gate, Class 150 threaded',sz:S1([0.5,0.75,1,1.5,2],function(n){return genGate(150,n,'TH');})},
+ {grp:'Valves, flanged',id:'VGFL150',skey:'VGFL',name:'Globe, Class 150 RF',sz:S1(sizesOf(VLV.globe[150]),function(n){return genGlobe(150,n);})},
+ {grp:'Valves, flanged',id:'VGFL300',skey:'VGFL',name:'Globe, Class 300 RF',sz:S1(sizesOf(VLV.globe[300]),function(n){return genGlobe(300,n);})},
+ {grp:'Valves, flanged',id:'VBFL150',skey:'VBFL',name:'Ball, Class 150 RF',sz:S1(sizesOf(VLV.gate[150]),function(n){return genBallFlanged(150,n);})},
+ {grp:'Valves, flanged',id:'VBFL300',skey:'VBFL',name:'Ball, Class 300 RF',sz:S1(sizesOf(VLV.gate[300]),function(n){return genBallFlanged(300,n);})},
+ {grp:'Valves, flanged',id:'VPBW',skey:'VPBW',name:'Plug, butt weld, lever',sz:S1([1,1.5,2,2.5,3,4,6,8],function(n){return genPlugValve(150,n,'BW','lever');})},
+ {grp:'Valves, flanged',id:'VPFL',skey:'VPFL',name:'Plug, flanged, lever',sz:S1([1,1.5,2,2.5,3,4,6,8],function(n){return genPlugValve(150,n,'FL','lever');})},
+ {grp:'Manufacturer models',id:'MVPFL',skey:'VPFL',name:'Plug, Nordstrom Fig 143',sz:S1([1,1.5,2,2.5,3,4],genPlugNordstrom)},
+ {grp:'Valves, flanged',id:'RAFL',skey:'RAFL',name:'Relief valve, spring',sz:S1([1,1.5,2,3,4,6],genReliefValve)},
+ {grp:'Valves, flanged',id:'IIBW',skey:'IIBW',name:'Inline instrument',sz:S1([1,1.5,2,3,4,6,8],function(n){return genInlineInstr(150,n);})},
+
+ {grp:'Butterfly valves',id:'VYFL150',skey:'VYFL',name:'Wafer, Class 150',sz:S1(sizesOf(VLV.bfly[150]),function(n){return genButterfly(150,n,false);})},
+ {grp:'Butterfly valves',id:'VYLG150',skey:'VYFL',name:'Lugged, Class 150',sz:S1(sizesOf(VLV.bfly[150]),function(n){return genButterfly(150,n,true);})},
+ {grp:'Butterfly valves',id:'VYFL300',skey:'VYFL',name:'Wafer, Class 300',sz:S1(sizesOf(VLV.bfly[300]),function(n){return genButterfly(300,n,false);})},
+
+ {grp:'Valves, forged Class 800',id:'VTSW',skey:'VTSW',name:'Gate, socket weld',sz:S1(sizesOf(VLV.gate[800]),function(n){return genForged('gate',n,true);})},
+ {grp:'Valves, forged Class 800',id:'VTSC',skey:'VTSC',name:'Gate, threaded',sz:S1(sizesOf(VLV.gate[800]),function(n){return genForged('gate',n,false);})},
+ {grp:'Valves, forged Class 800',id:'VGSW',skey:'VGSW',name:'Globe, socket weld',sz:S1(sizesOf(VLV.globe[800]),function(n){return genForged('globe',n,true);})},
+ {grp:'Valves, forged Class 800',id:'VBSW',skey:'VBSW',name:'Ball, socket weld',sz:S1(sizesOf(VLV.ball800),function(n){return genBallForged(n,true);})},
+ {grp:'Valves, forged Class 800',id:'VBSC',skey:'VBSC',name:'Ball, threaded',sz:S1(sizesOf(VLV.ball800),function(n){return genBallForged(n,false);})},
+
+ {grp:'Manufacturer models',id:'MVTFL',skey:'VTFL',name:'Gate, AVK resilient seat',sz:[100,150,200,250,300].map(function(dn){return {lab:'DN'+dn,f:function(){return genGateAVK(dn);}};})},
+ {grp:'Manufacturer models',id:'MVGFL',skey:'VGFL',name:'Globe, Bonney Forge 1-31 RF',sz:S1([2,2.5,3,4,6,8],genGlobeBF)},
+ {grp:'Manufacturer models',id:'MVCFL',skey:'VCFL',name:'Check, Bonney Forge 1-61 RF',sz:S1([4,6,8,10,12,16],genCheckBF)},
+ {grp:'Manufacturer models',id:'MVBFL',skey:'VBFL',name:'Ball, DP-3k welded body',sz:[80,100,150,200,250].map(function(dn){return {lab:'DN'+dn,f:function(){return genBallDP(dn);}};})},
+ {grp:'Manufacturer models',id:'MVYFL',skey:'VYFL',name:'Butterfly, uPVC Comer BUT 10',sz:[63,75,90,110,160,225].map(function(d){return {lab:'Ø'+d,f:function(){return genBflyComer(d);}};})},
+
+ {grp:'Supports',id:'DUCK',skey:'DUCK',name:'Dummy leg, welded',sz:S1([2,3,4,6,8,10,12],genDummyLeg)},
+ {grp:'Supports',id:'01HG',skey:'01HG',name:'Pipe shoe / rest',sz:S1([2,3,4,6,8,10,12,14,16],genPipeShoe)},
+ {grp:'Supports',id:'ANCH',skey:'ANCH',name:'Anchor / stanchion',sz:S1([2,3,4,6,8,10,12,14,16],genAnchor)},
+ {grp:'Supports',id:'SPRG',skey:'SPRG',name:'Spring hanger',sz:S1([2,3,4,6,8,10,12],genSpringHanger)},
+ {grp:'Supports',id:'20BL',skey:'20BL',name:'Pipe clamp / U-bolt rest',sz:S1([2,3,4,6,8,10,12,14,16],genPipeClamp)},
+
+ {grp:'Plates',id:'SB',skey:'SB',name:'Spectacle blind, Class 300',sz:S1([3,4,6,8,10,12],function(n){return genSpecBlind(300,n);})},
+ {grp:'Plates',id:'OP',skey:'OP',name:'Orifice plate, Class 300',sz:S1([3,4,6,8,10,12],function(n){return genOrificePlate(300,n);})}
+];
+
+/* ============================================================ SCENE */
+var scene,cam,rnd,root,clip,spin=true,cut=false,wire=false;
+var cur={ci:0,si:0}, theta=-0.72, phi=1.18, dist=40, target=new THREE.Vector3();
+function initScene(){
+  var cv=document.getElementById('cv');
+  rnd=new THREE.WebGLRenderer({canvas:cv,antialias:true});
+  rnd.setPixelRatio(Math.min(devicePixelRatio,2));
+  rnd.localClippingEnabled=true;
+  scene=new THREE.Scene(); scene.background=new THREE.Color(0x0d1117);
+  cam=new THREE.PerspectiveCamera(38,1,0.1,4000);
+  scene.add(new THREE.HemisphereLight(0xdfe8f2,0x2a3038,0.85));
+  var k=new THREE.DirectionalLight(0xffffff,0.85); k.position.set(1,1.6,1.1); scene.add(k);
+  var f=new THREE.DirectionalLight(0x9fc4ea,0.35); f.position.set(-1.2,0.4,-1); scene.add(f);
+  root=new THREE.Group(); scene.add(root);
+  clip=new THREE.Plane(new THREE.Vector3(0,0,1),0);
+  initMat();
+  addEventListener('resize',resize); resize();
+  var d=false,px=0,py=0,btn=0;
+  cv.addEventListener('pointerdown',function(e){d=true;btn=e.button;px=e.clientX;py=e.clientY;cv.setPointerCapture(e.pointerId);});
+  cv.addEventListener('pointerup',function(e){d=false;});
+  cv.addEventListener('pointermove',function(e){
+    if(!d)return; var dx=e.clientX-px,dy=e.clientY-py; px=e.clientX;py=e.clientY;
+    if(btn===2){var s=dist*0.0016; target.x-=dx*s; target.y+=dy*s;}
+    else{theta-=dx*0.008; phi=Math.max(0.12,Math.min(Math.PI-0.12,phi-dy*0.008)); spin=false; setChip('bSpin',false);}
+  });
+  cv.addEventListener('contextmenu',function(e){e.preventDefault();});
+  cv.addEventListener('wheel',function(e){e.preventDefault();dist*=(e.deltaY>0?1.09:0.917);},{passive:false});
+}
+function resize(){
+  var v=document.getElementById('view');
+  rnd.setSize(v.clientWidth,v.clientHeight,false);
+  cam.aspect=v.clientWidth/v.clientHeight; cam.updateProjectionMatrix();
+}
+function setChip(id,on){document.getElementById(id).classList.toggle('on',on);}
+function applyStyle(){
+  for(var k in MAT){MAT[k].wireframe=wire; MAT[k].clippingPlanes=cut?[clip]:[]; MAT[k].needsUpdate=true;}
+}
+function fit(){
+  var b=new THREE.Box3().setFromObject(root); if(b.isEmpty())return;
+  var c=b.getCenter(new THREE.Vector3()), s=b.getSize(new THREE.Vector3());
+  target.copy(c); dist=Math.max(s.x,s.y,s.z)*1.95+3;
+}
+function build(){
+  while(root.children.length) root.remove(root.children[0]);
+  var c=CAT[cur.ci], e=c.sz[Math.min(cur.si,c.sz.length-1)], r=null;
+  try{ r=e.f(); }catch(err){ console.error(err); }
+  if(!r){ document.getElementById('info').innerHTML='<h4>Not available</h4>'; return; }
+  var g=r.g; if(!r.noRot) g.rotation.z=-Math.PI/2;
+  root.add(g); fit(); applyStyle();
+  var h='<h4>'+c.name+'  <span style="color:var(--dim)">'+e.lab+(c.skey?'  \u00b7  SKEY '+c.skey:'')+'</span></h4><table>';
+  r.dims.forEach(function(d){h+='<tr><td>'+d[0]+'</td><td class="v">'+d[1]+'</td></tr>';});
+  h+='</table><div id="src">Dimensions from <b>'+r.std+'</b>'+(r.note?'<br>'+r.note:'')+'</div>';
+  document.getElementById('info').innerHTML=h;
+}
+function drawList(){
+  var L=document.getElementById('list'),h='',g0='';
+  CAT.forEach(function(c,i){
+    if(c.grp!==g0){h+='<div class="grp">'+c.grp+'</div>';g0=c.grp;}
+    h+='<div class="it'+(i===cur.ci?' on':'')+'" data-i="'+i+'"><span class="sk">'+(c.skey||'\u2014')+'</span><span class="nm">'+c.name+'</span></div>';
+  });
+  L.innerHTML=h;
+  Array.prototype.forEach.call(L.querySelectorAll('.it'),function(el){
+    el.onclick=function(){cur.ci=+el.dataset.i;cur.si=Math.min(cur.si,CAT[cur.ci].sz.length-1);drawList();drawSizes();build();};
+  });
+}
+function drawSizes(){
+  var S=document.getElementById('sizes'),c=CAT[cur.ci],h='';
+  c.sz.forEach(function(s,i){h+='<button class="chip'+(i===cur.si?' on':'')+'" data-i="'+i+'">'+s.lab+'</button>';});
+  S.innerHTML=h;
+  Array.prototype.forEach.call(S.querySelectorAll('.chip'),function(el){
+    el.onclick=function(){cur.si=+el.dataset.i;drawSizes();build();};
+  });
+}
+function loop(){
+  requestAnimationFrame(loop);
+  if(spin) theta+=0.0042;
+  cam.position.set(target.x+dist*Math.sin(phi)*Math.cos(theta),target.y+dist*Math.cos(phi),target.z+dist*Math.sin(phi)*Math.sin(theta));
+  cam.lookAt(target); rnd.render(scene,cam);
+}
+(function(){
+  initScene();
+  document.getElementById('bCut').onclick=function(){cut=!cut;setChip('bCut',cut);applyStyle();};
+  document.getElementById('bWire').onclick=function(){wire=!wire;setChip('bWire',wire);applyStyle();};
+  document.getElementById('bSpin').onclick=function(){spin=!spin;setChip('bSpin',spin);};
+  document.getElementById('bFit').onclick=function(){fit();};
+  cur.ci=CAT.findIndex(function(c){return c.id==='FLWN300';}); if(cur.ci<0)cur.ci=0; cur.si=7;
+  drawList(); drawSizes(); build(); loop();
+})();
+</script></body></html>
