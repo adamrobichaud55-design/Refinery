@@ -1440,7 +1440,7 @@ function vRunner(d,L,e,g,mat){
 }
 /* Half length along the flow a body may take without cutting into the
    end connections: inside the flange plate, or inside the weld end. */
-function vRoom(cl,n,L,e,end){return L/2-((end&&end!=='FL')?e:flgT(cl,n)+0.08);}
+function vRoom(cl,n,L,e,end){return L/2-((end&&end!=='FL')?Math.min(e,L*0.18):flgT(cl,n)+0.08);}
 /* Lathe about +Y with the profile radius normalised to 1, stretched to
    half widths ax along the flow (top-group X) and az across it (Z). */
 function oval(pts,ax,az,mat,seg){var m=solid(pts,mat,seg||48);m.scale.set(ax,1,az);return m;}
@@ -1587,11 +1587,11 @@ function genGate(cl,n,end){
   var e=vEnds(cl,n,L,d,g,end,M), ro=vRunner(d,L,e,g,M);
   var u=flg(cl,n)[0], room=vRoom(cl,n,L,e,end), top=G();
   /* boxy wedge body, rounded bottom, cast rib down front and back */
-  var hx=Math.min(u*0.40,room), az=Math.max(u*0.28,ro*1.08), yt=u*0.52;
-  top.add(oval([[0,-u*0.48],[0.7,-u*0.47],[0.95,-u*0.38],[1,-u*0.24],[1,yt],[0,yt]],hx,az,M));
+  var hx=Math.min(u*0.40,room), az=Math.max(u*0.28,ro*1.15), yt=u*0.52, bz=Math.max(u*0.48,ro*1.2);
+  top.add(oval([[0,-bz],[0.7,-bz*0.98],[0.95,-bz*0.79],[1,-bz*0.5],[1,yt],[0,yt]],hx,az,M));
   [-1,1].forEach(function(s){
-    var r=new THREE.Mesh(new THREE.BoxGeometry(hx*0.30,u*0.86,u*0.04),M);
-    r.position.set(0,yt-u*0.43,s*az); top.add(r);
+    var r=new THREE.Mesh(new THREE.BoxGeometry(hx*0.30,yt+bz*0.79,u*0.04),M);
+    r.position.set(0,(yt-bz*0.79)/2,s*az); top.add(r);
   });
   /* body and bonnet flanges, rounded oblong, eight studs */
   var fw=Math.min(u*1.0,L*0.9), fd=u*0.64, ft=u*0.07, y1=yt;
@@ -1625,8 +1625,8 @@ function genGate(cl,n,end){
    Returns the top of the bonnet flange. */
 function globeBody(cl,n,L,e,end,ro,M,top){
   var u=flg(cl,n)[0], room=vRoom(cl,n,L,e,end);
-  var hx=Math.min(u*0.42,room), az=Math.max(Math.min(u*0.40,room),ro*1.08);
-  top.add(oval([[0,-u*0.47],[0.6,-u*0.45],[0.9,-u*0.33],[1,-u*0.12],[0.97,u*0.12],[0.85,u*0.35],[0.72,u*0.55],[0,u*0.55]],hx,az,M));
+  var hx=Math.min(Math.max(u*0.42,ro*1.3),room), az=Math.min(Math.max(u*0.40,ro*1.3),room), bz=Math.max(u*0.47,ro*1.25);
+  top.add(oval([[0,-bz],[0.6,-bz*0.957],[0.9,-bz*0.70],[1,-bz*0.255],[0.97,u*0.12],[0.85,u*0.35],[0.72,u*0.55],[0,u*0.55]],hx,az,M));
   var rf=u*0.47, ft=u*0.105, y1=u*0.55;
   top.add(boltPlate(rf*2,ft,u*0.05,rf*1.7,8,u*0.05,y1,M));
   top.add(boltPlate(rf*1.96,ft,u*0.05,rf*1.7,8,u*0.05,y1+ft,M));
@@ -1685,8 +1685,8 @@ function genCheck(cl,n,end){
   var e=vEnds(cl,n,L,d,g,end,M), ro=vRunner(d,L,e,g,M);
   var u=flg(cl,n)[0], room=vRoom(cl,n,L,e,end), top=G();
   /* round bellied body under a bolted cover */
-  var hx=Math.min(u*0.44,room), az=Math.max(u*0.42,ro*1.1), y1=u*0.58;
-  top.add(oval([[0,-u*0.42],[0.55,-u*0.40],[0.88,-u*0.27],[1,-u*0.05],[0.97,u*0.15],[0.86,u*0.36],[0.80,y1],[0,y1]],hx,az,M));
+  var hx=Math.min(Math.max(u*0.44,ro*1.3),room*0.95), az=Math.max(u*0.42,ro*1.3), y1=u*0.58, bz=Math.max(u*0.42,ro*1.3);
+  top.add(oval([[0,-bz],[0.55,-bz*0.95],[0.88,-bz*0.64],[1,-bz*0.12],[0.97,u*0.15],[0.86,u*0.36],[0.80,y1],[0,y1]],hx,az,M));
   var fw=Math.min(u*1.0,L*0.92), fd=u*0.78, ft=u*0.13;
   top.add(rbox(fw,fd,ft,y1,u*0.2,M)); top.add(rbox(fw*0.98,fd*0.98,ft,y1+ft,u*0.2,M));
   studsAt(rectPts(fw,fd,u*0.08),u*0.024,y1,y1+ft*2,top);
@@ -1861,15 +1861,17 @@ function genPlugValve(cl,n,end,op){
   var e=vEnds(cl,n,L,d,g,end,M), ro=vRunner(d,L,e,g,M);
   var u=flg(cl,n)[0], room=vRoom(cl,n,L,e,end);
   /* round necks from the ends into a tall plug housing, wide end up */
-  var Rp=Math.min(u*0.26,room*0.95), Rn=Math.max(Math.min(u*0.24,room*0.9),ro);
+  var fl=(!end||end==='FL'), lim=fl?room:L/2;
+  var Rn=Math.max(Math.min(u*0.24,room*0.9),ro), Rp=Math.max(u*0.26,Rn*1.15), px=Math.min(Rp,lim*0.98);
+  var bz=Math.max(u*0.43,Rn*1.25);
   g.add(tube(d/2,Rn,-room,room,M));
   var top=G();
-  top.add(solid([[0,-u*0.43],[Rp*0.7,-u*0.43],[Rp*0.95,-u*0.38],[Rp,-u*0.30],[Rp*1.06,u*0.40],[0,u*0.40]],M,48));
-  /* round cover flange stack with six studs */
-  var rs=Math.min(u*0.37,room*0.96), ft=u*0.14;
-  top.add(solid([[0,u*0.40],[rs,u*0.40],[rs,u*0.40+ft],[0,u*0.40+ft]],M,48));
-  top.add(solid([[0,u*0.40+ft],[rs*0.97,u*0.40+ft],[rs*0.97,u*0.40+ft*2],[0,u*0.40+ft*2]],M,48));
-  ringStuds(6,rs*0.84,rs*0.84,u*0.02,u*0.40,u*0.40+ft*2,top);
+  top.add(oval([[0,-bz],[0.7,-bz],[0.95,-bz*0.88],[1,-bz*0.7],[1.06,u*0.40],[0,u*0.40]],px,Rp,M));
+  /* cover flange stack with six studs, oval where the end flanges crowd it */
+  var rz=Math.max(u*0.37,Rp*1.2), rx=Math.min(rz,lim*0.96), ft=u*0.14;
+  top.add(oval([[0,u*0.40],[1,u*0.40],[1,u*0.40+ft],[0,u*0.40+ft]],rx,rz,M));
+  top.add(oval([[0,u*0.40+ft],[0.97,u*0.40+ft],[0.97,u*0.40+ft*2],[0,u*0.40+ft*2]],rx,rz,M));
+  ringStuds(6,rx*0.84,rz*0.84,u*0.02,u*0.40,u*0.40+ft*2,top);
   /* stem boss and a lever along the pipe */
   var yc=u*0.40+ft*2, yb=u*0.93;
   top.add(solid([[0,yc],[u*0.12,yc],[u*0.12,yb-u*0.02],[u*0.105,yb],[0,yb]],M,32));
