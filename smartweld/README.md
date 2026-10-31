@@ -8,7 +8,7 @@ Clean-room build. Read `DESIGN_BASIS.md` (every rule with its reason) and `PROVE
 | Stage | Scope                                                   | Status  |
 |-------|---------------------------------------------------------|---------|
 | 1     | Structural sections, plates, connection hardware, welds | done    |
-| 2     | Building shell (frame, cold-formed framing, cladding, roof, doors) | next |
+| 2     | Building shell (frame, cold-formed framing, cladding, roof, doors) | done |
 | 3     | Interior: equipment, pipe rack, platforms, access steel  | pending (needs eCFR access) |
 | 4     | Valves                                                  | pending |
 | 5     | Piping and routing                                      | pending (needs user decision on pipe/flange interface sourcing) |
@@ -21,7 +21,7 @@ npm install
 npm test          # rule and geometry tests (vitest)
 npm run typecheck
 npm run dev       # viewer at http://127.0.0.1:5173/
-npm run screenshot  # headless-browser verification → screenshots/stage1/
+npm run screenshot -- screenshots/stageN  # headless-browser verification
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
@@ -36,9 +36,16 @@ src/core               units, dimension basis tags, physical constants
 src/catalogue          designation parser and part rules → PartSpec (plain data)
 src/geometry           profiles, extrusion, transforms → mesh arrays (plain data)
 src/scene              catalogue list and demonstration assemblies (plain data)
+src/generator          building shell generator → placed parts (plain data) and bill of materials
 src/viewer             three.js browser viewer (rendering only)
 tests                  vitest rule/geometry/audit tests
 tools/screenshot.mjs   Playwright verification
 ```
 
 The same `PartSpec` + transform data drives the 3D view and (stage 6) the ground-truth export.
+
+## Viewer
+
+The building views render the generated plant; click the 3D view to walk (W A S D, mouse look,
+Shift to run, Esc to release). The right panel lists the values derived by rule and the bill of
+materials computed from the same placed-part list that the 3D view draws.

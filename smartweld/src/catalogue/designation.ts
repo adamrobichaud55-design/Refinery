@@ -14,7 +14,11 @@ export type Designation =
   | { kind: 'B'; d: number; L: number }
   | { kind: 'AR'; d: number; L: number }
   | { kind: 'FW'; leg: number }
-  | { kind: 'GW'; t: number };
+  | { kind: 'GW'; t: number }
+  | { kind: 'Z'; D: number; B: number; t: number }
+  | { kind: 'CS'; D: number; B: number; t: number }
+  | { kind: 'RD'; d: number }
+  | { kind: 'PNL'; ribH: number; cover: number };
 
 const NUM = String.raw`(\d+(?:[-\s]\d+\/\d+|\/\d+|\.\d+)?|\.\d+)`;
 const rx = (prefix: string, n: number, lastOptional = false) => {
@@ -29,6 +33,10 @@ export function parseDesignation(input: string): Designation {
   const s = input.replace(/\s+/g, '').replace(/×/g, 'x');
   let m: RegExpExecArray | null;
   if ((m = rx('W', 2).exec(s))) return { kind: 'W', D: n(m[1]), w: n(m[2]) };
+  if ((m = rx('CS', 3).exec(s))) return { kind: 'CS', D: n(m[1]), B: n(m[2]), t: n(m[3]) };
+  if ((m = rx('Z', 3).exec(s))) return { kind: 'Z', D: n(m[1]), B: n(m[2]), t: n(m[3]) };
+  if ((m = rx('RD', 1).exec(s))) return { kind: 'RD', d: n(m[1]) };
+  if ((m = rx('PNL', 2).exec(s))) return { kind: 'PNL', ribH: n(m[1]), cover: n(m[2]) };
   if ((m = rx('C', 2).exec(s))) return { kind: 'C', D: n(m[1]), w: n(m[2]) };
   if ((m = rx('L', 3).exec(s))) return { kind: 'L', a: n(m[1]), b: n(m[2]), t: n(m[3]) };
   if ((m = rx('HSS', 3).exec(s))) return { kind: 'HSS_RECT', H: n(m[1]), B: n(m[2]), t: n(m[3]) };
@@ -59,5 +67,9 @@ export function formatDesignation(d: Designation): string {
     case 'AR': return `AR${f(d.d)}x${f(d.L)}`;
     case 'FW': return `FW${f(d.leg)}`;
     case 'GW': return `GW${f(d.t)}`;
+    case 'Z': return `Z${f(d.D)}x${f(d.B)}x${Number(d.t.toFixed(4))}`;
+    case 'CS': return `CS${f(d.D)}x${f(d.B)}x${Number(d.t.toFixed(4))}`;
+    case 'RD': return `RD${f(d.d)}`;
+    case 'PNL': return `PNL${d.ribH}x${d.cover}`;
   }
 }

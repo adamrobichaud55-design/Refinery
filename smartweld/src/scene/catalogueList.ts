@@ -1,5 +1,6 @@
 /** The stage-1 catalogue entries shown in the viewer. Designations are examples typed as a drawing would state them. */
-import { makePart, makeBasePlate, makeAnchorRod, makeStiffener, makeGusset, proportionW, type PartSpec } from '../catalogue';
+import { makePart, makeBasePlate, makeAnchorRod, makeStiffener, makeGusset, proportionW, makeTrim, makeFilletWeldAround, type PartSpec } from '../catalogue';
+import { wProfile } from '../geometry/profiles';
 
 export interface Entry { group: string; label: string; build: () => PartSpec }
 
@@ -22,6 +23,13 @@ export const ENTRIES: Entry[] = [
   { group: 'Hardware', label: 'B3/4x2-1/2 (grip 1-1/2)', build: () => { const p = makePart('B1', 'B3/4x2-1/2'); p.dims.grip = { value: 1.5, unit: 'in', basis: { kind: 'drawing' }, label: 'Grip' }; return p; } },
   { group: 'Hardware', label: 'B1x4 (grip 3)', build: () => { const p = makePart('B2', 'B1x4'); p.dims.grip = { value: 3, unit: 'in', basis: { kind: 'drawing' }, label: 'Grip' }; return p; } },
   { group: 'Hardware', label: 'Anchor rod (for the W10x49 base)', build: () => { const bp = makeBasePlate('BP-1', { column: proportionW(10, 49) }); return makeAnchorRod('AR-1', { basePlateT: bp.dims.t.value, groutT: bp.dims.grout.value, plateWasherT: bp.dims.washerT.value }); } },
+  { group: 'Cold-formed', label: 'Z10x2.5x5/64 (purlin)', build: () => makePart('Z1', 'Z10x2.5x0.078125', 120) },
+  { group: 'Cold-formed', label: 'CS10x2.5x5/64 (eave strut)', build: () => makePart('CS1', 'CS10x2.5x0.078125', 120) },
+  { group: 'Cold-formed', label: 'RD3/4 bracing rod', build: () => makePart('RD1', 'RD3/4', 120) },
+  { group: 'Sheet', label: 'Wall/roof panel PNL1.25x36', build: () => makePart('PNL1', 'PNL1.25x36', 120) },
+  { group: 'Sheet', label: 'Corner trim 4x4', build: () => makeTrim('CT', 'corner', 4, 4, 60) },
+  { group: 'Sheet', label: 'Ridge cap 12x12 (1:12)', build: () => makeTrim('RC', 'ridge cap', 12, 12, 60, undefined, undefined, Math.atan(1 / 12)) },
   { group: 'Weld', label: 'FW1/4 × 12 in', build: () => makePart('FW1', 'FW1/4', 12) },
+  { group: 'Weld', label: 'Fillet all around W10x49', build: () => makeFilletWeldAround('FWA', wProfile(proportionW(10, 49)), 0.5) },
   { group: 'Weld', label: 'GW1/2 × 12 in', build: () => makePart('GW1', 'GW1/2', 12) },
 ];

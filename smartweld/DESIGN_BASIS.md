@@ -320,3 +320,168 @@ they appear in the bill of materials and in the ground-truth export.
 - Every dimension carries a basis; every `rule:` basis names a rule ID that exists in this
   file.
 - Bolt assemblies: SW-B-7 length ≥ grip + washer + nut + d/4.
+
+---
+
+# Stage 2 — Building shell (frame, cold-formed framing, cladding, roof, doors)
+
+Written before any stage-2 code. The generator's building is described by a drawing block
+whose values carry basis `drawing` (they are inputs the user can change); everything the
+generator derives from them carries a rule below.
+
+## 13. Building drawing block (`SW-BLD-*`)
+
+- `SW-BLD-1` The building drawing states: width W out-to-out of the steel line, length L,
+  number of bays and bay spacing, eave height He, roof slope (rise per 12), roof gravity
+  design load (includes snow), wall design pressure, floor slab thickness, steel grades for
+  hot-rolled, cold-formed and sheet steel, bolt tensile strength, and the door schedule.
+  Demonstration plant values: W = 80 ft, 8 bays at 25 ft (L = 200 ft), He = 30 ft, slope
+  1:12, roof gravity load 30 psf, wall pressure 20 psf, slab 6 in, Grade 36 hot-rolled
+  (SW-MAT-1), "Grade 50" cold-formed and sheet (F_y = 50 ksi, the number in the grade name),
+  bolts "Grade 90" (F_u = 90 ksi). Reason: inputs, stated so they can be reviewed; wind and
+  seismic are not analysed in this stage (noted, not hidden).
+- `SW-BLD-2` A frame line at every bay line, including both end walls; the gable is
+  symmetric with the ridge at mid-width; columns stand with their outside flange face on
+  the steel line; girts and purlins by-pass the columns and rafters on their outside so the
+  cladding is a continuous flat plane. Reason: continuous by-pass framing makes a flat,
+  simple wall and roof surface.
+- `SW-BLD-4` Endwall wind posts: W sections at 20 ft spacing along each end wall (at
+  z = ±20 ft for the 80 ft plant), from a base plate (SW-BP-*) to the rafter underside, with
+  nominal depth roundup(height / 36, 2 in) and weight by the SW-PF-3 search for
+  M = w h² / 8 where w = wall pressure × 20 ft tributary width. The post-to-rafter
+  connection hardware is not modeled in this stage (stated). Endwall girts span between
+  posts and corner columns. Reason: an 80 ft endwall cannot be girted in one span; posts at
+  20 ft keep endwall girts within the sidewall girt rule.
+- `SW-BLD-3` Floor slab: a concrete slab of the stated thickness, top at elevation 0,
+  extending 6 in beyond the steel line. Column bases sit on the slab with the grout bed of
+  SW-BP-5. Non-steel; not in the steel bill of materials.
+
+## 14. Primary frames (`SW-PF-*`)
+
+Preliminary proportioning for a visual-reference model; not a structural design.
+
+- `SW-PF-1` Rafter nominal depth D = roundup(W / 40, 2 in) (W in inches). Reason: a depth
+  near 1/40 of the gable span (1/20 of each rafter's half-span) gives a frame stiff enough
+  to limit sway and roof sag; deeper members save weight but cost headroom.
+- `SW-PF-2` Frame gravity load per foot: w = (roof design load + roof dead load) × bay
+  spacing, where the roof dead load is computed from the model's own purlins and panels
+  (SW-CL-1, SW-CF-5) plus a 10 % allowance for the rafter and connections. Design moment
+  for rafter and knee: M = w W² / 12. Reason: the fixed-end moment of a uniformly loaded
+  span; a portal frame with continuous knees approaches it, and because pinned bases shift
+  moment from the knee to the ridge, using the fixed-end value for both rafter and column
+  covers the envelope within the accuracy of this preliminary rule.
+- `SW-PF-3` Required plastic modulus Z = M / (0.9 F_y). The drawn W section's plastic modulus
+  is Z = bf tf (d − tf) + tw (d − 2tf)² / 4 (fillets ignored). The rafter weight is the
+  lightest whole lb/ft at depth D (starting from the family reference member) whose Z meets
+  the requirement, rounded up to a multiple of 5 lb/ft. Reason: equilibrium of the plastic
+  stress blocks; 0.9 is the SmartWeld bending resistance factor; the 5 lb/ft step keeps the
+  plant's distinct sizes few.
+- `SW-PF-4` Columns use the rafter section. Reason: equal depth makes the end-plate knee a
+  direct flange-to-flange joint and the knee moment is the same in both members; the axial
+  load of the column is small relative to its bending at this span.
+- `SW-PF-5` Knee and ridge joints are bolted end plates with no haunch (a stated
+  simplification). End plate: thickness roundup(max(3/4 in, 1.25 tf), SW-PL-2), width
+  bf + 1 in, bolts in 4 rows of 2 — two rows outside each flange and two inside — at
+  1.75 in from the flange faces, with gauge roundup(max(bf / 2, 3 d_b), 1/2 in); plate length
+  = d + 2 (1.75 in + 1.5 d_b) rounded up to 1/2 in. Bolt diameter: the four bolts nearest
+  the tension flange share the flange force T = M / d; per bolt T/4 ≤ 0.75 A_b F_u gives
+  A_b, hence d_b = roundup(√(4 A_b / π), 1/8 in), minimum 3/4 in. Reason: a 1.25 tf plate
+  keeps prying small; 1.75 in from the flange face clears a socket; 0.75 is the SmartWeld
+  tension resistance factor for threads in the tensile area (A_b taken on the nominal
+  diameter, which is conservative).
+- `SW-PF-6` Base plates by SW-BP-* with bearing pressure f_p = P / (N B), P = w W / 2 (the
+  gravity reaction of one column). Anchor rods by SW-AR-*.
+- `SW-PF-7` Column-to-base-plate weld: a fillet weld all around the column profile, sized by
+  SW-WD-1 with t_thin = min(tw, tf, t_plate). Modeled as a loft from the profile outline
+  offset outward by the leg on the plate to the outline at leg height on the column.
+- `SW-PF-8` Rod bracing: in the first and last bay of each sidewall, X-bracing rods from the
+  column bases to the eave; in the roof of the same bays, X-bracing rods between the
+  rafters from the eave to the ridge. Rod diameter 3/4 in. Reason: the end bays of a
+  bay-framed building are braced to carry longitudinal load to the foundations; 3/4 in is
+  the smallest rod that is stiff enough to be useful and robust against accidental damage;
+  wind is not analysed in this stage, so this is a proportion, not a design.
+
+## 15. Cold-formed framing (`SW-CF-*`)
+
+- `SW-CF-1` Grammar: Z section `Z{D}x{B}x{t}` and C section `CS{D}x{B}x{t}`: depth D, flange
+  width B, sheet thickness t stated. Lip length = roundup(0.3 B, 1/8 in). Inside bend radius
+  = 1.5 t, outside = 2.5 t (the cold-forming reasoning of SW-HSS-2). Reason: a stiffening
+  lip about 30 % of the flange width keeps the flange edge from buckling locally.
+- `SW-CF-2` Z sections have equal flanges; laps at supports are not modeled (stated).
+- `SW-CF-3` Gross section properties (I, S about the strong axis) are computed from the
+  drawn profile polygon by exact polygon integration; no effective-width reduction is
+  applied (stated simplification).
+- `SW-CF-4` Purlin spacing ≤ 5 ft measured along the slope, with the first purlin 1 ft from
+  the ridge and the last at the eave strut; girt spacing ≤ 7.5 ft, first girt at 7.5 ft
+  above the floor, last at the eave strut. Eave strut: a CS section of the girt size.
+  Reason: the panel of SW-CL-1 spans 5 ft (checked by SW-CL-3); girts at 7.5 ft keep the
+  wall panel span within the same check at the lower wall pressure.
+- `SW-CF-5` Purlin and girt design: simple span over the bay spacing Lb; w = design load ×
+  tributary width; M = w Lb² / 8; S_req = M / (0.9 F_y). Depth D = roundup(Lb / 30, 2 in),
+  flange B = roundup(D / 4, 1/2 in), thickness the first of the series
+  {4/64, 5/64, 6/64, 7/64, 8/64, 9/64 in} whose gross S ≥ S_req. Reason: span/30 depth
+  keeps deflection small; the thickness series is in 1/64 in steps, chosen by SmartWeld,
+  not from any gauge table.
+- `SW-CF-6` Purlin and girt clips: a plate 1/4 in × 4 in × (D − 2 in) standing perpendicular
+  to the supporting flange (rafter top flange, column outer flange) and parallel to the
+  member web, fillet-welded to the flange along its free face (SW-WD-1), with two 1/2 in
+  bolts (SW-B-*) through the web at D/2 ± 1.5 in. Purlins sit on the rafter with their web
+  normal to the roof; girts lie against the column flange with their web horizontal
+  (depth normal to the wall), so in both cases the same plate detail applies. Clips are
+  placed 2-1/2 in inside each bay so the two members meeting at a frame have their own
+  clips (laps not modeled, SW-CF-2). Reason: a bolted clip lets the secondary member be
+  erected after the frame; the plate must be parallel to the web for the bolts to pass;
+  1/2 in bolts carry the member reaction with margin.
+- `SW-CF-7` Endwall girts use the sidewall girt section (their spans between posts are
+  shorter, so the sidewall size governs). Door jambs and headers use the girt section as a
+  C (`CS`) so the flanges can face away from the opening. Reason: fewer distinct sizes.
+
+## 16. Cladding and trim (`SW-CL-*`)
+
+- `SW-CL-1` Panel: single-skin ribbed sheet, thickness 0.025 in, rib height 1.25 in, rib
+  pitch 12 in, rib top flat 1.5 in, rib sides at 30° from vertical, cover width 36 in
+  (three ribs). Side laps are not modeled; sheets are placed edge to edge at the cover
+  width. Reason: the rib gives the sheet its bending stiffness over the purlin spacing;
+  0.025 in is the thinnest sheet that roll-forms a 1.25 in rib without edge waviness and
+  resists foot traffic; the proportions are SmartWeld choices checked by SW-CL-3.
+- `SW-CL-2` Wall sheets run vertically from the base trim to the eave in one length; roof
+  sheets run from the eave to the ridge in one length, overhanging the wall sheet by 2 in
+  at the eave and stopping 1 in short of the ridge line under the ridge cap. Sheets at the
+  gable are cut to the roof line. Reason: the overhang drips clear of the wall; the ridge
+  gap lets the cap seat.
+- `SW-CL-3` Check (tested): the panel's gross section modulus per foot of width, from the
+  drawn profile, must be ≥ M / (0.9 F_y) with M = w s² / 8 over the purlin (or girt)
+  spacing s and the stated design load.
+- `SW-CL-4` Fasteners (self-drilling screws) are not modeled in this stage (stated).
+- `SW-CL-5` Trim is formed from the panel sheet (0.025 in) into angles with a 1.5 t inside
+  bend: corner trim 4 × 4 in, base trim 3 × 2 in, eave trim 4 × 4 in, rake trim 6 × 4 in,
+  ridge cap 12 in each side bent to the roof angle, door head and jamb trim with a 2 in face and a leg equal to the girt depth, formed from 1/16 in sheet (SW-DR-3).
+  Lengths equal the edges they cover. Reason: legs long enough to cover the panel rib
+  height plus a fastening flat.
+
+## 17. Doors (`SW-DR-*`)
+
+- `SW-DR-1` Door schedule (drawing): personnel doors 3 ft 0 in × 7 ft 0 in; equipment
+  doors 14 ft 0 in × 16 ft 0 in roll-up. The generator places two personnel doors on each
+  sidewall (at the second and seventh bays) and one equipment door centred on each end wall.
+- `SW-DR-2` Framed opening: jambs of the girt section from the floor to the first girt
+  above the head, a header of the girt section between the jambs at the head, both clipped
+  per SW-CF-6. Girts that cross the opening are cut at the jambs. Reason: the jambs carry
+  the cut girts' reactions to the floor and to the girt above.
+- `SW-DR-3` Personnel door: a flush leaf 1-3/4 in thick (drawing) in a frame of 2 in face
+  width formed from 1/16 in sheet (drawing), the leaf shown closed. Roll-up door: a curtain
+  1/8 in thick (drawing) shown closed, with a drum 24 in in diameter (drawing) above the
+  head inside the wall, on brackets of 1/4 in plate. Non-structural; weights not in the
+  steel bill of materials.
+
+## 18. Tests required for stage 2
+
+- Cold-formed and panel profiles are simple polygons; polygon-integrated I for a plain
+  rectangle equals b h³ / 12 (validates the integrator).
+- Purlin thickness never decreases with span or load; SW-CL-3 passes for the demonstration
+  plant's purlin and girt spacing.
+- Rafter section Z ≥ required; column count = 2 × (bays + 1); every purlin spacing ≤ 5 ft
+  and every girt spacing ≤ 7.5 ft; no door opening overlaps a column; bolt diameters at the
+  knee ≥ 3/4 in.
+- Every stage-2 rule ID used in code exists in this file (audit test extended).
+- The building model is JSON-serialisable and every instance transform is finite.

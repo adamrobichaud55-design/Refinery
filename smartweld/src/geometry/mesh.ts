@@ -14,25 +14,28 @@ export function profileArea(p: Profile): number {
 }
 
 /** Extrude a profile in the xy plane from z=z0 to z=z0+length. Outward-facing CCW triangles. */
-export function extrude(profile: Profile, length: number, z0 = 0): MeshData {
+export interface EndCuts { start?: { dx: number; dy: number }; end?: { dx: number; dy: number } }
+/** Extrude; optional end cuts shear the end faces: z += dx·x + dy·y (e.g. a vertical cut on a sloped member). */
+export function extrude(profile: Profile, length: number, z0 = 0, cuts?: EndCuts): MeshData {
   const outer = ensureCCW(profile.outer);
   const inner = profile.inner ? ensureCCW(profile.inner) : undefined;
   if (inner && inner.length !== outer.length) throw new Error('ring profile needs equal vertex counts');
   const positions: number[] = [];
   const indices: number[] = [];
   const z1 = z0 + length;
+  const c0 = cuts?.start ?? { dx: 0, dy: 0 }, c1 = cuts?.end ?? { dx: 0, dy: 0 };
   const push = (x: number, y: number, z: number) => { positions.push(x, y, z); return positions.length / 3 - 1; };
   const n = outer.length;
-  const ob = outer.map(p => push(p.x, p.y, z0));
-  const ot = outer.map(p => push(p.x, p.y, z1));
+  const ob = outer.map(p => push(p.x, p.y, z0 + c0.dx * p.x + c0.dy * p.y));
+  const ot = outer.map(p => push(p.x, p.y, z1 + c1.dx * p.x + c1.dy * p.y));
   // outer side walls: for CCW outer, outward normal needs (b0, b1, t1), (b0, t1, t0)
   for (let i = 0; i < n; i++) {
     const j = (i + 1) % n;
     indices.push(ob[i], ob[j], ot[j], ob[i], ot[j], ot[i]);
   }
   if (inner) {
-    const ib = inner.map(p => push(p.x, p.y, z0));
-    const it = inner.map(p => push(p.x, p.y, z1));
+    const ib = inner.map(p => push(p.x, p.y, z0 + c0.dx * p.x + c0.dy * p.y));
+    const it = inner.map(p => push(p.x, p.y, z1 + c1.dx * p.x + c1.dy * p.y));
     for (let i = 0; i < n; i++) {
       const j = (i + 1) % n;
       indices.push(ib[j], ib[i], it[i], ib[j], it[i], it[j]); // reversed: faces inward to the hole

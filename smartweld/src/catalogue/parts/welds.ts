@@ -63,3 +63,22 @@ export function makeGrooveWeld(id: string, t: number, lengthIn: number, material
     notes: ['Single-V, 60° included, with 1/16 in reinforcement (SW-WD-4).'],
   };
 }
+
+/** SW-PF-7: fillet weld all around a member profile outline (e.g. column to base plate). */
+export function makeFilletWeldAround(id: string, outline: { x: number; y: number }[], tThin: number, material: Material = DEFAULT_MATERIAL): PartSpec {
+  const w = filletLegForThickness(tThin);
+  let per = 0;
+  for (let i = 0; i < outline.length; i++) { const a = outline[i], b = outline[(i + 1) % outline.length]; per += Math.hypot(b.x - a.x, b.y - a.y); }
+  return {
+    id, kind: 'FILLET_WELD_AROUND', category: 'weld', designation: `${formatDesignation({ kind: 'FW', leg: w })} all around`,
+    dims: {
+      leg: rule(w, 'SW-WD-1', 'Leg size'), throat: rule(w * Math.SQRT1_2, 'SW-WD-2', 'Throat'),
+      perimeter: rule(per, 'SW-PF-7', 'Weld length (profile perimeter)'),
+      rho: constant(K.STEEL_DENSITY_LB_FT3, 'K-1', 'Steel density', 'lb/ft3'),
+    },
+    length: rule(per, 'SW-PF-7', 'Weld length'), material,
+    weight: rule(0.5 * w * w * per * RHO, 'SW-WD-3', 'Weld metal weight', 'lb'),
+    notes: ['Loft from the outline offset by the leg (on the plate) to the outline at leg height (SW-PF-7).'],
+    extra: { outline },
+  };
+}

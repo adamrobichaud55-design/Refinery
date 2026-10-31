@@ -7,6 +7,9 @@ import { makeHssRect, makeHssRound } from './parts/hss';
 import { makePlate } from './parts/plates';
 import { makeBolt } from './parts/hardware';
 import { makeFilletWeld, makeGrooveWeld } from './parts/welds';
+import { makeZ, makeCS } from './parts/coldFormed';
+import { makeRod } from './parts/rod';
+import { makePanel } from './parts/cladding';
 import type { PartSpec } from './part';
 
 export * from './part';
@@ -18,6 +21,9 @@ export * from './parts/hss';
 export * from './parts/plates';
 export * from './parts/hardware';
 export * from './parts/welds';
+export * from './parts/coldFormed';
+export * from './parts/cladding';
+export * from './parts/rod';
 
 /** Build a part from drawing text. `length` is the member/weld length in inches where the designation has none. */
 export function makePart(id: string, designation: string, length = 120): PartSpec {
@@ -32,6 +38,10 @@ export function makePart(id: string, designation: string, length = 120): PartSpe
     case 'B': return makeBolt(id, d.d, d.L);
     case 'FW': return makeFilletWeld(id, length, { leg: d.leg });
     case 'GW': return makeGrooveWeld(id, d.t, length);
+    case 'Z': return makeZ(id, d.D, d.B, d.t, length);
+    case 'CS': return makeCS(id, d.D, d.B, d.t, length);
+    case 'RD': return makeRod(id, d.d, length);
+    case 'PNL': return makePanel(id, length, undefined, d.cover);
     case 'AR': throw new Error('Anchor rods are built from a base plate (makeAnchorRod), not from text alone');
   }
 }

@@ -4,11 +4,15 @@ import type { WDims } from '../catalogue/parts/wideFlange';
 import type { CDims } from '../catalogue/parts/channel';
 import { hexHardware } from '../catalogue/parts/hardware';
 import { grooveDims } from '../catalogue/parts/welds';
-import { extrude, transformMesh, translation, signedVolume, type MeshData, type Profile } from './mesh';
+import { cfDims, zProfile, csProfile } from '../catalogue/parts/coldFormed';
+import { panelProfile, trimProfile } from '../catalogue/parts/cladding';
+import { extrude, transformMesh, translation, signedVolume, type MeshData, type Profile, type EndCuts } from './mesh';
+import { filletAroundProfile } from './sweep';
 import { circle, regularHexagon, type Polygon, type Pt } from './polygon';
 import { wProfile, cProfile, lProfile, hssRectProfile, hssRoundProfile, filletProfile, grooveProfile, ringAroundHole, N_CIRCLE } from './profiles';
 
-export interface Solid { name: string; mesh: MeshData; role: 'steel' | 'hardware' | 'weld' }
+export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door';
+export interface Solid { name: string; mesh: MeshData; role: Role }
 export interface PartGeometry { partId: string; solids: Solid[]; profile?: Profile; volume: number }
 
 const v = (dims: PartSpec['dims'], k: string) => dims[k].value;
@@ -23,6 +27,13 @@ export function profileOf(part: PartSpec): Profile | undefined {
     case 'HSS_ROUND': return hssRoundProfile(v(d, 'OD'), v(d, 't'));
     case 'PL': { const w = v(d, 'w'), t = v(d, 't'); return { outer: [{ x: -w / 2, y: -t / 2 }, { x: w / 2, y: -t / 2 }, { x: w / 2, y: t / 2 }, { x: -w / 2, y: t / 2 }] }; }
     case 'GUSSET': case 'STIFFENER': return { outer: part.extra!.outline as Polygon };
+    case 'Z': return { outer: zProfile(cfDims(v(d, 'D'), v(d, 'B'), v(d, 't'))) };
+    case 'CS': return { outer: csProfile(cfDims(v(d, 'D'), v(d, 'B'), v(d, 't'))) };
+    case 'ROD': return { outer: circle(0, 0, v(d, 'd') / 2, 24) };
+    case 'PANEL': return { outer: panelProfile(v(d, 'cover')) };
+    case 'TRIM': return { outer: (part.extra?.outline as Polygon | undefined) ?? trimProfile(v(d, 'a'), v(d, 'b'), v(d, 't')) };
+    case 'CONCRETE': case 'DOOR_LEAF': case 'DOOR_CURTAIN': { const w = v(d, 'w'), t = v(d, 't'); return { outer: [{ x: -w / 2, y: -t / 2 }, { x: w / 2, y: -t / 2 }, { x: w / 2, y: t / 2 }, { x: -w / 2, y: t / 2 }] }; }
+    case 'DOOR_DRUM': return { outer: circle(0, 0, v(d, 'dia') / 2, 32) };
     case 'FILLET_WELD': return { outer: filletProfile(v(d, 'leg')) };
     case 'GROOVE_WELD': return { outer: grooveProfile(grooveDims(v(d, 't'))) };
     default: return undefined;
@@ -65,8 +76,20 @@ export function buildGeometry(part: PartSpec): PartGeometry {
   const solids: Solid[] = [];
   const profile = profileOf(part);
   switch (part.kind) {
-    case 'W': case 'C': case 'L': case 'HSS_RECT': case 'HSS_ROUND': case 'PL': case 'GUSSET': case 'STIFFENER':
-      solids.push({ name: part.designation, role: 'steel', mesh: extrude(profile!, part.length!.value) });
+    case 'W': case 'C': case 'L': case 'HSS_RECT': case 'HSS_ROUND': case 'PL': case 'GUSSET': case 'STIFFENER': case 'Z': case 'CS': case 'ROD':
+      solids.push({ name: part.designation, role: 'steel', mesh: extrude(profile!, part.length!.value, 0, part.extra?.endCuts as EndCuts | undefined) });
+      break;
+    case 'PANEL': case 'TRIM':
+      solids.push({ name: part.designation, role: 'sheet', mesh: extrude(profile!, part.length!.value, 0, part.extra?.endCuts as EndCuts | undefined) });
+      break;
+    case 'FILLET_WELD_AROUND':
+      solids.push({ name: part.designation, role: 'weld', mesh: filletAroundProfile(part.extra!.outline as Polygon, v(d, 'leg')) });
+      break;
+    case 'CONCRETE':
+      solids.push({ name: part.designation, role: 'concrete', mesh: extrude(profile!, part.length!.value) });
+      break;
+    case 'DOOR_LEAF': case 'DOOR_CURTAIN': case 'DOOR_DRUM':
+      solids.push({ name: part.designation, role: 'door', mesh: extrude(profile!, part.length!.value) });
       break;
     case 'FILLET_WELD': case 'GROOVE_WELD':
       solids.push({ name: part.designation, role: 'weld', mesh: extrude(profile!, part.length!.value) });

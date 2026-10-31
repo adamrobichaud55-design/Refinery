@@ -3,93 +3,77 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { ENTRIES } from '../scene/catalogueList';
 import { columnBaseAssembly, type Assembly } from '../scene/assemblies';
 import { makePart, type PartSpec } from '../catalogue';
-import { buildGeometry, profileOf } from '../geometry/partGeometry';
-import { transformMesh, type MeshData } from '../geometry/mesh';
+import { buildGeometry, profileOf, type Role, type PartGeometry } from '../geometry/partGeometry';
+import { transformMesh, mergeMeshes, type MeshData, type Mat4 } from '../geometry/mesh';
 import { identity } from '../geometry/transform';
 import { basisText } from '../core/basis';
 import { formatLength } from '../core/units';
+import { generateBuilding, billOfMaterials, type BuildingModel } from '../generator/building';
 
-const viewEl = document.getElementById('view')!;
-const infoEl = document.getElementById('info')!;
-const errEl = document.getElementById('err')!;
-const entriesEl = document.getElementById('entries')!;
+const viewEl = document.getElementById('view')!, infoEl = document.getElementById('info')!, errEl = document.getElementById('err')!, entriesEl = document.getElementById('entries')!;
 
 // --- three.js scene ---------------------------------------------------------
 const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 viewEl.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xe9edf2);
-const camera = new THREE.PerspectiveCamera(40, 1, 0.1, 5000);
+scene.background = new THREE.Color(0xdfe6ee);
+const camera = new THREE.PerspectiveCamera(50, 1, 0.5, 20000);
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
-scene.add(new THREE.HemisphereLight(0xffffff, 0x8899aa, 0.9));
-const sun = new THREE.DirectionalLight(0xffffff, 1.2); sun.position.set(60, 100, 40); scene.add(sun);
-const fill = new THREE.DirectionalLight(0xffffff, 0.4); fill.position.set(-60, 30, -80); scene.add(fill);
-const grid = new THREE.GridHelper(240, 20, 0x9aa3ad, 0xc9d0d8); // 240 in square, 12 in cells (SW-U-1)
+scene.add(new THREE.HemisphereLight(0xffffff, 0x7f8a99, 0.9));
+const sun = new THREE.DirectionalLight(0xffffff, 1.1); sun.position.set(600, 1000, 400); scene.add(sun);
+const fill = new THREE.DirectionalLight(0xffffff, 0.35); fill.position.set(-600, 300, -800); scene.add(fill);
+const grid = new THREE.GridHelper(240, 20, 0x9aa3ad, 0xc9d0d8);
 scene.add(grid);
-scene.add(new THREE.AxesHelper(12));
-const group = new THREE.Group();
-scene.add(group);
+const axes = new THREE.AxesHelper(12); scene.add(axes);
+const group = new THREE.Group(); scene.add(group);
 
-const MATERIALS = {
+const MATERIALS: Record<Role, THREE.Material> = {
   steel: new THREE.MeshStandardMaterial({ color: 0x6f7b8a, metalness: 0.35, roughness: 0.55 }),
   hardware: new THREE.MeshStandardMaterial({ color: 0x3b4450, metalness: 0.5, roughness: 0.45 }),
   weld: new THREE.MeshStandardMaterial({ color: 0xc8a24a, metalness: 0.3, roughness: 0.6 }),
-  grout: new THREE.MeshStandardMaterial({ color: 0xb9b4a8, roughness: 0.95 }),
+  sheet: new THREE.MeshStandardMaterial({ color: 0xb8c4cf, metalness: 0.5, roughness: 0.4, side: THREE.DoubleSide }),
+  concrete: new THREE.MeshStandardMaterial({ color: 0xb9b4a8, roughness: 0.95 }),
+  door: new THREE.MeshStandardMaterial({ color: 0x8a4b3c, roughness: 0.8 }),
 };
 
 function toBufferGeometry(m: MeshData): THREE.BufferGeometry {
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(m.positions, 3));
   g.setIndex(m.indices);
-  const flat = g.toNonIndexed(); // hard edges: no normal smoothing across faces
-  flat.computeVertexNormals();
-  return flat;
+  const flat = g.toNonIndexed(); flat.computeVertexNormals(); return flat;
 }
-
-function resize() {
-  const w = viewEl.clientWidth, h = viewEl.clientHeight;
-  renderer.setSize(w, h, false);
-  camera.aspect = w / h; camera.updateProjectionMatrix();
-}
+function resize() { const w = viewEl.clientWidth, h = viewEl.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
 window.addEventListener('resize', resize);
-
-function frame(box: THREE.Box3) {
+function frame(box: THREE.Box3, dir = new THREE.Vector3(0.8, 0.55, 1)) {
   const size = box.getSize(new THREE.Vector3()), centre = box.getCenter(new THREE.Vector3());
   const radius = Math.max(size.length() / 2, 1);
-  const dist = radius / Math.sin((camera.fov * Math.PI) / 360) * 1.1;
-  camera.position.copy(centre).add(new THREE.Vector3(0.8, 0.55, 1).normalize().multiplyScalar(dist));
-  camera.near = dist / 100; camera.far = dist * 20; camera.updateProjectionMatrix();
+  const dist = radius / Math.sin((camera.fov * Math.PI) / 360) * 1.05;
+  camera.position.copy(centre).add(dir.normalize().multiplyScalar(dist));
+  camera.near = Math.max(0.05, dist / 500); camera.far = dist * 50; camera.updateProjectionMatrix();
   controls.target.copy(centre); controls.update();
   grid.position.y = box.min.y - 0.01;
 }
-function gridAt(y: number) { grid.position.y = y; }
 
-function showAssembly(asm: Assembly) {
+// --- geometry cache & merged rendering ----------------------------------------
+const geoCache = new Map<PartSpec, PartGeometry>();
+const geomOf = (p: PartSpec) => { let g = geoCache.get(p); if (!g) { g = buildGeometry(p); geoCache.set(p, g); } return g; };
+
+function renderInstances(list: { part: PartSpec; transform: Mat4 }[]): THREE.Box3 {
   group.clear();
-  const box = new THREE.Box3();
-  for (const inst of asm.instances) {
-    const geo = buildGeometry(inst.part);
-    for (const s of geo.solids) {
-      const mat = inst.part.designation === 'grout bed' ? MATERIALS.grout : MATERIALS[s.role];
-      const mesh = new THREE.Mesh(toBufferGeometry(transformMesh(s.mesh, inst.transform)), mat);
-      mesh.name = `${inst.part.id}:${s.name}`;
-      group.add(mesh);
-      box.expandByObject(mesh);
+  const byRole = new Map<Role, MeshData[]>();
+  for (const inst of list) {
+    for (const s of geomOf(inst.part).solids) {
+      const arr = byRole.get(s.role) ?? []; arr.push(transformMesh(s.mesh, inst.transform)); byRole.set(s.role, arr);
     }
   }
-  frame(box);
-  gridAt(0); // concrete surface
-  const totals = new Map<string, { n: number; weight: number; part: PartSpec }>();
-  for (const i of asm.instances) {
-    const k = i.part.id; const t = totals.get(k) ?? { n: 0, weight: 0, part: i.part };
-    t.n++; t.weight += i.part.weight.value; totals.set(k, t);
+  const box = new THREE.Box3();
+  for (const [role, meshes] of byRole) {
+    const mesh = new THREE.Mesh(toBufferGeometry(mergeMeshes(meshes)), MATERIALS[role]);
+    mesh.name = role; group.add(mesh); box.expandByObject(mesh);
   }
-  infoEl.innerHTML = `<h2>${asm.name}</h2><div class="cat">${asm.description}</div>
-    <table><tr><th>Mark</th><th>Part</th><th>Qty</th><th>Weight</th><th>Basis of size</th></tr>
-    ${[...totals.values()].map(t => `<tr><td>${t.part.id}</td><td>${t.part.designation}</td><td class="v">${t.n}</td><td class="v">${t.weight.toFixed(1)} lb</td><td>${summariseBasis(t.part)}</td></tr>`).join('')}
-    </table><div class="legend">Bill of materials from the same part list that drives the 3D view.</div>`;
+  return box;
 }
 
 function summariseBasis(p: PartSpec): string {
@@ -98,15 +82,19 @@ function summariseBasis(p: PartSpec): string {
   return ids.size ? `rules ${[...ids].join(', ')}` : 'all stated on drawing';
 }
 
+function showAssembly(asm: Assembly) {
+  frame(renderInstances(asm.instances)); grid.position.y = 0;
+  const totals = new Map<string, { n: number; weight: number; part: PartSpec }>();
+  for (const i of asm.instances) { const t = totals.get(i.part.id) ?? { n: 0, weight: 0, part: i.part }; t.n++; t.weight += i.part.weight.value; totals.set(i.part.id, t); }
+  infoEl.innerHTML = `<h2>${asm.name}</h2><div class="cat">${asm.description}</div>
+    <table><tr><th>Mark</th><th>Part</th><th>Qty</th><th>Weight</th><th>Basis of size</th></tr>
+    ${[...totals.values()].map(t => `<tr><td>${t.part.id}</td><td>${t.part.designation}</td><td class="v">${t.n}</td><td class="v">${t.weight.toFixed(1)} lb</td><td>${summariseBasis(t.part)}</td></tr>`).join('')}
+    </table><div class="legend">Bill of materials from the same part list that drives the 3D view.</div>`;
+}
+
 function showPart(part: PartSpec) {
-  group.clear();
-  const geo = buildGeometry(part);
-  const box = new THREE.Box3();
-  for (const s of geo.solids) {
-    const mesh = new THREE.Mesh(toBufferGeometry(transformMesh(s.mesh, identity())), MATERIALS[s.role]);
-    mesh.name = s.name; group.add(mesh); box.expandByObject(mesh);
-  }
-  frame(box);
+  const geo = geomOf(part);
+  frame(renderInstances([{ part, transform: identity() }]));
   const rows = Object.values(part.dims).map(d => {
     const val = d.unit === 'in' ? formatLength(d.value) : `${Number(d.value.toFixed(3))} ${d.unit}`;
     return `<tr><td>${d.label}</td><td class="v">${val}</td><td class="b-${d.basis.kind}">${basisText(d.basis)}</td></tr>`;
@@ -121,17 +109,70 @@ function showPart(part: PartSpec) {
     <div class="legend">Model volume ${geo.volume.toFixed(2)} in³ (${(geo.volume * 490 / 1728).toFixed(2)} lb at 490 lb/ft³).</div>`;
   if (prof) drawProfile(prof.outer, prof.inner);
 }
-
 function drawProfile(outer: { x: number; y: number }[], inner?: { x: number; y: number }[]) {
   const svg = document.getElementById('profile') as unknown as SVGSVGElement;
   const xs = outer.map(p => p.x), ys = outer.map(p => p.y);
   const minX = Math.min(...xs), maxX = Math.max(...xs), minY = Math.min(...ys), maxY = Math.max(...ys);
-  const span = Math.max(maxX - minX, maxY - minY) * 1.1;
-  const cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
+  const span = Math.max(maxX - minX, maxY - minY) * 1.1, cx = (minX + maxX) / 2, cy = (minY + maxY) / 2;
   const sx = (x: number) => 50 + ((x - cx) / span) * 100, sy = (y: number) => 50 - ((y - cy) / span) * 100;
   const path = (poly: { x: number; y: number }[]) => poly.map((p, i) => `${i ? 'L' : 'M'}${sx(p.x).toFixed(2)} ${sy(p.y).toFixed(2)}`).join(' ') + ' Z';
   svg.innerHTML = `<path d="${path(outer)}${inner ? ' ' + path(inner) : ''}" fill="#9fb0c4" fill-rule="evenodd" stroke="#1b1f24" stroke-width="0.4"/>
     <text x="2" y="97" font-size="4" fill="#666">section, ${(maxX - minX).toFixed(2)} × ${(maxY - minY).toFixed(2)} in</text>`;
+}
+
+// --- building ------------------------------------------------------------------
+let building: BuildingModel | null = null;
+function showBuilding(view: string) {
+  if (!building) building = generateBuilding();
+  const t0 = performance.now();
+  const box = renderInstances(building.instances);
+  const dr = building.drawing, L = dr.bays * dr.bayFt * 12, W = dr.widthFt * 12;
+  grid.position.y = -dr.slabIn - 0.5;
+  if (view === 'interior') lookFrom([L * 0.75, 66, W * 0.3], [L * 0.1, 200, -W * 0.2]);
+  else if (view === 'knee') lookFrom([L * 0.5 + 420, 250, W / 2 - 420], [L * 0.5, 340, W / 2 - 30]);
+  else if (view === 'door') lookFrom([L * 0.1875 + 200, 70, W / 2 + 260], [L * 0.1875, 60, W / 2]);
+  else if (view === 'corner') lookFrom([-240, 200, -W / 2 - 240], [L * 0.3, 150, 0]);
+  else frame(box, new THREE.Vector3(1, 0.5, 0.9));
+  const bom = billOfMaterials(building);
+  const total = bom.reduce((s, e) => s + e.weight, 0);
+  const steelCount = building.instances.filter(i => i.part.category !== 'non-steel').length;
+  infoEl.innerHTML = `<h2>Demonstration plant — building shell</h2>
+    <div class="cat">${dr.widthFt} ft × ${dr.bays * dr.bayFt} ft, eave ${dr.eaveFt} ft, slope ${dr.slopeRisePer12}:12 (drawing, SW-BLD-1). ${steelCount.toLocaleString()} steel parts, ${(total / 2000).toFixed(1)} tons. Built in ${((performance.now() - t0) / 1000).toFixed(1)} s.</div>
+    <p class="notes">${building.notes.join(' ')}</p>
+    <div class="legend">Walk: click the 3D view, then W A S D to move, mouse to look, Esc to release.</div>
+    <h3>Derived by rule</h3><table>${Object.values(building.derived).map(d => `<tr><td>${d.label}</td><td class="v">${Number(d.value.toFixed(3))} ${d.unit}</td><td class="b-${d.basis.kind}">${basisText(d.basis)}</td></tr>`).join('')}</table>
+    <h3>Bill of materials (steel, by designation × length)</h3>
+    <table><tr><th>Part</th><th>Qty</th><th>Weight</th><th>Rules</th></tr>
+    ${bom.map(e => `<tr><td>${e.designation}</td><td class="v">${e.qty}</td><td class="v">${e.weight.toFixed(0)} lb</td><td>${e.rules.join(', ')}</td></tr>`).join('')}
+    <tr><td><b>Total</b></td><td></td><td class="v"><b>${total.toFixed(0)} lb</b></td><td></td></tr></table>`;
+}
+function lookFrom(eye: number[], target: number[]) {
+  camera.position.set(eye[0], eye[1], eye[2]); controls.target.set(target[0], target[1], target[2]);
+  camera.near = 1; camera.far = 20000; camera.updateProjectionMatrix(); controls.update();
+}
+
+// --- first-person walk (pointer lock) --------------------------------------------
+const keys = new Set<string>();
+let walking = false, yaw = 0, pitch = 0;
+const EYE = 66; // 5 ft 6 in eye height
+renderer.domElement.addEventListener('click', () => { if (building && group.children.length) renderer.domElement.requestPointerLock(); });
+document.addEventListener('pointerlockchange', () => {
+  walking = document.pointerLockElement === renderer.domElement;
+  controls.enabled = !walking;
+  if (walking) { const dir = new THREE.Vector3(); camera.getWorldDirection(dir); yaw = Math.atan2(-dir.x, -dir.z); pitch = Math.asin(dir.y); camera.position.y = EYE; }
+});
+document.addEventListener('mousemove', e => { if (!walking) return; yaw -= e.movementX * 0.002; pitch = Math.max(-1.4, Math.min(1.4, pitch - e.movementY * 0.002)); });
+document.addEventListener('keydown', e => keys.add(e.code)); document.addEventListener('keyup', e => keys.delete(e.code));
+let last = performance.now();
+function stepWalk() {
+  const now = performance.now(), dt = Math.min(0.05, (now - last) / 1000); last = now;
+  if (!walking) return;
+  const speed = (keys.has('ShiftLeft') ? 240 : 96) * dt; // in/s: 8 ft/s walk, 20 ft/s run
+  const fwd = new THREE.Vector3(-Math.sin(yaw), 0, -Math.cos(yaw)), right = new THREE.Vector3(Math.cos(yaw), 0, -Math.sin(yaw));
+  if (keys.has('KeyW')) camera.position.addScaledVector(fwd, speed); if (keys.has('KeyS')) camera.position.addScaledVector(fwd, -speed);
+  if (keys.has('KeyD')) camera.position.addScaledVector(right, speed); if (keys.has('KeyA')) camera.position.addScaledVector(right, -speed);
+  camera.position.y = EYE;
+  camera.quaternion.setFromEuler(new THREE.Euler(pitch, yaw, 0, 'YXZ'));
 }
 
 // --- list -------------------------------------------------------------------
@@ -142,11 +183,14 @@ function addButton(container: HTMLElement, label: string, onClick: () => void): 
   b.addEventListener('click', () => { setActive(b); errEl.style.display = 'none'; try { onClick(); } catch (e) { showError(e); } });
   container.appendChild(b); return b;
 }
-function showError(e: unknown) { errEl.textContent = String((e as Error).message ?? e); errEl.style.display = 'block'; }
-
-const byGroup = new Map<string, HTMLElement>();
-const h = document.createElement('h2'); h.textContent = 'Assemblies'; entriesEl.appendChild(h);
+function showError(e: unknown) { errEl.textContent = String((e as Error).message ?? e); errEl.style.display = 'block'; console.error(e); }
+const h = document.createElement('h2'); h.textContent = 'Building'; entriesEl.appendChild(h);
+const buildingBtns: Record<string, HTMLButtonElement> = {};
+for (const [label, view] of [['Demo plant — exterior', 'exterior'], ['Demo plant — corner', 'corner'], ['Demo plant — interior (walk)', 'interior'], ['Demo plant — knee close-up', 'knee'], ['Demo plant — personnel door', 'door']])
+  buildingBtns[view] = addButton(entriesEl, label, () => { location.hash = 'building:' + view; showBuilding(view); });
+const h1 = document.createElement('h2'); h1.textContent = 'Assemblies'; entriesEl.appendChild(h1);
 const asmBtn = addButton(entriesEl, 'Column base (W10x49)', () => { location.hash = 'assembly:column-base'; showAssembly(columnBaseAssembly()); });
+const byGroup = new Map<string, HTMLElement>();
 for (const e of ENTRIES) {
   if (!byGroup.has(e.group)) { const h2 = document.createElement('h2'); h2.textContent = e.group; entriesEl.appendChild(h2); const div = document.createElement('div'); entriesEl.appendChild(div); byGroup.set(e.group, div); }
   addButton(byGroup.get(e.group)!, e.label, () => { location.hash = 'entry:' + encodeURIComponent(e.label); showPart(e.build()); });
@@ -157,16 +201,16 @@ document.getElementById('typed')!.addEventListener('submit', ev => {
   errEl.style.display = 'none';
   try { setActive(null); location.hash = 'des:' + encodeURIComponent(text); showPart(makePart(text, text, 120)); } catch (e) { showError(e); }
 });
-
 function openFromHash() {
   const hsh = decodeURIComponent(location.hash.slice(1));
   if (hsh.startsWith('entry:')) { const e = ENTRIES.find(x => x.label === hsh.slice(6)); if (e) { showPart(e.build()); return; } }
   if (hsh.startsWith('des:')) { try { showPart(makePart(hsh.slice(4), hsh.slice(4), 120)); return; } catch (e) { showError(e); } }
   if (hsh.startsWith('assembly:')) { setActive(asmBtn); showAssembly(columnBaseAssembly()); return; }
+  if (hsh.startsWith('building:')) { const v = hsh.slice(9); setActive(buildingBtns[v] ?? null); showBuilding(v); return; }
   showPart(ENTRIES[1].build());
 }
 resize();
 openFromHash();
 window.addEventListener('hashchange', () => { errEl.style.display = 'none'; try { openFromHash(); } catch (e) { showError(e); } });
 (window as any).__smartweldReady = true;
-renderer.setAnimationLoop(() => { controls.update(); renderer.render(scene, camera); });
+renderer.setAnimationLoop(() => { stepWalk(); if (!walking) controls.update(); renderer.render(scene, camera); });

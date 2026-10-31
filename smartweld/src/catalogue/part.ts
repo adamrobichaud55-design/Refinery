@@ -3,9 +3,10 @@ import type { Dim } from '../core/basis';
 export type PartKind =
   | 'W' | 'C' | 'L' | 'HSS_RECT' | 'HSS_ROUND'
   | 'PL' | 'GUSSET' | 'BASE_PLATE' | 'STIFFENER'
-  | 'BOLT' | 'ANCHOR_ROD' | 'FILLET_WELD' | 'GROOVE_WELD';
+  | 'BOLT' | 'ANCHOR_ROD' | 'FILLET_WELD' | 'GROOVE_WELD'
+  | 'Z' | 'CS' | 'ROD' | 'PANEL' | 'TRIM' | 'CONCRETE' | 'DOOR_LEAF' | 'DOOR_CURTAIN' | 'DOOR_DRUM' | 'FILLET_WELD_AROUND';
 
-export type Category = 'section' | 'plate' | 'hardware' | 'weld';
+export type Category = 'section' | 'plate' | 'hardware' | 'weld' | 'sheet' | 'non-steel';
 
 export interface Material {
   grade: string;
