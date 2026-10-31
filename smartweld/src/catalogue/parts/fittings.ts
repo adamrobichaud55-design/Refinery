@@ -1,8 +1,8 @@
 /** Butt-weld fittings, pipe weld rings and pipe supports: DESIGN_BASIS.md §34, §38, §39. */
 import { K } from '../../core/constants';
 import { drawing, rule, constant, type Dim } from '../../core/basis';
-import { type PartSpec } from '../part';
-import { pipeDims, PIPE_GRADE, designFlange, type PipeClass } from './pipe';
+import { type PartSpec, type Material } from '../part';
+import { pipeDims, PIPE_GRADE, STUD_GRADE, designFlange, type PipeClass } from './pipe';
 import { hexHardware } from './hardware';
 import { grooveDims } from './welds';
 import { DEFAULT_MATERIAL } from '../part';
@@ -17,11 +17,11 @@ const rhoDim = () => constant(K.STEEL_DENSITY_LB_FT3, 'K-1', 'Steel density', 'l
 export type FitRole = 'pipe' | 'weld' | 'steel' | 'hardware';
 export interface FitSolid { name: string; mesh: MeshData; role: FitRole }
 
-function finish(id: string, kind: PartSpec['kind'], designation: string, dims: Record<string, Dim>, solids: FitSolid[], weightRule: string, extra: Record<string, unknown> = {}, weightOverride?: number): PartSpec {
+function finish(id: string, kind: PartSpec['kind'], designation: string, dims: Record<string, Dim>, solids: FitSolid[], weightRule: string, extra: Record<string, unknown> = {}, weightOverride?: number, material: Material = PIPE_GRADE): PartSpec {
   const vol = solids.filter(s => s.role !== 'hardware' || true).reduce((a, s) => a + signedVolume(s.mesh), 0);
   return {
     id, kind, category: 'piping', designation, dims: { ...dims, rho: rhoDim() },
-    length: dims.L ?? drawing(0, 'Length'), material: PIPE_GRADE,
+    length: dims.L ?? drawing(0, 'Length'), material,
     weight: rule(weightOverride ?? vol * RHO, weightRule, weightOverride !== undefined ? 'Weight' : 'Weight (drawn solid)', 'lb'),
     notes: [], extra: { solids, ...extra },
   };
@@ -129,7 +129,7 @@ export function makeShoe(id: string, NPS: number, cls: PipeClass, kind: 'shoe' |
     { name: 'shoe base', mesh: boxM(-2, -h, -Ls / 2, 2, -h + t, Ls / 2), role: 'steel' },
   ];
   if (kind === 'guide') for (const s of [-1, 1]) solids.push({ name: 'guide angle L3x3x1/4', mesh: mergeMeshes([boxM(s > 0 ? 2.125 : -2.375, -h, -3, s > 0 ? 2.375 : -2.125, -h + 3, 3), boxM(s > 0 ? 2.125 : -5.125, -h, -3, s > 0 ? 5.125 : -2.125, -h + 0.25, 3)]), role: 'steel' });
-  return finish(id, 'SUPPORT', `${kind.toUpperCase()}-${NPS}`, { NPS: drawing(NPS, 'Pipe size'), H: rule(h, 'SW-PS-1', 'Shoe height'), L: rule(Ls, 'SW-PS-1', 'Shoe length') }, solids, 'SW-PS-1', { supportKind: kind });
+  return finish(id, 'SUPPORT', `${kind.toUpperCase()}-${NPS}`, { NPS: drawing(NPS, 'Pipe size'), H: rule(h, 'SW-PS-1', 'Shoe height'), L: rule(Ls, 'SW-PS-1', 'Shoe length') }, solids, 'SW-PS-1', { supportKind: kind }, undefined, DEFAULT_MATERIAL);
 }
 /** Stanchion (SW-PS-9): post from the floor (y = 0) up to a saddle under the pipe bottom at y = h. */
 export function makeStanchion(id: string, NPS: number, cls: PipeClass, h: number): PartSpec {
@@ -140,7 +140,7 @@ export function makeStanchion(id: string, NPS: number, cls: PipeClass, h: number
     { name: 'saddle', mesh: boxM(-p.OD * 0.4, h - 0.375, -3, p.OD * 0.4, h, 3), role: 'steel' },
     { name: 'anchor rods 2 × 1/2', mesh: mergeMeshes([cylYM(0.25, -0.5, tb + 0.6, -sb / 2 + 1.25, 0), cylYM(0.25, -0.5, tb + 0.6, sb / 2 - 1.25, 0)]), role: 'hardware' },
   ];
-  return finish(id, 'SUPPORT', `STANCHION-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), post: rule(2 * rp, 'SW-PS-9', 'Post OD'), H: rule(h, 'SW-PS-9', 'Height to saddle') }, solids, 'SW-PS-9', { supportKind: 'stanchion' });
+  return finish(id, 'SUPPORT', `STANCHION-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), post: rule(2 * rp, 'SW-PS-9', 'Post OD'), H: rule(h, 'SW-PS-9', 'Height to saddle') }, solids, 'SW-PS-9', { supportKind: 'stanchion' }, undefined, DEFAULT_MATERIAL);
 }
 const SIZES_FOR_POST = [2, 2.5, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24];
 const prevSize = (NPS: number) => { let best = 2; for (const s of SIZES_FOR_POST) if (s < NPS) best = s; return best; };
@@ -155,7 +155,7 @@ export function makeHanger(id: string, NPS: number, cls: PipeClass, h: number): 
     { name: `rod ${d}`, mesh: cylYM(d / 2, r + 1.5, h), role: 'hardware' },
     { name: 'top plate', mesh: boxM(-2, h, -2, 2, h + 0.375, 2), role: 'steel' },
   ];
-  return finish(id, 'SUPPORT', `HANGER-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), rod: rule(d, 'SW-PS-9', 'Rod diameter'), H: rule(h, 'SW-PS-9', 'Rod length to the steel') }, solids, 'SW-PS-9', { supportKind: 'hanger' });
+  return finish(id, 'SUPPORT', `HANGER-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), rod: rule(d, 'SW-PS-9', 'Rod diameter'), H: rule(h, 'SW-PS-9', 'Rod length to the steel') }, solids, 'SW-PS-9', { supportKind: 'hanger' }, undefined, DEFAULT_MATERIAL);
 }
 /** Trapeze (SW-PS-13): an L2x2x1/4 under the pipe carried by two rods at a = OD/2 + 6 in either side, for a line that
  *  runs directly under another so a single rod cannot pass. Local frame: pipe centre at the origin, y up, z along the
@@ -167,14 +167,14 @@ export function makeTrapeze(id: string, NPS: number, cls: PipeClass, h1: number,
     { name: `rods ${d}`, mesh: mergeMeshes([cylYM(d / 2, -r - 1, h1, -a, 0), cylYM(d / 2, -r - 1, h2, a, 0)]), role: 'hardware' },
     { name: 'top plates', mesh: mergeMeshes([boxM(-a - 2, h1, -2, -a + 2, h1 + 0.375, 2), boxM(a - 2, h2, -2, a + 2, h2 + 0.375, 2)]), role: 'steel' },
   ];
-  return finish(id, 'SUPPORT', `TRAPEZE-${NPS}x${Math.max(h1, h2).toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), rod: rule(d, 'SW-PS-9', 'Rod diameter'), a: rule(a, 'SW-PS-13', 'Rod offset from the pipe axis'), H1: rule(h1, 'SW-PS-13', 'Rod length, side 1'), H2: rule(h2, 'SW-PS-13', 'Rod length, side 2') }, solids, 'SW-PS-13', { supportKind: 'trapeze' });
+  return finish(id, 'SUPPORT', `TRAPEZE-${NPS}x${Math.max(h1, h2).toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), rod: rule(d, 'SW-PS-9', 'Rod diameter'), a: rule(a, 'SW-PS-13', 'Rod offset from the pipe axis'), H1: rule(h1, 'SW-PS-13', 'Rod length, side 1'), H2: rule(h2, 'SW-PS-13', 'Rod length, side 2') }, solids, 'SW-PS-13', { supportKind: 'trapeze' }, undefined, DEFAULT_MATERIAL);
 }
 /** Trunnion (SW-PS-4/10): a pipe of the line's OD × 3/8 wall standing under an elbow (top at y = 0) down to y = −h on a base plate. */
 export function makeTrunnion(id: string, NPS: number, cls: PipeClass, h: number): PartSpec {
   const p = pipeDims(NPS, cls), ro = p.OD / 2, ri = Math.max(0.1, ro - 0.375), sb = p.OD + 4;
   const tube = transformMesh(extrude({ outer: circle(0, 0, ro, 32), inner: circle(0, 0, ri, 32) }, h - 0.5), multiply(translate(0, -h + 0.5, 0), rotateX(-Math.PI / 2)));
   const solids: FitSolid[] = [{ name: 'trunnion', mesh: tube, role: 'steel' }, { name: 'base plate', mesh: boxM(-sb / 2, -h, -sb / 2, sb / 2, -h + 0.5, sb / 2), role: 'steel' }];
-  return finish(id, 'SUPPORT', `TRUNNION-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), H: rule(h, 'SW-PS-10', 'Height') }, solids, 'SW-PS-4', { supportKind: 'trunnion' });
+  return finish(id, 'SUPPORT', `TRUNNION-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), H: rule(h, 'SW-PS-10', 'Height') }, solids, 'SW-PS-4', { supportKind: 'trunnion' }, undefined, DEFAULT_MATERIAL);
 }
 void DEFAULT_MATERIAL;
 
@@ -190,7 +190,7 @@ export function makeStudSet(id: string, NPS: number, cls: PipeClass, stack: numb
   return {
     id, kind: 'STUD', category: 'hardware', designation: `STUDS ${f.n}×${f.d}x${L} (${NPS}-${cls})`,
     dims: { n: rule(f.n, 'SW-FLG-4', 'Studs', 'count'), d: rule(f.d, 'SW-FLG-4', 'Stud diameter'), L: rule(L, 'SW-FLG-7', 'Stud length'), rho: rhoDim() },
-    length: rule(L, 'SW-FLG-7', 'Stud length'), material: DEFAULT_MATERIAL, weight: rule(vol * RHO, 'SW-FLG-7', 'Weight of studs and nuts', 'lb'),
+    length: rule(L, 'SW-FLG-7', 'Stud length'), material: STUD_GRADE, weight: rule(vol * RHO, 'SW-FLG-7', 'Weight of studs and nuts', 'lb'),
     notes: [], extra: { solids: [{ name: `studs ${f.n} × ${f.d}`, mesh: mergeMeshes(parts), role: 'hardware' }] },
   };
 }

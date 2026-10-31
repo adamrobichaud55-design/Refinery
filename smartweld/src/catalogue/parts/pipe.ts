@@ -16,6 +16,8 @@ export const SIZE_SERIES = [0.25, 0.375, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 4, 
 export const PIPE_GRADE: Material = { grade: 'Grade 35 pipe', Fy: { value: 35, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum yield strength (grade stated on drawing)' } };
 export const FORGING_GRADE: Material = { grade: 'Grade 36 forging', Fy: { value: 36, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum yield strength (grade stated on drawing)' } };
 export const STUD_FU = 90; // ksi, "Grade 90" (drawing)
+/** stud and nut material of SW-FLG-7; the strength stated for this grade is its minimum tensile strength */
+export const STUD_GRADE: Material = { grade: 'Grade 90 stud', Fy: { value: STUD_FU, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum tensile strength (grade stated on drawing)' } };
 
 export interface PipeDims { NPS: number; cls: PipeClass; P: number; OD: number; t: number; D: number }
 export function pipeDims(NPS: number, cls: PipeClass): PipeDims {

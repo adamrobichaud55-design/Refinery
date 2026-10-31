@@ -1374,3 +1374,82 @@ bore is continuous and every end is a butt-weld bevel.
 - Every stage-5 rule ID used in code exists in this file.
 - Every valve's drawn envelope clears steel, equipment (other than its own) and other lines by 3 in
   (SW-LL-5); the committed plant piping data equals a fresh run of the generator.
+
+# Stage 6 — Line classes and ground-truth export
+
+## 41. Line classes (`SW-LC-*`)
+
+- `SW-LC-1` A line class is SmartWeld's piping specification: the set of lines that share fluid
+  and pressure class and therefore every design decision of stages 4 and 5. Code
+  `{fluid group}{pressure class number}`, e.g. `H300`. Fluid groups: `H` hydrocarbon process,
+  `W` water (cooling water supply and return, process water), `S` low-pressure steam, `C` steam
+  condensate, `G` air and gases (instrument air, plant air, nitrogen), `F` flare and relief
+  outlets. Reason: fluid and pressure decide wall, flanges, gaskets, bolting, valve choice and
+  insulation, so the class is the unit a line is specified, bought and checked by. The codes
+  and group letters are SmartWeld's own.
+- `SW-LC-2` Assignment by service (SW-LL-1): P and RV → H; CWS, CWR, W → W; LS → S; SC → C;
+  IA, PA, N → G; FL → F. Services that serve another line or equipment take the group of what
+  they connect to: V, D, I, SP stubs on an equipment nozzle or a process line → H, on a header →
+  the header's group; HS (hose station) lines → the group of the header they tap. The pressure
+  class is the line's own (SW-LL-2). Reason: a vent, drain or instrument connection carries the
+  fluid of what it is attached to.
+- `SW-LC-3` Each class records: pressure class and design pressure (SW-PIPE-1); pipe wall
+  (SW-PIPE-2/3); flanges, gaskets and studs (SW-FLG); fittings (SW-FIT); valve choices
+  (SW-LL-3, SW-VLV-11); branch connection by tee (SW-FIT-2); materials (pipe and fittings
+  `Grade 35 pipe`, flanges `Grade 36 forging`, valve bodies `Grade 36 casting`, studs
+  `Grade 90 stud`, gaskets compressed sheet); insulation — S and C lines are insulated (steam
+  and hot condensate burn on touch and lose heat), the others are not (insulation is recorded,
+  not drawn, stated); a display colour (viewer only, not ground truth).
+- `SW-LC-4` A line's class covers every item from its start to its end. A branch begins at the
+  weld on its tee outlet; the tee belongs to the run it is welded into. Reason: the tee is
+  bought and fabricated with the run.
+
+## 42. Item metadata (`SW-GT-1..3`)
+
+- `SW-GT-1` Every placed item — pipe piece, fitting, flange, blind, gasket, stud set, valve,
+  nozzle neck, weld and support — carries: a unique tag; its line number and line class; its
+  kind; a description written from its part (e.g. `ELBOW 90° R = 5/3 OD 4" P300`); the part
+  designation and part key (which rebuilds its geometry); nominal size (and branch or small size
+  where it has two); pressure class; material grade; end types (BW butt-weld, RF raised face);
+  cut length (pipe); weight; its spool or `loose`; its two end points and centre in plant
+  coordinates; its axis direction; and the rule IDs its dimensions come from.
+- `SW-GT-2` Plant coordinates: East = +x, North = −z, Elevation = 100'-0" + y, all from the
+  building's south-west floor corner (inches internally; feet-inches to 1/16 in for drawings).
+  Reason: elevations above a 100 ft datum stay positive for anything below the floor (pits,
+  foundations), so a sign is never misread.
+- `SW-GT-3` Item number: within a line, items with the same description share one item number,
+  numbered in the order they are first met from the line's start; pipe is one item per size,
+  its pieces carrying cut lengths.
+
+## 43. Spools and isometric data (`SW-GT-4..6`)
+
+- `SW-GT-4` Spools: a line is divided at every field weld (SW-PW-2) and every flanged joint. A
+  shop spool is the welded assembly of pipe, fittings and weld-neck flanges between two such
+  breaks, numbered `{line}-SP{nn}` from the line's start. Valves, gaskets, stud sets and blinds
+  are loose items. Shop welds lie inside one spool; a field weld joins two spools (or a spool to
+  a parent tee). Reason: a spool is what a fabrication shop builds and ships; loose items are
+  fitted in the field.
+- `SW-GT-5` Isometric data per line: the line header (number, class, service, size, pressure
+  class, design pressure, insulation, from and to); the ordered centreline nodes from start to
+  end (end faces, flange faces, valve ends, weld points, elbow work points, tee centres,
+  reducer ends) with plant coordinates and the direction of flow; the bill of materials
+  (items aggregated by item number: quantity, total pipe length, total weight); the weld list;
+  the support list; the spool list.
+- `SW-GT-6` Export: one JSON file per line under `public/groundtruth/lines/` (file name from the
+  line number with `"` → `in` and `/` → `-`), a plant index (`index.json`: every line with its
+  class, service, size and counts), the line-class table (`line-classes.json`), the equipment
+  nozzle necks (`nozzles.json`, recorded as equipment items with the class of the line at their
+  face) and a plant-wide bill of materials (`bom.csv`). Produced only from the plant piping model and the catalogue;
+  deterministic, so a test can check the committed files equal a fresh export.
+
+## 44. Tests required for stage 6
+
+- Every line has exactly one line class, consistent with SW-LC-2 and its own pressure class.
+- Every item of the plant model appears exactly once in the export, with every SW-GT-1 field
+  filled (`loose` counts as a spool value); item weights sum to the line's BOM weight.
+- Spools: every pipe, fitting and weld-neck flange is in one spool; every shop weld joins two
+  items of the same spool; every field weld joins items of two different spools (or a spool and
+  a parent tee); every valve, gasket, stud set and blind is loose.
+- Isometric nodes run continuously from start to end; plant coordinates convert back to model
+  coordinates exactly.
+- The committed export equals a fresh export; every stage-6 rule ID used in code exists here.

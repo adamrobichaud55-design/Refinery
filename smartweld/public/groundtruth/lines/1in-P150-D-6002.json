@@ -1,0 +1,357 @@
+{
+ "header": {
+  "line": "1\"-P150-D-6002",
+  "lineClass": "H150",
+  "fluid": "Hydrocarbon process",
+  "service": "D",
+  "NPS": 1,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "stub",
+  "from": "V-101-N4",
+  "to": "blind",
+  "flow": "V-101-N4 → blind"
+ },
+ "items": [
+  {
+   "tag": "1\"-P150-D-6002/1",
+   "line": "1\"-P150-D-6002",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 1\" P150 COMPRESSED SHEET",
+   "designation": "GASKET1-P150",
+   "key": "GSK|1|P150",
+   "NPS": 1,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 443.6563,
+    "N": -300,
+    "EL": 1302
+   },
+   "b": {
+    "E": 443.7813,
+    "N": -300,
+    "EL": 1302
+   },
+   "centre": {
+    "E": 443.7188,
+    "N": -300,
+    "EL": 1302
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "1\"-P150-D-6002/2",
+   "line": "1\"-P150-D-6002",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 2,
+   "description": "VALVE, BALL, FLOATING 1\" P150",
+   "designation": "BALL1-P150",
+   "key": "VLV|BALL|1|P150",
+   "NPS": 1,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 31.6221,
+   "spool": "loose",
+   "a": {
+    "E": 443.7813,
+    "N": -300,
+    "EL": 1302
+   },
+   "b": {
+    "E": 457.1625,
+    "N": -300,
+    "EL": 1302
+   },
+   "centre": {
+    "E": 450.4719,
+    "N": -300,
+    "EL": 1302
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-B-1",
+    "SW-VLV-B-2",
+    "SW-VLV-F-6"
+   ]
+  },
+  {
+   "tag": "1\"-P150-D-6002/3",
+   "line": "1\"-P150-D-6002",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.5\" × 4\" WITH 2 NUTS, FOR 1\" P150",
+   "designation": "STUDS 4×0.5x4 (1-P150)",
+   "key": "STUDS|1|P150|2.750",
+   "NPS": 1,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 1.2207,
+   "spool": "loose",
+   "a": {
+    "E": 441.7188,
+    "N": -300,
+    "EL": 1302
+   },
+   "b": {
+    "E": 445.7188,
+    "N": -300,
+    "EL": 1302
+   },
+   "centre": {
+    "E": 443.7188,
+    "N": -300,
+    "EL": 1302
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "1\"-P150-D-6002/4",
+   "line": "1\"-P150-D-6002",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 1\" P150 COMPRESSED SHEET",
+   "designation": "GASKET1-P150",
+   "key": "GSK|1|P150",
+   "NPS": 1,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 457.1625,
+    "N": -300,
+    "EL": 1302
+   },
+   "b": {
+    "E": 457.2875,
+    "N": -300,
+    "EL": 1302
+   },
+   "centre": {
+    "E": 457.225,
+    "N": -300,
+    "EL": 1302
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "1\"-P150-D-6002/5",
+   "line": "1\"-P150-D-6002",
+   "lineClass": "H150",
+   "kind": "blind",
+   "itemNo": 4,
+   "description": "FLANGE BLIND 1\" P150 RAISED FACE",
+   "designation": "BLIND1-P150",
+   "key": "BLIND|1|P150",
+   "NPS": 1,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "RF",
+   "weight": 4.8016,
+   "spool": "loose",
+   "a": {
+    "E": 457.2875,
+    "N": -300,
+    "EL": 1302
+   },
+   "b": {
+    "E": 458.6,
+    "N": -300,
+    "EL": 1302
+   },
+   "centre": {
+    "E": 457.9438,
+    "N": -300,
+    "EL": 1302
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-8",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "1\"-P150-D-6002/6",
+   "line": "1\"-P150-D-6002",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.5\" × 4\" WITH 2 NUTS, FOR 1\" P150",
+   "designation": "STUDS 4×0.5x4 (1-P150)",
+   "key": "STUDS|1|P150|2.750",
+   "NPS": 1,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 1.2207,
+   "spool": "loose",
+   "a": {
+    "E": 455.225,
+    "N": -300,
+    "EL": 1302
+   },
+   "b": {
+    "E": 459.225,
+    "N": -300,
+    "EL": 1302
+   },
+   "centre": {
+    "E": 457.225,
+    "N": -300,
+    "EL": 1302
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  }
+ ],
+ "welds": [],
+ "supports": [],
+ "spools": [],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "GASKET 1\" P150 COMPRESSED SHEET",
+   "qty": 2,
+   "weight": 0
+  },
+  {
+   "itemNo": 2,
+   "description": "VALVE, BALL, FLOATING 1\" P150",
+   "qty": 1,
+   "weight": 31.6221
+  },
+  {
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.5\" × 4\" WITH 2 NUTS, FOR 1\" P150",
+   "qty": 2,
+   "weight": 2.4414
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE BLIND 1\" P150 RAISED FACE",
+   "qty": 1,
+   "weight": 4.8016
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 443.6563,
+    "N": -300,
+    "EL": 1302
+   },
+   "kind": "gasket start",
+   "ref": "1\"-P150-D-6002/1"
+  },
+  {
+   "at": {
+    "E": 443.7813,
+    "N": -300,
+    "EL": 1302
+   },
+   "kind": "gasket end",
+   "ref": "1\"-P150-D-6002/1"
+  },
+  {
+   "at": {
+    "E": 457.1625,
+    "N": -300,
+    "EL": 1302
+   },
+   "kind": "valve end",
+   "ref": "1\"-P150-D-6002/2"
+  },
+  {
+   "at": {
+    "E": 457.2875,
+    "N": -300,
+    "EL": 1302
+   },
+   "kind": "gasket end",
+   "ref": "1\"-P150-D-6002/4"
+  },
+  {
+   "at": {
+    "E": 458.6,
+    "N": -300,
+    "EL": 1302
+   },
+   "kind": "blind end",
+   "ref": "1\"-P150-D-6002/5"
+  }
+ ],
+ "totals": {
+  "items": 6,
+  "welds": 0,
+  "fieldWelds": 0,
+  "supports": 0,
+  "pipeLength": 0,
+  "weight": 38.8651
+ }
+}

@@ -1,0 +1,1702 @@
+{
+ "header": {
+  "line": "2\"-P150-SC-3010",
+  "lineClass": "C150",
+  "fluid": "Steam condensate",
+  "service": "SC",
+  "NPS": 2,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": true,
+  "kind": "routed",
+  "from": "T-102-N8",
+  "to": "tap 3\"-P150-SC-2004",
+  "flow": "T-102-N8 → tap 3\"-P150-SC-2004"
+ },
+ "items": [
+  {
+   "tag": "2\"-P150-SC-3010/A1",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 2\" P150 COMPRESSED SHEET",
+   "designation": "GASKET2-P150",
+   "key": "GSK|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 450.125,
+    "N": 318,
+    "EL": 1254
+   },
+   "b": {
+    "E": 450,
+    "N": 318,
+    "EL": 1254
+   },
+   "centre": {
+    "E": 450.0625,
+    "N": 318,
+    "EL": 1254
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/A2",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "valve",
+   "itemNo": 2,
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P150",
+   "designation": "GATE2-P150",
+   "key": "VLV|GATE|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 60.5151,
+   "spool": "loose",
+   "a": {
+    "E": 450,
+    "N": 318,
+    "EL": 1254
+   },
+   "b": {
+    "E": 439.25,
+    "N": 318,
+    "EL": 1254
+   },
+   "centre": {
+    "E": 444.625,
+    "N": 318,
+    "EL": 1254
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/A3",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.625\" × 4-1/4\" WITH 2 NUTS, FOR 2\" P150",
+   "designation": "STUDS 4×0.625x4.25 (2-P150)",
+   "key": "STUDS|2|P150|2.750",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 2.1231,
+   "spool": "loose",
+   "a": {
+    "E": 452.1875,
+    "N": 318,
+    "EL": 1254
+   },
+   "b": {
+    "E": 447.9375,
+    "N": 318,
+    "EL": 1254
+   },
+   "centre": {
+    "E": 450.0625,
+    "N": 318,
+    "EL": 1254
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/A4",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 2\" P150 COMPRESSED SHEET",
+   "designation": "GASKET2-P150",
+   "key": "GSK|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 439.25,
+    "N": 318,
+    "EL": 1254
+   },
+   "b": {
+    "E": 439.125,
+    "N": 318,
+    "EL": 1254
+   },
+   "centre": {
+    "E": 439.1875,
+    "N": 318,
+    "EL": 1254
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/A5",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 2\" P150 RAISED FACE",
+   "designation": "FLG2-P150",
+   "key": "WNF|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "weight": 8.6257,
+   "spool": "2\"-P150-SC-3010-SP01",
+   "a": {
+    "E": 439.125,
+    "N": 318,
+    "EL": 1254
+   },
+   "b": {
+    "E": 434.9375,
+    "N": 318,
+    "EL": 1254
+   },
+   "centre": {
+    "E": 437.0313,
+    "N": 318,
+    "EL": 1254
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/A6",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.625\" × 4-1/4\" WITH 2 NUTS, FOR 2\" P150",
+   "designation": "STUDS 4×0.625x4.25 (2-P150)",
+   "key": "STUDS|2|P150|2.750",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 2.1231,
+   "spool": "loose",
+   "a": {
+    "E": 441.3125,
+    "N": 318,
+    "EL": 1254
+   },
+   "b": {
+    "E": 437.0625,
+    "N": 318,
+    "EL": 1254
+   },
+   "centre": {
+    "E": 439.1875,
+    "N": 318,
+    "EL": 1254
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/p7",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 5,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|5.604",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 5.6042,
+   "weight": 1.1701,
+   "spool": "2\"-P150-SC-3010-SP02",
+   "a": {
+    "E": 434.9375,
+    "N": 318,
+    "EL": 1254
+   },
+   "b": {
+    "E": 429.3333,
+    "N": 318,
+    "EL": 1254
+   },
+   "centre": {
+    "E": 432.1354,
+    "N": 318,
+    "EL": 1254
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/el8",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "elbow",
+   "itemNo": 6,
+   "description": "ELBOW 90° R = 5/3 OD 2\" P150",
+   "designation": "EL90-2-P150",
+   "key": "EL|2|P150|90",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 1.0856,
+   "spool": "2\"-P150-SC-3010-SP02",
+   "a": {
+    "E": 429.3333,
+    "N": 318,
+    "EL": 1254
+   },
+   "b": {
+    "E": 426,
+    "N": 318,
+    "EL": 1257.3333
+   },
+   "centre": {
+    "E": 427.6667,
+    "N": 318,
+    "EL": 1255.6667
+   },
+   "axis": {
+    "E": -0.7071,
+    "N": 0,
+    "EL": 0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/p9",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 5,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|239.333",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 239.3334,
+   "weight": 49.9708,
+   "spool": "2\"-P150-SC-3010-SP02",
+   "a": {
+    "E": 426,
+    "N": 318,
+    "EL": 1257.3333
+   },
+   "b": {
+    "E": 426,
+    "N": 318,
+    "EL": 1496.6667
+   },
+   "centre": {
+    "E": 426,
+    "N": 318,
+    "EL": 1377
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/el10",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "elbow",
+   "itemNo": 6,
+   "description": "ELBOW 90° R = 5/3 OD 2\" P150",
+   "designation": "EL90-2-P150",
+   "key": "EL|2|P150|90",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 1.0856,
+   "spool": "2\"-P150-SC-3010-SP02",
+   "a": {
+    "E": 426,
+    "N": 318,
+    "EL": 1496.6667
+   },
+   "b": {
+    "E": 422.6667,
+    "N": 318,
+    "EL": 1500
+   },
+   "centre": {
+    "E": 424.3334,
+    "N": 318,
+    "EL": 1498.3333
+   },
+   "axis": {
+    "E": -0.7071,
+    "N": 0,
+    "EL": 0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/p11",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 5,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|11.333",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 11.3334,
+   "weight": 2.3662,
+   "spool": "2\"-P150-SC-3010-SP02",
+   "a": {
+    "E": 422.6667,
+    "N": 318,
+    "EL": 1500
+   },
+   "b": {
+    "E": 411.3333,
+    "N": 318,
+    "EL": 1500
+   },
+   "centre": {
+    "E": 417,
+    "N": 318,
+    "EL": 1500
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/el12",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "elbow",
+   "itemNo": 6,
+   "description": "ELBOW 90° R = 5/3 OD 2\" P150",
+   "designation": "EL90-2-P150",
+   "key": "EL|2|P150|90",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 1.0856,
+   "spool": "2\"-P150-SC-3010-SP02",
+   "a": {
+    "E": 411.3333,
+    "N": 318,
+    "EL": 1500
+   },
+   "b": {
+    "E": 408,
+    "N": 314.6667,
+    "EL": 1500
+   },
+   "centre": {
+    "E": 409.6667,
+    "N": 316.3334,
+    "EL": 1500
+   },
+   "axis": {
+    "E": -0.7071,
+    "N": -0.7071,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/p13",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 5,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|335.333",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 335.3334,
+   "weight": 70.0148,
+   "spool": "2\"-P150-SC-3010-SP02",
+   "a": {
+    "E": 408,
+    "N": 314.6667,
+    "EL": 1500
+   },
+   "b": {
+    "E": 408,
+    "N": -20.6667,
+    "EL": 1500
+   },
+   "centre": {
+    "E": 408,
+    "N": 147,
+    "EL": 1500
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/el14",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "elbow",
+   "itemNo": 6,
+   "description": "ELBOW 90° R = 5/3 OD 2\" P150",
+   "designation": "EL90-2-P150",
+   "key": "EL|2|P150|90",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 1.0856,
+   "spool": "2\"-P150-SC-3010-SP02",
+   "a": {
+    "E": 408,
+    "N": -20.6667,
+    "EL": 1500
+   },
+   "b": {
+    "E": 408,
+    "N": -24,
+    "EL": 1496.6667
+   },
+   "centre": {
+    "E": 408,
+    "N": -22.3333,
+    "EL": 1498.3333
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/p15",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 5,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|4.792",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 4.7917,
+   "weight": 1.0005,
+   "spool": "2\"-P150-SC-3010-SP02",
+   "a": {
+    "E": 408,
+    "N": -24,
+    "EL": 1496.6667
+   },
+   "b": {
+    "E": 408,
+    "N": -24,
+    "EL": 1491.875
+   },
+   "centre": {
+    "E": 408,
+    "N": -24,
+    "EL": 1494.2708
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/B7",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.625\" × 4-1/4\" WITH 2 NUTS, FOR 2\" P150",
+   "designation": "STUDS 4×0.625x4.25 (2-P150)",
+   "key": "STUDS|2|P150|2.750",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 2.1231,
+   "spool": "loose",
+   "a": {
+    "E": 408,
+    "N": -24,
+    "EL": 1485.5
+   },
+   "b": {
+    "E": 408,
+    "N": -24,
+    "EL": 1489.75
+   },
+   "centre": {
+    "E": 408,
+    "N": -24,
+    "EL": 1487.625
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/B6",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 2\" P150 RAISED FACE",
+   "designation": "FLG2-P150",
+   "key": "WNF|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "weight": 8.6257,
+   "spool": "2\"-P150-SC-3010-SP03",
+   "a": {
+    "E": 408,
+    "N": -24,
+    "EL": 1487.6875
+   },
+   "b": {
+    "E": 408,
+    "N": -24,
+    "EL": 1491.875
+   },
+   "centre": {
+    "E": 408,
+    "N": -24,
+    "EL": 1489.7813
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/B5",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 2\" P150 COMPRESSED SHEET",
+   "designation": "GASKET2-P150",
+   "key": "GSK|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 408,
+    "N": -24,
+    "EL": 1487.5625
+   },
+   "b": {
+    "E": 408,
+    "N": -24,
+    "EL": 1487.6875
+   },
+   "centre": {
+    "E": 408,
+    "N": -24,
+    "EL": 1487.625
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/B4",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.625\" × 4-1/4\" WITH 2 NUTS, FOR 2\" P150",
+   "designation": "STUDS 4×0.625x4.25 (2-P150)",
+   "key": "STUDS|2|P150|2.750",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 2.1231,
+   "spool": "loose",
+   "a": {
+    "E": 408,
+    "N": -24,
+    "EL": 1474.625
+   },
+   "b": {
+    "E": 408,
+    "N": -24,
+    "EL": 1478.875
+   },
+   "centre": {
+    "E": 408,
+    "N": -24,
+    "EL": 1476.75
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/B3",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "valve",
+   "itemNo": 2,
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P150",
+   "designation": "GATE2-P150",
+   "key": "VLV|GATE|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 60.5151,
+   "spool": "loose",
+   "a": {
+    "E": 408,
+    "N": -24,
+    "EL": 1476.8125
+   },
+   "b": {
+    "E": 408,
+    "N": -24,
+    "EL": 1487.5625
+   },
+   "centre": {
+    "E": 408,
+    "N": -24,
+    "EL": 1482.1875
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/B2",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 2\" P150 COMPRESSED SHEET",
+   "designation": "GASKET2-P150",
+   "key": "GSK|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 408,
+    "N": -24,
+    "EL": 1476.6875
+   },
+   "b": {
+    "E": 408,
+    "N": -24,
+    "EL": 1476.8125
+   },
+   "centre": {
+    "E": 408,
+    "N": -24,
+    "EL": 1476.75
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/B1",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 2\" P150 RAISED FACE",
+   "designation": "FLG2-P150",
+   "key": "WNF|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "weight": 8.6257,
+   "spool": "2\"-P150-SC-3010-SP04",
+   "a": {
+    "E": 408,
+    "N": -24,
+    "EL": 1472.5
+   },
+   "b": {
+    "E": 408,
+    "N": -24,
+    "EL": 1476.6875
+   },
+   "centre": {
+    "E": 408,
+    "N": -24,
+    "EL": 1474.5938
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "2\"-P150-SC-3010/W1",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "3\"-P150-SC-2004/T:2\"-P150-SC-3010",
+    "2\"-P150-SC-3010/B1"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "3\"-P150-SC-2004-SP01",
+    "2\"-P150-SC-3010-SP04"
+   ],
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1472.5
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W2",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/A5",
+    "2\"-P150-SC-3010/p7"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "2\"-P150-SC-3010-SP01",
+    "2\"-P150-SC-3010-SP02"
+   ],
+   "at": {
+    "E": 434.9375,
+    "N": 318,
+    "EL": 1254
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W3",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/p7",
+    "2\"-P150-SC-3010/el8"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-SC-3010-SP02",
+   "spools": [
+    "2\"-P150-SC-3010-SP02",
+    "2\"-P150-SC-3010-SP02"
+   ],
+   "at": {
+    "E": 429.3333,
+    "N": 318,
+    "EL": 1254
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W4",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/el8",
+    "2\"-P150-SC-3010/p9"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-SC-3010-SP02",
+   "spools": [
+    "2\"-P150-SC-3010-SP02",
+    "2\"-P150-SC-3010-SP02"
+   ],
+   "at": {
+    "E": 426,
+    "N": 318,
+    "EL": 1257.3333
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W5",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/p9",
+    "2\"-P150-SC-3010/el10"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-SC-3010-SP02",
+   "spools": [
+    "2\"-P150-SC-3010-SP02",
+    "2\"-P150-SC-3010-SP02"
+   ],
+   "at": {
+    "E": 426,
+    "N": 318,
+    "EL": 1496.6667
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W6",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/el10",
+    "2\"-P150-SC-3010/p11"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-SC-3010-SP02",
+   "spools": [
+    "2\"-P150-SC-3010-SP02",
+    "2\"-P150-SC-3010-SP02"
+   ],
+   "at": {
+    "E": 422.6667,
+    "N": 318,
+    "EL": 1500
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W7",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/p11",
+    "2\"-P150-SC-3010/el12"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-SC-3010-SP02",
+   "spools": [
+    "2\"-P150-SC-3010-SP02",
+    "2\"-P150-SC-3010-SP02"
+   ],
+   "at": {
+    "E": 411.3333,
+    "N": 318,
+    "EL": 1500
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W8",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/el12",
+    "2\"-P150-SC-3010/p13"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-SC-3010-SP02",
+   "spools": [
+    "2\"-P150-SC-3010-SP02",
+    "2\"-P150-SC-3010-SP02"
+   ],
+   "at": {
+    "E": 408,
+    "N": 314.6667,
+    "EL": 1500
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W9",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/p13",
+    "2\"-P150-SC-3010/el14"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-SC-3010-SP02",
+   "spools": [
+    "2\"-P150-SC-3010-SP02",
+    "2\"-P150-SC-3010-SP02"
+   ],
+   "at": {
+    "E": 408,
+    "N": -20.6667,
+    "EL": 1500
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W10",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/el14",
+    "2\"-P150-SC-3010/p15"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-SC-3010-SP02",
+   "spools": [
+    "2\"-P150-SC-3010-SP02",
+    "2\"-P150-SC-3010-SP02"
+   ],
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1496.6667
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/W11",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-SC-3010/p15",
+    "2\"-P150-SC-3010/B6"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "2\"-P150-SC-3010-SP02",
+    "2\"-P150-SC-3010-SP03"
+   ],
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1491.875
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "2\"-P150-SC-3010/S1",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "hanger",
+   "description": "HANGER FOR 2\" LINE (HANGER-2x78.1)",
+   "designation": "HANGER-2x78.1",
+   "key": "HANG|2|P150|78.06",
+   "material": "Grade 36",
+   "weight": 6.0101,
+   "spool": "loose",
+   "at": {
+    "E": 408,
+    "N": 250.8889,
+    "EL": 1500
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/S2",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "hanger",
+   "description": "HANGER FOR 2\" LINE (HANGER-2x88.0)",
+   "designation": "HANGER-2x88.0",
+   "key": "HANG|2|P150|88.02",
+   "material": "Grade 36",
+   "weight": 6.3185,
+   "spool": "loose",
+   "at": {
+    "E": 408,
+    "N": 131.9593,
+    "EL": 1500
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "2\"-P150-SC-3010/S3",
+   "line": "2\"-P150-SC-3010",
+   "lineClass": "C150",
+   "type": "hanger",
+   "description": "HANGER FOR 2\" LINE (HANGER-2x93.0)",
+   "designation": "HANGER-2x93.0",
+   "key": "HANG|2|P150|93.00",
+   "material": "Grade 36",
+   "weight": 6.4727,
+   "spool": "loose",
+   "at": {
+    "E": 408,
+    "N": 72.1665,
+    "EL": 1500
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "2\"-P150-SC-3010-SP01",
+   "items": [
+    "2\"-P150-SC-3010/A5"
+   ],
+   "shopWelds": [],
+   "weight": 8.6257
+  },
+  {
+   "id": "2\"-P150-SC-3010-SP02",
+   "items": [
+    "2\"-P150-SC-3010/p7",
+    "2\"-P150-SC-3010/el8",
+    "2\"-P150-SC-3010/p9",
+    "2\"-P150-SC-3010/el10",
+    "2\"-P150-SC-3010/p11",
+    "2\"-P150-SC-3010/el12",
+    "2\"-P150-SC-3010/p13",
+    "2\"-P150-SC-3010/el14",
+    "2\"-P150-SC-3010/p15"
+   ],
+   "shopWelds": [
+    "2\"-P150-SC-3010/W3",
+    "2\"-P150-SC-3010/W4",
+    "2\"-P150-SC-3010/W5",
+    "2\"-P150-SC-3010/W6",
+    "2\"-P150-SC-3010/W7",
+    "2\"-P150-SC-3010/W8",
+    "2\"-P150-SC-3010/W9",
+    "2\"-P150-SC-3010/W10"
+   ],
+   "weight": 129.1862
+  },
+  {
+   "id": "2\"-P150-SC-3010-SP03",
+   "items": [
+    "2\"-P150-SC-3010/B6"
+   ],
+   "shopWelds": [],
+   "weight": 8.6257
+  },
+  {
+   "id": "2\"-P150-SC-3010-SP04",
+   "items": [
+    "2\"-P150-SC-3010/B1"
+   ],
+   "shopWelds": [],
+   "weight": 8.6257
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "GASKET 2\" P150 COMPRESSED SHEET",
+   "qty": 4,
+   "weight": 0
+  },
+  {
+   "itemNo": 2,
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P150",
+   "qty": 2,
+   "weight": 121.0302
+  },
+  {
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.625\" × 4-1/4\" WITH 2 NUTS, FOR 2\" P150",
+   "qty": 4,
+   "weight": 8.4926
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 2\" P150 RAISED FACE",
+   "qty": 3,
+   "weight": 25.8771
+  },
+  {
+   "itemNo": 5,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "qty": 5,
+   "length": 596.3961,
+   "weight": 124.5224
+  },
+  {
+   "itemNo": 6,
+   "description": "ELBOW 90° R = 5/3 OD 2\" P150",
+   "qty": 4,
+   "weight": 4.3425
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 450.125,
+    "N": 318,
+    "EL": 1254
+   },
+   "kind": "gasket start",
+   "ref": "2\"-P150-SC-3010/A1"
+  },
+  {
+   "at": {
+    "E": 450,
+    "N": 318,
+    "EL": 1254
+   },
+   "kind": "gasket end",
+   "ref": "2\"-P150-SC-3010/A1"
+  },
+  {
+   "at": {
+    "E": 439.25,
+    "N": 318,
+    "EL": 1254
+   },
+   "kind": "valve end",
+   "ref": "2\"-P150-SC-3010/A2"
+  },
+  {
+   "at": {
+    "E": 439.125,
+    "N": 318,
+    "EL": 1254
+   },
+   "kind": "gasket end",
+   "ref": "2\"-P150-SC-3010/A4"
+  },
+  {
+   "at": {
+    "E": 434.9375,
+    "N": 318,
+    "EL": 1254
+   },
+   "kind": "flange end",
+   "ref": "2\"-P150-SC-3010/A5"
+  },
+  {
+   "at": {
+    "E": 429.3333,
+    "N": 318,
+    "EL": 1254
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-SC-3010/p7"
+  },
+  {
+   "at": {
+    "E": 426,
+    "N": 318,
+    "EL": 1254
+   },
+   "kind": "elbow work point",
+   "ref": "2\"-P150-SC-3010/el8"
+  },
+  {
+   "at": {
+    "E": 426,
+    "N": 318,
+    "EL": 1257.3333
+   },
+   "kind": "elbow end",
+   "ref": "2\"-P150-SC-3010/el8"
+  },
+  {
+   "at": {
+    "E": 426,
+    "N": 318,
+    "EL": 1496.6667
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-SC-3010/p9"
+  },
+  {
+   "at": {
+    "E": 426,
+    "N": 318,
+    "EL": 1500
+   },
+   "kind": "elbow work point",
+   "ref": "2\"-P150-SC-3010/el10"
+  },
+  {
+   "at": {
+    "E": 422.6667,
+    "N": 318,
+    "EL": 1500
+   },
+   "kind": "elbow end",
+   "ref": "2\"-P150-SC-3010/el10"
+  },
+  {
+   "at": {
+    "E": 411.3333,
+    "N": 318,
+    "EL": 1500
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-SC-3010/p11"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": 318,
+    "EL": 1500
+   },
+   "kind": "elbow work point",
+   "ref": "2\"-P150-SC-3010/el12"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": 314.6667,
+    "EL": 1500
+   },
+   "kind": "elbow end",
+   "ref": "2\"-P150-SC-3010/el12"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": -20.6667,
+    "EL": 1500
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-SC-3010/p13"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1500
+   },
+   "kind": "elbow work point",
+   "ref": "2\"-P150-SC-3010/el14"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1496.6667
+   },
+   "kind": "elbow end",
+   "ref": "2\"-P150-SC-3010/el14"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1491.875
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-SC-3010/p15"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1487.6875
+   },
+   "kind": "flange end",
+   "ref": "2\"-P150-SC-3010/B6"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1487.5625
+   },
+   "kind": "gasket end",
+   "ref": "2\"-P150-SC-3010/B5"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1476.8125
+   },
+   "kind": "valve end",
+   "ref": "2\"-P150-SC-3010/B3"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1476.6875
+   },
+   "kind": "gasket end",
+   "ref": "2\"-P150-SC-3010/B2"
+  },
+  {
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1472.5
+   },
+   "kind": "flange end",
+   "ref": "2\"-P150-SC-3010/B1"
+  }
+ ],
+ "totals": {
+  "items": 22,
+  "welds": 11,
+  "fieldWelds": 3,
+  "supports": 3,
+  "pipeLength": 596.3961,
+  "weight": 284.2649
+ }
+}

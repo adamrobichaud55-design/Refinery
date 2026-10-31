@@ -1,0 +1,2702 @@
+{
+ "header": {
+  "line": "2\"-P150-IA-2005",
+  "lineClass": "G150",
+  "fluid": "Air and gases",
+  "service": "IA",
+  "NPS": 2,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "header",
+  "from": "cap",
+  "to": "cap",
+  "flow": "cap → cap"
+ },
+ "items": [
+  {
+   "tag": "2\"-P150-IA-2005/cap0",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 2\" P150",
+   "designation": "CAP2-P150",
+   "key": "CAP|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 0.3331,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 250.5,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 252,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 251.25,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p2",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|88.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 88,
+   "weight": 18.3737,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 252,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 340,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 296,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5005",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE REDUCING 2\" × 1/2\" P150",
+   "designation": "TEE2x0.5-P150",
+   "key": "TEE|2|P150|0.5",
+   "NPS": 2,
+   "NPS2": 0.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.8649,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 340,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 344,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 342,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p4",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|236.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 236,
+   "weight": 49.2749,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 344,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 580,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 462,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5010",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE REDUCING 2\" × 1/2\" P150",
+   "designation": "TEE2x0.5-P150",
+   "key": "TEE|2|P150|0.5",
+   "NPS": 2,
+   "NPS2": 0.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.8649,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 580,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 584,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 582,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p6",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|230.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 230,
+   "weight": 48.0221,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 584,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 814,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 699,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5015",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE REDUCING 2\" × 1/2\" P150",
+   "designation": "TEE2x0.5-P150",
+   "key": "TEE|2|P150|0.5",
+   "NPS": 2,
+   "NPS2": 0.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.8649,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 814,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 818,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 816,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p8",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|242.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 242,
+   "weight": 50.5276,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 818,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1060,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 939,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5020",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE REDUCING 2\" × 1/2\" P150",
+   "designation": "TEE2x0.5-P150",
+   "key": "TEE|2|P150|0.5",
+   "NPS": 2,
+   "NPS2": 0.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.8649,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 1060,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1064,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1062,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p10",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|236.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 236,
+   "weight": 49.2749,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 1064,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1300,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1182,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5025",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE REDUCING 2\" × 1/2\" P150",
+   "designation": "TEE2x0.5-P150",
+   "key": "TEE|2|P150|0.5",
+   "NPS": 2,
+   "NPS2": 0.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.8649,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 1300,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1304,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1302,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p12",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|232.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 232,
+   "weight": 48.4397,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 1304,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1536,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1420,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p13",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|232.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 232,
+   "weight": 48.4397,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 1536,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1768,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1652,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5030",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE REDUCING 2\" × 1/2\" P150",
+   "designation": "TEE2x0.5-P150",
+   "key": "TEE|2|P150|0.5",
+   "NPS": 2,
+   "NPS2": 0.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.8649,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 1768,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1772,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1770,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p15",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|248.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 248,
+   "weight": 51.7804,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 1772,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2020,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1896,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5035",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE REDUCING 2\" × 1/2\" P150",
+   "designation": "TEE2x0.5-P150",
+   "key": "TEE|2|P150|0.5",
+   "NPS": 2,
+   "NPS2": 0.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.8649,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2020,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2024,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2022,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p17",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|68.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 68,
+   "weight": 14.1978,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2024,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2092,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2058,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:3/4\"-P150-V-8015",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 4,
+   "description": "TEE REDUCING 2\" × 3/4\" P150",
+   "designation": "TEE2x0.75-P150",
+   "key": "TEE|2|P150|0.75",
+   "NPS": 2,
+   "NPS2": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.881,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2092,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2096,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2094,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p19",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|8.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 8,
+   "weight": 1.6703,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2096,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2104,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2100,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:3/4\"-P150-D-8014",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 4,
+   "description": "TEE REDUCING 2\" × 3/4\" P150",
+   "designation": "TEE2x0.75-P150",
+   "key": "TEE|2|P150|0.75",
+   "NPS": 2,
+   "NPS2": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.881,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2104,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2108,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2106,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p21",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|8.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 8,
+   "weight": 1.6703,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2108,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2116,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2112,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:3/4\"-P150-D-8013",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 4,
+   "description": "TEE REDUCING 2\" × 3/4\" P150",
+   "designation": "TEE2x0.75-P150",
+   "key": "TEE|2|P150|0.75",
+   "NPS": 2,
+   "NPS2": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.881,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2116,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2120,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2118,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p23",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|8.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 8,
+   "weight": 1.6703,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2120,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2128,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2124,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5040",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE REDUCING 2\" × 1/2\" P150",
+   "designation": "TEE2x0.5-P150",
+   "key": "TEE|2|P150|0.5",
+   "NPS": 2,
+   "NPS2": 0.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 0.8649,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2128,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2132,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2130,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/p25",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "designation": "PIPE2-P150",
+   "key": "PIPE|2|P150|16.000",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 16,
+   "weight": 3.3407,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2132,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2148,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2140,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/cap1",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 2\" P150",
+   "designation": "CAP2-P150",
+   "key": "CAP|2|P150",
+   "NPS": 2,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 0.3331,
+   "spool": "2\"-P150-IA-2005-SP01",
+   "a": {
+    "E": 2148,
+    "N": 30,
+    "EL": 1470
+   },
+   "b": {
+    "E": 2149.5,
+    "N": 30,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 2148.75,
+    "N": 30,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "2\"-P150-IA-2005/W1",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/cap0",
+    "2\"-P150-IA-2005/p2"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 252,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W2",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p2",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5005"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 340,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W3",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5005",
+    "2\"-P150-IA-2005/p4"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 344,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W4",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p4",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5010"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 580,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W5",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5010",
+    "2\"-P150-IA-2005/p6"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 584,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W6",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p6",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5015"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 814,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W7",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5015",
+    "2\"-P150-IA-2005/p8"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 818,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W8",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p8",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5020"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 1060,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W9",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5020",
+    "2\"-P150-IA-2005/p10"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 1064,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W10",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p10",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5025"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 1300,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W11",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5025",
+    "2\"-P150-IA-2005/p12"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 1304,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W12",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p12",
+    "2\"-P150-IA-2005/p13"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 1536,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W13",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p13",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5030"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 1768,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W14",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5030",
+    "2\"-P150-IA-2005/p15"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 1772,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W15",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p15",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5035"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2020,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W16",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5035",
+    "2\"-P150-IA-2005/p17"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2024,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W17",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p17",
+    "2\"-P150-IA-2005/T:3/4\"-P150-V-8015"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2092,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W18",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:3/4\"-P150-V-8015",
+    "2\"-P150-IA-2005/p19"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2096,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W19",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p19",
+    "2\"-P150-IA-2005/T:3/4\"-P150-D-8014"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2104,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W20",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:3/4\"-P150-D-8014",
+    "2\"-P150-IA-2005/p21"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2108,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W21",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p21",
+    "2\"-P150-IA-2005/T:3/4\"-P150-D-8013"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2116,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W22",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:3/4\"-P150-D-8013",
+    "2\"-P150-IA-2005/p23"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2120,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W23",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p23",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5040"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2128,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W24",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5040",
+    "2\"-P150-IA-2005/p25"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2132,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/W25",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.125,
+   "NPS": 2,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-IA-2005/p25",
+    "2\"-P150-IA-2005/cap1"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P150-IA-2005-SP01",
+   "spools": [
+    "2\"-P150-IA-2005-SP01",
+    "2\"-P150-IA-2005-SP01"
+   ],
+   "at": {
+    "E": 2148,
+    "N": 30,
+    "EL": 1470
+   },
+   "key": "BW|2|P150",
+   "weight": 0.0402,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "2\"-P150-IA-2005/S1",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 360,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S2",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "guide",
+   "description": "GUIDE FOR 2\" LINE (GUIDE-2)",
+   "designation": "GUIDE-2",
+   "key": "SHOE|2|P150|guide|5.000",
+   "material": "Grade 36",
+   "weight": 16.3014,
+   "spool": "loose",
+   "at": {
+    "E": 480,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S3",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 600,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S4",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 720,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S5",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 840,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S6",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "guide",
+   "description": "GUIDE FOR 2\" LINE (GUIDE-2)",
+   "designation": "GUIDE-2",
+   "key": "SHOE|2|P150|guide|5.000",
+   "material": "Grade 36",
+   "weight": 16.3014,
+   "spool": "loose",
+   "at": {
+    "E": 960,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S7",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1080,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S8",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "anchor",
+   "description": "ANCHOR FOR 2\" LINE (ANCHOR-2)",
+   "designation": "ANCHOR-2",
+   "key": "SHOE|2|P150|anchor|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1200,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S9",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1320,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S10",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "guide",
+   "description": "GUIDE FOR 2\" LINE (GUIDE-2)",
+   "designation": "GUIDE-2",
+   "key": "SHOE|2|P150|guide|5.000",
+   "material": "Grade 36",
+   "weight": 16.3014,
+   "spool": "loose",
+   "at": {
+    "E": 1440,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S11",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1560,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S12",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1680,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S13",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1800,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S14",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "guide",
+   "description": "GUIDE FOR 2\" LINE (GUIDE-2)",
+   "designation": "GUIDE-2",
+   "key": "SHOE|2|P150|guide|5.000",
+   "material": "Grade 36",
+   "weight": 16.3014,
+   "spool": "loose",
+   "at": {
+    "E": 1920,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P150-IA-2005/S15",
+   "line": "2\"-P150-IA-2005",
+   "lineClass": "G150",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P150|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 2040,
+    "N": 30,
+    "EL": 1464
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "2\"-P150-IA-2005-SP01",
+   "items": [
+    "2\"-P150-IA-2005/cap0",
+    "2\"-P150-IA-2005/p2",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5005",
+    "2\"-P150-IA-2005/p4",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5010",
+    "2\"-P150-IA-2005/p6",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5015",
+    "2\"-P150-IA-2005/p8",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5020",
+    "2\"-P150-IA-2005/p10",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5025",
+    "2\"-P150-IA-2005/p12",
+    "2\"-P150-IA-2005/p13",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5030",
+    "2\"-P150-IA-2005/p15",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5035",
+    "2\"-P150-IA-2005/p17",
+    "2\"-P150-IA-2005/T:3/4\"-P150-V-8015",
+    "2\"-P150-IA-2005/p19",
+    "2\"-P150-IA-2005/T:3/4\"-P150-D-8014",
+    "2\"-P150-IA-2005/p21",
+    "2\"-P150-IA-2005/T:3/4\"-P150-D-8013",
+    "2\"-P150-IA-2005/p23",
+    "2\"-P150-IA-2005/T:1/2\"-P150-HS-5040",
+    "2\"-P150-IA-2005/p25",
+    "2\"-P150-IA-2005/cap1"
+   ],
+   "shopWelds": [
+    "2\"-P150-IA-2005/W1",
+    "2\"-P150-IA-2005/W2",
+    "2\"-P150-IA-2005/W3",
+    "2\"-P150-IA-2005/W4",
+    "2\"-P150-IA-2005/W5",
+    "2\"-P150-IA-2005/W6",
+    "2\"-P150-IA-2005/W7",
+    "2\"-P150-IA-2005/W8",
+    "2\"-P150-IA-2005/W9",
+    "2\"-P150-IA-2005/W10",
+    "2\"-P150-IA-2005/W11",
+    "2\"-P150-IA-2005/W12",
+    "2\"-P150-IA-2005/W13",
+    "2\"-P150-IA-2005/W14",
+    "2\"-P150-IA-2005/W15",
+    "2\"-P150-IA-2005/W16",
+    "2\"-P150-IA-2005/W17",
+    "2\"-P150-IA-2005/W18",
+    "2\"-P150-IA-2005/W19",
+    "2\"-P150-IA-2005/W20",
+    "2\"-P150-IA-2005/W21",
+    "2\"-P150-IA-2005/W22",
+    "2\"-P150-IA-2005/W23",
+    "2\"-P150-IA-2005/W24",
+    "2\"-P150-IA-2005/W25"
+   ],
+   "weight": 397.9152
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "CAP 2\" P150",
+   "qty": 2,
+   "weight": 0.6662
+  },
+  {
+   "itemNo": 2,
+   "description": "PIPE 2\" P150 BEVELLED ENDS",
+   "qty": 13,
+   "length": 1852,
+   "weight": 386.6825
+  },
+  {
+   "itemNo": 3,
+   "description": "TEE REDUCING 2\" × 1/2\" P150",
+   "qty": 8,
+   "weight": 6.9195
+  },
+  {
+   "itemNo": 4,
+   "description": "TEE REDUCING 2\" × 3/4\" P150",
+   "qty": 3,
+   "weight": 2.6431
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 250.5,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "cap start",
+   "ref": "2\"-P150-IA-2005/cap0"
+  },
+  {
+   "at": {
+    "E": 252,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "cap end",
+   "ref": "2\"-P150-IA-2005/cap0"
+  },
+  {
+   "at": {
+    "E": 340,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p2"
+  },
+  {
+   "at": {
+    "E": 342,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5005"
+  },
+  {
+   "at": {
+    "E": 344,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5005"
+  },
+  {
+   "at": {
+    "E": 580,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p4"
+  },
+  {
+   "at": {
+    "E": 582,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5010"
+  },
+  {
+   "at": {
+    "E": 584,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5010"
+  },
+  {
+   "at": {
+    "E": 814,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p6"
+  },
+  {
+   "at": {
+    "E": 816,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5015"
+  },
+  {
+   "at": {
+    "E": 818,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5015"
+  },
+  {
+   "at": {
+    "E": 1060,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p8"
+  },
+  {
+   "at": {
+    "E": 1062,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5020"
+  },
+  {
+   "at": {
+    "E": 1064,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5020"
+  },
+  {
+   "at": {
+    "E": 1300,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p10"
+  },
+  {
+   "at": {
+    "E": 1302,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5025"
+  },
+  {
+   "at": {
+    "E": 1304,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5025"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p12"
+  },
+  {
+   "at": {
+    "E": 1768,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p13"
+  },
+  {
+   "at": {
+    "E": 1770,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5030"
+  },
+  {
+   "at": {
+    "E": 1772,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5030"
+  },
+  {
+   "at": {
+    "E": 2020,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p15"
+  },
+  {
+   "at": {
+    "E": 2022,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5035"
+  },
+  {
+   "at": {
+    "E": 2024,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5035"
+  },
+  {
+   "at": {
+    "E": 2092,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p17"
+  },
+  {
+   "at": {
+    "E": 2094,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:3/4\"-P150-V-8015"
+  },
+  {
+   "at": {
+    "E": 2096,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:3/4\"-P150-V-8015"
+  },
+  {
+   "at": {
+    "E": 2104,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p19"
+  },
+  {
+   "at": {
+    "E": 2106,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:3/4\"-P150-D-8014"
+  },
+  {
+   "at": {
+    "E": 2108,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:3/4\"-P150-D-8014"
+  },
+  {
+   "at": {
+    "E": 2116,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p21"
+  },
+  {
+   "at": {
+    "E": 2118,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:3/4\"-P150-D-8013"
+  },
+  {
+   "at": {
+    "E": 2120,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:3/4\"-P150-D-8013"
+  },
+  {
+   "at": {
+    "E": 2128,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p23"
+  },
+  {
+   "at": {
+    "E": 2130,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5040"
+  },
+  {
+   "at": {
+    "E": 2132,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "tee end",
+   "ref": "2\"-P150-IA-2005/T:1/2\"-P150-HS-5040"
+  },
+  {
+   "at": {
+    "E": 2148,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P150-IA-2005/p25"
+  },
+  {
+   "at": {
+    "E": 2149.5,
+    "N": 30,
+    "EL": 1470
+   },
+   "kind": "cap end",
+   "ref": "2\"-P150-IA-2005/cap1"
+  }
+ ],
+ "totals": {
+  "items": 26,
+  "welds": 25,
+  "fieldWelds": 0,
+  "supports": 15,
+  "pipeLength": 1852,
+  "weight": 396.9113
+ }
+}

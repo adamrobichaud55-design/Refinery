@@ -1,0 +1,462 @@
+{
+ "header": {
+  "line": "3/4\"-P150-D-8019",
+  "lineClass": "G150",
+  "fluid": "Air and gases",
+  "service": "D",
+  "NPS": 0.75,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "stub",
+  "from": "tap 2\"-P150-N-2007",
+  "to": "blind",
+  "flow": "tap 2\"-P150-N-2007 → blind"
+ },
+ "items": [
+  {
+   "tag": "3/4\"-P150-D-8019/1",
+   "line": "3/4\"-P150-D-8019",
+   "lineClass": "G150",
+   "kind": "flange",
+   "itemNo": 1,
+   "description": "FLANGE WELD-NECK 3/4\" P150 RAISED FACE",
+   "designation": "FLG0.75-P150",
+   "key": "WNF|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "weight": 4.7577,
+   "spool": "3/4\"-P150-D-8019-SP01",
+   "a": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1472
+   },
+   "b": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1476.5
+   },
+   "centre": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1474.25
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-D-8019/2",
+   "line": "3/4\"-P150-D-8019",
+   "lineClass": "G150",
+   "kind": "gasket",
+   "itemNo": 2,
+   "description": "GASKET 3/4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET0.75-P150",
+   "key": "GSK|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1476.5
+   },
+   "b": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1476.625
+   },
+   "centre": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1476.5625
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-D-8019/3",
+   "line": "3/4\"-P150-D-8019",
+   "lineClass": "G150",
+   "kind": "valve",
+   "itemNo": 3,
+   "description": "VALVE, BALL, FLOATING 3/4\" P150",
+   "designation": "BALL0.75-P150",
+   "key": "VLV|BALL|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 24.6608,
+   "spool": "loose",
+   "a": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1476.625
+   },
+   "b": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1489.7688
+   },
+   "centre": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1483.1969
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-B-1",
+    "SW-VLV-B-2",
+    "SW-VLV-F-6"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-D-8019/4",
+   "line": "3/4\"-P150-D-8019",
+   "lineClass": "G150",
+   "kind": "studs",
+   "itemNo": 4,
+   "description": "STUD SET 4 × 0.5\" × 4-1/4\" WITH 2 NUTS, FOR 3/4\" P150",
+   "designation": "STUDS 4×0.5x4.25 (0.75-P150)",
+   "key": "STUDS|0.75|P150|3.000",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 1.2764,
+   "spool": "loose",
+   "a": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1474.4375
+   },
+   "b": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1478.6875
+   },
+   "centre": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1476.5625
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-D-8019/5",
+   "line": "3/4\"-P150-D-8019",
+   "lineClass": "G150",
+   "kind": "gasket",
+   "itemNo": 2,
+   "description": "GASKET 3/4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET0.75-P150",
+   "key": "GSK|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1489.7688
+   },
+   "b": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1489.8938
+   },
+   "centre": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1489.8313
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-D-8019/6",
+   "line": "3/4\"-P150-D-8019",
+   "lineClass": "G150",
+   "kind": "blind",
+   "itemNo": 5,
+   "description": "FLANGE BLIND 3/4\" P150 RAISED FACE",
+   "designation": "BLIND0.75-P150",
+   "key": "BLIND|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "RF",
+   "weight": 4.6212,
+   "spool": "loose",
+   "a": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1489.8938
+   },
+   "b": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1491.3313
+   },
+   "centre": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1490.6126
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-8",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-D-8019/7",
+   "line": "3/4\"-P150-D-8019",
+   "lineClass": "G150",
+   "kind": "studs",
+   "itemNo": 4,
+   "description": "STUD SET 4 × 0.5\" × 4-1/4\" WITH 2 NUTS, FOR 3/4\" P150",
+   "designation": "STUDS 4×0.5x4.25 (0.75-P150)",
+   "key": "STUDS|0.75|P150|3.000",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 1.2764,
+   "spool": "loose",
+   "a": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1487.7063
+   },
+   "b": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1491.9563
+   },
+   "centre": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1489.8313
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "3/4\"-P150-D-8019/W1",
+   "line": "3/4\"-P150-D-8019",
+   "lineClass": "G150",
+   "type": "BW",
+   "size": 0.0938,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "2\"-P150-N-2007/T:3/4\"-P150-D-8019",
+    "3/4\"-P150-D-8019/1"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "2\"-P150-N-2007-SP01",
+    "3/4\"-P150-D-8019-SP01"
+   ],
+   "at": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1472
+   },
+   "key": "BW|0.75|P150",
+   "weight": 0.0101,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [],
+ "spools": [
+  {
+   "id": "3/4\"-P150-D-8019-SP01",
+   "items": [
+    "3/4\"-P150-D-8019/1"
+   ],
+   "shopWelds": [],
+   "weight": 4.7577
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "FLANGE WELD-NECK 3/4\" P150 RAISED FACE",
+   "qty": 1,
+   "weight": 4.7577
+  },
+  {
+   "itemNo": 2,
+   "description": "GASKET 3/4\" P150 COMPRESSED SHEET",
+   "qty": 2,
+   "weight": 0
+  },
+  {
+   "itemNo": 3,
+   "description": "VALVE, BALL, FLOATING 3/4\" P150",
+   "qty": 1,
+   "weight": 24.6608
+  },
+  {
+   "itemNo": 4,
+   "description": "STUD SET 4 × 0.5\" × 4-1/4\" WITH 2 NUTS, FOR 3/4\" P150",
+   "qty": 2,
+   "weight": 2.5527
+  },
+  {
+   "itemNo": 5,
+   "description": "FLANGE BLIND 3/4\" P150 RAISED FACE",
+   "qty": 1,
+   "weight": 4.6212
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1472
+   },
+   "kind": "flange start",
+   "ref": "3/4\"-P150-D-8019/1"
+  },
+  {
+   "at": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1476.5
+   },
+   "kind": "flange end",
+   "ref": "3/4\"-P150-D-8019/1"
+  },
+  {
+   "at": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1476.625
+   },
+   "kind": "gasket end",
+   "ref": "3/4\"-P150-D-8019/2"
+  },
+  {
+   "at": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1489.7688
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P150-D-8019/3"
+  },
+  {
+   "at": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1489.8938
+   },
+   "kind": "gasket end",
+   "ref": "3/4\"-P150-D-8019/5"
+  },
+  {
+   "at": {
+    "E": 2136,
+    "N": 42,
+    "EL": 1491.3313
+   },
+   "kind": "blind end",
+   "ref": "3/4\"-P150-D-8019/6"
+  }
+ ],
+ "totals": {
+  "items": 7,
+  "welds": 1,
+  "fieldWelds": 1,
+  "supports": 0,
+  "pipeLength": 0,
+  "weight": 36.5924
+ }
+}

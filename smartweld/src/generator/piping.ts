@@ -19,6 +19,7 @@ import { buildLineList, type LineDef, type EndRef } from './linelist';
 import { generateBuilding, type Placed } from './building';
 import { generateInterior, DEMO_LAYOUT } from './interior';
 import { boxGap, segBox } from './pipingCheck';
+import { lineClassCode } from './lineclass';
 
 /** environment variable when run under Node (debug output only); undefined in the browser */
 const envVar = (k: string): string | undefined => (globalThis as { process?: { env?: Record<string, string> } }).process?.env?.[k];
@@ -75,7 +76,7 @@ export function partFromKey(key: string): PartSpec {
 export interface Comp { tag: string; kind: string; key: string; T: Mat4; a: V3; b: V3; NPS: number; cls: PipeClass }
 export interface WeldRec { id: string; line: string; type: 'BW' | 'FW'; size: number; at: V3; dir: V3; joins: [string, string]; field: boolean; NPS: number; key: string; T: Mat4 }
 export interface SupportRec { id: string; line: string; type: 'shoe' | 'guide' | 'anchor' | 'stanchion' | 'hanger' | 'trunnion' | 'trapeze'; at: V3; key: string; T: Mat4 }
-export interface LineRun { no: string; service: string; NPS: number; cls: PipeClass; kind: LineDef['kind']; from: string; to: string; comps: Comp[]; welds: WeldRec[]; supports: SupportRec[]; path: V3[]; ok: boolean; note?: string; cv?: boolean }
+export interface LineRun { no: string; service: string; NPS: number; cls: PipeClass; lineClass?: string; kind: LineDef['kind']; from: string; to: string; comps: Comp[]; welds: WeldRec[]; supports: SupportRec[]; path: V3[]; ok: boolean; note?: string; cv?: boolean }
 export interface NozzleRun { id: string; equip: string; service: string; NPS: number; cls: PipeClass; face: V3; u: V3; comps: Comp[]; welds: WeldRec[] }
 export interface PipingModel { lines: LineRun[]; nozzles: NozzleRun[]; failures: string[]; stats: Record<string, number> }
 
@@ -648,7 +649,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
       pipeTo(p, to);
     };
     if (run.kind === 'header') { const w = unit(sub(pts[1], pts[0])); comps.push({ tag: `${run.no}/cap0`, kind: 'cap', key: `CAP|${l.NPS}|${l.cls}`, T: frameFromAxes(pts[0], perp(w), neg(w)), a: add(pts[0], w, -cl), b: pts[0], NPS: l.NPS, cls: l.cls }); }
-    else comps.push(...ends0!.A.built!.comps);
+    else comps.push(...ends0!.A.built!.comps.map((c, i) => ({ ...c, tag: `${run.no}/A${i + 1}` })));   // SW-GT-1: unique tags (start stack A, end stack B)
     let cursor = pts[0];
     for (let i = 1; i < pts.length - 1; i++) {
       const a = unit(sub(pts[i], pts[i - 1])), b = unit(sub(pts[i + 1], pts[i])), ein = add(pts[i], a, -Rr), eout = add(pts[i], b, Rr);
@@ -658,7 +659,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
     }
     straight(cursor, pts[pts.length - 1]);
     if (run.kind === 'header') { const w = unit(sub(pts[1], pts[0])), e = pts[pts.length - 1]; comps.push({ tag: `${run.no}/cap1`, kind: 'cap', key: `CAP|${l.NPS}|${l.cls}`, T: frameFromAxes(e, perp(w), w), a: e, b: add(e, w, cl), NPS: l.NPS, cls: l.cls }); }
-    else comps.push(...ends0!.B.built!.comps.slice().reverse());
+    else comps.push(...ends0!.B.built!.comps.map((c, i) => ({ ...c, tag: `${run.no}/B${i + 1}` })).reverse());
     run.comps = comps;
     // field welds (SW-PW-2): the closing weld at each end stack, the tee outlet at a tap, and where the line meets its rack run
     const fieldAt: V3[] = [];
@@ -681,6 +682,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
   }
 
   const lines = list.map(l => runs.get(l.no)!).filter(Boolean);
+  { const byRun = new Map(lines.map(r => [r.no, r] as const)); for (const r of lines) r.lineClass = lineClassCode(r, byRun); }   // SW-LC-2
   const stats = { lines: lines.length, routed: lines.filter(r => r.kind !== 'stub' && r.ok).length, failed: failures.length, comps: lines.reduce((s, r) => s + r.comps.length, 0), welds: lines.reduce((s, r) => s + r.welds.length, 0), supports: lines.reduce((s, r) => s + r.supports.length, 0), ...tm, t_total: Date.now() - T0 };
   for (const run of runs.values()) delete (run as LineRun & { _ends?: unknown })._ends;
   return { lines, nozzles: nozzleRuns, failures, stats };
