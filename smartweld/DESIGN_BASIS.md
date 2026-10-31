@@ -1224,6 +1224,9 @@ bore is continuous and every end is a butt-weld bevel.
 - `SW-NOZ-3` Relief valves stand upright on top nozzles and need their own height plus 12 in below
   the roof steel; they are therefore fitted to the drum and the tanks, not to the tall vessels and
   the column, whose tops are within a valve's height of the roof (stated layout consequence).
+- `SW-NOZ-4` A relief nozzle's standout is increased (by less than 6 in) above SW-NOZ-1 so the safety valve's
+  outlet centreline lands on the 6 in routing grid (SW-RT-3). Reason: the flare line leaves the valve
+  outlet horizontally; on the grid its first elbow and every later one stay exactly orthogonal.
 
 ## 36. Line list (`SW-LL-*`)
 
@@ -1243,36 +1246,64 @@ bore is continuous and every end is a butt-weld bevel.
   - utility branches: a gate or ball valve at the header take-off;
   - vents, drains, instrument and sample connections: a ball valve on the nozzle, closed by a blind
     flange;
-  - hose stations: a gate or ball valve at 42 in above the floor, closed by a cap;
+  - pump seal flush connections: no valve at the pump; the line bolts to the flush nozzle and is
+    isolated at its header take-off. Reason: the pumps' baseplates stand 30 in apart, too close for a
+    valve stack across the gap (a stated layout consequence, PROVENANCE P-45);
+  - hose stations: a gate or ball valve at 42 in above the floor, closed by a blind flange (as every
+    other closed end in the plant; amended from "cap", P-45);
   - relief valves: the safety valve (SW-VLV-PSV) bolted to its inlet nozzle; the outlet line runs to
     the flare header.
   Reason: every line must be isolable at the equipment for maintenance, and a pump's check valve
   stops reverse flow when it stops.
 - `SW-LL-4` Branches from headers take off the top of the header with a tee (SW-FIT-2). Headers are
   capped at both ends (SW-FIT-4).
+- `SW-LL-5` Valve orientation: a valve in a horizontal run has its stem up; if its drawn envelope (body,
+  bonnet, stem, handwheel, lever, gear or actuator) would come within 3 in of steel, equipment other
+  than the equipment it is bolted to, or another line, the stem is turned to the first horizontal
+  direction across the flow that is clear; in a vertical run the stem is horizontal, first clear
+  direction of +x, −x, +z, −z. Never stem-down (dirt settles in the bonnet). A control valve keeps its
+  actuator up and a swing check its cover up in a horizontal run; if no direction is clear the line
+  is a layout failure (the nozzle schedule is changed, not the valve). Reason: operators reach
+  stems from above or the side, and every valve must be operable without striking anything.
 
 ## 37. Routing (`SW-RT-*`)
 
 - `SW-RT-1` Lines run orthogonally (along x, y, z) with 90° long-radius elbows (SW-FIT-1). Lines
   between areas run on the pipe rack: process lines on the lower tier, utility and flare headers
   on the upper tier. Each line on the rack has its own lane across the rack width; lanes may be
-  shared by lines whose lengths along the rack do not overlap.
+  shared by lines whose lengths along the rack do not overlap. A process line's lane is the one
+  nearest the rack centreline whose straight and whose two drops are clear; each end leaves the rack
+  at the x nearest its equipment, or the nearest clear x within 3 ft of it (6 in steps).
 - `SW-RT-2` Lane pitch: the centrelines of two adjacent lines are at least
-  (OD_1 + OD_2)/2 + 3 in apart. Reason: room for insulation and for a hand between pipes.
+  (D_1 + D_2)/2 + 3 in apart, where D is the larger of the line's OD and the OD of the largest flange
+  on a valved take-off from it. Reason: room for insulation and for a hand between pipes, and between
+  a branch flange and the next pipe.
 - `SW-RT-3` Away from the rack, lines are routed on a 6 in grid by a shortest-path search whose
   cost is length plus 4 ft for every elbow. Cells are forbidden where they come within 3 in of
   equipment, steel, platforms, stairs, ladders, the building or another pipe; below 8 ft above
   the floor; and less than 7 ft above any platform, landing or stair tread within its plan area —
-  in both cases except within 4 ft, in plan, of the line's own end points (so a riser can climb
-  straight up from a pump or nozzle at grade). Reason: 8 ft keeps walkway headroom
+  in both cases except within 4 ft, in plan, of the line's own end points — the end stack's face,
+  the first routed point beyond it, and the rack drop point — (so a riser can climb straight up from
+  a pump or nozzle at grade). Clearance is measured surface to surface between drawn envelopes: pipe
+  and fittings by their OD, flanges and gaskets by the flange OD, valves by the box of their drawn
+  solids. Reason: 8 ft keeps walkway headroom
   (SW-LAY-4), 7 ft keeps a person upright on a platform, and the elbow penalty gives few,
   deliberate turns.
-- `SW-RT-4` Between two elbows there is at least 2 R of straight pipe (each elbow's own length),
-  and the first leg from a nozzle is at least as long as the valve stack bolted to it.
+- `SW-RT-4` Two elbows are never welded back to back: their corners are at least 2 R + 2 in apart,
+  leaving at least 2 in of straight pipe, and every cut piece of pipe is at least 2 in long (an elbow
+  either welds straight to an end stack's weld-neck or stands 2 in or more off it). The first leg from
+  a nozzle is at least as long as the valve stack bolted to it. Reason: two butt welds closer than
+  about 2 in overlap their heat-affected zones and cannot each be inspected. (Amended from
+  "at least 2 R of straight pipe", which was not what the routing grid does, P-45.)
 - `SW-RT-5` Pipe is supplied in lengths of at most 40 ft; longer straight runs get a butt-weld
-  splice. Reason: transport and handling length.
+  splice. Splices on the rack are moved in 6 in steps to stand at least 14 in from every beam that
+  carries a shoe. Reason: transport and handling length; a shoe is not welded over a girth weld.
 - `SW-RT-6` Every routed line is checked for clashes against structure, equipment and every other
   line; a clash is a routing failure, not a drawing note.
+- `SW-RT-7` The 2 ft above each rack tier, over the rack's length and width, is kept for lines running
+  along the rack: other lines may enter it only within 4 ft, in plan, of their own end or drop points
+  (handled like SW-RT-3 headroom). Reason: a line crossing the rack at lane height would block every
+  lane it crosses; crossings go over the upper tier or between the tiers.
 
 ## 38. Pipe supports placed on lines (`SW-PS-7..12`)
 
@@ -1280,7 +1311,9 @@ bore is continuous and every end is a butt-weld bevel.
 
 - `SW-PS-7` (as stage 3) maximum span: 20 ft for OD ≥ 3.5 in, 15 ft for OD ≥ 2.375 in, 10 ft for
   smaller.
-- `SW-PS-8` On the rack, every line rests on a shoe (SW-PS-1) at each tier beam it crosses; lines
+- `SW-PS-8` On the rack, every line rests on a shoe (SW-PS-1; its height is the gap from the beam top to
+  the pipe bottom, 4 to 10 in as the line's grid elevation leaves it) at each tier beam it crosses;
+  tees on a rack run stand C + 8 in clear of those beams so no shoe is displaced; lines
   needing spans under 20 ft also rest on intermediate beams (SW-RK-6). One anchor per rack run, at
   the bent nearest the middle of the run (SW-PS-3); guides (SW-PS-2) at the bents on either side of
   the anchor and at the bents next to where the line leaves the rack; plain shoes elsewhere.
@@ -1294,6 +1327,11 @@ bore is continuous and every end is a butt-weld bevel.
   (minimum 2 in) from a 3/8 in base plate on the floor to a curved saddle under the pipe; above
   10 ft, a hanger — a rod from the steel or roof framing directly above, with a two-piece pipe
   clamp. Rod diameter: 3/8 in for OD ≤ 4.5 in, 1/2 in ≤ 8.5 in, 5/8 in ≤ 12.75 in, 3/4 in above.
+  Rods hang only from horizontal steel (beams, struts, purlins, platform framing), never from
+  equipment, columns, ladders, guardrails or grating; at most 20 ft long; the rod's path must be
+  clear of other lines. Supports are stepped along the run, each at the equal division of the length
+  that remains, moved in 6 in steps (or to the exact point under a member) to clear fittings and welds
+  and find a floor path or steel above, never more than one span from the last.
   Reason: low pipes are carried from the floor, high ones from the structure, so nobody walks into
   a hanger rod.
 - `SW-PS-10` Vertical runs longer than 10 ft get a trunnion (SW-PS-4) under their lowest elbow,
@@ -1303,6 +1341,9 @@ bore is continuous and every end is a butt-weld bevel.
   4 ft are carried by their nozzle and need no support.
 - `SW-PS-12` Shoes, guides and anchors are fillet-welded (SW-WD-1); stanchion bases are anchored
   with two 1/2 in rods into the slab (SW-AR-*).
+- `SW-PS-13` Trapeze: where a line runs directly under another line so a single rod cannot pass, two
+  rods (SW-PS-9 diameter) at a = OD/2 + 6 in either side of the pipe carry an `L2x2x1/4` under it.
+  Reason: the rods pass either side of the line above with room to spare.
 
 ## 39. Pipe welds (`SW-PW-*`)
 
@@ -1310,7 +1351,9 @@ bore is continuous and every end is a butt-weld bevel.
   fitting and weld-neck flange, and at each splice (SW-RT-5). Its cap is drawn as a ring standing
   1/16 in proud of the pipe surface, as wide as the groove at the surface.
 - `SW-PW-2` Each weld is shop or field. Field welds: the weld joining a line to the rack run at
-  each end, and the closing weld nearest each nozzle; all others are shop welds. Reason: a line is
+  each end, the closing weld nearest each nozzle (where the routed pipe meets each end stack), and
+  the weld at a branch's tee outlet; all others are shop welds. The welds of a line are derived from
+  its component chain: one at every joint where pipe, a fitting or a weld-neck hub meets another. Reason: a line is
   shop-fabricated in spools that can be shipped, and closed in the field where it meets steel or
   equipment whose position is only known on site.
 - `SW-PW-3` Every weld carries an identifier, its line number, type (butt or fillet), size (wall
@@ -1328,3 +1371,5 @@ bore is continuous and every end is a butt-weld bevel.
 - Line list numbering follows SW-LL-1; every valve is offered (SW-VLV-11) in the line's size and
   class.
 - Every stage-5 rule ID used in code exists in this file.
+- Every valve's drawn envelope clears steel, equipment (other than its own) and other lines by 3 in
+  (SW-LL-5); the committed plant piping data equals a fresh run of the generator.

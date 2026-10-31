@@ -295,7 +295,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
       }
     return true;
   };
-  /** build a stack, turning any valve whose stem, handwheel or actuator would strike something to the next stem
+  /** SW-LL-5: build a stack, turning any valve whose stem, handwheel or actuator would strike something to the next stem
    *  direction across the flow (up first, then sideways; never stem-down, which traps dirt in the bonnet) */
   const orient = (items0: Item[], build: (it: Item[]) => Built, id: number, w: V3, ownEquip?: string): { b: Built; ok: boolean } => {
     const items = items0.map(x => ({ ...x }));
@@ -305,7 +305,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
       if (it.k !== 'valve') return;
       const comp = () => b.comps.filter(c => c.kind === 'valve')[items.slice(0, i).filter(x => x.k === 'valve').length];
       if (boxClear(worldBox(partFromKey(comp().key), comp().T)!, id, ownEquip)) return;
-      // a control valve keeps its actuator up and a swing check its cover up in a horizontal run (SW-LL-3)
+      // a control valve keeps its actuator up and a swing check its cover up in a horizontal run (SW-LL-5)
       if (Math.abs(w[1]) < 0.9 && (it.type === 'CONTROL' || it.type === 'CHECK')) { ok = false; return; }
       for (const sd of cands) { it.stem = sd; b = build(items); if (boxClear(worldBox(partFromKey(comp().key), comp().T)!, id, ownEquip)) return; }
       delete it.stem; b = build(items); ok = false;
@@ -693,3 +693,5 @@ function simplify(p: V3[]): V3[] {
 }
 function segDist(p: V3, a: V3, b: V3) { const ab = sub(b, a), t = Math.max(0, Math.min(1, dot(sub(p, a), ab) / (dot(ab, ab) || 1))); return len(sub(p, add(a, ab, t))); }
 export { transformMesh };
+/** the committed plant piping data: the model with numbers rounded to 1/10000 in (deterministic, compact) */
+export const serializePiping = (m: PipingModel) => JSON.stringify({ lines: m.lines, nozzles: m.nozzles, failures: m.failures, stats: Object.fromEntries(Object.entries(m.stats).filter(([k]) => !k.startsWith('t_'))) }, (_k, v) => (typeof v === 'number' ? Math.round(v * 1e4) / 1e4 : v));

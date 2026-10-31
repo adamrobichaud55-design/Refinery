@@ -9,7 +9,8 @@
     "preview": "vite preview",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
-    "screenshot": "node tools/screenshot.mjs"
+    "screenshot": "node tools/screenshot.mjs",
+    "gen:piping": "vite-node tools/gen-piping.ts public/plant-piping.json"
   },
   "dependencies": {
     "three": "^0.170.0"

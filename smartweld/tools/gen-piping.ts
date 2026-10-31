@@ -1,6 +1,7 @@
-// Runs the stage-5 piping generator, reports stats, failures and the §40 checks; optionally writes the model as JSON.
+// Runs the stage-5 piping generator, reports stats, failures and the §40 checks; optionally writes the model as JSON
+// (npm run gen:piping writes public/plant-piping.json, which the viewer loads).
 import { writeFileSync } from 'node:fs';
-import { generatePiping, partFromKey, staticPlant } from '../src/generator/piping';
+import { generatePiping, partFromKey, staticPlant, serializePiping } from '../src/generator/piping';
 import * as K from '../src/generator/pipingCheck';
 import { buildGeometry } from '../src/geometry/partGeometry';
 import type { Comp } from '../src/generator/piping';
@@ -19,7 +20,7 @@ report('numbering/valves', K.checkNumberingAndValves(m));
 const c = K.checkLineClearance(m, vb); console.log('line clearance: pairs', c.pairs, 'min', c.min.toFixed(2)); report('  violations', c.violations);
 report('static clearance', K.checkStaticClearance(m, staticPlant(), vb));
 report('supports', K.checkSupports(m));
-if (process.argv[2]) { writeFileSync(process.argv[2], JSON.stringify(m)); console.log('wrote', process.argv[2]); }
+if (process.argv[2]) { writeFileSync(process.argv[2], serializePiping(m)); console.log('wrote', process.argv[2]); }
 
 function valveBoxFn() {
   const cache = new Map<string, [V3, V3]>();
