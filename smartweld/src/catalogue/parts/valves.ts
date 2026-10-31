@@ -1,4 +1,4 @@
-/** Valves: DESIGN_BASIS.md sections 31–32. 18 types, each a distinct design. Local frame: flow along +z, stem up +y, x across. */
+/** Valves: DESIGN_BASIS.md sections 31–32. 16 types, each a distinct design. Local frame: flow along +z, stem up +y, x across. */
 import { K } from '../../core/constants';
 import { drawing, rule, constant, type Dim } from '../../core/basis';
 import { roundUpTo } from '../../core/units';
@@ -15,11 +15,11 @@ import { polygonize, type SDF } from '../../geometry/sdf';
 
 const RHO = K.STEEL_DENSITY_LB_IN3;
 const rhoDim = () => constant(K.STEEL_DENSITY_LB_FT3, 'K-1', 'Steel density', 'lb/ft3');
-export type ValveType = 'GATE' | 'KNIFE' | 'GLOBE' | 'YGLOBE' | 'AGLOBE' | 'CHECK' | 'LCHECK' | 'DCHECK' | 'BALL' | 'TBALL' | 'BFLY' | 'LBFLY' | 'DBFLY' | 'PLUG' | 'DIAPH' | 'NEEDLE' | 'PSV' | 'CONTROL';
+export type ValveType = 'GATE' | 'KNIFE' | 'GLOBE' | 'YGLOBE' | 'AGLOBE' | 'CHECK' | 'LCHECK' | 'BALL' | 'BFLY' | 'LBFLY' | 'DBFLY' | 'PLUG' | 'DIAPH' | 'NEEDLE' | 'PSV' | 'CONTROL';
 export const VALVE_TYPES: { id: ValveType; name: string }[] = [
   { id: 'GATE', name: 'Gate, wedge, OS&Y' }, { id: 'KNIFE', name: 'Knife gate, lugged wafer' }, { id: 'GLOBE', name: 'Globe, T-pattern' }, { id: 'YGLOBE', name: 'Globe, Y-pattern' },
-  { id: 'AGLOBE', name: 'Angle globe' }, { id: 'CHECK', name: 'Swing check' }, { id: 'LCHECK', name: 'Lift (piston) check' }, { id: 'DCHECK', name: 'Dual-plate wafer check' },
-  { id: 'BALL', name: 'Ball, floating' }, { id: 'TBALL', name: 'Ball, trunnion-mounted' }, { id: 'BFLY', name: 'Butterfly, wafer' }, { id: 'LBFLY', name: 'Butterfly, lugged' },
+  { id: 'AGLOBE', name: 'Angle globe' }, { id: 'CHECK', name: 'Swing check' }, { id: 'LCHECK', name: 'Lift (piston) check' },
+  { id: 'BALL', name: 'Ball, floating' }, { id: 'BFLY', name: 'Butterfly, wafer' }, { id: 'LBFLY', name: 'Butterfly, lugged' },
   { id: 'DBFLY', name: 'Butterfly, double-flanged, double-offset' }, { id: 'PLUG', name: 'Plug, lubricated taper' }, { id: 'DIAPH', name: 'Diaphragm, weir' }, { id: 'NEEDLE', name: 'Needle' },
   { id: 'PSV', name: 'Pressure safety valve' }, { id: 'CONTROL', name: 'Control, globe with diaphragm actuator' },
 ];
@@ -32,7 +32,7 @@ const N = 48;
 // ---- offering (SW-VLV-11) --------------------------------------------------------------------------------
 const OFFER: Record<ValveType, [number, number, PipeClass]> = {
   GATE: [0.5, 48, 'P4800'], KNIFE: [2, 36, 'P150'], GLOBE: [0.5, 12, 'P4800'], YGLOBE: [0.5, 16, 'P4800'], AGLOBE: [0.5, 12, 'P4800'],
-  CHECK: [2, 48, 'P4800'], LCHECK: [0.5, 6, 'P4800'], DCHECK: [2, 48, 'P600'], BALL: [0.5, 6, 'P600'], TBALL: [2, 48, 'P4800'],
+  CHECK: [2, 48, 'P4800'], LCHECK: [0.5, 6, 'P4800'], BALL: [0.5, 6, 'P600'],
   BFLY: [2, 24, 'P300'], LBFLY: [2, 24, 'P300'], DBFLY: [3, 48, 'P1200'], PLUG: [0.5, 12, 'P600'], DIAPH: [0.5, 12, 'P300'],
   NEEDLE: [0.25, 1, 'P4800'], PSV: [1, 8, 'P4800'], CONTROL: [0.5, 12, 'P4800'],
 };
@@ -333,7 +333,7 @@ function globeBodySDF(c: Common, zi: number, tilt = 0): { body: SDF; info: Globe
 type Build = (b: ValveSolid[], NPS: number, cls: PipeClass, dims: Record<string, Dim>, notes: string[]) => { c: Common; op: Operator; extra?: Record<string, unknown> };
 const yokeTa = (c: Common) => Math.max(0.5, 0.15 * c.D, c.tb);
 
-// ---- kept: fabricated or machined designs (knife gate, dual-plate check, forged trunnion ball, needle) ----
+// ---- fabricated or machined designs (knife gate, needle) ----
 const buildKnife: Build = (b, NPS, cls, dims) => {
   const D0 = pipeDims(NPS, cls).D, P = CLASS_PRESSURE[cls];
   const w = Math.max(1.5, 0.12 * D0 + 1);
@@ -382,29 +382,9 @@ const buildKnife: Build = (b, NPS, cls, dims) => {
   return { c, op };
 };
 
-const buildDCheck: Build = (b, NPS, cls, dims) => {
-  const D0 = pipeDims(NPS, cls).D, wb = 0.25 * D0 + 1, c = common(NPS, cls, wb, D0); c.F2F = wb;
-  const { D, f } = c, bodyOD = f.BC - f.d - 0.25, rp = Math.max(0.375, 0.08 * D) / 2, tp = Math.max(3 / 16, 0.04 * D);
-  castPart(b, 'wafer body', S.subtract(S.blend(0.3, S.rcylZ(bodyOD / 2, -wb / 2, wb / 2, Math.min(0.3, wb * 0.15)), S.rcylY(0.45 + 0.03 * D, bodyOD / 2 - 0.5, bodyOD / 2 + 0.5, 0.15)), S.cylZ(D / 2, -wb, wb), S.cylY(0.22 + 0.01 * D, bodyOD / 2 - 0.4, bodyOD / 2 + 1)),
-    [-bodyOD / 2 - 0.3, -bodyOD / 2 - 0.3, -wb / 2 - 0.1], [bodyOD / 2 + 0.3, bodyOD / 2 + 0.7, wb / 2 + 0.1], Math.min(c.tb, wb / 4));                 // F-5: ring with lifting-eye boss
-  { const re = 0.5 + 0.03 * D, rw = 0.12 + 0.008 * D, yE = bodyOD / 2 + 0.5 + re;                                   // lifting eyebolt
-    push(b, 'lifting eyebolt', mergeMeshes([transformMesh(torusY(re, rw, 0), multiply(translate(0, yE, 0), rotateX(Math.PI / 2))), cylY(0.2 + 0.01 * D, bodyOD / 2 - 0.4, yE - re + rw)]), 'hardware', STUDM); }
-  for (const sy of [-1, 1]) push(b, 'retainer plug', hexPrismY(0.6 + 0.04 * D, sy > 0 ? bodyOD / 2 - 0.01 : -bodyOD / 2 - 0.35, sy > 0 ? bodyOD / 2 + 0.35 : -bodyOD / 2 + 0.01, 0, Math.min(0.3 * D, wb / 2 - rp * 0.7 - 0.1)), 'hardware', STUDM);   // retain the stop pin; the post is retained under the eye boss
-  const zStop = Math.min(0.3 * D, wb / 2 - rp * 0.7 - 0.1);
-  const rRet = (D / 2 + bodyOD / 2) / 2;                                                                       // post ends retained in holes in the body ring
-  push(b, 'hinge post', cylY(rp, -rRet, rRet), 'stem', BAR);
-  push(b, 'stop pin', cylY(rp * 0.7, -rRet, rRet, 0, zStop), 'stem', BAR);
-  for (const sx of [-1, 1]) {
-    const half: Polygon = dedupe([{ x: sx * (rp + 0.05), y: -0.48 * D }, ...arc(0, 0, 0.48 * D, sx > 0 ? -Math.PI / 2 : 1.5 * Math.PI, sx > 0 ? Math.PI / 2 : Math.PI / 2, 24).filter(p => sx * p.x >= rp + 0.05 - 1e-9), { x: sx * (rp + 0.05), y: 0.48 * D }]);
-    push(b, 'plate', transformMesh(extrude({ outer: half }, tp), translate(0, 0, 0.02)), 'closure');
-    push(b, 'torsion spring', transformMesh(helixTube(rp + 0.08, 0.1, 3, 0.04, 16, 8), multiply(translate(0, sx * 0.25 * D, 0), toY)), 'stem', 'Grade 180 spring wire');
-  }
-  Object.assign(dims, { bodyW: rule(wb, 'SW-VLV-CD-1', 'Body width'), bodyOD: rule(bodyOD, 'SW-VLV-CD-1', 'Body OD'), plateT: rule(tp, 'SW-VLV-CD-1', 'Plate thickness'), post: rule(2 * rp, 'SW-VLV-CD-1', 'Post diameter') });
-  return { c, op: { kind: 'none', rimForce: 0, T: 0 } };
-};
 
 const mirrorZ = (m: MeshData): MeshData => { const p = m.positions.slice(); for (let i = 2; i < p.length; i += 3) p[i] = -p[i]; const idx = m.indices.slice(); for (let k = 0; k < idx.length; k += 3) { const t = idx[k + 1]; idx[k + 1] = idx[k + 2]; idx[k + 2] = t; } return { positions: p, indices: idx }; };
-/** ball-valve body of BT-1: thick cylinder along z, bore 2Rc, OD Db, from −zj to zj, chamfered outer edges */
+/** ball-valve centre body of B-1: thick cylinder along z, bore 2Rc, OD Db, from −zj to zj, chamfered outer edges */
 function forgedBody(Rc: number, Db: number, zj: number, rr = 0.1 * (Db / 2 - Rc)): MeshData {
   const R = Db / 2, loop: { r: number; z: number }[] = [{ r: Rc, z: -zj }];
   for (let i = 0; i <= 8; i++) { const a = (Math.PI / 2) * (i / 8); loop.push({ r: R - rr + rr * Math.sin(a), z: -zj + rr - rr * Math.cos(a) }); }
@@ -413,7 +393,7 @@ function forgedBody(Rc: number, Db: number, zj: number, rr = 0.1 * (Db / 2 - Rc)
   return revolve(dedupeRZ(loop), N);
 }
 const dedupeRZ = (p: { r: number; z: number }[]) => p.filter((q, i) => i === 0 || Math.hypot(q.r - p[i - 1].r, q.z - p[i - 1].z) > 1e-6);
-/** one end of a ball valve on +z (BT-1 / B-1): bolted adapter (gasket, studs tapped into the body, adapter flange) or integral collar, then a curved taper, neck and pipe flange. */
+/** one end of a ball valve on +z (B-1): bolted adapter (gasket, studs tapped into the body, adapter flange) or integral collar, then a curved taper, neck and pipe flange. */
 function ballEnd(c: Common, fe: FlangeDesign, zj: number, Db: number, bolted: boolean, taperK = 0.45, neckMin = 0): { solids: ValveSolid[]; zFace: number } {
   const { D, tb, f } = c, out: ValveSolid[] = [], h = hexHardware(fe.d);
   const z1 = zj + fe.gasketT + fe.tf;
@@ -439,7 +419,7 @@ function ballEnd(c: Common, fe: FlangeDesign, zj: number, Db: number, bolted: bo
   return { solids: out, zFace };
 }
 const pushEnd = (b: ValveSolid[], e: { solids: ValveSolid[] }, side: 1 | -1) => { for (const x of e.solids) b.push({ ...x, mesh: side > 0 ? x.mesh : mirrorZ(x.mesh) }); };
-/** stem pad on top and trunnion/bottom pad on a cylindrical body of radius Rb2 (BT-1) */
+/** stem pad on top or bottom pad on a cylindrical body of radius Rb2 (B-1) */
 function bodyPad(Rb2: number, rp: number, up: 1 | -1, proud: number): MeshData {
   const y0 = Math.sqrt(Math.max(0, Rb2 * Rb2 - rp * rp)) - 0.2;
   return up > 0 ? cylY(rp, y0, Rb2 + proud) : cylY(rp, -(Rb2 + proud), -y0);
@@ -451,48 +431,6 @@ function ballWithBore(Rb: number, D: number): MeshData {
   loop.push({ r: D / 2, z: zc }, { r: D / 2, z: -zc });
   return revolve(loop, N);
 }
-const buildTBall: Build = (b, NPS, cls, dims) => {
-  const D0 = pipeDims(NPS, cls).D, Rb = 0.75 * D0, sc = 0.15 * D0;
-  const c = common(NPS, cls, 1.5 * D0 + 2 * sc + 1, 2 * Rb + 2 * sc); const { D, tb, P } = c;
-  const Rc = Rb + sc, fe = designFlange(NPS, cls, 2 * Rc, tb, 2 * Rc + 2 * tb), Db = fe.BC + 3.5 * fe.d, zj = Rc + 0.5;   // BT-1
-  push(b, 'centre body (forged)', forgedBody(Rc, Db, zj, 1.5 * fe.d));
-  const end = ballEnd(c, fe, zj, Db, true, 1.0, 0.25 * D);
-  pushEnd(b, end, 1); pushEnd(b, end, -1);
-  c.wBody = 2 * zj; c.F2F = 2 * end.zFace;
-  push(b, `ball ${2 * Rb} in`, ballWithBore(Rb, D), 'closure', BAR);
-  for (const s of [-1, 1]) {
-    push(b, 'seat carrier', ringZ(0.6 * D + sc, 0.6 * D - sc / 2, s * (Rb - 0.2 * sc) - sc / 2, s * (Rb - 0.2 * sc) + sc / 2), 'stem', BAR);
-    push(b, 'seat insert', ringZ(0.6 * D + sc / 4, 0.6 * D - sc / 2, s * (Rb - 0.2 * sc) - sc / 2 - 0.08, s * (Rb - 0.2 * sc) - sc / 2), 'polymer', 'polymer');
-    const room = Math.max(0.3, zj - (Rb + 0.3 * sc) - 0.1), spr: MeshData[] = [];                              // springs between the carrier and the adapter face
-    for (let i = 0; i < 6; i++) { const a = (2 * Math.PI * i) / 6; spr.push(transformMesh(helixTube(Math.min(0.06 * D, sc / 2), room / 3, 3, Math.min(0.02 * D, sc / 8), 12, 6), translate((0.6 * D + sc / 4) * Math.cos(a), (0.6 * D + sc / 4) * Math.sin(a), s > 0 ? Rb + 0.3 * sc : -Rb - 0.3 * sc - room))); }
-    push(b, 'seat springs 6', mergeMeshes(spr), 'stem', 'Grade 180 spring wire', 6);
-  }
-  const T = P * Math.PI * (1.2 * D) * (0.1 * D) * 0.1 * (0.6 * D) + P * (Math.PI / 4) * D * D * 0.05 * 0.5;        // BT-2 (stem term uses a provisional ds/2 = 0.5)
-  const ds = ballStem(T), op = sizeOperator(T, true);
-  // BT-1: stem housing — a raised boss closed by a bolted cover, then a mounting spool to the operator; the same boss
-  // and cover close the trunnion underneath
-  const rp = Math.max(ds + 3, 0.4 * D) / 2 + ds / 2, yBoss = Db / 2 + 1, tc = Math.max(0.75, 0.5 * ds), dB = Math.max(0.375, roundUpTo(0.12 * rp, 1 / 8)), hB = hexHardware(dB);
-  const rBC = rp - hB.F / 2 - 0.15, rSp = Math.max(ds / 2 + 1, 0.45 * rp), ySp0 = yBoss + tc, yNeck = ySp0 + 1.5 * ds + 1.5;
-  for (const up of [1, -1] as const) {
-    push(b, up > 0 ? 'stem housing boss' : 'trunnion boss', bodyPad(Db / 2, rp, up, yBoss - Db / 2));
-    push(b, up > 0 ? 'stem housing cover' : 'trunnion cover', up > 0 ? ringY(rp + 0.25, ds / 2 + 0.05, yBoss, yBoss + tc) : cylY(rp + 0.25, -(yBoss + tc), -yBoss));
-    const bl: MeshData[] = []; for (let i = 0; i < 8; i++) { const a = (Math.PI * (i + 0.5)) / 4, x = rBC * Math.cos(a), z = rBC * Math.sin(a); bl.push(up > 0 ? hexPrismY(hB.F, yBoss + tc, yBoss + tc + hB.H, x, z) : hexPrismY(hB.F, -(yBoss + tc + hB.H), -(yBoss + tc), x, z)); }
-    push(b, `${up > 0 ? 'cover' : 'trunnion cover'} bolts 8 × ${dB} in`, mergeMeshes(bl), 'hardware', 'Grade 90 bolt', 8);
-  }
-  push(b, 'mounting spool', ringY(rSp, ds / 2 + 0.05, ySp0, yNeck - 0.5));
-  push(b, 'mounting flange', ringY(rSp + 0.5, ds / 2 + 0.05, yNeck - 0.5, yNeck));
-  push(b, 'stem seal', ringY(ds / 2 + 0.03, ds / 2, yBoss - 0.6, yBoss - 0.2), 'polymer', 'polymer');
-  push(b, `stem ${ds} in`, cylY(ds / 2, Rb - 0.4 * ds, yNeck + 1), 'stem', BAR);
-  push(b, 'trunnion', cylY(ds / 2, -(Db / 2 + 0.5), -(Rb - 0.4 * ds)), 'stem', BAR);
-  if (NPS >= 8) {                                                                                                  // BT-1 saddle feet
-    const tF = tb + 0.25, yBase = -(yBoss + tc + hB.H + 1), xw = 0.3 * Db, yTopF = -Math.sqrt((Db / 2) ** 2 - xw * xw) + 0.3, ft: MeshData[] = [];
-    for (const sz of [-1, 1]) { const z = sz * 0.5 * zj; ft.push(box(-xw, yBase + 0.5, z - tF / 2, xw, yTopF, z + tF / 2), box(-xw - 1, yBase, z - 2, xw + 1, yBase + 0.5, z + 2)); }
-    push(b, 'saddle feet 2', mergeMeshes(ft));
-  }
-  operateQT(b, op, op.kind === 'gear' ? yNeck : yNeck + 0.2, ds, D);
-  Object.assign(dims, { ballD: rule(2 * Rb, 'SW-VLV-BT-1', 'Ball diameter'), carrier: rule(sc, 'SW-VLV-BT-1', 'Seat carrier section'), bodyOD: rule(Db, 'SW-VLV-BT-1', 'Body outside diameter'), torque: rule(T, 'SW-VLV-BT-2', 'Operating torque (lb·in)', 'lb'), stemD: rule(ds, 'SW-VLV-B-2', 'Stem / trunnion diameter') });
-  return { c, op, extra: { joint: fe, torque: T } };
-};
 
 const buildNeedle: Build = (b, NPS, cls, dims, notes) => {
   const D0 = pipeDims(NPS, cls).D, P = CLASS_PRESSURE[cls], AF = 2 * D0 + 0.75, Lb = 3 * D0 + 2;
@@ -680,7 +618,7 @@ const buildBall: Build = (b, NPS, cls, dims) => {
   push(b, `stem ${ds} in`, mergeMeshes([cylY(ds / 2, Rb - 0.4 * ds, yNeck + 1), cylY(ds, Rc - 0.4, Rc - 0.4 + 0.3 * ds)]), 'stem', BAR);
   push(b, 'stem nut', hexPrismY(1.5 * ds + 0.2, yNeck + 0.6, yNeck + 0.6 + 0.6 * ds), 'hardware', STUDM);
   operateQT(b, op, op.kind === 'gear' ? yNeck : yNeck + 0.2, ds, D);
-  Object.assign(dims, { ballD: rule(2 * Rb, 'SW-VLV-B-1', 'Ball diameter'), seat: rule(seat, 'SW-VLV-B-1', 'Seat section'), bodyOD: rule(Db, 'SW-VLV-BT-1', 'Body joint diameter'), bodySphere: rule(2 * Rs, 'SW-VLV-F-6', 'Body sphere diameter'), torque: rule(T, 'SW-VLV-B-2', 'Operating torque (lb·in)', 'lb'), stemD: rule(ds, 'SW-VLV-B-2', 'Stem diameter') });
+  Object.assign(dims, { ballD: rule(2 * Rb, 'SW-VLV-B-1', 'Ball diameter'), seat: rule(seat, 'SW-VLV-B-1', 'Seat section'), bodyOD: rule(Db, 'SW-VLV-B-1', 'Body joint diameter'), bodySphere: rule(2 * Rs, 'SW-VLV-F-6', 'Body sphere diameter'), torque: rule(T, 'SW-VLV-B-2', 'Operating torque (lb·in)', 'lb'), stemD: rule(ds, 'SW-VLV-B-2', 'Stem diameter') });
   return { c, op, extra: { joint: fe, torque: T } };
 };
 
@@ -769,7 +707,8 @@ const buildDiaph: Build = (b, NPS, cls, dims, notes) => {
   const D0 = pipeDims(NPS, cls).D, c = common(NPS, cls, 1.6 * D0, 1.6 * D0); c.wBody = 1.6 * D0 + 2 * c.tb; c.F2F = 2 * c.f.tf + 2 * c.hHub + c.wBody;
   const { D, tb, P } = c, zi = c.F2F / 2 - c.f.tf, k = blendK(c);
   endFlanges(b, c);
-  const Ro = 0.8 * D, yF = 0.3 * D, fb = designFlange(NPS, cls, 2 * Ro, tb, 2 * Ro + 2 * tb), hs = Ro + tb + 2.2 * fb.d, td = Math.max(0.125, 0.03 * D);
+  const Ro = 0.8 * D, yF = D / 2 + tb + 0.25 * D,   // DI-1: body flange face above the pipe axis
+    fb = designFlange(NPS, cls, 2 * Ro, tb, 2 * Ro + 2 * tb), hs = Ro + tb + 2.2 * fb.d, td = Math.max(0.125, 0.03 * D);
   const yLo = -(D / 2 + tb), yHi = yF - fb.tf;
   // F-8: the body flares from each flange hub into the body (no bare run tube)
   const rH = D / 2 + 2 * tb, rBf = 0.75 * (Ro + tb), zb = Ro + tb;
@@ -880,7 +819,7 @@ const buildControl: Build = (b, NPS, cls, dims, notes) => {
   return { c, op: { kind: 'none', rimForce: 0, T: 0 }, extra: { actuator: { Da, Fa }, stem: st, spring: spr } };
 };
 
-const BUILDERS: Record<ValveType, Build> = { GATE: buildGate, KNIFE: buildKnife, GLOBE: buildGlobe, YGLOBE: buildYGlobe, AGLOBE: buildAGlobe, CHECK: buildCheck, LCHECK: buildLCheck, DCHECK: buildDCheck, BALL: buildBall, TBALL: buildTBall, BFLY: buildBfly, LBFLY: buildLBfly, DBFLY: buildDBfly, PLUG: buildPlug, DIAPH: buildDiaph, NEEDLE: buildNeedle, PSV: buildPSV, CONTROL: buildControl };
+const BUILDERS: Record<ValveType, Build> = { GATE: buildGate, KNIFE: buildKnife, GLOBE: buildGlobe, YGLOBE: buildYGlobe, AGLOBE: buildAGlobe, CHECK: buildCheck, LCHECK: buildLCheck, BALL: buildBall, BFLY: buildBfly, LBFLY: buildLBfly, DBFLY: buildDBfly, PLUG: buildPlug, DIAPH: buildDiaph, NEEDLE: buildNeedle, PSV: buildPSV, CONTROL: buildControl };
 
 export function makeValve(id: string, type: ValveType, NPS: number, cls: PipeClass): PartSpec {
   if (!isOffered(type, NPS, cls)) throw new Error(`${type} is not offered in ${NPS} in ${cls} (SW-VLV-11)`);

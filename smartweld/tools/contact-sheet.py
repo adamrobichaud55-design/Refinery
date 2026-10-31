@@ -3,8 +3,8 @@ import sys
 from PIL import Image, ImageDraw
 src = sys.argv[1] if len(sys.argv) > 1 else 'screenshots/stage4'
 SHEETS = {
-    'sheet-1.png': ['v-GATE', 'v-GLOBE', 'v-YGLOBE', 'v-AGLOBE', 'v-CHECK', 'v-LCHECK-section', 'v-DCHECK', 'v-BALL', 'v-TBALL', 'v-BFLY', 'v-LBFLY', 'v-DBFLY'],
-    'sheet-2.png': ['v-PLUG', 'v-DIAPH', 'v-NEEDLE', 'v-PSV', 'v-CONTROL', 'v-KNIFE', 'v-GATE-gear', 'v-GATE-section'],
+    'sheet-1.png': ['v-GATE', 'v-GLOBE', 'v-YGLOBE', 'v-AGLOBE', 'v-CHECK', 'v-LCHECK-section', 'v-BALL', 'v-BFLY', 'v-LBFLY', 'v-DBFLY', 'v-PLUG', 'v-DIAPH'],
+    'sheet-2.png': ['v-NEEDLE', 'v-PSV', 'v-CONTROL', 'v-KNIFE', 'v-GATE-gear', 'v-GATE-section', 'v-DIAPH-section', 'v-BALL-section'],
 }
 W, H = 395, 380
 for out, names in SHEETS.items():

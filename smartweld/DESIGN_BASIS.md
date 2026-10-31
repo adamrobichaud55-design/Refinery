@@ -961,62 +961,34 @@ simple and tight in small bores; above 6 in its weight slams).
   diameter and 0.3 D long guided in a dashpot cylinder of bore 1.2 D + 1/32 in hanging from a
   bolted cap (SW-VLV-7) with a domed top. Reason: the dashpot damps the closing stroke.
 
-Dual-plate wafer check (`SW-VLV-CD-*`). Sizes 2–48, classes up to P600 (thin spring-loaded
-plates).
-
-- `CD-1` Wafer body ring of width 0.25 D + 1 in, outside diameter BC − d − 1/4 in; a central
-  post of diameter max(3/8 in, 0.08 D) across the bore carrying two D-shaped plates of
-  thickness max(3/16 in, 0.04 D) on a torsion spring each, with a stop pin behind; shown
-  closed. Reason: half the swing of a single disc, so it closes before reverse flow builds;
-  the wafer body is the shortest and lightest check valve.
+Dual-plate wafer check: withdrawn from the catalogue by SmartWeld on review (P-49); rules
+CD-* retired. The swing check (C-*) and lift check (CL-*) remain.
 
 Ball, floating (`SW-VLV-B-*`). Sizes 1/2–6, classes up to P600 (the whole pressure end-force
 bears on the downstream polymer seat; above this it would extrude).
 
 - `B-1` Ball diameter 1.5 D with a through bore D; two polymer seat rings of section 0.1 D ×
-  0.1 D at mean diameter 1.2 D; two-piece body: a centre body built as BT-1 (cylinder of
-  diameter D_b around a cavity 1.5 D + 2 × 0.1 D) with the inlet end integral (a solid
-  collar of the adapter flange thickness and the same taper) and the outlet end a bolted
-  adapter studded into the body as BT-1. (Amended on user review, as BT-1.) Reason: the ball must cover the seat with margin in every
-  position; the seats carry the ball against the downstream seat.
+  0.1 D at mean diameter 1.2 D. Two-piece body: a centre body that is a thick cylinder along
+  the flow axis around a cavity 1.5 D + 2 × 0.1 D, of outside diameter D_b = BC_j + 2.5 d_j
+  where BC_j and d_j are the joint bolting of SW-FLG-3/4 applied to a gasket on the cavity
+  bore, with 10 % chamfers on its outer edges; the inlet end integral (a solid collar of the
+  adapter flange thickness tapering to the pipe neck); the outlet end a one-piece bolted
+  adapter — a flange of diameter D_b clamped to the body face by studs tapped 1.5 d_j into the
+  body (nut on the adapter, stick-out d_j/4), then a curved taper, 0.45 × its radial drop long,
+  from just inside the nut circle down to a neck of radius D/2 + 2 t_b, then the pipe end
+  flange (SW-FLG). Reason: the ball must cover the seat with margin in every position; the
+  seats carry the ball against the downstream seat; studding the joint into the body wall
+  keeps the joint diameter equal to the body, and the adapter tapers because the bolt load
+  must be carried into the much smaller pipe neck. (Made self-contained when BT-* was
+  withdrawn, P-49; the construction is unchanged.)
 - `B-2` Torque T = P (π/4) (1.2 D)² μ_s (0.75 D) × 1.2 with seat friction μ_s = 0.1 on polymer,
   20 % for the stem seal. Stem diameter d_s = roundup( max( (16 T / (π · 0.3 F_y,stem))^(1/3),
   3/8 in ), 1/16 in ) (shear in torsion), with a square drive and a blow-out shoulder. Lever or
   gear per SW-VLV-4; lever of flat bar 0.25 D × 1/4 in minimum 1 in × 1/4 in with a 90° stop.
 
-Ball, trunnion-mounted (`SW-VLV-BT-*`). Sizes 2–48, all classes within SW-VLV-11.
-
-- `BT-1` Three-piece forged body: a centre body that is a thick cylinder along the flow axis,
-  bore = the cavity (1.5 D + 2 × 0.15 D), length = cavity + 1 in, outside diameter
-  D_b = BC_j + 2.5 d_j where BC_j and d_j are the joint bolting of SW-FLG-3/4 applied to a
-  gasket on the cavity bore; 10 % chamfers on its outer edges; a flat stem pad on top and a
-  trunnion pad underneath (diameter max(d_s + 3 in, 0.4 D)), the trunnion closed by a cover
-  with four 3/8 in bolts. Two end adapters, each one piece: a flange of diameter D_b clamped to
-  the body face by studs tapped 1.5 d_j into the body (nut on the adapter, stick-out d_j/4),
-  then a curved taper, 0.45 × its radial drop long, from just inside the nut circle down to a
-  neck of radius D/2 + 2 t_b, then the pipe end flange (SW-FLG). Face-to-face = body + 2 × (gasket + adapter). Reason: a
-  forged body is a cylinder because it is machined from a bar or ring forging; studding the
-  joint into the body wall instead of adding an outward flange keeps the joint diameter equal
-  to the body, which is how these bodies are built; the adapter tapers because the bolt load
-  must be carried into the much smaller pipe neck. (Amended on user review: the earlier
-  flange-to-flange joint stood proud of a narrow body and was not a real construction.)
-  Second amendment on user review (P-48): body OD D_b = BC_j + 3.5 d_j so its outer edges can
-  be rounded with radius 1.5 d_j outside the nut circle; each adapter's taper runs over its full
-  radial drop (concave, from the joint flange to the neck) and its neck is at least 0.25 D long
-  before the end flange, so the end connectors read as the forged cones they are; the stem
-  housing is a raised round boss on top of the body closed by a bolted cover flange (8 bolts),
-  with a cylindrical mounting spool to the operator; the trunnion is closed underneath by the
-  same boss and cover; from 8 in, two saddle feet (plates of thickness t_b + 1/4 in, 0.6 D_b
-  wide, at half the body length from the centre) stand under the body on base plates 1 in
-  below the trunnion cover bolts. Reason: the bonnet and trunnion covers are separate
-  bolted parts so the stem and trunnion bearings can be serviced; large valves are set on
-  feet so the line does not carry their weight. Ball 1.5 D, carried on the
-  stem and a bottom trunnion of diameter d_s in bearings; seat carriers (rings of section
-  0.15 D × 0.15 D) pressed onto the ball by coil springs. Reason: the trunnions take the
-  end-force, so the seats only have to seal, which is what makes large and high-pressure ball
-  valves possible.
-- `BT-2` Torque T = P π (1.2 D)(0.1 D) μ_s (0.6 D) + P (π/4) D² μ_b (d_s / 2), with μ_s = 0.1
-  (seat) and μ_b = 0.05 (bearing). Stem by B-2. Lever or gear per SW-VLV-4.
+Ball, trunnion-mounted: withdrawn from the catalogue by SmartWeld on review (P-49); rules
+BT-* retired. Ball valves are the floating ball (B-*), sizes 1/2–6; larger quarter-turn
+isolation is by the butterfly valves.
 
 Butterfly, wafer, resilient seat (`SW-VLV-BF-*`). Sizes 2–24, classes up to P300 (the
 polymer liner is the seat and the body is clamped, not bolted).
@@ -1062,7 +1034,10 @@ Plug, lubricated taper plug (`SW-VLV-PL-*`). Sizes 1/2–12, classes up to P600.
 Diaphragm, weir type (`SW-VLV-DI-*`). Sizes 1/2–12, classes up to P300 (the diaphragm is
 the pressure boundary).
 
-- `DI-1` Body: run bore D with a weir rising 0.6 D at mid-length and a round top opening of
+- `DI-1` Body: run bore D with a weir rising 0.6 D at mid-length; the body rises above the
+  run so that its top (bolting) flange face stands D/2 + t_b + 0.25 D above the pipe axis
+  (amended on user review from 0.3 D, P-49: the body and bonnet sat too low between the end
+  flanges; the raised body gives the diaphragm a deeper bowl to close into); a round top opening of
   diameter 1.6 D with a flat bolting flange; diaphragm a polymer disc 1.6 D + 2 t_f in diameter
   and max(1/8 in, 0.03 D) thick, clamped by the bonnet flange with studs per SW-FLG-3/4 on the
   opening; bonnet a rounded dome of the flange diameter and height 0.45 × its diameter with
@@ -1164,9 +1139,9 @@ rules of sections 29–32.
   disc must swing clear into the chamber, which therefore extends along the flow.
 - `F-6` Floating ball: a cast body that is a sphere of radius (0.85 D + t_b) around the ball
   cavity, blended into the integral inlet end and into a joint collar of diameter D_b
-  (BT-1) on the outlet side; a bolted end connector (flange of diameter D_b and a neck
+  (B-1) on the outlet side; a bolted end connector (flange of diameter D_b and a neck
   tapering to the pipe flange) studded into the collar; a flat top pad with the stem and a
-  flat-bar lever with a stop. Trunnion ball: the forged construction of BT-1.
+  flat-bar lever with a stop.
 - `F-7` Butterfly (wafer, lug): a ring body with a cylindrical neck rising max(2-1/2 in,
   0.25 D) above the ring to a square top plate (side 2.6 × the neck radius) that carries the
   lever and notch plate or the gearbox, and a short bottom boss; the wafer body has four

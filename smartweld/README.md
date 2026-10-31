@@ -11,7 +11,7 @@ must accompany any distribution of the viewer. No published dimension tables, st
 | 1     | Structural sections, plates, connection hardware, welds | done    |
 | 2     | Building shell (frame, cold-formed framing, cladding, roof, doors) | done |
 | 3     | Interior: equipment, pipe rack, platforms, access steel  | done (SmartWeld rules only; no regulation cited, by user decision) |
-| 4     | Pipe, flanges and 18 valve types, all sizes and classes offered (SW-VLV-11) | done |
+| 4     | Pipe, flanges and 16 valve types, all sizes and classes offered (SW-VLV-11) | done |
 | 5     | Piping and routing: 203 lines with fittings, valves, welds and supports; all §40 checks pass | done |
 | 6     | Ground-truth export                                     | next |
 
@@ -28,7 +28,7 @@ npm run gen:piping # regenerate public/plant-piping.json (about a minute) after 
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
 `HSS10x1/2`, `PL3/4x10x14`, `B7/8x3`, `FW5/16`, `GW3/4`). Use the valve configurator (type, size, class) to build any
-of the 18 valve types in any offered size and class; the "Section view" checkbox cuts any part on
+of the 16 valve types in any offered size and class; the "Section view" checkbox cuts any part on
 its stem plane.
 
 ## Layout

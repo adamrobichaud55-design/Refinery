@@ -72,7 +72,7 @@ describe('valves (SW-VLV-*)', () => {
       expect(offeredSizes(t.id, 'P150').length).toBeGreaterThan(0);
       for (const n of SIZE_SERIES) for (const c of CLASS_SERIES) if (isOffered(t.id, n, c)) expect(n * n * CLASS_PRESSURE[c]).toBeLessThanOrEqual(1800000);
     }
-    expect(isOffered('BALL', 8, 'P150')).toBe(false); expect(isOffered('TBALL', 8, 'P150')).toBe(true);
+    expect(isOffered('BALL', 8, 'P150')).toBe(false);
     expect(isOffered('KNIFE', 6, 'P300')).toBe(false); expect(isOffered('NEEDLE', 0.5, 'P4800')).toBe(true);
     expect(() => makeValve('x', 'BALL', 8, 'P150')).toThrow();
   });
@@ -82,16 +82,16 @@ describe('valves (SW-VLV-*)', () => {
     const mid = offeredSizes(t.id, 'P150'); const n2 = mid[Math.floor(mid.length / 2)];
     for (const c of offeredClasses(t.id, n2)) if (c !== 'P150') sample.push([t.id, n2, c]);      // every class at a middle size
   }
-  it(`sample covers ${sample.length} builds across all 18 types`, () => { expect(sample.length).toBeGreaterThan(150); });
+  it(`sample covers ${sample.length} builds across all 16 types`, () => { expect(sample.length).toBeGreaterThan(150); });
   for (const [type, NPS, cls] of sample) {
     it(`${type}${NPS}-${cls}: rules hold, solids closed, rules audited`, () => {
       const v = makeValve('v', type, NPS, cls);
       const D = pipeDims(NPS, cls).D, f = designFlange(NPS, cls);
       expect(v.dims.D.value).toBeCloseTo(D, 9);
       if (['GATE', 'GLOBE', 'YGLOBE', 'CHECK', 'LCHECK', 'PLUG', 'DIAPH', 'CONTROL'].includes(type)) expect(v.dims.F2F.value).toBeCloseTo(2 * f.tf + 2 * (f.hubLen + 1) + v.dims.wBody.value, 9);
-      if (type === 'BALL' || type === 'TBALL') {                                     // BT-1: studded body joint, body longer than the cavity, F2F = body + two ends
+      if (type === 'BALL') {                                     // B-1: studded body joint, body longer than the cavity, F2F = body + two ends
         const j = v.extra!.joint as { BC: number; d: number; n: number };
-        expect(v.dims.bodyOD.value).toBeCloseTo(j.BC + (type === "TBALL" ? 3.5 : 2.5) * j.d, 9);   // BT-1 (amended, P-48), B-1
+        expect(v.dims.bodyOD.value).toBeCloseTo(j.BC + 2.5 * j.d, 9);   // B-1
         expect(v.dims.bodyOD.value).toBeGreaterThan(v.dims.ballD.value);
         expect(j.n % 4).toBe(0);
         expect(v.dims.F2F.value).toBeGreaterThan(v.dims.wBody.value + 2 * f.tf);

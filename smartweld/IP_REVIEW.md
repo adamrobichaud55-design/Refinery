@@ -56,9 +56,7 @@ the function that dictates it.
 | Swing check | Chamber long along the flow, round bolted cover | F-5 | Disc must swing clear; cover is the only service access |
 | Swing check | Raised centre on cover; hinge-pin bosses | F-5 | Stiffens the cover against pressure; carries the hinge pin |
 | Lift check | Small domed cap | F-5 | Houses the dashpot guide; dome resists pressure |
-| Dual-plate check | Wafer ring, two plates on a post, lifting eye, plugs | CD-1 | Short, light check; plugs retain the pins; eye lifts it into place |
 | Floating ball | Spherical body, bolted end connector | B-1, F-6 | Encloses the ball; connector allows ball insertion |
-| Trunnion ball | Forged cylindrical body, studded joint, tapered adapters | BT-1 | Machined from forgings; joint load carried into a smaller neck |
 | Ball, butterfly, plug | Flat top pad or plate | F-6, F-7, F-8 | Mounting face for the lever or gearbox |
 | Butterfly | Ring body, tall neck, top plate | F-7 | Clamped between flanges; neck clears pipe insulation |
 | Butterfly | Locating ears with holes; lugs | F-7, BL-1 | Centre the valve on the line studs; lugs allow dead-end service |
@@ -87,7 +85,7 @@ editing one rule in `DESIGN_BASIS.md` and its code, without touching anything el
 
 ## 4. What counsel needs to decide or search
 
-1. **Design patents and registered designs.** Search each of the 18 valve forms (renders in
+1. **Design patents and registered designs.** Search each of the 16 valve forms (renders in
    `screenshots/stage4/`, contact sheets `sheet-1.png`, `sheet-2.png`) in every market where
    SmartWeld will use or sell this product. This session had no access to patent databases.
 2. **Trade dress.** Review the colour scheme (§3) and any overall look against marks in use.
