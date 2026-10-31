@@ -91,7 +91,7 @@ describe('valves (SW-VLV-*)', () => {
       if (['GATE', 'GLOBE', 'YGLOBE', 'CHECK', 'LCHECK', 'PLUG', 'DIAPH', 'CONTROL'].includes(type)) expect(v.dims.F2F.value).toBeCloseTo(2 * f.tf + 2 * (f.hubLen + 1) + v.dims.wBody.value, 9);
       if (type === 'BALL' || type === 'TBALL') {                                     // BT-1: studded body joint, body longer than the cavity, F2F = body + two ends
         const j = v.extra!.joint as { BC: number; d: number; n: number };
-        expect(v.dims.bodyOD.value).toBeCloseTo(j.BC + 2.5 * j.d, 9);
+        expect(v.dims.bodyOD.value).toBeCloseTo(j.BC + (type === "TBALL" ? 3.5 : 2.5) * j.d, 9);   // BT-1 (amended, P-48), B-1
         expect(v.dims.bodyOD.value).toBeGreaterThan(v.dims.ballD.value);
         expect(j.n % 4).toBe(0);
         expect(v.dims.F2F.value).toBeGreaterThan(v.dims.wBody.value + 2 * f.tf);

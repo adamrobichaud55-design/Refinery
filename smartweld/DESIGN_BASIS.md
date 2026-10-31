@@ -908,9 +908,17 @@ Knife gate (`SW-VLV-K-*`), lugged wafer body, flat plate gate. Sizes 2–36, cla
   width w = 0.12 D + 1 in (minimum 1-1/2 in), with a rectangular gate housing above the bore
   of the same width and 1.3 D wide, topped by a transverse packing box 4 s deep (SW-VLV-6)
   with a bolted gland. Gate plate thickness max(1/4 in, 0.03 D), width 1.3 D, with a rounded
-  bottom edge of radius 0.52 D concentric with the bore (bevelled to a knife edge); stroke D + 0.05 D; a cast yoke of two tapered arms (G-4 proportions) from the
-  gland plate to a stem-nut boss. Reason: a plate gate needs no cavity, which is why the body
-  is thin and why slurries pass; the plate is sealed where it leaves the body, not in a bonnet.
+  bottom edge of radius 0.52 D concentric with the bore (bevelled to a knife edge); stroke D + 0.05 D.
+  The body is one casting (F-0 blends): the lugged ring, of the pipe flange's OD and drilled on
+  its bolt circle, rises into a gate chest of the body width and 2 (0.65 D + t_b) across, which
+  carries the packing box and ends in a flat top flange b_l + 1/2 in wider each side than the
+  chest; a gland plate is drawn down onto the packing by two short studs in the top flange.
+  Yoke: two straight, parallel legs of flat bar b_l = max(1 in, 0.15 D) × the body width,
+  bolted to the top flange (two bolts each), joined at the top by a yoke plate carrying the
+  stem-nut boss; the stem rises through the handwheel. Reason: a plate gate needs no cavity,
+  which is why the body is thin and why slurries pass; the plate is sealed where it leaves the
+  body, not in a bonnet; straight legs carry the stem thrust as columns. (Amended on user
+  review from tapered splayed arms and box-built housing, P-48.)
 - `K-2` Thrust F = P (π/4) D² × 0.3 × 1.2 (plate dragged over the seat, 20 % for the
   transverse packing); stem and handwheel by SW-VLV-5/8 on a two-bar yoke.
 
@@ -991,7 +999,18 @@ Ball, trunnion-mounted (`SW-VLV-BT-*`). Sizes 2–48, all classes within SW-VLV-
   joint into the body wall instead of adding an outward flange keeps the joint diameter equal
   to the body, which is how these bodies are built; the adapter tapers because the bolt load
   must be carried into the much smaller pipe neck. (Amended on user review: the earlier
-  flange-to-flange joint stood proud of a narrow body and was not a real construction.) Ball 1.5 D, carried on the
+  flange-to-flange joint stood proud of a narrow body and was not a real construction.)
+  Second amendment on user review (P-48): body OD D_b = BC_j + 3.5 d_j so its outer edges can
+  be rounded with radius 1.5 d_j outside the nut circle; each adapter's taper runs over its full
+  radial drop (concave, from the joint flange to the neck) and its neck is at least 0.25 D long
+  before the end flange, so the end connectors read as the forged cones they are; the stem
+  housing is a raised round boss on top of the body closed by a bolted cover flange (8 bolts),
+  with a cylindrical mounting spool to the operator; the trunnion is closed underneath by the
+  same boss and cover; from 8 in, two saddle feet (plates of thickness t_b + 1/4 in, 0.6 D_b
+  wide, at half the body length from the centre) stand under the body on base plates 1 in
+  below the trunnion cover bolts. Reason: the bonnet and trunnion covers are separate
+  bolted parts so the stem and trunnion bearings can be serviced; large valves are set on
+  feet so the line does not carry their weight. Ball 1.5 D, carried on the
   stem and a bottom trunnion of diameter d_s in bearings; seat carriers (rings of section
   0.15 D × 0.15 D) pressed onto the ball by coil springs. Reason: the trunnions take the
   end-force, so the seats only have to seal, which is what makes large and high-pressure ball
@@ -1157,10 +1176,15 @@ rules of sections 29–32.
 - `F-8` Plug: a cast body that is a rounded square prism (superellipse exponent 4) around the
   taper, blended into the run tubes, closed by a round gland cover; square wrench head and a
   wrench lever. Diaphragm: run tubes into a rounded square body with a low weir across the
-  bore, a square body flange and a square bonnet flange with four corner bolts clamping the
-  diaphragm, and a dome bonnet (the intersection of the square prism and an ellipsoid, so the
-  dome is round on top and square at its base) with a top boss. Reason: the diaphragm and its
-  compressor are rectangular in plan where they meet the weir.
+  bore, a square body flange and a square bonnet flange with bolts (DI-1) clamping the
+  diaphragm. The body flares smoothly from each end-flange hub into the body (a cone from the
+  hub to 0.75 of the body half-width, blended), so no bare run tube shows. The bonnet rises
+  from its square flange as the intersection of a square prism (tapering to 0.8 of the
+  flange half-side) and a cone, so it is square at the base and round above, to a round
+  spindle neck of radius max(1.2 d_s + 1/2 in, 0.3 × the flange half-side); bonnet height
+  0.8 × the flange half-side + the neck. Reason: the diaphragm and its compressor are
+  rectangular in plan where they meet the weir; above them only the spindle needs housing.
+  (Amended on user review from a low dome on dumbbell run tubes, P-48.)
 - `F-9` Safety valve: a cast angle body that blends the inlet neck (from below), a bowl around
   the nozzle and the outlet neck (to the side); a bonnet that tapers from its bolted base
   flange to the cap; a screwed cap with a lifting lever of length max(4 in, 3 × the cap radius)
