@@ -156,7 +156,7 @@ function showBuilding(view: string, withInterior = false, piping?: { line?: stri
   if (withInterior && !interior) interior = generateInterior();
   const t0 = performance.now();
   const all = withInterior ? [...building.instances, ...interior!.instances] : building.instances;
-  const shown = view === 'overview' ? all.filter(i => !i.tags.includes('cladding') && !i.tags.includes('trim') && !i.tags.includes('roof-sheet')) : all; // cutaway: sheets and trim hidden
+  const shown = view === 'overview' || (piping && view !== 'walk') ? all.filter(i => !i.tags.includes('cladding') && !i.tags.includes('trim') && !i.tags.includes('roof-sheet')) : all; // cutaway: sheets and trim hidden
   const box = renderInstances(shown);
   const dr = building.drawing, L = dr.bays * dr.bayFt * 12, W = dr.widthFt * 12;
   grid.position.y = -dr.slabIn - 0.5;
@@ -173,9 +173,9 @@ function showBuilding(view: string, withInterior = false, piping?: { line?: stri
   else if (view === 'walk') lookFrom([L * 0.55, 66, 170], [L * 0.2, 120, 300]);
   else if (view === 'piping-rack') lookFrom([300, 150, 230], [1100, 230, 0]);
   else if (view === 'piping-pumps') lookFrom([1700, 120, 40], [1990, 60, 200]);
-  else if (view === 'piping-column') lookFrom([1060, 200, -60], [822, 200, -280]);
+  else if (view === 'piping-column') lookFrom([990, 330, -90], [822, 220, -300]);
   else if (view === 'piping-exchangers') lookFrom([1250, 140, 90], [1550, 80, 300]);
-  else if (view === 'piping-tanks') lookFrom([700, 160, -100], [400, 120, -318]);
+  else if (view === 'piping-tanks') lookFrom([110, 150, -170], [300, 90, -330]);
   else if (view === 'piping-above') lookFrom([L * 0.5, 2300, 40], [L * 0.5, 0, 0]);
   else lookFrom([L * 1.25, 900, W * 1.6], [L * 0.45, 60, 0]);
   const bom = billOfMaterials({ ...building, instances: all });
@@ -217,7 +217,7 @@ function showPiping(t0: number, line?: string) {
     const pick = `<div class="cfg"><label>Line inspector: <select id="linesel"><option value="">— choose a line —</option>${m.lines.map(l => `<option${l.no === line ? ' selected' : ''}>${l.no}</option>`).join('')}</select></label></div>`;
     note.outerHTML = `<div id="pipinginfo">${pick}${sel ? lineReport(sel) : ''}${plantSummary(m)}<p class="notes">Plant and piping built in ${((performance.now() - t0) / 1000).toFixed(1)} s. Valves in plant views use a coarser marching grid (same dimensions).</p></div>`;
     document.getElementById('linesel')!.addEventListener('change', ev => { const v = (ev.target as HTMLSelectElement).value; location.hash = `${view}${v ? ';line=' + v : ''}`; });
-    if (sel) { const b = new THREE.Box3(); for (const c of sel.comps) { b.expandByPoint(new THREE.Vector3(...c.a)); b.expandByPoint(new THREE.Vector3(...c.b)); } const ctr = b.getCenter(new THREE.Vector3()), r = Math.max(120, b.getSize(new THREE.Vector3()).length() * 0.7); lookFrom([ctr.x + r * 0.8, ctr.y + r * 0.6, ctr.z + r], [ctr.x, ctr.y, ctr.z]); }
+    if (sel) { const b = new THREE.Box3(); for (const c of sel.comps) { b.expandByPoint(new THREE.Vector3(...c.a)); b.expandByPoint(new THREE.Vector3(...c.b)); } const ctr = b.getCenter(new THREE.Vector3()), r = Math.max(120, b.getSize(new THREE.Vector3()).length() * 0.6); lookFrom([ctr.x + r * 0.6, Math.min(ctr.y + r * 0.45, 330), ctr.z + r * 0.7], [ctr.x, ctr.y, ctr.z]); }
     (window as any).__pipingReady = true;
   }).catch(e => { note.textContent = String(e); showError(e); });
 }
