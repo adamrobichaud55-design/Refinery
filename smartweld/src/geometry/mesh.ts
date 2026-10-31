@@ -135,3 +135,37 @@ export function revolve(loop: { r: number; z: number }[], n: number): MeshData {
   if (signedVolume(mesh) < 0) for (let k = 0; k < indices.length; k += 3) { const t = indices[k + 1]; indices[k + 1] = indices[k + 2]; indices[k + 2] = t; }
   return mesh;
 }
+
+/** Helical coil (spring) about the local z axis: mean radius R, pitch per turn, `turns`, wire radius r. Closed with end caps. */
+export function helixTube(R: number, pitch: number, turns: number, r: number, segsPerTurn = 24, nRing = 10): MeshData {
+  const positions: number[] = [], indices: number[] = [];
+  const steps = Math.max(2, Math.round(turns * segsPerTurn));
+  const rings: number[][] = [];
+  for (let i = 0; i <= steps; i++) {
+    const t = (2 * Math.PI * turns * i) / steps;
+    const c = [R * Math.cos(t), R * Math.sin(t), (pitch * turns * i) / steps];
+    const tan = [-R * Math.sin(t), R * Math.cos(t), pitch / (2 * Math.PI)]; const L = Math.hypot(tan[0], tan[1], tan[2]); tan[0] /= L; tan[1] /= L; tan[2] /= L;
+    const nrm = [Math.cos(t), Math.sin(t), 0];
+    const bin = [tan[1] * nrm[2] - tan[2] * nrm[1], tan[2] * nrm[0] - tan[0] * nrm[2], tan[0] * nrm[1] - tan[1] * nrm[0]];
+    const ring: number[] = [];
+    for (let k = 0; k < nRing; k++) {
+      const a = (2 * Math.PI * k) / nRing;
+      positions.push(c[0] + r * (Math.cos(a) * nrm[0] + Math.sin(a) * bin[0]), c[1] + r * (Math.cos(a) * nrm[1] + Math.sin(a) * bin[1]), c[2] + r * (Math.cos(a) * nrm[2] + Math.sin(a) * bin[2]));
+      ring.push(positions.length / 3 - 1);
+    }
+    rings.push(ring);
+  }
+  for (let i = 0; i < steps; i++) for (let k = 0; k < nRing; k++) {
+    const k2 = (k + 1) % nRing, a = rings[i], b = rings[i + 1];
+    indices.push(a[k], b[k], b[k2], a[k], b[k2], a[k2]);
+  }
+  // end caps as fans from a centre vertex
+  for (const [ring, flip] of [[rings[0], false], [rings[steps], true]] as const) {
+    let cx = 0, cy = 0, cz = 0; for (const v of ring) { cx += positions[3 * v]; cy += positions[3 * v + 1]; cz += positions[3 * v + 2]; }
+    positions.push(cx / nRing, cy / nRing, cz / nRing); const c = positions.length / 3 - 1;
+    for (let k = 0; k < nRing; k++) { const k2 = (k + 1) % nRing; if (flip) indices.push(c, ring[k2], ring[k]); else indices.push(c, ring[k], ring[k2]); }
+  }
+  const m = { positions, indices };
+  if (signedVolume(m) < 0) for (let k = 0; k < indices.length; k += 3) { const t = indices[k + 1]; indices[k + 1] = indices[k + 2]; indices[k + 2] = t; }
+  return m;
+}

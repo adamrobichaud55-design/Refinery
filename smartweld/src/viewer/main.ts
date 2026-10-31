@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { ENTRIES } from '../scene/catalogueList';
 import { columnBaseAssembly, type Assembly } from '../scene/assemblies';
-import { makePart, type PartSpec } from '../catalogue';
+import { makePart, makeValve, VALVE_TYPES, SIZE_SERIES, CLASS_SERIES, isOffered, type PartSpec, type ValveType, type PipeClass } from '../catalogue';
 import { buildGeometry, profileOf, type Role, type PartGeometry } from '../geometry/partGeometry';
 import { transformMesh, mergeMeshes, signedVolume as signedVol, type MeshData, type Mat4 } from '../geometry/mesh';
 import { identity } from '../geometry/transform';
@@ -226,6 +226,19 @@ for (const e of ENTRIES) {
   if (!byGroup.has(e.group)) { const h2 = document.createElement('h2'); h2.textContent = e.group; entriesEl.appendChild(h2); const div = document.createElement('div'); entriesEl.appendChild(div); byGroup.set(e.group, div); }
   addButton(byGroup.get(e.group)!, e.label, () => { location.hash = 'entry:' + encodeURIComponent(e.label); showPart(e.build()); });
 }
+// valve configurator (SW-VLV-11 offering)
+const selType = document.getElementById('vtype') as HTMLSelectElement, selSize = document.getElementById('vsize') as HTMLSelectElement, selCls = document.getElementById('vcls') as HTMLSelectElement;
+for (const t of VALVE_TYPES) { const o = document.createElement('option'); o.value = t.id; o.textContent = t.name; selType.appendChild(o); }
+function refreshValveSelects() {
+  const t = selType.value as ValveType, size = Number(selSize.value), cls = selCls.value as PipeClass;
+  selSize.innerHTML = ''; for (const n of SIZE_SERIES) if (CLASS_SERIES.some(c => isOffered(t, n, c))) { const o = document.createElement('option'); o.value = String(n); o.textContent = `${n} in`; selSize.appendChild(o); }
+  if (Array.from(selSize.options).some(o => Number(o.value) === size)) selSize.value = String(size);
+  selCls.innerHTML = ''; for (const c of CLASS_SERIES) if (isOffered(t, Number(selSize.value), c)) { const o = document.createElement('option'); o.value = c; o.textContent = c; selCls.appendChild(o); }
+  if (Array.from(selCls.options).some(o => o.value === cls)) selCls.value = cls;
+}
+selType.addEventListener('change', refreshValveSelects); selSize.addEventListener('change', refreshValveSelects);
+refreshValveSelects();
+document.getElementById('vbuild')!.addEventListener('click', () => { const t = selType.value as ValveType, n = Number(selSize.value), c = selCls.value as PipeClass; location.hash = `valve:${t}:${n}:${c}${sectionOn ? ';section' : ''}`; try { setActive(null); showPart(makeValve(`${t}${n}-${c}`, t, n, c)); } catch (e) { showError(e); } });
 document.getElementById('typed')!.addEventListener('submit', ev => {
   ev.preventDefault();
   const text = (document.getElementById('des') as HTMLInputElement).value;
@@ -237,6 +250,7 @@ function openFromHash() {
   let hsh = decodeURIComponent(location.hash.slice(1));
   if (hsh.endsWith(';section')) { hsh = hsh.slice(0, -8); setSection(true); } else setSection(false);
   if (hsh.startsWith('entry:')) { const e = ENTRIES.find(x => x.label === hsh.slice(6)); if (e) { showPart(e.build()); return; } }
+  if (hsh.startsWith('valve:')) { const [, t, n, c] = hsh.split(':'); selType.value = t; refreshValveSelects(); selSize.value = n; refreshValveSelects(); selCls.value = c; try { showPart(makeValve(`${t}${n}-${c}`, t as ValveType, Number(n), c as PipeClass)); return; } catch (e) { showError(e); } }
   if (hsh.startsWith('des:')) { try { showPart(makePart(hsh.slice(4), hsh.slice(4), 120)); return; } catch (e) { showError(e); } }
   if (hsh.startsWith('assembly:')) { setActive(asmBtn); showAssembly(columnBaseAssembly()); return; }
   if (hsh.startsWith('building:')) { const v = hsh.slice(9); setActive(buildingBtns[v] ?? null); showBuilding(v); return; }

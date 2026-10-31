@@ -8,8 +8,11 @@ import { hexHardware } from './hardware';
 const RHO = K.STEEL_DENSITY_LB_IN3;
 const rhoDim = () => constant(K.STEEL_DENSITY_LB_FT3, 'K-1', 'Steel density', 'lb/ft3');
 
-export type PipeClass = 'P150' | 'P300' | 'P600';
-export const CLASS_PRESSURE: Record<PipeClass, number> = { P150: 150, P300: 300, P600: 600 }; // psi, by name (SW-PIPE-1)
+export type PipeClass = 'P150' | 'P300' | 'P600' | 'P1200' | 'P2400' | 'P4800';
+export const CLASS_PRESSURE: Record<PipeClass, number> = { P150: 150, P300: 300, P600: 600, P1200: 1200, P2400: 2400, P4800: 4800 }; // psi, by name (SW-PIPE-1)
+export const CLASS_SERIES: PipeClass[] = ['P150', 'P300', 'P600', 'P1200', 'P2400', 'P4800'];
+/** SW-PIPE-6 size series (nominal inches = SmartWeld outside diameter). */
+export const SIZE_SERIES = [0.25, 0.375, 0.5, 0.75, 1, 1.25, 1.5, 2, 2.5, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24, 30, 36, 42, 48];
 export const PIPE_GRADE: Material = { grade: 'Grade 35 pipe', Fy: { value: 35, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum yield strength (grade stated on drawing)' } };
 export const FORGING_GRADE: Material = { grade: 'Grade 36 forging', Fy: { value: 36, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum yield strength (grade stated on drawing)' } };
 export const STUD_FU = 90; // ksi, "Grade 90" (drawing)
@@ -53,18 +56,17 @@ export function designFlange(NPS: number, cls: PipeClass, boreOverride?: number,
   const Wseat = Math.PI * G * wg * y, Wop = (Math.PI / 4) * G * G * P + Math.PI * G * wg * m * P;           // SW-FLG-3
   const W = Math.max(Wseat, Wop);
   const rfOD = G + wg + 1 / 8, rfH = 1 / 16;
-  let chosen: { d: number; n: number; BC: number } | null = null;
-  for (let d = 0.5; d <= 1.5 + 1e-9; d += 1 / 8) {                                                           // SW-FLG-4
+  let chosen: { d: number; n: number; BC: number; OD: number } | null = null;
+  for (let d = 0.5; d <= 4 + 1e-9; d += 1 / 8) {                                                             // SW-FLG-4
     const cap = (STUD_FU * 1000 / 3) * (Math.PI / 4) * d * d;
-    let n = Math.max(4, Math.ceil(W / cap)); n = roundUpTo(n, 4);
-    const BC = rfOD + d + 0.25;
-    let pitch = (Math.PI * BC) / n;
-    while (pitch > 5 * d) { n += 4; pitch = (Math.PI * BC) / n; }
-    if (pitch >= 3 * d) { chosen = { d, n, BC }; break; }
+    let n = roundUpTo(Math.max(4, Math.ceil(W / cap)), 4);
+    let BC = Math.max(rfOD + d + 0.25, (3 * d * n) / Math.PI);
+    while ((Math.PI * BC) / n > 5 * d) { n += 4; BC = Math.max(rfOD + d + 0.25, (3 * d * n) / Math.PI); }
+    const OD = BC + 3 * d;
+    if (!chosen || OD < chosen.OD - 1e-9) chosen = { d, n, BC, OD };
   }
   if (!chosen) throw new Error('SW-FLG-4: no stud size fits');
-  const { d, n, BC } = chosen;
-  const flOD = BC + 3 * d;
+  const { d, n, BC, OD: flOD } = chosen;
   const Wb = 1.5 * n * (Math.PI / 4) * d * d * (STUD_FU * 1000 / 3);                                        // SW-FLG-5: preload capacity
   const a = (BC - G) / 2, mb = (Wb * a) / (Math.PI * G);
   const tf = roundUpTo(Math.max(Math.sqrt((6 * mb) / (0.6 * FORGING_GRADE.Fy.value * 1000)), d + 0.25), 1 / 8);

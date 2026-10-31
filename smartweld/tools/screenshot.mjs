@@ -16,9 +16,14 @@ const targets = [
   ['typed-W18x50', '#des:W18x50'],
   ['building-exterior', '#building:exterior'], ['building-corner', '#building:corner'], ['building-interior', '#building:interior'], ['building-knee', '#building:knee'], ['building-door', '#building:door'],
   ['plant-walk', '#plant:walk'], ['plant-rack', '#plant:rack'], ['plant-vessels', '#plant:vessels'], ['plant-stair', '#plant:stair'], ['plant-column', '#plant:column'], ['plant-tanks', '#plant:tanks'], ['plant-pumps', '#plant:pumps'], ['plant-overview', '#plant:overview'],
-  ['flange-6-P300', '#entry:' + encodeURIComponent('FLG6-P300 weld neck')], ['valve-gate6', '#entry:GATE6-P300'], ['valve-gate6-section', '#entry:GATE6-P300;section'],
-  ['valve-gate12-gear', '#entry:' + encodeURIComponent('GATE12-P600 (gear)')], ['valve-globe4-section', '#entry:GLOBE4-P300;section'], ['valve-check6-section', '#entry:CHECK6-P300;section'],
-  ['valve-ball4', '#entry:BALL4-P600'], ['valve-ball4-section', '#entry:BALL4-P600;section'], ['valve-bfly8', '#entry:BFLY8-P150'], ['valve-bfly8-section', '#entry:BFLY8-P150;section'],
+  ['flange-6-P300', '#entry:' + encodeURIComponent('FLG6-P300 weld neck')],
+  ['v-GATE', '#valve:GATE:6:P300'], ['v-GATE-section', '#valve:GATE:6:P300;section'], ['v-GATE-gear', '#valve:GATE:16:P600'], ['v-KNIFE', '#valve:KNIFE:8:P150'],
+  ['v-GLOBE', '#valve:GLOBE:4:P300'], ['v-GLOBE-section', '#valve:GLOBE:4:P300;section'], ['v-YGLOBE', '#valve:YGLOBE:4:P300'], ['v-AGLOBE', '#valve:AGLOBE:4:P300'],
+  ['v-CHECK', '#valve:CHECK:6:P300'], ['v-CHECK-section', '#valve:CHECK:6:P300;section'], ['v-LCHECK-section', '#valve:LCHECK:2:P600;section'], ['v-DCHECK', '#valve:DCHECK:8:P150'],
+  ['v-BALL', '#valve:BALL:4:P600'], ['v-BALL-section', '#valve:BALL:4:P600;section'], ['v-TBALL', '#valve:TBALL:12:P600'], ['v-TBALL-section', '#valve:TBALL:12:P600;section'],
+  ['v-BFLY', '#valve:BFLY:8:P150'], ['v-LBFLY', '#valve:LBFLY:8:P150'], ['v-DBFLY', '#valve:DBFLY:12:P300'],
+  ['v-PLUG', '#valve:PLUG:4:P300'], ['v-PLUG-section', '#valve:PLUG:4:P300;section'], ['v-DIAPH', '#valve:DIAPH:3:P150'], ['v-DIAPH-section', '#valve:DIAPH:3:P150;section'],
+  ['v-NEEDLE', '#valve:NEEDLE:0.5:P2400'], ['v-PSV', '#valve:PSV:3:P300'], ['v-PSV-section', '#valve:PSV:3:P300;section'], ['v-CONTROL', '#valve:CONTROL:4:P300'], ['v-CONTROL-section', '#valve:CONTROL:4:P300;section'],
   ['Z-purlin', '#entry:' + encodeURIComponent('Z10x2.5x5/64 (purlin)')], ['panel', '#entry:' + encodeURIComponent('Wall/roof panel PNL1.25x36')], ['ridge-cap', '#entry:' + encodeURIComponent('Ridge cap 12x12 (1:12)')], ['weld-around', '#entry:' + encodeURIComponent('Fillet all around W10x49')],
 ];
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] });

@@ -714,9 +714,15 @@ temperature; stresses are in psi unless stated.
 ## 29. Pipe (`SW-PIPE-*`)
 
 - `SW-PIPE-1` Identification: `PIPE{NPS}-{class}`, e.g. `PIPE6-P300`. NPS is the nominal size
-  in inches; the class is one of `P150`, `P300`, `P600`, named by its design pressure in psi.
-  Reason: the drawing names a line by size and class; naming the class by its pressure keeps
-  it self-explanatory and independent of any published rating.
+  in inches; the class is one of the SmartWeld series `P150`, `P300`, `P600`, `P1200`,
+  `P2400`, `P4800`, each named by its design pressure in psi. Reason: the drawing names a
+  line by size and class; a doubling series from 150 psi covers low-pressure utilities to
+  high-pressure process service in six steps, and naming each class by its pressure keeps it
+  self-explanatory and independent of any published rating.
+- `SW-PIPE-6` Size series (nominal inches): 1/4, 3/8, 1/2, 3/4, 1, 1-1/4, 1-1/2, 2, 2-1/2, 3,
+  4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24, 30, 36, 42, 48. Reason: steps of about a third up
+  to 6 in, then 2 to 6 in steps, so that each size carries roughly 1.5 to 2 times the flow of
+  the one below; these are names, and in SmartWeld pipe the outside diameter equals the name.
 - `SW-PIPE-2` Outside diameter OD = NPS for every class. Reason: one outside envelope per size
   lets fittings, supports, clamps and insulation be shared across classes; the bore varies.
 - `SW-PIPE-3` Wall thickness t = roundup( max( P·OD / (2 S) + CA, OD/40 + 1/16 in ), 1/32 in )
@@ -740,14 +746,18 @@ temperature; stresses are in psi unless stated.
   pressure end-force.
 - `SW-FLG-3` Bolt load: W = max( W_seat, W_op ) with W_seat = π G w_g y and
   W_op = (π/4) G² P + π G w_g m P. Reason: equilibrium of the joint at seating and in service.
-- `SW-FLG-4` Bolting: stud diameter d from the series 1/2 in to 1-1/2 in by 1/8 in; allowable
-  stud stress = F_u / 3 on the nominal area (bolts "Grade 90", drawing); count n = the smallest
-  multiple of 4 with n (π/4) d² F_u/3 ≥ W; bolt circle BC = RF OD + d + 1/4 in, where the raised
-  face OD = G + w_g + 1/8 in; the pitch π BC / n must lie between 3 d and 5 d, and the smallest
-  d for which this holds is used. Flange OD = BC + 3 d (edge distance 1.5 d, SW-B-9). Reason: a
-  third of the tensile strength leaves margin for preload scatter and cyclic load; a multiple of
-  four keeps the pattern symmetric about both axes; pitch ≥ 3 d clears the nuts, ≤ 5 d keeps
-  the gasket evenly loaded between bolts; 1/4 in clears a socket from the raised face.
+- `SW-FLG-4` Bolting: stud diameter d from the series 1/2 in to 4 in by 1/8 in; allowable
+  stud stress = F_u / 3 on the nominal area (bolts "Grade 90", drawing); for each d the count
+  n is the smallest multiple of 4 with n (π/4) d² F_u/3 ≥ W; bolt circle BC = max( RF OD + d
+  + 1/4 in, 3 d n / π ), where the raised face OD = G + w_g + 1/8 in (the circle grows when
+  the studs would otherwise crowd); n is then raised in fours until the pitch π BC / n ≤ 5 d;
+  flange OD = BC + 3 d (edge distance 1.5 d, SW-B-9). Of all d, the one giving the smallest
+  flange OD is used (the smaller d on a tie). Reason: a third of the tensile strength leaves
+  margin for preload scatter and cyclic load; a multiple of four keeps the pattern symmetric
+  about both axes; pitch ≥ 3 d clears the nuts, ≤ 5 d keeps the gasket evenly loaded between
+  bolts; 1/4 in clears a socket from the raised face; the most compact flange is the one a
+  manufacturer would make. (Amended while extending to the P1200–P4800 classes: with the bolt
+  circle pinned to the raised face no stud size could hold the required count at 3 d pitch.)
 - `SW-FLG-5` Thickness: the ring carries the bolt load as a moment about the hub with arm
   a = (BC − G)/2. The load used is the bolting's preload capacity W_b = 1.5 n (π/4) d² F_u/3,
   not the design load W, because a fitter tightens the studs to what they will take, not to
@@ -818,7 +828,19 @@ on the closure member and the effort a person can apply. Every internal is a rea
 
 ## 32. Valve types
 
-Gate (`SW-VLV-G-*`), solid wedge, outside-screw rising stem with yoke:
+Each type is a distinct design with its own proportions and operator. Shared rules:
+SW-VLV-2 (walls), SW-VLV-4 (operability), SW-VLV-5/6 (stems, packing), SW-VLV-7 (bonnets),
+SW-VLV-8 (handwheels), SW-VLV-9 (face-to-face from the internals).
+
+- `SW-VLV-11` Offering (sizes and classes each type is built in), from the series of SW-PIPE-6
+  and SW-PIPE-1. A general limit for every type with a closure member loaded by the full
+  pressure end-force: the bore is limited so that P D² ≤ 1,800,000 lb (a stem thrust or seat
+  load near a million pounds is the most a stem, yoke and seats can carry), i.e. D ≤
+  √(1,800,000 / P), rounded down to the size series. Type ranges and their reasons are given
+  with each type. Reason: a catalogue offers what can be made to work, not every combination.
+
+Gate (`SW-VLV-G-*`), solid wedge, outside-screw rising stem with yoke. Sizes 1/2–48, all
+classes within SW-VLV-11 (the general-purpose isolation valve).
 
 - `G-1` Wedge: included angle 10° (5° per face), width across the seats 1.3 D, thickness at
   the seat line 0.25 D, seat faces 0.1 D wide (minimum 1/4 in) matched by seat rings of the
@@ -839,23 +861,68 @@ Gate (`SW-VLV-G-*`), solid wedge, outside-screw rising stem with yoke:
   housing at height = stroke + stuffing box + 2 in above the bonnet. Reason: the stem nut must
   clear the fully risen stem.
 
-Globe (`SW-VLV-GL-*`), T-pattern, plug disc, rising stem:
+Knife gate (`SW-VLV-K-*`), lugged wafer body, flat plate gate. Sizes 2–36, class P150 only
+(the thin plate and the transverse packing cannot hold more).
+
+- `K-1` Body: a lugged ring of the pipe-flange pattern (bolted through by the line studs),
+  width w = 0.12 D + 1 in (minimum 1-1/2 in), with a rectangular gate housing above the bore
+  of the same width and 1.3 D wide, topped by a transverse packing box 4 s deep (SW-VLV-6)
+  with a bolted gland. Gate plate thickness max(1/4 in, 0.03 D), width 1.3 D, bevelled
+  bottom edge; stroke D + 0.05 D. Reason: a plate gate needs no cavity, which is why the body
+  is thin and why slurries pass; the plate is sealed where it leaves the body, not in a bonnet.
+- `K-2` Thrust F = P (π/4) D² × 0.3 × 1.2 (plate dragged over the seat, 20 % for the
+  transverse packing); stem and handwheel by SW-VLV-5/8 on a two-bar yoke.
+
+Globe, T-pattern (`SW-VLV-GL-*`), plug disc, inside-screw rising stem. Sizes 1/2–12, all
+classes within SW-VLV-11 (above 12 in the thrust and the pressure drop make a globe
+impractical and a gate or butterfly is used).
 
 - `GL-1` Seat ring OD 1.2 D in a horizontal partition of thickness t_b; disc diameter 1.2 D
   with a 30° conical plug face; lift h = D/4 (the curtain area π D h equals the bore area at
   full lift). Reason: full flow at quarter-bore lift; a conical plug seats on a line.
 - `GL-2` Cavity width w_body = 1.5 D (the S-passage needs space for the flow to turn twice).
-  Thrust F = P (π/4) (1.2 D)² × 1.15 (closing against pressure under the disc). Stem, bonnet,
-  handwheel as SW-VLV-5..8; no yoke (inside-screw) — stem thread inside the bonnet.
+  Thrust F = P (π/4) (1.2 D)² × 1.15 (closing against pressure under the disc).
 
-Swing check (`SW-VLV-C-*`):
+Globe, Y-pattern (`SW-VLV-GY-*`). Sizes 1/2–16, all classes within SW-VLV-11.
+
+- `GY-1` As GL-1/2 but the stem axis is inclined 45° toward the inlet and the seat lies in the
+  run, so the flow path is nearly straight; cavity width along the run 1.5 D; bonnet, stuffing
+  box and handwheel on the inclined axis. Reason: a straight-through seat gives the low
+  pressure drop and self-draining line that a T-pattern cannot; the 45° stem keeps the
+  handwheel reachable.
+
+Angle globe (`SW-VLV-GA-*`). Sizes 1/2–12, all classes within SW-VLV-11.
+
+- `GA-1` Inlet on the run axis, outlet turned 90° downward, stem vertical on the outlet axis;
+  seat ring (1.2 D) horizontal at the mouth of the outlet; chamber a vertical cylinder of
+  diameter 1.5 D; centre-to-face = t_f + h_hub + 0.75 D for both ends. Reason: the valve
+  replaces an elbow and the flow turns only once.
+
+Swing check (`SW-VLV-C-*`). Sizes 2–48, all classes within SW-VLV-11.
 
 - `C-1` Body as the globe (w_body = 1.2 D); disc 1.2 D in diameter, thickness 0.15 D, hung on a
   hinge pin of diameter max(3/8 in, 0.1 D) through a hinge arm; seat ring 1.2 D OD; a bolted
   top cover (SW-VLV-7) for access; disc swings open to 70°. Reason: gravity and reverse flow
   close the disc; the cover is the only way to service it.
 
-Ball (`SW-VLV-B-*`), floating ball, two-piece body, quarter turn:
+Lift (piston) check (`SW-VLV-CL-*`). Sizes 1/2–6, all classes (a free piston in a guide is
+simple and tight in small bores; above 6 in its weight slams).
+
+- `CL-1` Globe body (GL-2 cavity) with the seat ring in the partition; a piston disc 1.2 D in
+  diameter and 0.3 D long guided in a dashpot cylinder of bore 1.2 D + 1/32 in hanging from a
+  bolted cap (SW-VLV-7) with a domed top. Reason: the dashpot damps the closing stroke.
+
+Dual-plate wafer check (`SW-VLV-CD-*`). Sizes 2–48, classes up to P600 (thin spring-loaded
+plates).
+
+- `CD-1` Wafer body ring of width 0.25 D + 1 in, outside diameter BC − d − 1/4 in; a central
+  post of diameter max(3/8 in, 0.08 D) across the bore carrying two D-shaped plates of
+  thickness max(3/16 in, 0.04 D) on a torsion spring each, with a stop pin behind; shown
+  closed. Reason: half the swing of a single disc, so it closes before reverse flow builds;
+  the wafer body is the shortest and lightest check valve.
+
+Ball, floating (`SW-VLV-B-*`). Sizes 1/2–6, classes up to P600 (the whole pressure end-force
+bears on the downstream polymer seat; above this it would extrude).
 
 - `B-1` Ball diameter 1.5 D with a through bore D; two polymer seat rings of section 0.1 D ×
   0.1 D at mean diameter 1.2 D; body cavity 1.5 D + 2 × 0.1 D wide; end cap bolted with studs
@@ -866,7 +933,19 @@ Ball (`SW-VLV-B-*`), floating ball, two-piece body, quarter turn:
   3/8 in ), 1/16 in ) (shear in torsion), with a square drive and a blow-out shoulder. Lever or
   gear per SW-VLV-4; lever of flat bar 0.25 D × 1/4 in minimum 1 in × 1/4 in with a 90° stop.
 
-Butterfly (`SW-VLV-BF-*`), wafer, resilient liner, quarter turn:
+Ball, trunnion-mounted (`SW-VLV-BT-*`). Sizes 2–48, all classes within SW-VLV-11.
+
+- `BT-1` Three-piece body: centre body with the stem boss above and a trunnion boss with a
+  bolted cover below; two end caps bolted with studs per SW-FLG-3/4. Ball 1.5 D, carried on the
+  stem and a bottom trunnion of diameter d_s in bearings; seat carriers (rings of section
+  0.15 D × 0.15 D) pressed onto the ball by coil springs. Reason: the trunnions take the
+  end-force, so the seats only have to seal, which is what makes large and high-pressure ball
+  valves possible.
+- `BT-2` Torque T = P π (1.2 D)(0.1 D) μ_s (0.6 D) + P (π/4) D² μ_b (d_s / 2), with μ_s = 0.1
+  (seat) and μ_b = 0.05 (bearing). Stem by B-2. Lever or gear per SW-VLV-4.
+
+Butterfly, wafer, resilient seat (`SW-VLV-BF-*`). Sizes 2–24, classes up to P300 (the
+polymer liner is the seat and the body is clamped, not bolted).
 
 - `BF-1` Wafer body width 0.3 D + 1 in, outside diameter = BC − d − 1/4 in of the flange it
   sits between (centred by the flange studs); liner 1/8 in polymer; disc diameter D (seals in
@@ -874,8 +953,88 @@ Butterfly (`SW-VLV-BF-*`), wafer, resilient liner, quarter turn:
   max(1/2 in, 0.12 D) through the disc. Torque T = 0.014 P D³: the hydrodynamic torque of a
   disc at mid-opening, about 0.1 of the pressure end-force acting at D/8 from the shaft
   (0.0098 P D³), plus the friction of the disc edge in the liner, whose seal pressure must
-  exceed P (0.004 P D³); lever or gear per SW-VLV-4. Reason: a wafer body is held by the pipe flange
-  studs; the disc edge compresses the liner to seal.
+  exceed P (0.004 P D³); lever or gear per SW-VLV-4.
+
+Butterfly, lugged (`SW-VLV-BL-*`). Sizes 2–24, classes up to P300.
+
+- `BL-1` As BF-1 with threaded lugs: n bosses of diameter 2 d at the bolt circle, the full
+  body width, each tapped for the line stud. Reason: the valve can be bolted to one flange
+  alone, so the downstream line can be removed with the valve in service as a dead-end.
+
+Butterfly, double-flanged, double-offset, metal seat (`SW-VLV-BD-*`). Sizes 3–48, classes
+up to P1200.
+
+- `BD-1` Body with its own two flanges (SW-FLG pattern), face-to-face 0.5 D + 2 t_f; shaft
+  axis offset 0.1 D behind the disc plane and 0.05 D off the bore centreline; disc 0.1 D thick
+  with a machined edge seating on a metal seat ring; shaft max(5/8 in, 0.14 D) in a top neck
+  with a stuffing box and a bottom bearing cover. Torque T = 0.03 P D³ (metal seating needs
+  interference). Gear operator for D ≥ 8 in or by SW-VLV-4. Reason: the double offset lifts the
+  disc off the seat in the first degrees of opening, so the seat does not rub and can be
+  metal, which is what allows the higher classes.
+
+Plug, lubricated taper plug (`SW-VLV-PL-*`). Sizes 1/2–12, classes up to P600.
+
+- `PL-1` Body a block w = 1.6 D + 2 t_b wide, F2F by SW-VLV-9 with w_body = 1.6 D + 2 t_b,
+  height from 0.9 D below the bore to a top gland; plug a cone frustum of mean diameter 1.3 D,
+  height 1.8 D and 5° half-angle, with a square wrench head; a bolted gland cover with four
+  studs; a lubricant screw fitting on the cover. Shown closed (port across the run; the port
+  is a slot 0.8 D wide, not cut in this stage). Torque T = P (π/4) D² μ (0.65 D) × 1.5 with
+  μ = 0.2 (lubricated metal), 1.5 for the taper wedging. Wrench lever or gear per SW-VLV-4.
+  Reason: a taper plug seats by its own wedging and seals on a lubricant film; the gland
+  presses the plug home.
+
+Diaphragm, weir type (`SW-VLV-DI-*`). Sizes 1/2–12, classes up to P300 (the diaphragm is
+the pressure boundary).
+
+- `DI-1` Body: run bore D with a weir rising 0.6 D at mid-length and a round top opening of
+  diameter 1.6 D with a flat bolting flange; diaphragm a polymer disc 1.6 D + 2 t_f in diameter
+  and max(1/8 in, 0.03 D) thick, clamped by the bonnet flange with studs per SW-FLG-3/4 on the
+  opening; bonnet a dome housing a compressor (a weir-shaped shoe) on a non-rising spindle;
+  handwheel by SW-VLV-8 rising with the spindle sleeve. Thrust F = P (π/4)(1.6 D)² × 0.5 (the
+  diaphragm carries half its area to the weir), torque by SW-VLV-5 with a stem of diameter
+  by SW-VLV-5. Reason: no packing and no cavity: the only wetted parts are body and
+  diaphragm, which is why it is used for corrosive and clean services.
+
+Needle (`SW-VLV-NE-*`). Sizes 1/4–1, all classes (small bore, bar-stock body).
+
+- `NE-1` Body from hexagonal bar of width across flats 2 D + 3/4 in and length 3 D + 2 in
+  with threaded female ports (modeled as plain bores with a counterbore 1.2 D for the thread),
+  a round threaded bonnet of diameter 1.5 D + 1/2 in with a packing nut, stem of diameter
+  max(1/4 in, 0.4 D) with a 30° needle tip and a fine thread of pitch d_s / 10, and a T-bar
+  handle of length 3 D + 2 in. Thrust F = P (π/4) D² × 1.5; the T-bar is the operator (force
+  at the bar end ≤ 25 lbf, one hand on a small valve). Reason: fine control of small flows
+  needs a fine thread and a long tapered tip.
+
+Pressure safety valve, spring-loaded (`SW-VLV-PSV-*`). Inlet sizes 1–8, all classes; set
+pressure = the class pressure (drawing).
+
+- `PSV-1` Angle body: inlet flange below (size NPS), outlet flange on the side of the next
+  size up in the series; a nozzle ring inside the inlet with a flat seat of diameter 0.8 D;
+  disc and disc holder on a spindle of diameter max(3/8 in, 0.2 D); a spring housing (bonnet)
+  of bore D_m + d_w + 1/4 in with a bolted flange (SW-FLG-3/4 on the housing gasket); an
+  adjusting screw with lock nut under a screwed cap; a lifting lever on the cap. Spring:
+  seat force F = P_set (π/4)(0.8 D)²; wire diameter d_w = √(60 F / (π τ)) with τ = 50,000 psi
+  (half the strength of "Grade 100 spring wire", drawing) at spring index 6 (mean coil
+  diameter D_m = 6 d_w), 6 active coils plus 2 closed, pitch 2.5 d_w. Reason: the spring must
+  hold the disc shut at the set pressure and lift fully by 10 % over it; index 6 is a coil
+  that winds without excessive stress at the inside of the coil.
+
+Control valve, cage-guided globe with pneumatic diaphragm actuator (`SW-VLV-CV-*`). Sizes
+1/2–12, all classes within SW-VLV-11.
+
+- `CV-1` Body as the T-pattern globe (GL-1/2) with a cage (cylinder of bore 1.2 D and wall
+  0.1 D between the seat ring and the bonnet; its flow windows are not cut in this stage) and
+  a plug of diameter 1.2 D guided in it; a bonnet with an extended stuffing box (SW-VLV-6, six
+  rings) and a cast yoke of two legs to the actuator. Actuator: diaphragm case of two dished
+  halves of diameter D_a = roundup(√(4 F_a / (π · 30 psi)), 2 in) where F_a = P (π/4)(1.2 D)²
+  + 100 lb/in × π (1.2 D) (unbalanced plug plus seat load), on a 30 psi air supply
+  (drawing); a range spring inside the lower case: wire by the PSV-1 stress rule for F_a at
+  index 6, active coils n = δ G d_w / (1728 F_a) (the coil-spring deflection formula with
+  D_m = 6 d_w, shear modulus G = E / (2 (1 + ν)) from K-2 and K-3), minimum 2, plus 2 closed
+  coils, pitch d_w + 1.2 δ/n, for the travel δ = D/4; the lower case is a cylinder deep
+  enough for the spring plus 1 in, with a dished bottom; a stem connector and a travel scale
+  on the yoke; a positioner box on the yoke side. Reason: the actuator must close the plug against the full pressure with the
+  supply air available; the spring returns it on air failure.
 
 ## 33. Tests required for stage 4
 
