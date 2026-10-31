@@ -52,6 +52,7 @@ const MATERIALS: Record<Role, THREE.Material> = {
   closure: new THREE.MeshStandardMaterial({ color: 0xa9adb2, metalness: 0.85, roughness: 0.3, side: THREE.DoubleSide }),
   stem: new THREE.MeshStandardMaterial({ color: 0xb8bcc1, metalness: 0.9, roughness: 0.25, side: THREE.DoubleSide }),
   polymer: new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9, side: THREE.DoubleSide }),
+  pipe: new THREE.MeshStandardMaterial({ color: 0x6e7781, metalness: 0.35, roughness: 0.5, side: THREE.DoubleSide }),
   operator: new THREE.MeshStandardMaterial({ color: 0xb3261e, metalness: 0.1, roughness: 0.45, side: THREE.DoubleSide }),   // F-10 red handwheels and levers
 };
 

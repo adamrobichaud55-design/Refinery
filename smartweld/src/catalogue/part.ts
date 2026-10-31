@@ -6,7 +6,8 @@ export type PartKind =
   | 'BOLT' | 'ANCHOR_ROD' | 'FILLET_WELD' | 'GROOVE_WELD'
   | 'Z' | 'CS' | 'ROD' | 'PANEL' | 'TRIM' | 'CONCRETE' | 'DOOR_LEAF' | 'DOOR_CURTAIN' | 'DOOR_DRUM' | 'FILLET_WELD_AROUND'
   | 'GRATING' | 'GRATING_TREAD' | 'CAGE_HOOP' | 'VESSEL_V' | 'VESSEL_H' | 'EXCHANGER' | 'PUMP' | 'TANK'
-  | 'PIPE' | 'FLANGE' | 'BLIND' | 'GASKET' | 'STUD' | 'VALVE';
+  | 'PIPE' | 'FLANGE' | 'BLIND' | 'GASKET' | 'STUD' | 'VALVE'
+  | 'ELBOW' | 'TEE' | 'REDUCER' | 'CAP' | 'BUTT_WELD' | 'SUPPORT';
 
 export type Category = 'section' | 'plate' | 'hardware' | 'weld' | 'sheet' | 'non-steel' | 'equipment' | 'piping' | 'valve';
 

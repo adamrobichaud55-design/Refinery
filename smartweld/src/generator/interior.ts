@@ -30,14 +30,14 @@ export const DEMO_LAYOUT = {
   rack: { x0: 240, x1: 2160, bentSpacing: 240, halfWidth: 120, tiers: [192, 264], loadPsf: 40 },
   pedestal: 6, padHeight: 6,
   equipment: {
-    V101: { x: 400, z: 300 }, V102: { x: 640, z: 300 }, vessel: { ID: 72, t: 0.5, TT: 216, skirtH: 72, rods: 8 },
+    V101: { x: 402, z: 300 }, V102: { x: 642, z: 300 }, vessel: { ID: 72, t: 0.5, TT: 216, skirtH: 72, rods: 8 },
     platformTop: 285, stairLane: 300,
-    D101: { x: 1100, z: 300, ID: 60, t: 0.5, TT: 180, centreline: 84 },
-    E101: { x: 1420, z: 300 }, E102: { x: 1700, z: 300 }, E103: { x: 1130, z: -300 }, exchanger: { ID: 36, t: 0.5, TT: 192, centreline: 60 },
-    pumpsS: [1850, 1910, 1970, 2030, 2090, 2150].map(x => ({ x, z: 220 })), pumpsN: [1400, 1460].map(x => ({ x, z: -220 })),
-    pump: { baseW: 30, baseL: 72, casingD: 20, casingW: 12, motorD: 18, motorL: 30 },
-    T101: { x: 300, z: -320 }, T102: { x: 530, z: -320 }, tank: { D: 144, H: 264, t: 0.25 },
-    C101: { x: 820, z: -300, ID: 48, t: 0.5, TT: 240, skirtH: 48, rods: 8, platforms: [150, 270] },
+    D101: { x: 1098, z: 300, ID: 60, t: 0.5, TT: 180, centreline: 84 },
+    E101: { x: 1425, z: 300 }, E102: { x: 1701, z: 300 }, E103: { x: 1131, z: -300 }, exchanger: { ID: 36, t: 0.5, TT: 192, centreline: 72 },
+    pumpsS: [1848, 1908, 1968, 2028, 2088, 2148].map(x => ({ x, z: 222 })), pumpsN: [1398, 1458].map(x => ({ x, z: -222 })),
+    pump: { baseW: 30, baseL: 72, casingD: 20, casingW: 12, motorD: 18, motorL: 30 }, pumpPad: 9,
+    T101: { x: 300, z: -318 }, T102: { x: 528, z: -318 }, tank: { D: 144, H: 264, t: 0.25 },
+    C101: { x: 822, z: -300, ID: 48, t: 0.5, TT: 240, skirtH: 48, rods: 8, platforms: [132, 240] },
   },
 } as const;
 
@@ -321,6 +321,12 @@ export function generateInterior(lay = DEMO_LAYOUT): InteriorModel {
       for (const dy of [-1.5, 0, 1.5]) add(tabBolt, frameFromAxes([xe + sg * 2, tier - sd.d / 2 + dy, zc + sd.tw / 2 + 0.375], [0, 1, 0], [0, 0, -1]), tag, 'bolt');
     }
   }
+  // intermediate beams (SW-RK-6): a channel at mid-bay on each tier, spanning between the struts, top level with the tier beams
+  { const Dch = Ds; let wC = 10; for (let w = Math.ceil(weightPerFootFromArea(0.04 * Dch * Dch)); w < 200; w++) { if (proportionC(Dch, w).tw >= 0.25) { wC = w; break; } }
+    const cdm = proportionC(Dch, wC), span = 2 * (rk.halfWidth - cd.d / 2) - sd.bf;
+    const mid = part('rkmid', () => makeChannel(`C${Dch}x${wC}`, Dch, wC, span));
+    for (let i = 0; i < bents.length - 1; i++) for (const tier of rk.tiers) add(mid, frameFromAxes([(bents[i] + bents[i + 1]) / 2 - cdm.bf / 2, tier - Dch / 2, -span / 2], [0, 1, 0], [0, 0, 1]), `rack-bay:${i}`, 'intermediate-beam');   // depth vertical, flanges toward +x
+    derived.rackMid = rule(wC, 'SW-RK-6', `Rack intermediate beam C${Dch}x${wC}`, 'lb/ft'); }
   // rod bracing (SW-RK-3): every fourth bay, column planes and tier planes
   const rodP = (L: number) => part(`rrod:${L.toFixed(1)}`, () => makeRod('XR-R', 0.75, L, G36, 'SW-RK-3'));
   for (let i = 0; i < bents.length - 1; i += 4) {
@@ -350,6 +356,7 @@ export function generateInterior(lay = DEMO_LAYOUT): InteriorModel {
     for (let i = 0; i < n; i++) { const a = (2 * Math.PI * (i + 0.5)) / n; add(rod, multiply(translate(x + R * Math.cos(a), lay.padHeight, z + R * Math.sin(a)), standUp()), tag, 'anchor-rod'); }
     add(concrete('grout', 2 * R + 6, 1.5, 2 * R + 6), frameFromAxes([x - R - 3, lay.padHeight + 0.75, z], [0, 1, 0], [1, 0, 0]), tag, 'grout');
   };
+  const pumpPad = (x: number, z: number, tag: string) => add(concrete('pump pad', eq.pump.baseL + 12, eq.pumpPad, eq.pump.baseW + 12), frameFromAxes([x - (eq.pump.baseW + 12) / 2, eq.pumpPad / 2, z], [0, 1, 0], [1, 0, 0]), tag, 'pad');
   const yVessel = lay.padHeight + 1.5 + 0.75;                                   // pad + grout + base ring
   for (const [tag, pos] of [['V-101', eq.V101], ['V-102', eq.V102]] as const) {
     const v = makeVerticalVessel({ tag, ...eq.vessel });
@@ -372,14 +379,14 @@ export function generateInterior(lay = DEMO_LAYOUT): InteriorModel {
   const pumpTags = ['P-101A', 'P-101B', 'P-102A', 'P-102B', 'P-103A', 'P-103B'];
   eq.pumpsS.forEach((pos, i) => {
     const p = makePump({ tag: pumpTags[i], ...eq.pump });
-    padFor(pos.x, pos.z, eq.pump.baseL + 12, eq.pump.baseW + 12, pumpTags[i]);   // pump axis along z: pad long dimension along z
-    place(p, frameFromAxes([pos.x, lay.padHeight, pos.z], [0, 1, 0], [0, 0, 1]), pumpTags[i]);                         // shaft along +z: suction toward the rack
+    pumpPad(pos.x, pos.z, pumpTags[i]);   // pump axis along z: pad long dimension along z
+    place(p, frameFromAxes([pos.x, eq.pumpPad, pos.z], [0, 1, 0], [0, 0, 1]), pumpTags[i]);                         // shaft along +z: suction toward the rack
   });
   eq.pumpsN.forEach((pos, i) => {
     const tag = ['P-104A', 'P-104B'][i];
     const p = makePump({ tag, ...eq.pump });
-    padFor(pos.x, pos.z, eq.pump.baseL + 12, eq.pump.baseW + 12, tag);
-    place(p, frameFromAxes([pos.x, lay.padHeight, pos.z], [0, 1, 0], [0, 0, -1]), tag);
+    pumpPad(pos.x, pos.z, tag);
+    place(p, frameFromAxes([pos.x, eq.pumpPad, pos.z], [0, 1, 0], [0, 0, -1]), tag);
   });
   for (const [tag, pos] of [['T-101', eq.T101], ['T-102', eq.T102]] as const) {
     const t = makeTank({ tag, ...eq.tank });

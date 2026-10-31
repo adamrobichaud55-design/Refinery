@@ -28,6 +28,7 @@ export * from './parts/access';
 export * from './parts/equipment';
 export * from './parts/pipe';
 export * from './parts/valves';
+export * from './parts/fittings';
 
 /** Build a part from drawing text. `length` is the member/weld length in inches where the designation has none. */
 export function makePart(id: string, designation: string, length = 120): PartSpec {

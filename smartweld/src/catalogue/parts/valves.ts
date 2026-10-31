@@ -765,7 +765,7 @@ const buildDiaph: Build = (b, NPS, cls, dims, notes) => {
 const buildPSV: Build = (b, NPS, cls, dims, notes) => {
   const D0 = pipeDims(NPS, cls).D, P = CLASS_PRESSURE[cls];
   const c = common(NPS, cls, 1.8 * D0, 1.8 * D0); const { D, tb, f } = c, k = blendK(c);
-  const outNPS = SIZE_SERIES[SIZE_SERIES.indexOf(NPS) + 1], fo = designFlange(outNPS, cls), Do = pipeDims(outNPS, cls).D;
+  const outNPS = SIZE_SERIES[SIZE_SERIES.indexOf(NPS) + 1], fo = designFlange(outNPS, 'P150'), Do = pipeDims(outNPS, 'P150').D;   // PSV-1: outlet in P150
   const Rbowl = 0.9 * D, CFin = f.tf + c.hHub + Rbowl, CFout = fo.tf + fo.hubLen + 1 + Rbowl; c.F2F = CFin + CFout;
   const dSeat = 0.8 * D, Fs = P * (Math.PI / 4) * dSeat ** 2, sp = springDesign(Fs), dsp = Math.max(0.375, 0.2 * D), Rh = sp.Dm / 2 + sp.dw / 2 + 0.125;
   const fbj = designFlange(NPS, cls, 2 * Rh, tb, 2 * Rh + 2 * tb), yBody = Rbowl + tb + fbj.tf;

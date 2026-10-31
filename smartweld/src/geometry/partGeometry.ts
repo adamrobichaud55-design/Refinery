@@ -16,7 +16,7 @@ import { revolve } from './mesh';
 import { wProfile, cProfile, lProfile, hssRectProfile, hssRoundProfile, filletProfile, grooveProfile, ringAroundHole, N_CIRCLE } from './profiles';
 const arcPts = (r: number, a0: number, a1: number, n: number) => Array.from({ length: n + 1 }, (_, i) => { const a = a0 + ((a1 - a0) * i) / n; return { x: r * Math.cos(a), y: r * Math.sin(a) }; });
 
-export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door' | 'equipment' | 'casting' | 'closure' | 'stem' | 'polymer' | 'operator';
+export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door' | 'equipment' | 'casting' | 'closure' | 'stem' | 'polymer' | 'operator' | 'pipe';
 export interface Solid { name: string; mesh: MeshData; role: Role }
 export interface PartGeometry { partId: string; solids: Solid[]; profile?: Profile; volume: number }
 
@@ -112,11 +112,14 @@ export function buildGeometry(part: PartSpec): PartGeometry {
     case 'VESSEL_V': case 'VESSEL_H': case 'EXCHANGER': case 'PUMP': case 'TANK':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData }[]) solids.push({ name: s.name, role: 'equipment', mesh: s.mesh });
       break;
+    case 'ELBOW': case 'TEE': case 'REDUCER': case 'CAP': case 'BUTT_WELD': case 'SUPPORT':
+      for (const s of part.extra!.solids as { name: string; mesh: MeshData; role: Role }[]) solids.push({ name: s.name, role: s.role, mesh: s.mesh });
+      break;
     case 'VALVE':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData; role: Role }[]) solids.push({ name: s.name, role: s.role, mesh: s.mesh });
       break;
     case 'PIPE':
-      solids.push({ name: part.designation, role: 'steel', mesh: extrude({ outer: circle(0, 0, v(d, 'OD') / 2, 48), inner: circle(0, 0, v(d, 'D') / 2, 48) }, part.length!.value) });
+      solids.push({ name: part.designation, role: 'pipe', mesh: extrude({ outer: circle(0, 0, v(d, 'OD') / 2, 48), inner: circle(0, 0, v(d, 'D') / 2, 48) }, part.length!.value) });
       break;
     case 'FLANGE': case 'BLIND': {
       const f = part.extra!.design as FlangeDesign, blind = part.kind === 'BLIND';
@@ -141,6 +144,7 @@ export function buildGeometry(part: PartSpec): PartGeometry {
       break;
     }
     case 'STUD': {
+      if (part.extra?.solids) { for (const s of part.extra.solids as { name: string; mesh: MeshData; role: Role }[]) solids.push({ name: s.name, role: s.role, mesh: s.mesh }); break; }
       const dia = v(d, 'd'), L = v(d, 'L'), h = hexHardware(dia);
       solids.push({ name: 'stud', role: 'hardware', mesh: extrude({ outer: circle(0, 0, dia / 2, 24) }, L) });
       for (const z of [h.nutH * 0.5, L - h.nutH * 1.5]) solids.push({ name: 'nut', role: 'hardware', mesh: transformMesh(hexNut(h.F, dia, h.nutH), translation(0, 0, z)) });

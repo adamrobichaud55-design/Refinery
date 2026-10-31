@@ -679,8 +679,10 @@ The demonstration layout places, inside the stage-2 building:
 
 - `SW-LAY-1` A pipe rack 20 ft wide down the building centreline, tiers at 16 ft and
   22 ft, bents at 20 ft from x = 20 ft to x = 180 ft.
-- `SW-LAY-2` Equipment rows either side of the rack, each item on a 6 in concrete pad with
-  stated plan dimensions and orientation (equipment list in code, `DEMO_EQUIPMENT`).
+- `SW-LAY-2` Equipment rows either side of the rack, each item on a 6 in concrete pad (pumps on a
+  9 in pad) with stated plan dimensions and orientation (equipment list in code, `DEMO_LAYOUT`).
+  Positions are chosen so every nozzle lies on the 6 in routing grid of SW-RT-3 (amended in
+  stage 5: each item moved by at most 3 in).
 - `SW-LAY-3` Access: a platform below the top head of the two vertical vessels at 23 ft 9 in
   (two square annuli joined by a bridge, with a three-flight stair tower); a mid-height and a
   top platform on the column with ladders; caged ladders to the storage tank roofs; a caged
@@ -1065,7 +1067,8 @@ Pressure safety valve, spring-loaded (`SW-VLV-PSV-*`). Inlet sizes 1–8, all cl
 pressure = the class pressure (drawing).
 
 - `PSV-1` Angle body: inlet flange below (size NPS), outlet flange on the side of the next
-  size up in the series; a nozzle ring inside the inlet with a flat seat of diameter 0.8 D;
+  size up in the series, in class P150 (the outlet sees only the flare system's back-pressure,
+  not the vessel's pressure; amended in stage 5); a nozzle ring inside the inlet with a flat seat of diameter 0.8 D;
   disc and disc holder on a spindle of diameter max(3/8 in, 0.2 D); a spring housing (bonnet)
   of bore D_m + d_w + 1/4 in with a bolted flange (SW-FLG-3/4 on the housing gasket); an
   adjusting screw with lock nut under a screwed cap; a lifting lever on the cap. Spring:
@@ -1179,3 +1182,149 @@ rules of sections 29–32.
   globe lift = D/4; face-to-face = 2 t_f + 2 h_hub + w_body; stem diameter ≥ D/8; every solid
   closed with positive volume; steel weight from the drawn solids.
 - Every stage-4 rule ID used in code exists in this file.
+
+---
+
+# Stage 5 — Piping and routing
+
+Written before any stage-5 code. Pipe, flanges and valves are the SmartWeld parts of stage 4
+(`SW-PIPE-*`, `SW-FLG-*`, `SW-VLV-*`). Every line is butt-welded steel pipe; flanged joints
+occur only at equipment nozzles, valves and blinds. Small-bore socket-weld and threaded fittings
+are not used (stated).
+
+## 34. Fittings (`SW-FIT-*`)
+
+All fittings match the outside diameter and wall of the pipe they join (SW-PIPE-2/3), so the
+bore is continuous and every end is a butt-weld bevel.
+
+- `SW-FIT-1` Elbow (90° and 45°): centreline bend radius R = (5/3) OD. Reason: when a pipe is bent,
+  the outer fibre of the bend stretches by (OD/2)/R; limiting that to 30 % keeps the wall from
+  thinning or cracking when the fitting is formed, which needs R ≥ OD/(2 × 0.3). This value was
+  derived from that strain limit; I recognised that a different radius is common practice and
+  deliberately did not use it (PROVENANCE P-43).
+- `SW-FIT-2` Tee (equal or reducing outlet): run length 2 C and outlet height C from the run axis,
+  with C = OD_run/2 + max(1 in, OD_run/3). Reason: the outlet needs the run's half diameter to clear
+  the run, plus a straight length for the weld bevel and for the blend between branch and run.
+- `SW-FIT-3` Reducer (concentric or eccentric): cone half-angle 12°, with a 1 in straight at each
+  end; length H = (OD_large − OD_small) / (2 tan 12°) + 2 in. Eccentric reducers keep one side
+  flat: flat on top in suction lines (no vapour pocket), flat on the bottom on the rack (pipe
+  stays on its shoe). Reason: flow expanding through a cone wider than about 12° separates from
+  the wall and loses energy.
+- `SW-FIT-4` Cap: 2:1 ellipsoidal head (depth OD/4) plus a 1 in straight. Reason: as SW-EQ-1.
+- `SW-FIT-5` Weight of every fitting from its drawn solid (K-1).
+
+## 35. Equipment nozzles (`SW-NOZ-*`)
+
+- `SW-NOZ-1` A nozzle is a pipe of the line's size and class welded into the shell and ending in a
+  weld-neck flange (SW-FLG). The flange face stands S = flange OD / 2 + 3 in from the shell surface.
+  Reason: the nuts behind the flange must clear the shell and 3 in of insulation.
+- `SW-NOZ-2` Nozzle positions and services are the plant's drawing (`DEMO_NOZZLES`, basis
+  `drawing`). Pump suction nozzles are axial at the casing end; pump discharge nozzles are on top of
+  the casing.
+- `SW-NOZ-3` Relief valves stand upright on top nozzles and need their own height plus 12 in below
+  the roof steel; they are therefore fitted to the drum and the tanks, not to the tall vessels and
+  the column, whose tops are within a valve's height of the roof (stated layout consequence).
+
+## 36. Line list (`SW-LL-*`)
+
+- `SW-LL-1` Line number: `{NPS}"-{class}-{service}-{sequence}`, e.g. `6"-P300-P-1001`. Services:
+  P process, CWS / CWR cooling water supply and return, LS low-pressure steam, SC steam condensate,
+  IA instrument air, PA plant air, N nitrogen, W process water, FL flare, V vent, D drain,
+  I instrument connection, SP sample, HS hose station, RV relief valve inlet.
+- `SW-LL-2` Classes: process lines and steam P300; all other services P150. Sizes are stated in the
+  line list (drawing).
+- `SW-LL-3` Valves on each line:
+  - at every equipment nozzle: an isolation valve bolted to the nozzle flange — gate for NPS ≥ 2,
+    floating ball below 2 (SW-VLV-11 permitting);
+  - pump suction: gate valve; pump discharge: swing check valve then gate valve (check nearest the
+    pump, so it can be isolated for service);
+  - control valves (lines marked `cv` in the list): a control valve with a gate valve on each side,
+    in a horizontal run at the destination end (no bypass, stated);
+  - utility branches: a gate or ball valve at the header take-off;
+  - vents, drains, instrument and sample connections: a ball valve on the nozzle, closed by a blind
+    flange;
+  - hose stations: a gate or ball valve at 42 in above the floor, closed by a cap;
+  - relief valves: the safety valve (SW-VLV-PSV) bolted to its inlet nozzle; the outlet line runs to
+    the flare header.
+  Reason: every line must be isolable at the equipment for maintenance, and a pump's check valve
+  stops reverse flow when it stops.
+- `SW-LL-4` Branches from headers take off the top of the header with a tee (SW-FIT-2). Headers are
+  capped at both ends (SW-FIT-4).
+
+## 37. Routing (`SW-RT-*`)
+
+- `SW-RT-1` Lines run orthogonally (along x, y, z) with 90° long-radius elbows (SW-FIT-1). Lines
+  between areas run on the pipe rack: process lines on the lower tier, utility and flare headers
+  on the upper tier. Each line on the rack has its own lane across the rack width; lanes may be
+  shared by lines whose lengths along the rack do not overlap.
+- `SW-RT-2` Lane pitch: the centrelines of two adjacent lines are at least
+  (OD_1 + OD_2)/2 + 3 in apart. Reason: room for insulation and for a hand between pipes.
+- `SW-RT-3` Away from the rack, lines are routed on a 6 in grid by a shortest-path search whose
+  cost is length plus 4 ft for every elbow. Cells are forbidden where they come within 3 in of
+  equipment, steel, platforms, stairs, ladders, the building or another pipe; below 8 ft above
+  the floor; and less than 7 ft above any platform, landing or stair tread within its plan area —
+  in both cases except within 4 ft, in plan, of the line's own end points (so a riser can climb
+  straight up from a pump or nozzle at grade). Reason: 8 ft keeps walkway headroom
+  (SW-LAY-4), 7 ft keeps a person upright on a platform, and the elbow penalty gives few,
+  deliberate turns.
+- `SW-RT-4` Between two elbows there is at least 2 R of straight pipe (each elbow's own length),
+  and the first leg from a nozzle is at least as long as the valve stack bolted to it.
+- `SW-RT-5` Pipe is supplied in lengths of at most 40 ft; longer straight runs get a butt-weld
+  splice. Reason: transport and handling length.
+- `SW-RT-6` Every routed line is checked for clashes against structure, equipment and every other
+  line; a clash is a routing failure, not a drawing note.
+
+## 38. Pipe supports placed on lines (`SW-PS-7..12`)
+
+`SW-PS-1..6` (stage 3) define the support parts. Placement:
+
+- `SW-PS-7` (as stage 3) maximum span: 20 ft for OD ≥ 3.5 in, 15 ft for OD ≥ 2.375 in, 10 ft for
+  smaller.
+- `SW-PS-8` On the rack, every line rests on a shoe (SW-PS-1) at each tier beam it crosses; lines
+  needing spans under 20 ft also rest on intermediate beams (SW-RK-6). One anchor per rack run, at
+  the bent nearest the middle of the run (SW-PS-3); guides (SW-PS-2) at the bents on either side of
+  the anchor and at the bents next to where the line leaves the rack; plain shoes elsewhere.
+  Reason: the anchor fixes the line so it expands both ways from the middle; guides keep it in its
+  lane.
+- `SW-RK-6` Intermediate rack beams: a channel spanning between the longitudinal struts at mid-bay
+  on each tier, of the strut depth (SW-RK-3), lightest weight with a 1/4 in web (SW-SR-2 rule).
+  Reason: small lines need support at shorter spans than the bent spacing.
+- `SW-PS-9` Off the rack, horizontal runs get a support within each span limit: if the pipe bottom
+  is at most 10 ft above the floor, a stanchion — a round HSS post of the next size below the pipe
+  (minimum 2 in) from a 3/8 in base plate on the floor to a curved saddle under the pipe; above
+  10 ft, a hanger — a rod from the steel or roof framing directly above, with a two-piece pipe
+  clamp. Rod diameter: 3/8 in for OD ≤ 4.5 in, 1/2 in ≤ 8.5 in, 5/8 in ≤ 12.75 in, 3/4 in above.
+  Reason: low pipes are carried from the floor, high ones from the structure, so nobody walks into
+  a hanger rod.
+- `SW-PS-10` Vertical runs longer than 10 ft get a trunnion (SW-PS-4) under their lowest elbow,
+  standing on a stanchion base when that elbow is at most 10 ft up; otherwise they hang from the
+  hanger nearest their top.
+- `SW-PS-11` Small-bore stubs (vents, drains, instrument connections, sample points) shorter than
+  4 ft are carried by their nozzle and need no support.
+- `SW-PS-12` Shoes, guides and anchors are fillet-welded (SW-WD-1); stanchion bases are anchored
+  with two 1/2 in rods into the slab (SW-AR-*).
+
+## 39. Pipe welds (`SW-PW-*`)
+
+- `SW-PW-1` A complete-penetration butt weld (SW-WD-4, on the pipe wall) at every joint of pipe,
+  fitting and weld-neck flange, and at each splice (SW-RT-5). Its cap is drawn as a ring standing
+  1/16 in proud of the pipe surface, as wide as the groove at the surface.
+- `SW-PW-2` Each weld is shop or field. Field welds: the weld joining a line to the rack run at
+  each end, and the closing weld nearest each nozzle; all others are shop welds. Reason: a line is
+  shop-fabricated in spools that can be shipped, and closed in the field where it meets steel or
+  equipment whose position is only known on site.
+- `SW-PW-3` Every weld carries an identifier, its line number, type (butt or fillet), size (wall
+  thickness or fillet leg), the two components it joins, its position and its shop/field status.
+  These records are the ground truth for stage 6.
+
+## 40. Tests required for stage 5
+
+- At least 200 lines; every line is continuous (each component's end meets the next one's start
+  within 1/16 in, with matching size and class).
+- Every butt joint carries exactly one weld record; every flanged joint carries a gasket and bolting.
+- Every elbow has the radius of SW-FIT-1; straight lengths between elbows obey SW-RT-4.
+- No two lines, and no line and the structure or equipment, come closer than SW-RT-3 clearance.
+- Supports: no horizontal span exceeds SW-PS-7; every rack crossing carries a shoe, guide or anchor.
+- Line list numbering follows SW-LL-1; every valve is offered (SW-VLV-11) in the line's size and
+  class.
+- Every stage-5 rule ID used in code exists in this file.
