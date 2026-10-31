@@ -815,10 +815,18 @@ on the closure member and the effort a person can apply. Every internal is a rea
   four rings, box bore d_s + 2 s, gland follower s deep with two gland studs of diameter
   max(3/8 in, s) (SW-B-*); packing friction adds 15 % to the stem thrust. Reason: square
   braided packing seals by radial expansion under the gland; four rings share the pressure drop.
-- `SW-VLV-7` Bonnet: a cover of the body-wall thickness, dished or flat, bolted with studs by
-  SW-FLG-3/4 applied to the bonnet gasket (gasket per SW-FLG-2 on the bonnet opening).
-- `SW-VLV-8` Handwheel: rim of round section min(1-1/2 in, 0.06 D_hw + 1/4 in), 4 spokes
-  (6 above 16 in) of 0.5 × rim section, hub 1.5 d_s long; stem nut captive in the hub (gate, globe) or the wheel
+- `SW-VLV-7` Bonnet: a cover of the body-wall thickness, dished or flat, bolted by SW-FLG-3/4
+  applied to the bonnet gasket (gasket per SW-FLG-2 on the bonnet opening) with hex bolts,
+  head on the cover and nut under the body flange, stick-out d/4; the bonnet flange runs into
+  the neck through a fillet of radius t_b. Reason: hex bolts are what a bonnet is assembled
+  with in the shop; a cast flange always has a fillet to its neck. (Amended on user review:
+  double-nut studs with long stick-outs looked wrong.)
+- `SW-VLV-8` Handwheel: rim of round section min(1-1/2 in, 0.06 D_hw + 1/4 in), dished so
+  the hub sits 0.12 D_hw below the rim plane, 4 curved spokes (6 above 16 in) of 0.6 × rim
+  section, hub 1.5 d_s long; D_hw is also not less than 3 in more than the diameter of any
+  part within 3 in below the rim plane. Reason: a dished wheel keeps the knuckles clear of
+  the bonnet and gives a better grip; a wheel smaller than the bonnet under it traps fingers.
+  (Amended on user review.) stem nut captive in the hub (gate, globe) or the wheel
   keyed to the stem (gear input). Reason: a rim thick enough to grip; spokes carry the rim pull.
 - `SW-VLV-9` Face-to-face is derived: F2F = 2 t_f + 2 h_hub + w_body, with h_hub = 1.5 t_f + 1 in
   (SW-FLG-6) and w_body the cavity width of the type rule. Reason: the length is what the
@@ -857,9 +865,12 @@ classes within SW-VLV-11 (the general-purpose isolation valve).
   μ = 0.3. Reason: the wedge must be dragged across the downstream seat under full
   differential pressure, 15 % for packing (SW-VLV-6), and the operator wedges the gate tight
   with an extra quarter of the pressure end-force.
-- `G-4` Yoke: two arms of section 0.6 t_b × 2 t_b from the bonnet flange to the stem-nut
-  housing at height = stroke + stuffing box + 2 in above the bonnet. Reason: the stem nut must
-  clear the fully risen stem.
+- `G-4` Yoke: a cast frame of two tapered arms, 0.25 D wide at the bonnet flange narrowing
+  to 0.12 D at the top, 0.8 t_b thick (minimum 3/8 in), joined by a round boss of diameter
+  3 d_s housing the stem nut at height = stroke + stuffing box + 2 in above the bonnet; the
+  bonnet above the flange is a dome tapering to the stuffing box. Reason: the stem nut must
+  clear the fully risen stem; a cast yoke tapers because the bending moment is largest at its
+  root. (Amended on user review from rectangular bar arms.)
 
 Knife gate (`SW-VLV-K-*`), lugged wafer body, flat plate gate. Sizes 2–36, class P150 only
 (the thin plate and the transverse packing cannot hold more).
@@ -867,8 +878,9 @@ Knife gate (`SW-VLV-K-*`), lugged wafer body, flat plate gate. Sizes 2–36, cla
 - `K-1` Body: a lugged ring of the pipe-flange pattern (bolted through by the line studs),
   width w = 0.12 D + 1 in (minimum 1-1/2 in), with a rectangular gate housing above the bore
   of the same width and 1.3 D wide, topped by a transverse packing box 4 s deep (SW-VLV-6)
-  with a bolted gland. Gate plate thickness max(1/4 in, 0.03 D), width 1.3 D, bevelled
-  bottom edge; stroke D + 0.05 D. Reason: a plate gate needs no cavity, which is why the body
+  with a bolted gland. Gate plate thickness max(1/4 in, 0.03 D), width 1.3 D, with a rounded
+  bottom edge of radius 0.52 D concentric with the bore (bevelled to a knife edge); stroke D + 0.05 D; a cast yoke of two tapered arms (G-4 proportions) from the
+  gland plate to a stem-nut boss. Reason: a plate gate needs no cavity, which is why the body
   is thin and why slurries pass; the plate is sealed where it leaves the body, not in a bonnet.
 - `K-2` Thrust F = P (π/4) D² × 0.3 × 1.2 (plate dragged over the seat, 20 % for the
   transverse packing); stem and handwheel by SW-VLV-5/8 on a two-bar yoke.
@@ -925,8 +937,9 @@ Ball, floating (`SW-VLV-B-*`). Sizes 1/2–6, classes up to P600 (the whole pres
 bears on the downstream polymer seat; above this it would extrude).
 
 - `B-1` Ball diameter 1.5 D with a through bore D; two polymer seat rings of section 0.1 D ×
-  0.1 D at mean diameter 1.2 D; body cavity 1.5 D + 2 × 0.1 D wide; end cap bolted with studs
-  per SW-FLG-3/4 on the cavity gasket. Reason: the ball must cover the seat with margin in every
+  0.1 D at mean diameter 1.2 D; body cavity 1.5 D + 2 × 0.1 D wide inside a spherical body
+  wall of radius (0.75 D + 0.1 D + t_b) blending into the end necks; end cap bolted with hex
+  bolts per SW-FLG-3/4 and SW-VLV-7 on the cavity gasket. Reason: the ball must cover the seat with margin in every
   position; the seats carry the ball against the downstream seat.
 - `B-2` Torque T = P (π/4) (1.2 D)² μ_s (0.75 D) × 1.2 with seat friction μ_s = 0.1 on polymer,
   20 % for the stem seal. Stem diameter d_s = roundup( max( (16 T / (π · 0.3 F_y,stem))^(1/3),
@@ -935,8 +948,8 @@ bears on the downstream polymer seat; above this it would extrude).
 
 Ball, trunnion-mounted (`SW-VLV-BT-*`). Sizes 2–48, all classes within SW-VLV-11.
 
-- `BT-1` Three-piece body: centre body with the stem boss above and a trunnion boss with a
-  bolted cover below; two end caps bolted with studs per SW-FLG-3/4. Ball 1.5 D, carried on the
+- `BT-1` Three-piece body: a spherical centre body (as B-1) with the stem boss above and a
+  trunnion boss with a bolted cover below; two end caps bolted with hex bolts per SW-FLG-3/4. Ball 1.5 D, carried on the
   stem and a bottom trunnion of diameter d_s in bearings; seat carriers (rings of section
   0.15 D × 0.15 D) pressed onto the ball by coil springs. Reason: the trunnions take the
   end-force, so the seats only have to seal, which is what makes large and high-pressure ball
@@ -978,8 +991,10 @@ Plug, lubricated taper plug (`SW-VLV-PL-*`). Sizes 1/2–12, classes up to P600.
   height from 0.9 D below the bore to a top gland; plug a cone frustum of mean diameter 1.3 D,
   height 1.8 D and 5° half-angle, with a square wrench head; a bolted gland cover with four
   studs; a lubricant screw fitting on the cover. Shown closed (port across the run; the port
-  is a slot 0.8 D wide, not cut in this stage). Torque T = P (π/4) D² μ (0.65 D) × 1.5 with
-  μ = 0.2 (lubricated metal), 1.5 for the taper wedging. Wrench lever or gear per SW-VLV-4.
+  is a slot 0.8 D wide, not cut in this stage). Torque T = P (π/4) D² μ (0.65 D) with
+  μ = 0.1 (the plug turns on its lubricant film; the gland, not the operator, seats the
+  taper). Wrench lever or gear per SW-VLV-4. (Amended on user review: a 4 in plug valve is
+  turned with a wrench, which the earlier μ = 0.2 × 1.5 denied.)
   Reason: a taper plug seats by its own wedging and seals on a lubricant film; the gland
   presses the plug home.
 
@@ -989,8 +1004,9 @@ the pressure boundary).
 - `DI-1` Body: run bore D with a weir rising 0.6 D at mid-length and a round top opening of
   diameter 1.6 D with a flat bolting flange; diaphragm a polymer disc 1.6 D + 2 t_f in diameter
   and max(1/8 in, 0.03 D) thick, clamped by the bonnet flange with studs per SW-FLG-3/4 on the
-  opening; bonnet a dome housing a compressor (a weir-shaped shoe) on a non-rising spindle;
-  handwheel by SW-VLV-8 rising with the spindle sleeve. Thrust F = P (π/4)(1.6 D)² × 0.5 (the
+  opening; bonnet a rounded dome of the flange diameter and height 0.45 × its diameter with
+  a flat top boss, housing a compressor (a weir-shaped shoe) on a non-rising spindle;
+  handwheel by SW-VLV-8 (so at least 3 in wider than the dome) rising with the spindle sleeve. Thrust F = P (π/4)(1.6 D)² × 0.5 (the
   diaphragm carries half its area to the weir), torque by SW-VLV-5 with a stem of diameter
   by SW-VLV-5. Reason: no packing and no cavity: the only wetted parts are body and
   diaphragm, which is why it is used for corrosive and clean services.
@@ -1013,9 +1029,11 @@ pressure = the class pressure (drawing).
   disc and disc holder on a spindle of diameter max(3/8 in, 0.2 D); a spring housing (bonnet)
   of bore D_m + d_w + 1/4 in with a bolted flange (SW-FLG-3/4 on the housing gasket); an
   adjusting screw with lock nut under a screwed cap; a lifting lever on the cap. Spring:
-  seat force F = P_set (π/4)(0.8 D)²; wire diameter d_w = √(60 F / (π τ)) with τ = 50,000 psi
-  (half the strength of "Grade 100 spring wire", drawing) at spring index 6 (mean coil
-  diameter D_m = 6 d_w), 6 active coils plus 2 closed, pitch 2.5 d_w. Reason: the spring must
+  seat force F = P_set (π/4)(0.8 D)²; wire diameter d_w = √(52 F / (π τ)) with τ = 90,000 psi
+  (half the strength of "Grade 180 spring wire", drawing) at spring index 5 (mean coil
+  diameter D_m = 5 d_w; the 52 is 8 × index × a curvature factor of 1.3), 6 active coils
+  plus 2 closed, pitch 2.5 d_w. (Amended on user review: index 6 on a softer wire made
+  springs too fat for their housings.) Reason: the spring must
   hold the disc shut at the set pressure and lift fully by 10 % over it; index 6 is a coil
   that winds without excessive stress at the inside of the coil.
 
@@ -1025,15 +1043,19 @@ Control valve, cage-guided globe with pneumatic diaphragm actuator (`SW-VLV-CV-*
 - `CV-1` Body as the T-pattern globe (GL-1/2) with a cage (cylinder of bore 1.2 D and wall
   0.1 D between the seat ring and the bonnet; its flow windows are not cut in this stage) and
   a plug of diameter 1.2 D guided in it; a bonnet with an extended stuffing box (SW-VLV-6, six
-  rings) and a cast yoke of two legs to the actuator. Actuator: diaphragm case of two dished
-  halves of diameter D_a = roundup(√(4 F_a / (π · 30 psi)), 2 in) where F_a = P (π/4)(1.2 D)²
+  rings) and a cast yoke of two tapered legs to the actuator. Actuator: diaphragm case of two
+  shallow dished halves, each 0.12 D_a deep, bolted at the rim with 3/8 in bolts at 3 in
+  pitch, of diameter D_a = roundup(√(4 F_a / (π · 30 psi)), 2 in) where F_a = P (π/4)(1.2 D)²
   + 100 lb/in × π (1.2 D) (unbalanced plug plus seat load), on a 30 psi air supply
   (drawing); a range spring inside the lower case: wire by the PSV-1 stress rule for F_a at
-  index 6, active coils n = δ G d_w / (1728 F_a) (the coil-spring deflection formula with
-  D_m = 6 d_w, shear modulus G = E / (2 (1 + ν)) from K-2 and K-3), minimum 2, plus 2 closed
-  coils, pitch d_w + 1.2 δ/n, for the travel δ = D/4; the lower case is a cylinder deep
-  enough for the spring plus 1 in, with a dished bottom; a stem connector and a travel scale
-  on the yoke; a positioner box on the yoke side. Reason: the actuator must close the plug against the full pressure with the
+  index 6, active coils by the coil-spring deflection formula (with
+  D_m = 5 d_w, shear modulus G = E / (2 (1 + ν)) from K-2 and K-3), minimum 2, plus 2 closed
+  coils, pitch d_w + 1.2 δ/n, for the travel δ = D/4 (with D_m = 5 d_w the coil count is
+  n = δ G d_w / (1000 F_a)); the spring sits in a spring barrel of diameter D_m + 2 d_w + 1 in
+  under the lower case, which is as long as the spring plus 1 in
+  and joins the yoke; a stem connector and a travel scale on the yoke; a positioner box on
+  the yoke side. (Amended on user review: a deep case is not how an actuator is built; the
+  spring lives in a barrel.) Reason: the actuator must close the plug against the full pressure with the
   supply air available; the spring returns it on air failure.
 
 ## 33. Tests required for stage 4
