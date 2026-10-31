@@ -10,8 +10,8 @@ Clean-room build. Read `DESIGN_BASIS.md` (every rule with its reason) and `PROVE
 | 1     | Structural sections, plates, connection hardware, welds | done    |
 | 2     | Building shell (frame, cold-formed framing, cladding, roof, doors) | done |
 | 3     | Interior: equipment, pipe rack, platforms, access steel  | done (SmartWeld rules only; no regulation cited, by user decision) |
-| 4     | Valves                                                  | pending |
-| 5     | Piping and routing                                      | pending (needs user decision on pipe/flange interface sourcing) |
+| 4     | Pipe, flanges and valves (SmartWeld interface rules)    | done |
+| 5     | Piping and routing                                      | next |
 | 6     | Ground-truth export                                     | pending |
 
 ## Run
@@ -25,7 +25,8 @@ npm run screenshot -- screenshots/stageN  # headless-browser verification
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
-`HSS10x1/2`, `PL3/4x10x14`, `B7/8x3`, `FW5/16`, `GW3/4`).
+`HSS10x1/2`, `PL3/4x10x14`, `B7/8x3`, `FW5/16`, `GW3/4`). Valve and flange entries are in the list; the
+"Section view" checkbox cuts any part on its stem plane.
 
 ## Layout
 

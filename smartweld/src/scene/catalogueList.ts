@@ -1,5 +1,5 @@
 /** The stage-1 catalogue entries shown in the viewer. Designations are examples typed as a drawing would state them. */
-import { makePart, makeBasePlate, makeAnchorRod, makeStiffener, makeGusset, proportionW, makeTrim, makeFilletWeldAround, type PartSpec } from '../catalogue';
+import { makePart, makeBasePlate, makeAnchorRod, makeStiffener, makeGusset, proportionW, makeTrim, makeFilletWeldAround, makePipe, makeFlange, makeBlindFlange, makeGasket, makeStud, designFlange, makeValve, type PartSpec } from '../catalogue';
 import { wProfile } from '../geometry/profiles';
 
 export interface Entry { group: string; label: string; build: () => PartSpec }
@@ -29,6 +29,19 @@ export const ENTRIES: Entry[] = [
   { group: 'Sheet', label: 'Wall/roof panel PNL1.25x36', build: () => makePart('PNL1', 'PNL1.25x36', 120) },
   { group: 'Sheet', label: 'Corner trim 4x4', build: () => makeTrim('CT', 'corner', 4, 4, 60) },
   { group: 'Sheet', label: 'Ridge cap 12x12 (1:12)', build: () => makeTrim('RC', 'ridge cap', 12, 12, 60, undefined, undefined, Math.atan(1 / 12)) },
+  { group: 'Pipe & flanges', label: 'PIPE6-P300 × 10 ft', build: () => makePipe('PIPE6', 6, 'P300', 120) },
+  { group: 'Pipe & flanges', label: 'FLG6-P300 weld neck', build: () => makeFlange('FLG6', 6, 'P300') },
+  { group: 'Pipe & flanges', label: 'FLG12-P600 weld neck', build: () => makeFlange('FLG12', 12, 'P600') },
+  { group: 'Pipe & flanges', label: 'BLIND6-P300', build: () => makeBlindFlange('BLD6', 6, 'P300') },
+  { group: 'Pipe & flanges', label: 'GASKET6-P300', build: () => makeGasket('GK6', 6, 'P300') },
+  { group: 'Pipe & flanges', label: 'Stud for FLG6-P300', build: () => { const f = designFlange(6, 'P300'); return makeStud('ST6', f.d, f.studLen); } },
+  { group: 'Valves', label: 'GATE6-P300', build: () => makeValve('GATE6', 'GATE', 6, 'P300') },
+  { group: 'Valves', label: 'GATE12-P600 (gear)', build: () => makeValve('GATE12', 'GATE', 12, 'P600') },
+  { group: 'Valves', label: 'GLOBE4-P300', build: () => makeValve('GLOBE4', 'GLOBE', 4, 'P300') },
+  { group: 'Valves', label: 'CHECK6-P300', build: () => makeValve('CHECK6', 'CHECK', 6, 'P300') },
+  { group: 'Valves', label: 'BALL4-P600', build: () => makeValve('BALL4', 'BALL', 4, 'P600') },
+  { group: 'Valves', label: 'BALL10-P300 (gear)', build: () => makeValve('BALL10', 'BALL', 10, 'P300') },
+  { group: 'Valves', label: 'BFLY8-P150', build: () => makeValve('BFLY8', 'BFLY', 8, 'P150') },
   { group: 'Weld', label: 'FW1/4 × 12 in', build: () => makePart('FW1', 'FW1/4', 12) },
   { group: 'Weld', label: 'Fillet all around W10x49', build: () => makeFilletWeldAround('FWA', wProfile(proportionW(10, 49)), 0.5) },
   { group: 'Weld', label: 'GW1/2 × 12 in', build: () => makePart('GW1', 'GW1/2', 12) },

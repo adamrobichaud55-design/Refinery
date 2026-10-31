@@ -11,9 +11,12 @@ import { multiply as multiply4 } from './transform';
 import { filletAroundProfile } from './sweep';
 import { circle, regularHexagon, annularSector, rect, type Polygon, type Pt } from './polygon';
 import { GRATING, type BarSeg } from '../catalogue/parts/access';
+import { type FlangeDesign } from '../catalogue/parts/pipe';
+import { revolve } from './mesh';
 import { wProfile, cProfile, lProfile, hssRectProfile, hssRoundProfile, filletProfile, grooveProfile, ringAroundHole, N_CIRCLE } from './profiles';
+const arcPts = (r: number, a0: number, a1: number, n: number) => Array.from({ length: n + 1 }, (_, i) => { const a = a0 + ((a1 - a0) * i) / n; return { x: r * Math.cos(a), y: r * Math.sin(a) }; });
 
-export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door' | 'equipment';
+export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door' | 'equipment' | 'casting' | 'closure' | 'stem' | 'polymer';
 export interface Solid { name: string; mesh: MeshData; role: Role }
 export interface PartGeometry { partId: string; solids: Solid[]; profile?: Profile; volume: number }
 
@@ -109,6 +112,40 @@ export function buildGeometry(part: PartSpec): PartGeometry {
     case 'VESSEL_V': case 'VESSEL_H': case 'EXCHANGER': case 'PUMP': case 'TANK':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData }[]) solids.push({ name: s.name, role: 'equipment', mesh: s.mesh });
       break;
+    case 'VALVE':
+      for (const s of part.extra!.solids as { name: string; mesh: MeshData; role: Role }[]) solids.push({ name: s.name, role: s.role, mesh: s.mesh });
+      break;
+    case 'PIPE':
+      solids.push({ name: part.designation, role: 'steel', mesh: extrude({ outer: circle(0, 0, v(d, 'OD') / 2, 48), inner: circle(0, 0, v(d, 'D') / 2, 48) }, part.length!.value) });
+      break;
+    case 'FLANGE': case 'BLIND': {
+      const f = part.extra!.design as FlangeDesign, blind = part.kind === 'BLIND';
+      const bore = blind ? 0 : f.bore;
+      const cells: MeshData[] = [];
+      for (let i = 0; i < f.n; i++) {
+        const a = (2 * Math.PI * (i + 0.5)) / f.n, half = Math.PI / f.n;
+        const sector = blind ? [{ x: 0, y: 0 }, ...arcPts(f.OD / 2, a - half, a + half, 8)] : annularSector(bore / 2, f.OD / 2, a - half, a + half, 6);
+        cells.push(extrude(ringAroundHole(sector, { x: (f.BC / 2) * Math.cos(a), y: (f.BC / 2) * Math.sin(a) }, f.holeD / 2, 24), f.tf));
+      }
+      solids.push({ name: 'flange ring', role: 'steel', mesh: mergeMeshes(cells) });
+      solids.push({ name: 'raised face', role: 'steel', mesh: transformMesh(blind ? extrude({ outer: circle(0, 0, f.rfOD / 2, 48) }, f.rfH) : extrude({ outer: circle(0, 0, f.rfOD / 2, 48), inner: circle(0, 0, bore / 2, 48) }, f.rfH), translation(0, 0, -f.rfH)) });
+      if (!blind) {
+        const loop = [{ r: f.bore / 2, z: f.tf }, { r: f.bore / 2 + f.hubT, z: f.tf }, { r: f.bore / 2 + f.pipeT, z: f.tf + f.hubLen }, { r: f.bore / 2 + f.pipeT, z: f.tf + f.hubLen + f.neckLen }, { r: f.bore / 2, z: f.tf + f.hubLen + f.neckLen }];
+        solids.push({ name: 'hub and neck', role: 'steel', mesh: revolve(loop, 48) });
+      }
+      break;
+    }
+    case 'GASKET': {
+      const f = part.extra!.design as FlangeDesign;
+      solids.push({ name: 'gasket', role: 'polymer', mesh: extrude({ outer: circle(0, 0, f.gasketID / 2 + f.wg, 48), inner: circle(0, 0, f.gasketID / 2, 48) }, f.gasketT) });
+      break;
+    }
+    case 'STUD': {
+      const dia = v(d, 'd'), L = v(d, 'L'), h = hexHardware(dia);
+      solids.push({ name: 'stud', role: 'hardware', mesh: extrude({ outer: circle(0, 0, dia / 2, 24) }, L) });
+      for (const z of [h.nutH * 0.5, L - h.nutH * 1.5]) solids.push({ name: 'nut', role: 'hardware', mesh: transformMesh(hexNut(h.F, dia, h.nutH), translation(0, 0, z)) });
+      break;
+    }
     case 'CONCRETE':
       solids.push({ name: part.designation, role: 'concrete', mesh: extrude(profile!, part.length!.value) });
       break;

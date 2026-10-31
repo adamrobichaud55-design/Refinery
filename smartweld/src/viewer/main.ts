@@ -4,7 +4,7 @@ import { ENTRIES } from '../scene/catalogueList';
 import { columnBaseAssembly, type Assembly } from '../scene/assemblies';
 import { makePart, type PartSpec } from '../catalogue';
 import { buildGeometry, profileOf, type Role, type PartGeometry } from '../geometry/partGeometry';
-import { transformMesh, mergeMeshes, type MeshData, type Mat4 } from '../geometry/mesh';
+import { transformMesh, mergeMeshes, signedVolume as signedVol, type MeshData, type Mat4 } from '../geometry/mesh';
 import { identity } from '../geometry/transform';
 import { basisText } from '../core/basis';
 import { formatLength } from '../core/units';
@@ -29,6 +29,12 @@ const grid = new THREE.GridHelper(240, 20, 0x9aa3ad, 0xc9d0d8);
 scene.add(grid);
 const axes = new THREE.AxesHelper(12); scene.add(axes);
 const group = new THREE.Group(); scene.add(group);
+const sectionPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0); // keeps the x < 0 half; the cut face looks toward the default camera at +x
+let sectionOn = false;
+function setSection(on: boolean) {
+  sectionOn = on; renderer.localClippingEnabled = on;
+  for (const m of Object.values(MATERIALS)) { (m as THREE.Material).clippingPlanes = on ? [sectionPlane] : []; m.needsUpdate = true; }
+}
 
 const MATERIALS: Record<Role, THREE.Material> = {
   steel: new THREE.MeshStandardMaterial({ color: 0x6f7b8a, metalness: 0.35, roughness: 0.55 }),
@@ -38,6 +44,10 @@ const MATERIALS: Record<Role, THREE.Material> = {
   concrete: new THREE.MeshStandardMaterial({ color: 0xb9b4a8, roughness: 0.95 }),
   door: new THREE.MeshStandardMaterial({ color: 0x8a4b3c, roughness: 0.8 }),
   equipment: new THREE.MeshStandardMaterial({ color: 0x9aa7a0, metalness: 0.2, roughness: 0.6 }),
+  casting: new THREE.MeshStandardMaterial({ color: 0x5b7391, metalness: 0.3, roughness: 0.7, side: THREE.DoubleSide }),
+  closure: new THREE.MeshStandardMaterial({ color: 0xb08d57, metalness: 0.5, roughness: 0.5, side: THREE.DoubleSide }),
+  stem: new THREE.MeshStandardMaterial({ color: 0xc9ced4, metalness: 0.8, roughness: 0.3, side: THREE.DoubleSide }),
+  polymer: new THREE.MeshStandardMaterial({ color: 0x2b2b2b, roughness: 0.9, side: THREE.DoubleSide }),
 };
 
 function toBufferGeometry(m: MeshData): THREE.BufferGeometry {
@@ -96,9 +106,10 @@ function showAssembly(asm: Assembly) {
 
 function showPart(part: PartSpec) {
   const geo = geomOf(part);
-  frame(renderInstances([{ part, transform: identity() }]));
+  frame(renderInstances([{ part, transform: identity() }]), part.kind === 'VALVE' ? new THREE.Vector3(1, 0.45, 0.9) : undefined);
+  (document.getElementById('section') as HTMLInputElement).checked = sectionOn;
   const rows = Object.values(part.dims).map(d => {
-    const val = d.unit === 'in' ? formatLength(d.value) : `${Number(d.value.toFixed(3))} ${d.unit}`;
+    const val = d.unit === 'in' ? formatLength(d.value) : `${Number(d.value.toFixed(3))} ${d.unit === 'in2' ? 'in²' : d.unit}`;
     return `<tr><td>${d.label}</td><td class="v">${val}</td><td class="b-${d.basis.kind}">${basisText(d.basis)}</td></tr>`;
   }).join('');
   const lengthRow = part.length ? `<tr><td>${part.length.label}</td><td class="v">${formatLength(part.length.value)}</td><td class="b-${part.length.basis.kind}">${basisText(part.length.basis)}</td></tr>` : '';
@@ -108,6 +119,7 @@ function showPart(part: PartSpec) {
     <table><tr><th>Dimension</th><th>Value</th><th>Basis</th></tr>${rows}${lengthRow}
     <tr><td>${part.weight.label}</td><td class="v">${part.weight.value.toFixed(2)} lb</td><td class="b-${part.weight.basis.kind}">${basisText(part.weight.basis)}</td></tr></table>
     <p class="notes">${part.notes.join(' ')}</p>
+    ${part.kind === 'VALVE' ? `<h3>Parts list (ground truth)</h3><table><tr><th>Part</th><th>Material</th><th>Volume</th></tr>${geo.solids.map(s => `<tr><td>${s.name}</td><td>${(part.extra!.solids as { name: string; material: string }[]).find(x => x.name === s.name)?.material ?? ''}</td><td class="v">${signedVol(s.mesh).toFixed(2)} in³</td></tr>`).join('')}</table>` : ''}
     <div class="legend">Model volume ${geo.volume.toFixed(2)} in³ (${(geo.volume * 490 / 1728).toFixed(2)} lb at 490 lb/ft³).</div>`;
   if (prof) drawProfile(prof.outer, prof.inner);
 }
@@ -220,8 +232,10 @@ document.getElementById('typed')!.addEventListener('submit', ev => {
   errEl.style.display = 'none';
   try { setActive(null); location.hash = 'des:' + encodeURIComponent(text); showPart(makePart(text, text, 120)); } catch (e) { showError(e); }
 });
+document.getElementById('section')!.addEventListener('change', ev => { setSection((ev.target as HTMLInputElement).checked); });
 function openFromHash() {
-  const hsh = decodeURIComponent(location.hash.slice(1));
+  let hsh = decodeURIComponent(location.hash.slice(1));
+  if (hsh.endsWith(';section')) { hsh = hsh.slice(0, -8); setSection(true); } else setSection(false);
   if (hsh.startsWith('entry:')) { const e = ENTRIES.find(x => x.label === hsh.slice(6)); if (e) { showPart(e.build()); return; } }
   if (hsh.startsWith('des:')) { try { showPart(makePart(hsh.slice(4), hsh.slice(4), 120)); return; } catch (e) { showError(e); } }
   if (hsh.startsWith('assembly:')) { setActive(asmBtn); showAssembly(columnBaseAssembly()); return; }

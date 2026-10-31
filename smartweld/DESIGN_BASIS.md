@@ -702,3 +702,187 @@ The demonstration layout places, inside the stage-2 building:
   the rack columns.
 - Every stage-3 rule ID used in code exists in this file; the interior model is plain data
   with finite transforms and closed meshes.
+
+---
+
+# Stage 4 — Pipe, flanges and valves
+
+Written before any stage-4 code. Per the user's decision (PROVENANCE P-27) every interface
+dimension is a SmartWeld rule. Pressure P is the class design pressure in psi at ambient
+temperature; stresses are in psi unless stated.
+
+## 29. Pipe (`SW-PIPE-*`)
+
+- `SW-PIPE-1` Identification: `PIPE{NPS}-{class}`, e.g. `PIPE6-P300`. NPS is the nominal size
+  in inches; the class is one of `P150`, `P300`, `P600`, named by its design pressure in psi.
+  Reason: the drawing names a line by size and class; naming the class by its pressure keeps
+  it self-explanatory and independent of any published rating.
+- `SW-PIPE-2` Outside diameter OD = NPS for every class. Reason: one outside envelope per size
+  lets fittings, supports, clamps and insulation be shared across classes; the bore varies.
+- `SW-PIPE-3` Wall thickness t = roundup( max( P·OD / (2 S) + CA, OD/40 + 1/16 in ), 1/32 in )
+  with S = F_y / 2 = 17,500 psi for "Grade 35 pipe" (drawing, SW-MAT-1) and corrosion
+  allowance CA = 1/16 in. Reason: thin-wall hoop stress (Barlow) with a factor of 2 on yield,
+  plus metal to lose to corrosion; the second term is the thinnest wall that can be handled,
+  bevelled and welded without distortion.
+- `SW-PIPE-4` Bore D = OD − 2 t. All in-line components of a class share this bore (full port).
+- `SW-PIPE-5` Pipe weight from the drawn ring (K-1).
+
+## 30. Flanges, gaskets and bolting (`SW-FLG-*`)
+
+- `SW-FLG-1` Weld-neck flange `FLG{NPS}-{class}`: a ring with a raised face 1/16 in high on
+  the gasket side and a tapered hub on the pipe side, bore = pipe bore. Reason: the hub
+  carries the bending from the bolts into the pipe wall without a stress jump.
+- `SW-FLG-2` Gasket: compressed-sheet ring 1/8 in thick, inside diameter = bore + 1/8 in,
+  width w_g = roundup( max(1/2 in, OD/12), 1/8 in ), mean diameter G = ID + w_g. Seating
+  stress y = 2,000 psi; pressure-retention factor m = 2. Reason: a soft sheet gasket flows
+  into the face finish at about 2,000 psi; to stay tight it must be kept compressed to
+  about twice the fluid pressure; the width grows with size so the seated area grows with the
+  pressure end-force.
+- `SW-FLG-3` Bolt load: W = max( W_seat, W_op ) with W_seat = π G w_g y and
+  W_op = (π/4) G² P + π G w_g m P. Reason: equilibrium of the joint at seating and in service.
+- `SW-FLG-4` Bolting: stud diameter d from the series 1/2 in to 1-1/2 in by 1/8 in; allowable
+  stud stress = F_u / 3 on the nominal area (bolts "Grade 90", drawing); count n = the smallest
+  multiple of 4 with n (π/4) d² F_u/3 ≥ W; bolt circle BC = RF OD + d + 1/4 in, where the raised
+  face OD = G + w_g + 1/8 in; the pitch π BC / n must lie between 3 d and 5 d, and the smallest
+  d for which this holds is used. Flange OD = BC + 3 d (edge distance 1.5 d, SW-B-9). Reason: a
+  third of the tensile strength leaves margin for preload scatter and cyclic load; a multiple of
+  four keeps the pattern symmetric about both axes; pitch ≥ 3 d clears the nuts, ≤ 5 d keeps
+  the gasket evenly loaded between bolts; 1/4 in clears a socket from the raised face.
+- `SW-FLG-5` Thickness: the ring carries the bolt load as a moment about the hub with arm
+  a = (BC − G)/2. The load used is the bolting's preload capacity W_b = 1.5 n (π/4) d² F_u/3,
+  not the design load W, because a fitter tightens the studs to what they will take, not to
+  the calculated minimum. Per unit length of the gasket circle m_b = W_b a / (π G); plate
+  bending gives t_f = roundup( max( √(6 m_b / (0.6 F_y)), d + 1/4 in ), 1/8 in ) with
+  F_y = 36,000 psi ("Grade 36 forging", drawing). Reason: bending of the ring section under
+  the preload the studs can actually deliver; 0.6 F_y is a 1.67 factor on yield for a pressure
+  part; a flange thinner than the stud diameter plus 1/4 in cannot seat the nut properly.
+  (Amended on user review of stage 4: the design-load basis gave flanges visibly too thin.)
+- `SW-FLG-6` Hub: wall 2 t_pipe at the back of the flange tapering to t_pipe over a length
+  1.5 t_f; a straight neck of 1 in to the weld bevel; weld-end bevel per SW-WD-4. Reason: the
+  taper spreads the flange moment into the pipe.
+- `SW-FLG-7` Studs: length = 2 t_f + gasket + 2 nut heights (SW-B-3) + 2 × d/4 stick-out,
+  rounded up to 1/4 in; heavy hex nuts both ends; no washers. Reason: studs can be fitted
+  from either side and replaced in place.
+- `SW-FLG-8` Blind flange: same ring, no bore, thickness roundup( max( t_f, (G/2) √(1.24 P /
+  (0.6 F_y)) ), 1/8 in ). Reason: a flat circular plate loaded by pressure over the gasket
+  circle; 1.24 is the simply-supported plate coefficient 3(3 + ν)/8 with ν = 0.3.
+- `SW-FLG-9` Flange weight from the drawn solid (K-1). Gasket is non-steel.
+
+## 31. Valves — common rules (`SW-VLV-*`)
+
+Valves are designed as a manufacturer designs them: from the bore, the pressure, the forces
+on the closure member and the effort a person can apply. Every internal is a real part.
+
+- `SW-VLV-1` Identification: `{TYPE}{NPS}-{class}` with TYPE one of `GATE`, `GLOBE`, `CHECK`,
+  `BALL`, `BFLY`. Bore D = the pipe bore of the class (full port). Ends: integral flanges with
+  the SW-FLG pattern of the size and class (BFLY is a wafer body between pipe flanges).
+- `SW-VLV-2` Body wall: t_b = roundup( max( 1/4 in, P D_c / (2 S_c) + 1/8 in ), 1/16 in ) with
+  S_c = F_y / 2.5 = 14,400 psi ("Grade 36 casting", drawing) and D_c the body cavity diameter.
+  Reason: hoop stress with a larger factor for a casting (porosity, surface defects) plus a
+  casting allowance; 1/4 in is the thinnest pourable wall.
+- `SW-VLV-3` Materials (drawing): body, bonnet, wedge/disc of Grade 36 casting; stems and
+  seats of "Grade 60 bar" (F_y = 60 ksi); packing and soft seats "polymer" (non-steel); gaskets
+  as SW-FLG-2.
+- `SW-VLV-4` Operability: the rim pull on a handwheel must not exceed 80 lbf (two hands on
+  the rim) and the force at the end of a lever must not exceed 50 lbf (one hand). Handwheel
+  diameter D_hw = roundup( 2 T / 80 lbf, 2 in ), minimum 6 in, maximum 30 in; lever length
+  L = roundup( T / 50 lbf, 2 in ), minimum 6 in, maximum 24 in. If the limit is exceeded a
+  gear operator is fitted: ratio = the smallest whole number with input torque ≤ 80 lbf ×
+  6 in on a 12 in handwheel, modeled as a box with that handwheel. Reason: a person leans
+  into a wheel with both hands but pulls a lever with one; larger wheels do not fit; beyond
+  that, gears. (Amended on user review of stage 4: a one-hand limit made wheels oversized.)
+- `SW-VLV-5` Rising stems (gate, globe): thrust F from the type rule; stem diameter
+  d_s = roundup( max( √(4 F / (π · 0.25 F_y,stem)), D/8, 1/2 in ), 1/16 in ). Thread: a power
+  thread with pitch p = d_s / 5 and depth 0.3 p; stem nut height 1.5 d_s. Operating torque
+  T = F (d_s / 2) tan(λ + φ) + F μ_c (d_s / 2), with lead angle λ = atan(p / (π d_s)), thread
+  friction φ = atan 0.15, collar friction μ_c = 0.02 (the stem nut runs on a ball thrust
+  bearing in the yoke). Reason: the stem is a column under the closing thrust, so 1/4 of
+  yield on area covers buckling of the exposed length; D/8 keeps the stem stiff against
+  bending from the wedge; a coarse power thread makes few turns per inch of travel; the
+  torque is the screw-jack formula with lubricated-steel thread friction and a rolling
+  thrust bearing, which is how an outside-screw yoke is built so the wheel can be turned.
+- `SW-VLV-6` Stuffing box: packing ring section s = roundup( max(1/4 in, d_s / 8), 1/16 in ),
+  four rings, box bore d_s + 2 s, gland follower s deep with two gland studs of diameter
+  max(3/8 in, s) (SW-B-*); packing friction adds 15 % to the stem thrust. Reason: square
+  braided packing seals by radial expansion under the gland; four rings share the pressure drop.
+- `SW-VLV-7` Bonnet: a cover of the body-wall thickness, dished or flat, bolted with studs by
+  SW-FLG-3/4 applied to the bonnet gasket (gasket per SW-FLG-2 on the bonnet opening).
+- `SW-VLV-8` Handwheel: rim of round section min(1-1/2 in, 0.06 D_hw + 1/4 in), 4 spokes
+  (6 above 16 in) of 0.5 × rim section, hub 1.5 d_s long; stem nut captive in the hub (gate, globe) or the wheel
+  keyed to the stem (gear input). Reason: a rim thick enough to grip; spokes carry the rim pull.
+- `SW-VLV-9` Face-to-face is derived: F2F = 2 t_f + 2 h_hub + w_body, with h_hub = 1.5 t_f + 1 in
+  (SW-FLG-6) and w_body the cavity width of the type rule. Reason: the length is what the
+  internals need, not a tabulated figure.
+- `SW-VLV-10` Weight: steel parts from the drawn solids (K-1); packing, gaskets and polymer
+  seats are non-steel and listed without weight.
+
+## 32. Valve types
+
+Gate (`SW-VLV-G-*`), solid wedge, outside-screw rising stem with yoke:
+
+- `G-1` Wedge: included angle 10° (5° per face), width across the seats 1.3 D, thickness at
+  the seat line 0.25 D, seat faces 0.1 D wide (minimum 1/4 in) matched by seat rings of the
+  same width pressed into the body. Reason: a 5° face is self-locking enough to hold tight
+  shut-off yet releases with modest stem pull; 1.3 D covers the seat ring; 0.25 D resists the
+  differential pressure as a plate with margin.
+- `G-2` Stroke = 1.05 D (the wedge clears the bore when open). Cavity: run bore D through the
+  body; wedge chamber of width w_body = D + 2 t_b across the run, extending 0.1 D below the
+  bore; bonnet neck bore 1.35 D. Reason: the chamber is as wide as the bore so the wedge can
+  tilt onto its seats, the seat rings can be pressed in through the ends and the casting walls
+  can be cored. (Amended on user review of stage 4 from 0.45 D + 1/2 in, which gave a body
+  too short for its wheel.)
+- `G-3` Thrust F = P (π/4) D² (μ + tan 5°) × 1.15 + 0.25 P (π/4) D² with seat friction
+  μ = 0.3. Reason: the wedge must be dragged across the downstream seat under full
+  differential pressure, 15 % for packing (SW-VLV-6), and the operator wedges the gate tight
+  with an extra quarter of the pressure end-force.
+- `G-4` Yoke: two arms of section 0.6 t_b × 2 t_b from the bonnet flange to the stem-nut
+  housing at height = stroke + stuffing box + 2 in above the bonnet. Reason: the stem nut must
+  clear the fully risen stem.
+
+Globe (`SW-VLV-GL-*`), T-pattern, plug disc, rising stem:
+
+- `GL-1` Seat ring OD 1.2 D in a horizontal partition of thickness t_b; disc diameter 1.2 D
+  with a 30° conical plug face; lift h = D/4 (the curtain area π D h equals the bore area at
+  full lift). Reason: full flow at quarter-bore lift; a conical plug seats on a line.
+- `GL-2` Cavity width w_body = 1.5 D (the S-passage needs space for the flow to turn twice).
+  Thrust F = P (π/4) (1.2 D)² × 1.15 (closing against pressure under the disc). Stem, bonnet,
+  handwheel as SW-VLV-5..8; no yoke (inside-screw) — stem thread inside the bonnet.
+
+Swing check (`SW-VLV-C-*`):
+
+- `C-1` Body as the globe (w_body = 1.2 D); disc 1.2 D in diameter, thickness 0.15 D, hung on a
+  hinge pin of diameter max(3/8 in, 0.1 D) through a hinge arm; seat ring 1.2 D OD; a bolted
+  top cover (SW-VLV-7) for access; disc swings open to 70°. Reason: gravity and reverse flow
+  close the disc; the cover is the only way to service it.
+
+Ball (`SW-VLV-B-*`), floating ball, two-piece body, quarter turn:
+
+- `B-1` Ball diameter 1.5 D with a through bore D; two polymer seat rings of section 0.1 D ×
+  0.1 D at mean diameter 1.2 D; body cavity 1.5 D + 2 × 0.1 D wide; end cap bolted with studs
+  per SW-FLG-3/4 on the cavity gasket. Reason: the ball must cover the seat with margin in every
+  position; the seats carry the ball against the downstream seat.
+- `B-2` Torque T = P (π/4) (1.2 D)² μ_s (0.75 D) × 1.2 with seat friction μ_s = 0.1 on polymer,
+  20 % for the stem seal. Stem diameter d_s = roundup( max( (16 T / (π · 0.3 F_y,stem))^(1/3),
+  3/8 in ), 1/16 in ) (shear in torsion), with a square drive and a blow-out shoulder. Lever or
+  gear per SW-VLV-4; lever of flat bar 0.25 D × 1/4 in minimum 1 in × 1/4 in with a 90° stop.
+
+Butterfly (`SW-VLV-BF-*`), wafer, resilient liner, quarter turn:
+
+- `BF-1` Wafer body width 0.3 D + 1 in, outside diameter = BC − d − 1/4 in of the flange it
+  sits between (centred by the flange studs); liner 1/8 in polymer; disc diameter D (seals in
+  the liner), lens section 0.15 D thick at the shaft and 0.05 D at the edge; shaft diameter
+  max(1/2 in, 0.12 D) through the disc. Torque T = 0.014 P D³: the hydrodynamic torque of a
+  disc at mid-opening, about 0.1 of the pressure end-force acting at D/8 from the shaft
+  (0.0098 P D³), plus the friction of the disc edge in the liner, whose seal pressure must
+  exceed P (0.004 P D³); lever or gear per SW-VLV-4. Reason: a wafer body is held by the pipe flange
+  studs; the disc edge compresses the liner to seal.
+
+## 33. Tests required for stage 4
+
+- Pipe wall meets Barlow with CA for every size and class; bore < OD.
+- Flange: bolt count multiple of 4, pitch within 3 d..5 d, OD = BC + 3 d, thickness ≥ d + 1/4,
+  stud length covers the stack; blind thickness ≥ flange thickness.
+- Valves: rim pull or lever force ≤ 50 lbf (or a gear operator present); gate stroke ≥ D;
+  globe lift = D/4; face-to-face = 2 t_f + 2 h_hub + w_body; stem diameter ≥ D/8; every solid
+  closed with positive volume; steel weight from the drawn solids.
+- Every stage-4 rule ID used in code exists in this file.

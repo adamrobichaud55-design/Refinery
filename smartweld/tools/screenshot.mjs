@@ -16,6 +16,9 @@ const targets = [
   ['typed-W18x50', '#des:W18x50'],
   ['building-exterior', '#building:exterior'], ['building-corner', '#building:corner'], ['building-interior', '#building:interior'], ['building-knee', '#building:knee'], ['building-door', '#building:door'],
   ['plant-walk', '#plant:walk'], ['plant-rack', '#plant:rack'], ['plant-vessels', '#plant:vessels'], ['plant-stair', '#plant:stair'], ['plant-column', '#plant:column'], ['plant-tanks', '#plant:tanks'], ['plant-pumps', '#plant:pumps'], ['plant-overview', '#plant:overview'],
+  ['flange-6-P300', '#entry:' + encodeURIComponent('FLG6-P300 weld neck')], ['valve-gate6', '#entry:GATE6-P300'], ['valve-gate6-section', '#entry:GATE6-P300;section'],
+  ['valve-gate12-gear', '#entry:' + encodeURIComponent('GATE12-P600 (gear)')], ['valve-globe4-section', '#entry:GLOBE4-P300;section'], ['valve-check6-section', '#entry:CHECK6-P300;section'],
+  ['valve-ball4', '#entry:BALL4-P600'], ['valve-ball4-section', '#entry:BALL4-P600;section'], ['valve-bfly8', '#entry:BFLY8-P150'], ['valve-bfly8-section', '#entry:BFLY8-P150;section'],
   ['Z-purlin', '#entry:' + encodeURIComponent('Z10x2.5x5/64 (purlin)')], ['panel', '#entry:' + encodeURIComponent('Wall/roof panel PNL1.25x36')], ['ridge-cap', '#entry:' + encodeURIComponent('Ridge cap 12x12 (1:12)')], ['weld-around', '#entry:' + encodeURIComponent('Fillet all around W10x49')],
 ];
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] });

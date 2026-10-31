@@ -10,7 +10,7 @@ export type Basis =
 export interface Dim {
   /** value in inches (or the unit named in `unit`) */
   value: number;
-  unit: 'in' | 'lb/ft' | 'lb/ft3' | 'lb' | 'in2' | 'ksi' | 'deg' | 'count';
+  unit: 'in' | 'lb/ft' | 'lb/ft3' | 'lb' | 'in2' | 'ksi' | 'psi' | 'deg' | 'count';
   basis: Basis;
   /** short human description for the dimension table */
   label: string;
