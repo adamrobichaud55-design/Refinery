@@ -1,0 +1,27 @@
+/** The stage-1 catalogue entries shown in the viewer. Designations are examples typed as a drawing would state them. */
+import { makePart, makeBasePlate, makeAnchorRod, makeStiffener, makeGusset, proportionW, type PartSpec } from '../catalogue';
+
+export interface Entry { group: string; label: string; build: () => PartSpec }
+
+export const ENTRIES: Entry[] = [
+  { group: 'Wide-flange', label: 'W8x31', build: () => makePart('W8x31', 'W8x31', 120) },
+  { group: 'Wide-flange', label: 'W12x26', build: () => makePart('W12x26', 'W12x26', 120) },
+  { group: 'Wide-flange', label: 'W14x90', build: () => makePart('W14x90', 'W14x90', 120) },
+  { group: 'Wide-flange', label: 'W24x76', build: () => makePart('W24x76', 'W24x76', 120) },
+  { group: 'Channel', label: 'C6x8.2', build: () => makePart('C6x8.2', 'C6x8.2', 120) },
+  { group: 'Channel', label: 'C10x15.3', build: () => makePart('C10x15.3', 'C10x15.3', 120) },
+  { group: 'Angle', label: 'L4x4x1/4', build: () => makePart('L4x4x1/4', 'L4x4x1/4', 120) },
+  { group: 'Angle', label: 'L6x4x1/2', build: () => makePart('L6x4x1/2', 'L6x4x1/2', 120) },
+  { group: 'HSS', label: 'HSS6x4x1/4', build: () => makePart('HSS6x4x1/4', 'HSS6x4x1/4', 120) },
+  { group: 'HSS', label: 'HSS8x8x1/2', build: () => makePart('HSS8x8x1/2', 'HSS8x8x1/2', 120) },
+  { group: 'HSS', label: 'HSS6x1/4 (round)', build: () => makePart('HSS6x1/4', 'HSS6x1/4', 120) },
+  { group: 'Plate', label: 'PL1/2x12x18', build: () => makePart('PL1/2x12x18', 'PL1/2x12x18') },
+  { group: 'Plate', label: 'Gusset (rule thickness)', build: () => makeGusset('GP-1', [{ x: 0, y: 0 }, { x: 16, y: 0 }, { x: 16, y: 6 }, { x: 6, y: 16 }, { x: 0, y: 16 }], 0.5) },
+  { group: 'Plate', label: 'Base plate for W10x49', build: () => makeBasePlate('BP-1', { column: proportionW(10, 49) }) },
+  { group: 'Plate', label: 'Stiffener for W10x49', build: () => makeStiffener('ST-1', proportionW(10, 49)) },
+  { group: 'Hardware', label: 'B3/4x2-1/2 (grip 1-1/2)', build: () => { const p = makePart('B1', 'B3/4x2-1/2'); p.dims.grip = { value: 1.5, unit: 'in', basis: { kind: 'drawing' }, label: 'Grip' }; return p; } },
+  { group: 'Hardware', label: 'B1x4 (grip 3)', build: () => { const p = makePart('B2', 'B1x4'); p.dims.grip = { value: 3, unit: 'in', basis: { kind: 'drawing' }, label: 'Grip' }; return p; } },
+  { group: 'Hardware', label: 'Anchor rod (for the W10x49 base)', build: () => { const bp = makeBasePlate('BP-1', { column: proportionW(10, 49) }); return makeAnchorRod('AR-1', { basePlateT: bp.dims.t.value, groutT: bp.dims.grout.value, plateWasherT: bp.dims.washerT.value }); } },
+  { group: 'Weld', label: 'FW1/4 × 12 in', build: () => makePart('FW1', 'FW1/4', 12) },
+  { group: 'Weld', label: 'GW1/2 × 12 in', build: () => makePart('GW1', 'GW1/2', 12) },
+];
