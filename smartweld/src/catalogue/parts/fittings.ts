@@ -120,15 +120,16 @@ export function makeButtWeld(id: string, NPS: number, cls: PipeClass): PartSpec 
 // ---- supports (SW-PS-*) ---------------------------------------------------------------------------------
 const boxM = (x0: number, y0: number, z0: number, x1: number, y1: number, z1: number) => transformMesh(extrude({ outer: rect(x0, y0, x1, y1) }, z1 - z0), translate(0, 0, z0));
 const cylYM = (r: number, y0: number, y1: number, x = 0, z = 0) => transformMesh(extrude({ outer: circle(0, 0, r, 24) }, y1 - y0), multiply(translate(x, y0, z), rotateX(-Math.PI / 2)));
-/** Shoe (SW-PS-1) under a pipe along local z, pipe bottom at y = 0, base at y = −4; `kind` adds guides or marks an anchor. */
-export function makeShoe(id: string, NPS: number, cls: PipeClass, kind: 'shoe' | 'guide' | 'anchor'): PartSpec {
+/** Shoe, guide or anchor (SW-PS-1..3). Local frame: origin at the pipe bottom, y up, z along the pipe; the base sits
+ *  h below on the beam top (h ≥ 4 in, the gap the line's grid elevation leaves, SW-PS-1). */
+export function makeShoe(id: string, NPS: number, cls: PipeClass, kind: 'shoe' | 'guide' | 'anchor', h = 4): PartSpec {
   const p = pipeDims(NPS, cls), Ls = p.OD <= 8 ? 12 : 18, t = 0.375;
   const solids: FitSolid[] = [
-    { name: 'shoe web', mesh: boxM(-t / 2, -4 + t, -Ls / 2, t / 2, 0.15, Ls / 2), role: 'steel' },
-    { name: 'shoe base', mesh: boxM(-2, -4, -Ls / 2, 2, -4 + t, Ls / 2), role: 'steel' },
+    { name: 'shoe web', mesh: boxM(-t / 2, -h + t, -Ls / 2, t / 2, 0.15, Ls / 2), role: 'steel' },
+    { name: 'shoe base', mesh: boxM(-2, -h, -Ls / 2, 2, -h + t, Ls / 2), role: 'steel' },
   ];
-  if (kind === 'guide') for (const s of [-1, 1]) solids.push({ name: 'guide angle L3x3x1/4', mesh: mergeMeshes([boxM(s > 0 ? 2.125 : -2.375, -4, -3, s > 0 ? 2.375 : -2.125, -1, 3), boxM(s > 0 ? 2.125 : -5.125, -4, -3, s > 0 ? 5.125 : -2.125, -3.75, 3)]), role: 'steel' });
-  return finish(id, 'SUPPORT', `${kind.toUpperCase()}-${NPS}`, { NPS: drawing(NPS, 'Pipe size'), H: rule(4, 'SW-PS-1', 'Shoe height'), L: rule(Ls, 'SW-PS-1', 'Shoe length') }, solids, 'SW-PS-1', { supportKind: kind });
+  if (kind === 'guide') for (const s of [-1, 1]) solids.push({ name: 'guide angle L3x3x1/4', mesh: mergeMeshes([boxM(s > 0 ? 2.125 : -2.375, -h, -3, s > 0 ? 2.375 : -2.125, -h + 3, 3), boxM(s > 0 ? 2.125 : -5.125, -h, -3, s > 0 ? 5.125 : -2.125, -h + 0.25, 3)]), role: 'steel' });
+  return finish(id, 'SUPPORT', `${kind.toUpperCase()}-${NPS}`, { NPS: drawing(NPS, 'Pipe size'), H: rule(h, 'SW-PS-1', 'Shoe height'), L: rule(Ls, 'SW-PS-1', 'Shoe length') }, solids, 'SW-PS-1', { supportKind: kind });
 }
 /** Stanchion (SW-PS-9): post from the floor (y = 0) up to a saddle under the pipe bottom at y = h. */
 export function makeStanchion(id: string, NPS: number, cls: PipeClass, h: number): PartSpec {
@@ -155,6 +156,18 @@ export function makeHanger(id: string, NPS: number, cls: PipeClass, h: number): 
     { name: 'top plate', mesh: boxM(-2, h, -2, 2, h + 0.375, 2), role: 'steel' },
   ];
   return finish(id, 'SUPPORT', `HANGER-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), rod: rule(d, 'SW-PS-9', 'Rod diameter'), H: rule(h, 'SW-PS-9', 'Rod length to the steel') }, solids, 'SW-PS-9', { supportKind: 'hanger' });
+}
+/** Trapeze (SW-PS-13): an L2x2x1/4 under the pipe carried by two rods at a = OD/2 + 6 in either side, for a line that
+ *  runs directly under another so a single rod cannot pass. Local frame: pipe centre at the origin, y up, z along the
+ *  pipe; rods rise h1 (at x = −a) and h2 (at x = +a) to the steel. */
+export function makeTrapeze(id: string, NPS: number, cls: PipeClass, h1: number, h2: number): PartSpec {
+  const p = pipeDims(NPS, cls), d = hangerRod(p.OD), r = p.OD / 2, a = r + 6, t = 0.25;
+  const solids: FitSolid[] = [
+    { name: 'angle L2x2x1/4', mesh: mergeMeshes([boxM(-a - 1, -r - t, -1, a + 1, -r, 1), boxM(-a - 1, -r - 2, -1, a + 1, -r - t, -1 + t)]), role: 'steel' },
+    { name: `rods ${d}`, mesh: mergeMeshes([cylYM(d / 2, -r - 1, h1, -a, 0), cylYM(d / 2, -r - 1, h2, a, 0)]), role: 'hardware' },
+    { name: 'top plates', mesh: mergeMeshes([boxM(-a - 2, h1, -2, -a + 2, h1 + 0.375, 2), boxM(a - 2, h2, -2, a + 2, h2 + 0.375, 2)]), role: 'steel' },
+  ];
+  return finish(id, 'SUPPORT', `TRAPEZE-${NPS}x${Math.max(h1, h2).toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), rod: rule(d, 'SW-PS-9', 'Rod diameter'), a: rule(a, 'SW-PS-13', 'Rod offset from the pipe axis'), H1: rule(h1, 'SW-PS-13', 'Rod length, side 1'), H2: rule(h2, 'SW-PS-13', 'Rod length, side 2') }, solids, 'SW-PS-13', { supportKind: 'trapeze' });
 }
 /** Trunnion (SW-PS-4/10): a pipe of the line's OD × 3/8 wall standing under an elbow (top at y = 0) down to y = −h on a base plate. */
 export function makeTrunnion(id: string, NPS: number, cls: PipeClass, h: number): PartSpec {

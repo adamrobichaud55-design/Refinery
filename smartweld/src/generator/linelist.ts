@@ -64,7 +64,7 @@ export function buildLineList(): LineDef[] {
   for (let xb: number = rk.x0; xb <= rk.x1; xb += rk.bentSpacing) {
     if (xb === 1440) continue;
     const svcs: [Service, number, PipeClass][] = [['W', 1, 'P150'], ['PA', 1, 'P150'], ['LS', 1, 'P300'], ['N', 1, 'P150'], ['IA', 0.5, 'P150']];
-    svcs.forEach(([svc, NPS, cls], i) => add(q++, 'HS', NPS, cls, tap(hdr[svc], true), { k: 'station', at: [xb + 30 + 18 * i, 42, -132] }));
+    svcs.forEach(([svc, NPS, cls], i) => add(q++, 'HS', NPS, cls, tap(hdr[svc], true), { k: 'station', at: [xb === rk.x1 ? xb - 102 + 18 * i : xb + 30 + 18 * i, 42, -132] }));   // in the bay beyond each bent; before the last one
   }
   // ---- equipment stubs: vents, drains, instruments, samples, unused process nozzles (SW-LL-3) ----
   q = 6001;

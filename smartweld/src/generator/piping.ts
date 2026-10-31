@@ -6,7 +6,7 @@
  */
 import {
   makePipe, makeFlange, makeBlindFlange, makeGasket, makeValve, makeElbow, makeTee, makeReducer, makeCap, makeButtWeld,
-  makeShoe, makeStanchion, makeHanger, makeTrunnion, makeStudSet, designFlange, pipeDims, isOffered, elbowRadius, teeC, reducerLength,
+  makeShoe, makeStanchion, makeHanger, makeTrunnion, makeTrapeze, makeStudSet, designFlange, pipeDims, isOffered, elbowRadius, teeC, reducerLength,
   type PartSpec, type PipeClass, type ValveType,
 } from '../catalogue';
 import { frameFromAxes, type Vec3 } from '../geometry/transform';
@@ -58,10 +58,11 @@ export function partFromKey(key: string): PartSpec {
     case 'STUDS': p = makeStudSet(key, n(1), c(2), n(3)); break;
     case 'VLV': p = makeValve(key, a[1] as ValveType, n(2), c(3)); break;
     case 'BW': p = makeButtWeld(key, n(1), c(2)); break;
-    case 'SHOE': p = makeShoe(key, n(1), c(2), a[3] as 'shoe' | 'guide' | 'anchor'); break;
+    case 'SHOE': p = makeShoe(key, n(1), c(2), a[3] as 'shoe' | 'guide' | 'anchor', a[4] ? n(4) : 4); break;
     case 'STAN': p = makeStanchion(key, n(1), c(2), n(3)); break;
     case 'HANG': p = makeHanger(key, n(1), c(2), n(3)); break;
     case 'TRUN': p = makeTrunnion(key, n(1), c(2), n(3)); break;
+    case 'TRAP': p = makeTrapeze(key, n(1), c(2), n(3), n(4)); break;
     default: throw new Error(`unknown part key ${key}`);
   }
   memo.set(key, p); return p;
@@ -70,7 +71,7 @@ export function partFromKey(key: string): PartSpec {
 // ---- records (ground truth, SW-PW-3) ---------------------------------------------------------------------
 export interface Comp { tag: string; kind: string; key: string; T: Mat4; a: V3; b: V3; NPS: number; cls: PipeClass }
 export interface WeldRec { id: string; line: string; type: 'BW' | 'FW'; size: number; at: V3; dir: V3; joins: [string, string]; field: boolean; NPS: number; key: string; T: Mat4 }
-export interface SupportRec { id: string; line: string; type: 'shoe' | 'guide' | 'anchor' | 'stanchion' | 'hanger' | 'trunnion'; at: V3; key: string; T: Mat4 }
+export interface SupportRec { id: string; line: string; type: 'shoe' | 'guide' | 'anchor' | 'stanchion' | 'hanger' | 'trunnion' | 'trapeze'; at: V3; key: string; T: Mat4 }
 export interface LineRun { no: string; service: string; NPS: number; cls: PipeClass; kind: LineDef['kind']; from: string; to: string; comps: Comp[]; welds: WeldRec[]; supports: SupportRec[]; path: V3[]; ok: boolean; note?: string; cv?: boolean }
 export interface NozzleRun { id: string; equip: string; service: string; NPS: number; cls: PipeClass; face: V3; u: V3; comps: Comp[]; welds: WeldRec[] }
 export interface PipingModel { lines: LineRun[]; nozzles: NozzleRun[]; failures: string[]; stats: Record<string, number> }
@@ -243,6 +244,12 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
   g.computeDistance();
   tm.t_static = Date.now() - T0;
 
+  const bentXs: number[] = []; for (let x = rk.x0; x <= rk.x1 + 1e-6; x += rk.bentSpacing) bentXs.push(x);
+  const spanOf = (OD: number) => (OD >= 3.5 ? 240 : OD >= 2.375 ? 180 : 120);                 // SW-PS-7
+  /** the tier a horizontal x-run rests on, if it is on the rack (pipe bottom 4–12 in above a tier top) */
+  const rackTier = (a: V3, b: V3, r: number) => Math.abs(b[0] - a[0]) > 1e-6 && Math.abs(b[1] - a[1]) < 1e-6 && Math.abs(b[2] - a[2]) < 1e-6 && Math.abs(a[2]) < rk.halfWidth - 6 ? rk.tiers.find(t => a[1] - r - t >= 3.9 && a[1] - r - t <= 12.1) : undefined;
+  /** support stations on a rack run: every bent, and mid-bay intermediate beams for lines needing spans under 20 ft (SW-PS-8, SW-RK-6) */
+  const rackStations = (lo: number, hi: number, span: number) => { const xs: number[] = []; for (const xb of bentXs) { if (xb > lo + 6 && xb < hi - 6) xs.push(xb); const m = xb + rk.bentSpacing / 2; if (span < rk.bentSpacing && m < rk.x1 && m > lo + 6 && m < hi - 6) xs.push(m); } return xs.sort((p, q) => p - q); };
   const lineId = new Map<string, number>(); list.forEach((l, i) => lineId.set(l.no, i + 1));
   const byNo = new Map(list.map(l => [l.no, l]));
   type Seg = [V3, V3, number] | { box: [V3, V3] };
@@ -337,6 +344,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
       for (let s = snapUp(s0); s <= s1 + 1e-6; s += H) {
         const at = add(a, w, s);
         if (used.some(u => len(sub(u.at, at)) < Math.max(2 * C + 2, C + Math.max(u.flR, fl) + 3))) continue;   // tees ≥ 2 in apart, branch flanges clear
+        if (rackTier(a, b, pOD / 2) !== undefined && rackStations(-1e9, 1e9, spanOf(pOD)).some(x => Math.abs(x - at[0]) < C + 8)) continue;   // keep tees off the beams that carry the shoes
         const outs: V3[] = prefUp && Math.abs(w[1]) < 0.5 ? [[0, 1, 0]] : DIRS.filter(d => Math.abs(dot(d, w)) < 0.5);
         for (const out of outs) {
           const d = len(sub(toward, add(at, out, C))) - (prefUp ? 0 : 6 * dot(out, unit(sub(toward, at))));
@@ -507,6 +515,106 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
     }
   }
 
+  // ---- supports (SW-PS-7..12) ----
+  const HANG_FROM = (tag: string) => !/equipment|pad|grout|ladder|guardrail|cage|rail|tread|stair|grating|cladding|door|slab|base-plate|anchor|weld|bolt|clip|column/.test(tag);
+  /** lowest steel directly above p that a hanger rod can reach, with the rod path clear of other lines */
+  const steelAboveExact = (p: V3, r: number, id: number): number | null => {
+    let best = Infinity;
+    for (let y = Math.floor((p[1] + r) / SB); y <= Math.floor(480 / SB); y++) for (const i of sidx.get(`${Math.floor(p[0] / SB)},${y},${Math.floor(p[2] / SB)}`) ?? []) {
+      const o = st.obstacles[i]; if (!HANG_FROM(o.tag)) continue;
+      let bottom: number;
+      if (o.kind === 'box') { if (p[0] < o.mn[0] || p[0] > o.mx[0] || p[2] < o.mn[2] || p[2] > o.mx[2]) continue; bottom = o.mn[1]; }
+      else {
+        const ab = sub(o.b, o.a), L = len(ab); if (L < 1e-6 || Math.abs(ab[1]) / L > 0.5) continue;      // horizontal-ish members only
+        const t = Math.max(0, Math.min(1, ((p[0] - o.a[0]) * ab[0] + (p[2] - o.a[2]) * ab[2]) / (ab[0] ** 2 + ab[2] ** 2 || 1))), q = add(o.a, ab, t);
+        if (Math.hypot(q[0] - p[0], q[2] - p[2]) > o.r * 0.6) continue; bottom = q[1] - o.r * 0.7;
+      }
+      if (bottom > p[1] + r + 6 && bottom < best) best = bottom;
+    }
+    if (!isFinite(best) || best - p[1] > 240) return null;                                   // rods up to 20 ft (SW-PS-9)
+    for (let y = p[1] + r + 3; y < best - 6; y += H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return null; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id && o !== STATIC) return null; }
+    return best;
+  };
+  /** clear path straight down to the floor for a stanchion */
+  const floorClear = (p: V3, r: number, id: number) => { for (let y = p[1] - r - 3; y > 3; y -= H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return false; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id) return false; } return true; };
+
+  function placeSupports(run: LineRun, l: LineDef): SupportRec[] {
+    const out: SupportRec[] = [], OD = pipeDims(l.NPS, l.cls).OD, r = OD / 2, span = spanOf(OD), id = lineId.get(run.no)!;
+    const fittings = run.comps.filter(c => c.kind !== 'pipe' && c.kind !== 'studs');
+    const clearOf = (p: V3, half: number) => fittings.every(f => segDist(p, f.a, f.b) > half + 2) && run.welds.every(w => len(sub(w.at, p)) > half + 2);
+    // straight horizontal runs: pipe and inline tees merged
+    const runs0: { a: V3; b: V3 }[] = [];
+    for (const c of run.comps.filter(x => x.kind === 'pipe' || x.kind === 'tee')) { const last = runs0[runs0.length - 1], w = unit(sub(c.b, c.a)); if (last && len(sub(last.b, c.a)) < 0.1 && Math.abs(dot(unit(sub(last.b, last.a)), w) - 1) < 1e-6) last.b = c.b; else runs0.push({ a: c.a, b: c.b }); }
+    let n = 0;
+    const push = (type: SupportRec['type'], at: V3, key: string, T: Mat4) => out.push({ id: `${run.no}/S${++n}`, line: run.no, type, at, key, T });
+    for (const sr of runs0) {
+      const w = unit(sub(sr.b, sr.a)), L = len(sub(sr.b, sr.a));
+      if (Math.abs(w[1]) > 0.5) continue;
+      const tier = rackTier(sr.a, sr.b, r);
+      if (tier !== undefined) {
+        const lo = Math.min(sr.a[0], sr.b[0]), hi = Math.max(sr.a[0], sr.b[0]), xs = rackStations(lo, hi, span);
+        const bx = xs.filter(x => bentXs.includes(x)), mid = (lo + hi) / 2, anchor = bx.length ? bx.reduce((u, v) => (Math.abs(v - mid) < Math.abs(u - mid) ? v : u)) : NaN, ia = bx.indexOf(anchor);
+        const h = sr.a[1] - r - tier;
+        for (const x of xs) {
+          const ib = bx.indexOf(x);
+          const type: SupportRec['type'] = x === anchor ? 'anchor' : ib >= 0 && (Math.abs(ib - ia) === 1 || ib === 0 || ib === bx.length - 1) ? 'guide' : 'shoe';
+          push(type, [x, tier, sr.a[2]], `SHOE|${l.NPS}|${l.cls}|${type}|${h.toFixed(3)}`, frameFromAxes([x, sr.a[1] - r, sr.a[2]], [0, 1, 0], [1, 0, 0]));
+        }
+        continue;
+      }
+      if (L <= 48 && run.kind !== 'header') continue;                                       // short legs are carried by the fittings either side
+      // where the run passes under a horizontal member (in plan), a hanger can hang straight from it
+      const crossings: number[] = [];
+      if (sr.a[1] - r > 120) {
+        const seen = new Set<number>();
+        for (let t = 0; t <= L; t += SB / 2) { const q = add(sr.a, w, t); for (let y = Math.floor(q[1] / SB); y <= Math.floor(480 / SB); y++) for (const i of sidx.get(`${Math.floor(q[0] / SB)},${y},${Math.floor(q[2] / SB)}`) ?? []) {
+          if (seen.has(i)) continue; seen.add(i); const o = st.obstacles[i]; if (o.kind !== 'cap' || !HANG_FROM(o.tag)) continue;
+          const ab = sub(o.b, o.a); if (Math.abs(ab[1]) > 0.5 * len(ab)) continue;
+          // plan intersection of the run (sr.a + w s) with the member axis (o.a + ab u)
+          const den = w[0] * ab[2] - w[2] * ab[0]; if (Math.abs(den) < 1e-9) continue;
+          const dx = o.a[0] - sr.a[0], dz = o.a[2] - sr.a[2], sPos = (dx * ab[2] - dz * ab[0]) / den, u = (dx * w[2] - dz * w[0]) / den;
+          if (u >= 0 && u <= 1 && sPos > 0 && sPos < L) crossings.push(sPos);
+        } }
+      }
+      // supports stepped along the run: each at the equal division of what remains, moved in 6 in steps (never past one
+      // span from the last) to clear fittings and welds and to find a floor path or steel above (SW-PS-7, SW-PS-9)
+      let prev = 0;
+      while (L - prev > span + 1e-6) {
+        const k = Math.ceil((L - prev) / span), target = prev + (L - prev) / k, cands: number[] = crossings.filter(c => c > prev + 12 && c <= prev + span && c < L - 6);
+        for (let d = 0; d <= span; d += 6) { if (target - d > prev + 12) cands.push(target - d); if (d && target + d <= prev + span && target + d < L - 6) cands.push(target + d); }
+        cands.sort((u, v) => Math.abs(u - target) - Math.abs(v - target));
+        let placed = -1;
+        const dbg = process.env.PIPE_DEBUG_LINE === run.no;
+        if (dbg) console.log(run.no, 'run', sr.a, sr.b, 'prev', prev, 'target', target, 'crossings', crossings);
+        for (const sPos of cands) {
+          const p = add(sr.a, w, sPos); if (!clearOf(p, 3)) { if (dbg) console.log('  ', sPos, 'not clear of fittings'); continue; }
+          if (dbg) console.log('  ', sPos, 'floor', p[1] - r <= 120 && floorClear(p, r, id), 'steel', steelAboveExact(p, r, id));
+          const bottom = p[1] - r;
+          if (bottom <= 120 && floorClear(p, r, id)) { push('stanchion', p, `STAN|${l.NPS}|${l.cls}|${bottom.toFixed(2)}`, frameFromAxes([p[0], 0, p[2]], [0, 1, 0], [w[0], 0, w[2]])); placed = sPos; break; }
+          const top = steelAboveExact(p, r, id);
+          if (top !== null) { push('hanger', p, `HANG|${l.NPS}|${l.cls}|${(top - p[1]).toFixed(2)}`, frameFromAxes(p, [0, 1, 0], [w[0], 0, w[2]])); placed = sPos; break; }
+        }
+        if (placed < 0) for (const sPos of cands) {                                         // SW-PS-13 trapeze when a line above blocks a single rod
+          const p = add(sr.a, w, sPos); if (!clearOf(p, 3)) continue;
+          const side = cross(w, [0, 1, 0]), aoff = r + 6, t1 = steelAboveExact(add(p, side, -aoff), 0.5, id), t2 = steelAboveExact(add(p, side, aoff), 0.5, id);
+          if (t1 === null || t2 === null) continue;
+          push('trapeze', p, `TRAP|${l.NPS}|${l.cls}|${(t1 - p[1]).toFixed(2)}|${(t2 - p[1]).toFixed(2)}`, frameFromAxes(p, [0, 1, 0], w)); placed = sPos; break;
+        }
+        if (placed < 0) break;                                                              // reported by the span check
+        prev = placed;
+      }
+    }
+    // trunnions under the lowest elbow of vertical runs longer than 10 ft, when that elbow is at most 10 ft up (SW-PS-10)
+    const els = run.comps.filter(c => c.kind === 'elbow');
+    for (const sr of runs0) {
+      const w = unit(sub(sr.b, sr.a)); if (Math.abs(w[1]) < 0.5 || len(sub(sr.b, sr.a)) < 120) continue;
+      const lowEnd = sr.a[1] < sr.b[1] ? sr.a : sr.b, el = els.find(e => len(sub(e.a, lowEnd)) < 1e-3 || len(sub(e.b, lowEnd)) < 1e-3); if (!el) continue;
+      const vtx = add(lowEnd, [0, -1, 0], R(l.NPS, l.cls)), top: V3 = [vtx[0], vtx[1] - r, vtx[2]];
+      if (top[1] <= 120 && top[1] > 6 && floorClear(add(top, [0, r, 0]), r, id)) push('trunnion', top, `TRUN|${l.NPS}|${l.cls}|${top[1].toFixed(2)}`, frameFromAxes(top, [0, 1, 0], [1, 0, 0]));
+    }
+    return out;
+  }
+
   // ---- 5. assemble routed lines and headers into an ordered chain of components; welds follow from the chain ----
   for (const run of runs.values()) {
     if (!run.ok || run.kind === 'stub') continue;
@@ -516,9 +624,14 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
     const myTaps = taps.get(run.no) ?? [];
     const pipeTo = (from: V3, to: V3) => {
       const rem = len(sub(to, from)); if (rem < 0.05) return;
-      const w = unit(sub(to, from)), n = Math.ceil(rem / 480);           // SW-RT-5: ≤ 40 ft lengths, butt-weld splices between
-      for (let i = 0; i < n; i++) { const a = add(from, w, (rem * i) / n), b = add(from, w, (rem * (i + 1)) / n);
-        comps.push({ tag: `${run.no}/p${comps.length + 1}`, kind: 'pipe', key: `PIPE|${l.NPS}|${l.cls}|${(rem / n).toFixed(3)}`, T: frameFromAxes(a, perp(w), w), a, b, NPS: l.NPS, cls: l.cls }); }
+      const w = unit(sub(to, from)), n = Math.ceil((rem + 48) / 480);    // SW-RT-5: ≤ 40 ft lengths, butt-weld splices between
+      // splices on a rack run are moved (in 6 in steps) off the beams so every beam can carry a shoe
+      const tier = rackTier(from, to, OD / 2), stations = tier !== undefined ? rackStations(Math.min(from[0], to[0]) - 1e3, Math.max(from[0], to[0]) + 1e3, spanOf(OD)) : [];
+      const cuts: number[] = [0];
+      for (let i = 1; i < n; i++) { let s = (rem * i) / n; for (const d of [0, 6, -6, 12, -12, 18, -18, 24, -24]) { const x = from[0] + w[0] * (s + d); if (stations.every(st => Math.abs(st - x) > 14)) { s += d; break; } } cuts.push(s); }
+      cuts.push(rem);
+      for (let i = 0; i < n; i++) { const a = add(from, w, cuts[i]), b = add(from, w, cuts[i + 1]);
+        comps.push({ tag: `${run.no}/p${comps.length + 1}`, kind: 'pipe', key: `PIPE|${l.NPS}|${l.cls}|${(cuts[i + 1] - cuts[i]).toFixed(3)}`, T: frameFromAxes(a, perp(w), w), a, b, NPS: l.NPS, cls: l.cls }); }
     };
     const straight = (from: V3, to: V3) => {
       const w = unit(sub(to, from)), Ltot = len(sub(to, from)); if (Ltot < 1e-6) return;
@@ -555,60 +668,6 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
     run.welds = deriveWelds(run.no, comps, ext, fieldAt);
     run.supports = placeSupports(run, l);
   }
-  // ---- supports (SW-PS-7..12) ----
-  function placeSupports(run: LineRun, l: LineDef): SupportRec[] {
-    const out: SupportRec[] = [], OD = pipeDims(l.NPS, l.cls).OD, r = OD / 2, span = OD >= 3.5 ? 240 : OD >= 2.375 ? 180 : 120;
-    const fittings = run.comps.filter(c => c.kind !== 'pipe');
-    const clearOf = (p: V3) => fittings.every(f => segDist(p, f.a, f.b) > 10) && run.welds.every(w => len(sub(w.at, p)) > 8);
-    const bents: number[] = []; for (let x = DEMO_LAYOUT.rack.x0; x <= DEMO_LAYOUT.rack.x1 + 1e-6; x += DEMO_LAYOUT.rack.bentSpacing) bents.push(x);
-    const pipes = run.comps.filter(c => c.kind === 'pipe');
-    // merge collinear pipe pieces into straight runs
-    const straightRuns: { a: V3; b: V3 }[] = [];
-    for (const p of pipes) { const lastR = straightRuns[straightRuns.length - 1]; if (lastR && len(sub(lastR.b, p.a)) < 12 && Math.abs(dot(unit(sub(lastR.b, lastR.a)), unit(sub(p.b, p.a))) - 1) < 1e-6) lastR.b = p.b; else straightRuns.push({ a: p.a, b: p.b }); }
-    let n = 0;
-    for (const sr of straightRuns) {
-      const w = unit(sub(sr.b, sr.a)), L = len(sub(sr.b, sr.a));
-      if (Math.abs(w[1]) > 0.5) continue;                                 // vertical: trunnions below (SW-PS-10)
-      const onRack = Math.abs(w[0]) > 0.5 && Math.abs(sr.a[2]) < DEMO_LAYOUT.rack.halfWidth && DEMO_LAYOUT.rack.tiers.some(t => sr.a[1] - r - t >= 3.9 && sr.a[1] - r - t <= 12);
-      if (onRack) {
-        const tier = DEMO_LAYOUT.rack.tiers.find(t => sr.a[1] - r - t >= 3.9 && sr.a[1] - r - t <= 12)!, xs: number[] = [];
-        const lo = Math.min(sr.a[0], sr.b[0]), hi = Math.max(sr.a[0], sr.b[0]);
-        for (const xb of bents) { if (xb > lo + 6 && xb < hi - 6) xs.push(xb); if (span < 240 && xb + 120 > lo + 6 && xb + 120 < hi - 6 && xb + 120 < DEMO_LAYOUT.rack.x1) xs.push(xb + 120); }
-        const mid = (lo + hi) / 2, bentXs = xs.filter(x => (x - DEMO_LAYOUT.rack.x0) % 240 === 0), anchor = bentXs.length ? bentXs.reduce((a, b) => (Math.abs(b - mid) < Math.abs(a - mid) ? b : a)) : NaN;
-        for (const x of xs) {
-          const p: V3 = [x, sr.a[1], sr.a[2]]; if (!clearOf(p)) continue;
-          const ib = bentXs.indexOf(x), ia = bentXs.indexOf(anchor);
-          const type: SupportRec['type'] = x === anchor ? 'anchor' : (ib >= 0 && (Math.abs(ib - ia) === 1 || ib === 0 || ib === bentXs.length - 1)) ? 'guide' : 'shoe';
-          const h = sr.a[1] - r - tier;
-          out.push({ id: `${run.no}/S${++n}`, line: run.no, type, at: [x, tier, sr.a[2]], key: `SHOE|${l.NPS}|${l.cls}|${type}`, T: frameFromAxes([x, sr.a[1] - r - h + 4 + (h - 4), sr.a[2]], [0, 1, 0], [1, 0, 0]) });
-        }
-        continue;
-      }
-      if (L < 48 && run.kind !== 'header') continue;
-      const m = Math.max(1, Math.ceil(L / span));
-      for (let i = 0; i < m; i++) {
-        let p = add(sr.a, w, (L * (i + 0.5)) / m);
-        if (!clearOf(p)) { const alt = [12, -12, 24, -24].map(d => add(p, w, d)).find(q => clearOf(q) && dot(sub(q, sr.a), w) > 6 && dot(sub(q, sr.a), w) < L - 6); if (!alt) continue; p = alt; }
-        const bottom = p[1] - r;
-        if (bottom <= 120 && freeColumn(p, -1, bottom, lineId.get(run.no)!)) out.push({ id: `${run.no}/S${++n}`, line: run.no, type: 'stanchion', at: p, key: `STAN|${l.NPS}|${l.cls}|${bottom.toFixed(2)}`, T: frameFromAxes([p[0], 0, p[2]], [0, 1, 0], [w[0], 0, w[2]]) });
-        else { const top = steelAbove(p, lineId.get(run.no)!); if (top !== null) out.push({ id: `${run.no}/S${++n}`, line: run.no, type: 'hanger', at: p, key: `HANG|${l.NPS}|${l.cls}|${(top - p[1]).toFixed(2)}`, T: frameFromAxes(p, [0, 1, 0], [w[0], 0, w[2]]) }); }
-      }
-    }
-    // trunnions under the lowest elbow of long vertical runs (SW-PS-10)
-    const els = run.comps.filter(c => c.kind === 'elbow');
-    for (const sr of straightRuns) {
-      const w = unit(sub(sr.b, sr.a)); if (Math.abs(w[1]) < 0.5 || len(sub(sr.b, sr.a)) < 120) continue;
-      const lowEnd = sr.a[1] < sr.b[1] ? sr.a : sr.b, el = els.find(e => len(sub(e.a, lowEnd)) < 1e-3 || len(sub(e.b, lowEnd)) < 1e-3);
-      if (!el) continue;
-      const corner = len(sub(el.a, lowEnd)) < 1e-3 ? el.b : el.a, d = unit(sub(corner, lowEnd)), vtx = add(lowEnd, [0, -1, 0], R(l.NPS, l.cls));
-      const pBelow: V3 = [vtx[0], vtx[1] - r, vtx[2]]; void d;
-      if (pBelow[1] <= 120 && freeColumn(pBelow, -1, pBelow[1], lineId.get(run.no)!)) out.push({ id: `${run.no}/S${++n}`, line: run.no, type: 'trunnion', at: pBelow, key: `TRUN|${l.NPS}|${l.cls}|${pBelow[1].toFixed(2)}`, T: frameFromAxes(pBelow, [0, 1, 0], [1, 0, 0]) });
-    }
-    return out;
-  }
-  function freeColumn(p: V3, _dir: number, h: number, id: number) { for (let y = p[1] - 6; y > 6; y -= H) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) break; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id) return false; } void h; return true; }
-  function steelAbove(p: V3, id: number): number | null { for (let y = p[1] + 12; y < 396; y += H) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return null; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o === STATIC) return y - H / 2; if (o !== 0 && o !== id) return null; } return null; }
-
   // ---- equipment nozzles (SW-NOZ-1): weld-neck flange facing out, nozzle pipe from its hub back to the shell ----
   const nozzleRuns: NozzleRun[] = [];
   for (const nz of nozzles.values()) {
