@@ -106,3 +106,32 @@ export function mergeMeshes(list: MeshData[]): MeshData {
   for (const m of list) { const off = positions.length / 3; positions.push(...m.positions); for (const i of m.indices) indices.push(i + off); }
   return { positions, indices };
 }
+
+/**
+ * Surface of revolution about the local z axis. `loop` is a closed polygon in the (r, z) half-plane
+ * (r ≥ 0); points with r ≈ 0 become single apex vertices. Returns a closed, outward-facing mesh.
+ */
+export function revolve(loop: { r: number; z: number }[], n: number): MeshData {
+  const positions: number[] = [], indices: number[] = [];
+  const rings: (number[] | number)[] = [];
+  for (const p of loop) {
+    if (p.r < 1e-9) { positions.push(0, 0, p.z); rings.push(positions.length / 3 - 1); continue; }
+    const ring: number[] = [];
+    for (let i = 0; i < n; i++) { const a = (2 * Math.PI * i) / n; positions.push(p.r * Math.cos(a), p.r * Math.sin(a), p.z); ring.push(positions.length / 3 - 1); }
+    rings.push(ring);
+  }
+  const m = rings.length;
+  for (let k = 0; k < m; k++) {
+    const a = rings[k], b = rings[(k + 1) % m];
+    if (typeof a === 'number' && typeof b === 'number') continue;
+    for (let i = 0; i < n; i++) {
+      const j = (i + 1) % n;
+      if (typeof a === 'number') indices.push(a, (b as number[])[i], (b as number[])[j]);
+      else if (typeof b === 'number') indices.push(a[i], b, a[j]);
+      else indices.push(a[i], b[i], b[j], a[i], b[j], a[j]);
+    }
+  }
+  const mesh = { positions, indices };
+  if (signedVolume(mesh) < 0) for (let k = 0; k < indices.length; k += 3) { const t = indices[k + 1]; indices[k + 1] = indices[k + 2]; indices[k + 2] = t; }
+  return mesh;
+}

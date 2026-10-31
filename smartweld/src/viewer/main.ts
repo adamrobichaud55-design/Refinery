@@ -9,6 +9,7 @@ import { identity } from '../geometry/transform';
 import { basisText } from '../core/basis';
 import { formatLength } from '../core/units';
 import { generateBuilding, billOfMaterials, type BuildingModel } from '../generator/building';
+import { generateInterior, type InteriorModel } from '../generator/interior';
 
 const viewEl = document.getElementById('view')!, infoEl = document.getElementById('info')!, errEl = document.getElementById('err')!, entriesEl = document.getElementById('entries')!;
 
@@ -36,6 +37,7 @@ const MATERIALS: Record<Role, THREE.Material> = {
   sheet: new THREE.MeshStandardMaterial({ color: 0xb8c4cf, metalness: 0.5, roughness: 0.4, side: THREE.DoubleSide }),
   concrete: new THREE.MeshStandardMaterial({ color: 0xb9b4a8, roughness: 0.95 }),
   door: new THREE.MeshStandardMaterial({ color: 0x8a4b3c, roughness: 0.8 }),
+  equipment: new THREE.MeshStandardMaterial({ color: 0x9aa7a0, metalness: 0.2, roughness: 0.6 }),
 };
 
 function toBufferGeometry(m: MeshData): THREE.BufferGeometry {
@@ -121,26 +123,40 @@ function drawProfile(outer: { x: number; y: number }[], inner?: { x: number; y: 
 }
 
 // --- building ------------------------------------------------------------------
-let building: BuildingModel | null = null;
-function showBuilding(view: string) {
+let building: BuildingModel | null = null, interior: InteriorModel | null = null;
+function showBuilding(view: string, withInterior = false) {
   if (!building) building = generateBuilding();
+  if (withInterior && !interior) interior = generateInterior();
   const t0 = performance.now();
-  const box = renderInstances(building.instances);
+  const all = withInterior ? [...building.instances, ...interior!.instances] : building.instances;
+  const shown = view === 'overview' ? all.filter(i => !i.tags.includes('cladding') && !i.tags.includes('trim') && !i.tags.includes('roof-sheet')) : all; // cutaway: sheets and trim hidden
+  const box = renderInstances(shown);
   const dr = building.drawing, L = dr.bays * dr.bayFt * 12, W = dr.widthFt * 12;
   grid.position.y = -dr.slabIn - 0.5;
   if (view === 'interior') lookFrom([L * 0.75, 66, W * 0.3], [L * 0.1, 200, -W * 0.2]);
   else if (view === 'knee') lookFrom([L * 0.5 + 420, 250, W / 2 - 420], [L * 0.5, 340, W / 2 - 30]);
   else if (view === 'door') lookFrom([L * 0.1875 + 200, 70, W / 2 + 260], [L * 0.1875, 60, W / 2]);
   else if (view === 'corner') lookFrom([-240, 200, -W / 2 - 240], [L * 0.3, 150, 0]);
-  else frame(box, new THREE.Vector3(1, 0.5, 0.9));
-  const bom = billOfMaterials(building);
+  else if (view === 'rack') lookFrom([120, 90, 260], [900, 200, 0]);
+  else if (view === 'vessels') lookFrom([1060, 150, 180], [520, 200, 300]);
+  else if (view === 'stair') lookFrom([1180, 90, 430], [820, 150, 310]);
+  else if (view === 'column') lookFrom([1180, 130, -150], [820, 180, -300]);
+  else if (view === 'tanks') lookFrom([880, 110, -170], [420, 150, -320]);
+  else if (view === 'pumps') lookFrom([1680, 72, 140], [2000, 30, 220]);
+  else if (view === 'walk') lookFrom([L * 0.55, 66, 170], [L * 0.2, 120, 300]);
+  else lookFrom([L * 1.25, 900, W * 1.6], [L * 0.45, 60, 0]);
+  const bom = billOfMaterials({ ...building, instances: all });
   const total = bom.reduce((s, e) => s + e.weight, 0);
-  const steelCount = building.instances.filter(i => i.part.category !== 'non-steel').length;
-  infoEl.innerHTML = `<h2>Demonstration plant — building shell</h2>
+  const steelCount = all.filter(i => i.part.category !== 'non-steel').length;
+  const equip = interior && withInterior ? interior.equipment.map(e => `${e.tag}: ${e.part.designation} (${e.part.weight.value.toFixed(0)} lb empty)`).join('; ') : '';
+  const derivedAll = withInterior ? { ...building.derived, ...interior!.derived } : building.derived;
+  const notesAll = withInterior ? [...building.notes, ...interior!.notes] : building.notes;
+  infoEl.innerHTML = `<h2>Demonstration plant — ${withInterior ? 'building and interior' : 'building shell'}</h2>
     <div class="cat">${dr.widthFt} ft × ${dr.bays * dr.bayFt} ft, eave ${dr.eaveFt} ft, slope ${dr.slopeRisePer12}:12 (drawing, SW-BLD-1). ${steelCount.toLocaleString()} steel parts, ${(total / 2000).toFixed(1)} tons. Built in ${((performance.now() - t0) / 1000).toFixed(1)} s.</div>
-    <p class="notes">${building.notes.join(' ')}</p>
+    <p class="notes">${notesAll.join(' ')}</p>
+    ${equip ? `<p class="notes"><b>Equipment:</b> ${equip}</p>` : ''}
     <div class="legend">Walk: click the 3D view, then W A S D to move, mouse to look, Esc to release.</div>
-    <h3>Derived by rule</h3><table>${Object.values(building.derived).map(d => `<tr><td>${d.label}</td><td class="v">${Number(d.value.toFixed(3))} ${d.unit}</td><td class="b-${d.basis.kind}">${basisText(d.basis)}</td></tr>`).join('')}</table>
+    <h3>Derived by rule</h3><table>${Object.values(derivedAll).map(d => `<tr><td>${d.label}</td><td class="v">${Number(d.value.toFixed(3))} ${d.unit}</td><td class="b-${d.basis.kind}">${basisText(d.basis)}</td></tr>`).join('')}</table>
     <h3>Bill of materials (steel, by designation × length)</h3>
     <table><tr><th>Part</th><th>Qty</th><th>Weight</th><th>Rules</th></tr>
     ${bom.map(e => `<tr><td>${e.designation}</td><td class="v">${e.qty}</td><td class="v">${e.weight.toFixed(0)} lb</td><td>${e.rules.join(', ')}</td></tr>`).join('')}
@@ -186,8 +202,11 @@ function addButton(container: HTMLElement, label: string, onClick: () => void): 
 function showError(e: unknown) { errEl.textContent = String((e as Error).message ?? e); errEl.style.display = 'block'; console.error(e); }
 const h = document.createElement('h2'); h.textContent = 'Building'; entriesEl.appendChild(h);
 const buildingBtns: Record<string, HTMLButtonElement> = {};
-for (const [label, view] of [['Demo plant — exterior', 'exterior'], ['Demo plant — corner', 'corner'], ['Demo plant — interior (walk)', 'interior'], ['Demo plant — knee close-up', 'knee'], ['Demo plant — personnel door', 'door']])
+for (const [label, view] of [['Shell — exterior', 'exterior'], ['Shell — corner', 'corner'], ['Shell — interior', 'interior'], ['Shell — knee close-up', 'knee'], ['Shell — personnel door', 'door']])
   buildingBtns[view] = addButton(entriesEl, label, () => { location.hash = 'building:' + view; showBuilding(view); });
+const hp = document.createElement('h2'); hp.textContent = 'Plant (building + interior)'; entriesEl.appendChild(hp);
+for (const [label, view] of [['Plant — walk (start)', 'walk'], ['Plant — pipe rack', 'rack'], ['Plant — vessel platforms', 'vessels'], ['Plant — stair tower', 'stair'], ['Plant — column & ladders', 'column'], ['Plant — tanks', 'tanks'], ['Plant — pumps', 'pumps'], ['Plant — cutaway overview', 'overview']])
+  buildingBtns['plant:' + view] = addButton(entriesEl, label, () => { location.hash = 'plant:' + view; showBuilding(view, true); });
 const h1 = document.createElement('h2'); h1.textContent = 'Assemblies'; entriesEl.appendChild(h1);
 const asmBtn = addButton(entriesEl, 'Column base (W10x49)', () => { location.hash = 'assembly:column-base'; showAssembly(columnBaseAssembly()); });
 const byGroup = new Map<string, HTMLElement>();
@@ -207,6 +226,7 @@ function openFromHash() {
   if (hsh.startsWith('des:')) { try { showPart(makePart(hsh.slice(4), hsh.slice(4), 120)); return; } catch (e) { showError(e); } }
   if (hsh.startsWith('assembly:')) { setActive(asmBtn); showAssembly(columnBaseAssembly()); return; }
   if (hsh.startsWith('building:')) { const v = hsh.slice(9); setActive(buildingBtns[v] ?? null); showBuilding(v); return; }
+  if (hsh.startsWith('plant:')) { const v = hsh.slice(6); setActive(buildingBtns['plant:' + v] ?? null); showBuilding(v, true); return; }
   showPart(ENTRIES[1].build());
 }
 resize();

@@ -111,3 +111,10 @@ export function earClip(poly: Polygon): number[] {
   if (idx.length === 3) tris.push(idx[0], idx[1], idx[2]);
   return tris;
 }
+
+/** Annular sector from angle a0 to a1 (radians, a1 > a0), radii r0 < r1, n segments. CCW. */
+export function annularSector(r0: number, r1: number, a0: number, a1: number, n: number): Polygon {
+  return dedupe([...arc(0, 0, r1, a0, a1, n), ...arc(0, 0, r0, a1, a0, n)]);
+}
+/** Axis-aligned rectangle from corner (x0,y0) to (x1,y1). CCW. */
+export const rect = (x0: number, y0: number, x1: number, y1: number): Polygon => [{ x: x0, y: y0 }, { x: x1, y: y0 }, { x: x1, y: y1 }, { x: x0, y: y1 }];

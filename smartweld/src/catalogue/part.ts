@@ -4,9 +4,10 @@ export type PartKind =
   | 'W' | 'C' | 'L' | 'HSS_RECT' | 'HSS_ROUND'
   | 'PL' | 'GUSSET' | 'BASE_PLATE' | 'STIFFENER'
   | 'BOLT' | 'ANCHOR_ROD' | 'FILLET_WELD' | 'GROOVE_WELD'
-  | 'Z' | 'CS' | 'ROD' | 'PANEL' | 'TRIM' | 'CONCRETE' | 'DOOR_LEAF' | 'DOOR_CURTAIN' | 'DOOR_DRUM' | 'FILLET_WELD_AROUND';
+  | 'Z' | 'CS' | 'ROD' | 'PANEL' | 'TRIM' | 'CONCRETE' | 'DOOR_LEAF' | 'DOOR_CURTAIN' | 'DOOR_DRUM' | 'FILLET_WELD_AROUND'
+  | 'GRATING' | 'GRATING_TREAD' | 'CAGE_HOOP' | 'VESSEL_V' | 'VESSEL_H' | 'EXCHANGER' | 'PUMP' | 'TANK';
 
-export type Category = 'section' | 'plate' | 'hardware' | 'weld' | 'sheet' | 'non-steel';
+export type Category = 'section' | 'plate' | 'hardware' | 'weld' | 'sheet' | 'non-steel' | 'equipment';
 
 export interface Material {
   grade: string;

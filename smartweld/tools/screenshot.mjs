@@ -15,6 +15,7 @@ const targets = [
   ['fillet-weld', '#entry:' + encodeURIComponent('FW1/4 × 12 in')], ['groove-weld', '#entry:' + encodeURIComponent('GW1/2 × 12 in')],
   ['typed-W18x50', '#des:W18x50'],
   ['building-exterior', '#building:exterior'], ['building-corner', '#building:corner'], ['building-interior', '#building:interior'], ['building-knee', '#building:knee'], ['building-door', '#building:door'],
+  ['plant-walk', '#plant:walk'], ['plant-rack', '#plant:rack'], ['plant-vessels', '#plant:vessels'], ['plant-stair', '#plant:stair'], ['plant-column', '#plant:column'], ['plant-tanks', '#plant:tanks'], ['plant-pumps', '#plant:pumps'], ['plant-overview', '#plant:overview'],
   ['Z-purlin', '#entry:' + encodeURIComponent('Z10x2.5x5/64 (purlin)')], ['panel', '#entry:' + encodeURIComponent('Wall/roof panel PNL1.25x36')], ['ridge-cap', '#entry:' + encodeURIComponent('Ridge cap 12x12 (1:12)')], ['weld-around', '#entry:' + encodeURIComponent('Fillet all around W10x49')],
 ];
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] });
@@ -25,7 +26,7 @@ page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 for (const [name, hash] of targets) {
   await page.goto(base + hash, { waitUntil: 'load' });
   await page.waitForFunction(() => window.__smartweldReady === true, null, { timeout: 120000 });
-  await page.waitForTimeout(name.startsWith('building') ? 4000 : 600);
+  await page.waitForTimeout(name.startsWith('building') || name.startsWith('plant') ? 5000 : 600);
   const visibleErr = await page.$eval('#err', el => getComputedStyle(el).display !== 'none' ? el.textContent : '');
   if (visibleErr) errors.push(`${name}: ${visibleErr}`);
   const title = await page.$eval('#info h2', el => el.textContent);

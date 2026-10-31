@@ -485,3 +485,220 @@ Preliminary proportioning for a visual-reference model; not a structural design.
   knee ≥ 3/4 in.
 - Every stage-2 rule ID used in code exists in this file (audit test extended).
 - The building model is JSON-serialisable and every instance transform is finite.
+
+---
+
+# Stage 3 — Interior: equipment, pipe rack, platforms and access steel
+
+Written before any stage-3 code. Per the user's decision (PROVENANCE P-22) no external source
+of any kind is used for this stage: guardrail, stair and ladder proportions are SmartWeld
+rules reasoned from the human body and from fall-protection logic, for visual reference.
+Where such a value may coincide with a published regulation it was not taken from one.
+
+## 19. Grating (`SW-GR-*`)
+
+- `SW-GR-1` Welded bar grating: bearing bars 1-1/2 in deep × 3/16 in thick at 1-1/2 in
+  centres, cross bars 1/4 in square at 4 in centres, set flush with the top of the bearing
+  bars. Reason: a 1-5/16 in clear opening between bars stops a boot heel and most dropped
+  hand tools while leaving the grating mostly open for light and drainage; 3/16 in bars
+  1-1/2 in deep span the 4 ft of SW-PLT-2 under a person with a stiff feel; cross bars at
+  4 in keep the bearing bars upright and spread a point load to its neighbours.
+- `SW-GR-2` Panels are cut to the platform framing with a 1/2 in clearance to the toe plate
+  and are 36 in wide maximum (bars run across the span); banding bars (3/16 × 1-1/2 in flat)
+  close the cut ends. Reason: a 36 in panel is a two-person lift.
+- `SW-GR-3` Grating stair treads: the same grating 10 in deep (bars across the tread) with a
+  1-1/4 in × 3/16 in checker-plate nosing angle along the front edge, carrier plates
+  3/16 × 2 in at each end bolted to the stringer with two 3/8 in bolts (SW-B-*). Reason:
+  a visible, abrasive nosing marks the tread edge; the carrier plate gives a flat bolting
+  face.
+- `SW-GR-4` Grating weight is computed from the drawn bars (K-1).
+
+## 20. Guardrail (`SW-HR-*`)
+
+- `SW-HR-1` Guardrail: top rail at 42 in above the walking surface, one mid rail at half
+  that height, toe plate 4 in high × 1/4 in flush with the walking surface, posts at 6 ft
+  maximum spacing and at every corner and end. Reason: a tall adult's centre of gravity
+  stands about 41 in above the floor, so a rail at 42 in stays above it and a person
+  leaning or stumbling against it rotates back rather than over; the mid rail halves the
+  opening so a crouching or falling person cannot pass under the top rail; a 4 in toe plate
+  stops tools and a boot from sliding off the edge; 6 ft posts keep the rail deflection
+  small under a person's weight thrown against it.
+- `SW-HR-2` Members: posts and rails are round HSS 2 in OD × 1/8 in wall (`HSS2x1/8`,
+  SW-HSS-*); the toe plate is `PL1/4x4` (SW-PL-*). Reason: a 2 in round section is a
+  comfortable hand grip and is the same member for posts and rails; 1/8 in wall is the
+  thinnest that takes a fillet weld without burn-through.
+- `SW-HR-3` Posts are welded to a base plate `PL3/8x5x5` bolted to the platform framing with
+  two 1/2 in bolts (SW-B-*), or welded directly to the stringer of a stair. Rails are welded
+  to the posts (SW-WD-1). Reason: bolted posts can be removed for lifting access.
+- `SW-HR-4` Openings for ladders and stair heads have no rail across the opening; a
+  self-closing gate is not modeled (stated).
+
+## 21. Stairs (`SW-SR-*`)
+
+- `SW-SR-1` Rise 7-1/2 in, run 10 in (angle 36.9°), uniform in a flight; treads 36 in clear
+  width between stringers; risers open. Reason: for an adult gait the sum 2 × rise + run
+  near 25 in is comfortable; an industrial stair is steepened to about 37° to save floor
+  space while staying walkable facing forward; 36 in lets a person carry a tool box and lets
+  two people pass at a landing.
+- `SW-SR-2` Stringers: channels of depth roundup(flight length along slope / 16, 2 in),
+  minimum 10 in; the channel weight is the lightest whole lb/ft whose drawn web thickness
+  (SW-C-*) is at least 1/4 in. Reason: the stringer is a sloped beam loaded by
+  people; depth of 1/16 of its span keeps it stiff; a 1/4 in web takes the tread bolts.
+- `SW-SR-3` Landings: a platform (SW-PLT-*) at least 36 in long in the direction of travel at
+  every change of direction and at the top of every flight; flights are limited to 12 ft
+  rise between landings. Reason: a resting point and a place to stand while opening a gate;
+  12 ft limits the fall down one flight.
+- `SW-SR-4` Handrail on both sides of every flight at 36 in above the tread nosing line,
+  continuing at 42 in around landings (SW-HR-1); the stair-side rail is carried by the
+  stringer posts. Reason: a hanging hand reaches a rail near 36 in on a slope.
+- `SW-SR-5` Stringer bearing: top end bolted to the platform edge beam with a clip angle
+  `L4x4x3/8` × 8 in and four 3/4 in bolts; bottom end on a `PL1/2x8x10` base plate with two
+  3/4 in anchor rods (SW-AR-*). Reason: standard bolted bearing, removable.
+
+## 22. Fixed ladders (`SW-LD-*`)
+
+- `SW-LD-1` Rails `PL1/2x2-1/2` (flat bar on edge) at 18 in clear; rungs `RD3/4` at 12 in
+  centres, welded through the rails; the rail extends 42 in above the landing it serves and
+  flares to 24 in clear over that top 42 in to form a walk-through. Reason: 18 in clear fits boots and gloves between the
+  rails; 12 in rungs match a comfortable climbing step; 3/4 in round is a full-hand grip
+  and does not bend under a boot; the 42 in extension gives a hand hold while stepping
+  onto the platform.
+- `SW-LD-2` Standoff: the rung centreline is 7 in clear of the wall or vessel it climbs,
+  carried by brackets `L3x3x1/4` at 8 ft maximum spacing welded or bolted to the structure.
+  Reason: toe room behind the rung for a boot.
+- `SW-LD-3` Cage: when the climb exceeds 20 ft, hoops of `PL1/4x2` bent to a 30 in
+  diameter at 4 ft centres from 7 ft above the base to the top of the ladder, with five
+  vertical straps `PL3/16x1-1/2` equally spaced around the hoop. Reason: a 30 in cage
+  surrounds a climber's body so a slip is arrested against the cage rather than becoming
+  a free fall; it starts at 7 ft so a person can walk under it; falls below 20 ft are short
+  enough that the cage's own hazard outweighs its benefit.
+- `SW-LD-4` Climbs above 30 ft are broken by an offset landing platform (SW-PLT-*) with the
+  next ladder section offset sideways. Reason: limits the distance of a fall inside a cage.
+
+## 23. Platforms (`SW-PLT-*`)
+
+- `SW-PLT-1` A platform is a rectangle (or an annulus around a vessel, built from
+  rectangular segments) of grating (SW-GR-*) on steel framing with guardrail (SW-HR-*) on
+  every open edge and toe plate all around. Design load 100 psf (drawing: a crowd of people
+  and hand tools).
+- `SW-PLT-2` Framing: edge beams and intermediate beams at 4 ft maximum spacing (the
+  grating span), of W shapes with nominal depth roundup(span / 20, 2 in), minimum 6 in,
+  weight by the SW-PF-3 search for M = w L² / 8, w = 100 psf × tributary width; bolted to
+  the columns and vessel clips with `L4x4x3/8` clips and two 3/4 in bolts (SW-B-*). Reason:
+  span/20 is the stiffness limit for a floor people walk on; the beam sizing is the same
+  rule used for the building frame.
+- `SW-PLT-3` Free-standing platforms stand on W columns with nominal depth roundup(height /
+  36, 2 in) (minimum 6 in) by the SW-BLD-4 search, base plates and anchor rods by SW-BP-*
+  and SW-AR-*, and rod bracing (`RD3/4`) in one bay in each direction. Vessel platforms are
+  carried on clips welded to the vessel shell (SW-EQ-6). Reason: as the building frame.
+- `SW-PLT-4` Walking surface elevation: the top of the grating. Platform elevation is
+  stated by the layout (SW-LAY-*).
+
+## 24. Pipe rack (`SW-RK-*`)
+
+- `SW-RK-1` Transverse bents at 20 ft spacing along the rack, each a two-column moment frame
+  with one beam per tier; rack width and tier elevations stated by the layout. Reason:
+  20 ft is the span pipes of 3 in and larger carry between supports without excessive sag
+  (checked in stage 5); smaller lines get intermediate supports.
+- `SW-RK-2` Tier beams: W shapes with nominal depth roundup(width / 20, 2 in), weight by the
+  SW-PF-3 search for M = w L² / 8 with w = rack design load 40 psf (drawing) × bent
+  spacing. Columns: W shapes with nominal depth roundup(height / 24, 2 in), weight by the
+  SW-PF-3 search for M = the top-tier beam moment / 2 (knee continuity). Bolted end-plate
+  knees as SW-PF-5. Reason: a loaded rack tier is a floor of pipe; the beam rule follows
+  SW-PLT-2; the column carries half the beam's end moment in a two-column bent.
+- `SW-RK-3` Longitudinal struts: W shapes of the tier-beam depth − 4 in (minimum 6 in),
+  lightest weight (family reference member rounded up to 5 lb/ft), between bents at every
+  tier along both column lines; rod bracing `RD3/4` in the plane of the struts in every
+  fourth bay, and in the column planes in the same bays. Reason: the struts carry pipe
+  anchor loads and brace the columns; the rods carry longitudinal load to the bases.
+- `SW-RK-4` Base plates and anchor rods by SW-BP-* / SW-AR-* on 6 in concrete pedestals
+  above the slab (non-steel). Reason: keeps the base plate above wash-down water.
+- `SW-RK-5` Pipe supports on the rack are stage-5 parts: the rack provides a flat top flange
+  at each tier for shoes, and the struts carry guides and anchors.
+
+## 25. Equipment (`SW-EQ-*`)
+
+Equipment is modeled as true-scale envelopes from the stated dimensions of the layout's
+equipment list (drawing basis). Internals are not modeled. Nozzles are placed in stage 5
+once the pipe interface decision is made; each item carries its nozzle schedule as data.
+
+- `SW-EQ-1` Vertical vessel: cylindrical shell of stated inside diameter, length
+  tangent-to-tangent, and wall thickness; 2:1 ellipsoidal heads (head depth = D/4) top and
+  bottom; a cylindrical skirt of the shell diameter and stated height with a base ring
+  `PL3/4` 6 in wide and anchor rods `AR1` (count stated, minimum 8) by SW-AR-*; the skirt
+  has one access opening 24 in × 36 in. Reason: a 2:1 ellipsoidal head is the shallowest head that
+  carries pressure with the shell's thickness, so it is the common choice; the skirt
+  carries the vessel without a thermal short circuit to the foundation.
+- `SW-EQ-2` Horizontal vessel: shell and 2:1 heads as SW-EQ-1, on two saddles of `PL1/2` web,
+  `PL1/2` base 10 in wide and a wear plate 120° around the shell, at 0.2 L from each
+  tangent line, centreline at the stated elevation; saddle width = D/3 (min 6 in). Reason:
+  saddles near the ends use the head stiffness; a 120° wear plate spreads the load into the
+  shell.
+- `SW-EQ-3` Shell-and-tube exchanger: shell cylinder of stated diameter and length; channel
+  of the same diameter and length D/2 with a flat cover plate of thickness D/12 (min 1 in)
+  at the front; a 2:1 head at the rear; saddles as SW-EQ-2. Reason: envelope only.
+- `SW-EQ-4` Centrifugal pump: a baseplate `PL1` of stated plan size on a 6 in concrete pad;
+  pump casing modeled as a cylinder of stated diameter and width on a pedestal
+  box; motor as a cylinder of stated diameter and length on a box foot; coupling guard a
+  box between. Reason: envelope only.
+- `SW-EQ-5` Flat-bottom storage tank: cylindrical shell of stated diameter, height and
+  thickness on the slab, a cone roof of 3/4 in rise per 12 in of 3/16 in plate, and a
+  `L2x2x1/4` top curb angle. Reason: the shallow cone
+  sheds rain and needs no columns at this diameter.
+- `SW-EQ-6` Vessel platform clips: `PL1/2` gusseted brackets 12 in deep welded to the shell
+  at the platform beam locations. Reason: carries the platform without penetrating the
+  shell.
+- `SW-EQ-7` Equipment weight: from the drawn steel (K-1), empty.
+
+## 26. Pipe supports (`SW-PS-*`) — rules parametric in pipe outside diameter `OD`
+
+Geometry built in stage 5 once `OD` is known; rules fixed here.
+
+- `SW-PS-1` Pipe shoe: a T 4 in high of `PL3/8` web and `PL3/8` base 4 in wide, length 12 in for OD ≤ 8 in and 18 in above, welded to the pipe
+  with intermittent fillets. Reason: 4 in lifts the pipe over the beam flange with room for
+  insulation; a shoe long enough to stay on the beam through thermal travel.
+- `SW-PS-2` Guide: two `L3x3x1/4` × 6 in each side of the shoe with 1/8 in clearance,
+  welded to the beam. Reason: lets the line slide axially and stops it moving sideways.
+- `SW-PS-3` Anchor: the shoe base welded to the beam all around (SW-WD-1).
+- `SW-PS-4` Trunnion (for vertical runs at an elbow): a cylinder of OD × 3/8 in wall
+  (round HSS of the pipe's OD, SW-HSS-*) × 12 in long, welded to the elbow, on a `PL1/2`
+  base. Reason: carries a riser's weight at its lowest elbow.
+- `SW-PS-5` U-bolt (small lines, OD ≤ 2.5 in): `RD3/8` bent around the pipe with 1/16 in
+  clearance, legs through the beam flange with nuts (SW-B-3). Reason: the simplest hold-down
+  for a light line.
+- `SW-PS-6` Cantilever bracket from a column: `W` of depth 6 in (lightest), length as
+  required, welded to the column flange, with a `PL3/8` stiffener; for lines off the rack.
+- `SW-PS-7` Maximum span between supports for a line (checked in stage 5): 20 ft for
+  OD ≥ 3.5 in, 15 ft for OD ≥ 2.375 in, 10 ft for smaller. Reason: deflection of a water-filled
+  line at these spans stays within a visually flat line; small-bore lines need more support.
+
+## 27. Layout (`SW-LAY-*`)
+
+The layout is the generator's drawing of where things are: it carries basis `drawing`.
+The demonstration layout places, inside the stage-2 building:
+
+- `SW-LAY-1` A pipe rack 20 ft wide down the building centreline, tiers at 16 ft and
+  22 ft, bents at 20 ft from x = 20 ft to x = 180 ft.
+- `SW-LAY-2` Equipment rows either side of the rack, each item on a 6 in concrete pad with
+  stated plan dimensions and orientation (equipment list in code, `DEMO_EQUIPMENT`).
+- `SW-LAY-3` Access: a platform below the top head of the two vertical vessels at 23 ft 9 in
+  (two square annuli joined by a bridge, with a three-flight stair tower); a mid-height and a
+  top platform on the column with ladders; caged ladders to the storage tank roofs; a caged
+  ladder to the rack top tier at each end of the rack. (Amended before code from "stair to the
+  rack top": the tier elevations are not multiples of the stair rise, and from "top-head
+  level": the guardrail must clear the rafters near the sidewall.)
+- `SW-LAY-4` Clearances: 3 ft minimum walkway between equipment and the rack columns;
+  7 ft 6 in minimum headroom under any platform or rack beam over a walkway. Reason: a
+  person with a tool bag passes; a tall person with a hard hat walks under.
+
+## 28. Tests required for stage 3
+
+- Grating bar count and weight match the panel size; guardrail top rail at 42 in and posts
+  ≤ 6 ft apart on every platform; stair rise and run uniform and equal to SW-SR-1; ladder
+  rung pitch 12 in and cage present only on climbs over 20 ft; every platform edge not
+  against a wall, vessel, stair or ladder has a guardrail.
+- Rack beam and column sections meet their rule Z; headroom and walkway clearances of
+  SW-LAY-4 hold for the demonstration layout; no equipment envelope intersects another or
+  the rack columns.
+- Every stage-3 rule ID used in code exists in this file; the interior model is plain data
+  with finite transforms and closed meshes.

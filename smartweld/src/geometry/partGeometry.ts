@@ -6,12 +6,14 @@ import { hexHardware } from '../catalogue/parts/hardware';
 import { grooveDims } from '../catalogue/parts/welds';
 import { cfDims, zProfile, csProfile } from '../catalogue/parts/coldFormed';
 import { panelProfile, trimProfile } from '../catalogue/parts/cladding';
-import { extrude, transformMesh, translation, signedVolume, type MeshData, type Profile, type EndCuts } from './mesh';
+import { extrude, transformMesh, translation, signedVolume, mergeMeshes, type MeshData, type Profile, type EndCuts } from './mesh';
+import { multiply as multiply4 } from './transform';
 import { filletAroundProfile } from './sweep';
-import { circle, regularHexagon, type Polygon, type Pt } from './polygon';
+import { circle, regularHexagon, annularSector, rect, type Polygon, type Pt } from './polygon';
+import { GRATING, type BarSeg } from '../catalogue/parts/access';
 import { wProfile, cProfile, lProfile, hssRectProfile, hssRoundProfile, filletProfile, grooveProfile, ringAroundHole, N_CIRCLE } from './profiles';
 
-export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door';
+export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door' | 'equipment';
 export interface Solid { name: string; mesh: MeshData; role: Role }
 export interface PartGeometry { partId: string; solids: Solid[]; profile?: Profile; volume: number }
 
@@ -84,6 +86,28 @@ export function buildGeometry(part: PartSpec): PartGeometry {
       break;
     case 'FILLET_WELD_AROUND':
       solids.push({ name: part.designation, role: 'weld', mesh: filletAroundProfile(part.extra!.outline as Polygon, v(d, 'leg')) });
+      break;
+    case 'GRATING': case 'GRATING_TREAD': {
+      const g = GRATING, bars = part.extra!.bars as BarSeg[], crosses = part.extra!.crosses as BarSeg[];
+      const barMeshes: MeshData[] = [], crossMeshes: MeshData[] = [];
+      for (const b of bars) barMeshes.push(transformMesh(extrude({ outer: rect(b.x0, b.y0 - g.barT / 2, b.x1, b.y0 + g.barT / 2) }, g.barDepth), translation(0, 0, -g.barDepth)));
+      for (const c of crosses) crossMeshes.push(transformMesh(extrude({ outer: rect(c.x0 - g.crossSize / 2, c.y0, c.x0 + g.crossSize / 2, c.y1) }, g.crossSize), translation(0, 0, -g.crossSize)));
+      solids.push({ name: 'bearing bars', role: 'steel', mesh: mergeMeshes(barMeshes) });
+      if (crossMeshes.length) solids.push({ name: 'cross bars', role: 'steel', mesh: mergeMeshes(crossMeshes) });
+      if (part.kind === 'GRATING_TREAD') {
+        const w = v(d, 'width');
+        solids.push({ name: 'nosing', role: 'steel', mesh: transformMesh(extrude({ outer: [{ x: 0, y: 0 }, { x: 1.25, y: 0 }, { x: 1.25, y: g.barT }, { x: g.barT, y: g.barT }, { x: g.barT, y: 1.25 }, { x: 0, y: 1.25 }] }, w), multiply4(translation(0, 0, 0), [0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, -1.25, 0, 1])) });
+        for (const x of [0, w - g.barT]) solids.push({ name: 'carrier plate', role: 'steel', mesh: transformMesh(extrude({ outer: rect(x, 0, x + g.barT, 10) }, 2), translation(0, 0, -2)) });
+      }
+      break;
+    }
+    case 'CAGE_HOOP': {
+      const { R, t, a0, a1 } = part.extra as { R: number; t: number; a0: number; a1: number };
+      solids.push({ name: 'hoop', role: 'steel', mesh: extrude({ outer: annularSector(R, R + t, a0, a1, 48) }, part.length!.value) });
+      break;
+    }
+    case 'VESSEL_V': case 'VESSEL_H': case 'EXCHANGER': case 'PUMP': case 'TANK':
+      for (const s of part.extra!.solids as { name: string; mesh: MeshData }[]) solids.push({ name: s.name, role: 'equipment', mesh: s.mesh });
       break;
     case 'CONCRETE':
       solids.push({ name: part.designation, role: 'concrete', mesh: extrude(profile!, part.length!.value) });

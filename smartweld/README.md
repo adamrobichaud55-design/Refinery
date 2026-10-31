@@ -9,7 +9,7 @@ Clean-room build. Read `DESIGN_BASIS.md` (every rule with its reason) and `PROVE
 |-------|---------------------------------------------------------|---------|
 | 1     | Structural sections, plates, connection hardware, welds | done    |
 | 2     | Building shell (frame, cold-formed framing, cladding, roof, doors) | done |
-| 3     | Interior: equipment, pipe rack, platforms, access steel  | pending (needs eCFR access) |
+| 3     | Interior: equipment, pipe rack, platforms, access steel  | done (SmartWeld rules only; no regulation cited, by user decision) |
 | 4     | Valves                                                  | pending |
 | 5     | Piping and routing                                      | pending (needs user decision on pipe/flange interface sourcing) |
 | 6     | Ground-truth export                                     | pending |
@@ -36,7 +36,7 @@ src/core               units, dimension basis tags, physical constants
 src/catalogue          designation parser and part rules → PartSpec (plain data)
 src/geometry           profiles, extrusion, transforms → mesh arrays (plain data)
 src/scene              catalogue list and demonstration assemblies (plain data)
-src/generator          building shell generator → placed parts (plain data) and bill of materials
+src/generator          building shell and interior generators → placed parts (plain data) and bill of materials
 src/viewer             three.js browser viewer (rendering only)
 tests                  vitest rule/geometry/audit tests
 tools/screenshot.mjs   Playwright verification
