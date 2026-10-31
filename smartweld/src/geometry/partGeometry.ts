@@ -16,7 +16,7 @@ import { revolve } from './mesh';
 import { wProfile, cProfile, lProfile, hssRectProfile, hssRoundProfile, filletProfile, grooveProfile, ringAroundHole, N_CIRCLE } from './profiles';
 const arcPts = (r: number, a0: number, a1: number, n: number) => Array.from({ length: n + 1 }, (_, i) => { const a = a0 + ((a1 - a0) * i) / n; return { x: r * Math.cos(a), y: r * Math.sin(a) }; });
 
-export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door' | 'equipment' | 'casting' | 'closure' | 'stem' | 'polymer';
+export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door' | 'equipment' | 'casting' | 'closure' | 'stem' | 'polymer' | 'operator';
 export interface Solid { name: string; mesh: MeshData; role: Role }
 export interface PartGeometry { partId: string; solids: Solid[]; profile?: Profile; volume: number }
 

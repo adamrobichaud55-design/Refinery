@@ -26,15 +26,17 @@ const targets = [
   ['v-NEEDLE', '#valve:NEEDLE:0.5:P2400'], ['v-PSV', '#valve:PSV:3:P300'], ['v-PSV-section', '#valve:PSV:3:P300;section'], ['v-CONTROL', '#valve:CONTROL:4:P300'], ['v-CONTROL-section', '#valve:CONTROL:4:P300;section'],
   ['Z-purlin', '#entry:' + encodeURIComponent('Z10x2.5x5/64 (purlin)')], ['panel', '#entry:' + encodeURIComponent('Wall/roof panel PNL1.25x36')], ['ridge-cap', '#entry:' + encodeURIComponent('Ridge cap 12x12 (1:12)')], ['weld-around', '#entry:' + encodeURIComponent('Fillet all around W10x49')],
 ];
+const only = process.argv[3];   // optional name prefix filter
+const run = only ? targets.filter(([n]) => n.startsWith(only)) : targets;
 const browser = await chromium.launch({ args: ['--use-gl=swiftshader', '--enable-unsafe-swiftshader'] });
 const page = await browser.newPage({ viewport: { width: 1400, height: 860 } });
 const errors = [];
 page.on('pageerror', e => errors.push(String(e)));
 page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
-for (const [name, hash] of targets) {
+for (const [name, hash] of run) {
   await page.goto(base + hash, { waitUntil: 'load' });
   await page.waitForFunction(() => window.__smartweldReady === true, null, { timeout: 120000 });
-  await page.waitForTimeout(name.startsWith('building') || name.startsWith('plant') ? 5000 : 600);
+  await page.waitForTimeout(name.startsWith('building') || name.startsWith('plant') ? 5000 : name.startsWith('v-') ? 2500 : 600);
   const visibleErr = await page.$eval('#err', el => getComputedStyle(el).display !== 'none' ? el.textContent : '');
   if (visibleErr) errors.push(`${name}: ${visibleErr}`);
   const title = await page.$eval('#info h2', el => el.textContent);

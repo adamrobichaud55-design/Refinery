@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
+import { toCreasedNormals } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
 import { ENTRIES } from '../scene/catalogueList';
 import { columnBaseAssembly, type Assembly } from '../scene/assemblies';
 import { makePart, makeValve, VALVE_TYPES, SIZE_SERIES, CLASS_SERIES, isOffered, type PartSpec, type ValveType, type PipeClass } from '../catalogue';
@@ -18,6 +20,8 @@ const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffe
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 viewEl.appendChild(renderer.domElement);
 const scene = new THREE.Scene();
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.85;
+scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture;   // soft studio reflections
 scene.background = new THREE.Color(0xdfe6ee);
 const camera = new THREE.PerspectiveCamera(50, 1, 0.5, 20000);
 const controls = new OrbitControls(camera, renderer.domElement);
@@ -38,23 +42,26 @@ function setSection(on: boolean) {
 
 const MATERIALS: Record<Role, THREE.Material> = {
   steel: new THREE.MeshStandardMaterial({ color: 0x6f7b8a, metalness: 0.35, roughness: 0.55 }),
-  hardware: new THREE.MeshStandardMaterial({ color: 0x3b4450, metalness: 0.5, roughness: 0.45 }),
+  hardware: new THREE.MeshStandardMaterial({ color: 0x2e3238, metalness: 0.6, roughness: 0.4 }),
   weld: new THREE.MeshStandardMaterial({ color: 0xc8a24a, metalness: 0.3, roughness: 0.6 }),
   sheet: new THREE.MeshStandardMaterial({ color: 0xb8c4cf, metalness: 0.5, roughness: 0.4, side: THREE.DoubleSide }),
   concrete: new THREE.MeshStandardMaterial({ color: 0xb9b4a8, roughness: 0.95 }),
   door: new THREE.MeshStandardMaterial({ color: 0x8a4b3c, roughness: 0.8 }),
   equipment: new THREE.MeshStandardMaterial({ color: 0x9aa7a0, metalness: 0.2, roughness: 0.6 }),
-  casting: new THREE.MeshStandardMaterial({ color: 0x5b7391, metalness: 0.3, roughness: 0.7, side: THREE.DoubleSide }),
-  closure: new THREE.MeshStandardMaterial({ color: 0xb08d57, metalness: 0.5, roughness: 0.5, side: THREE.DoubleSide }),
-  stem: new THREE.MeshStandardMaterial({ color: 0xc9ced4, metalness: 0.8, roughness: 0.3, side: THREE.DoubleSide }),
-  polymer: new THREE.MeshStandardMaterial({ color: 0x2b2b2b, roughness: 0.9, side: THREE.DoubleSide }),
+  casting: new THREE.MeshStandardMaterial({ color: 0x56606a, metalness: 0.2, roughness: 0.6, side: THREE.DoubleSide }),   // F-10 grey paint
+  closure: new THREE.MeshStandardMaterial({ color: 0xa9adb2, metalness: 0.85, roughness: 0.3, side: THREE.DoubleSide }),
+  stem: new THREE.MeshStandardMaterial({ color: 0xb8bcc1, metalness: 0.9, roughness: 0.25, side: THREE.DoubleSide }),
+  polymer: new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9, side: THREE.DoubleSide }),
+  operator: new THREE.MeshStandardMaterial({ color: 0xb3261e, metalness: 0.1, roughness: 0.45, side: THREE.DoubleSide }),   // F-10 red handwheels and levers
 };
 
 function toBufferGeometry(m: MeshData): THREE.BufferGeometry {
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(m.positions, 3));
   g.setIndex(m.indices);
-  const flat = g.toNonIndexed(); flat.computeVertexNormals(); return flat;
+  if (m.normals) { g.setAttribute('normal', new THREE.Float32BufferAttribute(m.normals, 3)); return g; }   // cast parts: exact surface normals
+  if (m.indices.length / 3 > 600000) { const flat = g.toNonIndexed(); flat.computeVertexNormals(); return flat; }   // whole-plant views: flat shading for speed
+  return toCreasedNormals(g.toNonIndexed(), (35 * Math.PI) / 180);   // parts: smooth curved surfaces, hard edges kept
 }
 function resize() { const w = viewEl.clientWidth, h = viewEl.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
 window.addEventListener('resize', resize);
@@ -74,14 +81,16 @@ const geomOf = (p: PartSpec) => { let g = geoCache.get(p); if (!g) { g = buildGe
 
 function renderInstances(list: { part: PartSpec; transform: Mat4 }[]): THREE.Box3 {
   group.clear();
-  const byRole = new Map<Role, MeshData[]>();
+  const byRole = new Map<string, MeshData[]>();                       // grouped by finish and by whether exact normals are carried
   for (const inst of list) {
     for (const s of geomOf(inst.part).solids) {
-      const arr = byRole.get(s.role) ?? []; arr.push(transformMesh(s.mesh, inst.transform)); byRole.set(s.role, arr);
+      const key = `${s.role}|${s.mesh.normals ? 'n' : 'f'}`;
+      const arr = byRole.get(key) ?? []; arr.push(transformMesh(s.mesh, inst.transform)); byRole.set(key, arr);
     }
   }
   const box = new THREE.Box3();
-  for (const [role, meshes] of byRole) {
+  for (const [key, meshes] of byRole) {
+    const role = key.split('|')[0] as Role;
     const mesh = new THREE.Mesh(toBufferGeometry(mergeMeshes(meshes)), MATERIALS[role]);
     mesh.name = role; group.add(mesh); box.expandByObject(mesh);
   }

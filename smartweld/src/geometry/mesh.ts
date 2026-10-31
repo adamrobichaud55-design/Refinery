@@ -4,6 +4,7 @@ import { earClip, ensureCCW, signedArea, type Polygon } from './polygon';
 export interface MeshData {
   positions: number[]; // xyz triples
   indices: number[];   // triangle index triples, CCW outward
+  normals?: number[];  // optional per-vertex unit normals (exact surface normals of cast parts, for display)
 }
 
 /** A profile is an outer polygon and optionally an inner polygon with the same vertex count (a ring). */
@@ -98,13 +99,24 @@ export function transformMesh(m: MeshData, t: Mat4): MeshData {
       t[2] * x + t[6] * y + t[10] * z + t[14],
     );
   }
-  return { positions, indices: m.indices.slice() };
+  const out: MeshData = { positions, indices: m.indices.slice() };
+  if (m.normals) {                                  // rigid transforms only: rotate the normals
+    const n: number[] = [];
+    for (let i = 0; i < m.normals.length; i += 3) { const x = m.normals[i], y = m.normals[i + 1], z = m.normals[i + 2]; n.push(t[0] * x + t[4] * y + t[8] * z, t[1] * x + t[5] * y + t[9] * z, t[2] * x + t[6] * y + t[10] * z); }
+    out.normals = n;
+  }
+  return out;
 }
 export const translation = (x: number, y: number, z: number): Mat4 => [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, x, y, z, 1];
 export function mergeMeshes(list: MeshData[]): MeshData {
-  const positions: number[] = [], indices: number[] = [];
-  for (const m of list) { const off = positions.length / 3; positions.push(...m.positions); for (const i of m.indices) indices.push(i + off); }
-  return { positions, indices };
+  const positions: number[] = [], indices: number[] = [], all = list.length > 0 && list.every(m => m.normals), normals: number[] = [];
+  for (const m of list) {
+    const off = positions.length / 3;
+    for (let i = 0; i < m.positions.length; i++) positions.push(m.positions[i]);   // no spread: large meshes overflow the call stack
+    for (const i of m.indices) indices.push(i + off);
+    if (all) for (let i = 0; i < m.normals!.length; i++) normals.push(m.normals![i]);
+  }
+  return all ? { positions, indices, normals } : { positions, indices };
 }
 
 /**

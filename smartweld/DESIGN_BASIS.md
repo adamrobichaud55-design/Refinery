@@ -792,10 +792,12 @@ on the closure member and the effort a person can apply. Every internal is a rea
 - `SW-VLV-1` Identification: `{TYPE}{NPS}-{class}` with TYPE one of `GATE`, `GLOBE`, `CHECK`,
   `BALL`, `BFLY`. Bore D = the pipe bore of the class (full port). Ends: integral flanges with
   the SW-FLG pattern of the size and class (BFLY is a wafer body between pipe flanges).
-- `SW-VLV-2` Body wall: t_b = roundup( max( 1/4 in, P D_c / (2 S_c) + 1/8 in ), 1/16 in ) with
+- `SW-VLV-2` Body wall: t_b = roundup( max( 1/4 in + D/50, P D_c / (2 S_c) + 1/8 in ), 1/16 in ) with
   S_c = F_y / 2.5 = 14,400 psi ("Grade 36 casting", drawing) and D_c the body cavity diameter.
   Reason: hoop stress with a larger factor for a casting (porosity, surface defects) plus a
-  casting allowance; 1/4 in is the thinnest pourable wall.
+  casting allowance; the minimum grows with size (1/4 in + D/50) because molten metal must run
+  further through a larger mould before it freezes, so large castings cannot be poured as thin
+  as small ones. (Amended with the form rules below.)
 - `SW-VLV-3` Materials (drawing): body, bonnet, wedge/disc of Grade 36 casting; stems and
   seats of "Grade 60 bar" (F_y = 60 ksi); packing and soft seats "polymer" (non-steel); gaskets
   as SW-FLG-2.
@@ -807,6 +809,17 @@ on the closure member and the effort a person can apply. Every internal is a rea
   6 in on a 12 in handwheel. Reason: a person leans into a wheel with both hands but pulls a
   lever with one; larger wheels do not fit; beyond that, gears. (Amended on user review of
   stage 4: a one-hand limit made wheels oversized.)
+  Gear input handwheel: 8 in when the output torque is at most 10,000 lb·in, 12 in up to
+  50,000 lb·in, 18 in above; the ratio is the smallest whole number keeping the rim pull at
+  or below 80 lbf on that wheel. Reason: a gearbox grows with the torque it carries, and a small
+  gearbox cannot carry a large wheel; the ratio, not the wheel, absorbs the effort. (Amended on
+  user review: a 12 in wheel on every gearbox dwarfed small valves.)
+  Lever form: a flat handle tapering from 1.2 × to 0.8 × its root width with a rounded end, a
+  polymer grip sleeve over the last 4 in of the bar, a boss on the stem; on butterfly valves a
+  spring latch at the root engaging a toothed notch plate (ten teeth over the quarter turn); on
+  plug valves the handle carries a square socket that fits over the plug head. Reason: a lever
+  is a stamped or forged handle shaped to the hand; the notch plate holds the disc at a set
+  opening; the socket transmits the torque to the square head.
   Gear operator form: a mounting spool, a round gear housing of radius max(3 in, 2.5 d_s) and
   height max(3 in, 1.6 d_s + 1 in) with a rounded top edge, a worm tube of radius 0.35 × the
   housing radius whose axis is horizontal and offset 0.7 × the housing radius (tangent to the
@@ -1084,6 +1097,78 @@ Control valve, cage-guided globe with pneumatic diaphragm actuator (`SW-VLV-CV-*
   the yoke side. (Amended on user review: a deep case is not how an actuator is built; the
   spring lives in a barrel.) Reason: the actuator must close the plug against the full pressure with the
   supply air available; the spring returns it on air failure.
+
+## 32A. Valve form (`SW-VLV-F-*`)
+
+Basis (PROVENANCE P-39): the generic form that every valve of a type shares — the
+arrangement of body, bonnet, yoke, cover and operator that any engineer would describe for
+that type — is common engineering knowledge and is drawn as such. No specific product's
+design, styling, catalogue drawing or dimension is used; every size still comes from the
+rules of sections 29–32.
+
+- `F-0` Cast parts (bodies, bonnets, yokes, covers, adapters) are modeled as smooth blends of
+  simple solids with blend radius max(t_b, 0.06 D), hollowed by their internal passages, so
+  section views show the real wall. They are meshed by the SmartWeld polygoniser
+  (`src/geometry/sdf.ts`) at a cell no larger than half the body wall where the cell cap
+  allows; vertices are snapped onto the true surface and carry its exact normal; free edges
+  of cast flanges and yoke arms are rounded by min(0.3 in, 0.3 × the part thickness) because a
+  casting has no sharp edges; tessellation does not change the geometry rules. Machined parts (flanges with bolt
+  holes, stems, seats, balls, discs, bolts) are modeled exactly.
+- `F-1` Bolted joints of castings (bonnets, covers, end connectors) are drawn with the head on
+  the cover side and the nut on the body side; the part of the shank inside the flanges is
+  not drawn (no overlap of solids); holes in cast joint flanges are not cut.
+- `F-2` Gate: run tube with hubs to the end flanges; above and below the run, a chamber of
+  elliptic section, long across the flow (inner semi-axes 0.7 D across, 0.3 D along the
+  flow), rising 0.6 D above the bore to an oval body–bonnet flange whose bolts lie on an
+  ellipse 1.25 d + t_b outside the chamber; rounded bottom 0.15 D below the bore. Bonnet: oval
+  flange, then a body tapering to the round stuffing box over max(0.75 D, the wedge travel
+  above the body chamber), and a cast yoke integral with the bonnet (G-4). Gland: a flat
+  gland flange of stadium outline with two swing bolts. Reason: the wedge is wide across the
+  flow and thin along it, so the chamber is oval; the yoke is cast with the bonnet so the
+  stem nut is held true to the stem.
+- `F-3` Globe (T-pattern) and control-valve body: run tubes into a spherical bulb of radius
+  0.85 D + t_b; an S-shaped partition (horizontal plate with the seat opening, a wall rising
+  from it on the inlet side and a wall falling from it on the outlet side); a round neck to
+  the bonnet flange; bonnet and yoke as F-2 with round flanges. Reason: the flow must turn
+  under the partition, up through the seat and out over it, and a sphere is the casting that
+  encloses that path with the least metal.
+- `F-4` Y-globe: the F-3 bulb with the neck, bonnet, yoke and seat plate inclined 45° toward the
+  inlet; the seat plate is perpendicular to the stem. Angle globe: bulb with the inlet on the
+  run axis and the outlet straight down, seat at the mouth of the outlet; no partition.
+- `F-5` Swing check: run tubes into a chamber of elliptic section long along the flow (inner
+  semi-axes 0.62 D across, 0.75 D along) with a rounded bottom, rising to a round bolted cover
+  that is a flat plate with a raised centre; hinge-pin bosses on both sides of the chamber.
+  Lift check: the F-3 bulb and partition closed by a small domed cap. No operator. Reason: the
+  disc must swing clear into the chamber, which therefore extends along the flow.
+- `F-6` Floating ball: a cast body that is a sphere of radius (0.85 D + t_b) around the ball
+  cavity, blended into the integral inlet end and into a joint collar of diameter D_b
+  (BT-1) on the outlet side; a bolted end connector (flange of diameter D_b and a neck
+  tapering to the pipe flange) studded into the collar; a flat top pad with the stem and a
+  flat-bar lever with a stop. Trunnion ball: the forged construction of BT-1.
+- `F-7` Butterfly (wafer, lug): a ring body with a cylindrical neck rising max(2-1/2 in,
+  0.25 D) above the ring to a square top plate (side 2.6 × the neck radius) that carries the
+  lever and notch plate or the gearbox, and a short bottom boss; the wafer body has four
+  locating ears with clearance holes at four of the line studs; the lugged body has bosses of
+  diameter 2 d at every line stud, drilled through. Double-offset: the same neck and boss on a body between
+  two integral flanges. Reason: the neck lifts the operator clear of pipe insulation.
+- `F-8` Plug: a cast body that is a rounded square prism (superellipse exponent 4) around the
+  taper, blended into the run tubes, closed by a round gland cover; square wrench head and a
+  wrench lever. Diaphragm: run tubes into a rounded square body with a low weir across the
+  bore, a square body flange and a square bonnet flange with four corner bolts clamping the
+  diaphragm, and a dome bonnet (the intersection of the square prism and an ellipsoid, so the
+  dome is round on top and square at its base) with a top boss. Reason: the diaphragm and its
+  compressor are rectangular in plan where they meet the weir.
+- `F-9` Safety valve: a cast angle body that blends the inlet neck (from below), a bowl around
+  the nozzle and the outlet neck (to the side); a bonnet that tapers from its bolted base
+  flange to the cap; a screwed cap with a lifting lever of length max(4 in, 3 × the cap radius)
+  pivoted on the cap and hanging 30° below horizontal. Control valve actuator: two dished
+  cases of total height about 0.4 D_a, the spring force carried by a ring of six short springs
+  inside the lower case (each designed by PSV-1 for F_a / 6), a cast yoke of two arms from the
+  bonnet to the lower case, a positioner box on the yoke. Reason: a ring of short springs gives
+  the actuator force within a shallow case. The springs stand on the case floor where it lies
+  at their radius (0.25 D_a), so they stay inside the curved case.
+- `F-10` Finishes (display only, not part of the ground truth): castings painted grey,
+  handwheels and levers painted red, stems and seats bright metal, bolts dark, polymer black.
 
 ## 33. Tests required for stage 4
 
