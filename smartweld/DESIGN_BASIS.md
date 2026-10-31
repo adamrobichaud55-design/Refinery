@@ -751,12 +751,18 @@ temperature; stresses are in psi unless stated.
   n is the smallest multiple of 4 with n (π/4) d² F_u/3 ≥ W; bolt circle BC = max( RF OD + d
   + 1/4 in, 3 d n / π ), where the raised face OD = G + w_g + 1/8 in (the circle grows when
   the studs would otherwise crowd); n is then raised in fours until the pitch π BC / n ≤ 5 d;
-  flange OD = BC + 3 d (edge distance 1.5 d, SW-B-9). Of all d, the one giving the smallest
-  flange OD is used (the smaller d on a tie). Reason: a third of the tensile strength leaves
+  flange OD = BC + 3 d (edge distance 1.5 d, SW-B-9). The stud size is the smallest d whose
+  count does not exceed n_max = max(4, 4 ⌈S / 4⌉), one stud per inch of joint size S rounded
+  up to fours, where S is the larger of NPS and the bore of the joint (body and bonnet joints
+  seal a cavity larger than the pipe) (if none does, the d giving the smallest
+  flange OD). Reason for n_max: a joint is tightened by hand in a star pattern; beyond about
+  one stud per inch of nominal size the extra studs only add assembly time, and many small
+  studs on a large flange twist off before they stretch, so the stud is made larger instead.
+  (Amended on user review: the smallest-OD choice put two dozen 1/2 in studs on 12 in
+  flanges.) Reason: a third of the tensile strength leaves
   margin for preload scatter and cyclic load; a multiple of four keeps the pattern symmetric
   about both axes; pitch ≥ 3 d clears the nuts, ≤ 5 d keeps the gasket evenly loaded between
-  bolts; 1/4 in clears a socket from the raised face; the most compact flange is the one a
-  manufacturer would make. (Amended while extending to the P1200–P4800 classes: with the bolt
+  bolts; 1/4 in clears a socket from the raised face. (Amended while extending to the P1200–P4800 classes: with the bolt
   circle pinned to the raised face no stud size could hold the required count at 3 d pitch.)
 - `SW-FLG-5` Thickness: the ring carries the bolt load as a moment about the hub with arm
   a = (BC − G)/2. The load used is the bolting's preload capacity W_b = 1.5 n (π/4) d² F_u/3,
@@ -798,9 +804,17 @@ on the closure member and the effort a person can apply. Every internal is a rea
   diameter D_hw = roundup( 2 T / 80 lbf, 2 in ), minimum 6 in, maximum 30 in; lever length
   L = roundup( T / 50 lbf, 2 in ), minimum 6 in, maximum 24 in. If the limit is exceeded a
   gear operator is fitted: ratio = the smallest whole number with input torque ≤ 80 lbf ×
-  6 in on a 12 in handwheel, modeled as a box with that handwheel. Reason: a person leans
-  into a wheel with both hands but pulls a lever with one; larger wheels do not fit; beyond
-  that, gears. (Amended on user review of stage 4: a one-hand limit made wheels oversized.)
+  6 in on a 12 in handwheel. Reason: a person leans into a wheel with both hands but pulls a
+  lever with one; larger wheels do not fit; beyond that, gears. (Amended on user review of
+  stage 4: a one-hand limit made wheels oversized.)
+  Gear operator form: a mounting spool, a round gear housing of radius max(3 in, 2.5 d_s) and
+  height max(3 in, 1.6 d_s + 1 in) with a rounded top edge, a worm tube of radius 0.35 × the
+  housing radius whose axis is horizontal and offset 0.7 × the housing radius (tangent to the
+  wheel), bearing caps at both ends, the input shaft and the 12 in handwheel on one end, and a
+  position indicator on top of quarter-turn units. Reason: a worm gear is how a slow,
+  self-locking quarter turn or a high-torque multi-turn drive is obtained by hand; the housing
+  is round because the wheel inside it is. (Amended on user review: a plain box was not a
+  gearbox.)
 - `SW-VLV-5` Rising stems (gate, globe): thrust F from the type rule; stem diameter
   d_s = roundup( max( √(4 F / (π · 0.25 F_y,stem)), D/8, 1/2 in ), 1/16 in ). Thread: a power
   thread with pitch p = d_s / 5 and depth 0.3 p; stem nut height 1.5 d_s. Operating torque
@@ -937,9 +951,10 @@ Ball, floating (`SW-VLV-B-*`). Sizes 1/2–6, classes up to P600 (the whole pres
 bears on the downstream polymer seat; above this it would extrude).
 
 - `B-1` Ball diameter 1.5 D with a through bore D; two polymer seat rings of section 0.1 D ×
-  0.1 D at mean diameter 1.2 D; body cavity 1.5 D + 2 × 0.1 D wide inside a spherical body
-  wall of radius (0.75 D + 0.1 D + t_b) blending into the end necks; end cap bolted with hex
-  bolts per SW-FLG-3/4 and SW-VLV-7 on the cavity gasket. Reason: the ball must cover the seat with margin in every
+  0.1 D at mean diameter 1.2 D; two-piece body: a centre body built as BT-1 (cylinder of
+  diameter D_b around a cavity 1.5 D + 2 × 0.1 D) with the inlet end integral (a solid
+  collar of the adapter flange thickness and the same taper) and the outlet end a bolted
+  adapter studded into the body as BT-1. (Amended on user review, as BT-1.) Reason: the ball must cover the seat with margin in every
   position; the seats carry the ball against the downstream seat.
 - `B-2` Torque T = P (π/4) (1.2 D)² μ_s (0.75 D) × 1.2 with seat friction μ_s = 0.1 on polymer,
   20 % for the stem seal. Stem diameter d_s = roundup( max( (16 T / (π · 0.3 F_y,stem))^(1/3),
@@ -948,8 +963,20 @@ bears on the downstream polymer seat; above this it would extrude).
 
 Ball, trunnion-mounted (`SW-VLV-BT-*`). Sizes 2–48, all classes within SW-VLV-11.
 
-- `BT-1` Three-piece body: a spherical centre body (as B-1) with the stem boss above and a
-  trunnion boss with a bolted cover below; two end caps bolted with hex bolts per SW-FLG-3/4. Ball 1.5 D, carried on the
+- `BT-1` Three-piece forged body: a centre body that is a thick cylinder along the flow axis,
+  bore = the cavity (1.5 D + 2 × 0.15 D), length = cavity + 1 in, outside diameter
+  D_b = BC_j + 2.5 d_j where BC_j and d_j are the joint bolting of SW-FLG-3/4 applied to a
+  gasket on the cavity bore; 10 % chamfers on its outer edges; a flat stem pad on top and a
+  trunnion pad underneath (diameter max(d_s + 3 in, 0.4 D)), the trunnion closed by a cover
+  with four 3/8 in bolts. Two end adapters, each one piece: a flange of diameter D_b clamped to
+  the body face by studs tapped 1.5 d_j into the body (nut on the adapter, stick-out d_j/4),
+  then a curved taper, 0.45 × its radial drop long, from just inside the nut circle down to a
+  neck of radius D/2 + 2 t_b, then the pipe end flange (SW-FLG). Face-to-face = body + 2 × (gasket + adapter). Reason: a
+  forged body is a cylinder because it is machined from a bar or ring forging; studding the
+  joint into the body wall instead of adding an outward flange keeps the joint diameter equal
+  to the body, which is how these bodies are built; the adapter tapers because the bolt load
+  must be carried into the much smaller pipe neck. (Amended on user review: the earlier
+  flange-to-flange joint stood proud of a narrow body and was not a real construction.) Ball 1.5 D, carried on the
   stem and a bottom trunnion of diameter d_s in bearings; seat carriers (rings of section
   0.15 D × 0.15 D) pressed onto the ball by coil springs. Reason: the trunnions take the
   end-force, so the seats only have to seal, which is what makes large and high-pressure ball

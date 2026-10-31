@@ -56,15 +56,19 @@ export function designFlange(NPS: number, cls: PipeClass, boreOverride?: number,
   const Wseat = Math.PI * G * wg * y, Wop = (Math.PI / 4) * G * G * P + Math.PI * G * wg * m * P;           // SW-FLG-3
   const W = Math.max(Wseat, Wop);
   const rfOD = G + wg + 1 / 8, rfH = 1 / 16;
-  let chosen: { d: number; n: number; BC: number; OD: number } | null = null;
-  for (let d = 0.5; d <= 4 + 1e-9; d += 1 / 8) {                                                             // SW-FLG-4
+  type Pick = { d: number; n: number; BC: number; OD: number };
+  let chosen: Pick | null = null, compact: Pick | null = null;
+  const nMax = Math.max(4, 4 * Math.ceil(Math.max(NPS, bore) / 4));                                                   // counted on the joint bore (body and bonnet joints are larger than the pipe)                                                                  // SW-FLG-4 stud count limit
+  for (let d = 0.5; d <= 4 + 1e-9; d += 1 / 8) {
     const cap = (STUD_FU * 1000 / 3) * (Math.PI / 4) * d * d;
     let n = roundUpTo(Math.max(4, Math.ceil(W / cap)), 4);
     let BC = Math.max(rfOD + d + 0.25, (3 * d * n) / Math.PI);
     while ((Math.PI * BC) / n > 5 * d) { n += 4; BC = Math.max(rfOD + d + 0.25, (3 * d * n) / Math.PI); }
     const OD = BC + 3 * d;
-    if (!chosen || OD < chosen.OD - 1e-9) chosen = { d, n, BC, OD };
+    if (!compact || OD < compact.OD - 1e-9) compact = { d, n, BC, OD };
+    if (n <= nMax) { chosen = { d, n, BC, OD }; break; }
   }
+  if (!chosen) chosen = compact;
   if (!chosen) throw new Error('SW-FLG-4: no stud size fits');
   const { d, n, BC, OD: flOD } = chosen;
   const Wb = 1.5 * n * (Math.PI / 4) * d * d * (STUD_FU * 1000 / 3);                                        // SW-FLG-5: preload capacity

@@ -162,15 +162,27 @@ function lever(b: ValveSolid[], op: Operator, y: number, ds: number, D: number) 
   push(b, `lever ${L} in`, mergeMeshes([box(-w / 2, y, 0, w / 2, y + t, L), cylY(Math.max(ds, 0.6) + 0.2, y - 0.5, y + t + 0.5), box(-w / 2, y - 0.5, -1.5, w / 2, y + 0.5, 1.5)]));
   push(b, 'lever grip', transformMesh(cylZ(0.5, L - 4, L + 1), translate(0, y + t + 0.5, 0)), 'polymer', 'polymer');
 }
-function gearOperator(b: ValveSolid[], op: Operator, y: number, ds: number) {
-  const s = Math.max(4, 3 * ds), yc = y + 0.6 * s;
-  push(b, `gear operator ${op.ratio}:1`, box(-s, y, -s, s, y + 1.2 * s, s));
-  push(b, 'input shaft', transformMesh(cylZ(0.5, s, s + 3), multiply(translate(0, yc, 0), toX)), 'stem', BAR);
-  const parts: MeshData[] = [transformMesh(torusY(6 - 0.6, 0.6, 0), multiply(translate(s + 3, yc, 0), rotateZ(-Math.PI / 2))), transformMesh(cylZ(1, s + 2, s + 4), multiply(translate(0, yc, 0), toX))];
-  for (let i = 0; i < 4; i++) parts.push(transformMesh(cylZ(0.3, 0.8, 5.4), multiply(translate(s + 3, yc, 0), rotateX((2 * Math.PI * i) / 4))));
+function gearOperator(b: ValveSolid[], op: Operator, y: number, ds: number, quarterTurn = false) {   // SW-VLV-4 gear form
+  const Rg = Math.max(3, 2.5 * ds), Hg = Math.max(3, 1.6 * ds + 1), rr = 0.15 * Rg, yb = y + 1.5;
+  push(b, 'gearbox mounting spool', ringY(0.6 * Rg, ds / 2 + 0.05, y, yb));
+  const hs: { r: number; z: number }[] = [{ r: 0, z: yb }, { r: Rg, z: yb }];
+  for (let i = 0; i <= 6; i++) { const a = (Math.PI / 2) * (i / 6); hs.push({ r: Rg - rr + rr * Math.cos(a), z: yb + Hg - rr + rr * Math.sin(a) }); }
+  hs.push({ r: 0, z: yb + Hg });
+  push(b, `gearbox housing ${op.ratio}:1`, revolveY(hs));
+  const yw = yb + Hg / 2, zw = 0.7 * Rg, rw = 0.35 * Rg, xw = 0.95 * Rg;
+  push(b, 'worm tube', transformMesh(cylZ(rw, -xw, xw), multiply(translate(0, yw, zw), toX)));
+  for (const sx of [-1, 1]) push(b, 'worm bearing cap', transformMesh(cylZ(rw + 0.2, sx > 0 ? xw : -xw - 0.5, sx > 0 ? xw + 0.5 : -xw), multiply(translate(0, yw, zw), toX)));
+  push(b, 'input shaft', transformMesh(cylZ(0.5, xw + 0.5, xw + 3), multiply(translate(0, yw, zw), toX)), 'stem', BAR);
+  const xh = xw + 3, parts: MeshData[] = [transformMesh(torusY(6 - 0.6, 0.6, 0), multiply(translate(xh, yw, zw), rotateZ(-Math.PI / 2))), transformMesh(cylZ(1, xh - 1, xh + 1), multiply(translate(0, yw, zw), toX))];
+  for (let i = 0; i < 4; i++) parts.push(transformMesh(cylZ(0.3, 0.8, 5.4), multiply(translate(xh, yw, zw), rotateX((2 * Math.PI * i) / 4))));
   push(b, 'input handwheel 12 in', mergeMeshes(parts));
+  if (quarterTurn) {
+    push(b, 'position indicator', cylY(0.4 * Rg, yb + Hg, yb + Hg + 0.6));
+    push(b, 'indicator pointer', box(-0.15, yb + Hg + 0.6, -0.35 * Rg, 0.15, yb + Hg + 0.9, 0.35 * Rg), 'polymer', 'polymer');
+  }
 }
 const operate = (b: ValveSolid[], op: Operator, y: number, ds: number, D: number, clearD = 0) => { if (op.kind === 'gear') gearOperator(b, op, y, ds); else if (op.kind === 'lever') lever(b, op, y, ds, D); else if (op.kind === 'handwheel') handwheel(b, op, y, ds, clearD); };
+const operateQT = (b: ValveSolid[], op: Operator, y: number, ds: number, D: number) => { if (op.kind === 'gear') gearOperator(b, op, y, ds, true); else if (op.kind === 'lever') lever(b, op, y, ds, D); };
 
 // ---- shared body builders -------------------------------------------------------------------------------
 interface Common { NPS: number; cls: PipeClass; P: number; D: number; tb: number; f: FlangeDesign; F2F: number; hHub: number; wBody: number }
@@ -401,6 +413,43 @@ const buildDCheck: Build = (b, NPS, cls, dims) => {
   return { c, op: { kind: 'none', rimForce: 0, T: 0 } };
 };
 
+const mirrorZ = (m: MeshData): MeshData => { const p = m.positions.slice(); for (let i = 2; i < p.length; i += 3) p[i] = -p[i]; const idx = m.indices.slice(); for (let k = 0; k < idx.length; k += 3) { const t = idx[k + 1]; idx[k + 1] = idx[k + 2]; idx[k + 2] = t; } return { positions: p, indices: idx }; };
+/** ball-valve body of BT-1: thick cylinder along z, bore 2Rc, OD Db, from −zj to zj, chamfered outer edges */
+function forgedBody(Rc: number, Db: number, zj: number): MeshData {
+  const ch = 0.1 * (Db / 2 - Rc);
+  return revolve([{ r: Rc, z: -zj }, { r: Db / 2 - ch, z: -zj }, { r: Db / 2, z: -zj + ch }, { r: Db / 2, z: zj - ch }, { r: Db / 2 - ch, z: zj }, { r: Rc, z: zj }], N);
+}
+/** one end of a ball valve on +z (BT-1 / B-1): bolted adapter (gasket, studs tapped into the body, adapter flange) or integral collar, then a curved taper, neck and pipe flange. */
+function ballEnd(c: Common, fe: FlangeDesign, zj: number, Db: number, bolted: boolean): { solids: ValveSolid[]; zFace: number } {
+  const { D, tb, f } = c, out: ValveSolid[] = [], h = hexHardware(fe.d);
+  const z1 = zj + fe.gasketT + fe.tf;
+  if (bolted) {
+    out.push({ name: 'adapter gasket', mesh: ringZ((fe.gasketID + 2 * fe.wg) / 2, fe.gasketID / 2, zj, zj + fe.gasketT), role: 'polymer', material: 'compressed sheet' });
+    out.push({ name: 'end adapter flange', mesh: flangeRing({ ...fe, OD: Db }, zj + fe.gasketT, D), role: 'casting', material: CAST });
+    const nutProf = ringAroundHole(regularHexagon(h.F), { x: 0, y: 0 }, fe.d / 2, 24), st: MeshData[] = [];
+    for (let i = 0; i < fe.n; i++) {
+      const a = (2 * Math.PI * (i + 0.5)) / fe.n, x = (fe.BC / 2) * Math.cos(a), y = (fe.BC / 2) * Math.sin(a);
+      st.push(cylZ(fe.d / 2, zj, z1 + h.nutH + fe.d / 4, x, y), transformMesh(extrude(nutProf, h.nutH), translate(x, y, z1)));
+    }
+    out.push({ name: `adapter studs ${fe.n} × ${fe.d} in (1.5 d tapped into the body, engaged length not drawn)`, mesh: mergeMeshes(st), role: 'hardware', material: STUDM, count: fe.n });
+  } else out.push({ name: 'integral end collar', mesh: ringZ(Db / 2 - 0.1 * (Db / 2 - fe.gasketID / 2), D / 2, zj, z1), role: 'casting', material: CAST });
+  const rN = D / 2 + 2 * tb, Rt0 = Math.max(rN + 0.25, bolted ? fe.BC / 2 - h.F / 2 - 0.25 : Db / 2 - 0.1 * (Db / 2 - fe.gasketID / 2));
+  const Lt = Math.max(1, 0.45 * (Rt0 - rN)), loop: { r: number; z: number }[] = [{ r: D / 2, z: z1 }];
+  for (let i = 0; i <= 8; i++) { const a = (Math.PI / 2) * (i / 8); loop.push({ r: rN + (Rt0 - rN) * Math.cos(a), z: z1 + Lt * Math.sin(a) }); }
+  loop.push({ r: D / 2, z: z1 + Lt });
+  out.push({ name: bolted ? 'end adapter taper' : 'body end taper', mesh: revolve(loop, N), role: 'casting', material: CAST });
+  const z2 = z1 + Lt, zFace = z2 + 1 + 0.5 * f.hubLen + f.tf;
+  out.push({ name: bolted ? 'end adapter neck' : 'body end neck', mesh: ringZ(rN, D / 2, z2, zFace - f.tf), role: 'casting', material: CAST });
+  out.push({ name: 'end flange', mesh: flangeRing(f, zFace - f.tf, D), role: 'casting', material: CAST });
+  out.push({ name: 'raised face', mesh: ringZ(f.rfOD / 2, D / 2, zFace, zFace + f.rfH), role: 'casting', material: CAST });
+  return { solids: out, zFace };
+}
+const pushEnd = (b: ValveSolid[], e: { solids: ValveSolid[] }, side: 1 | -1) => { for (const x of e.solids) b.push({ ...x, mesh: side > 0 ? x.mesh : mirrorZ(x.mesh) }); };
+/** stem pad on top and trunnion/bottom pad on a cylindrical body of radius Rb2 (BT-1) */
+function bodyPad(Rb2: number, rp: number, up: 1 | -1, proud: number): MeshData {
+  const y0 = Math.sqrt(Math.max(0, Rb2 * Rb2 - rp * rp)) - 0.2;
+  return up > 0 ? cylY(rp, y0, Rb2 + proud) : cylY(rp, -(Rb2 + proud), -y0);
+}
 function ballStem(T: number) { return roundUpTo(Math.max(Math.cbrt((16 * T) / (Math.PI * 0.3 * BAR60.Fy.value * 1000)), 0.375), 1 / 16); }
 function ballWithBore(Rb: number, D: number): MeshData {
   const zc = Math.sqrt(Rb * Rb - (D / 2) ** 2), loop: { r: number; z: number }[] = [];
@@ -409,72 +458,56 @@ function ballWithBore(Rb: number, D: number): MeshData {
   return revolve(loop, N);
 }
 const buildBall: Build = (b, NPS, cls, dims) => {
-  const D0 = pipeDims(NPS, cls).D, Rb = 0.75 * D0, seat = 0.1 * D0, wBody = 1.5 * D0 + 2 * seat + 0.5;
-  const c = common(NPS, cls, wBody, 2 * Rb + 2 * seat); const { D, tb, P } = c; ends(b, c);
-  const Rc = Rb + seat, Rs = Rc + tb, zj = wBody / 2 - 0.25;
-  // spherical body wall around the ball, cut to the cavity bore at the end-cap joint and the run bore at the inlet (B-1)
-  const sph: { r: number; z: number }[] = [];
-  const zIn = -Math.sqrt(Math.max(0, Rs * Rs - (D / 2 + tb) ** 2)), zOut = Math.min(zj, Math.sqrt(Math.max(0, Rs * Rs - (Rc) ** 2)));
-  for (let i = 0; i <= 24; i++) { const z = zIn + ((zOut - zIn) * i) / 24; sph.push({ r: Math.sqrt(Math.max(0, Rs * Rs - z * z)), z }); }
-  sph.push({ r: Rc, z: zOut }, { r: Rc, z: -zOut }, { r: D / 2, z: -zOut }, { r: D / 2, z: zIn });
-  push(b, 'body (spherical)', revolve(sph, N));
-  if (zj > zOut) push(b, 'body neck', ringZ(Rc + tb, Rc, zOut, zj));
-  const fe = designFlange(NPS, cls, 2 * Rc, tb, 2 * Rc + 2 * tb);
-  push(b, 'body end flange', flangeRing(fe, zj - fe.tf, 2 * Rc));
-  push(b, 'end cap gasket', ringZ((fe.gasketID + 2 * fe.wg) / 2, fe.gasketID / 2, zj, zj + fe.gasketT), 'polymer', 'compressed sheet');
-  push(b, 'end cap flange', flangeRing(fe, zj + fe.gasketT, D));
-  push(b, `end cap bolts ${fe.n} × ${fe.d} in`, boltRing(fe, zj - fe.tf, 2 * fe.tf + fe.gasketT), 'hardware', 'Grade 90 bolt', fe.n);
+  const D0 = pipeDims(NPS, cls).D, Rb = 0.75 * D0, seat = 0.1 * D0;
+  const c = common(NPS, cls, 1.5 * D0 + 2 * seat + 0.5, 2 * Rb + 2 * seat); const { D, tb, P } = c;
+  const Rc = Rb + seat, fe = designFlange(NPS, cls, 2 * Rc, tb, 2 * Rc + 2 * tb), Db = fe.BC + 2.5 * fe.d, zj = Rc + 0.5;   // B-1 (body as BT-1)
+  push(b, 'body (forged, two-piece)', forgedBody(Rc, Db, zj));
+  const outlet = ballEnd(c, fe, zj, Db, true), inlet = ballEnd(c, fe, zj, Db, false);
+  pushEnd(b, outlet, 1); pushEnd(b, inlet, -1);
+  c.wBody = 2 * zj; c.F2F = 2 * outlet.zFace;
   push(b, `ball ${2 * Rb} in`, ballWithBore(Rb, D), 'closure', BAR);
   for (const s of [-1, 1]) push(b, 'seat ring', ringZ(0.6 * D + seat / 2, 0.6 * D - seat / 2, s * (Rb - 0.3 * seat) - seat / 2, s * (Rb - 0.3 * seat) + seat / 2), 'polymer', 'polymer');
   const T = P * (Math.PI / 4) * (1.2 * D) ** 2 * 0.1 * (0.75 * D) * 1.2, ds = ballStem(T), op = sizeOperator(T, true);  // B-2
-  const yNeck = Rc + tb + 1.5 * ds + 0.5;
-  push(b, 'stem boss', ringY(ds + 0.5, ds / 2 + 0.03, Rc - 0.5, yNeck));
+  const rp = Math.max(ds + 1, 0.3 * D), yPad = Db / 2 + 0.5, yNeck = yPad + 1.5 * ds + 0.5;
+  push(b, 'stem pad', bodyPad(Db / 2, rp, 1, 0.5));
+  push(b, 'stem neck', ringY(ds + 0.4, ds / 2 + 0.03, yPad, yNeck));
   push(b, 'stem seal', ringY(ds / 2 + 0.03, ds / 2, yNeck - 0.6, yNeck - 0.2), 'polymer', 'polymer');
   push(b, `stem ${ds} in`, mergeMeshes([cylY(ds / 2, Rb - 0.4 * ds, yNeck + 1), cylY(ds, Rc - 0.4, Rc - 0.4 + 0.3 * ds)]), 'stem', BAR);
-  operate(b, op, op.kind === 'gear' ? yNeck : yNeck + 0.2, ds, D);
-  Object.assign(dims, { ballD: rule(2 * Rb, 'SW-VLV-B-1', 'Ball diameter'), seat: rule(seat, 'SW-VLV-B-1', 'Seat section'), torque: rule(T, 'SW-VLV-B-2', 'Operating torque (lb·in)', 'lb'), stemD: rule(ds, 'SW-VLV-B-2', 'Stem diameter') });
-  return { c, op, extra: { endCap: fe, torque: T } };
+  operateQT(b, op, op.kind === 'gear' ? yNeck : yNeck + 0.2, ds, D);
+  Object.assign(dims, { ballD: rule(2 * Rb, 'SW-VLV-B-1', 'Ball diameter'), seat: rule(seat, 'SW-VLV-B-1', 'Seat section'), bodyOD: rule(Db, 'SW-VLV-BT-1', 'Body outside diameter'), torque: rule(T, 'SW-VLV-B-2', 'Operating torque (lb·in)', 'lb'), stemD: rule(ds, 'SW-VLV-B-2', 'Stem diameter') });
+  return { c, op, extra: { joint: fe, torque: T } };
 };
 const buildTBall: Build = (b, NPS, cls, dims) => {
   const D0 = pipeDims(NPS, cls).D, Rb = 0.75 * D0, sc = 0.15 * D0;
   const c = common(NPS, cls, 1.5 * D0 + 2 * sc + 1, 2 * Rb + 2 * sc); const { D, tb, P } = c;
-  const Rc = Rb + sc, fe = designFlange(NPS, cls, 2 * Rc, tb, 2 * Rc + 2 * tb);
-  const wc = Math.max(1.5 * D0 + 2 * sc + 1, 2 * (fe.tf + 0.25) + Rb);                                           // centre body long enough for both joint flanges
-  c.wBody = wc; c.F2F = 2 * c.f.tf + 2 * c.hHub + wc;
-  const zj = wc / 2 - fe.tf - 0.25;                                                                              // joint faces at ±zj
-  { const Rs = Rc + tb, zOut = Math.min(zj, Math.sqrt(Math.max(0, Rs * Rs - Rc * Rc))), sph: { r: number; z: number }[] = [];
-    for (let i = 0; i <= 32; i++) { const z = -zOut + ((2 * zOut) * i) / 32; sph.push({ r: Math.sqrt(Math.max(0, Rs * Rs - z * z)), z }); }
-    sph.push({ r: Rc, z: zOut }, { r: Rc, z: -zOut });
-    push(b, 'centre body (spherical)', revolve(sph, N));
-    if (zj > zOut) for (const s of [-1, 1]) push(b, 'centre body neck', s > 0 ? ringZ(Rc + tb, Rc, zOut, zj) : ringZ(Rc + tb, Rc, -zj, -zOut)); }
-  for (const s of [-1, 1] as const) {
-    push(b, 'centre body flange', flangeRing(fe, s > 0 ? zj - fe.tf : -zj, 2 * Rc));
-    push(b, 'end cap gasket', s > 0 ? ringZ((fe.gasketID + 2 * fe.wg) / 2, fe.gasketID / 2, zj, zj + fe.gasketT) : ringZ((fe.gasketID + 2 * fe.wg) / 2, fe.gasketID / 2, -zj - fe.gasketT, -zj), 'polymer', 'compressed sheet');
-    push(b, 'end cap flange', flangeRing(fe, s > 0 ? zj + fe.gasketT : -zj - fe.gasketT - fe.tf, D));
-    push(b, `end cap bolts ${fe.n} × ${fe.d} in`, boltRing(fe, s > 0 ? zj - fe.tf : -zj - fe.gasketT - fe.tf, 2 * fe.tf + fe.gasketT), 'hardware', 'Grade 90 bolt', fe.n);
-    flangedEnd(b, c, s, c.F2F / 2, zj + fe.gasketT + fe.tf - 0.01);                                              // pipe flange + hub on each cap
-  }
+  const Rc = Rb + sc, fe = designFlange(NPS, cls, 2 * Rc, tb, 2 * Rc + 2 * tb), Db = fe.BC + 2.5 * fe.d, zj = Rc + 0.5;   // BT-1
+  push(b, 'centre body (forged)', forgedBody(Rc, Db, zj));
+  const end = ballEnd(c, fe, zj, Db, true);
+  pushEnd(b, end, 1); pushEnd(b, end, -1);
+  c.wBody = 2 * zj; c.F2F = 2 * end.zFace;
   push(b, `ball ${2 * Rb} in`, ballWithBore(Rb, D), 'closure', BAR);
   for (const s of [-1, 1]) {
     push(b, 'seat carrier', ringZ(0.6 * D + sc, 0.6 * D - sc / 2, s * (Rb - 0.2 * sc) - sc / 2, s * (Rb - 0.2 * sc) + sc / 2), 'stem', BAR);
     push(b, 'seat insert', ringZ(0.6 * D + sc / 4, 0.6 * D - sc / 2, s * (Rb - 0.2 * sc) - sc / 2 - 0.08, s * (Rb - 0.2 * sc) - sc / 2), 'polymer', 'polymer');
-    const room = Math.max(0.3, zj - (Rb + 0.3 * sc) - 0.1), spr: MeshData[] = [];                              // springs fit between the carrier and the joint face
+    const room = Math.max(0.3, zj - (Rb + 0.3 * sc) - 0.1), spr: MeshData[] = [];                              // springs between the carrier and the adapter face
     for (let i = 0; i < 6; i++) { const a = (2 * Math.PI * i) / 6; spr.push(transformMesh(helixTube(Math.min(0.06 * D, sc / 2), room / 3, 3, Math.min(0.02 * D, sc / 8), 12, 6), translate((0.6 * D + sc / 4) * Math.cos(a), (0.6 * D + sc / 4) * Math.sin(a), s > 0 ? Rb + 0.3 * sc : -Rb - 0.3 * sc - room))); }
     push(b, 'seat springs 6', mergeMeshes(spr), 'stem', 'Grade 180 spring wire', 6);
   }
   const T = P * Math.PI * (1.2 * D) * (0.1 * D) * 0.1 * (0.6 * D) + P * (Math.PI / 4) * D * D * 0.05 * 0.5;        // BT-2 (stem term uses a provisional ds/2 = 0.5)
-  const ds = ballStem(T), op = sizeOperator(T, true), yNeck = Rc + tb + 1.5 * ds + 0.5;
-  push(b, 'stem boss', ringY(ds + 0.5, ds / 2 + 0.03, Rc - 0.5, yNeck));
+  const ds = ballStem(T), op = sizeOperator(T, true);
+  const rp = Math.max(ds + 3, 0.4 * D) / 2 + ds / 2, yPad = Db / 2 + 0.75, yNeck = yPad + 1.5 * ds + 0.5;
+  push(b, 'stem pad', bodyPad(Db / 2, rp, 1, 0.75));
+  push(b, 'stem neck', ringY(ds + 0.5, ds / 2 + 0.03, yPad, yNeck));
   push(b, 'stem seal', ringY(ds / 2 + 0.03, ds / 2, yNeck - 0.6, yNeck - 0.2), 'polymer', 'polymer');
   push(b, `stem ${ds} in`, cylY(ds / 2, Rb - 0.4 * ds, yNeck + 1), 'stem', BAR);
-  push(b, 'trunnion boss', ringY(ds + 0.5, ds / 2 + 0.03, -(Rc + tb + 1), -(Rc - 0.5)));
-  push(b, 'trunnion', cylY(ds / 2, -(Rc + 0.5), -(Rb - 0.4 * ds)), 'stem', BAR);
-  push(b, 'trunnion cover', cylY(ds + 1.25, -(Rc + tb + 1.5), -(Rc + tb + 1)));
-  const cov: MeshData[] = []; for (let i = 0; i < 4; i++) { const a = Math.PI / 4 + (Math.PI * i) / 2; cov.push(transformMesh(hexBolt(0.375, 0.5, 0, (ds + 0.95) * Math.cos(a), (ds + 0.95) * Math.sin(a)), multiply(translate(0, -(Rc + tb + 1.5), 0), multiply(rotateX(Math.PI / 2), translate(0, 0, 0))))); }
+  push(b, 'trunnion pad', bodyPad(Db / 2, rp, -1, 0.75));
+  push(b, 'trunnion', cylY(ds / 2, -(Db / 2 + 0.5), -(Rb - 0.4 * ds)), 'stem', BAR);
+  push(b, 'trunnion cover', cylY(ds + 1.25, -(yPad + 0.75), -yPad));
+  const cov: MeshData[] = []; for (let i = 0; i < 4; i++) { const a = Math.PI / 4 + (Math.PI * i) / 2; cov.push(transformMesh(hexBolt(0.375, 0.75, 0, (ds + 0.95) * Math.cos(a), (ds + 0.95) * Math.sin(a)), multiply(translate(0, -yPad, 0), rotateX(Math.PI / 2)))); }
   push(b, 'cover bolts 4 × 3/8 in', mergeMeshes(cov), 'hardware', 'Grade 90 bolt', 4);
-  operate(b, op, op.kind === 'gear' ? yNeck : yNeck + 0.2, ds, D);
-  Object.assign(dims, { ballD: rule(2 * Rb, 'SW-VLV-BT-1', 'Ball diameter'), carrier: rule(sc, 'SW-VLV-BT-1', 'Seat carrier section'), torque: rule(T, 'SW-VLV-BT-2', 'Operating torque (lb·in)', 'lb'), stemD: rule(ds, 'SW-VLV-B-2', 'Stem / trunnion diameter') });
-  return { c, op, extra: { endCap: fe, torque: T } };
+  operateQT(b, op, op.kind === 'gear' ? yNeck : yNeck + 0.2, ds, D);
+  Object.assign(dims, { ballD: rule(2 * Rb, 'SW-VLV-BT-1', 'Ball diameter'), carrier: rule(sc, 'SW-VLV-BT-1', 'Seat carrier section'), bodyOD: rule(Db, 'SW-VLV-BT-1', 'Body outside diameter'), torque: rule(T, 'SW-VLV-BT-2', 'Operating torque (lb·in)', 'lb'), stemD: rule(ds, 'SW-VLV-B-2', 'Stem / trunnion diameter') });
+  return { c, op, extra: { joint: fe, torque: T } };
 };
 
 function butterflyWafer(b: ValveSolid[], c: Common, bodyOD: number, wBody: number, dims: Record<string, Dim>, ruleId: string) {
@@ -488,7 +521,7 @@ function butterflyWafer(b: ValveSolid[], c: Common, bodyOD: number, wBody: numbe
   push(b, `shaft ${ds} in`, cylY(ds / 2, -bodyOD / 2 + 0.5, yNeck + 1), 'stem', BAR);
   push(b, 'shaft seal', ringY(ds / 2 + 0.03, ds / 2, yNeck - 0.6, yNeck - 0.2), 'polymer', 'polymer');
   const op = sizeOperator(T, true);
-  if (op.kind === 'gear') gearOperator(b, op, yNeck, ds); else { lever(b, op, yNeck + 0.2, ds, D); push(b, 'notch plate', transformMesh(extrude({ outer: annularSector(1.5 * ds, 0.25 * D + 1, 0, Math.PI / 2, 8) }, 0.25), multiply(translate(0, yNeck, 0), toY))); }
+  if (op.kind === 'gear') gearOperator(b, op, yNeck, ds, true); else { lever(b, op, yNeck + 0.2, ds, D); push(b, 'notch plate', transformMesh(extrude({ outer: annularSector(1.5 * ds, 0.25 * D + 1, 0, Math.PI / 2, 8) }, 0.25), multiply(translate(0, yNeck, 0), toY))); }
   Object.assign(dims, { bodyOD: rule(bodyOD, ruleId, 'Body OD'), liner: rule(liner, ruleId, 'Liner thickness'), shaftD: rule(ds, ruleId, 'Shaft diameter'), torque: rule(T, 'SW-VLV-BF-1', 'Operating torque (lb·in)', 'lb') });
   return { op, T };
 }
@@ -526,7 +559,7 @@ const buildDBfly: Build = (b, NPS, cls, dims, notes) => {
   push(b, `shaft ${ds} in`, cylY(ds / 2, -(D / 2 + tb + 0.5), yGland + 1.5, xOff), 'stem', BAR);
   push(b, 'bottom bearing cover', cylY(ds + 1, -(D / 2 + tb + 1), -(D / 2 + tb + 0.5), xOff));
   const op = D >= 8 ? sizeOperator(Math.max(T, 80 * 6 * 2), true) : sizeOperator(T, true);
-  if (op.kind === 'gear') { const s2: ValveSolid[] = []; gearOperator(s2, op, yGland + 1, ds); for (const s of s2) push(b, s.name, transformMesh(s.mesh, translate(xOff, 0, 0)), s.role, s.material); }
+  if (op.kind === 'gear') { const s2: ValveSolid[] = []; gearOperator(s2, op, yGland + 1, ds, true); for (const s of s2) push(b, s.name, transformMesh(s.mesh, translate(xOff, 0, 0)), s.role, s.material); }
   else { const s2: ValveSolid[] = []; lever(s2, op, yGland + 1.7, ds, D); for (const s of s2) push(b, s.name, transformMesh(s.mesh, translate(xOff, 0, 0)), s.role, s.material); }
   Object.assign(dims, { offsetZ: rule(zOff, 'SW-VLV-BD-1', 'Shaft offset behind the disc plane'), offsetX: rule(xOff, 'SW-VLV-BD-1', 'Shaft offset off the centreline'), shaftD: rule(ds, 'SW-VLV-BD-1', 'Shaft diameter'), torque: rule(T, 'SW-VLV-BD-1', 'Operating torque (lb·in)', 'lb') });
   notes.push('Double offset: the disc lifts off the metal seat as it opens (SW-VLV-BD-1).');
@@ -552,7 +585,7 @@ const buildPlug: Build = (b, NPS, cls, dims, notes) => {
   push(b, 'wrench head (square)', box(-head / 2, yT - 0.1, -head / 2, head / 2, yHead + head, head / 2), 'closure');
   push(b, 'lubricant fitting', mergeMeshes([hexPrismY(0.5, yHead, yHead + 0.5, 0.4 * Rc, 0.4 * Rc), cylY(0.15, yHead + 0.5, yHead + 1.0, 0.4 * Rc, 0.4 * Rc)]), 'stem', BAR);
   const T = P * (Math.PI / 4) * D * D * 0.1 * (0.65 * D), op = sizeOperator(T, true);   // PL-1 (lubricated film)
-  operate(b, op, yHead + head, head / 2, D);
+  operateQT(b, op, yHead + head, head / 2, D);
   Object.assign(dims, { plugBase: rule(2 * rB, 'SW-VLV-PL-1', 'Plug diameter at the small end'), plugTop: rule(2 * rT, 'SW-VLV-PL-1', 'Plug diameter at the large end'), torque: rule(T, 'SW-VLV-PL-1', 'Operating torque (lb·in)', 'lb') });
   notes.push('Plug port not cut in this stage (shown closed); the chamber is drawn at the plug\'s mean radius (SW-VLV-PL-1).');
   return { c, op, extra: { torque: T } };
