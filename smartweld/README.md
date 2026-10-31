@@ -12,8 +12,8 @@ must accompany any distribution of the viewer. No published dimension tables, st
 | 2     | Building shell (frame, cold-formed framing, cladding, roof, doors) | done |
 | 3     | Interior: equipment, pipe rack, platforms, access steel  | done (SmartWeld rules only; no regulation cited, by user decision) |
 | 4     | Pipe, flanges and 18 valve types, all sizes and classes offered (SW-VLV-11) | done |
-| 5     | Piping and routing                                      | next |
-| 6     | Ground-truth export                                     | pending |
+| 5     | Piping and routing: 203 lines with fittings, valves, welds and supports; all §40 checks pass | done |
+| 6     | Ground-truth export                                     | next |
 
 ## Run
 
@@ -23,6 +23,7 @@ npm test          # rule and geometry tests (vitest)
 npm run typecheck
 npm run dev       # viewer at http://127.0.0.1:5173/
 npm run screenshot -- screenshots/stageN  # headless-browser verification
+npm run gen:piping # regenerate public/plant-piping.json (about a minute) after any stage-5 change
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
@@ -39,10 +40,13 @@ src/core               units, dimension basis tags, physical constants
 src/catalogue          designation parser and part rules → PartSpec (plain data)
 src/geometry           profiles, extrusion, transforms → mesh arrays (plain data)
 src/scene              catalogue list and demonstration assemblies (plain data)
-src/generator          building shell and interior generators → placed parts (plain data) and bill of materials
+src/generator          building shell, interior, nozzles, line list, router and piping generators → placed parts
+                       and per-line records (plain data); pipingCheck.ts audits the piping against §40
+public/plant-piping.json  the generated plant piping (committed; a test checks it is current)
 src/viewer             three.js browser viewer (rendering only)
 tests                  vitest rule/geometry/audit tests
 tools/screenshot.mjs   Playwright verification
+tools/gen-piping.ts    runs the piping generator and the §40 checks; writes the plant data
 ```
 
 The same `PartSpec` + transform data drives the 3D view and (stage 6) the ground-truth export.
@@ -52,3 +56,8 @@ The same `PartSpec` + transform data drives the 3D view and (stage 6) the ground
 The building views render the generated plant; click the 3D view to walk (W A S D, mouse look,
 Shift to run, Esc to release). The right panel lists the values derived by rule and the bill of
 materials computed from the same placed-part list that the 3D view draws.
+
+The "Plant piping" views add the stage-5 piping. The line inspector (right panel) lists any line's
+components, its welds (with shop/field status and the two parts each joins) and its supports, and
+highlights the line in the 3D view. In these whole-plant views valves are faceted more coarsely with
+distance and tees are drawn as plain run and branch pipes; dimensions are unchanged (PROVENANCE P-47).

@@ -20,6 +20,9 @@ import { generateBuilding, type Placed } from './building';
 import { generateInterior, DEMO_LAYOUT } from './interior';
 import { boxGap, segBox } from './pipingCheck';
 
+/** environment variable when run under Node (debug output only); undefined in the browser */
+const envVar = (k: string): string | undefined => (globalThis as { process?: { env?: Record<string, string> } }).process?.env?.[k];
+
 // ---- vectors ---------------------------------------------------------------------------------------------
 const add = (a: V3, b: V3, k = 1): V3 => [a[0] + k * b[0], a[1] + k * b[1], a[2] + k * b[2]];
 const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
@@ -490,7 +493,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
     return rank(a) - rank(b) || b.NPS - a.NPS;
   });
   for (const l of order) { const t = Date.now(); exp = 0; routeLine(l); perLine.push([l.no, Date.now() - t, exp]); }
-  if (process.env.PIPE_DEBUG) { perLine.sort((a, b) => b[1] - a[1]); console.log(perLine.slice(0, 15)); }
+  if (envVar("PIPE_DEBUG")) { perLine.sort((a, b) => b[1] - a[1]); console.log(perLine.slice(0, 15)); }
   tm.t_route = Date.now() - T0 - tm.t_static;
 
   // ---- 4. stubs (valve + blind on nozzles, or on taps) ----
@@ -584,7 +587,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
         for (let d = 0; d <= span; d += 6) { if (target - d > prev + 12) cands.push(target - d); if (d && target + d <= prev + span && target + d < L - 6) cands.push(target + d); }
         cands.sort((u, v) => Math.abs(u - target) - Math.abs(v - target));
         let placed = -1;
-        const dbg = process.env.PIPE_DEBUG_LINE === run.no;
+        const dbg = envVar("PIPE_DEBUG_LINE") === run.no;
         if (dbg) console.log(run.no, 'run', sr.a, sr.b, 'prev', prev, 'target', target, 'crossings', crossings);
         for (const sPos of cands) {
           const p = add(sr.a, w, sPos); if (!clearOf(p, 3)) { if (dbg) console.log('  ', sPos, 'not clear of fittings'); continue; }

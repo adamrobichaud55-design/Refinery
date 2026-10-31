@@ -24,6 +24,9 @@ const targets = [
   ['v-BFLY', '#valve:BFLY:8:P150'], ['v-LBFLY', '#valve:LBFLY:8:P150'], ['v-DBFLY', '#valve:DBFLY:12:P300'],
   ['v-PLUG', '#valve:PLUG:4:P300'], ['v-PLUG-section', '#valve:PLUG:4:P300;section'], ['v-DIAPH', '#valve:DIAPH:3:P150'], ['v-DIAPH-section', '#valve:DIAPH:3:P150;section'],
   ['v-NEEDLE', '#valve:NEEDLE:0.5:P2400'], ['v-PSV', '#valve:PSV:3:P300'], ['v-PSV-section', '#valve:PSV:3:P300;section'], ['v-CONTROL', '#valve:CONTROL:4:P300'], ['v-CONTROL-section', '#valve:CONTROL:4:P300;section'],
+  ['piping-overview', '#piping:overview'], ['piping-rack', '#piping:piping-rack'], ['piping-pumps', '#piping:piping-pumps'], ['piping-column', '#piping:piping-column'],
+  ['piping-exchangers', '#piping:piping-exchangers'], ['piping-tanks', '#piping:piping-tanks'], ['piping-above', '#piping:piping-above'], ['piping-walk', '#piping:walk'],
+  ['piping-line-1015', '#piping:piping-column;line=' + encodeURIComponent('3"-P300-P-1015')], ['piping-line-3001', '#piping:piping-rack;line=' + encodeURIComponent('4"-P150-CWS-3001')],
   ['Z-purlin', '#entry:' + encodeURIComponent('Z10x2.5x5/64 (purlin)')], ['panel', '#entry:' + encodeURIComponent('Wall/roof panel PNL1.25x36')], ['ridge-cap', '#entry:' + encodeURIComponent('Ridge cap 12x12 (1:12)')], ['weld-around', '#entry:' + encodeURIComponent('Fillet all around W10x49')],
 ];
 const only = process.argv[3];   // optional name prefix filter
@@ -36,7 +39,8 @@ page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 for (const [name, hash] of run) {
   await page.goto(base + hash, { waitUntil: 'load' });
   await page.waitForFunction(() => window.__smartweldReady === true, null, { timeout: 120000 });
-  await page.waitForTimeout(name.startsWith('building') || name.startsWith('plant') ? 5000 : name.startsWith('v-') ? 2500 : 600);
+  if (name.startsWith('piping')) await page.waitForFunction(() => window.__pipingReady === true, null, { timeout: 600000 });
+  await page.waitForTimeout(name.startsWith('building') || name.startsWith('plant') || name.startsWith('piping') ? 5000 : name.startsWith('v-') ? 2500 : 600);
   const visibleErr = await page.$eval('#err', el => getComputedStyle(el).display !== 'none' ? el.textContent : '');
   if (visibleErr) errors.push(`${name}: ${visibleErr}`);
   const title = await page.$eval('#info h2', el => el.textContent);

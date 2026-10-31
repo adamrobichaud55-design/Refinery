@@ -12,6 +12,7 @@ import { basisText } from '../core/basis';
 import { formatLength } from '../core/units';
 import { generateBuilding, billOfMaterials, type BuildingModel } from '../generator/building';
 import { generateInterior, type InteriorModel } from '../generator/interior';
+import { loadPiping, buildPipingObject, lineReport, plantSummary } from './pipingView';
 
 const viewEl = document.getElementById('view')!, infoEl = document.getElementById('info')!, errEl = document.getElementById('err')!, entriesEl = document.getElementById('entries')!;
 
@@ -33,10 +34,14 @@ const grid = new THREE.GridHelper(240, 20, 0x9aa3ad, 0xc9d0d8);
 scene.add(grid);
 const axes = new THREE.AxesHelper(12); scene.add(axes);
 const group = new THREE.Group(); scene.add(group);
+let needsRender = true;
+const _add = group.add.bind(group), _clear = group.clear.bind(group);
+group.add = (...o: THREE.Object3D[]) => { needsRender = true; return _add(...o); };
+group.clear = () => { needsRender = true; return _clear(); };
 const sectionPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), 0); // keeps the x < 0 half; the cut face looks toward the default camera at +x
 let sectionOn = false;
 function setSection(on: boolean) {
-  sectionOn = on; renderer.localClippingEnabled = on;
+  sectionOn = on; renderer.localClippingEnabled = on; needsRender = true;
   for (const m of Object.values(MATERIALS)) { (m as THREE.Material).clippingPlanes = on ? [sectionPlane] : []; m.needsUpdate = true; }
 }
 
@@ -64,7 +69,7 @@ function toBufferGeometry(m: MeshData): THREE.BufferGeometry {
   if (m.indices.length / 3 > 600000) { const flat = g.toNonIndexed(); flat.computeVertexNormals(); return flat; }   // whole-plant views: flat shading for speed
   return toCreasedNormals(g.toNonIndexed(), (35 * Math.PI) / 180);   // parts: smooth curved surfaces, hard edges kept
 }
-function resize() { const w = viewEl.clientWidth, h = viewEl.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); }
+function resize() { const w = viewEl.clientWidth, h = viewEl.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); needsRender = true; }
 window.addEventListener('resize', resize);
 function frame(box: THREE.Box3, dir = new THREE.Vector3(0.8, 0.55, 1)) {
   const size = box.getSize(new THREE.Vector3()), centre = box.getCenter(new THREE.Vector3());
@@ -81,7 +86,7 @@ const geoCache = new Map<PartSpec, PartGeometry>();
 const geomOf = (p: PartSpec) => { let g = geoCache.get(p); if (!g) { g = buildGeometry(p); geoCache.set(p, g); } return g; };
 
 function renderInstances(list: { part: PartSpec; transform: Mat4 }[]): THREE.Box3 {
-  group.clear();
+  group.clear(); pipingLOD = [];
   const byRole = new Map<string, MeshData[]>();                       // grouped by finish and by whether exact normals are carried
   for (const inst of list) {
     for (const s of geomOf(inst.part).solids) {
@@ -146,7 +151,7 @@ function drawProfile(outer: { x: number; y: number }[], inner?: { x: number; y: 
 
 // --- building ------------------------------------------------------------------
 let building: BuildingModel | null = null, interior: InteriorModel | null = null;
-function showBuilding(view: string, withInterior = false) {
+function showBuilding(view: string, withInterior = false, piping?: { line?: string }) {
   if (!building) building = generateBuilding();
   if (withInterior && !interior) interior = generateInterior();
   const t0 = performance.now();
@@ -166,6 +171,12 @@ function showBuilding(view: string, withInterior = false) {
   else if (view === 'tanks') lookFrom([880, 110, -170], [420, 150, -320]);
   else if (view === 'pumps') lookFrom([1680, 72, 140], [2000, 30, 220]);
   else if (view === 'walk') lookFrom([L * 0.55, 66, 170], [L * 0.2, 120, 300]);
+  else if (view === 'piping-rack') lookFrom([300, 150, 230], [1100, 230, 0]);
+  else if (view === 'piping-pumps') lookFrom([1700, 120, 40], [1990, 60, 200]);
+  else if (view === 'piping-column') lookFrom([1060, 200, -60], [822, 200, -280]);
+  else if (view === 'piping-exchangers') lookFrom([1250, 140, 90], [1550, 80, 300]);
+  else if (view === 'piping-tanks') lookFrom([700, 160, -100], [400, 120, -318]);
+  else if (view === 'piping-above') lookFrom([L * 0.5, 2300, 40], [L * 0.5, 0, 0]);
   else lookFrom([L * 1.25, 900, W * 1.6], [L * 0.45, 60, 0]);
   const bom = billOfMaterials({ ...building, instances: all });
   const total = bom.reduce((s, e) => s + e.weight, 0);
@@ -183,10 +194,32 @@ function showBuilding(view: string, withInterior = false) {
     <table><tr><th>Part</th><th>Qty</th><th>Weight</th><th>Rules</th></tr>
     ${bom.map(e => `<tr><td>${e.designation}</td><td class="v">${e.qty}</td><td class="v">${e.weight.toFixed(0)} lb</td><td>${e.rules.join(', ')}</td></tr>`).join('')}
     <tr><td><b>Total</b></td><td></td><td class="v"><b>${total.toFixed(0)} lb</b></td><td></td></tr></table>`;
+  if (piping) showPiping(t0, piping.line);
 }
 function lookFrom(eye: number[], target: number[]) {
   camera.position.set(eye[0], eye[1], eye[2]); controls.target.set(target[0], target[1], target[2]);
-  camera.near = 1; camera.far = 20000; camera.updateProjectionMatrix(); controls.update();
+  camera.near = 1; camera.far = 20000; camera.updateProjectionMatrix(); controls.update(); needsRender = true;
+}
+
+// --- plant piping (stage 5) ---------------------------------------------------------
+const HIGHLIGHT = new THREE.MeshStandardMaterial({ color: 0xff8c1a, emissive: 0x7a3a00, metalness: 0.2, roughness: 0.5, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, side: THREE.DoubleSide });
+let pipingSeq = 0, pipingLOD: { update: (eye: THREE.Vector3) => void }[] = [];
+function showPiping(t0: number, line?: string) {
+  const seq = ++pipingSeq;
+  const note = document.createElement('p'); note.className = 'notes'; note.textContent = 'Loading plant piping…'; infoEl.prepend(note);
+  loadPiping().then(m => {
+    if (seq !== pipingSeq) return;
+    const po = buildPipingObject(m, MATERIALS, toBufferGeometry); group.add(po.group); pipingLOD = [po];
+    const sel = m.lines.find(l => l.no === line);
+    if (sel) { const hl = buildPipingObject(m, MATERIALS, toBufferGeometry, l => l.no === sel.no, HIGHLIGHT); group.add(hl.group); pipingLOD.push(hl); }
+    for (const p of pipingLOD) p.update(camera.position);
+    const view = decodeURIComponent(location.hash.slice(1)).split(';')[0];
+    const pick = `<div class="cfg"><label>Line inspector: <select id="linesel"><option value="">— choose a line —</option>${m.lines.map(l => `<option${l.no === line ? ' selected' : ''}>${l.no}</option>`).join('')}</select></label></div>`;
+    note.outerHTML = `<div id="pipinginfo">${pick}${sel ? lineReport(sel) : ''}${plantSummary(m)}<p class="notes">Plant and piping built in ${((performance.now() - t0) / 1000).toFixed(1)} s. Valves in plant views use a coarser marching grid (same dimensions).</p></div>`;
+    document.getElementById('linesel')!.addEventListener('change', ev => { const v = (ev.target as HTMLSelectElement).value; location.hash = `${view}${v ? ';line=' + v : ''}`; });
+    if (sel) { const b = new THREE.Box3(); for (const c of sel.comps) { b.expandByPoint(new THREE.Vector3(...c.a)); b.expandByPoint(new THREE.Vector3(...c.b)); } const ctr = b.getCenter(new THREE.Vector3()), r = Math.max(120, b.getSize(new THREE.Vector3()).length() * 0.7); lookFrom([ctr.x + r * 0.8, ctr.y + r * 0.6, ctr.z + r], [ctr.x, ctr.y, ctr.z]); }
+    (window as any).__pipingReady = true;
+  }).catch(e => { note.textContent = String(e); showError(e); });
 }
 
 // --- first-person walk (pointer lock) --------------------------------------------
@@ -229,6 +262,9 @@ for (const [label, view] of [['Shell — exterior', 'exterior'], ['Shell — cor
 const hp = document.createElement('h2'); hp.textContent = 'Plant (building + interior)'; entriesEl.appendChild(hp);
 for (const [label, view] of [['Plant — walk (start)', 'walk'], ['Plant — pipe rack', 'rack'], ['Plant — vessel platforms', 'vessels'], ['Plant — stair tower', 'stair'], ['Plant — column & ladders', 'column'], ['Plant — tanks', 'tanks'], ['Plant — pumps', 'pumps'], ['Plant — cutaway overview', 'overview']])
   buildingBtns['plant:' + view] = addButton(entriesEl, label, () => { location.hash = 'plant:' + view; showBuilding(view, true); });
+const hpp = document.createElement('h2'); hpp.textContent = 'Plant piping (stage 5)'; entriesEl.appendChild(hpp);
+for (const [label, view] of [['Piping — overview', 'overview'], ['Piping — pipe rack', 'piping-rack'], ['Piping — pumps', 'piping-pumps'], ['Piping — column', 'piping-column'], ['Piping — exchangers', 'piping-exchangers'], ['Piping — tanks', 'piping-tanks'], ['Piping — plan from above', 'piping-above'], ['Piping — walk (start)', 'walk']])
+  buildingBtns['piping:' + view] = addButton(entriesEl, label, () => { location.hash = 'piping:' + view; showBuilding(view, true, {}); });
 const h1 = document.createElement('h2'); h1.textContent = 'Assemblies'; entriesEl.appendChild(h1);
 const asmBtn = addButton(entriesEl, 'Column base (W10x49)', () => { location.hash = 'assembly:column-base'; showAssembly(columnBaseAssembly()); });
 const byGroup = new Map<string, HTMLElement>();
@@ -264,6 +300,7 @@ function openFromHash() {
   if (hsh.startsWith('des:')) { try { showPart(makePart(hsh.slice(4), hsh.slice(4), 120)); return; } catch (e) { showError(e); } }
   if (hsh.startsWith('assembly:')) { setActive(asmBtn); showAssembly(columnBaseAssembly()); return; }
   if (hsh.startsWith('building:')) { const v = hsh.slice(9); setActive(buildingBtns[v] ?? null); showBuilding(v); return; }
+  if (hsh.startsWith('piping:')) { const [v, ...opts] = hsh.slice(7).split(';'); const line = opts.find(o => o.startsWith('line='))?.slice(5); setActive(buildingBtns['piping:' + v] ?? null); showBuilding(v, true, { line }); return; }
   if (hsh.startsWith('plant:')) { const v = hsh.slice(6); setActive(buildingBtns['plant:' + v] ?? null); showBuilding(v, true); return; }
   showPart(ENTRIES[1].build());
 }
@@ -271,4 +308,11 @@ resize();
 openFromHash();
 window.addEventListener('hashchange', () => { errEl.style.display = 'none'; try { openFromHash(); } catch (e) { showError(e); } });
 (window as any).__smartweldReady = true;
-renderer.setAnimationLoop(() => { stepWalk(); if (!walking) controls.update(); renderer.render(scene, camera); });
+// draw on demand: only when the view, the scene or the camera changed (whole-plant frames are heavy)
+let lastEye = new THREE.Vector3(Infinity, 0, 0);
+renderer.setAnimationLoop(() => {
+  stepWalk(); if (!walking && controls.update()) needsRender = true;
+  if (walking) needsRender = true;
+  if (pipingLOD.length && camera.position.distanceTo(lastEye) > 24) { lastEye = camera.position.clone(); for (const p of pipingLOD) p.update(camera.position); needsRender = true; }   // valve detail by distance
+  if (needsRender) { renderer.render(scene, camera); needsRender = false; (window as any).__frames = ((window as any).__frames ?? 0) + 1; }
+});
