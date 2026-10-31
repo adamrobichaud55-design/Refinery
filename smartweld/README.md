@@ -1,7 +1,8 @@
 # SmartWeld 3D Catalogue and Plant Generator
 
 Clean-room build. Read `DESIGN_BASIS.md` (every rule with its reason) and `PROVENANCE.md`
-(the audit log) first. No published dimension tables, standards or catalogues were used.
+(the audit log) first. `IP_REVIEW.md` is the package for IP counsel; `THIRD_PARTY_NOTICES.md`
+must accompany any distribution of the viewer. No published dimension tables, standards or catalogues were used.
 
 ## Stage status
 
