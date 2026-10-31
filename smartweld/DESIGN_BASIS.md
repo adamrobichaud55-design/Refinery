@@ -1035,9 +1035,11 @@ Diaphragm, weir type (`SW-VLV-DI-*`). Sizes 1/2–12, classes up to P300 (the di
 the pressure boundary).
 
 - `DI-1` Body: run bore D with a weir rising 0.6 D at mid-length; the body rises above the
-  run so that its top (bolting) flange face stands D/2 + t_b + 0.25 D above the pipe axis
-  (amended on user review from 0.3 D, P-49: the body and bonnet sat too low between the end
-  flanges; the raised body gives the diaphragm a deeper bowl to close into); a round top opening of
+  run so that the underside of its square (bolting) flange stands 1/4 in above the rim of the
+  round end flanges, i.e. its flange face at OD_end/2 + 1/4 in + the body flange thickness
+  above the pipe axis (amended on user review twice: from 0.3 D, then from D/2 + t_b + 0.25 D,
+  P-49, P-50: the square body and bonnet flanges must stand clear above the round end
+  flanges); a round top opening of
   diameter 1.6 D with a flat bolting flange; diaphragm a polymer disc 1.6 D + 2 t_f in diameter
   and max(1/8 in, 0.03 D) thick, clamped by the bonnet flange with studs per SW-FLG-3/4 on the
   opening; bonnet a rounded dome of the flange diameter and height 0.45 × its diameter with

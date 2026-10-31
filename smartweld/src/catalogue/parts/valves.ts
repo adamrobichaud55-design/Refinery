@@ -707,8 +707,8 @@ const buildDiaph: Build = (b, NPS, cls, dims, notes) => {
   const D0 = pipeDims(NPS, cls).D, c = common(NPS, cls, 1.6 * D0, 1.6 * D0); c.wBody = 1.6 * D0 + 2 * c.tb; c.F2F = 2 * c.f.tf + 2 * c.hHub + c.wBody;
   const { D, tb, P } = c, zi = c.F2F / 2 - c.f.tf, k = blendK(c);
   endFlanges(b, c);
-  const Ro = 0.8 * D, yF = D / 2 + tb + 0.25 * D,   // DI-1: body flange face above the pipe axis
-    fb = designFlange(NPS, cls, 2 * Ro, tb, 2 * Ro + 2 * tb), hs = Ro + tb + 2.2 * fb.d, td = Math.max(0.125, 0.03 * D);
+  const Ro = 0.8 * D, fb = designFlange(NPS, cls, 2 * Ro, tb, 2 * Ro + 2 * tb), yF = c.f.OD / 2 + 0.25 + fb.tf,   // DI-1: square flange clear above the end flanges
+    hs = Ro + tb + 2.2 * fb.d, td = Math.max(0.125, 0.03 * D);
   const yLo = -(D / 2 + tb), yHi = yF - fb.tf;
   // F-8: the body flares from each flange hub into the body (no bare run tube)
   const rH = D / 2 + 2 * tb, rBf = 0.75 * (Ro + tb), zb = Ro + tb;
