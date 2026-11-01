@@ -13,7 +13,7 @@ must accompany any distribution of the viewer. No published dimension tables, st
 | 3     | Interior: equipment, pipe rack, platforms, access steel  | done (SmartWeld rules only; no regulation cited, by user decision) |
 | 4     | Pipe, flanges and 16 valve types, all sizes and classes offered (SW-VLV-11) | done |
 | 5     | Piping and routing: 203 lines with fittings, valves, welds and supports; all §40 checks pass | done |
-| 6     | Ground-truth export                                     | next |
+| 6     | Line classes (8) and ground-truth export: per-item metadata, spools, isometric data, BOM (`public/groundtruth/`) | done |
 
 ## Run
 
@@ -24,6 +24,7 @@ npm run typecheck
 npm run dev       # viewer at http://127.0.0.1:5173/
 npm run screenshot -- screenshots/stageN  # headless-browser verification
 npm run gen:piping # regenerate public/plant-piping.json (about a minute) after any stage-5 change
+npm run export:gt  # regenerate public/groundtruth/ from the plant piping (about a minute)
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
@@ -61,3 +62,10 @@ The "Plant piping" views add the stage-5 piping. The line inspector (right panel
 components, its welds (with shop/field status and the two parts each joins) and its supports, and
 highlights the line in the 3D view. In these whole-plant views valves are faceted more coarsely with
 distance and tees are drawn as plain run and branch pipes; dimensions are unchanged (PROVENANCE P-47).
+
+Stage 6 ground truth: `public/groundtruth/index.json` lists every line (class, service, size, from/to,
+counts); `lines/<line>.json` holds each line's header, items with full metadata, welds, supports,
+spools, bill of materials and isometric nodes in plant coordinates (E, N, EL with EL 100'-0" at the
+floor); `line-classes.json` defines the 8 SmartWeld line classes; `bom.csv` is the plant-wide bill of
+materials. In the viewer, "Piping — by line class" colours each class (tick boxes show or hide them),
+and clicking any item shows its metadata.

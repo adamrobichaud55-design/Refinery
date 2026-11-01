@@ -43,3 +43,9 @@ export function fluidGroupOf(l: LineLike, byNo: Map<string, LineLike>, seen = ne
   return 'H';
 }
 export const lineClassCode = (l: LineLike, byNo: Map<string, LineLike>) => `${fluidGroupOf(l, byNo)}${l.cls.slice(1)}`;
+/** display colour of a class (viewer only): its fluid group's colour, darker by 35 % above P150 so classes of one
+ *  group stay distinct */
+export function classColour(code: string): number {
+  const c = FLUID_GROUPS[code[0] as FluidGroup].colour, k = code.slice(1) === '150' ? 1 : 0.65;
+  return (Math.round(((c >> 16) & 255) * k) << 16) | (Math.round(((c >> 8) & 255) * k) << 8) | Math.round((c & 255) * k);
+}

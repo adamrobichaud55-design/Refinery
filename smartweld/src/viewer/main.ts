@@ -12,7 +12,8 @@ import { basisText } from '../core/basis';
 import { formatLength } from '../core/units';
 import { generateBuilding, billOfMaterials, type BuildingModel } from '../generator/building';
 import { generateInterior, type InteriorModel } from '../generator/interior';
-import { loadPiping, buildPipingObject, lineReport, plantSummary } from './pipingView';
+import { loadPiping, buildPipingObject, lineReport, plantSummary, pickedItem, itemRecord, itemReport, itemHighlight, classLegend } from './pipingView';
+import { classColour } from '../generator/lineclass';
 
 const viewEl = document.getElementById('view')!, infoEl = document.getElementById('info')!, errEl = document.getElementById('err')!, entriesEl = document.getElementById('entries')!;
 
@@ -86,7 +87,7 @@ const geoCache = new Map<PartSpec, PartGeometry>();
 const geomOf = (p: PartSpec) => { let g = geoCache.get(p); if (!g) { g = buildGeometry(p); geoCache.set(p, g); } return g; };
 
 function renderInstances(list: { part: PartSpec; transform: Mat4 }[]): THREE.Box3 {
-  group.clear(); pipingLOD = [];
+  group.clear(); pipingLOD = []; pipingRoot = null; pickObj = null;
   const byRole = new Map<string, MeshData[]>();                       // grouped by finish and by whether exact normals are carried
   for (const inst of list) {
     for (const s of geomOf(inst.part).solids) {
@@ -151,12 +152,12 @@ function drawProfile(outer: { x: number; y: number }[], inner?: { x: number; y: 
 
 // --- building ------------------------------------------------------------------
 let building: BuildingModel | null = null, interior: InteriorModel | null = null;
-function showBuilding(view: string, withInterior = false, piping?: { line?: string }) {
+function showBuilding(view: string, withInterior = false, piping?: { line?: string; item?: string }) {
   if (!building) building = generateBuilding();
   if (withInterior && !interior) interior = generateInterior();
   const t0 = performance.now();
   const all = withInterior ? [...building.instances, ...interior!.instances] : building.instances;
-  const shown = view === 'overview' || (piping && view !== 'walk') ? all.filter(i => !i.tags.includes('cladding') && !i.tags.includes('trim') && !i.tags.includes('roof-sheet')) : all; // cutaway: sheets and trim hidden
+  const shown = view === 'overview' || view === 'line-classes' || (piping && view !== 'walk') ? all.filter(i => !i.tags.includes('cladding') && !i.tags.includes('trim') && !i.tags.includes('roof-sheet')) : all; // cutaway: sheets and trim hidden
   const box = renderInstances(shown);
   const dr = building.drawing, L = dr.bays * dr.bayFt * 12, W = dr.widthFt * 12;
   grid.position.y = -dr.slabIn - 0.5;
@@ -177,6 +178,7 @@ function showBuilding(view: string, withInterior = false, piping?: { line?: stri
   else if (view === 'piping-exchangers') lookFrom([1250, 140, 90], [1550, 80, 300]);
   else if (view === 'piping-tanks') lookFrom([110, 150, -170], [300, 90, -330]);
   else if (view === 'piping-above') lookFrom([L * 0.5, 2300, 40], [L * 0.5, 0, 0]);
+  else if (view === 'line-classes') lookFrom([L * 0.62, 820, 760], [L * 0.45, 120, 0]);
   else lookFrom([L * 1.25, 900, W * 1.6], [L * 0.45, 60, 0]);
   const bom = billOfMaterials({ ...building, instances: all });
   const total = bom.reduce((s, e) => s + e.weight, 0);
@@ -188,13 +190,13 @@ function showBuilding(view: string, withInterior = false, piping?: { line?: stri
     <div class="cat">${dr.widthFt} ft × ${dr.bays * dr.bayFt} ft, eave ${dr.eaveFt} ft, slope ${dr.slopeRisePer12}:12 (drawing, SW-BLD-1). ${steelCount.toLocaleString()} steel parts, ${(total / 2000).toFixed(1)} tons. Built in ${((performance.now() - t0) / 1000).toFixed(1)} s.</div>
     <p class="notes">${notesAll.join(' ')}</p>
     ${equip ? `<p class="notes"><b>Equipment:</b> ${equip}</p>` : ''}
-    <div class="legend">Walk: click the 3D view, then W A S D to move, mouse to look, Esc to release.</div>
+    <div class="legend">${piping ? 'Click any pipe, fitting, flange, valve, weld or support to see its metadata. ' : ''}Walk: double-click the 3D view, then W A S D to move, mouse to look, Esc to release.</div>
     <h3>Derived by rule</h3><table>${Object.values(derivedAll).map(d => `<tr><td>${d.label}</td><td class="v">${Number(d.value.toFixed(3))} ${d.unit}</td><td class="b-${d.basis.kind}">${basisText(d.basis)}</td></tr>`).join('')}</table>
     <h3>Bill of materials (steel, by designation × length)</h3>
     <table><tr><th>Part</th><th>Qty</th><th>Weight</th><th>Rules</th></tr>
     ${bom.map(e => `<tr><td>${e.designation}</td><td class="v">${e.qty}</td><td class="v">${e.weight.toFixed(0)} lb</td><td>${e.rules.join(', ')}</td></tr>`).join('')}
     <tr><td><b>Total</b></td><td></td><td class="v"><b>${total.toFixed(0)} lb</b></td><td></td></tr></table>`;
-  if (piping) showPiping(t0, piping.line);
+  if (piping) showPiping(t0, piping.line, view === 'line-classes', piping.item);
 }
 function lookFrom(eye: number[], target: number[]) {
   camera.position.set(eye[0], eye[1], eye[2]); controls.target.set(target[0], target[1], target[2]);
@@ -204,29 +206,58 @@ function lookFrom(eye: number[], target: number[]) {
 // --- plant piping (stage 5) ---------------------------------------------------------
 const HIGHLIGHT = new THREE.MeshStandardMaterial({ color: 0xff8c1a, emissive: 0x7a3a00, metalness: 0.2, roughness: 0.5, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, side: THREE.DoubleSide });
 let pipingSeq = 0, pipingLOD: { update: (eye: THREE.Vector3) => void }[] = [];
-function showPiping(t0: number, line?: string) {
+function showPiping(t0: number, line?: string, byClass = false, item?: string) {
   const seq = ++pipingSeq;
   const note = document.createElement('p'); note.className = 'notes'; note.textContent = 'Loading plant piping…'; infoEl.prepend(note);
   loadPiping().then(m => {
     if (seq !== pipingSeq) return;
-    const po = buildPipingObject(m, MATERIALS, toBufferGeometry); group.add(po.group); pipingLOD = [po];
+    pipingRoot = new THREE.Group(); group.add(pipingRoot); pipingLOD = [];
+    if (byClass) {                                                   // SW-LC-1: each line class in its own colour (display only)
+      for (const code of [...new Set(m.lines.map(l => l.lineClass!))].sort()) {
+        const mat = new THREE.MeshStandardMaterial({ color: classColour(code), metalness: 0.25, roughness: 0.5, side: THREE.DoubleSide });
+        const po = buildPipingObject(m, MATERIALS, toBufferGeometry, l => l.lineClass === code, mat, false); po.group.name = 'class:' + code; pipingRoot.add(po.group); pipingLOD.push(po);
+      }
+      const nz = buildPipingObject(m, MATERIALS, toBufferGeometry, () => false, undefined, true); pipingRoot.add(nz.group); pipingLOD.push(nz);
+    } else { const po = buildPipingObject(m, MATERIALS, toBufferGeometry); pipingRoot.add(po.group); pipingLOD.push(po); }
     const sel = m.lines.find(l => l.no === line);
-    if (sel) { const hl = buildPipingObject(m, MATERIALS, toBufferGeometry, l => l.no === sel.no, HIGHLIGHT); group.add(hl.group); pipingLOD.push(hl); }
+    if (sel) { const hl = buildPipingObject(m, MATERIALS, toBufferGeometry, l => l.no === sel.no, HIGHLIGHT); pipingRoot.add(hl.group); pipingLOD.push(hl); }
     for (const p of pipingLOD) p.update(camera.position);
     const view = decodeURIComponent(location.hash.slice(1)).split(';')[0];
     const pick = `<div class="cfg"><label>Line inspector: <select id="linesel"><option value="">— choose a line —</option>${m.lines.map(l => `<option${l.no === line ? ' selected' : ''}>${l.no}</option>`).join('')}</select></label></div>`;
-    note.outerHTML = `<div id="pipinginfo">${pick}${sel ? lineReport(sel) : ''}${plantSummary(m)}<p class="notes">Plant and piping built in ${((performance.now() - t0) / 1000).toFixed(1)} s. Valves in plant views use a coarser marching grid (same dimensions).</p></div>`;
+    note.outerHTML = `<div id="pickinfo"></div><div id="pipinginfo">${pick}${byClass ? classLegend(m) : ''}${sel ? lineReport(sel) : ''}${plantSummary(m)}<p class="notes">Plant and piping built in ${((performance.now() - t0) / 1000).toFixed(1)} s. Valves in plant views use a coarser marching grid (same dimensions).</p></div>`;
     document.getElementById('linesel')!.addEventListener('change', ev => { const v = (ev.target as HTMLSelectElement).value; location.hash = `${view}${v ? ';line=' + v : ''}`; });
+    for (const box of Array.from(document.querySelectorAll<HTMLInputElement>('.lcbox'))) box.addEventListener('change', () => { const o = pipingRoot?.getObjectByName('class:' + box.dataset.class); if (o) { o.visible = box.checked; needsRender = true; } });
+    pipingModel = m;
+    if (item) { const l = m.lines.find(x => [...x.comps.map(c => c.tag), ...x.welds.map(w => w.id), ...x.supports.map(s2 => s2.id)].includes(item)); if (l) showItem({ tag: item, line: l.no }, true); }
     if (sel) { const b = new THREE.Box3(); for (const c of sel.comps) { b.expandByPoint(new THREE.Vector3(...c.a)); b.expandByPoint(new THREE.Vector3(...c.b)); } const ctr = b.getCenter(new THREE.Vector3()), r = Math.max(120, b.getSize(new THREE.Vector3()).length() * 0.6); lookFrom([ctr.x + r * 0.6, Math.min(ctr.y + r * 0.45, 330), ctr.z + r * 0.7], [ctr.x, ctr.y, ctr.z]); }
-    (window as any).__pipingReady = true;
+    if (!item) (window as any).__pipingReady = true;
   }).catch(e => { note.textContent = String(e); showError(e); });
 }
+// --- click a piping item to see its metadata (stage 6, SW-GT-1) -----------------------------------------------
+let pipingRoot: THREE.Group | null = null, pipingModel: Awaited<ReturnType<typeof loadPiping>> | null = null, pickObj: THREE.Object3D | null = null;
+const raycaster = new THREE.Raycaster();
+function showItem(sel: { tag: string; line: string }, frameIt = false) {
+  if (pickObj) { pickObj.parent?.remove(pickObj); pickObj = null; }
+  if (pipingModel && pipingRoot) { pickObj = itemHighlight(pipingModel, sel.tag, HIGHLIGHT, toBufferGeometry); if (pickObj) pipingRoot.add(pickObj); needsRender = true; }
+  if (frameIt && pickObj) { const b = new THREE.Box3().setFromObject(pickObj), c = b.getCenter(new THREE.Vector3()), r = Math.max(48, b.getSize(new THREE.Vector3()).length() * 2.5); lookFrom([c.x + r * 0.7, c.y + r * 0.5, c.z + r * 0.8], [c.x, c.y, c.z]); }
+  itemRecord(sel).then(res => {
+    const el = document.getElementById('pickinfo'); if (el) el.innerHTML = res ? itemReport(res.rec, res.header) + '<hr>' : `<p class="notes">No record for ${sel.tag}</p>`;
+    (window as any).__pipingReady = true;
+  }).catch(showError);
+}
+let downXY: [number, number] | null = null;
+renderer.domElement.addEventListener('pointerdown', e => { downXY = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener('pointerup', e => {
+  if (!downXY || walking || !pipingRoot) return; const moved = Math.hypot(e.clientX - downXY[0], e.clientY - downXY[1]); downXY = null; if (moved > 4) return;
+  const r = renderer.domElement.getBoundingClientRect(); raycaster.setFromCamera(new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), camera);
+  for (const hit of raycaster.intersectObject(pipingRoot, true)) { if (!hit.object.visible || !hit.object.parent?.visible) continue; const sel = pickedItem(hit); if (sel) { showItem(sel); return; } }
+});
 
 // --- first-person walk (pointer lock) --------------------------------------------
 const keys = new Set<string>();
 let walking = false, yaw = 0, pitch = 0;
 const EYE = 66; // 5 ft 6 in eye height
-renderer.domElement.addEventListener('click', () => { if (building && group.children.length) renderer.domElement.requestPointerLock(); });
+renderer.domElement.addEventListener('dblclick', () => { if (building && group.children.length) renderer.domElement.requestPointerLock(); });
 document.addEventListener('pointerlockchange', () => {
   walking = document.pointerLockElement === renderer.domElement;
   controls.enabled = !walking;
@@ -263,7 +294,7 @@ const hp = document.createElement('h2'); hp.textContent = 'Plant (building + int
 for (const [label, view] of [['Plant — walk (start)', 'walk'], ['Plant — pipe rack', 'rack'], ['Plant — vessel platforms', 'vessels'], ['Plant — stair tower', 'stair'], ['Plant — column & ladders', 'column'], ['Plant — tanks', 'tanks'], ['Plant — pumps', 'pumps'], ['Plant — cutaway overview', 'overview']])
   buildingBtns['plant:' + view] = addButton(entriesEl, label, () => { location.hash = 'plant:' + view; showBuilding(view, true); });
 const hpp = document.createElement('h2'); hpp.textContent = 'Plant piping (stage 5)'; entriesEl.appendChild(hpp);
-for (const [label, view] of [['Piping — overview', 'overview'], ['Piping — pipe rack', 'piping-rack'], ['Piping — pumps', 'piping-pumps'], ['Piping — column', 'piping-column'], ['Piping — exchangers', 'piping-exchangers'], ['Piping — tanks', 'piping-tanks'], ['Piping — plan from above', 'piping-above'], ['Piping — walk (start)', 'walk']])
+for (const [label, view] of [['Piping — by line class', 'line-classes'], ['Piping — overview', 'overview'], ['Piping — pipe rack', 'piping-rack'], ['Piping — pumps', 'piping-pumps'], ['Piping — column', 'piping-column'], ['Piping — exchangers', 'piping-exchangers'], ['Piping — tanks', 'piping-tanks'], ['Piping — plan from above', 'piping-above'], ['Piping — walk (start)', 'walk']])
   buildingBtns['piping:' + view] = addButton(entriesEl, label, () => { location.hash = 'piping:' + view; showBuilding(view, true, {}); });
 const h1 = document.createElement('h2'); h1.textContent = 'Assemblies'; entriesEl.appendChild(h1);
 const asmBtn = addButton(entriesEl, 'Column base (W10x49)', () => { location.hash = 'assembly:column-base'; showAssembly(columnBaseAssembly()); });
@@ -300,7 +331,7 @@ function openFromHash() {
   if (hsh.startsWith('des:')) { try { showPart(makePart(hsh.slice(4), hsh.slice(4), 120)); return; } catch (e) { showError(e); } }
   if (hsh.startsWith('assembly:')) { setActive(asmBtn); showAssembly(columnBaseAssembly()); return; }
   if (hsh.startsWith('building:')) { const v = hsh.slice(9); setActive(buildingBtns[v] ?? null); showBuilding(v); return; }
-  if (hsh.startsWith('piping:')) { const [v, ...opts] = hsh.slice(7).split(';'); const line = opts.find(o => o.startsWith('line='))?.slice(5); setActive(buildingBtns['piping:' + v] ?? null); showBuilding(v, true, { line }); return; }
+  if (hsh.startsWith('piping:')) { const [v, ...opts] = hsh.slice(7).split(';'); const line = opts.find(o => o.startsWith('line='))?.slice(5), item = opts.find(o => o.startsWith('item='))?.slice(5); setActive(buildingBtns['piping:' + v] ?? null); showBuilding(v, true, { line, item }); return; }
   if (hsh.startsWith('plant:')) { const v = hsh.slice(6); setActive(buildingBtns['plant:' + v] ?? null); showBuilding(v, true); return; }
   showPart(ENTRIES[1].build());
 }

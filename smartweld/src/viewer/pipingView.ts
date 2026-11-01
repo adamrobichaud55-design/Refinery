@@ -14,21 +14,23 @@ import { transformMesh, mergeMeshes, type MeshData, type Mat4 } from '../geometr
 import { pipeDims, teeC, makeValve, type ValveType, type PipeClass } from '../catalogue';
 import { translate } from '../geometry/transform';
 import { formatLength } from '../core/units';
+import { lineFileName, plantText, type GTLine, type GTItem, type PlantPt } from '../generator/groundtruth';
+import { FLUID_GROUPS, classColour, type FluidGroup } from '../generator/lineclass';
 
 let cached: Promise<PipingModel> | null = null;
 export const loadPiping = (): Promise<PipingModel> => (cached ??= fetch('/plant-piping.json').then((r): Promise<PipingModel> => { if (!r.ok) throw new Error('plant-piping.json not found: run npm run gen:piping'); return r.json(); }));
 
-type Placed = { key: string; T: Mat4; scaleZ?: number };
+type Placed = { key: string; T: Mat4; scaleZ?: number; tag: string; line: string };
 const NEAR_CELLS = 40, FAR_CELLS = 18, NEAR_DIST = 480;
 /** every drawn item of the model as (part key, transform); pipe lengths share one unit-length template per size */
-function placedItems(m: PipingModel, only?: (l: LineRun) => boolean): Placed[] {
+function placedItems(m: PipingModel, only?: (l: LineRun) => boolean, nozzles = !only): Placed[] {
   const out: Placed[] = [];
-  const comp = (c: Comp) => {
-    if (c.kind === 'pipe') { const [, n, k] = c.key.split('|'); out.push({ key: `PIPE|${n}|${k}|1.000`, T: c.T, scaleZ: Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]) }); }
-    else out.push({ key: c.key, T: c.T });
+  const comp = (c: Comp, line: string) => {
+    if (c.kind === 'pipe') { const [, n, k] = c.key.split('|'); out.push({ key: `PIPE|${n}|${k}|1.000`, T: c.T, scaleZ: Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), tag: c.tag, line }); }
+    else out.push({ key: c.key, T: c.T, tag: c.tag, line });
   };
-  for (const l of m.lines) { if (only && !only(l)) continue; l.comps.forEach(comp); for (const w of l.welds) out.push({ key: w.key, T: w.T }); for (const s of l.supports) out.push({ key: s.key, T: s.T }); }
-  if (!only) for (const n of m.nozzles) { n.comps.forEach(comp); for (const w of n.welds) out.push({ key: w.key, T: w.T }); }
+  for (const l of m.lines) { if (only && !only(l)) continue; l.comps.forEach(c => comp(c, l.no)); for (const w of l.welds) out.push({ key: w.key, T: w.T, tag: w.id, line: l.no }); for (const s of l.supports) out.push({ key: s.key, T: s.T, tag: s.id, line: l.no }); }
+  if (nozzles) for (const n of m.nozzles) { n.comps.forEach(c => comp(c, `nozzle:${n.id}`)); for (const w of n.welds) out.push({ key: w.key, T: w.T, tag: w.id, line: `nozzle:${n.id}` }); }
   return out;
 }
 const geoCache = new Map<string, { role: Role; mesh: MeshData }[]>();
@@ -54,31 +56,30 @@ const m4 = (T: Mat4, sz = 1) => { const M = new THREE.Matrix4().fromArray(T as n
 export interface PipingObject { group: THREE.Group; update: (eye: THREE.Vector3) => void }
 /** the piping as a group: keys used four times or more are instanced, the rest merged by finish; valves carry a near
  *  and a far tessellation and `update(eye)` moves each valve instance to the one its distance calls for */
-export function buildPipingObject(m: PipingModel, materials: Record<Role, THREE.Material>, toGeo: (m: MeshData) => THREE.BufferGeometry, only?: (l: LineRun) => boolean, material?: THREE.Material): PipingObject {
+export function buildPipingObject(m: PipingModel, materials: Record<Role, THREE.Material>, toGeo: (m: MeshData) => THREE.BufferGeometry, only?: (l: LineRun) => boolean, material?: THREE.Material, nozzles?: boolean): PipingObject {
   const grp = new THREE.Group(), byKey = new Map<string, Placed[]>();
-  for (const p of placedItems(m, only)) { const a = byKey.get(p.key) ?? []; a.push(p); byKey.set(p.key, a); }
-  const merged = new Map<Role, MeshData[]>();
+  for (const p of placedItems(m, only, nozzles)) { const a = byKey.get(p.key) ?? []; a.push(p); byKey.set(p.key, a); }
   const lods: { list: Placed[]; centres: THREE.Vector3[]; near: THREE.InstancedMesh[]; far: THREE.InstancedMesh[] }[] = [];
   for (const [key, list] of byKey) {
     if (key.startsWith('VLV')) {
-      const mk = (cells: number) => solidsOf(key, cells).map(s => { const im = new THREE.InstancedMesh(toGeo(s.mesh), material ?? materials[s.role], list.length); im.frustumCulled = false; im.count = 0; im.name = `${key}@${cells}`; grp.add(im); return im; });
+      const mk = (cells: number) => solidsOf(key, cells).map(s => { const im = new THREE.InstancedMesh(toGeo(s.mesh), material ?? materials[s.role], list.length); im.frustumCulled = false; im.count = 0; im.name = `${key}@${cells}`; im.userData = { tags: [], lines: [] }; grp.add(im); return im; });
       lods.push({ list, centres: list.map(p => new THREE.Vector3(p.T[12], p.T[13], p.T[14])), near: mk(NEAR_CELLS), far: mk(FAR_CELLS) });
       continue;
     }
     const solids = solidsOf(key);
-    if (list.length >= 4 || list[0].scaleZ !== undefined) {
-      for (const s of solids) {
-        const im = new THREE.InstancedMesh(toGeo(s.mesh), material ?? materials[s.role], list.length);
-        list.forEach((p, i) => im.setMatrixAt(i, m4(p.T, p.scaleZ)));
-        im.instanceMatrix.needsUpdate = true; im.computeBoundingSphere(); im.name = key; grp.add(im);
-      }
-    } else for (const p of list) for (const s of solids) { const a = merged.get(s.role) ?? []; a.push(transformMesh(s.mesh, p.T)); merged.set(s.role, a); }
+    for (const s of solids) {                                                       // every item is an instance, so a click can name it
+      const im = new THREE.InstancedMesh(toGeo(s.mesh), material ?? materials[s.role], list.length);
+      list.forEach((p, i) => im.setMatrixAt(i, m4(p.T, p.scaleZ)));
+      im.instanceMatrix.needsUpdate = true; im.computeBoundingSphere(); im.name = key; im.userData = { tags: list.map(p => p.tag), lines: list.map(p => p.line) }; grp.add(im);
+    }
   }
-  for (const [role, meshes] of merged) { const mesh = new THREE.Mesh(toGeo(mergeMeshes(meshes)), material ?? materials[role]); mesh.name = role; grp.add(mesh); }
   const mats = lods.map(L => L.list.map(p => m4(p.T)));
   const update = (eye: THREE.Vector3) => lods.forEach((L, li) => {
     let nN = 0, nF = 0;
-    L.list.forEach((_, i) => { const near = L.centres[i].distanceTo(eye) < NEAR_DIST; for (const im of near ? L.near : L.far) im.setMatrixAt(near ? nN : nF, mats[li][i]); if (near) nN++; else nF++; });
+    const tn: string[] = [], ln: string[] = [], tf: string[] = [], lf: string[] = [];
+    L.list.forEach((p, i) => { const near = L.centres[i].distanceTo(eye) < NEAR_DIST; for (const im of near ? L.near : L.far) im.setMatrixAt(near ? nN : nF, mats[li][i]); if (near) { nN++; tn.push(p.tag); ln.push(p.line); } else { nF++; tf.push(p.tag); lf.push(p.line); } });
+    for (const im of L.near) { im.userData = { tags: tn, lines: ln }; im.boundingSphere = null; }
+    for (const im of L.far) { im.userData = { tags: tf, lines: lf }; im.boundingSphere = null; }
     for (const im of L.near) { im.count = nN; im.instanceMatrix.needsUpdate = true; }
     for (const im of L.far) { im.count = nF; im.instanceMatrix.needsUpdate = true; }
   });
@@ -89,7 +90,7 @@ const esc = (s: string) => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;
 const fmtKey = (k: string) => {
   const a = k.split('|');
   switch (a[0]) {
-    case 'PIPE': return `Pipe ${a[1]}" ${a[2]}`; case 'EL': return `Elbow 90° LR ${a[1]}" ${a[2]}`; case 'TEE': return `Tee ${a[1]}" × ${a[3]}" ${a[2]}`;
+    case 'PIPE': return `Pipe ${a[1]}" ${a[2]}`; case 'EL': return `Elbow 90° R = 5/3 OD ${a[1]}" ${a[2]}`; case 'TEE': return `Tee ${a[1]}" × ${a[3]}" ${a[2]}`;
     case 'RED': return `Reducer ${a[1]}" × ${a[2]}" ${a[3]}`; case 'CAP': return `Cap ${a[1]}" ${a[2]}`; case 'WNF': return `Weld-neck flange ${a[1]}" ${a[2]}`;
     case 'BLIND': return `Blind flange ${a[1]}" ${a[2]}`; case 'GSK': return `Gasket ${a[1]}" ${a[2]}`; case 'STUDS': return `Stud set ${a[1]}" ${a[2]}`;
     case 'VLV': return `${a[1][0]}${a[1].slice(1).toLowerCase()} valve ${a[2]}" ${a[3]}`;
@@ -106,7 +107,7 @@ export function lineReport(l: LineRun): string {
   const pipeLen = [...bom.entries()].filter(([k]) => k.startsWith('PIPE')).reduce((s, [, e]) => s + e.len, 0);
   const shop = l.welds.filter(w => !w.field).length, field = l.welds.length - shop;
   return `<h2>${esc(l.no)}</h2>
-    <div class="cat">${l.service} · ${l.NPS}" ${l.cls} · ${l.kind} · from ${esc(l.from)} to ${esc(l.to)}${l.cv ? ' · control valve' : ''}. OD ${pipeDims(l.NPS, l.cls).OD.toFixed(3)} in, pipe ${formatLength(pipeLen)}; ${l.welds.length} butt welds (${shop} shop, ${field} field); ${l.supports.length} supports.</div>
+    <div class="cat">class ${l.lineClass ?? ''} · ${l.service} · ${l.NPS}" ${l.cls} · ${l.kind} · from ${esc(l.from)} to ${esc(l.to)}${l.cv ? ' · control valve' : ''}. OD ${pipeDims(l.NPS, l.cls).OD.toFixed(3)} in, pipe ${formatLength(pipeLen)}; ${l.welds.length} butt welds (${shop} shop, ${field} field); ${l.supports.length} supports.</div>
     <h3>Bill of materials</h3><table><tr><th>Item</th><th>Qty</th><th>Length</th></tr>
     ${[...bom.entries()].map(([k, e]) => `<tr><td>${esc(fmtKey(k))}</td><td class="v">${e.n}</td><td class="v">${e.len ? formatLength(e.len) : ''}</td></tr>`).join('')}</table>
     <h3>Welds (SW-PW-3)</h3><table><tr><th>Id</th><th>Size</th><th>Joins</th><th></th></tr>
@@ -121,4 +122,45 @@ export function plantSummary(m: PipingModel): string {
   const welds = lines.flatMap(l => l.welds), sup = lines.flatMap(l => l.supports), st = new Map<string, number>(); for (const s of sup) st.set(s.type, (st.get(s.type) ?? 0) + 1);
   return `<p class="notes"><b>Piping (stage 5):</b> ${lines.length} lines (${lines.filter(l => l.kind === 'routed').length} routed, ${lines.filter(l => l.kind === 'header').length} rack headers, ${lines.filter(l => l.kind === 'stub').length} stubs), ${formatLength(pipeLen)} of pipe, ${comps.filter(c => c.kind === 'elbow').length} elbows, ${comps.filter(c => c.kind === 'tee').length} tees, ${valves.length} valves (${[...vt.entries()].map(([t, n]) => `${t.toLowerCase()} ${n}`).join(', ')}), ${welds.length} butt welds (${welds.filter(w => w.field).length} field), ${sup.length} supports (${[...st.entries()].map(([t, n]) => `${t} ${n}`).join(', ')}). Routing failures: ${m.failures.length}.</p>
     <p class="notes">By service: ${[...by.entries()].map(([s, n]) => `${s} ${n}`).join(' · ')}</p>`;
+}
+
+// ---- picking and item metadata (stage 6) --------------------------------------------------------------------
+/** the item under a ray hit: its tag and line (from the instance it hit) */
+export function pickedItem(hit: THREE.Intersection): { tag: string; line: string } | null {
+  const o = hit.object as THREE.InstancedMesh, ud = o.userData as { tags?: string[]; lines?: string[] };
+  if (!ud?.tags || hit.instanceId === undefined || !ud.tags[hit.instanceId]) return null;
+  return { tag: ud.tags[hit.instanceId], line: ud.lines![hit.instanceId] };
+}
+const gtCache = new Map<string, Promise<GTLine | GTItem[]>>();
+const loadGT = (path: string) => { let p = gtCache.get(path); if (!p) { p = fetch(`/groundtruth/${path}`).then(r => { if (!r.ok) throw new Error(`ground truth ${path} not found: run npm run export:gt`); return r.json(); }); gtCache.set(path, p); } return p; };
+/** the metadata record of a picked item, from the committed ground-truth export (SW-GT-1) */
+export async function itemRecord(sel: { tag: string; line: string }): Promise<{ rec: Record<string, unknown>; header?: GTLine['header'] } | null> {
+  if (sel.line.startsWith('nozzle:')) { const all = await loadGT('nozzles.json') as GTItem[]; const r = all.find(x => x.tag === sel.tag); return r ? { rec: r as unknown as Record<string, unknown> } : null; }
+  const l = await loadGT(`lines/${lineFileName(sel.line)}`) as GTLine;
+  const r = [...l.items, ...l.welds, ...l.supports].find(x => x.tag === sel.tag);
+  return r ? { rec: r as unknown as Record<string, unknown>, header: l.header } : null;
+}
+const pt = (q: unknown) => { const p = q as PlantPt; return plantText(p); };
+export function itemReport(rec: Record<string, unknown>, header?: GTLine['header']): string {
+  const rows: [string, string][] = [];
+  const add = (k: string, v: unknown) => { if (v === undefined || v === null || v === '') return; rows.push([k, typeof v === 'number' ? String(Math.round(v * 1000) / 1000) : Array.isArray(v) ? v.join(', ') : String(v)]); };
+  add('Tag', rec.tag); add('Line', rec.line); add('Line class', rec.lineClass); add('Kind', rec.kind ?? rec.type); add('Item no.', rec.itemNo); add('Description', rec.description); add('Designation', rec.designation);
+  add('Size', rec.NPS !== undefined ? `${rec.NPS}"${rec.NPS2 !== undefined ? ` × ${rec.NPS2}"` : ''}` : undefined); add('Pressure class', rec.cls); add('Material', rec.material); add('Ends', rec.ends);
+  if (rec.cutLength !== undefined) add('Cut length', formatLength(rec.cutLength as number));
+  add('Weight (lb)', rec.weight); add('Spool', rec.spool); if (rec.shopField) { add('Shop / field', rec.shopField); add('Weld size (in)', rec.size); add('Joins', (rec.joins as string[]).map(j => j.replace(`${rec.line}/`, ''))); add('Spools joined', rec.spools); }
+  if (rec.a) { add('End A', pt(rec.a)); add('End B', pt(rec.b)); add('Centre', pt(rec.centre)); } if (rec.at) add('At', pt(rec.at));
+  add('Part key', rec.key); add('Rules', rec.rules);
+  const head = header ? `<div class="cat">${esc(header.line)} · class ${header.lineClass} (${esc(header.fluid)}${header.insulated ? ', insulated' : ''}) · ${esc(header.flow)}</div>` : '';
+  return `<h2>${esc(String(rec.description ?? rec.tag))}</h2>${head}<table>${rows.map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}</table>`;
+}
+/** the picked item drawn on top in the highlight finish */
+export function itemHighlight(m: PipingModel, tag: string, mat: THREE.Material, toGeo: (m: MeshData) => THREE.BufferGeometry): THREE.Object3D | null {
+  for (const l of m.lines) for (const it of [...l.comps.map(c => ({ key: c.kind === 'pipe' ? c.key.split('|').slice(0, 3).join('|') + '|1.000' : c.key, T: c.T, tag: c.tag, sz: c.kind === 'pipe' ? Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]) : 1 })), ...l.welds.map(w => ({ key: w.key, T: w.T, tag: w.id, sz: 1 })), ...l.supports.map(s => ({ key: s.key, T: s.T, tag: s.id, sz: 1 }))])
+    if (it.tag === tag) { const g = new THREE.Group(); for (const s of solidsOf(it.key, it.key.startsWith('VLV') ? NEAR_CELLS : undefined)) { const mesh = new THREE.Mesh(toGeo(s.mesh), mat); mesh.matrixAutoUpdate = false; mesh.matrix.copy(m4(it.T, it.sz)); g.add(mesh); } return g; }
+  return null;
+}
+/** line-class legend (SW-LC-1; colours are display only) */
+export function classLegend(m: PipingModel): string {
+  const by = new Map<string, number>(); for (const l of m.lines) by.set(l.lineClass!, (by.get(l.lineClass!) ?? 0) + 1);
+  return `<h3>Line classes</h3><table>${[...by.entries()].sort().map(([c, n]) => { const g = FLUID_GROUPS[c[0] as FluidGroup]; return `<tr><td><label><input type="checkbox" class="lcbox" data-class="${c}" checked> <span style="display:inline-block;width:12px;height:12px;background:#${classColour(c).toString(16).padStart(6, '0')};vertical-align:middle"></span> <b>${c}</b></label></td><td>${esc(g.name)}, ${c.slice(1)} psi${g.insulated ? ', insulated' : ''}</td><td class="v">${n} lines</td></tr>`; }).join('')}</table>`;
 }

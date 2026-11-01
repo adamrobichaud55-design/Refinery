@@ -7,7 +7,7 @@ import { VALVE_TYPES, pipeDims, CLASS_PRESSURE, type PipeClass, type PartSpec } 
 import { ruleIdsOf } from '../core/basis';
 import { formatLength } from '../core/units';
 import { partFromKey, type PipingModel, type LineRun, type Comp, type NozzleRun } from './piping';
-import { lineClassFor, fluidGroupOf, FLUID_GROUPS, type FluidGroup, type LineClass } from './lineclass';
+import { lineClassFor, fluidGroupOf, classColour, type FluidGroup, type LineClass } from './lineclass';
 import { elbowRadius } from '../catalogue';
 import type { V3 } from './router';
 
@@ -138,7 +138,7 @@ const r4 = (_k: string, v: unknown) => (typeof v === 'number' ? Math.round(v * 1
 export function exportFiles(gt: GroundTruth): Map<string, string> {
   const f = new Map<string, string>();
   for (const l of gt.lines) f.set(`lines/${lineFileName(l.header.line)}`, JSON.stringify(l, r4, 1));
-  f.set('line-classes.json', JSON.stringify(gt.classes.map(c => ({ ...c, colour: `#${FLUID_GROUPS[c.group].colour.toString(16).padStart(6, '0')}` })), r4, 1));
+  f.set('line-classes.json', JSON.stringify(gt.classes.map(c => ({ ...c, colour: `#${classColour(c.code).toString(16).padStart(6, '0')}` })), r4, 1));
   f.set('nozzles.json', JSON.stringify(gt.nozzles, r4, 1));
   f.set('index.json', JSON.stringify({ datum: 'EL 100\'-0" = floor; E = +x, N = -z (SW-GT-2)', lines: gt.lines.map(l => ({ ...l.header, file: `lines/${lineFileName(l.header.line)}`, ...l.totals })) }, r4, 1));
   const csv = ['line,lineClass,itemNo,description,qty,length_in,weight_lb'];

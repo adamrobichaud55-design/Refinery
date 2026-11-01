@@ -27,6 +27,7 @@ const targets = [
   ['piping-overview', '#piping:overview'], ['piping-rack', '#piping:piping-rack'], ['piping-pumps', '#piping:piping-pumps'], ['piping-column', '#piping:piping-column'],
   ['piping-exchangers', '#piping:piping-exchangers'], ['piping-tanks', '#piping:piping-tanks'], ['piping-above', '#piping:piping-above'], ['piping-walk', '#piping:walk'],
   ['piping-line-1015', '#piping:piping-column;line=' + encodeURIComponent('3"-P300-P-1015')], ['piping-line-3001', '#piping:piping-rack;line=' + encodeURIComponent('4"-P150-CWS-3001')],
+  ['piping-classes', '#piping:line-classes'], ['piping-item-cv', '#piping:piping-column;item=' + encodeURIComponent('3"-P300-P-1015/B13')],
   ['Z-purlin', '#entry:' + encodeURIComponent('Z10x2.5x5/64 (purlin)')], ['panel', '#entry:' + encodeURIComponent('Wall/roof panel PNL1.25x36')], ['ridge-cap', '#entry:' + encodeURIComponent('Ridge cap 12x12 (1:12)')], ['weld-around', '#entry:' + encodeURIComponent('Fillet all around W10x49')],
 ];
 const only = process.argv[3];   // optional name prefix filter
