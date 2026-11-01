@@ -14,6 +14,7 @@ must accompany any distribution of the viewer. No published dimension tables, st
 | 4     | Pipe, flanges and 16 valve types, all sizes and classes offered (SW-VLV-11) | done |
 | 5     | Piping and routing: 203 lines with fittings, valves, welds and supports; all §40 checks pass | done |
 | 6     | Line classes (8) and ground-truth export: per-item metadata, spools, isometric data, BOM (`public/groundtruth/`) | done |
+| 7     | Equipment metadata; 25 shutdown work orders with isometrics, scope, isolations, demo welding specs, NDE, tests and ITPs (`public/workorders/`, `public/isometrics/`) | done |
 
 ## Run
 
@@ -25,6 +26,8 @@ npm run dev       # viewer at http://127.0.0.1:5173/
 npm run screenshot -- screenshots/stageN  # headless-browser verification
 npm run gen:piping # regenerate public/plant-piping.json (about a minute) after any stage-5 change
 npm run export:gt  # regenerate public/groundtruth/ from the plant piping (about a minute)
+npm run export:wo  # regenerate public/isometrics/ and public/workorders/ (seconds)
+npm run wo:pdf     # print every work-order pack to PDF (public/workorders/pdf/)
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
@@ -69,3 +72,12 @@ spools, bill of materials and isometric nodes in plant coordinates (E, N, EL wit
 floor); `line-classes.json` defines the 8 SmartWeld line classes; `bom.csv` is the plant-wide bill of
 materials. In the viewer, "Piping — by line class" colours each class (tick boxes show or hide them),
 and clicking any item shows its metadata.
+
+Stage 7 work orders: `public/workorders/index.json` lists the 25 shutdown work orders by area;
+each `WO-*.json` holds the scope, affected items, isolation list (valves locked, blinds), parts,
+new welds (each tied to the weld it replaces), welding specification, NDE, inspections and
+thickness locations, test, bolt-up preloads and the ITP; `WO-*.html` and `pdf/WO-*.pdf` are the
+printable packs with the isometrics attached. Welding, NDE and test content is SmartWeld
+demonstration content — not qualified procedures; the facility owner's procedures and codes
+govern. In the viewer, open a work order from the left list: its items are highlighted, and the
+ITP can be signed off activity by activity (saved in the browser; "Download completion record").

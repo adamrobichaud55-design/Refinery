@@ -12,7 +12,8 @@ import { basisText } from '../core/basis';
 import { formatLength } from '../core/units';
 import { generateBuilding, billOfMaterials, type BuildingModel } from '../generator/building';
 import { generateInterior, type InteriorModel } from '../generator/interior';
-import { loadPiping, buildPipingObject, lineReport, plantSummary, pickedItem, itemRecord, itemReport, itemHighlight, classLegend } from './pipingView';
+import { loadPiping, buildPipingObject, lineReport, plantSummary, pickedItem, itemRecord, itemReport, itemHighlight, classLegend, equipmentPickGroup, loadEquipment, equipmentReport, loadWOIndex, loadWO, loadCompletion, saveCompletion, woReport } from './pipingView';
+import type { WorkOrder } from '../generator/workorders';
 import { classColour } from '../generator/lineclass';
 
 const viewEl = document.getElementById('view')!, infoEl = document.getElementById('info')!, errEl = document.getElementById('err')!, entriesEl = document.getElementById('entries')!;
@@ -152,12 +153,12 @@ function drawProfile(outer: { x: number; y: number }[], inner?: { x: number; y: 
 
 // --- building ------------------------------------------------------------------
 let building: BuildingModel | null = null, interior: InteriorModel | null = null;
-function showBuilding(view: string, withInterior = false, piping?: { line?: string; item?: string }) {
+function showBuilding(view: string, withInterior = false, piping?: { line?: string; item?: string; wo?: string }) {
   if (!building) building = generateBuilding();
   if (withInterior && !interior) interior = generateInterior();
   const t0 = performance.now();
   const all = withInterior ? [...building.instances, ...interior!.instances] : building.instances;
-  const shown = view === 'overview' || view === 'line-classes' || (piping && view !== 'walk') ? all.filter(i => !i.tags.includes('cladding') && !i.tags.includes('trim') && !i.tags.includes('roof-sheet')) : all; // cutaway: sheets and trim hidden
+  const shown = view === 'overview' || view === 'line-classes' || view === 'wo' || (piping && view !== 'walk') ? all.filter(i => !i.tags.includes('cladding') && !i.tags.includes('trim') && !i.tags.includes('roof-sheet')) : all; // cutaway: sheets and trim hidden
   const box = renderInstances(shown);
   const dr = building.drawing, L = dr.bays * dr.bayFt * 12, W = dr.widthFt * 12;
   grid.position.y = -dr.slabIn - 0.5;
@@ -196,7 +197,7 @@ function showBuilding(view: string, withInterior = false, piping?: { line?: stri
     <table><tr><th>Part</th><th>Qty</th><th>Weight</th><th>Rules</th></tr>
     ${bom.map(e => `<tr><td>${e.designation}</td><td class="v">${e.qty}</td><td class="v">${e.weight.toFixed(0)} lb</td><td>${e.rules.join(', ')}</td></tr>`).join('')}
     <tr><td><b>Total</b></td><td></td><td class="v"><b>${total.toFixed(0)} lb</b></td><td></td></tr></table>`;
-  if (piping) showPiping(t0, piping.line, view === 'line-classes', piping.item);
+  if (piping) showPiping(t0, piping.line, view === 'line-classes', piping.item, piping.wo);
 }
 function lookFrom(eye: number[], target: number[]) {
   camera.position.set(eye[0], eye[1], eye[2]); controls.target.set(target[0], target[1], target[2]);
@@ -206,7 +207,7 @@ function lookFrom(eye: number[], target: number[]) {
 // --- plant piping (stage 5) ---------------------------------------------------------
 const HIGHLIGHT = new THREE.MeshStandardMaterial({ color: 0xff8c1a, emissive: 0x7a3a00, metalness: 0.2, roughness: 0.5, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, side: THREE.DoubleSide });
 let pipingSeq = 0, pipingLOD: { update: (eye: THREE.Vector3) => void }[] = [];
-function showPiping(t0: number, line?: string, byClass = false, item?: string) {
+function showPiping(t0: number, line?: string, byClass = false, item?: string, woNumber?: string) {
   const seq = ++pipingSeq;
   const note = document.createElement('p'); note.className = 'notes'; note.textContent = 'Loading plant piping…'; infoEl.prepend(note);
   loadPiping().then(m => {
@@ -228,13 +229,16 @@ function showPiping(t0: number, line?: string, byClass = false, item?: string) {
     document.getElementById('linesel')!.addEventListener('change', ev => { const v = (ev.target as HTMLSelectElement).value; location.hash = `${view}${v ? ';line=' + v : ''}`; });
     for (const box of Array.from(document.querySelectorAll<HTMLInputElement>('.lcbox'))) box.addEventListener('change', () => { const o = pipingRoot?.getObjectByName('class:' + box.dataset.class); if (o) { o.visible = box.checked; needsRender = true; } });
     pipingModel = m;
+    if (interior) { eqRoot = equipmentPickGroup(interior.equipment); group.add(eqRoot); }
+    if (woNumber) { showWorkOrder(m, woNumber); return; }
+    if (pendingEquip) { showEquipment(pendingEquip); pendingEquip = null; }
     if (item) { const l = m.lines.find(x => [...x.comps.map(c => c.tag), ...x.welds.map(w => w.id), ...x.supports.map(s2 => s2.id)].includes(item)); if (l) showItem({ tag: item, line: l.no }, true); }
     if (sel) { const b = new THREE.Box3(); for (const c of sel.comps) { b.expandByPoint(new THREE.Vector3(...c.a)); b.expandByPoint(new THREE.Vector3(...c.b)); } const ctr = b.getCenter(new THREE.Vector3()), r = Math.max(120, b.getSize(new THREE.Vector3()).length() * 0.6); lookFrom([ctr.x + r * 0.6, Math.min(ctr.y + r * 0.45, 330), ctr.z + r * 0.7], [ctr.x, ctr.y, ctr.z]); }
     if (!item) (window as any).__pipingReady = true;
   }).catch(e => { note.textContent = String(e); showError(e); });
 }
 // --- click a piping item to see its metadata (stage 6, SW-GT-1) -----------------------------------------------
-let pipingRoot: THREE.Group | null = null, pipingModel: Awaited<ReturnType<typeof loadPiping>> | null = null, pickObj: THREE.Object3D | null = null;
+let pendingEquip: string | null = null, eqRoot: THREE.Group | null = null, pipingRoot: THREE.Group | null = null, pipingModel: Awaited<ReturnType<typeof loadPiping>> | null = null, pickObj: THREE.Object3D | null = null;
 const raycaster = new THREE.Raycaster();
 function showItem(sel: { tag: string; line: string }, frameIt = false) {
   if (pickObj) { pickObj.parent?.remove(pickObj); pickObj = null; }
@@ -245,12 +249,55 @@ function showItem(sel: { tag: string; line: string }, frameIt = false) {
     (window as any).__pipingReady = true;
   }).catch(showError);
 }
+function showEquipment(tag: string) {
+  if (pickObj) { pickObj.parent?.remove(pickObj); pickObj = null; }
+  const e = interior?.equipment.find(x => x.tag === tag); if (e && pipingRoot) { pickObj = equipmentHighlight([e], HIGHLIGHT); pipingRoot.add(pickObj); needsRender = true; }
+  loadEquipment().then(all => { const r = all.find(x => x.tag === tag); const el = document.getElementById('pickinfo'); if (el && r) el.innerHTML = equipmentReport(r) + '<hr>'; }).catch(showError);
+}
+function equipmentHighlight(list: { part: PartSpec; transform: Mat4 }[], mat: THREE.Material): THREE.Group {
+  const g = new THREE.Group();
+  for (const e of list) for (const s of geomOf(e.part).solids) { const mesh = new THREE.Mesh(toBufferGeometry(s.mesh), mat); mesh.matrixAutoUpdate = false; mesh.matrix.fromArray(e.transform as number[]); g.add(mesh); }
+  return g;
+}
+// --- work orders (stage 7) ------------------------------------------------------------------------------------------
+const ISOLATION = new THREE.MeshStandardMaterial({ color: 0x1f6fd1, emissive: 0x0a2a55, metalness: 0.2, roughness: 0.5, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, side: THREE.DoubleSide });
+let woGroup: THREE.Group | null = null;
+async function showWorkOrder(m: NonNullable<typeof pipingModel>, number: string) {
+  const wo: WorkOrder = await loadWO(number);
+  woGroup = new THREE.Group(); pipingRoot!.add(woGroup);
+  const box = new THREE.Box3();
+  const mark = (tag: string, mat: THREE.Material, frame = true) => { const o = itemHighlight(m, tag, mat, toBufferGeometry); if (o) { woGroup!.add(o); o.updateMatrixWorld(true); if (frame) box.expandByObject(o); } };
+  for (const t of new Set(wo.items)) { const e = interior?.equipment.find(x => x.tag === t); if (e) { const o = equipmentHighlight([e], HIGHLIGHT); woGroup.add(o); o.updateMatrixWorld(true); box.expandByObject(o); } else mark(t, HIGHLIGHT); }
+  for (const i of wo.isolations) if (i.kind === 'valve' || i.kind === 'blind' || i.kind === 'removal') mark(i.tag, ISOLATION, false);   // isolations can be far apart; frame the work itself
+  for (const t of wo.tmls) box.expandByPoint(new THREE.Vector3(t.at.E, t.at.EL - 1200, -t.at.N));
+  needsRender = true;
+  if (!box.isEmpty()) { const c = box.getCenter(new THREE.Vector3()), r = Math.max(150, box.getSize(new THREE.Vector3()).length() * 0.9); lookFrom([c.x + r * 0.6, Math.min(c.y + r * 0.5, 340), c.z + r * 0.75], [c.x, c.y, c.z]); }
+  const comp = loadCompletion(wo);
+  const render = () => {
+    const el = document.getElementById('pickinfo'); if (!el) return;
+    el.innerHTML = woReport(wo, comp) + '<hr>';
+    el.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-i]').forEach(inp => inp.addEventListener('change', () => {
+      const a = comp.activities[Number(inp.dataset.i)] as unknown as Record<string, string>; a[inp.dataset.f!] = inp.value; saveCompletion(comp); render();
+    }));
+    document.getElementById('wo-download')!.addEventListener('click', () => {
+      const blob = new Blob([JSON.stringify({ ...comp, title: wo.title, notice: wo.notice, itp: wo.itp.map((x, i) => ({ ...x, ...comp.activities[i] })) }, null, 1)], { type: 'application/json' });
+      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${wo.number}-completion.json`; a.click();
+    });
+    document.getElementById('wo-reset')!.addEventListener('click', () => { if (!confirm(`Clear all sign-offs for ${wo.number}?`)) return; localStorage.removeItem(`smartweld-wo-completion:${wo.number}`); Object.assign(comp, loadCompletion(wo)); render(); });
+  };
+  render();
+  (window as any).__pipingReady = true;
+}
 let downXY: [number, number] | null = null;
 renderer.domElement.addEventListener('pointerdown', e => { downXY = [e.clientX, e.clientY]; });
 renderer.domElement.addEventListener('pointerup', e => {
   if (!downXY || walking || !pipingRoot) return; const moved = Math.hypot(e.clientX - downXY[0], e.clientY - downXY[1]); downXY = null; if (moved > 4) return;
   const r = renderer.domElement.getBoundingClientRect(); raycaster.setFromCamera(new THREE.Vector2(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1), camera);
-  for (const hit of raycaster.intersectObject(pipingRoot, true)) { if (!hit.object.visible || !hit.object.parent?.visible) continue; const sel = pickedItem(hit); if (sel) { showItem(sel); return; } }
+  const hits = [...raycaster.intersectObject(pipingRoot, true), ...(eqRoot ? raycaster.intersectObject(eqRoot, true) : [])].sort((a, b) => a.distance - b.distance);
+  for (const hit of hits) {
+    if (hit.object.userData?.equipment) { showEquipment(hit.object.userData.equipment as string); return; }
+    if (!hit.object.visible || !hit.object.parent?.visible) continue; const sel = pickedItem(hit); if (sel) { showItem(sel); return; }
+  }
 });
 
 // --- first-person walk (pointer lock) --------------------------------------------
@@ -296,6 +343,17 @@ for (const [label, view] of [['Plant — walk (start)', 'walk'], ['Plant — pip
 const hpp = document.createElement('h2'); hpp.textContent = 'Plant piping (stage 5)'; entriesEl.appendChild(hpp);
 for (const [label, view] of [['Piping — by line class', 'line-classes'], ['Piping — overview', 'overview'], ['Piping — pipe rack', 'piping-rack'], ['Piping — pumps', 'piping-pumps'], ['Piping — column', 'piping-column'], ['Piping — exchangers', 'piping-exchangers'], ['Piping — tanks', 'piping-tanks'], ['Piping — plan from above', 'piping-above'], ['Piping — walk (start)', 'walk']])
   buildingBtns['piping:' + view] = addButton(entriesEl, label, () => { location.hash = 'piping:' + view; showBuilding(view, true, {}); });
+const hwo = document.createElement('h2'); hwo.textContent = 'Shutdown work orders (stage 7)'; entriesEl.appendChild(hwo);
+const woList = document.createElement('div'); entriesEl.appendChild(woList);
+const woBtns: Record<string, HTMLButtonElement> = {};
+loadWOIndex().then(idx => {
+  let area = '';
+  for (const w of idx.workOrders) {
+    if (w.area !== area) { area = w.area; const h = document.createElement('div'); h.className = 'sub'; h.style.marginTop = '6px'; h.textContent = `${w.area} ${w.areaName}`; woList.appendChild(h); }
+    woBtns[w.number] = addButton(woList, `${w.number} ${w.title}`, () => { location.hash = 'wo:' + w.number; });
+  }
+  const cur = decodeURIComponent(location.hash.slice(1)); if (cur.startsWith('wo:')) setActive(woBtns[cur.slice(3)] ?? null);
+}).catch(() => { woList.textContent = 'Work orders not exported (npm run export:wo).'; });
 const h1 = document.createElement('h2'); h1.textContent = 'Assemblies'; entriesEl.appendChild(h1);
 const asmBtn = addButton(entriesEl, 'Column base (W10x49)', () => { location.hash = 'assembly:column-base'; showAssembly(columnBaseAssembly()); });
 const byGroup = new Map<string, HTMLElement>();
@@ -331,7 +389,8 @@ function openFromHash() {
   if (hsh.startsWith('des:')) { try { showPart(makePart(hsh.slice(4), hsh.slice(4), 120)); return; } catch (e) { showError(e); } }
   if (hsh.startsWith('assembly:')) { setActive(asmBtn); showAssembly(columnBaseAssembly()); return; }
   if (hsh.startsWith('building:')) { const v = hsh.slice(9); setActive(buildingBtns[v] ?? null); showBuilding(v); return; }
-  if (hsh.startsWith('piping:')) { const [v, ...opts] = hsh.slice(7).split(';'); const line = opts.find(o => o.startsWith('line='))?.slice(5), item = opts.find(o => o.startsWith('item='))?.slice(5); setActive(buildingBtns['piping:' + v] ?? null); showBuilding(v, true, { line, item }); return; }
+  if (hsh.startsWith('wo:')) { const n = hsh.slice(3); setActive(woBtns[n] ?? null); showBuilding('wo', true, { wo: n }); return; }
+  if (hsh.startsWith('piping:')) { const [v, ...opts] = hsh.slice(7).split(';'); const line = opts.find(o => o.startsWith('line='))?.slice(5), item = opts.find(o => o.startsWith('item='))?.slice(5), equip = opts.find(o => o.startsWith('equip='))?.slice(6); pendingEquip = equip ?? null; setActive(buildingBtns['piping:' + v] ?? null); showBuilding(v, true, { line, item }); return; }
   if (hsh.startsWith('plant:')) { const v = hsh.slice(6); setActive(buildingBtns['plant:' + v] ?? null); showBuilding(v, true); return; }
   showPart(ENTRIES[1].build());
 }

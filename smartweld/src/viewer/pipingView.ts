@@ -7,14 +7,16 @@
  *    blended casting, whose thin wall needs a very fine grid).
  */
 import * as THREE from 'three';
-import { partFromKey, type PipingModel, type Comp, type LineRun } from '../generator/piping';
+import { partFromKey, solidBoxes, type PipingModel, type Comp, type LineRun } from '../generator/piping';
 import { buildGeometry, type Role } from '../geometry/partGeometry';
 import { setMaxCells } from '../geometry/sdf';
 import { transformMesh, mergeMeshes, type MeshData, type Mat4 } from '../geometry/mesh';
 import { pipeDims, teeC, makeValve, type ValveType, type PipeClass } from '../catalogue';
 import { translate } from '../geometry/transform';
 import { formatLength } from '../core/units';
-import { lineFileName, plantText, type GTLine, type GTItem, type PlantPt } from '../generator/groundtruth';
+import { lineFileName, plantText, type GTLine, type GTItem, type PlantPt, type GTEquipment } from '../generator/groundtruth';
+import type { WorkOrder } from '../generator/workorders';
+import type { PartSpec } from '../catalogue';
 import { FLUID_GROUPS, classColour, type FluidGroup } from '../generator/lineclass';
 
 let cached: Promise<PipingModel> | null = null;
@@ -163,4 +165,57 @@ export function itemHighlight(m: PipingModel, tag: string, mat: THREE.Material, 
 export function classLegend(m: PipingModel): string {
   const by = new Map<string, number>(); for (const l of m.lines) by.set(l.lineClass!, (by.get(l.lineClass!) ?? 0) + 1);
   return `<h3>Line classes</h3><table>${[...by.entries()].sort().map(([c, n]) => { const g = FLUID_GROUPS[c[0] as FluidGroup]; return `<tr><td><label><input type="checkbox" class="lcbox" data-class="${c}" checked> <span style="display:inline-block;width:12px;height:12px;background:#${classColour(c).toString(16).padStart(6, '0')};vertical-align:middle"></span> <b>${c}</b></label></td><td>${esc(g.name)}, ${c.slice(1)} psi${g.insulated ? ', insulated' : ''}</td><td class="v">${n} lines</td></tr>`; }).join('')}</table>`;
+}
+
+// ---- equipment picking and metadata (SW-GT-7) --------------------------------------------------------------------
+/** invisible boxes over each equipment solid, so a click on a pump, tank or vessel can name it */
+export function equipmentPickGroup(equipment: { tag: string; part: PartSpec; transform: Mat4 }[]): THREE.Group {
+  const g = new THREE.Group(), mat = new THREE.MeshBasicMaterial({ visible: false });
+  for (const e of equipment) for (const b of solidBoxes(e.part)) {
+    const size = new THREE.Vector3(b[1][0] - b[0][0], b[1][1] - b[0][1], b[1][2] - b[0][2]), ctr = new THREE.Vector3((b[0][0] + b[1][0]) / 2, (b[0][1] + b[1][1]) / 2, (b[0][2] + b[1][2]) / 2);
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(Math.max(size.x, 0.5), Math.max(size.y, 0.5), Math.max(size.z, 0.5)), mat);
+    mesh.matrixAutoUpdate = false; mesh.matrix.copy(new THREE.Matrix4().fromArray(e.transform as number[]).multiply(new THREE.Matrix4().makeTranslation(ctr.x, ctr.y, ctr.z)));
+    mesh.userData = { equipment: e.tag }; g.add(mesh);
+  }
+  return g;
+}
+let eqCache: Promise<GTEquipment[]> | null = null;
+export const loadEquipment = (): Promise<GTEquipment[]> => (eqCache ??= fetch('/groundtruth/equipment.json').then(r => r.json()));
+export function equipmentReport(e: GTEquipment): string {
+  return `<h2>${esc(e.tag)} — ${esc(e.type)}</h2><div class="cat">${esc(e.description)} · area ${esc(e.area)} ${esc(e.areaName)} · ${esc(e.material)} · ${Math.round(e.weight).toLocaleString('en-US')} lb empty · origin ${esc(plantText(e.origin))}</div>
+    <table>${e.dims.map(d => `<tr><td>${esc(d.label)}</td><td class="v">${esc(d.unit === 'in' ? formatLength(d.value) : `${Math.round(d.value * 1000) / 1000} ${d.unit}`)}</td><td>${esc(d.basis)}</td></tr>`).join('')}</table>
+    <h3>Nozzles</h3><table><tr><th>Nozzle</th><th>Service</th><th>Size</th><th>Line</th><th>Class</th></tr>${e.nozzles.map(n => `<tr><td>${esc(n.id)}</td><td>${esc(n.service)}</td><td>${n.NPS}" ${n.cls}</td><td>${esc(n.line ?? '—')}</td><td>${esc(n.lineClass ?? '')}</td></tr>`).join('')}</table>`;
+}
+
+// ---- work orders (stage 7) -------------------------------------------------------------------------------------------
+export interface WOIndexEntry { number: string; title: string; area: string; areaName: string; type: string; typeName: string; priority: number; equipment: string | null; lines: string[]; pdf: string; pack: string }
+let woIdx: Promise<{ notice: string; workOrders: WOIndexEntry[] }> | null = null;
+export const loadWOIndex = () => (woIdx ??= fetch('/workorders/index.json').then(r => r.json()));
+export const loadWO = (n: string): Promise<WorkOrder> => fetch(`/workorders/${n}.json`).then(r => r.json());
+type Status = 'open' | 'accepted' | 'rejected' | 'n/a';
+export interface Completion { workOrder: string; updated: string; activities: { step: number; status: Status; contractor: string; owner: string; thirdParty: string; date: string; remark: string }[] }
+const key = (n: string) => `smartweld-wo-completion:${n}`;
+export function loadCompletion(wo: WorkOrder): Completion {
+  try { const c = JSON.parse(localStorage.getItem(key(wo.number)) ?? 'null') as Completion | null; if (c && c.activities.length === wo.itp.length) return c; } catch { /* fresh record */ }
+  return { workOrder: wo.number, updated: '', activities: wo.itp.map(a => ({ step: a.step, status: 'open', contractor: '', owner: '', thirdParty: '', date: '', remark: '' })) };
+}
+export const saveCompletion = (c: Completion) => { c.updated = new Date().toISOString(); localStorage.setItem(key(c.workOrder), JSON.stringify(c)); };
+/** SW-ITP-3: complete when every activity is accepted or not applicable */
+export const progress = (c: Completion) => ({ done: c.activities.filter(a => a.status === 'accepted' || a.status === 'n/a').length, total: c.activities.length, rejected: c.activities.filter(a => a.status === 'rejected').length });
+export function woReport(wo: WorkOrder, c: Completion): string {
+  const p = progress(c), iso = (ln: string) => `/isometrics/ISO-${lineFileName(ln).replace(/\.json$/, '.svg')}`;
+  const opt = (v: Status, cur: Status) => `<option value="${v}"${v === cur ? ' selected' : ''}>${v}</option>`;
+  return `<div class="demo-note">${esc(wo.notice)}</div><h2>${esc(wo.number)} — ${esc(wo.title)}</h2>
+    <div class="cat">${esc(wo.area)} ${esc(wo.areaName)} · ${esc(wo.typeName)} · priority ${wo.priority} · ${esc(wo.issuedBy)}</div>
+    <p><a href="/workorders/${esc(wo.number)}.html" target="_blank">Work order pack (HTML)</a> · <a href="/workorders/pdf/${esc(wo.number)}.pdf" target="_blank">PDF</a> · ${wo.lines.map(l => `<a href="${iso(l)}" target="_blank">ISO-${esc(l)}</a>`).join(' · ')}</p>
+    <p class="notes"><b>Reason:</b> ${esc(wo.reason)}</p><ol class="notes">${wo.scope.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
+    <p class="notes">Orange: affected items · blue: isolation valves and blinds. ${wo.isolations.length} isolations, ${wo.newWelds.length} new welds${wo.weldSpecs.length ? ` (${wo.weldSpecs.join(', ')})` : ''}, ${wo.tmls.length} TMLs${wo.test ? `, test: ${esc(wo.test.kind)}${wo.test.pressure ? ` at ${Math.round(wo.test.pressure)} psi` : ''}` : ''}.</p>
+    <h3>ITP — completion ${p.done} of ${p.total}${p.rejected ? `, ${p.rejected} rejected` : ''}${p.done === p.total ? ' — COMPLETE' : ''}</h3>
+    <div class="legend">H hold · W witness · R review · S surveillance. Enter status, initials and date as each activity is signed; saved in this browser.</div>
+    <table class="itp"><tr><th>#</th><th>Activity</th><th>C/O/3P</th><th>Status</th><th>Contr.</th><th>Owner</th><th>3rd</th><th>Date</th><th>Remark</th></tr>
+    ${wo.itp.map((a, i) => { const r = c.activities[i]; return `<tr><td>${a.step}</td><td title="${esc(a.reference)} — ${esc(a.acceptance)} — record: ${esc(a.record)}">${esc(a.activity)}</td><td>${a.contractor}/${a.owner}/${a.thirdParty}</td>
+      <td><select data-i="${i}" data-f="status">${(['open', 'accepted', 'rejected', 'n/a'] as Status[]).map(v => opt(v, r.status)).join('')}</select></td>
+      ${(['contractor', 'owner', 'thirdParty'] as const).map(f => `<td><input data-i="${i}" data-f="${f}" size="3" value="${esc(r[f])}"></td>`).join('')}
+      <td><input type="date" data-i="${i}" data-f="date" value="${esc(r.date)}"></td><td><input data-i="${i}" data-f="remark" size="8" value="${esc(r.remark)}"></td></tr>`; }).join('')}</table>
+    <p><button id="wo-download" type="button">Download completion record (JSON)</button> <button id="wo-reset" type="button">Clear sign-offs</button></p>`;
 }

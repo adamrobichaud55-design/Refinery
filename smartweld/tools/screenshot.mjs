@@ -28,6 +28,7 @@ const targets = [
   ['piping-exchangers', '#piping:piping-exchangers'], ['piping-tanks', '#piping:piping-tanks'], ['piping-above', '#piping:piping-above'], ['piping-walk', '#piping:walk'],
   ['piping-line-1015', '#piping:piping-column;line=' + encodeURIComponent('3"-P300-P-1015')], ['piping-line-3001', '#piping:piping-rack;line=' + encodeURIComponent('4"-P150-CWS-3001')],
   ['piping-classes', '#piping:line-classes'], ['piping-item-cv', '#piping:piping-column;item=' + encodeURIComponent('3"-P300-P-1015/B13')],
+  ['wo-400-05', '#wo:WO-400-05'], ['wo-200-01', '#wo:WO-200-01'], ['wo-500-02', '#wo:WO-500-02'], ['equip-p101a', '#piping:piping-pumps;equip=P-101A'],
   ['Z-purlin', '#entry:' + encodeURIComponent('Z10x2.5x5/64 (purlin)')], ['panel', '#entry:' + encodeURIComponent('Wall/roof panel PNL1.25x36')], ['ridge-cap', '#entry:' + encodeURIComponent('Ridge cap 12x12 (1:12)')], ['weld-around', '#entry:' + encodeURIComponent('Fillet all around W10x49')],
 ];
 const only = process.argv[3];   // optional name prefix filter
@@ -40,8 +41,8 @@ page.on('console', m => { if (m.type() === 'error') errors.push(m.text()); });
 for (const [name, hash] of run) {
   await page.goto(base + hash, { waitUntil: 'load' });
   await page.waitForFunction(() => window.__smartweldReady === true, null, { timeout: 120000 });
-  if (name.startsWith('piping')) await page.waitForFunction(() => window.__pipingReady === true, null, { timeout: 600000 });
-  await page.waitForTimeout(name.startsWith('building') || name.startsWith('plant') || name.startsWith('piping') ? 5000 : name.startsWith('v-') ? 2500 : 600);
+  if (name.startsWith('piping') || name.startsWith('wo-') || name.startsWith('equip')) await page.waitForFunction(() => window.__pipingReady === true, null, { timeout: 600000 });
+  await page.waitForTimeout(name.startsWith('building') || name.startsWith('plant') || name.startsWith('piping') || name.startsWith('wo-') || name.startsWith('equip') ? 5000 : name.startsWith('v-') ? 2500 : 600);
   const visibleErr = await page.$eval('#err', el => getComputedStyle(el).display !== 'none' ? el.textContent : '');
   if (visibleErr) errors.push(`${name}: ${visibleErr}`);
   const title = await page.$eval('#info h2', el => el.textContent);

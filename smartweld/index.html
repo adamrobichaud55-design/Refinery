@@ -30,13 +30,16 @@
   #profile { width: 100%; height: 220px; border: 1px solid #eceef1; margin: 8px 0; background: #fafbfc; }
   .notes { color: #555; font-size: 12px; }
   .legend { font-size: 11px; color: #666; margin-top: 10px; }
+  .demo-note { color: #d0021b; font-weight: 700; border: 2px solid #d0021b; padding: 4px 6px; font-size: 11px; margin-bottom: 6px; }
+  table.itp td, table.itp th { font-size: 11px; padding: 2px 3px; } table.itp input { font: inherit; width: 100%; box-sizing: border-box; } table.itp select { font: inherit; }
+  #info a { color: #1f5fbf; }
 </style>
 </head>
 <body>
 <div id="app">
   <nav id="list">
     <h1>SmartWeld 3D Catalogue</h1>
-    <div class="sub">Stages 1–4 — sections, shell, interior, valves. Imperial. True scale.</div>
+    <div class="sub">Stages 1–7 — sections, shell, interior, valves, piping, ground truth, work orders. Imperial. True scale.</div>
     <form id="typed"><input id="des" placeholder="Type a designation, e.g. W18x50" /><button type="submit">Go</button></form>
     <label class="sub"><input type="checkbox" id="section" /> Section view (cut on the stem plane)</label>
     <h2>Valve configurator</h2>

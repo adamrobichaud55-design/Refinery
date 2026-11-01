@@ -39,7 +39,7 @@ export const OWNER_WORK_LIST: WorkListEntry[] = [
   { area: 'A400', type: 'PO', equipment: 'P-103B', priority: 3, reason: 'High bearing vibration; overhaul seal and bearings.' },
   { area: 'A400', type: 'VR', line: '4"-P300-P-1008', valve: 'CHECK', nth: 1, priority: 2, reason: 'Discharge check valve slamming; replace in kind.' },
   { area: 'A400', type: 'GJ', line: '3"-P300-P-1015', nth: 6, priority: 2, reason: 'Weeping joint at the control valve station.' },
-  { area: 'A400', type: 'SR', line: '4"-P300-P-1019', priority: 2, reason: 'Erosion at the pump discharge bend.' },
+  { area: 'A400', type: 'SR', line: '4"-P300-P-1019', priority: 2, reason: 'Wall loss below the owner\'s minimum found by the last survey on the discharge run to V-102.' },
   { area: 'A500', type: 'SP', line: '8"-P150-FL-2009', count: 3, priority: 3, reason: 'Corroded shoes and guides on the flare header.' },
   { area: 'A500', type: 'UT', line: '6"-P300-LS-2003', priority: 2, reason: 'Thickness survey of the steam header.' },
   { area: 'A500', type: 'SR', line: '1"-P300-HS-5013', priority: 3, reason: 'Steam hose-station drop corroded at the elbow.' },
