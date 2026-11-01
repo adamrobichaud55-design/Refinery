@@ -17,7 +17,7 @@ src = os.path.join(out, 'source'); os.makedirs(src)
 arch = subprocess.run(['git', 'archive', '--format=tar', 'HEAD', '.'], cwd=root, capture_output=True, check=True).stdout
 import io, tarfile
 with tarfile.open(fileobj=io.BytesIO(arch)) as t:
-    t.extractall(src, members=[m for m in t.getmembers() if not m.name.startswith(('public/', 'screenshots/', 'downloads/'))])
+    t.extractall(src, members=[m for m in t.getmembers() if not m.name.startswith(('public/', 'screenshots/', 'downloads/'))], filter='data')
 commit = subprocess.run(['git', 'rev-parse', '--short', 'HEAD'], cwd=root, capture_output=True, text=True, check=True).stdout.strip()
 shutil.copy2(os.path.join(root, 'tools', 'demo-README.md'), os.path.join(out, 'README.md'))
 # manifest
