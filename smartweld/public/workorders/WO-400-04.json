@@ -1,0 +1,242 @@
+{
+ "number": "WO-400-04",
+ "title": "Remake flanged joint 3\"-P300-P-1015/B12 on 3\"-P300-P-1015",
+ "area": "A400",
+ "areaName": "Pumps",
+ "type": "GJ",
+ "typeName": "Flanged joint remake",
+ "priority": 2,
+ "issuedBy": "Facility owner (demonstration)",
+ "notice": "DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.",
+ "reason": "Weeping joint at the control valve station.",
+ "scope": [
+  "Isolate per the isolation list, drain and vent 3\"-P300-P-1015.",
+  "Break the joint at E 68'-6\"  N 17'-8-13/16\"  EL 125'-0\" between VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 3\" P300 and VALVE, GATE, WEDGE, OS&Y 3\" P300.",
+  "Inspect both flange faces (SW-NDE-5).",
+  "Fit a new gasket and new studs; tighten to the stated preload in three passes, cross pattern (SW-WO-5).",
+  "Remove blinds; leak test on start-up (SW-TEST-2)."
+ ],
+ "lines": [
+  "3\"-P300-P-1015"
+ ],
+ "isometrics": [
+  "ISO-3\"-P300-P-1015"
+ ],
+ "items": [
+  "3\"-P300-P-1015/B12",
+  "3\"-P300-P-1015/B13",
+  "3\"-P300-P-1015/B10"
+ ],
+ "isolations": [
+  {
+   "seq": 1,
+   "kind": "valve",
+   "tag": "3\"-P300-P-1015/B16",
+   "line": "3\"-P300-P-1015",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 3\" P300 (3\"-P300-P-1015/B16)",
+   "at": {
+    "E": 822,
+    "N": 191.5937,
+    "EL": 1500
+   }
+  },
+  {
+   "seq": 2,
+   "kind": "blind",
+   "tag": "3\"-P300-P-1015/B13",
+   "line": "3\"-P300-P-1015",
+   "description": "Fit a line blind between 3\"-P300-P-1015/B16 and VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 3\" P300 (3\"-P300-P-1015/B13), work side",
+   "at": {
+    "E": 822,
+    "N": 212.7812,
+    "EL": 1500
+   }
+  },
+  {
+   "seq": 3,
+   "kind": "valve",
+   "tag": "3\"-P300-P-1015/B2",
+   "line": "3\"-P300-P-1015",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 3\" P300 (3\"-P300-P-1015/B2)",
+   "at": {
+    "E": 822,
+    "N": 261.75,
+    "EL": 1500
+   }
+  },
+  {
+   "seq": 4,
+   "kind": "blind",
+   "tag": "3\"-P300-P-1015/B5",
+   "line": "3\"-P300-P-1015",
+   "description": "Fit a line blind between 3\"-P300-P-1015/B2 and FLANGE WELD-NECK 3\" P300 RAISED FACE (3\"-P300-P-1015/B5), work side",
+   "at": {
+    "E": 822,
+    "N": 254.8437,
+    "EL": 1500
+   }
+  }
+ ],
+ "permits": [
+  "General work permit"
+ ],
+ "newWelds": [],
+ "weldSpecs": [],
+ "nde": [],
+ "inspections": [
+  {
+   "id": "WO-400-04-I1",
+   "description": "Flange faces before the new gasket goes in",
+   "criteria": "No radial scratch across the sealing face (SW-NDE-5)",
+   "basis": "SW-NDE-5"
+  }
+ ],
+ "tmls": [],
+ "test": {
+  "kind": "Service leak test",
+  "description": "The remade joint checked at operating pressure on start-up",
+  "basis": "SW-TEST-2"
+ },
+ "bolting": [
+  {
+   "joint": "3\"-P300-P-1015/B12",
+   "studs": "4 × 0.875\" studs (3\"-P300-P-1015/B14)",
+   "preloadPerStud": 27059.4211,
+   "passes": 3,
+   "basis": "SW-WO-5"
+  }
+ ],
+ "parts": [
+  {
+   "description": "GASKET 3\" P300 COMPRESSED SHEET",
+   "qty": 1,
+   "replaces": "3\"-P300-P-1015/B12"
+  },
+  {
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P300",
+   "qty": 1,
+   "replaces": "3\"-P300-P-1015/B14"
+  }
+ ],
+ "itp": [
+  {
+   "step": 1,
+   "activity": "Work permit issued; isolation list (valves locked, blinds fitted) verified at zero pressure and drained",
+   "reference": "SW-WO-3, isolation list",
+   "acceptance": "Every isolation in place and tagged; zero pressure at the vent",
+   "record": "Signed isolation certificate",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 2,
+   "activity": "Joint broken; both flange faces inspected",
+   "reference": "SW-NDE-5",
+   "acceptance": "No radial scratch across the sealing face",
+   "record": "Flange face inspection record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 3,
+   "activity": "New gasket fitted; studs tightened to preload in three passes",
+   "reference": "SW-WO-5",
+   "acceptance": "Preload per stud as stated",
+   "record": "Bolt-up record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 4,
+   "activity": "Service leak test on start-up",
+   "reference": "SW-TEST-2",
+   "acceptance": "No leak",
+   "record": "Leak test record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 5,
+   "activity": "Blinds removed, isolations returned to normal line-up per the isolation list",
+   "reference": "SW-WO-3",
+   "acceptance": "Every blind removed and accounted for",
+   "record": "Isolation certificate closed",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 6,
+   "activity": "Records complete; work order handed back to operations",
+   "reference": "SW-ITP-3",
+   "acceptance": "All ITP activities accepted or not applicable",
+   "record": "Signed ITP and completion record",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  }
+ ],
+ "rules": [
+  "SW-ITP-1",
+  "SW-ITP-2",
+  "SW-ITP-3",
+  "SW-NDE-5",
+  "SW-TEST-2",
+  "SW-WO-1",
+  "SW-WO-2",
+  "SW-WO-3",
+  "SW-WO-5"
+ ]
+}

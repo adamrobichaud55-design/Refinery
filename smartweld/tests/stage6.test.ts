@@ -3,7 +3,7 @@
  * piping (public/plant-piping.json, itself checked against a fresh run by the stage-5 tests).
  */
 import { readFileSync, readdirSync } from 'node:fs';
-import { buildGroundTruth, exportFiles, toPlant, fromPlant, type GroundTruth } from '../src/generator/groundtruth';
+import { buildGroundTruth, buildEquipment, exportFiles, toPlant, fromPlant, type GroundTruth } from '../src/generator/groundtruth';
 import { lineClassCode } from '../src/generator/lineclass';
 import type { PipingModel } from '../src/generator/piping';
 
@@ -95,15 +95,27 @@ describe('stage 6 — spools and isometric data (SW-GT-4..5)', () => {
   });
 });
 
+describe('stage 7 — equipment metadata (SW-GT-7)', () => {
+  it('every equipment item has its metadata, area and nozzles; every connected line exists', () => {
+    const eq = buildEquipment(m), lines = new Set(m.lines.map(l => l.no));
+    expect(eq.length).toBe(17);
+    for (const e of eq) {
+      for (const k of ['tag', 'type', 'description', 'area', 'designation', 'material'] as const) expect(String(e[k]).length, `${e.tag} ${k}`).toBeGreaterThan(0);
+      expect(e.weight).toBeGreaterThan(0); expect(e.dims.length).toBeGreaterThan(3); expect(e.nozzles.length, e.tag).toBeGreaterThan(0);
+      for (const n of e.nozzles) { expect(n.line, n.id).not.toBeNull(); expect(lines.has(n.line!)).toBe(true); }
+    }
+  });
+});
+
 describe('stage 6 — export (SW-GT-6)', () => {
   it('the committed export equals a fresh export', () => {
-    const files = exportFiles(gt), dir = new URL('groundtruth/', root);
+    const files = exportFiles(gt, buildEquipment(m)), dir = new URL('groundtruth/', root);
     expect(readdirSync(new URL('lines/', dir)).length).toBe(gt.lines.length);
     for (const [p, c] of files) expect(readFileSync(new URL(p, dir), 'utf8') === c, p).toBe(true);
   });
   it('every stage-6 rule ID used in code is written in DESIGN_BASIS.md', () => {
     const basis = readFileSync(new URL('../DESIGN_BASIS.md', import.meta.url), 'utf8');
-    for (const f of ['generator/groundtruth.ts', 'generator/lineclass.ts']) {
+    for (const f of ['generator/groundtruth.ts', 'generator/lineclass.ts', 'generator/areas.ts']) {
       const src = readFileSync(new URL(`../src/${f}`, import.meta.url), 'utf8');
       for (const id of new Set(src.match(/SW-[A-Z]+-\d+[a-z]?/g) ?? [])) expect(basis.includes('`' + id + '`'), `${id} in ${f}`).toBe(true);
     }

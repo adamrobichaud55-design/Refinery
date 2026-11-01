@@ -1,0 +1,266 @@
+{
+ "number": "WO-100-05",
+ "title": "Replace VALVE, GATE, WEDGE, OS&Y 2\" P150 (2\"-P150-SC-3010/A2)",
+ "area": "A100",
+ "areaName": "Tank farm",
+ "type": "VR",
+ "typeName": "Valve replacement in kind",
+ "priority": 3,
+ "issuedBy": "Facility owner (demonstration)",
+ "notice": "DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.",
+ "reason": "Condensate isolation valve passing; replace in kind.",
+ "scope": [
+  "Isolate per the isolation list, drain and vent 2\"-P150-SC-3010 between the isolations.",
+  "Unbolt and remove VALVE, GATE, WEDGE, OS&Y 2\" P150 (2\"-P150-SC-3010/A2) at E 37'-5/8\"  N 26'-6\"  EL 104'-6\".",
+  "Inspect both flange faces (SW-NDE-5); dress or report damage.",
+  "Install a new VALVE, GATE, WEDGE, OS&Y 2\" P150 of the same size, class and face-to-face (GATE2-P150), with new gaskets and studs, stem orientation as removed.",
+  "Tighten the studs to the stated preload in three passes, cross pattern (SW-WO-5).",
+  "Remove blinds, restore the line-up, leak test the two joints on start-up (SW-TEST-2)."
+ ],
+ "lines": [
+  "2\"-P150-SC-3010"
+ ],
+ "isometrics": [
+  "ISO-2\"-P150-SC-3010"
+ ],
+ "items": [
+  "2\"-P150-SC-3010/A2",
+  "2\"-P150-SC-3010/A1",
+  "2\"-P150-SC-3010/A4"
+ ],
+ "isolations": [
+  {
+   "seq": 1,
+   "kind": "equipment",
+   "tag": "T-102-N8",
+   "line": "2\"-P150-SC-3010",
+   "description": "Line end at T-102-N8: the equipment is out of service, drained and isolated under the shutdown isolation"
+  },
+  {
+   "seq": 2,
+   "kind": "valve",
+   "tag": "2\"-P150-SC-3010/B3",
+   "line": "2\"-P150-SC-3010",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 2\" P150 (2\"-P150-SC-3010/B3)",
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1482.1875
+   }
+  },
+  {
+   "seq": 3,
+   "kind": "blind",
+   "tag": "2\"-P150-SC-3010/B6",
+   "line": "2\"-P150-SC-3010",
+   "description": "Fit a line blind between 2\"-P150-SC-3010/B3 and FLANGE WELD-NECK 2\" P150 RAISED FACE (2\"-P150-SC-3010/B6), work side",
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1487.6875
+   }
+  }
+ ],
+ "permits": [
+  "General work permit"
+ ],
+ "newWelds": [],
+ "weldSpecs": [],
+ "nde": [],
+ "inspections": [
+  {
+   "id": "WO-100-05-I1",
+   "description": "Flange faces of both joints before the new gaskets go in",
+   "criteria": "No radial scratch across the sealing face (SW-NDE-5)",
+   "basis": "SW-NDE-5"
+  }
+ ],
+ "tmls": [],
+ "test": {
+  "kind": "Service leak test",
+  "description": "Both remade joints checked at operating pressure on start-up",
+  "basis": "SW-TEST-2"
+ },
+ "bolting": [
+  {
+   "joint": "2\"-P150-SC-3010/A1",
+   "studs": "4 × 0.625\" studs (2\"-P150-SC-3010/A3)",
+   "preloadPerStud": 13805.8271,
+   "passes": 3,
+   "basis": "SW-WO-5"
+  },
+  {
+   "joint": "2\"-P150-SC-3010/A4",
+   "studs": "4 × 0.625\" studs (2\"-P150-SC-3010/A6)",
+   "preloadPerStud": 13805.8271,
+   "passes": 3,
+   "basis": "SW-WO-5"
+  }
+ ],
+ "parts": [
+  {
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P150",
+   "qty": 1,
+   "replaces": "2\"-P150-SC-3010/A2"
+  },
+  {
+   "description": "GASKET 2\" P150 COMPRESSED SHEET",
+   "qty": 1,
+   "replaces": "2\"-P150-SC-3010/A1"
+  },
+  {
+   "description": "STUD SET 4 × 0.625\" × 4-1/4\" WITH 2 NUTS, FOR 2\" P150",
+   "qty": 1,
+   "replaces": "2\"-P150-SC-3010/A3"
+  },
+  {
+   "description": "GASKET 2\" P150 COMPRESSED SHEET",
+   "qty": 1,
+   "replaces": "2\"-P150-SC-3010/A4"
+  },
+  {
+   "description": "STUD SET 4 × 0.625\" × 4-1/4\" WITH 2 NUTS, FOR 2\" P150",
+   "qty": 1,
+   "replaces": "2\"-P150-SC-3010/A6"
+  }
+ ],
+ "itp": [
+  {
+   "step": 1,
+   "activity": "Work permit issued; isolation list (valves locked, blinds fitted) verified at zero pressure and drained",
+   "reference": "SW-WO-3, isolation list",
+   "acceptance": "Every isolation in place and tagged; zero pressure at the vent",
+   "record": "Signed isolation certificate",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 2,
+   "activity": "Valve 2\"-P150-SC-3010/A2 removed; flange faces inspected",
+   "reference": "SW-NDE-5",
+   "acceptance": "No radial scratch across the sealing face",
+   "record": "Flange face inspection record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 3,
+   "activity": "New valve verified: type, size, class, face-to-face and tag",
+   "reference": "GATE2-P150",
+   "acceptance": "Matches the parts list and the line class",
+   "record": "Material receiving record",
+   "contractor": "R",
+   "owner": "R",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 4,
+   "activity": "New gaskets fitted, studs tightened to preload in three passes",
+   "reference": "SW-WO-5",
+   "acceptance": "Preload per stud as stated; three passes, cross pattern",
+   "record": "Bolt-up record per joint",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 5,
+   "activity": "Service leak test of the remade joints on start-up",
+   "reference": "SW-TEST-2",
+   "acceptance": "No leak at either joint",
+   "record": "Leak test record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 6,
+   "activity": "Blinds removed, isolations returned to normal line-up per the isolation list",
+   "reference": "SW-WO-3",
+   "acceptance": "Every blind removed and accounted for",
+   "record": "Isolation certificate closed",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 7,
+   "activity": "Records complete; work order handed back to operations",
+   "reference": "SW-ITP-3",
+   "acceptance": "All ITP activities accepted or not applicable",
+   "record": "Signed ITP and completion record",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  }
+ ],
+ "rules": [
+  "SW-ITP-1",
+  "SW-ITP-2",
+  "SW-ITP-3",
+  "SW-NDE-5",
+  "SW-TEST-2",
+  "SW-WO-1",
+  "SW-WO-2",
+  "SW-WO-3",
+  "SW-WO-5"
+ ]
+}

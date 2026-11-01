@@ -1,0 +1,565 @@
+{
+ "number": "WO-100-03",
+ "title": "Replace spool SP02 of 6\"-P150-P-1001",
+ "area": "A100",
+ "areaName": "Tank farm",
+ "type": "SR",
+ "typeName": "Spool replacement",
+ "priority": 2,
+ "issuedBy": "Facility owner (demonstration)",
+ "notice": "DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.",
+ "reason": "External corrosion found on the tank outlet line at the first bend.",
+ "scope": [
+  "Isolate per the isolation list; drain, vent and purge 6\"-P150-P-1001 between the isolations; confirm gas-free for hot work.",
+  "Remove spool 6\"-P150-P-1001-SP02 (7 items, 37'-0\" of pipe) — cut at the field welds and break the flanged joints at its ends as listed.",
+  "Fabricate the replacement spool to ISO-6\"-P150-P-1001 with the same items (parts list), welding to WS-01; 6 shop welds.",
+  "Install the spool; make 2 field welds; new gaskets and studs at flanged ends, tightened per SW-WO-5.",
+  "NDE per the NDE table; hydrostatic test at 210 psi for 30 minutes with the relief valves blinded (SW-TEST-1).",
+  "Remove blinds, restore the line-up, hand back."
+ ],
+ "lines": [
+  "6\"-P150-P-1001"
+ ],
+ "isometrics": [
+  "ISO-6\"-P150-P-1001"
+ ],
+ "items": [
+  "6\"-P150-P-1001/el7",
+  "6\"-P150-P-1001/p8",
+  "6\"-P150-P-1001/el9",
+  "6\"-P150-P-1001/p10",
+  "6\"-P150-P-1001/el11",
+  "6\"-P150-P-1001/p12",
+  "6\"-P150-P-1001/el13"
+ ],
+ "isolations": [
+  {
+   "seq": 1,
+   "kind": "valve",
+   "tag": "6\"-P150-P-1001/A2",
+   "line": "6\"-P150-P-1001",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 6\" P150 (6\"-P150-P-1001/A2)",
+   "at": {
+    "E": 386.9375,
+    "N": 318,
+    "EL": 1218
+   }
+  },
+  {
+   "seq": 2,
+   "kind": "blind",
+   "tag": "6\"-P150-P-1001/A5",
+   "line": "6\"-P150-P-1001",
+   "description": "Fit a line blind between 6\"-P150-P-1001/A2 and FLANGE WELD-NECK 6\" P150 RAISED FACE (6\"-P150-P-1001/A5), work side",
+   "at": {
+    "E": 394.0938,
+    "N": 318,
+    "EL": 1218
+   }
+  },
+  {
+   "seq": 3,
+   "kind": "valve",
+   "tag": "6\"-P150-P-1001/B7",
+   "line": "6\"-P150-P-1001",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 6\" P150 (6\"-P150-P-1001/B7)",
+   "at": {
+    "E": 1848,
+    "N": -161.1391,
+    "EL": 1224
+   }
+  },
+  {
+   "seq": 4,
+   "kind": "blind",
+   "tag": "6\"-P150-P-1001/B10",
+   "line": "6\"-P150-P-1001",
+   "description": "Fit a line blind between 6\"-P150-P-1001/B7 and FLANGE WELD-NECK 6\" P150 RAISED FACE (6\"-P150-P-1001/B10), work side",
+   "at": {
+    "E": 1848,
+    "N": -153.9829,
+    "EL": 1224
+   }
+  }
+ ],
+ "permits": [
+  "General work permit",
+  "Hot work permit"
+ ],
+ "newWelds": [
+  {
+   "id": "WO-100-03-W01",
+   "replaces": "6\"-P150-P-1001/W1",
+   "line": "6\"-P150-P-1001",
+   "NPS": 6,
+   "cls": "P150",
+   "wall": 0.2188,
+   "shopField": "field",
+   "ws": "WS-01",
+   "nde": [
+    "VT",
+    "RT"
+   ],
+   "at": {
+    "E": 397.9688,
+    "N": 318,
+    "EL": 1218
+   },
+   "joins": [
+    "6\"-P150-P-1001/A5",
+    "6\"-P150-P-1001/el7"
+   ]
+  },
+  {
+   "id": "WO-100-03-W02",
+   "replaces": "6\"-P150-P-1001/W2",
+   "line": "6\"-P150-P-1001",
+   "NPS": 6,
+   "cls": "P150",
+   "wall": 0.2188,
+   "shopField": "shop",
+   "ws": "WS-01",
+   "nde": [
+    "VT",
+    "RT"
+   ],
+   "at": {
+    "E": 408,
+    "N": 318,
+    "EL": 1228
+   },
+   "joins": [
+    "6\"-P150-P-1001/el7",
+    "6\"-P150-P-1001/p8"
+   ]
+  },
+  {
+   "id": "WO-100-03-W03",
+   "replaces": "6\"-P150-P-1001/W3",
+   "line": "6\"-P150-P-1001",
+   "NPS": 6,
+   "cls": "P150",
+   "wall": 0.2188,
+   "shopField": "shop",
+   "ws": "WS-01",
+   "nde": [
+    "VT",
+    "RT"
+   ],
+   "at": {
+    "E": 408,
+    "N": 318,
+    "EL": 1352
+   },
+   "joins": [
+    "6\"-P150-P-1001/p8",
+    "6\"-P150-P-1001/el9"
+   ]
+  },
+  {
+   "id": "WO-100-03-W04",
+   "replaces": "6\"-P150-P-1001/W4",
+   "line": "6\"-P150-P-1001",
+   "NPS": 6,
+   "cls": "P150",
+   "wall": 0.2188,
+   "shopField": "shop",
+   "ws": "WS-01",
+   "nde": [
+    "VT",
+    "RT"
+   ],
+   "at": {
+    "E": 408,
+    "N": 308,
+    "EL": 1362
+   },
+   "joins": [
+    "6\"-P150-P-1001/el9",
+    "6\"-P150-P-1001/p10"
+   ]
+  },
+  {
+   "id": "WO-100-03-W05",
+   "replaces": "6\"-P150-P-1001/W5",
+   "line": "6\"-P150-P-1001",
+   "NPS": 6,
+   "cls": "P150",
+   "wall": 0.2188,
+   "shopField": "shop",
+   "ws": "WS-01",
+   "nde": [
+    "VT",
+    "RT"
+   ],
+   "at": {
+    "E": 408,
+    "N": 10,
+    "EL": 1362
+   },
+   "joins": [
+    "6\"-P150-P-1001/p10",
+    "6\"-P150-P-1001/el11"
+   ]
+  },
+  {
+   "id": "WO-100-03-W06",
+   "replaces": "6\"-P150-P-1001/W6",
+   "line": "6\"-P150-P-1001",
+   "NPS": 6,
+   "cls": "P150",
+   "wall": 0.2188,
+   "shopField": "shop",
+   "ws": "WS-01",
+   "nde": [
+    "VT",
+    "RT"
+   ],
+   "at": {
+    "E": 408,
+    "N": 0,
+    "EL": 1372
+   },
+   "joins": [
+    "6\"-P150-P-1001/el11",
+    "6\"-P150-P-1001/p12"
+   ]
+  },
+  {
+   "id": "WO-100-03-W07",
+   "replaces": "6\"-P150-P-1001/W7",
+   "line": "6\"-P150-P-1001",
+   "NPS": 6,
+   "cls": "P150",
+   "wall": 0.2188,
+   "shopField": "shop",
+   "ws": "WS-01",
+   "nde": [
+    "VT",
+    "RT"
+   ],
+   "at": {
+    "E": 408,
+    "N": 0,
+    "EL": 1394
+   },
+   "joins": [
+    "6\"-P150-P-1001/p12",
+    "6\"-P150-P-1001/el13"
+   ]
+  },
+  {
+   "id": "WO-100-03-W08",
+   "replaces": "6\"-P150-P-1001/W8",
+   "line": "6\"-P150-P-1001",
+   "NPS": 6,
+   "cls": "P150",
+   "wall": 0.2188,
+   "shopField": "field",
+   "ws": "WS-01",
+   "nde": [
+    "VT",
+    "RT"
+   ],
+   "at": {
+    "E": 418,
+    "N": 0,
+    "EL": 1404
+   },
+   "joins": [
+    "6\"-P150-P-1001/el13",
+    "6\"-P150-P-1001/p14"
+   ]
+  }
+ ],
+ "weldSpecs": [
+  "WS-01"
+ ],
+ "nde": [
+  {
+   "method": "VT",
+   "extent": "100 % of new welds, before and after welding",
+   "welds": [
+    "WO-100-03-W01",
+    "WO-100-03-W02",
+    "WO-100-03-W03",
+    "WO-100-03-W04",
+    "WO-100-03-W05",
+    "WO-100-03-W06",
+    "WO-100-03-W07",
+    "WO-100-03-W08"
+   ],
+   "basis": "SW-NDE-1"
+  },
+  {
+   "method": "RT (UT where RT is impractical)",
+   "extent": "100 % of new welds (class H150, high consequence)",
+   "welds": [
+    "WO-100-03-W01",
+    "WO-100-03-W02",
+    "WO-100-03-W03",
+    "WO-100-03-W04",
+    "WO-100-03-W05",
+    "WO-100-03-W06",
+    "WO-100-03-W07",
+    "WO-100-03-W08"
+   ],
+   "basis": "SW-NDE-2"
+  }
+ ],
+ "inspections": [],
+ "tmls": [],
+ "test": {
+  "kind": "Hydrostatic test",
+  "description": "Test boundary between the isolations; relief valves blinded or removed",
+  "pressure": 210,
+  "hold": "30 minutes, no leak, no pressure drop",
+  "basis": "SW-TEST-1"
+ },
+ "bolting": [],
+ "parts": [
+  {
+   "description": "ELBOW 90° R = 5/3 OD 6\" P150",
+   "qty": 4
+  },
+  {
+   "description": "PIPE 6\" P150 BEVELLED ENDS",
+   "qty": 3
+  }
+ ],
+ "itp": [
+  {
+   "step": 1,
+   "activity": "Work permit issued; isolation list (valves locked, blinds fitted) verified at zero pressure and drained",
+   "reference": "SW-WO-3, isolation list",
+   "acceptance": "Every isolation in place and tagged; zero pressure at the vent",
+   "record": "Signed isolation certificate",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 2,
+   "activity": "Line drained, vented and purged; gas-free for hot work",
+   "reference": "Owner hot-work procedure",
+   "acceptance": "Gas test within owner limits",
+   "record": "Gas test record, hot work permit",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 3,
+   "activity": "Replacement materials verified against the parts list (size, class, grade, heat marking)",
+   "reference": "Parts list, SW-LC-3",
+   "acceptance": "All items match the line class",
+   "record": "Material receiving record",
+   "contractor": "R",
+   "owner": "R",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 4,
+   "activity": "Welding specification WS-01 and welder identification available at the work",
+   "reference": "WS-01, SW-WPS-3",
+   "acceptance": "Specification on site; every welder identified",
+   "record": "Welder list",
+   "contractor": "R",
+   "owner": "R",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 5,
+   "activity": "Fit-up of every new weld: root opening and alignment within the root face",
+   "reference": "SW-WPS-3, SW-WD-4",
+   "acceptance": "Root opening 1/8 in; bores aligned within 1/16 in",
+   "record": "Fit-up record per weld",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "S",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 6,
+   "activity": "Preheat and interpass temperatures maintained during welding",
+   "reference": "WS-01, SW-WPS-2",
+   "acceptance": "Preheat ≥ 30 °F above dew point and ≥ 60 °F, 3 in each side; interpass ≤ 450 °F",
+   "record": "Weld record per weld (welder, temperatures)",
+   "contractor": "S",
+   "owner": "S",
+   "thirdParty": "S",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 7,
+   "activity": "Visual examination of every new weld",
+   "reference": "SW-NDE-1, SW-NDE-4",
+   "acceptance": "No crack, lack of fusion or incomplete penetration",
+   "record": "VT report",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "W",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 8,
+   "activity": "Volumetric examination per the NDE table; repairs re-examined",
+   "reference": "SW-NDE-2, SW-NDE-4",
+   "acceptance": "Acceptance per SW-NDE-4 and the owner's criteria",
+   "record": "RT/UT reports",
+   "contractor": "R",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 9,
+   "activity": "Flanged ends: faces inspected, new gaskets, studs to preload",
+   "reference": "SW-NDE-5, SW-WO-5",
+   "acceptance": "No radial scratch; preload as stated",
+   "record": "Bolt-up record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 10,
+   "activity": "Hydrostatic test at 210 psi, 30 minutes",
+   "reference": "SW-TEST-1",
+   "acceptance": "No leak, no pressure drop",
+   "record": "Test record with gauge calibration",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "H",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 11,
+   "activity": "Blinds removed, isolations returned to normal line-up per the isolation list",
+   "reference": "SW-WO-3",
+   "acceptance": "Every blind removed and accounted for",
+   "record": "Isolation certificate closed",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 12,
+   "activity": "Records complete; work order handed back to operations",
+   "reference": "SW-ITP-3",
+   "acceptance": "All ITP activities accepted or not applicable",
+   "record": "Signed ITP and completion record",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  }
+ ],
+ "rules": [
+  "SW-ITP-1",
+  "SW-ITP-2",
+  "SW-ITP-3",
+  "SW-NDE-1",
+  "SW-NDE-2",
+  "SW-NDE-4",
+  "SW-TEST-1",
+  "SW-WO-1",
+  "SW-WO-2",
+  "SW-WO-3",
+  "SW-WO-4",
+  "SW-WO-5",
+  "SW-WPS-1",
+  "SW-WPS-2",
+  "SW-WPS-3"
+ ]
+}

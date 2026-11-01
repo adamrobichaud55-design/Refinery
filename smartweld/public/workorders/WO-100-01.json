@@ -1,0 +1,753 @@
+{
+ "number": "WO-100-01",
+ "title": "Internal inspection of tank T-101",
+ "area": "A100",
+ "areaName": "Tank farm",
+ "type": "TI",
+ "typeName": "Tank internal inspection",
+ "priority": 2,
+ "issuedBy": "Facility owner (demonstration)",
+ "notice": "DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.",
+ "reason": "Scheduled internal inspection of the shell, floor and roof.",
+ "scope": [
+  "Isolate T-101 per the isolation list; drain, vent, purge and gas-test for entry.",
+  "Open for entry; clean as needed for inspection.",
+  "Internal visual examination; ultrasonic thickness at the 15 TMLs; floor scan.",
+  "Close with new gaskets on every opened joint; remove blinds; restore the line-up."
+ ],
+ "lines": [
+  "6\"-P150-P-1001",
+  "4\"-P150-P-6038",
+  "1\"-P150-V-6030",
+  "1\"-P150-D-6031",
+  "1\"-P150-N-3015",
+  "2\"-P300-LS-3007",
+  "2\"-P150-SC-3008",
+  "3/4\"-P150-I-6032",
+  "3/4\"-P150-I-6033"
+ ],
+ "isometrics": [
+  "ISO-6\"-P150-P-1001",
+  "ISO-4\"-P150-P-6038",
+  "ISO-1\"-P150-V-6030",
+  "ISO-1\"-P150-D-6031",
+  "ISO-1\"-P150-N-3015",
+  "ISO-2\"-P300-LS-3007",
+  "ISO-2\"-P150-SC-3008",
+  "ISO-3/4\"-P150-I-6032",
+  "ISO-3/4\"-P150-I-6033"
+ ],
+ "items": [
+  "T-101"
+ ],
+ "isolations": [
+  {
+   "seq": 1,
+   "kind": "valve",
+   "tag": "6\"-P150-P-1001/A2",
+   "line": "6\"-P150-P-1001",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 6\" P150 (6\"-P150-P-1001/A2) on T-101-N1",
+   "at": {
+    "E": 386.9375,
+    "N": 318,
+    "EL": 1218
+   }
+  },
+  {
+   "seq": 2,
+   "kind": "blind",
+   "tag": "T-101-N1",
+   "line": "6\"-P150-P-1001",
+   "description": "Fit a blind between 6\"-P150-P-1001/A2 and the nozzle flange T-101-N1",
+   "at": {
+    "E": 379.7813,
+    "N": 318,
+    "EL": 1218
+   }
+  },
+  {
+   "seq": 3,
+   "kind": "valve",
+   "tag": "4\"-P150-P-6038/2",
+   "line": "4\"-P150-P-6038",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 4\" P150 (4\"-P150-P-6038/2) on T-101-N2",
+   "at": {
+    "E": 300,
+    "N": 270,
+    "EL": 1486.8125
+   }
+  },
+  {
+   "seq": 4,
+   "kind": "blind",
+   "tag": "T-101-N2",
+   "line": "4\"-P150-P-6038",
+   "description": "Fit a blind between 4\"-P150-P-6038/2 and the nozzle flange T-101-N2",
+   "at": {
+    "E": 300,
+    "N": 270,
+    "EL": 1479.0625
+   }
+  },
+  {
+   "seq": 5,
+   "kind": "removal",
+   "tag": "3\"-P150-RV-4002/2",
+   "line": "3\"-P150-RV-4002",
+   "description": "Remove the relief valve on T-101-N3 and blind the nozzle"
+  },
+  {
+   "seq": 6,
+   "kind": "valve",
+   "tag": "1\"-P150-V-6030/2",
+   "line": "1\"-P150-V-6030",
+   "description": "Close and lock VALVE, BALL, FLOATING 1\" P150 (1\"-P150-V-6030/2) on T-101-N4",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1486.4719
+   }
+  },
+  {
+   "seq": 7,
+   "kind": "blind",
+   "tag": "T-101-N4",
+   "line": "1\"-P150-V-6030",
+   "description": "Fit a blind between 1\"-P150-V-6030/2 and the nozzle flange T-101-N4",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1479.6563
+   }
+  },
+  {
+   "seq": 8,
+   "kind": "valve",
+   "tag": "1\"-P150-D-6031/2",
+   "line": "1\"-P150-D-6031",
+   "description": "Close and lock VALVE, BALL, FLOATING 1\" P150 (1\"-P150-D-6031/2) on T-101-N5",
+   "at": {
+    "E": 216.0281,
+    "N": 318,
+    "EL": 1212
+   }
+  },
+  {
+   "seq": 9,
+   "kind": "blind",
+   "tag": "T-101-N5",
+   "line": "1\"-P150-D-6031",
+   "description": "Fit a blind between 1\"-P150-D-6031/2 and the nozzle flange T-101-N5",
+   "at": {
+    "E": 222.8438,
+    "N": 318,
+    "EL": 1212
+   }
+  },
+  {
+   "seq": 10,
+   "kind": "valve",
+   "tag": "1\"-P150-N-3015/B2",
+   "line": "1\"-P150-N-3015",
+   "description": "Close and lock VALVE, BALL, FLOATING 1\" P150 (1\"-P150-N-3015/B2) on T-101-N6",
+   "at": {
+    "E": 336,
+    "N": 318,
+    "EL": 1484.2219
+   }
+  },
+  {
+   "seq": 11,
+   "kind": "blind",
+   "tag": "T-101-N6",
+   "line": "1\"-P150-N-3015",
+   "description": "Fit a blind between 1\"-P150-N-3015/B2 and the nozzle flange T-101-N6",
+   "at": {
+    "E": 336,
+    "N": 318,
+    "EL": 1477.4063
+   }
+  },
+  {
+   "seq": 12,
+   "kind": "valve",
+   "tag": "2\"-P300-LS-3007/B2",
+   "line": "2\"-P300-LS-3007",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 2\" P300 (2\"-P300-LS-3007/B2) on T-101-N7",
+   "at": {
+    "E": 216.625,
+    "N": 318,
+    "EL": 1230
+   }
+  },
+  {
+   "seq": 13,
+   "kind": "blind",
+   "tag": "T-101-N7",
+   "line": "2\"-P300-LS-3007",
+   "description": "Fit a blind between 2\"-P300-LS-3007/B2 and the nozzle flange T-101-N7",
+   "at": {
+    "E": 222.125,
+    "N": 318,
+    "EL": 1230
+   }
+  },
+  {
+   "seq": 14,
+   "kind": "valve",
+   "tag": "2\"-P150-SC-3008/A2",
+   "line": "2\"-P150-SC-3008",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 2\" P150 (2\"-P150-SC-3008/A2) on T-101-N8",
+   "at": {
+    "E": 216.625,
+    "N": 318,
+    "EL": 1254
+   }
+  },
+  {
+   "seq": 15,
+   "kind": "blind",
+   "tag": "T-101-N8",
+   "line": "2\"-P150-SC-3008",
+   "description": "Fit a blind between 2\"-P150-SC-3008/A2 and the nozzle flange T-101-N8",
+   "at": {
+    "E": 222.125,
+    "N": 318,
+    "EL": 1254
+   }
+  },
+  {
+   "seq": 16,
+   "kind": "valve",
+   "tag": "3/4\"-P150-I-6032/2",
+   "line": "3/4\"-P150-I-6032",
+   "description": "Close and lock VALVE, BALL, FLOATING 3/4\" P150 (3/4\"-P150-I-6032/2) on T-101-N9",
+   "at": {
+    "E": 216.2719,
+    "N": 318,
+    "EL": 1284
+   }
+  },
+  {
+   "seq": 17,
+   "kind": "blind",
+   "tag": "T-101-N9",
+   "line": "3/4\"-P150-I-6032",
+   "description": "Fit a blind between 3/4\"-P150-I-6032/2 and the nozzle flange T-101-N9",
+   "at": {
+    "E": 222.9688,
+    "N": 318,
+    "EL": 1284
+   }
+  },
+  {
+   "seq": 18,
+   "kind": "valve",
+   "tag": "3/4\"-P150-I-6033/2",
+   "line": "3/4\"-P150-I-6033",
+   "description": "Close and lock VALVE, BALL, FLOATING 3/4\" P150 (3/4\"-P150-I-6033/2) on T-101-N10",
+   "at": {
+    "E": 216.2719,
+    "N": 318,
+    "EL": 1404
+   }
+  },
+  {
+   "seq": 19,
+   "kind": "blind",
+   "tag": "T-101-N10",
+   "line": "3/4\"-P150-I-6033",
+   "description": "Fit a blind between 3/4\"-P150-I-6033/2 and the nozzle flange T-101-N10",
+   "at": {
+    "E": 222.9688,
+    "N": 318,
+    "EL": 1404
+   }
+  }
+ ],
+ "permits": [
+  "General work permit",
+  "Confined-space entry permit"
+ ],
+ "newWelds": [],
+ "weldSpecs": [],
+ "nde": [],
+ "inspections": [
+  {
+   "id": "WO-100-01-I1",
+   "description": "Internal visual examination of the shell, floor, roof structure and nozzles",
+   "criteria": "Findings recorded against the owner's integrity criteria",
+   "basis": "SW-NDE-4"
+  },
+  {
+   "id": "WO-100-01-I2",
+   "description": "Ultrasonic thickness at the 15 TMLs listed",
+   "criteria": "Each reading above the owner's minimum wall",
+   "basis": "SW-WO-6"
+  },
+  {
+   "id": "WO-100-01-I3",
+   "description": "Floor scan for under-floor corrosion over the full floor",
+   "criteria": "Owner's floor acceptance criteria",
+   "basis": "SW-WO-6"
+  }
+ ],
+ "tmls": [
+  {
+   "id": "WO-100-01-TML01",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N1",
+   "at": {
+    "E": 379.7813,
+    "N": 318,
+    "EL": 1218
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML02",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N2",
+   "at": {
+    "E": 300,
+    "N": 270,
+    "EL": 1479.0625
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML03",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N3",
+   "at": {
+    "E": 264,
+    "N": 318,
+    "EL": 1480.3313
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML04",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N4",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1479.6563
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML05",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N5",
+   "at": {
+    "E": 222.8438,
+    "N": 318,
+    "EL": 1212
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML06",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N6",
+   "at": {
+    "E": 336,
+    "N": 318,
+    "EL": 1477.4063
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML07",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N7",
+   "at": {
+    "E": 222.125,
+    "N": 318,
+    "EL": 1230
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML08",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N8",
+   "at": {
+    "E": 222.125,
+    "N": 318,
+    "EL": 1254
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML09",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N9",
+   "at": {
+    "E": 222.9688,
+    "N": 318,
+    "EL": 1284
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML10",
+   "item": "T-101",
+   "description": "Nozzle neck T-101-N10",
+   "at": {
+    "E": 222.9688,
+    "N": 318,
+    "EL": 1404
+   },
+   "readings": [
+    "top",
+    "side",
+    "bottom",
+    "side"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML11",
+   "item": "T-101",
+   "description": "Floor centre",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1206
+   },
+   "readings": [
+    "centre"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML12",
+   "item": "T-101",
+   "description": "Shell at 0.000\" above the floor",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1206
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML13",
+   "item": "T-101",
+   "description": "Shell at 6'-0\" above the floor",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1278
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML14",
+   "item": "T-101",
+   "description": "Shell at 12'-0\" above the floor",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1350
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ]
+  },
+  {
+   "id": "WO-100-01-TML15",
+   "item": "T-101",
+   "description": "Shell at 18'-0\" above the floor",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1422
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ]
+  }
+ ],
+ "test": {
+  "kind": "Service leak test",
+  "description": "Every opened joint checked at operating pressure on start-up",
+  "basis": "SW-TEST-2"
+ },
+ "bolting": [],
+ "parts": [],
+ "itp": [
+  {
+   "step": 1,
+   "activity": "Work permit issued; isolation list (valves locked, blinds fitted) verified at zero pressure and drained",
+   "reference": "SW-WO-3, isolation list",
+   "acceptance": "Every isolation in place and tagged; zero pressure at the vent",
+   "record": "Signed isolation certificate",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 2,
+   "activity": "Equipment vented, purged and gas-tested for entry; confined-space entry permit issued",
+   "reference": "Owner entry procedure",
+   "acceptance": "Atmosphere safe for entry per owner limits",
+   "record": "Gas test record, entry permit",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 3,
+   "activity": "Opened for entry; cleaned for inspection",
+   "reference": "Owner procedure",
+   "acceptance": "Surfaces clean enough to inspect",
+   "record": "Daily report",
+   "contractor": "S",
+   "owner": "S",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 4,
+   "activity": "Internal visual examination",
+   "reference": "SW-NDE-4",
+   "acceptance": "Findings recorded",
+   "record": "Inspection report with photographs",
+   "contractor": "W",
+   "owner": "H",
+   "thirdParty": "W",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 5,
+   "activity": "Ultrasonic thickness at 15 TMLs",
+   "reference": "SW-WO-6",
+   "acceptance": "Above the owner's minimum wall",
+   "record": "Thickness record per TML",
+   "contractor": "S",
+   "owner": "R",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 6,
+   "activity": "Floor scan",
+   "reference": "SW-WO-6",
+   "acceptance": "Owner's floor criteria",
+   "record": "Floor scan report",
+   "contractor": "S",
+   "owner": "R",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 7,
+   "activity": "Owner's decision on findings (repair, monitor or accept)",
+   "reference": "Owner integrity procedure",
+   "acceptance": "Decision recorded",
+   "record": "Signed disposition",
+   "contractor": "R",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 8,
+   "activity": "Closed with new gaskets on every opened joint; studs to preload",
+   "reference": "SW-WO-5",
+   "acceptance": "Preload as stated",
+   "record": "Bolt-up record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 9,
+   "activity": "Service leak test of opened joints on start-up",
+   "reference": "SW-TEST-2",
+   "acceptance": "No leak",
+   "record": "Leak test record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 10,
+   "activity": "Blinds removed, isolations returned to normal line-up per the isolation list",
+   "reference": "SW-WO-3",
+   "acceptance": "Every blind removed and accounted for",
+   "record": "Isolation certificate closed",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 11,
+   "activity": "Records complete; work order handed back to operations",
+   "reference": "SW-ITP-3",
+   "acceptance": "All ITP activities accepted or not applicable",
+   "record": "Signed ITP and completion record",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  }
+ ],
+ "rules": [
+  "SW-ITP-1",
+  "SW-ITP-2",
+  "SW-ITP-3",
+  "SW-TEST-2",
+  "SW-WO-1",
+  "SW-WO-2",
+  "SW-WO-3",
+  "SW-WO-5",
+  "SW-WO-6"
+ ],
+ "equipment": "T-101"
+}

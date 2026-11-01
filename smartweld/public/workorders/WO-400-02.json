@@ -1,0 +1,332 @@
+{
+ "number": "WO-400-02",
+ "title": "Overhaul pump P-103B (mechanical seal and bearings)",
+ "area": "A400",
+ "areaName": "Pumps",
+ "type": "PO",
+ "typeName": "Pump overhaul",
+ "priority": 3,
+ "issuedBy": "Facility owner (demonstration)",
+ "notice": "DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.",
+ "reason": "High bearing vibration; overhaul seal and bearings.",
+ "scope": [
+  "Isolate P-103B electrically and per the isolation list; drain the casing.",
+  "Record as-found shaft alignment; remove the coupling guard and spacer.",
+  "Break the suction and discharge nozzle joints; remove the pump to the workshop.",
+  "Replace the mechanical seal and the bearings; inspect the impeller and wear rings.",
+  "Reinstall; new nozzle gaskets and studs tightened per SW-WO-5; align to the owner's alignment criteria.",
+  "Remove blinds and isolations; run test."
+ ],
+ "lines": [
+  "4\"-P300-P-1014",
+  "3\"-P300-P-1016",
+  "3/4\"-P150-W-3022"
+ ],
+ "isometrics": [
+  "ISO-4\"-P300-P-1014",
+  "ISO-3\"-P300-P-1016",
+  "ISO-3/4\"-P150-W-3022"
+ ],
+ "items": [
+  "P-103B"
+ ],
+ "isolations": [
+  {
+   "seq": 1,
+   "kind": "electrical",
+   "tag": "P-103B-M",
+   "line": "",
+   "description": "Motor of P-103B: isolated, locked and tried at the starter"
+  },
+  {
+   "seq": 2,
+   "kind": "valve",
+   "tag": "4\"-P300-P-1014/B7",
+   "line": "4\"-P300-P-1014",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 4\" P300 (4\"-P300-P-1014/B7) on P-103B-S",
+   "at": {
+    "E": 2148,
+    "N": -159.6875,
+    "EL": 1224
+   }
+  },
+  {
+   "seq": 3,
+   "kind": "blind",
+   "tag": "4\"-P300-P-1014/B5",
+   "line": "4\"-P300-P-1014",
+   "description": "Fit a blind between 4\"-P300-P-1014/B7 and 4\"-P300-P-1014/B5, P-103B side",
+   "at": {
+    "E": 2148,
+    "N": -172.875,
+    "EL": 1224
+   }
+  },
+  {
+   "seq": 4,
+   "kind": "valve",
+   "tag": "3\"-P300-P-1016/A5",
+   "line": "3\"-P300-P-1016",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 3\" P300 (3\"-P300-P-1016/A5) on P-103B-D",
+   "at": {
+    "E": 2148,
+    "N": -198,
+    "EL": 1262.1563
+   }
+  },
+  {
+   "seq": 5,
+   "kind": "blind",
+   "tag": "3\"-P300-P-1016/A2",
+   "line": "3\"-P300-P-1016",
+   "description": "Fit a blind between 3\"-P300-P-1016/A5 and 3\"-P300-P-1016/A2, P-103B side",
+   "at": {
+    "E": 2148,
+    "N": -198,
+    "EL": 1240.9688
+   }
+  },
+  {
+   "seq": 6,
+   "kind": "valve",
+   "tag": "3/4\"-P150-W-3022/A3",
+   "line": "3/4\"-P150-W-3022",
+   "description": "Close and lock VALVE, BALL, FLOATING 3/4\" P150 (3/4\"-P150-W-3022/A3) on P-103B-F",
+   "at": {
+    "E": 2136,
+    "N": -48,
+    "EL": 1483.6969
+   }
+  },
+  {
+   "seq": 7,
+   "kind": "blind",
+   "tag": "3/4\"-P150-W-3022/A6",
+   "line": "3/4\"-P150-W-3022",
+   "description": "Fit a blind between 3/4\"-P150-W-3022/A3 and 3/4\"-P150-W-3022/A6, P-103B side",
+   "at": {
+    "E": 2136,
+    "N": -48,
+    "EL": 1490.3938
+   }
+  }
+ ],
+ "permits": [
+  "General work permit",
+  "Lifting plan"
+ ],
+ "newWelds": [],
+ "weldSpecs": [],
+ "nde": [],
+ "inspections": [],
+ "tmls": [],
+ "test": {
+  "kind": "Run test",
+  "description": "Running at duty: no seal leak; bearing temperature and vibration within the owner's limits",
+  "basis": "SW-TEST-2"
+ },
+ "bolting": [
+  {
+   "joint": "4\"-P300-P-1014/B1",
+   "studs": "4 × 1\" studs (4\"-P300-P-1014/B3)",
+   "preloadPerStud": 35342.9174,
+   "passes": 3,
+   "basis": "SW-WO-5"
+  },
+  {
+   "joint": "3\"-P300-P-1016/A1",
+   "studs": "4 × 0.875\" studs (3\"-P300-P-1016/A3)",
+   "preloadPerStud": 27059.4211,
+   "passes": 3,
+   "basis": "SW-WO-5"
+  }
+ ],
+ "parts": [
+  {
+   "description": "GASKET 4\" P300 COMPRESSED SHEET",
+   "qty": 1,
+   "replaces": "4\"-P300-P-1014/B1"
+  },
+  {
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P300",
+   "qty": 1,
+   "replaces": "4\"-P300-P-1014/B3"
+  },
+  {
+   "description": "GASKET 3\" P300 COMPRESSED SHEET",
+   "qty": 1,
+   "replaces": "3\"-P300-P-1016/A1"
+  },
+  {
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P300",
+   "qty": 1,
+   "replaces": "3\"-P300-P-1016/A3"
+  },
+  {
+   "description": "Mechanical seal kit for P-103B",
+   "qty": 1
+  },
+  {
+   "description": "Bearing set for P-103B",
+   "qty": 1
+  }
+ ],
+ "itp": [
+  {
+   "step": 1,
+   "activity": "Work permit issued; isolation list (valves locked, blinds fitted) verified at zero pressure and drained",
+   "reference": "SW-WO-3, isolation list",
+   "acceptance": "Every isolation in place and tagged; zero pressure at the vent",
+   "record": "Signed isolation certificate",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 2,
+   "activity": "As-found alignment recorded",
+   "reference": "Owner alignment procedure",
+   "acceptance": "Recorded",
+   "record": "Alignment record",
+   "contractor": "W",
+   "owner": "R",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 3,
+   "activity": "Seal and bearings replaced; impeller and wear rings inspected",
+   "reference": "Owner pump procedure",
+   "acceptance": "Clearances within the owner's criteria",
+   "record": "Pump overhaul record",
+   "contractor": "S",
+   "owner": "R",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 4,
+   "activity": "Nozzle joints remade with new gaskets; studs to preload",
+   "reference": "SW-WO-5",
+   "acceptance": "Preload as stated",
+   "record": "Bolt-up record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 5,
+   "activity": "Final alignment",
+   "reference": "Owner alignment procedure",
+   "acceptance": "Within the owner's alignment criteria",
+   "record": "Alignment record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 6,
+   "activity": "Run test at duty",
+   "reference": "SW-TEST-2",
+   "acceptance": "No seal leak; temperatures and vibration within owner limits",
+   "record": "Run test record",
+   "contractor": "W",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 7,
+   "activity": "Blinds removed, isolations returned to normal line-up per the isolation list",
+   "reference": "SW-WO-3",
+   "acceptance": "Every blind removed and accounted for",
+   "record": "Isolation certificate closed",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 8,
+   "activity": "Records complete; work order handed back to operations",
+   "reference": "SW-ITP-3",
+   "acceptance": "All ITP activities accepted or not applicable",
+   "record": "Signed ITP and completion record",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  }
+ ],
+ "rules": [
+  "SW-ITP-1",
+  "SW-ITP-2",
+  "SW-ITP-3",
+  "SW-NDE-5",
+  "SW-TEST-2",
+  "SW-WO-1",
+  "SW-WO-2",
+  "SW-WO-3",
+  "SW-WO-5"
+ ],
+ "equipment": "P-103B"
+}

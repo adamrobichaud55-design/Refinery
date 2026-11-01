@@ -10,6 +10,10 @@ import { partFromKey, type PipingModel, type LineRun, type Comp, type NozzleRun 
 import { lineClassFor, fluidGroupOf, classColour, type FluidGroup, type LineClass } from './lineclass';
 import { elbowRadius } from '../catalogue';
 import type { V3 } from './router';
+import { generateInterior } from './interior';
+import { buildNozzles, DEMO_NOZZLES } from './nozzles';
+import { basisText } from '../core/basis';
+import { areaOfEquipment, AREAS } from './areas';
 
 // ---- SW-GT-2 plant coordinates ------------------------------------------------------------------------------
 export const DATUM = 1200;                                                   // 100'-0" (in)
@@ -135,8 +139,9 @@ export function buildGroundTruth(m: PipingModel): GroundTruth {
 export const lineFileName = (no: string) => no.replace(/"/g, 'in').replace(/\//g, '-') + '.json';
 const r4 = (_k: string, v: unknown) => (typeof v === 'number' ? Math.round(v * 1e4) / 1e4 : v);
 /** SW-GT-6: the files of the export, path → content (deterministic) */
-export function exportFiles(gt: GroundTruth): Map<string, string> {
+export function exportFiles(gt: GroundTruth, equipment?: GTEquipment[]): Map<string, string> {
   const f = new Map<string, string>();
+  if (equipment) f.set('equipment.json', JSON.stringify(equipment, r4, 1));
   for (const l of gt.lines) f.set(`lines/${lineFileName(l.header.line)}`, JSON.stringify(l, r4, 1));
   f.set('line-classes.json', JSON.stringify(gt.classes.map(c => ({ ...c, colour: `#${classColour(c.code).toString(16).padStart(6, '0')}` })), r4, 1));
   f.set('nozzles.json', JSON.stringify(gt.nozzles, r4, 1));
@@ -145,4 +150,22 @@ export function exportFiles(gt: GroundTruth): Map<string, string> {
   for (const l of gt.lines) for (const b of l.bom) csv.push([l.header.line, l.header.lineClass, b.itemNo, b.description, b.qty, b.length !== undefined ? b.length.toFixed(3) : '', b.weight.toFixed(2)].map(v => { const s = String(v); return /[",]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s; }).join(','));
   f.set('bom.csv', csv.join('\n') + '\n');
   return f;
+}
+
+// ---- SW-GT-7 equipment metadata -------------------------------------------------------------------------------
+export interface GTEquipment {
+  tag: string; type: string; description: string; area: string; areaName: string; designation: string; material: string; weight: number;
+  origin: PlantPt; dims: { name: string; label: string; value: number; unit: string; basis: string }[];
+  nozzles: { id: string; service: string; NPS: number; cls: PipeClass; face: PlantPt; facing: { E: number; N: number; EL: number }; line: string | null; lineClass: string | null }[];
+}
+const EQUIP_TYPE: Record<string, string> = { VESSEL_V: 'Vertical vessel', VESSEL_H: 'Horizontal drum', EXCHANGER: 'Shell-and-tube exchanger', PUMP: 'Centrifugal pump', TANK: 'Cone-roof storage tank' };
+export function buildEquipment(m: PipingModel): GTEquipment[] {
+  const nz = buildNozzles(), lineAt = new Map<string, LineRun>();
+  for (const r of m.lines) for (const e of [r.from, r.to]) { const id = e.startsWith('PSV on ') ? e.slice(7) : e; if (!lineAt.has(id)) lineAt.set(id, r); }
+  return generateInterior().equipment.map(e => {
+    const p = e.part, area = areaOfEquipment(e.tag);
+    const nozzles = DEMO_NOZZLES.filter(d => d.equip === e.tag).map(d => { const n = nz.get(d.id)!, l = lineAt.get(d.id) ?? null; return { id: d.id, service: d.service, NPS: d.NPS, cls: d.cls, face: toPlant(n.face), facing: dirPlant(n.u), line: l?.no ?? null, lineClass: l?.lineClass ?? null }; });
+    return { tag: e.tag, type: EQUIP_TYPE[p.kind] ?? p.kind, description: p.designation, area, areaName: AREAS[area].name, designation: p.designation, material: p.material.grade, weight: p.weight.value,
+      origin: toPlant([e.transform[12], e.transform[13], e.transform[14]]), dims: Object.entries(p.dims).filter(([k]) => k !== 'rho').map(([k, d]) => ({ name: k, label: d.label, value: d.value, unit: d.unit, basis: basisText(d.basis) })), nozzles };
+  });
 }

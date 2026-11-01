@@ -1453,3 +1453,152 @@ bore is continuous and every end is a butt-weld bevel.
 - Isometric nodes run continuously from start to end; plant coordinates convert back to model
   coordinates exactly.
 - The committed export equals a fresh export; every stage-6 rule ID used in code exists here.
+
+# Stage 7 — Equipment metadata and shutdown work orders
+
+All welding, NDE, inspection and test content of stage 7 is SmartWeld demonstration content written
+from reasoning (user decision, P-52). Every page that carries it is marked **DEMONSTRATION ONLY —
+NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.**
+No code, standard or published procedure was used, and none should be inferred.
+
+## 45. Areas and equipment metadata (`SW-AREA-*`, `SW-GT-7`)
+
+- `SW-AREA-1` The facility is divided into five maintenance areas (drawing): A100 tank farm
+  (T-101, T-102), A200 vessels and column (V-101, V-102, C-101), A300 exchangers and drum
+  (E-101, E-102, E-103, D-101), A400 pumps (P-101A … P-104B), A500 pipe rack (rack headers and
+  their branches). Reason: a shutdown is planned, isolated and staffed area by area.
+- `SW-AREA-2` A line belongs to the area of the equipment at its start; if it starts on another
+  line or a header, to the area of the equipment at its end; lines with no equipment (headers,
+  hose stations, header vents and drains) belong to A500.
+- `SW-GT-7` Equipment items carry: tag, type, description, area, designation, every dimension
+  with its basis, empty weight, material, the plant coordinates of its origin, and its nozzles
+  (id, service, size, pressure class, face coordinates, and the line connected there). Written to
+  `public/groundtruth/equipment.json`.
+
+## 46. Work orders (`SW-WO-*`)
+
+- `SW-WO-1` A work order is issued by the facility owner for one task on one area: number
+  `WO-{area number}-{sequence}`, title, area, task type, priority (1 safety, 2 integrity,
+  3 reliability), the scope description, the affected items (tags), the lines whose isometric
+  drawings are attached, the isolation list, new welds, the welding specification, NDE,
+  inspections, the test, the ITP, and the parts list. The owner's work list (which tasks, on what)
+  is drawing data (`OWNER_WORK_LIST`).
+- `SW-WO-2` Task types: VR valve replacement in kind; SR spool replacement; GJ flanged joint
+  remake (new gasket and studs); PR relief valve removal, bench test and reinstatement;
+  PO pump overhaul; VI vessel or column internal inspection; XB exchanger bundle pull, clean and
+  tube-side test; TI tank internal inspection; SP pipe support replacement; UT thickness survey
+  of a line.
+- `SW-WO-3` Isolation list: for work on a line, the nearest valve on each side of the affected
+  items along the line (or the line's end valves), each with a blind to be fitted at the flange
+  next to the work; for work on equipment, the first valve on every line at every nozzle, each
+  with a blind at the nozzle side. Every isolation is verified (zero pressure, drained) before
+  work. Reason: positive isolation by blind, not by a valve alone, protects the people inside
+  the isolation.
+- `SW-WO-4` New welds: a replaced spool is re-made complete — every shop weld of the spool is a
+  new shop weld, each end joint that was a field weld is a new field weld, and the outlet weld of
+  every branch line on a tee of the spool is a new field weld (the branch is cut free to remove
+  the spool and welded back to the new tee), numbered
+  `{WO}-W{nn}` and cross-referenced to the original weld ids. A replaced valve, a remade joint and
+  a relief valve need no welds.
+- `SW-WO-5` Bolt-up: each stud of a remade flanged joint is tightened to a preload of
+  0.5 F_u A_s (A_s the stud's unthreaded area), in at least three passes in a cross pattern.
+  Reason: the same preload that sized the flange (SW-FLG-5), so the flange is never loaded
+  beyond what it was proportioned for; passes in a cross pattern seat the gasket evenly.
+- `SW-WO-6` Thickness monitoring locations (TMLs) for a UT survey: every elbow extrados (the
+  outside of the bend at mid-arc), every tee at its branch outlet, and every pipe piece of 2 ft or
+  more at its mid-length, four readings 90° apart around the pipe at each. Vessels, the column,
+  the drum, exchanger shells and tanks: every nozzle neck, the centre of each head (the floor
+  centre of a tank), and four readings 90° apart around the shell at every 6 ft along its length
+  or height from the lower tangent (the tank floor). Reason: flow turns and impinges at the
+  extrados and the tee, where wall is lost first; in equipment, corrosion follows liquid levels
+  and inlets, so a regular grid with every nozzle catches both. The minimum acceptable wall is the
+  facility owner's (stated per work order, not by SmartWeld).
+
+## 47. Welding specification (`SW-WPS-*`) — demonstration
+
+- `SW-WPS-1` One SmartWeld welding specification per joint family, numbered `WS-{nn}`:
+  WS-01 butt welds in pipe, fittings and weld-neck flanges of the facility's pipe grade, wall
+  up to 1/2 in; WS-02 the same above 1/2 in; WS-03 fillet welds attaching shoes, guides and
+  anchors to pipe or steel (shielded metal arc throughout, filler `SW-F2`). Joint: SW-WD-4 single-V groove (60°, root
+  opening 1/8 in, root face 1/16 in). Process: gas-shielded tungsten arc for the root (a root
+  that must fuse both sides from one side needs a controllable arc), shielded metal arc for fill
+  and cap (portable for field work). Filler: matching strength, low-hydrogen, named by SmartWeld
+  as `SW-F1` (root wire) and `SW-F2` (covered electrode). Reason: matching strength keeps the
+  weld no weaker than the pipe; low hydrogen avoids hydrogen cracking in the heat-affected zone.
+- `SW-WPS-2` Thermal: preheat the joint 3 in either side to at least 30 °F above the ambient dew
+  point and never below 60 °F (drives off condensation, which is the source of hydrogen, with a
+  margin a contact thermometer can resolve); for WS-02 at least 150 °F (a thicker wall conducts
+  heat away faster, so the weld cools faster); interpass temperature no more than 450 °F (keeps the
+  heat-affected zone from softening). Post-weld heat treatment: not specified for the
+  demonstration — the facility owner states it.
+- `SW-WPS-3` Every welder is identified on the weld map and the weld record (welder stamp per
+  weld); fit-up is checked before welding: root opening per SW-WD-4, and the two bores aligned within the
+  root face (1/16 in, SW-WD-4), because a step larger than the root face leaves part of the root
+  unfused.
+
+## 48. NDE and inspection (`SW-NDE-*`) — demonstration
+
+- `SW-NDE-1` Every new weld: 100 % visual (VT) before and after welding.
+- `SW-NDE-2` Volumetric examination (radiography RT, or ultrasonic UT where radiography is
+  impractical) of new butt welds by line-class consequence: H, S and F classes 100 % of new
+  welds (flammable or scalding contents); C, G and W classes 10 % of new welds, at least one per
+  welder per work order, chosen by the owner's inspector. Reason: the consequence of a leak sets
+  the extent; a shutdown repair has no production run to sample from, so high-consequence welds
+  are all examined.
+- `SW-NDE-3` Fillet welds of support attachments: 100 % VT and magnetic particle (MT).
+- `SW-NDE-4` Acceptance (demonstration): no crack, no lack of fusion, no incomplete
+  penetration (each a planar flaw that grows under cyclic load); undercut, porosity, inclusions
+  and all other indications to the owner's acceptance criteria. A rejected weld is repaired once and re-examined to the same method; a second
+  rejection cuts it out.
+- `SW-NDE-5` Flange faces of every opened joint are inspected visually before the new gasket
+  goes in (no radial scratch across the sealing face).
+
+## 49. Test (`SW-TEST-*`) — demonstration
+
+- `SW-TEST-1` Lines with new welds are hydrostatically tested at 1.4 × the class design pressure
+  held for 30 minutes with no leak and no pressure drop, the relief valves blinded or removed.
+  Reason: a relief valve set at the design pressure lets the pressure rise while it opens and
+  flows, and surges add to that; 40 % above design proves the new welds clear of both, while the
+  stud preload that sized the flange (SW-FLG-5, 1.5 × the bolting's design-load capacity) still
+  holds the joint closed. (Common code multipliers were recognised and deliberately not used,
+  P-52.)
+- `SW-TEST-2` Remade flanged joints with no new welds: a service leak test at operating pressure
+  on start-up, every remade joint checked.
+- `SW-TEST-3` Relief valves: bench test of set pressure (the class design pressure, PSV-1) and
+  seat tightness before reinstatement; set and test recorded with the valve tag.
+
+## 50. Inspection and test plan (`SW-ITP-*`)
+
+- `SW-ITP-1` Every work order carries an ITP: an ordered list of activities, each with the
+  reference (rule, drawing or procedure), the acceptance criterion, the record that proves it,
+  and an inspection point for the contractor, the owner and the third-party inspector: H hold
+  (work stops until released), W witness (notified, may attend), R review of records,
+  S surveillance (spot check).
+- `SW-ITP-2` Hold points: isolation verified before work; fit-up before welding of a
+  high-consequence class (SW-NDE-2); NDE results before the test; the test; reinstatement of
+  isolations and blinds removed before handback. Reason: these are the steps whose failure
+  cannot be seen once the next step is done.
+- `SW-ITP-3` Completion capture: every activity has fields for status (open, accepted, rejected,
+  not applicable), signer per party, date and remark; a work order is complete when every
+  activity is accepted or not applicable. The viewer records sign-offs and exports them as a
+  completion record (JSON).
+
+## 51. Isometric drawings (`SW-ISO-*`)
+
+- `SW-ISO-1` One isometric per line, generated from the ground truth (SW-GT-5): the centreline
+  projected on isometric axes (East to the lower right at 30°, North to the upper right at 30°,
+  elevation vertical), not to scale; symbols for flanges, valves (by type), elbows, tees,
+  reducers, caps, gaskets, welds (shop dot, field flag with number), supports; the length of every
+  straight run and the elevation of every change of level written on the drawing; a north arrow,
+  the bill of materials, the weld list and a title block (line, class, service, size, design
+  pressure, insulation, from–to, drawing number `ISO-{line}`, revision, work order).
+- `SW-ISO-2` For a work order, the isometric clouds the affected items and the new welds.
+
+## 52. Tests required for stage 7
+
+- Every equipment item has its metadata and its nozzles; every nozzle's connected line exists.
+- Every work order has: an owner area matching its items, at least one ITP hold point, an
+  isolation list for any work that opens the line or equipment, new welds exactly matching its
+  replaced spools (SW-WO-4), NDE extents by SW-NDE-2, the test by SW-TEST-1..3.
+- Every isometric contains every item, weld and support of its line.
+- The committed work-order data equals a fresh run; every stage-7 rule ID used in code exists here.

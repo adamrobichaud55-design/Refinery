@@ -1,0 +1,255 @@
+{
+ "number": "WO-300-04",
+ "title": "Bench test relief valve 3\"-P300-RV-4001/2 on D-101-N3",
+ "area": "A300",
+ "areaName": "Exchangers and drum",
+ "type": "PR",
+ "typeName": "Relief valve bench test and reinstatement",
+ "priority": 1,
+ "issuedBy": "Facility owner (demonstration)",
+ "notice": "DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.",
+ "reason": "Relief valve due for its periodic bench test.",
+ "scope": [
+  "Confirm D-101 depressured and isolated.",
+  "Unbolt and remove VALVE, PRESSURE SAFETY VALVE 3\" P300 INLET × 4\" P150 OUTLET (3\"-P300-RV-4001/2); blind the nozzle and the outlet line.",
+  "Bench test: set pressure 300 psi and seat tightness (SW-TEST-3); service the valve as found.",
+  "Reinstall with new gaskets and studs, tightened per SW-WO-5; remove blinds."
+ ],
+ "lines": [
+  "3\"-P300-RV-4001",
+  "4\"-P150-FL-4004"
+ ],
+ "isometrics": [
+  "ISO-3\"-P300-RV-4001",
+  "ISO-4\"-P150-FL-4004"
+ ],
+ "items": [
+  "3\"-P300-RV-4001/2",
+  "3\"-P300-RV-4001/1",
+  "4\"-P150-FL-4004/A1"
+ ],
+ "isolations": [
+  {
+   "seq": 1,
+   "kind": "equipment",
+   "tag": "D-101",
+   "line": "3\"-P300-RV-4001",
+   "description": "D-101 depressured, drained and isolated under the shutdown isolation (no inlet valve)"
+  },
+  {
+   "seq": 2,
+   "kind": "blind",
+   "tag": "3\"-P300-RV-4001/1",
+   "line": "3\"-P300-RV-4001",
+   "description": "Blind the nozzle D-101-N3 once the valve is removed",
+   "at": {
+    "E": 1128,
+    "N": -300,
+    "EL": 1330.3313
+   }
+  },
+  {
+   "seq": 3,
+   "kind": "blind",
+   "tag": "4\"-P150-FL-4004/A1",
+   "line": "4\"-P150-FL-4004",
+   "description": "Blind the outlet line 4\"-P150-FL-4004 at its first flange",
+   "at": {
+    "E": 1128,
+    "N": -292.1438,
+    "EL": 1338
+   }
+  }
+ ],
+ "permits": [
+  "General work permit",
+  "Lifting plan"
+ ],
+ "newWelds": [],
+ "weldSpecs": [],
+ "nde": [],
+ "inspections": [],
+ "tmls": [],
+ "test": {
+  "kind": "Relief valve bench test",
+  "description": "Set pressure 300 psi (class design pressure, PSV-1) and seat tightness",
+  "pressure": 300,
+  "basis": "SW-TEST-3"
+ },
+ "bolting": [
+  {
+   "joint": "3\"-P300-RV-4001/1",
+   "studs": "4 × 0.875\" studs (3\"-P300-RV-4001/3)",
+   "preloadPerStud": 27059.4211,
+   "passes": 3,
+   "basis": "SW-WO-5"
+  },
+  {
+   "joint": "4\"-P150-FL-4004/A1",
+   "studs": "4 × 1\" studs (4\"-P150-FL-4004/A3)",
+   "preloadPerStud": 35342.9174,
+   "passes": 3,
+   "basis": "SW-WO-5"
+  }
+ ],
+ "parts": [
+  {
+   "description": "GASKET 3\" P300 COMPRESSED SHEET",
+   "qty": 1,
+   "replaces": "3\"-P300-RV-4001/1"
+  },
+  {
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P300",
+   "qty": 1,
+   "replaces": "3\"-P300-RV-4001/3"
+  },
+  {
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "qty": 1,
+   "replaces": "4\"-P150-FL-4004/A1"
+  },
+  {
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "qty": 1,
+   "replaces": "4\"-P150-FL-4004/A3"
+  }
+ ],
+ "itp": [
+  {
+   "step": 1,
+   "activity": "Work permit issued; isolation list (valves locked, blinds fitted) verified at zero pressure and drained",
+   "reference": "SW-WO-3, isolation list",
+   "acceptance": "Every isolation in place and tagged; zero pressure at the vent",
+   "record": "Signed isolation certificate",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 2,
+   "activity": "Relief valve removed; nozzle and outlet blinded",
+   "reference": "SW-WO-3",
+   "acceptance": "Both openings blinded and tagged",
+   "record": "Isolation certificate",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 3,
+   "activity": "As-found bench test (pop pressure recorded before any service)",
+   "reference": "SW-TEST-3",
+   "acceptance": "Recorded",
+   "record": "Bench test record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "W",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 4,
+   "activity": "Set pressure and seat tightness after service",
+   "reference": "SW-TEST-3, PSV-1",
+   "acceptance": "Set at 300 psi; seat tight",
+   "record": "Bench test record, seal tag",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "W",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 5,
+   "activity": "Valve reinstalled; new gaskets; studs to preload",
+   "reference": "SW-WO-5",
+   "acceptance": "Preload as stated",
+   "record": "Bolt-up record",
+   "contractor": "W",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 6,
+   "activity": "Blinds removed, isolations returned to normal line-up per the isolation list",
+   "reference": "SW-WO-3",
+   "acceptance": "Every blind removed and accounted for",
+   "record": "Isolation certificate closed",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 7,
+   "activity": "Records complete; work order handed back to operations",
+   "reference": "SW-ITP-3",
+   "acceptance": "All ITP activities accepted or not applicable",
+   "record": "Signed ITP and completion record",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  }
+ ],
+ "rules": [
+  "SW-ITP-1",
+  "SW-ITP-2",
+  "SW-ITP-3",
+  "SW-NDE-5",
+  "SW-TEST-3",
+  "SW-WO-1",
+  "SW-WO-2",
+  "SW-WO-5"
+ ]
+}

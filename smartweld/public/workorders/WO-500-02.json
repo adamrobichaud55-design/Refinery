@@ -1,0 +1,542 @@
+{
+ "number": "WO-500-02",
+ "title": "Ultrasonic thickness survey of 6\"-P300-LS-2003",
+ "area": "A500",
+ "areaName": "Pipe rack",
+ "type": "UT",
+ "typeName": "Ultrasonic thickness survey",
+ "priority": 2,
+ "issuedBy": "Facility owner (demonstration)",
+ "notice": "DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.",
+ "reason": "Thickness survey of the steam header.",
+ "scope": [
+  "Erect access and remove insulation at the TMLs where fitted (class S300, insulated).",
+  "Calibrate the thickness gauge on a step block covering 0.21875 in.",
+  "Take four readings 90° apart at each of the 23 TMLs (SW-WO-6).",
+  "Report readings against the owner's minimum wall; raise a spool replacement for any reading below it."
+ ],
+ "lines": [
+  "6\"-P300-LS-2003"
+ ],
+ "isometrics": [
+  "ISO-6\"-P300-LS-2003"
+ ],
+ "items": [
+  "6\"-P300-LS-2003/T:2\"-P300-LS-3007",
+  "6\"-P300-LS-2003/p4",
+  "6\"-P300-LS-2003/T:1\"-P300-HS-5003",
+  "6\"-P300-LS-2003/p6",
+  "6\"-P300-LS-2003/T:2\"-P300-LS-3009",
+  "6\"-P300-LS-2003/p8",
+  "6\"-P300-LS-2003/T:1\"-P300-HS-5008",
+  "6\"-P300-LS-2003/p10",
+  "6\"-P300-LS-2003/T:1\"-P300-HS-5013",
+  "6\"-P300-LS-2003/p12",
+  "6\"-P300-LS-2003/T:1\"-P300-HS-5018",
+  "6\"-P300-LS-2003/p14",
+  "6\"-P300-LS-2003/T:1\"-P300-HS-5023",
+  "6\"-P300-LS-2003/p16",
+  "6\"-P300-LS-2003/p17",
+  "6\"-P300-LS-2003/T:1\"-P300-HS-5028",
+  "6\"-P300-LS-2003/p19",
+  "6\"-P300-LS-2003/T:1\"-P300-HS-5033",
+  "6\"-P300-LS-2003/p21",
+  "6\"-P300-LS-2003/T:1\"-P300-HS-5038",
+  "6\"-P300-LS-2003/T:3/4\"-P150-V-8009",
+  "6\"-P300-LS-2003/T:3/4\"-P150-D-8008",
+  "6\"-P300-LS-2003/T:3/4\"-P150-D-8007"
+ ],
+ "isolations": [],
+ "permits": [
+  "General work permit"
+ ],
+ "newWelds": [],
+ "weldSpecs": [],
+ "nde": [],
+ "inspections": [
+  {
+   "id": "WO-500-02-I1",
+   "description": "Ultrasonic thickness at 23 TMLs, four readings each",
+   "criteria": "Nominal wall 0.21875 in; each reading above the owner's minimum wall",
+   "basis": "SW-WO-6"
+  }
+ ],
+ "tmls": [
+  {
+   "id": "WO-500-02-TML01",
+   "item": "6\"-P300-LS-2003/T:2\"-P300-LS-3007",
+   "description": "Tee 6\"-P300-LS-2003/T:2\"-P300-LS-3007 branch outlet",
+   "at": {
+    "E": 264,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML02",
+   "item": "6\"-P300-LS-2003/p4",
+   "description": "Pipe 6\"-P300-LS-2003/p4 mid-length",
+   "at": {
+    "E": 285,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML03",
+   "item": "6\"-P300-LS-2003/T:1\"-P300-HS-5003",
+   "description": "Tee 6\"-P300-LS-2003/T:1\"-P300-HS-5003 branch outlet",
+   "at": {
+    "E": 306,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML04",
+   "item": "6\"-P300-LS-2003/p6",
+   "description": "Pipe 6\"-P300-LS-2003/p6 mid-length",
+   "at": {
+    "E": 366,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML05",
+   "item": "6\"-P300-LS-2003/T:2\"-P300-LS-3009",
+   "description": "Tee 6\"-P300-LS-2003/T:2\"-P300-LS-3009 branch outlet",
+   "at": {
+    "E": 426,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML06",
+   "item": "6\"-P300-LS-2003/p8",
+   "description": "Pipe 6\"-P300-LS-2003/p8 mid-length",
+   "at": {
+    "E": 486,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML07",
+   "item": "6\"-P300-LS-2003/T:1\"-P300-HS-5008",
+   "description": "Tee 6\"-P300-LS-2003/T:1\"-P300-HS-5008 branch outlet",
+   "at": {
+    "E": 546,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML08",
+   "item": "6\"-P300-LS-2003/p10",
+   "description": "Pipe 6\"-P300-LS-2003/p10 mid-length",
+   "at": {
+    "E": 666,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML09",
+   "item": "6\"-P300-LS-2003/T:1\"-P300-HS-5013",
+   "description": "Tee 6\"-P300-LS-2003/T:1\"-P300-HS-5013 branch outlet",
+   "at": {
+    "E": 786,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML10",
+   "item": "6\"-P300-LS-2003/p12",
+   "description": "Pipe 6\"-P300-LS-2003/p12 mid-length",
+   "at": {
+    "E": 900,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML11",
+   "item": "6\"-P300-LS-2003/T:1\"-P300-HS-5018",
+   "description": "Tee 6\"-P300-LS-2003/T:1\"-P300-HS-5018 branch outlet",
+   "at": {
+    "E": 1014,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML12",
+   "item": "6\"-P300-LS-2003/p14",
+   "description": "Pipe 6\"-P300-LS-2003/p14 mid-length",
+   "at": {
+    "E": 1140,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML13",
+   "item": "6\"-P300-LS-2003/T:1\"-P300-HS-5023",
+   "description": "Tee 6\"-P300-LS-2003/T:1\"-P300-HS-5023 branch outlet",
+   "at": {
+    "E": 1266,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML14",
+   "item": "6\"-P300-LS-2003/p16",
+   "description": "Pipe 6\"-P300-LS-2003/p16 mid-length",
+   "at": {
+    "E": 1388.5,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML15",
+   "item": "6\"-P300-LS-2003/p17",
+   "description": "Pipe 6\"-P300-LS-2003/p17 mid-length",
+   "at": {
+    "E": 1623.5,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML16",
+   "item": "6\"-P300-LS-2003/T:1\"-P300-HS-5028",
+   "description": "Tee 6\"-P300-LS-2003/T:1\"-P300-HS-5028 branch outlet",
+   "at": {
+    "E": 1746,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML17",
+   "item": "6\"-P300-LS-2003/p19",
+   "description": "Pipe 6\"-P300-LS-2003/p19 mid-length",
+   "at": {
+    "E": 1866,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML18",
+   "item": "6\"-P300-LS-2003/T:1\"-P300-HS-5033",
+   "description": "Tee 6\"-P300-LS-2003/T:1\"-P300-HS-5033 branch outlet",
+   "at": {
+    "E": 1986,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML19",
+   "item": "6\"-P300-LS-2003/p21",
+   "description": "Pipe 6\"-P300-LS-2003/p21 mid-length",
+   "at": {
+    "E": 2040,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML20",
+   "item": "6\"-P300-LS-2003/T:1\"-P300-HS-5038",
+   "description": "Tee 6\"-P300-LS-2003/T:1\"-P300-HS-5038 branch outlet",
+   "at": {
+    "E": 2094,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML21",
+   "item": "6\"-P300-LS-2003/T:3/4\"-P150-V-8009",
+   "description": "Tee 6\"-P300-LS-2003/T:3/4\"-P150-V-8009 branch outlet",
+   "at": {
+    "E": 2106,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML22",
+   "item": "6\"-P300-LS-2003/T:3/4\"-P150-D-8008",
+   "description": "Tee 6\"-P300-LS-2003/T:3/4\"-P150-D-8008 branch outlet",
+   "at": {
+    "E": 2124,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-500-02-TML23",
+   "item": "6\"-P300-LS-2003/T:3/4\"-P150-D-8007",
+   "description": "Tee 6\"-P300-LS-2003/T:3/4\"-P150-D-8007 branch outlet",
+   "at": {
+    "E": 2136,
+    "N": -12,
+    "EL": 1476
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  }
+ ],
+ "test": null,
+ "bolting": [],
+ "parts": [],
+ "itp": [
+  {
+   "step": 1,
+   "activity": "Gauge calibrated on a step block; operator qualification checked",
+   "reference": "Owner UT procedure",
+   "acceptance": "Calibration within the owner's tolerance",
+   "record": "Calibration record",
+   "contractor": "R",
+   "owner": "R",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 2,
+   "activity": "Readings at 23 TMLs",
+   "reference": "SW-WO-6",
+   "acceptance": "Four readings per TML recorded",
+   "record": "Thickness record per TML",
+   "contractor": "S",
+   "owner": "S",
+   "thirdParty": "S",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 3,
+   "activity": "Results reviewed against the owner's minimum wall",
+   "reference": "Owner integrity procedure",
+   "acceptance": "Every reading above the minimum, or a work order raised",
+   "record": "Signed thickness report",
+   "contractor": "R",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 4,
+   "activity": "Insulation and access reinstated; work order handed back",
+   "reference": "SW-ITP-3",
+   "acceptance": "All activities accepted",
+   "record": "Signed ITP",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  }
+ ],
+ "rules": [
+  "SW-ITP-1",
+  "SW-ITP-2",
+  "SW-ITP-3",
+  "SW-WO-1",
+  "SW-WO-2",
+  "SW-WO-6"
+ ]
+}

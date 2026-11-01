@@ -49,6 +49,7 @@ export function formatFraction(inches: number, denom = 16): string {
 
 /** SW-U-2: display a length. Over 24 in as feet-inches; else inches. Thin dimensions as decimals. */
 export function formatLength(inches: number): string {
+  if (inches < 0) return `-${formatLength(-inches)}`;                       // coordinates south or west of the datum
   if (inches >= 24) {
     const ft = Math.floor(inches / 12);
     const rem = inches - ft * 12;

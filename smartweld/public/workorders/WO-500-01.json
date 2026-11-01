@@ -1,0 +1,245 @@
+{
+ "number": "WO-500-01",
+ "title": "Replace 3 supports on 8\"-P150-FL-2009",
+ "area": "A500",
+ "areaName": "Pipe rack",
+ "type": "SP",
+ "typeName": "Pipe support replacement",
+ "priority": 3,
+ "issuedBy": "Facility owner (demonstration)",
+ "notice": "DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.",
+ "reason": "Corroded shoes and guides on the flare header.",
+ "scope": [
+  "Support 8\"-P150-FL-2009 temporarily either side of each support location.",
+  "Cut out guide 8\"-P150-FL-2009/S1 at E 40'-0\"  N 4'-6\"  EL 122'-0\"; prepare surfaces.",
+  "Cut out shoe 8\"-P150-FL-2009/S2 at E 60'-0\"  N 4'-6\"  EL 122'-0\"; prepare surfaces.",
+  "Cut out guide 8\"-P150-FL-2009/S3 at E 80'-0\"  N 4'-6\"  EL 122'-0\"; prepare surfaces.",
+  "Weld new supports to WS-03; VT and MT of every fillet weld (SW-NDE-3).",
+  "Remove temporary supports; check the line rests on every support."
+ ],
+ "lines": [
+  "8\"-P150-FL-2009"
+ ],
+ "isometrics": [
+  "ISO-8\"-P150-FL-2009"
+ ],
+ "items": [
+  "8\"-P150-FL-2009/S1",
+  "8\"-P150-FL-2009/S2",
+  "8\"-P150-FL-2009/S3"
+ ],
+ "isolations": [],
+ "permits": [
+  "General work permit",
+  "Hot work permit"
+ ],
+ "newWelds": [
+  {
+   "id": "WO-500-01-W01",
+   "replaces": "8\"-P150-FL-2009/S1",
+   "line": "8\"-P150-FL-2009",
+   "NPS": 8,
+   "cls": "P150",
+   "wall": 0,
+   "shopField": "field",
+   "ws": "WS-03",
+   "nde": [
+    "VT",
+    "MT"
+   ],
+   "at": {
+    "E": 480,
+    "N": 54,
+    "EL": 1464
+   },
+   "joins": [
+    "8\"-P150-FL-2009/S1",
+    "8\"-P150-FL-2009"
+   ]
+  },
+  {
+   "id": "WO-500-01-W02",
+   "replaces": "8\"-P150-FL-2009/S2",
+   "line": "8\"-P150-FL-2009",
+   "NPS": 8,
+   "cls": "P150",
+   "wall": 0,
+   "shopField": "field",
+   "ws": "WS-03",
+   "nde": [
+    "VT",
+    "MT"
+   ],
+   "at": {
+    "E": 720,
+    "N": 54,
+    "EL": 1464
+   },
+   "joins": [
+    "8\"-P150-FL-2009/S2",
+    "8\"-P150-FL-2009"
+   ]
+  },
+  {
+   "id": "WO-500-01-W03",
+   "replaces": "8\"-P150-FL-2009/S3",
+   "line": "8\"-P150-FL-2009",
+   "NPS": 8,
+   "cls": "P150",
+   "wall": 0,
+   "shopField": "field",
+   "ws": "WS-03",
+   "nde": [
+    "VT",
+    "MT"
+   ],
+   "at": {
+    "E": 960,
+    "N": 54,
+    "EL": 1464
+   },
+   "joins": [
+    "8\"-P150-FL-2009/S3",
+    "8\"-P150-FL-2009"
+   ]
+  }
+ ],
+ "weldSpecs": [
+  "WS-03"
+ ],
+ "nde": [
+  {
+   "method": "VT + MT",
+   "extent": "100 % of attachment fillet welds",
+   "welds": [
+    "WO-500-01-W01",
+    "WO-500-01-W02",
+    "WO-500-01-W03"
+   ],
+   "basis": "SW-NDE-3"
+  }
+ ],
+ "inspections": [],
+ "tmls": [],
+ "test": null,
+ "bolting": [],
+ "parts": [
+  {
+   "description": "GUIDE FOR 8\" LINE (GUIDE-8)",
+   "qty": 1,
+   "replaces": "8\"-P150-FL-2009/S1"
+  },
+  {
+   "description": "SHOE FOR 8\" LINE (SHOE-8)",
+   "qty": 1,
+   "replaces": "8\"-P150-FL-2009/S2"
+  },
+  {
+   "description": "GUIDE FOR 8\" LINE (GUIDE-8)",
+   "qty": 1,
+   "replaces": "8\"-P150-FL-2009/S3"
+  }
+ ],
+ "itp": [
+  {
+   "step": 1,
+   "activity": "Temporary supports in place; line load taken",
+   "reference": "Owner rigging procedure",
+   "acceptance": "Line held at its elevation",
+   "record": "Daily report",
+   "contractor": "H",
+   "owner": "W",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 2,
+   "activity": "Old supports removed; pipe surface inspected under the support",
+   "reference": "SW-NDE-4",
+   "acceptance": "No wall loss beyond the owner's criteria (else raise a spool work order)",
+   "record": "Inspection record",
+   "contractor": "W",
+   "owner": "H",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 3,
+   "activity": "New supports welded to WS-03",
+   "reference": "WS-03, SW-WPS-3",
+   "acceptance": "Fit and leg as specified",
+   "record": "Weld record",
+   "contractor": "S",
+   "owner": "S",
+   "thirdParty": "—",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 4,
+   "activity": "VT and MT of every attachment weld",
+   "reference": "SW-NDE-3",
+   "acceptance": "No crack or lack of fusion",
+   "record": "VT/MT reports",
+   "contractor": "W",
+   "owner": "R",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 5,
+   "activity": "Records complete; work order handed back to operations",
+   "reference": "SW-ITP-3",
+   "acceptance": "All ITP activities accepted or not applicable",
+   "record": "Signed ITP and completion record",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  }
+ ],
+ "rules": [
+  "SW-ITP-1",
+  "SW-ITP-2",
+  "SW-ITP-3",
+  "SW-NDE-3",
+  "SW-PS-12",
+  "SW-WO-1",
+  "SW-WO-2",
+  "SW-WPS-1"
+ ]
+}

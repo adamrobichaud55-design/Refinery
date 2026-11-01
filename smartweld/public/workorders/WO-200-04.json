@@ -1,0 +1,398 @@
+{
+ "number": "WO-200-04",
+ "title": "Ultrasonic thickness survey of 6\"-P300-P-1011",
+ "area": "A200",
+ "areaName": "Vessels and column",
+ "type": "UT",
+ "typeName": "Ultrasonic thickness survey",
+ "priority": 2,
+ "issuedBy": "Facility owner (demonstration)",
+ "notice": "DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.",
+ "reason": "Thickness survey of the column overhead line.",
+ "scope": [
+  "Erect access and remove insulation at the TMLs where fitted (class H300).",
+  "Calibrate the thickness gauge on a step block covering 0.21875 in.",
+  "Take four readings 90° apart at each of the 15 TMLs (SW-WO-6).",
+  "Report readings against the owner's minimum wall; raise a spool replacement for any reading below it."
+ ],
+ "lines": [
+  "6\"-P300-P-1011"
+ ],
+ "isometrics": [
+  "ISO-6\"-P300-P-1011"
+ ],
+ "items": [
+  "6\"-P300-P-1011/el8",
+  "6\"-P300-P-1011/p9",
+  "6\"-P300-P-1011/el10",
+  "6\"-P300-P-1011/p11",
+  "6\"-P300-P-1011/el12",
+  "6\"-P300-P-1011/p13",
+  "6\"-P300-P-1011/T:3/4\"-P300-I-7011",
+  "6\"-P300-P-1011/el16",
+  "6\"-P300-P-1011/el18",
+  "6\"-P300-P-1011/p19",
+  "6\"-P300-P-1011/el20",
+  "6\"-P300-P-1011/p21",
+  "6\"-P300-P-1011/el22",
+  "6\"-P300-P-1011/p23",
+  "6\"-P300-P-1011/el24"
+ ],
+ "isolations": [],
+ "permits": [
+  "General work permit"
+ ],
+ "newWelds": [],
+ "weldSpecs": [],
+ "nde": [],
+ "inspections": [
+  {
+   "id": "WO-200-04-I1",
+   "description": "Ultrasonic thickness at 15 TMLs, four readings each",
+   "criteria": "Nominal wall 0.21875 in; each reading above the owner's minimum wall",
+   "basis": "SW-WO-6"
+  }
+ ],
+ "tmls": [
+  {
+   "id": "WO-200-04-TML01",
+   "item": "6\"-P300-P-1011/el8",
+   "description": "Elbow 6\"-P300-P-1011/el8 extrados",
+   "at": {
+    "E": 822,
+    "N": 299.1924,
+    "EL": 1559.1924
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML02",
+   "item": "6\"-P300-P-1011/p9",
+   "description": "Pipe 6\"-P300-P-1011/p9 mid-length",
+   "at": {
+    "E": 822,
+    "N": 222,
+    "EL": 1560
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML03",
+   "item": "6\"-P300-P-1011/el10",
+   "description": "Elbow 6\"-P300-P-1011/el10 extrados",
+   "at": {
+    "E": 822,
+    "N": 144.8076,
+    "EL": 1559.1924
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML04",
+   "item": "6\"-P300-P-1011/p11",
+   "description": "Pipe 6\"-P300-P-1011/p11 mid-length",
+   "at": {
+    "E": 822,
+    "N": 144,
+    "EL": 1500
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML05",
+   "item": "6\"-P300-P-1011/el12",
+   "description": "Elbow 6\"-P300-P-1011/el12 extrados",
+   "at": {
+    "E": 822,
+    "N": 143.1924,
+    "EL": 1440.8076
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML06",
+   "item": "6\"-P300-P-1011/p13",
+   "description": "Pipe 6\"-P300-P-1011/p13 mid-length",
+   "at": {
+    "E": 822,
+    "N": 72.5,
+    "EL": 1440
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML07",
+   "item": "6\"-P300-P-1011/T:3/4\"-P300-I-7011",
+   "description": "Tee 6\"-P300-P-1011/T:3/4\"-P300-I-7011 branch outlet",
+   "at": {
+    "E": 822,
+    "N": 6,
+    "EL": 1440
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML08",
+   "item": "6\"-P300-P-1011/el16",
+   "description": "Elbow 6\"-P300-P-1011/el16 extrados",
+   "at": {
+    "E": 822,
+    "N": -11.1924,
+    "EL": 1439.1924
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML09",
+   "item": "6\"-P300-P-1011/el18",
+   "description": "Elbow 6\"-P300-P-1011/el18 extrados",
+   "at": {
+    "E": 822.8076,
+    "N": -12,
+    "EL": 1404.8076
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML10",
+   "item": "6\"-P300-P-1011/p19",
+   "description": "Pipe 6\"-P300-P-1011/p19 mid-length",
+   "at": {
+    "E": 945,
+    "N": -12,
+    "EL": 1404
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML11",
+   "item": "6\"-P300-P-1011/el20",
+   "description": "Elbow 6\"-P300-P-1011/el20 extrados",
+   "at": {
+    "E": 1067.1924,
+    "N": -12,
+    "EL": 1403.1924
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML12",
+   "item": "6\"-P300-P-1011/p21",
+   "description": "Pipe 6\"-P300-P-1011/p21 mid-length",
+   "at": {
+    "E": 1068,
+    "N": -12,
+    "EL": 1377
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML13",
+   "item": "6\"-P300-P-1011/el22",
+   "description": "Elbow 6\"-P300-P-1011/el22 extrados",
+   "at": {
+    "E": 1068,
+    "N": -11.1924,
+    "EL": 1350.8076
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML14",
+   "item": "6\"-P300-P-1011/p23",
+   "description": "Pipe 6\"-P300-P-1011/p23 mid-length",
+   "at": {
+    "E": 1068,
+    "N": 144,
+    "EL": 1350
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  },
+  {
+   "id": "WO-200-04-TML15",
+   "item": "6\"-P300-P-1011/el24",
+   "description": "Elbow 6\"-P300-P-1011/el24 extrados",
+   "at": {
+    "E": 1068,
+    "N": 299.1924,
+    "EL": 1349.1924
+   },
+   "readings": [
+    "0°",
+    "90°",
+    "180°",
+    "270°"
+   ],
+   "nominalWall": 0.2188
+  }
+ ],
+ "test": null,
+ "bolting": [],
+ "parts": [],
+ "itp": [
+  {
+   "step": 1,
+   "activity": "Gauge calibrated on a step block; operator qualification checked",
+   "reference": "Owner UT procedure",
+   "acceptance": "Calibration within the owner's tolerance",
+   "record": "Calibration record",
+   "contractor": "R",
+   "owner": "R",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 2,
+   "activity": "Readings at 15 TMLs",
+   "reference": "SW-WO-6",
+   "acceptance": "Four readings per TML recorded",
+   "record": "Thickness record per TML",
+   "contractor": "S",
+   "owner": "S",
+   "thirdParty": "S",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 3,
+   "activity": "Results reviewed against the owner's minimum wall",
+   "reference": "Owner integrity procedure",
+   "acceptance": "Every reading above the minimum, or a work order raised",
+   "record": "Signed thickness report",
+   "contractor": "R",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  },
+  {
+   "step": 4,
+   "activity": "Insulation and access reinstated; work order handed back",
+   "reference": "SW-ITP-3",
+   "acceptance": "All activities accepted",
+   "record": "Signed ITP",
+   "contractor": "H",
+   "owner": "H",
+   "thirdParty": "R",
+   "status": "open",
+   "signoffs": {
+    "contractor": null,
+    "owner": null,
+    "thirdParty": null
+   },
+   "date": null,
+   "remark": ""
+  }
+ ],
+ "rules": [
+  "SW-ITP-1",
+  "SW-ITP-2",
+  "SW-ITP-3",
+  "SW-WO-1",
+  "SW-WO-2",
+  "SW-WO-6"
+ ]
+}
