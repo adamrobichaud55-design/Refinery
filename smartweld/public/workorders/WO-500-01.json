@@ -1,6 +1,61 @@
 {
  "number": "WO-500-01",
  "title": "Replace 3 supports on 8\"-P150-FL-2009",
+ "primaryAsset": {
+  "tag": "rack-bent:720",
+  "kind": "structure",
+  "description": "Pipe rack bent at E 60'-0\"",
+  "at": {
+   "E": 720,
+   "N": 0,
+   "EL": 1464
+  }
+ },
+ "assets": [
+  {
+   "tag": "rack-bent:720",
+   "kind": "structure",
+   "description": "Pipe rack bent at E 60'-0\"",
+   "at": {
+    "E": 720,
+    "N": 0,
+    "EL": 1464
+   }
+  },
+  {
+   "tag": "8\"-P150-FL-2009/S1",
+   "kind": "support",
+   "description": "GUIDE FOR 8\" LINE (GUIDE-8)",
+   "line": "8\"-P150-FL-2009",
+   "at": {
+    "E": 480,
+    "N": 54,
+    "EL": 1464
+   }
+  },
+  {
+   "tag": "8\"-P150-FL-2009/S2",
+   "kind": "support",
+   "description": "SHOE FOR 8\" LINE (SHOE-8)",
+   "line": "8\"-P150-FL-2009",
+   "at": {
+    "E": 720,
+    "N": 54,
+    "EL": 1464
+   }
+  },
+  {
+   "tag": "8\"-P150-FL-2009/S3",
+   "kind": "support",
+   "description": "GUIDE FOR 8\" LINE (GUIDE-8)",
+   "line": "8\"-P150-FL-2009",
+   "at": {
+    "E": 960,
+    "N": 54,
+    "EL": 1464
+   }
+  }
+ ],
  "area": "A500",
  "areaName": "Pipe rack",
  "type": "SP",
@@ -240,6 +295,7 @@
   "SW-PS-12",
   "SW-WO-1",
   "SW-WO-2",
+  "SW-WO-7",
   "SW-WPS-1"
  ]
 }

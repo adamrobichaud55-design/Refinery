@@ -11,7 +11,7 @@ export function workOrderFiles(m: PipingModel, gt: GroundTruth, eq: GTEquipment[
   const f = new Map<string, string>(), lineGT = new Map(gt.lines.map(l => [l.header.line, l] as const));
   for (const l of gt.lines) f.set(`isometrics/${isoFileName(l.header.line)}`, makeIsometric(l));
   const wos = buildWorkOrders(m, gt, eq);
-  f.set('workorders/index.json', JSON.stringify({ notice: wos[0]?.notice, workOrders: wos.map(w => ({ number: w.number, title: w.title, area: w.area, areaName: w.areaName, type: w.type, typeName: w.typeName, priority: w.priority, equipment: w.equipment ?? null, lines: w.lines, items: w.items.length, newWelds: w.newWelds.length, itp: w.itp.length, holdPoints: w.itp.filter(a => [a.contractor, a.owner, a.thirdParty].includes('H')).length, file: `${w.number}.json`, pack: `${w.number}.html`, pdf: `pdf/${w.number}.pdf` })) }, r4, 1));
+  f.set('workorders/index.json', JSON.stringify({ notice: wos[0]?.notice, workOrders: wos.map(w => ({ number: w.number, title: w.title, area: w.area, areaName: w.areaName, type: w.type, typeName: w.typeName, priority: w.priority, equipment: w.equipment ?? null, primaryAsset: { tag: w.primaryAsset.tag, kind: w.primaryAsset.kind, description: w.primaryAsset.description }, assets: w.assets.length, lines: w.lines, items: w.items.length, newWelds: w.newWelds.length, itp: w.itp.length, holdPoints: w.itp.filter(a => [a.contractor, a.owner, a.thirdParty].includes('H')).length, file: `${w.number}.json`, pack: `${w.number}.html`, pdf: `pdf/${w.number}.pdf` })) }, r4, 1));
   for (const w of wos) {
     f.set(`workorders/${w.number}.json`, JSON.stringify(w, r4, 1));
     f.set(`workorders/${w.number}.html`, woHtml(w, woIsometrics(w, lineGT)));

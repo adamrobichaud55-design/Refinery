@@ -1,6 +1,61 @@
 {
  "number": "WO-100-02",
  "title": "Bench test relief valve 3\"-P150-RV-4002/2 on T-101-N3",
+ "primaryAsset": {
+  "tag": "T-101",
+  "kind": "equipment",
+  "description": "T-101 tank 12' dia × 22' high",
+  "at": {
+   "E": 300,
+   "N": 318,
+   "EL": 1206
+  }
+ },
+ "assets": [
+  {
+   "tag": "T-101",
+   "kind": "equipment",
+   "description": "T-101 tank 12' dia × 22' high",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1206
+   }
+  },
+  {
+   "tag": "3\"-P150-RV-4002/2",
+   "kind": "item",
+   "description": "VALVE, PRESSURE SAFETY VALVE 3\" P150 INLET × 4\" P150 OUTLET",
+   "line": "3\"-P150-RV-4002",
+   "at": {
+    "E": 264,
+    "N": 318,
+    "EL": 1488
+   }
+  },
+  {
+   "tag": "3\"-P150-RV-4002/1",
+   "kind": "item",
+   "description": "GASKET 3\" P150 COMPRESSED SHEET",
+   "line": "3\"-P150-RV-4002",
+   "at": {
+    "E": 264,
+    "N": 318,
+    "EL": 1480.3938
+   }
+  },
+  {
+   "tag": "4\"-P150-FL-4005/A1",
+   "kind": "item",
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "line": "4\"-P150-FL-4005",
+   "at": {
+    "E": 264,
+    "N": 310.0812,
+    "EL": 1488
+   }
+  }
+ ],
  "area": "A100",
  "areaName": "Tank farm",
  "type": "PR",
@@ -250,6 +305,8 @@
   "SW-TEST-3",
   "SW-WO-1",
   "SW-WO-2",
-  "SW-WO-5"
- ]
+  "SW-WO-5",
+  "SW-WO-7"
+ ],
+ "equipment": "T-101"
 }

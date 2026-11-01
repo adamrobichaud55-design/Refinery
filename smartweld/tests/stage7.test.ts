@@ -7,7 +7,8 @@ import type { PipingModel } from '../src/generator/piping';
 import type { GTLine, GTEquipment, GroundTruth } from '../src/generator/groundtruth';
 import { buildWorkOrders, DEMO_NOTICE, type WorkOrder } from '../src/generator/workorders';
 import { workOrderFiles, isoFileName } from '../src/generator/woexport';
-import { areaOfLine, areaOfEquipment } from '../src/generator/areas';
+import { areaOfLine, areaOfEquipment, equipmentAt } from '../src/generator/areas';
+import { generateInterior } from '../src/generator/interior';
 import { CLASS_PRESSURE, pipeDims } from '../src/catalogue';
 
 const pub = new URL('../public/', import.meta.url);
@@ -79,6 +80,29 @@ describe('stage 7 — work orders (SW-WO-*)', () => {
   });
   it('every work order and pack carries the demonstration notice', () => {
     for (const w of wos) { expect(w.notice).toBe(DEMO_NOTICE); expect(readFileSync(new URL(`workorders/${w.number}.html`, pub), 'utf8')).toContain('DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE'); }
+  });
+});
+
+describe('stage 7 — work orders tied to the plant model (SW-WO-7)', () => {
+  const interiorTags = new Set(generateInterior().instances.flatMap(p => p.tags));
+  const items = new Set(lines.flatMap(l => [...l.items.map(i => i.tag), ...l.welds.map(x => x.tag), ...l.supports.map(x => x.tag)]));
+  const eqTags = new Set(eq.map(e => e.tag)), nozzles = new Set(eq.flatMap(e => e.nozzles.map(n => n.id)));
+  it('every asset of every work order is an object of the 3D model', () => {
+    for (const w of wos) for (const a of [w.primaryAsset, ...w.assets]) {
+      const ok = a.kind === 'equipment' ? eqTags.has(a.tag) : a.kind === 'motor' ? eqTags.has(a.tag.replace(/-M$/, '')) : a.kind === 'nozzle' ? nozzles.has(a.tag) : a.kind === 'structure' ? interiorTags.has(a.tag) : items.has(a.tag);
+      expect(ok, `${w.number} ${a.kind} ${a.tag}`).toBe(true);
+    }
+  });
+  it('every affected item, isolation point and replaced weld is among the assets', () => {
+    for (const w of wos) { const t = new Set(w.assets.map(a => a.tag)); for (const x of [...w.items, ...w.isolations.filter(i => i.kind !== 'electrical').map(i => i.tag), ...w.newWelds.filter(n => n.ws !== 'WS-03').map(n => n.replaces)]) expect(t.has(x), `${w.number} ${x}`).toBe(true); }
+  });
+  it('the primary asset is the equipment worked on or served, else the nearest rack bent', () => {
+    for (const w of wos) {
+      const L = w.lines[0] ? lineGT.get(w.lines[0]) : undefined, served = L ? equipmentAt(L.header.from) ?? equipmentAt(L.header.to) : null;
+      if (w.type === 'PO' || w.type === 'VI' || w.type === 'XB' || w.type === 'TI') expect(w.primaryAsset.kind).toBe('equipment');
+      else if (served) expect(w.primaryAsset.tag, w.number).toBe(served);
+      else expect(w.primaryAsset.tag, w.number).toMatch(/^rack-bent:\d+$/);
+    }
   });
 });
 

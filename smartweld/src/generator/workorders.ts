@@ -9,7 +9,8 @@
 import { CLASS_PRESSURE, pipeDims, STUD_FU, elbowRadius, type PipeClass } from '../catalogue';
 import { partFromKey, type PipingModel } from './piping';
 import { plantText, type GroundTruth, type GTLine, type GTItem, type GTEquipment, type PlantPt } from './groundtruth';
-import { AREAS, areaOfLine, areaOfEquipment } from './areas';
+import { AREAS, areaOfLine, areaOfEquipment, equipmentAt } from './areas';
+import { DEMO_LAYOUT } from './interior';
 import { formatLength } from '../core/units';
 
 export const DEMO_NOTICE = 'DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER\'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.';
@@ -51,9 +52,11 @@ export type Point = 'H' | 'W' | 'R' | 'S' | '—';
 export interface ITPActivity { step: number; activity: string; reference: string; acceptance: string; record: string; contractor: Point; owner: Point; thirdParty: Point; status: 'open'; signoffs: { contractor: null; owner: null; thirdParty: null }; date: null; remark: '' }
 export interface Isolation { seq: number; kind: 'valve' | 'blind' | 'electrical' | 'equipment' | 'removal'; tag: string; line: string; description: string; at?: PlantPt }
 export interface NewWeld { id: string; replaces: string; line: string; NPS: number; cls: PipeClass; wall: number; shopField: 'shop' | 'field'; ws: string; nde: string[]; at: PlantPt; joins: [string, string] }
+export interface Asset { tag: string; kind: 'equipment' | 'motor' | 'nozzle' | 'item' | 'weld' | 'support' | 'structure'; description: string; line?: string; at: PlantPt }
 export interface TML { id: string; item: string; description: string; at: PlantPt; readings: string[]; nominalWall?: number }
 export interface WorkOrder {
   number: string; title: string; area: string; areaName: string; type: TaskType; typeName: string; priority: number; issuedBy: string; notice: string;
+  primaryAsset: Asset; assets: Asset[];
   reason: string; scope: string[]; equipment?: string; lines: string[]; isometrics: string[]; items: string[];
   isolations: Isolation[]; permits: string[]; newWelds: NewWeld[]; weldSpecs: string[];
   nde: { method: string; extent: string; welds: string[]; basis: string }[]; inspections: { id: string; description: string; criteria: string; basis: string }[];
@@ -84,11 +87,11 @@ const fmtP = (q: PlantPt) => plantText(q);
 
 export function buildWorkOrders(m: PipingModel, gt: GroundTruth, equipment: GTEquipment[]): WorkOrder[] {
   const lineGT = new Map(gt.lines.map(l => [l.header.line, l] as const)), eqMap = new Map(equipment.map(e => [e.tag, e] as const));
-  const seq = new Map<string, number>(), out: WorkOrder[] = [];
+  const seq = new Map<string, number>(), out: WorkOrder[] = [], assetIndex = indexAssets(gt, equipment);
   for (const w of OWNER_WORK_LIST) {
     const n = (seq.get(w.area) ?? 0) + 1; seq.set(w.area, n);
     const number = `WO-${w.area.slice(1)}-${String(n).padStart(2, '0')}`;
-    const wo: WorkOrder = { number, title: '', area: w.area, areaName: AREAS[w.area].name, type: w.type, typeName: TASK_NAMES[w.type], priority: w.priority, issuedBy: 'Facility owner (demonstration)', notice: DEMO_NOTICE,
+    const wo: WorkOrder = { number, title: '', primaryAsset: null as unknown as Asset, assets: [], area: w.area, areaName: AREAS[w.area].name, type: w.type, typeName: TASK_NAMES[w.type], priority: w.priority, issuedBy: 'Facility owner (demonstration)', notice: DEMO_NOTICE,
       reason: w.reason, scope: [], lines: [], isometrics: [], items: [], isolations: [], permits: ['General work permit'], newWelds: [], weldSpecs: [], nde: [], inspections: [], tmls: [], test: null, bolting: [], parts: [], itp: [], rules: ['SW-WO-1', 'SW-WO-2', 'SW-ITP-1', 'SW-ITP-2', 'SW-ITP-3'] };
     const l = w.line ? lineGT.get(w.line) : undefined, e = w.equipment ? eqMap.get(w.equipment) : undefined;
     if (w.line && !l) throw new Error(`${number}: line ${w.line} not in the plant`);
@@ -108,6 +111,7 @@ export function buildWorkOrders(m: PipingModel, gt: GroundTruth, equipment: GTEq
       case 'SP': supportReplacement(ctx); break;
       case 'UT': thicknessSurvey(ctx); break;
     }
+    tieToAssets(wo, l, e, assetIndex);
     wo.isometrics = wo.lines.map(x => `ISO-${x}`);
     wo.weldSpecs = [...new Set(wo.newWelds.map(x => x.ws))];
     wo.rules = [...new Set(wo.rules)].sort();
@@ -130,9 +134,9 @@ function isolateAround(wo: WorkOrder, l: GTLine, i0: number, i1: number) {
       return;
     }
     const end = step < 0 ? l.header.from : l.header.to;
-    push(wo, end.startsWith('tap ') ? 'valve' : 'equipment', end, l.header.line, end.startsWith('tap ')
-      ? `No valve on this side within the line: isolate the parent line ${end.slice(4)} or depressure it under the shutdown isolation`
-      : `Line end at ${end}: the equipment is out of service, drained and isolated under the shutdown isolation`);
+    if (end.startsWith('tap ')) push(wo, 'equipment', `${end.slice(4)}/T:${l.header.line}`, end.slice(4), `No valve on this side within the line: isolate or depressure the parent line ${end.slice(4)} at its tee under the shutdown isolation`);
+    else if (end.startsWith('PSV on ')) push(wo, 'equipment', end.slice(7), l.header.line, `Line end at the relief valve on ${end.slice(7)}: the equipment is out of service and depressured under the shutdown isolation`);
+    else push(wo, 'equipment', end, l.header.line, `Line end at nozzle ${end}: the equipment is out of service, drained and isolated under the shutdown isolation`);
   };
   side(i0 - 1, -1); side(i1 + 1, 1);
   wo.rules.push('SW-WO-3');
@@ -383,3 +387,39 @@ function thicknessSurvey({ wo, l }: Ctx) {
   wo.rules.push('SW-WO-6');
 }
 
+
+// ---- SW-WO-7: every work order tied to objects of the 3D model ---------------------------------------------------
+type AssetIndex = Map<string, Asset>;
+/** every taggable object of the model: equipment, motors, nozzles, line items, welds, supports, rack bents */
+function indexAssets(gt: GroundTruth, equipment: GTEquipment[]): AssetIndex {
+  const ix: AssetIndex = new Map(), rk = DEMO_LAYOUT.rack;
+  for (const e of equipment) {
+    ix.set(e.tag, { tag: e.tag, kind: 'equipment', description: e.description, at: e.origin });
+    if (e.type === 'Centrifugal pump') ix.set(`${e.tag}-M`, { tag: `${e.tag}-M`, kind: 'motor', description: `Motor of ${e.tag}`, at: e.origin });
+    for (const n of e.nozzles) ix.set(n.id, { tag: n.id, kind: 'nozzle', description: `Nozzle ${n.id} (${n.service}, ${n.NPS}" ${n.cls}) on ${e.tag}`, at: n.face });
+  }
+  for (const l of gt.lines) {
+    for (const i of l.items) ix.set(i.tag, { tag: i.tag, kind: 'item', description: i.description, line: l.header.line, at: i.centre });
+    for (const w of l.welds) ix.set(w.tag, { tag: w.tag, kind: 'weld', description: `Butt weld ${w.NPS}" ${w.cls} (${w.shopField})`, line: l.header.line, at: w.at });
+    for (const sp of l.supports) ix.set(sp.tag, { tag: sp.tag, kind: 'support', description: sp.description, line: l.header.line, at: sp.at });
+  }
+  for (let x = rk.x0; x <= rk.x1 + 1e-6; x += rk.bentSpacing) ix.set(`rack-bent:${x}`, { tag: `rack-bent:${x}`, kind: 'structure', description: `Pipe rack bent at E ${formatLength(x)}`, at: { E: x, N: 0, EL: 1200 + rk.tiers[rk.tiers.length - 1] } });
+  return ix;
+}
+function tieToAssets(wo: WorkOrder, l: GTLine | undefined, e: GTEquipment | undefined, ix: AssetIndex) {
+  const get = (tag: string): Asset => { const a = ix.get(tag); if (!a) throw new Error(`${wo.number}: ${tag} is not an object of the plant model (SW-WO-7)`); return a; };
+  const tags = [...wo.items, ...wo.isolations.filter(i => i.kind !== 'electrical' || ix.has(i.tag)).map(i => i.tag), ...wo.newWelds.filter(x => x.ws !== 'WS-03').map(x => x.replaces), ...wo.tmls.map(t => t.item)];
+  if (e) wo.primaryAsset = get(e.tag);
+  else {
+    const eqTag = l ? (equipmentAt(l.header.from) ?? equipmentAt(l.header.to)) : null;
+    if (eqTag) { wo.primaryAsset = get(eqTag); wo.equipment = eqTag; }
+    else {                                                                                   // rack lines: the nearest bent to the work
+      const pts = wo.items.map(t => get(t).at), cx = pts.reduce((a, p) => a + p.E, 0) / Math.max(1, pts.length), rk = DEMO_LAYOUT.rack;
+      const x = Math.min(rk.x1, Math.max(rk.x0, rk.x0 + Math.round((cx - rk.x0) / rk.bentSpacing) * rk.bentSpacing));
+      wo.primaryAsset = get(`rack-bent:${x}`);
+    }
+  }
+  const seen = new Set<string>(); wo.assets = [];
+  for (const t of [wo.primaryAsset.tag, ...tags]) if (!seen.has(t)) { seen.add(t); wo.assets.push(get(t)); }
+  wo.rules.push('SW-WO-7');
+}

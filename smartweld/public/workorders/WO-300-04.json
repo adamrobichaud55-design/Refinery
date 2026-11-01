@@ -1,6 +1,61 @@
 {
  "number": "WO-300-04",
  "title": "Bench test relief valve 3\"-P300-RV-4001/2 on D-101-N3",
+ "primaryAsset": {
+  "tag": "D-101",
+  "kind": "equipment",
+  "description": "D-101 horizontal vessel 60\" ID × 180\"",
+  "at": {
+   "E": 1008,
+   "N": -300,
+   "EL": 1290
+  }
+ },
+ "assets": [
+  {
+   "tag": "D-101",
+   "kind": "equipment",
+   "description": "D-101 horizontal vessel 60\" ID × 180\"",
+   "at": {
+    "E": 1008,
+    "N": -300,
+    "EL": 1290
+   }
+  },
+  {
+   "tag": "3\"-P300-RV-4001/2",
+   "kind": "item",
+   "description": "VALVE, PRESSURE SAFETY VALVE 3\" P300 INLET × 4\" P150 OUTLET",
+   "line": "3\"-P300-RV-4001",
+   "at": {
+    "E": 1128,
+    "N": -300,
+    "EL": 1338
+   }
+  },
+  {
+   "tag": "3\"-P300-RV-4001/1",
+   "kind": "item",
+   "description": "GASKET 3\" P300 COMPRESSED SHEET",
+   "line": "3\"-P300-RV-4001",
+   "at": {
+    "E": 1128,
+    "N": -300,
+    "EL": 1330.3938
+   }
+  },
+  {
+   "tag": "4\"-P150-FL-4004/A1",
+   "kind": "item",
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "line": "4\"-P150-FL-4004",
+   "at": {
+    "E": 1128,
+    "N": -292.0813,
+    "EL": 1338
+   }
+  }
+ ],
  "area": "A300",
  "areaName": "Exchangers and drum",
  "type": "PR",
@@ -250,6 +305,8 @@
   "SW-TEST-3",
   "SW-WO-1",
   "SW-WO-2",
-  "SW-WO-5"
- ]
+  "SW-WO-5",
+  "SW-WO-7"
+ ],
+ "equipment": "D-101"
 }

@@ -1,6 +1,82 @@
 {
  "number": "WO-400-03",
  "title": "Replace VALVE, SWING CHECK 3\" P300 (4\"-P300-P-1008/A2)",
+ "primaryAsset": {
+  "tag": "P-102A",
+  "kind": "equipment",
+  "description": "P-102A centrifugal pump",
+  "at": {
+   "E": 1968,
+   "N": -222,
+   "EL": 1209
+  }
+ },
+ "assets": [
+  {
+   "tag": "P-102A",
+   "kind": "equipment",
+   "description": "P-102A centrifugal pump",
+   "at": {
+    "E": 1968,
+    "N": -222,
+    "EL": 1209
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1008/A2",
+   "kind": "item",
+   "description": "VALVE, SWING CHECK 3\" P300",
+   "line": "4\"-P300-P-1008",
+   "at": {
+    "E": 1968,
+    "N": -198,
+    "EL": 1248.1094
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1008/A1",
+   "kind": "item",
+   "description": "GASKET 3\" P300 COMPRESSED SHEET",
+   "line": "4\"-P300-P-1008",
+   "at": {
+    "E": 1968,
+    "N": -198,
+    "EL": 1240.9063
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1008/A4",
+   "kind": "item",
+   "description": "GASKET 3\" P300 COMPRESSED SHEET",
+   "line": "4\"-P300-P-1008",
+   "at": {
+    "E": 1968,
+    "N": -198,
+    "EL": 1255.3125
+   }
+  },
+  {
+   "tag": "P-102A-D",
+   "kind": "nozzle",
+   "description": "Nozzle P-102A-D (discharge, 3\" P300) on P-102A",
+   "at": {
+    "E": 1968,
+    "N": -198,
+    "EL": 1240.8438
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1008/A5",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
+   "line": "4\"-P300-P-1008",
+   "at": {
+    "E": 1968,
+    "N": -198,
+    "EL": 1262.1563
+   }
+  }
+ ],
  "area": "A400",
  "areaName": "Pumps",
  "type": "VR",
@@ -34,7 +110,7 @@
    "kind": "equipment",
    "tag": "P-102A-D",
    "line": "4\"-P300-P-1008",
-   "description": "Line end at P-102A-D: the equipment is out of service, drained and isolated under the shutdown isolation"
+   "description": "Line end at nozzle P-102A-D: the equipment is out of service, drained and isolated under the shutdown isolation"
   },
   {
    "seq": 2,
@@ -261,6 +337,8 @@
   "SW-WO-1",
   "SW-WO-2",
   "SW-WO-3",
-  "SW-WO-5"
- ]
+  "SW-WO-5",
+  "SW-WO-7"
+ ],
+ "equipment": "P-102A"
 }

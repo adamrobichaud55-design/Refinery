@@ -1514,6 +1514,14 @@ No code, standard or published procedure was used, and none should be inferred.
   and inlets, so a regular grid with every nozzle catches both. The minimum acceptable wall is the
   facility owner's (stated per work order, not by SmartWeld).
 
+- `SW-WO-7` Every work order is tied to objects that exist in the 3D plant model: a primary asset
+  — the equipment the work is on; for work on a line, the equipment the line serves (at its start,
+  else at its end); for a line with no equipment (rack headers, hose stations), the pipe-rack
+  bent nearest the work (`rack-bent:{x}`) — and an asset list naming every affected item, weld,
+  support, isolation point and equipment by its tag, with its description and plant location.
+  Every tag must resolve to an object of the model. Reason: a work order the crew cannot find in
+  the plant, or that names something that is not there, cannot be planned or closed.
+
 ## 47. Welding specification (`SW-WPS-*`) — demonstration
 
 - `SW-WPS-1` One SmartWeld welding specification per joint family, numbered `WS-{nn}`:

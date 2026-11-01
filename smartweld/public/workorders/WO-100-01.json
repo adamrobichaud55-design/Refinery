@@ -1,6 +1,228 @@
 {
  "number": "WO-100-01",
  "title": "Internal inspection of tank T-101",
+ "primaryAsset": {
+  "tag": "T-101",
+  "kind": "equipment",
+  "description": "T-101 tank 12' dia × 22' high",
+  "at": {
+   "E": 300,
+   "N": 318,
+   "EL": 1206
+  }
+ },
+ "assets": [
+  {
+   "tag": "T-101",
+   "kind": "equipment",
+   "description": "T-101 tank 12' dia × 22' high",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1206
+   }
+  },
+  {
+   "tag": "6\"-P150-P-1001/A2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 6\" P150",
+   "line": "6\"-P150-P-1001",
+   "at": {
+    "E": 386.9375,
+    "N": 318,
+    "EL": 1218
+   }
+  },
+  {
+   "tag": "T-101-N1",
+   "kind": "nozzle",
+   "description": "Nozzle T-101-N1 (outlet, 6\" P150) on T-101",
+   "at": {
+    "E": 379.7813,
+    "N": 318,
+    "EL": 1218
+   }
+  },
+  {
+   "tag": "4\"-P150-P-6038/2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P150",
+   "line": "4\"-P150-P-6038",
+   "at": {
+    "E": 300,
+    "N": 270,
+    "EL": 1486.8125
+   }
+  },
+  {
+   "tag": "T-101-N2",
+   "kind": "nozzle",
+   "description": "Nozzle T-101-N2 (inlet, 4\" P150) on T-101",
+   "at": {
+    "E": 300,
+    "N": 270,
+    "EL": 1479.0625
+   }
+  },
+  {
+   "tag": "3\"-P150-RV-4002/2",
+   "kind": "item",
+   "description": "VALVE, PRESSURE SAFETY VALVE 3\" P150 INLET × 4\" P150 OUTLET",
+   "line": "3\"-P150-RV-4002",
+   "at": {
+    "E": 264,
+    "N": 318,
+    "EL": 1488
+   }
+  },
+  {
+   "tag": "1\"-P150-V-6030/2",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 1\" P150",
+   "line": "1\"-P150-V-6030",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1486.4719
+   }
+  },
+  {
+   "tag": "T-101-N4",
+   "kind": "nozzle",
+   "description": "Nozzle T-101-N4 (vent, 1\" P150) on T-101",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1479.6563
+   }
+  },
+  {
+   "tag": "1\"-P150-D-6031/2",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 1\" P150",
+   "line": "1\"-P150-D-6031",
+   "at": {
+    "E": 216.0281,
+    "N": 318,
+    "EL": 1212
+   }
+  },
+  {
+   "tag": "T-101-N5",
+   "kind": "nozzle",
+   "description": "Nozzle T-101-N5 (drain, 1\" P150) on T-101",
+   "at": {
+    "E": 222.8438,
+    "N": 318,
+    "EL": 1212
+   }
+  },
+  {
+   "tag": "1\"-P150-N-3015/B2",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 1\" P150",
+   "line": "1\"-P150-N-3015",
+   "at": {
+    "E": 336,
+    "N": 318,
+    "EL": 1484.2219
+   }
+  },
+  {
+   "tag": "T-101-N6",
+   "kind": "nozzle",
+   "description": "Nozzle T-101-N6 (nitrogen, 1\" P150) on T-101",
+   "at": {
+    "E": 336,
+    "N": 318,
+    "EL": 1477.4063
+   }
+  },
+  {
+   "tag": "2\"-P300-LS-3007/B2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P300",
+   "line": "2\"-P300-LS-3007",
+   "at": {
+    "E": 216.625,
+    "N": 318,
+    "EL": 1230
+   }
+  },
+  {
+   "tag": "T-101-N7",
+   "kind": "nozzle",
+   "description": "Nozzle T-101-N7 (steam in, 2\" P300) on T-101",
+   "at": {
+    "E": 222.125,
+    "N": 318,
+    "EL": 1230
+   }
+  },
+  {
+   "tag": "2\"-P150-SC-3008/A2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P150",
+   "line": "2\"-P150-SC-3008",
+   "at": {
+    "E": 216.625,
+    "N": 318,
+    "EL": 1254
+   }
+  },
+  {
+   "tag": "T-101-N8",
+   "kind": "nozzle",
+   "description": "Nozzle T-101-N8 (condensate out, 2\" P150) on T-101",
+   "at": {
+    "E": 222.125,
+    "N": 318,
+    "EL": 1254
+   }
+  },
+  {
+   "tag": "3/4\"-P150-I-6032/2",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 3/4\" P150",
+   "line": "3/4\"-P150-I-6032",
+   "at": {
+    "E": 216.2719,
+    "N": 318,
+    "EL": 1284
+   }
+  },
+  {
+   "tag": "T-101-N9",
+   "kind": "nozzle",
+   "description": "Nozzle T-101-N9 (instrument, 0.75\" P150) on T-101",
+   "at": {
+    "E": 222.9688,
+    "N": 318,
+    "EL": 1284
+   }
+  },
+  {
+   "tag": "3/4\"-P150-I-6033/2",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 3/4\" P150",
+   "line": "3/4\"-P150-I-6033",
+   "at": {
+    "E": 216.2719,
+    "N": 318,
+    "EL": 1404
+   }
+  },
+  {
+   "tag": "T-101-N10",
+   "kind": "nozzle",
+   "description": "Nozzle T-101-N10 (instrument, 0.75\" P150) on T-101",
+   "at": {
+    "E": 222.9688,
+    "N": 318,
+    "EL": 1404
+   }
+  }
+ ],
  "area": "A100",
  "areaName": "Tank farm",
  "type": "TI",
@@ -747,7 +969,8 @@
   "SW-WO-2",
   "SW-WO-3",
   "SW-WO-5",
-  "SW-WO-6"
+  "SW-WO-6",
+  "SW-WO-7"
  ],
  "equipment": "T-101"
 }

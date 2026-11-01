@@ -1,6 +1,94 @@
 {
  "number": "WO-100-04",
  "title": "Remake flanged joint 2\"-P300-LS-3007/A2 on 2\"-P300-LS-3007",
+ "primaryAsset": {
+  "tag": "T-101",
+  "kind": "equipment",
+  "description": "T-101 tank 12' dia × 22' high",
+  "at": {
+   "E": 300,
+   "N": 318,
+   "EL": 1206
+  }
+ },
+ "assets": [
+  {
+   "tag": "T-101",
+   "kind": "equipment",
+   "description": "T-101 tank 12' dia × 22' high",
+   "at": {
+    "E": 300,
+    "N": 318,
+    "EL": 1206
+   }
+  },
+  {
+   "tag": "2\"-P300-LS-3007/A2",
+   "kind": "item",
+   "description": "GASKET 2\" P300 COMPRESSED SHEET",
+   "line": "2\"-P300-LS-3007",
+   "at": {
+    "E": 264,
+    "N": -12,
+    "EL": 1485.25
+   }
+  },
+  {
+   "tag": "2\"-P300-LS-3007/A1",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 2\" P300 RAISED FACE",
+   "line": "2\"-P300-LS-3007",
+   "at": {
+    "E": 264,
+    "N": -12,
+    "EL": 1483.0938
+   }
+  },
+  {
+   "tag": "2\"-P300-LS-3007/A3",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P300",
+   "line": "2\"-P300-LS-3007",
+   "at": {
+    "E": 264,
+    "N": -12,
+    "EL": 1490.6875
+   }
+  },
+  {
+   "tag": "6\"-P300-LS-2003/T:2\"-P300-LS-3007",
+   "kind": "item",
+   "description": "TEE REDUCING 6\" × 2\" P300",
+   "line": "6\"-P300-LS-2003",
+   "at": {
+    "E": 264,
+    "N": -12,
+    "EL": 1476
+   }
+  },
+  {
+   "tag": "2\"-P300-LS-3007/B2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P300",
+   "line": "2\"-P300-LS-3007",
+   "at": {
+    "E": 216.625,
+    "N": 318,
+    "EL": 1230
+   }
+  },
+  {
+   "tag": "2\"-P300-LS-3007/B5",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 2\" P300 RAISED FACE",
+   "line": "2\"-P300-LS-3007",
+   "at": {
+    "E": 209.0313,
+    "N": 318,
+    "EL": 1230
+   }
+  }
+ ],
  "area": "A100",
  "areaName": "Tank farm",
  "type": "GJ",
@@ -30,10 +118,10 @@
  "isolations": [
   {
    "seq": 1,
-   "kind": "valve",
-   "tag": "tap 6\"-P300-LS-2003",
-   "line": "2\"-P300-LS-3007",
-   "description": "No valve on this side within the line: isolate the parent line 6\"-P300-LS-2003 or depressure it under the shutdown isolation"
+   "kind": "equipment",
+   "tag": "6\"-P300-LS-2003/T:2\"-P300-LS-3007",
+   "line": "6\"-P300-LS-2003",
+   "description": "No valve on this side within the line: isolate or depressure the parent line 6\"-P300-LS-2003 at its tee under the shutdown isolation"
   },
   {
    "seq": 2,
@@ -220,6 +308,8 @@
   "SW-WO-1",
   "SW-WO-2",
   "SW-WO-3",
-  "SW-WO-5"
- ]
+  "SW-WO-5",
+  "SW-WO-7"
+ ],
+ "equipment": "T-101"
 }

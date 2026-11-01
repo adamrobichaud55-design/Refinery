@@ -1,6 +1,104 @@
 {
  "number": "WO-400-02",
  "title": "Overhaul pump P-103B (mechanical seal and bearings)",
+ "primaryAsset": {
+  "tag": "P-103B",
+  "kind": "equipment",
+  "description": "P-103B centrifugal pump",
+  "at": {
+   "E": 2148,
+   "N": -222,
+   "EL": 1209
+  }
+ },
+ "assets": [
+  {
+   "tag": "P-103B",
+   "kind": "equipment",
+   "description": "P-103B centrifugal pump",
+   "at": {
+    "E": 2148,
+    "N": -222,
+    "EL": 1209
+   }
+  },
+  {
+   "tag": "P-103B-M",
+   "kind": "motor",
+   "description": "Motor of P-103B",
+   "at": {
+    "E": 2148,
+    "N": -222,
+    "EL": 1209
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1014/B7",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P300",
+   "line": "4\"-P300-P-1014",
+   "at": {
+    "E": 2148,
+    "N": -159.6875,
+    "EL": 1224
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1014/B5",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 4\" P300 RAISED FACE",
+   "line": "4\"-P300-P-1014",
+   "at": {
+    "E": 2148,
+    "N": -170.1562,
+    "EL": 1224
+   }
+  },
+  {
+   "tag": "3\"-P300-P-1016/A5",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
+   "line": "3\"-P300-P-1016",
+   "at": {
+    "E": 2148,
+    "N": -198,
+    "EL": 1262.1563
+   }
+  },
+  {
+   "tag": "3\"-P300-P-1016/A2",
+   "kind": "item",
+   "description": "VALVE, SWING CHECK 3\" P300",
+   "line": "3\"-P300-P-1016",
+   "at": {
+    "E": 2148,
+    "N": -198,
+    "EL": 1248.1094
+   }
+  },
+  {
+   "tag": "3/4\"-P150-W-3022/A3",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 3/4\" P150",
+   "line": "3/4\"-P150-W-3022",
+   "at": {
+    "E": 2136,
+    "N": -48,
+    "EL": 1483.6969
+   }
+  },
+  {
+   "tag": "3/4\"-P150-W-3022/A6",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 3/4\" P150 RAISED FACE",
+   "line": "3/4\"-P150-W-3022",
+   "at": {
+    "E": 2136,
+    "N": -48,
+    "EL": 1492.6438
+   }
+  }
+ ],
  "area": "A400",
  "areaName": "Pumps",
  "type": "PO",
@@ -326,7 +424,8 @@
   "SW-WO-1",
   "SW-WO-2",
   "SW-WO-3",
-  "SW-WO-5"
+  "SW-WO-5",
+  "SW-WO-7"
  ],
  "equipment": "P-103B"
 }

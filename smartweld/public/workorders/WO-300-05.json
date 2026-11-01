@@ -1,6 +1,83 @@
 {
  "number": "WO-300-05",
  "title": "Replace VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300 (4\"-P300-P-1005/B13)",
+ "primaryAsset": {
+  "tag": "E-101",
+  "kind": "equipment",
+  "description": "E-101 shell-and-tube exchanger 36\" ID × 192\"",
+  "at": {
+   "E": 1338,
+   "N": -300,
+   "EL": 1278
+  }
+ },
+ "assets": [
+  {
+   "tag": "E-101",
+   "kind": "equipment",
+   "description": "E-101 shell-and-tube exchanger 36\" ID × 192\"",
+   "at": {
+    "E": 1338,
+    "N": -300,
+    "EL": 1278
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1005/B13",
+   "kind": "item",
+   "description": "VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300",
+   "line": "4\"-P300-P-1005",
+   "at": {
+    "E": 402,
+    "N": -187.9063,
+    "EL": 1452
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1005/B15",
+   "kind": "item",
+   "description": "GASKET 4\" P300 COMPRESSED SHEET",
+   "line": "4\"-P300-P-1005",
+   "at": {
+    "E": 402,
+    "N": -179.6875,
+    "EL": 1452
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1005/B12",
+   "kind": "item",
+   "description": "GASKET 4\" P300 COMPRESSED SHEET",
+   "line": "4\"-P300-P-1005",
+   "at": {
+    "E": 402,
+    "N": -196.125,
+    "EL": 1452
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1005/B16",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P300",
+   "line": "4\"-P300-P-1005",
+   "at": {
+    "E": 402,
+    "N": -172,
+    "EL": 1452
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1005/B10",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P300",
+   "line": "4\"-P300-P-1005",
+   "at": {
+    "E": 402,
+    "N": -203.8125,
+    "EL": 1452
+   }
+  }
+ ],
  "area": "A300",
  "areaName": "Exchangers and drum",
  "type": "VR",
@@ -278,6 +355,8 @@
   "SW-WO-1",
   "SW-WO-2",
   "SW-WO-3",
-  "SW-WO-5"
- ]
+  "SW-WO-5",
+  "SW-WO-7"
+ ],
+ "equipment": "E-101"
 }

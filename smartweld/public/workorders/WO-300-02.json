@@ -1,6 +1,175 @@
 {
  "number": "WO-300-02",
  "title": "Pull, clean and test the tube bundle of E-103",
+ "primaryAsset": {
+  "tag": "E-103",
+  "kind": "equipment",
+  "description": "E-103 shell-and-tube exchanger 36\" ID × 192\"",
+  "at": {
+   "E": 1044,
+   "N": 300,
+   "EL": 1278
+  }
+ },
+ "assets": [
+  {
+   "tag": "E-103",
+   "kind": "equipment",
+   "description": "E-103 shell-and-tube exchanger 36\" ID × 192\"",
+   "at": {
+    "E": 1044,
+    "N": 300,
+    "EL": 1278
+   }
+  },
+  {
+   "tag": "4\"-P150-CWS-3005/B2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P150",
+   "line": "4\"-P150-CWS-3005",
+   "at": {
+    "E": 1032,
+    "N": 300,
+    "EL": 1311.8125
+   }
+  },
+  {
+   "tag": "E-103-N1",
+   "kind": "nozzle",
+   "description": "Nozzle E-103-N1 (tube in, 4\" P150) on E-103",
+   "at": {
+    "E": 1032,
+    "N": 300,
+    "EL": 1304.0625
+   }
+  },
+  {
+   "tag": "4\"-P150-CWR-3006/A2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P150",
+   "line": "4\"-P150-CWR-3006",
+   "at": {
+    "E": 1032,
+    "N": 300,
+    "EL": 1244.1875
+   }
+  },
+  {
+   "tag": "E-103-N2",
+   "kind": "nozzle",
+   "description": "Nozzle E-103-N2 (tube out, 4\" P150) on E-103",
+   "at": {
+    "E": 1032,
+    "N": 300,
+    "EL": 1251.9375
+   }
+  },
+  {
+   "tag": "6\"-P300-P-1011/B2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 6\" P300",
+   "line": "6\"-P300-P-1011",
+   "at": {
+    "E": 1068,
+    "N": 300,
+    "EL": 1311.4375
+   }
+  },
+  {
+   "tag": "E-103-N3",
+   "kind": "nozzle",
+   "description": "Nozzle E-103-N3 (shell in, 6\" P300) on E-103",
+   "at": {
+    "E": 1068,
+    "N": 300,
+    "EL": 1304.2813
+   }
+  },
+  {
+   "tag": "6\"-P300-P-1012/A2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 6\" P300",
+   "line": "6\"-P300-P-1012",
+   "at": {
+    "E": 1212,
+    "N": 300,
+    "EL": 1244.5625
+   }
+  },
+  {
+   "tag": "E-103-N4",
+   "kind": "nozzle",
+   "description": "Nozzle E-103-N4 (shell out, 6\" P300) on E-103",
+   "at": {
+    "E": 1212,
+    "N": 300,
+    "EL": 1251.7188
+   }
+  },
+  {
+   "tag": "1\"-P150-V-6027/2",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 1\" P150",
+   "line": "1\"-P150-V-6027",
+   "at": {
+    "E": 1200,
+    "N": 300,
+    "EL": 1308.4719
+   }
+  },
+  {
+   "tag": "E-103-N5",
+   "kind": "nozzle",
+   "description": "Nozzle E-103-N5 (vent, 1\" P150) on E-103",
+   "at": {
+    "E": 1200,
+    "N": 300,
+    "EL": 1301.6563
+   }
+  },
+  {
+   "tag": "1\"-P150-D-6028/2",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 1\" P150",
+   "line": "1\"-P150-D-6028",
+   "at": {
+    "E": 1068,
+    "N": 300,
+    "EL": 1247.5281
+   }
+  },
+  {
+   "tag": "E-103-N6",
+   "kind": "nozzle",
+   "description": "Nozzle E-103-N6 (drain, 1\" P150) on E-103",
+   "at": {
+    "E": 1068,
+    "N": 300,
+    "EL": 1254.3438
+   }
+  },
+  {
+   "tag": "3/4\"-P300-I-6029/2",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 3/4\" P300",
+   "line": "3/4\"-P300-I-6029",
+   "at": {
+    "E": 1140,
+    "N": 330.2281,
+    "EL": 1278
+   }
+  },
+  {
+   "tag": "E-103-N7",
+   "kind": "nozzle",
+   "description": "Nozzle E-103-N7 (instrument, 0.75\" P300) on E-103",
+   "at": {
+    "E": 1140,
+    "N": 323.5313,
+    "EL": 1278
+   }
+  }
+ ],
  "area": "A300",
  "areaName": "Exchangers and drum",
  "type": "XB",
@@ -617,7 +786,8 @@
   "SW-WO-2",
   "SW-WO-3",
   "SW-WO-5",
-  "SW-WO-6"
+  "SW-WO-6",
+  "SW-WO-7"
  ],
  "equipment": "E-103"
 }

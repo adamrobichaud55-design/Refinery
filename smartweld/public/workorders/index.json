@@ -10,6 +10,12 @@
    "typeName": "Tank internal inspection",
    "priority": 2,
    "equipment": "T-101",
+   "primaryAsset": {
+    "tag": "T-101",
+    "kind": "equipment",
+    "description": "T-101 tank 12' dia × 22' high"
+   },
+   "assets": 20,
    "lines": [
     "6\"-P150-P-1001",
     "4\"-P150-P-6038",
@@ -37,7 +43,13 @@
    "type": "PR",
    "typeName": "Relief valve bench test and reinstatement",
    "priority": 1,
-   "equipment": null,
+   "equipment": "T-101",
+   "primaryAsset": {
+    "tag": "T-101",
+    "kind": "equipment",
+    "description": "T-101 tank 12' dia × 22' high"
+   },
+   "assets": 4,
    "lines": [
     "3\"-P150-RV-4002",
     "4\"-P150-FL-4005"
@@ -58,7 +70,13 @@
    "type": "SR",
    "typeName": "Spool replacement",
    "priority": 2,
-   "equipment": null,
+   "equipment": "T-101",
+   "primaryAsset": {
+    "tag": "T-101",
+    "kind": "equipment",
+    "description": "T-101 tank 12' dia × 22' high"
+   },
+   "assets": 20,
    "lines": [
     "6\"-P150-P-1001"
    ],
@@ -78,7 +96,13 @@
    "type": "GJ",
    "typeName": "Flanged joint remake",
    "priority": 1,
-   "equipment": null,
+   "equipment": "T-101",
+   "primaryAsset": {
+    "tag": "T-101",
+    "kind": "equipment",
+    "description": "T-101 tank 12' dia × 22' high"
+   },
+   "assets": 7,
    "lines": [
     "2\"-P300-LS-3007"
    ],
@@ -98,7 +122,13 @@
    "type": "VR",
    "typeName": "Valve replacement in kind",
    "priority": 3,
-   "equipment": null,
+   "equipment": "T-102",
+   "primaryAsset": {
+    "tag": "T-102",
+    "kind": "equipment",
+    "description": "T-102 tank 12' dia × 22' high"
+   },
+   "assets": 7,
    "lines": [
     "2\"-P150-SC-3010"
    ],
@@ -119,6 +149,12 @@
    "typeName": "Internal inspection",
    "priority": 2,
    "equipment": "C-101",
+   "primaryAsset": {
+    "tag": "C-101",
+    "kind": "equipment",
+    "description": "C-101 vertical vessel 48\" ID × 240\" T/T"
+   },
+   "assets": 21,
    "lines": [
     "4\"-P300-P-1010",
     "6\"-P300-P-1011",
@@ -148,6 +184,12 @@
    "typeName": "Internal inspection",
    "priority": 2,
    "equipment": "V-101",
+   "primaryAsset": {
+    "tag": "V-101",
+    "kind": "equipment",
+    "description": "V-101 vertical vessel 72\" ID × 216\" T/T"
+   },
+   "assets": 17,
    "lines": [
     "4\"-P300-P-1005",
     "6\"-P300-P-1006",
@@ -174,7 +216,13 @@
    "type": "VR",
    "typeName": "Valve replacement in kind",
    "priority": 2,
-   "equipment": null,
+   "equipment": "V-102",
+   "primaryAsset": {
+    "tag": "V-102",
+    "kind": "equipment",
+    "description": "V-102 vertical vessel 72\" ID × 216\" T/T"
+   },
+   "assets": 7,
    "lines": [
     "4\"-P300-P-1021"
    ],
@@ -194,7 +242,13 @@
    "type": "UT",
    "typeName": "Ultrasonic thickness survey",
    "priority": 2,
-   "equipment": null,
+   "equipment": "C-101",
+   "primaryAsset": {
+    "tag": "C-101",
+    "kind": "equipment",
+    "description": "C-101 vertical vessel 48\" ID × 240\" T/T"
+   },
+   "assets": 16,
    "lines": [
     "6\"-P300-P-1011"
    ],
@@ -214,7 +268,13 @@
    "type": "SR",
    "typeName": "Spool replacement",
    "priority": 2,
-   "equipment": null,
+   "equipment": "C-101",
+   "primaryAsset": {
+    "tag": "C-101",
+    "kind": "equipment",
+    "description": "C-101 vertical vessel 48\" ID × 240\" T/T"
+   },
+   "assets": 22,
    "lines": [
     "6\"-P300-P-1017"
    ],
@@ -235,6 +295,12 @@
    "typeName": "Exchanger bundle pull, clean and tube-side test",
    "priority": 2,
    "equipment": "E-101",
+   "primaryAsset": {
+    "tag": "E-101",
+    "kind": "equipment",
+    "description": "E-101 shell-and-tube exchanger 36\" ID × 192\""
+   },
+   "assets": 15,
    "lines": [
     "4\"-P300-P-1003",
     "4\"-P300-P-1005",
@@ -261,6 +327,12 @@
    "typeName": "Exchanger bundle pull, clean and tube-side test",
    "priority": 2,
    "equipment": "E-103",
+   "primaryAsset": {
+    "tag": "E-103",
+    "kind": "equipment",
+    "description": "E-103 shell-and-tube exchanger 36\" ID × 192\""
+   },
+   "assets": 15,
    "lines": [
     "4\"-P150-CWS-3005",
     "4\"-P150-CWR-3006",
@@ -287,6 +359,12 @@
    "typeName": "Internal inspection",
    "priority": 2,
    "equipment": "D-101",
+   "primaryAsset": {
+    "tag": "D-101",
+    "kind": "equipment",
+    "description": "D-101 horizontal vessel 60\" ID × 180\""
+   },
+   "assets": 18,
    "lines": [
     "6\"-P300-P-1012",
     "4\"-P300-P-1013",
@@ -313,7 +391,13 @@
    "type": "PR",
    "typeName": "Relief valve bench test and reinstatement",
    "priority": 1,
-   "equipment": null,
+   "equipment": "D-101",
+   "primaryAsset": {
+    "tag": "D-101",
+    "kind": "equipment",
+    "description": "D-101 horizontal vessel 60\" ID × 180\""
+   },
+   "assets": 4,
    "lines": [
     "3\"-P300-RV-4001",
     "4\"-P150-FL-4004"
@@ -334,7 +418,13 @@
    "type": "VR",
    "typeName": "Valve replacement in kind",
    "priority": 3,
-   "equipment": null,
+   "equipment": "E-101",
+   "primaryAsset": {
+    "tag": "E-101",
+    "kind": "equipment",
+    "description": "E-101 shell-and-tube exchanger 36\" ID × 192\""
+   },
+   "assets": 6,
    "lines": [
     "4\"-P300-P-1005"
    ],
@@ -354,7 +444,13 @@
    "type": "SR",
    "typeName": "Spool replacement",
    "priority": 3,
-   "equipment": null,
+   "equipment": "E-102",
+   "primaryAsset": {
+    "tag": "E-102",
+    "kind": "equipment",
+    "description": "E-102 shell-and-tube exchanger 36\" ID × 192\""
+   },
+   "assets": 16,
    "lines": [
     "4\"-P150-CWS-3003"
    ],
@@ -375,6 +471,12 @@
    "typeName": "Pump overhaul",
    "priority": 3,
    "equipment": "P-101A",
+   "primaryAsset": {
+    "tag": "P-101A",
+    "kind": "equipment",
+    "description": "P-101A centrifugal pump"
+   },
+   "assets": 8,
    "lines": [
     "6\"-P150-P-1001",
     "4\"-P300-P-1003",
@@ -397,6 +499,12 @@
    "typeName": "Pump overhaul",
    "priority": 3,
    "equipment": "P-103B",
+   "primaryAsset": {
+    "tag": "P-103B",
+    "kind": "equipment",
+    "description": "P-103B centrifugal pump"
+   },
+   "assets": 8,
    "lines": [
     "4\"-P300-P-1014",
     "3\"-P300-P-1016",
@@ -418,7 +526,13 @@
    "type": "VR",
    "typeName": "Valve replacement in kind",
    "priority": 2,
-   "equipment": null,
+   "equipment": "P-102A",
+   "primaryAsset": {
+    "tag": "P-102A",
+    "kind": "equipment",
+    "description": "P-102A centrifugal pump"
+   },
+   "assets": 6,
    "lines": [
     "4\"-P300-P-1008"
    ],
@@ -438,7 +552,13 @@
    "type": "GJ",
    "typeName": "Flanged joint remake",
    "priority": 2,
-   "equipment": null,
+   "equipment": "P-103A",
+   "primaryAsset": {
+    "tag": "P-103A",
+    "kind": "equipment",
+    "description": "P-103A centrifugal pump"
+   },
+   "assets": 7,
    "lines": [
     "3\"-P300-P-1015"
    ],
@@ -458,7 +578,13 @@
    "type": "SR",
    "typeName": "Spool replacement",
    "priority": 2,
-   "equipment": null,
+   "equipment": "P-104A",
+   "primaryAsset": {
+    "tag": "P-104A",
+    "kind": "equipment",
+    "description": "P-104A centrifugal pump"
+   },
+   "assets": 32,
    "lines": [
     "4\"-P300-P-1019",
     "3/4\"-P300-I-7019",
@@ -481,6 +607,12 @@
    "typeName": "Pipe support replacement",
    "priority": 3,
    "equipment": null,
+   "primaryAsset": {
+    "tag": "rack-bent:720",
+    "kind": "structure",
+    "description": "Pipe rack bent at E 60'-0\""
+   },
+   "assets": 4,
    "lines": [
     "8\"-P150-FL-2009"
    ],
@@ -501,6 +633,12 @@
    "typeName": "Ultrasonic thickness survey",
    "priority": 2,
    "equipment": null,
+   "primaryAsset": {
+    "tag": "rack-bent:1200",
+    "kind": "structure",
+    "description": "Pipe rack bent at E 100'-0\""
+   },
+   "assets": 24,
    "lines": [
     "6\"-P300-LS-2003"
    ],
@@ -521,6 +659,12 @@
    "typeName": "Spool replacement",
    "priority": 3,
    "equipment": null,
+   "primaryAsset": {
+    "tag": "rack-bent:720",
+    "kind": "structure",
+    "description": "Pipe rack bent at E 60'-0\""
+   },
+   "assets": 16,
    "lines": [
     "1\"-P300-HS-5013"
    ],
@@ -541,6 +685,12 @@
    "typeName": "Valve replacement in kind",
    "priority": 3,
    "equipment": null,
+   "primaryAsset": {
+    "tag": "rack-bent:720",
+    "kind": "structure",
+    "description": "Pipe rack bent at E 60'-0\""
+   },
+   "assets": 7,
    "lines": [
     "1\"-P150-HS-5011"
    ],

@@ -1,6 +1,93 @@
 {
  "number": "WO-200-03",
  "title": "Replace VALVE, GATE, WEDGE, OS&Y 4\" P300 (4\"-P300-P-1021/A2)",
+ "primaryAsset": {
+  "tag": "V-102",
+  "kind": "equipment",
+  "description": "V-102 vertical vessel 72\" ID × 216\" T/T",
+  "at": {
+   "E": 642,
+   "N": -300,
+   "EL": 1208.25
+  }
+ },
+ "assets": [
+  {
+   "tag": "V-102",
+   "kind": "equipment",
+   "description": "V-102 vertical vessel 72\" ID × 216\" T/T",
+   "at": {
+    "E": 642,
+    "N": -300,
+    "EL": 1208.25
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1021/A2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P300",
+   "line": "4\"-P300-P-1021",
+   "at": {
+    "E": 642,
+    "N": -248.1875,
+    "EL": 1308
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1021/A1",
+   "kind": "item",
+   "description": "GASKET 4\" P300 COMPRESSED SHEET",
+   "line": "4\"-P300-P-1021",
+   "at": {
+    "E": 642,
+    "N": -255.875,
+    "EL": 1308
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1021/A4",
+   "kind": "item",
+   "description": "GASKET 4\" P300 COMPRESSED SHEET",
+   "line": "4\"-P300-P-1021",
+   "at": {
+    "E": 642,
+    "N": -240.5,
+    "EL": 1308
+   }
+  },
+  {
+   "tag": "V-102-N2",
+   "kind": "nozzle",
+   "description": "Nozzle V-102-N2 (outlet, 4\" P300) on V-102",
+   "at": {
+    "E": 642,
+    "N": -255.9375,
+    "EL": 1308
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1021/B2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P300",
+   "line": "4\"-P300-P-1021",
+   "at": {
+    "E": 528,
+    "N": 270,
+    "EL": 1486.8125
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1021/B5",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 4\" P300 RAISED FACE",
+   "line": "4\"-P300-P-1021",
+   "at": {
+    "E": 528,
+    "N": 270,
+    "EL": 1497.2813
+   }
+  }
+ ],
  "area": "A200",
  "areaName": "Vessels and column",
  "type": "VR",
@@ -34,7 +121,7 @@
    "kind": "equipment",
    "tag": "V-102-N2",
    "line": "4\"-P300-P-1021",
-   "description": "Line end at V-102-N2: the equipment is out of service, drained and isolated under the shutdown isolation"
+   "description": "Line end at nozzle V-102-N2: the equipment is out of service, drained and isolated under the shutdown isolation"
   },
   {
    "seq": 2,
@@ -261,6 +348,8 @@
   "SW-WO-1",
   "SW-WO-2",
   "SW-WO-3",
-  "SW-WO-5"
- ]
+  "SW-WO-5",
+  "SW-WO-7"
+ ],
+ "equipment": "V-102"
 }

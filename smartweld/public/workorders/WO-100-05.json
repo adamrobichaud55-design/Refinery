@@ -1,6 +1,93 @@
 {
  "number": "WO-100-05",
  "title": "Replace VALVE, GATE, WEDGE, OS&Y 2\" P150 (2\"-P150-SC-3010/A2)",
+ "primaryAsset": {
+  "tag": "T-102",
+  "kind": "equipment",
+  "description": "T-102 tank 12' dia × 22' high",
+  "at": {
+   "E": 528,
+   "N": 318,
+   "EL": 1206
+  }
+ },
+ "assets": [
+  {
+   "tag": "T-102",
+   "kind": "equipment",
+   "description": "T-102 tank 12' dia × 22' high",
+   "at": {
+    "E": 528,
+    "N": 318,
+    "EL": 1206
+   }
+  },
+  {
+   "tag": "2\"-P150-SC-3010/A2",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P150",
+   "line": "2\"-P150-SC-3010",
+   "at": {
+    "E": 444.625,
+    "N": 318,
+    "EL": 1254
+   }
+  },
+  {
+   "tag": "2\"-P150-SC-3010/A1",
+   "kind": "item",
+   "description": "GASKET 2\" P150 COMPRESSED SHEET",
+   "line": "2\"-P150-SC-3010",
+   "at": {
+    "E": 450.0625,
+    "N": 318,
+    "EL": 1254
+   }
+  },
+  {
+   "tag": "2\"-P150-SC-3010/A4",
+   "kind": "item",
+   "description": "GASKET 2\" P150 COMPRESSED SHEET",
+   "line": "2\"-P150-SC-3010",
+   "at": {
+    "E": 439.1875,
+    "N": 318,
+    "EL": 1254
+   }
+  },
+  {
+   "tag": "T-102-N8",
+   "kind": "nozzle",
+   "description": "Nozzle T-102-N8 (condensate out, 2\" P150) on T-102",
+   "at": {
+    "E": 450.125,
+    "N": 318,
+    "EL": 1254
+   }
+  },
+  {
+   "tag": "2\"-P150-SC-3010/B3",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 2\" P150",
+   "line": "2\"-P150-SC-3010",
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1482.1875
+   }
+  },
+  {
+   "tag": "2\"-P150-SC-3010/B6",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 2\" P150 RAISED FACE",
+   "line": "2\"-P150-SC-3010",
+   "at": {
+    "E": 408,
+    "N": -24,
+    "EL": 1489.7813
+   }
+  }
+ ],
  "area": "A100",
  "areaName": "Tank farm",
  "type": "VR",
@@ -34,7 +121,7 @@
    "kind": "equipment",
    "tag": "T-102-N8",
    "line": "2\"-P150-SC-3010",
-   "description": "Line end at T-102-N8: the equipment is out of service, drained and isolated under the shutdown isolation"
+   "description": "Line end at nozzle T-102-N8: the equipment is out of service, drained and isolated under the shutdown isolation"
   },
   {
    "seq": 2,
@@ -261,6 +348,8 @@
   "SW-WO-1",
   "SW-WO-2",
   "SW-WO-3",
-  "SW-WO-5"
- ]
+  "SW-WO-5",
+  "SW-WO-7"
+ ],
+ "equipment": "T-102"
 }

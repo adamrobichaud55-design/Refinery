@@ -26,11 +26,13 @@ export function woHtml(wo: WorkOrder, isos: Map<string, string>): string {
     <h1>${esc(wo.number)} — ${esc(wo.title)}</h1>
     <table class="kv"><tr><td>Area</td><td>${esc(wo.area)} ${esc(wo.areaName)}</td><td>Task</td><td>${esc(wo.type)} ${esc(wo.typeName)}</td></tr>
     <tr><td>Priority</td><td>${wo.priority} (${['', 'safety', 'integrity', 'reliability'][wo.priority]})</td><td>Issued by</td><td>${esc(wo.issuedBy)}</td></tr>
+    <tr><td>Primary asset</td><td colspan="3"><b>${esc(wo.primaryAsset.tag)}</b> — ${esc(wo.primaryAsset.description)} — ${esc(plantText(wo.primaryAsset.at))}</td></tr>
     <tr><td>Equipment</td><td>${esc(wo.equipment ?? '—')}</td><td>Lines</td><td>${esc(wo.lines.join(', '))}</td></tr>
     <tr><td>Isometrics</td><td colspan="3">${esc(wo.isometrics.join(', '))}</td></tr>
     <tr><td>Permits</td><td colspan="3">${esc(wo.permits.join(', '))}</td></tr></table>
     <h2>Reason</h2><p>${esc(wo.reason)}</p><h2>Scope of work</h2><ol>${wo.scope.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
     <p class="small">Affected items: ${esc(wo.items.join(', '))}</p><p class="small">Rules: ${esc(wo.rules.join(', '))}</p></section>`);
+  sec.push(`<section><h2>Assets in the plant model (SW-WO-7)</h2>${table(['Tag', 'Kind', 'Description', 'Line', 'Location'], wo.assets.map(x => [x.tag, x.kind, x.description, x.line ?? '', plantText(x.at)]))}</section>`);
   if (wo.isolations.length) sec.push(`<section><h2>Isolation list (SW-WO-3)</h2>${table(['#', 'Kind', 'Tag', 'Line', 'Action', 'Location', 'Fitted ✓', 'Removed ✓'], wo.isolations.map(i => [i.seq, i.kind, i.tag, i.line, i.description, i.at ? plantText(i.at) : '', '', '']))}</section>`);
   if (wo.parts.length) sec.push(`<section><h2>Parts</h2>${table(['Description', 'Qty', 'Replaces'], wo.parts.map(p => [p.description, p.qty, p.replaces ?? '']))}</section>`);
   if (wo.newWelds.length) sec.push(`<section><h2>New welds (SW-WO-4)</h2>${table(['Weld', 'Replaces', 'Line', 'Size', 'Wall', 'Shop/field', 'Spec', 'NDE', 'Location', 'Welder', 'Date'], wo.newWelds.map(w => [w.id, w.replaces, w.line, `${w.NPS}" ${w.cls}`, w.wall ? `${w.wall} in` : '—', w.shopField, w.ws, w.nde.join(' + '), plantText(w.at), '', '']))}</section>`);

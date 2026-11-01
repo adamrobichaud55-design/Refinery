@@ -274,10 +274,18 @@ async function showWorkOrder(m: NonNullable<typeof pipingModel>, number: string)
   if (!box.isEmpty()) { const c = box.getCenter(new THREE.Vector3()), r = Math.max(150, box.getSize(new THREE.Vector3()).length() * 0.9); lookFrom([c.x + r * 0.6, Math.min(c.y + r * 0.5, 340), c.z + r * 0.75], [c.x, c.y, c.z]); }
   const comp = loadCompletion(wo);
   const render = () => {
-    const el = document.getElementById('pickinfo'); if (!el) return;
+    let el = document.getElementById('woinfo');
+    if (!el) { const pi = document.getElementById('pickinfo'); if (!pi) return; el = document.createElement('div'); el.id = 'woinfo'; pi.after(el); }   // clicked items show above the work order
     el.innerHTML = woReport(wo, comp) + '<hr>';
     el.querySelectorAll<HTMLInputElement | HTMLSelectElement>('[data-i]').forEach(inp => inp.addEventListener('change', () => {
       const a = comp.activities[Number(inp.dataset.i)] as unknown as Record<string, string>; a[inp.dataset.f!] = inp.value; saveCompletion(comp); render();
+    }));
+    el.querySelectorAll<HTMLAnchorElement>('a.asset').forEach(link => link.addEventListener('click', ev => {   // SW-WO-7: find the asset in the 3D model
+      ev.preventDefault(); const { tag, kind, line } = link.dataset as { tag: string; kind: string; line: string };
+      if (kind === 'equipment' || kind === 'motor') { showEquipment(tag.replace(/-M$/, '')); return; }
+      if (kind === 'nozzle') { showEquipment(tag.split('-').slice(0, 2).join('-')); return; }
+      if (kind === 'structure') { const n = Number(tag.split(':')[1]); lookFrom([n + 160, 300, 260], [n, 230, 0]); return; }
+      showItem({ tag, line }, true);
     }));
     document.getElementById('wo-download')!.addEventListener('click', () => {
       const blob = new Blob([JSON.stringify({ ...comp, title: wo.title, notice: wo.notice, itp: wo.itp.map((x, i) => ({ ...x, ...comp.activities[i] })) }, null, 1)], { type: 'application/json' });

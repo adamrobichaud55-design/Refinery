@@ -1,6 +1,94 @@
 {
  "number": "WO-500-04",
  "title": "Replace VALVE, BALL, FLOATING 1\" P150 (1\"-P150-HS-5011/A3)",
+ "primaryAsset": {
+  "tag": "rack-bent:720",
+  "kind": "structure",
+  "description": "Pipe rack bent at E 60'-0\"",
+  "at": {
+   "E": 720,
+   "N": 0,
+   "EL": 1464
+  }
+ },
+ "assets": [
+  {
+   "tag": "rack-bent:720",
+   "kind": "structure",
+   "description": "Pipe rack bent at E 60'-0\"",
+   "at": {
+    "E": 720,
+    "N": 0,
+    "EL": 1464
+   }
+  },
+  {
+   "tag": "1\"-P150-HS-5011/A3",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 1\" P150",
+   "line": "1\"-P150-HS-5011",
+   "at": {
+    "E": 750,
+    "N": -48,
+    "EL": 1483.5031
+   }
+  },
+  {
+   "tag": "1\"-P150-HS-5011/A2",
+   "kind": "item",
+   "description": "GASKET 1\" P150 COMPRESSED SHEET",
+   "line": "1\"-P150-HS-5011",
+   "at": {
+    "E": 750,
+    "N": -48,
+    "EL": 1476.75
+   }
+  },
+  {
+   "tag": "1\"-P150-HS-5011/A5",
+   "kind": "item",
+   "description": "GASKET 1\" P150 COMPRESSED SHEET",
+   "line": "1\"-P150-HS-5011",
+   "at": {
+    "E": 750,
+    "N": -48,
+    "EL": 1490.2563
+   }
+  },
+  {
+   "tag": "3\"-P150-W-2008/T:1\"-P150-HS-5011",
+   "kind": "item",
+   "description": "TEE REDUCING 3\" × 1\" P150",
+   "line": "3\"-P150-W-2008",
+   "at": {
+    "E": 750,
+    "N": -48,
+    "EL": 1470
+   }
+  },
+  {
+   "tag": "1\"-P150-HS-5011/B3",
+   "kind": "item",
+   "description": "VALVE, BALL, FLOATING 1\" P150",
+   "line": "1\"-P150-HS-5011",
+   "at": {
+    "E": 750,
+    "N": 132,
+    "EL": 1250.1281
+   }
+  },
+  {
+   "tag": "1\"-P150-HS-5011/B6",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 1\" P150 RAISED FACE",
+   "line": "1\"-P150-HS-5011",
+   "at": {
+    "E": 750,
+    "N": 132,
+    "EL": 1259.0376
+   }
+  }
+ ],
  "area": "A500",
  "areaName": "Pipe rack",
  "type": "VR",
@@ -31,10 +119,10 @@
  "isolations": [
   {
    "seq": 1,
-   "kind": "valve",
-   "tag": "tap 3\"-P150-W-2008",
-   "line": "1\"-P150-HS-5011",
-   "description": "No valve on this side within the line: isolate the parent line 3\"-P150-W-2008 or depressure it under the shutdown isolation"
+   "kind": "equipment",
+   "tag": "3\"-P150-W-2008/T:1\"-P150-HS-5011",
+   "line": "3\"-P150-W-2008",
+   "description": "No valve on this side within the line: isolate or depressure the parent line 3\"-P150-W-2008 at its tee under the shutdown isolation"
   },
   {
    "seq": 2,
@@ -261,6 +349,7 @@
   "SW-WO-1",
   "SW-WO-2",
   "SW-WO-3",
-  "SW-WO-5"
+  "SW-WO-5",
+  "SW-WO-7"
  ]
 }
