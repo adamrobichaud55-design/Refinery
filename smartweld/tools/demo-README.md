@@ -73,10 +73,10 @@ Each drawing's sheets were copied unchanged into `ISO-*.pdf`, then read and matc
 | `report.md` | The match report, drawing by drawing. |
 | `FIXLIST.md`, `fixlist.json` | Fix list FL-1: every finding as an instruction for the drawings' author (rules for revision 1, acceptance checks, and each change with drawing, sheet, model tag, exact text and model position). |
 
-All 203 lines are covered. Every sheet's bill of materials and pipe length, and every sheet break, agree
-with the model. The findings are drafting points: negative coordinates printed with the minus on the
-feet only ("-12'-6"" for −11'-6"), weld dots without a number, repeated labels, a few labels on the
-neighbouring sheet, and missing FROM/TO labels. In this revision, branch welds are numbered on from the parent line's welds
-(on ISO-P-1002, W11 and W12 are the welds of its two instrument taps). The fix list asks for the
-model's own form instead (I-7031/W1). In the viewer, a line or a clicked item links to its drawing. Each work order lists
-its lines' drawings, and gives each new weld's place on them ("ISO-P-1019 sh 2 W12").
+Revision 1 of the drawings agrees with the model completely, with 0 errors and 0 warnings: all 203
+lines, every title block, bill of materials, pipe length and sheet break, every weld label (1,265, each
+once on the sheet that holds the weld, tap welds by their model tag, e.g. I-7031/W1) and every FROM/TO
+label. It answered fix list FL-1, which the match issued against revision 0. The receipt keeps revision
+0's file hashes. In the viewer, a line or a clicked item links to its drawing. Each work order lists its
+lines' drawings and gives each new weld's place on them ("ISO-P-1019 sh 2 W12"). Its PDF pack ends
+with the sheets that hold the work, attached unchanged.

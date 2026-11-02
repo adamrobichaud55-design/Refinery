@@ -90,18 +90,15 @@ demonstration content — not qualified procedures; the facility owner's procedu
 govern. In the viewer, open a work order from the left list: its items are highlighted, and the
 ITP can be signed off activity by activity (saved in the browser; "Download completion record").
 
-Stage 8 imported drawings: `public/isometrics-imported/` holds the owner's isometric drawings, one
-PDF per drawing (`ISO-*.pdf`, copied unchanged from the received parts), `RECEIPT.json` (each received
-file's SHA-256 and the part and page of every sheet), `index.json` (the drawing for each line, each
-weld's label and sheet, and the findings per drawing), `match.json` (everything read from every
-sheet) and `report.md` (the match report). Every one of the 203 lines is covered; every sheet's bill of
-materials, every pipe length and every sheet break agree with the model. The findings are drafting
-points on the drawings: negative coordinates printed with the minus on the feet only, weld dots
-without a number, repeated labels, a few labels on the neighbouring sheet, and missing FROM/TO
-labels (DESIGN_BASIS.md §53). In the viewer, a line or a clicked item shows its drawing, the weld's
-label and sheet, and the findings; each work order links its lines' drawings, and its new welds
-say where the weld they replace is on them.
-`FIXLIST.md` and `fixlist.json` (fix list FL-1) turn every finding into an instruction for the
-drawings' author: the rules for revision 1, the acceptance checks, and each change with its drawing,
-sheet, model tag, exact text and model position (SW-IMP-7). Re-import the corrected set with
-`python3 -I tools/isomatch.py import <parts…>`; it should report no findings.
+Stage 8 imported drawings: `public/isometrics-imported/` holds the owner's isometric drawings, revision 1:
+one PDF per drawing (`ISO-*.pdf`, copied unchanged from the received parts), `RECEIPT.json` (each received
+file's SHA-256, the part and page of every sheet, and the superseded revision 0's hashes), `index.json` (the
+drawing for each line, each weld's label and sheet, each item's sheet, the findings), `match.json` (everything
+read from every sheet) and `report.md`. Revision 1 agrees with the model completely: all 203 lines, every
+title block, bill, pipe length, sheet break and weld label (1,265, each once on its own sheet), and every
+FROM/TO label — 0 errors, 0 warnings. In the viewer, a line or a clicked item shows its drawing and the
+weld's label and sheet; each work order lists its lines' drawings, says where each replaced weld is on them,
+and its PDF pack attaches the sheets that hold the work.
+`FIXLIST.md` and `fixlist.json` turn every finding into an instruction for the drawings' author
+(SW-IMP-7). Fix list FL-1 (in git history) took revision 0 to revision 1; for revision 1 they state that
+no change is needed. A new revision is received with `python3 -I tools/isomatch.py import <parts…>`.

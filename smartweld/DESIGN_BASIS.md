@@ -1683,7 +1683,8 @@ reported for the drawing's author to resolve.
     of feet can be printed the usual way ("-11'-6"" for −138 in, the sign applying to the whole
     value) or with the sign on the feet only ("-12'-6"" for −138 in). Every point where only one
     reading lies on the centreline decides; the matcher uses the reading the set's decisive points
-    agree on to place the breaks. Rev 0 of the owner's set uses the feet-only form throughout.
+    agree on to place the breaks. Rev 0 of the owner's set uses the feet-only form throughout;
+    revision 1 (answering fix list FL-1) uses the usual form throughout.
     Each value printed in the feet-only form is still reported, because a reader in the field
     takes "-12'-6"" as −150 in. If decisive points disagree, each point is judged on its own and
     every one in the feet-only form is reported.
@@ -1697,7 +1698,7 @@ reported for the drawing's author to resolve.
     as in the model's tag: "I-7001/W1" for `3/4"-P300-I-7001/W1`. Rev 0 of the owner's set instead
     continues the parent's numbering in order along the line (Wn+1…; ISO-P-1002 labels its
     branch welds W11 and W12). Both forms are accepted, and the fix list (SW-IMP-7) asks for the
-    model's form.
+    model's form, which revision 1 uses.
   - Each label must be on the sheet that holds the weld's position. A weld with no label, or a
     label repeated on a second sheet, is reported.
   - Not checked: printed dimension strings (set along the pipe at an angle, so they do not read
@@ -1723,7 +1724,8 @@ reported for the drawing's author to resolve.
   - The list states the rules the corrected set must follow and the acceptance checks. Its
     acceptance is a re-import with no error or warning.
   - Nothing in the model changes. The corrected drawings are a new revision of the same drawing
-    numbers.
+    numbers. On import, the receipt keeps the superseded revision's file hashes. When nothing is
+    left to change, the fix list says so instead of listing changes.
   - The list requires the revision to be made with permissively licensed software and fonts
     only, with no copyleft licence of any kind (the user's instruction of 2026-11-02, P-57).
 
