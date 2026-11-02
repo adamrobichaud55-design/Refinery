@@ -1,8 +1,10 @@
 /**
- * The work-order pack as a PDF, laid out by SmartWeld's own code (DESIGN_BASIS.md §55, SW-PDF-3..5) from the same
- * blocks as the HTML pack (woSections). Replaces printing by a headless browser (SW-LIC-2).
+ * The work-order pack as a PDF, laid out by SmartWeld's own code (DESIGN_BASIS.md §55, SW-PDF-3/5/6) from the same
+ * blocks as the HTML pack (woSections), with the owner's drawing sheets attached unchanged (SW-IMP-8). Replaces
+ * printing by a headless browser (SW-LIC-2).
  */
 import { PdfDoc, hex, type Page, type RGB } from './pdf';
+import { PdfSource } from './import';
 import type { Font } from './ttf';
 import type { Block, Section } from '../generator/wopack';
 
@@ -12,7 +14,8 @@ const BODY = 8, SMALL = 7, H1 = 15, H2 = 10.5, LH = 1.3, PADX = 3, PADY = 2;
 export class Layout {
   readonly doc: PdfDoc; page!: Page; y = 0;
   readonly x0: number; readonly x1: number; readonly top: number; readonly bottom: number;
-  constructor(font: Font, title: string) {
+  private sources = new Map<string, PdfSource>();
+  constructor(font: Font, title: string, readonly attachment?: (file: string) => Uint8Array) {
     this.doc = new PdfDoc(font, title);
     this.x0 = this.doc.margin; this.x1 = this.doc.W - this.doc.margin; this.top = this.doc.margin; this.bottom = this.doc.H - this.doc.margin;
     this.newPage();
@@ -123,76 +126,24 @@ export class Layout {
         break;
       }
       case 'table': this.table(b.head, b.rows); break;
-      case 'svg': drawSvg(this, b.svg); break;
+      case 'attach': {   // the owner's sheets, unchanged (SW-IMP-8, SW-PDF-6)
+        if (!this.attachment) throw new Error('layout: no source for attached drawings');
+        let src = this.sources.get(b.file); if (!src) { src = new PdfSource(this.attachment(b.file), b.file); this.sources.set(b.file, src); }
+        if (this.page.recs.length === 0 && this.doc.pages[this.doc.pages.length - 1] === this.page) this.doc.pages.pop();
+        for (const k of b.sheets) this.doc.attach(src, k - 1, `${b.drawing} sheet ${k} of ${b.of}`);
+        this.newPage(); break;
+      }
     }
   }
-}
-
-// ---- isometric SVG (SW-ISO-1) to PDF drawing (SW-PDF-4) ----------------------------------------------------------------
-const ent = (t: string) => t.replace(/&(quot|amp|lt|gt|apos|#\d+|#x[0-9a-f]+);/gi, (_, e: string) => ({ quot: '"', amp: '&', lt: '<', gt: '>', apos: "'" } as Record<string, string>)[e.toLowerCase()] ?? String.fromCodePoint(e[1] === 'x' || e[1] === 'X' ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10)));
-const attrs = (s: string) => { const a: Record<string, string> = {}; for (const m of s.matchAll(/([\w:-]+)="([^"]*)"/g)) a[m[1]] = ent(m[2]); return a; };
-type Style = Record<string, string>;
-
-export function drawSvg(L: Layout, svg: string) {
-  const vb = /viewBox="0 0 ([\d.]+) ([\d.]+)"/.exec(svg)!, VW = +vb[1], VH = +vb[2];
-  const avail = L.bottom - L.y, k = Math.min(L.width / VW, avail / VH);
-  if (k < 0.5) throw new Error('layout: no room for the isometric');
-  const ox = L.x0 + (L.width - VW * k) / 2, oy = L.y;
-  const css = new Map<string, Style>();
-  for (const m of (/<style>([\s\S]*?)<\/style>/.exec(svg)?.[1] ?? '').matchAll(/\.([\w-]+)\{([^}]*)\}/g)) {
-    const st: Style = {}; for (const d of m[2].split(';')) { const [p, ...v] = d.split(':'); if (p) st[p.trim()] = v.join(':').trim(); } css.set(m[1], st);
-  }
-  const style = (a: Record<string, string>, inherited: Style): Style => {
-    const st: Style = { ...inherited };
-    for (const c of (a.class ?? '').split(/\s+/)) Object.assign(st, css.get(c) ?? {});
-    for (const p of ['fill', 'stroke', 'stroke-width', 'stroke-dasharray', 'text-anchor', 'font']) if (a[p]) st[p] = a[p];
-    return st;
-  };
-  const P = (x: number, y: number, t: [number, number]): [number, number] => [ox + (x + t[0]) * k, oy + (y + t[1]) * k];
-  const stack: { st: Style; t: [number, number] }[] = [{ st: {}, t: [0, 0] }];
-  const body = svg.replace(/<style>[\s\S]*?<\/style>/, '');
-  const re = /<(\/?)(\w+)((?:\s+[\w:-]+="[^"]*")*)\s*(\/?)>([^<]*)/g;
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(body))) {
-    const [, close, tag, at, self, after] = m, top = stack[stack.length - 1];
-    if (close) { if (tag === 'g') stack.pop(); continue; }
-    const a = attrs(at), st = style(a, top.st);
-    let t = top.t;
-    const tr = /translate\(([-\d.]+)[ ,]+([-\d.]+)\)/.exec(a.transform ?? ''); if (tr) t = [t[0] + +tr[1], t[1] + +tr[2]];
-    if (tag === 'g') { if (!self) stack.push({ st, t }); continue; }
-    const fill = st.fill === 'none' ? undefined : hex(st.fill && st.fill.startsWith('#') ? st.fill : '#000000');
-    const stroke = st.stroke && st.stroke !== 'none' ? hex(st.stroke) : undefined;
-    const sw = (st['stroke-width'] ? parseFloat(st['stroke-width']) : 1) * k, dash = st['stroke-dasharray'] ? st['stroke-dasharray'].split(/[ ,]+/).map(v => +v * k) : undefined;
-    const sty = { fill: tag === 'line' || tag === 'polyline' ? (st.fill && st.fill !== 'none' && tag === 'polyline' ? fill : undefined) : fill, stroke, width: sw, dash };
-    if (tag === 'rect') L.doc.rect(L.page, ...P(+a.x, +a.y, t), +a.width * k, +a.height * k, sty);
-    else if (tag === 'line') L.doc.path(L.page, [P(+a.x1, +a.y1, t), P(+a.x2, +a.y2, t)], { ...sty, fill: undefined });
-    else if (tag === 'polyline' || tag === 'polygon') {
-      const pts = a.points.trim().split(/\s+/).map(q => q.split(',').map(Number)).map(([x, y]) => P(x, y, t));
-      L.doc.path(L.page, pts, { ...sty, closed: tag === 'polygon' });
-    } else if (tag === 'circle') L.doc.circle(L.page, ...P(+a.cx, +a.cy, t), +a.r * k, sty);
-    else if (tag === 'ellipse') {
-      const pts: [number, number][] = []; for (let i = 0; i < 36; i++) { const u = (i / 36) * 2 * Math.PI; pts.push(P(+a.cx + +a.rx * Math.cos(u), +a.cy + +a.ry * Math.sin(u), t)); }
-      L.doc.path(L.page, pts, { ...sty, closed: true });
-    }
-    else if (tag !== 'text' && tag !== 'svg') throw new Error(`isometric: SVG element <${tag}> is not drawn by the PDF writer (SW-PDF-4)`);
-    else if (tag === 'text') {
-      const text = ent(after).trim(); if (!text) continue;
-      const f = /(bold\s+)?([\d.]+)px/.exec(st.font ?? '') ?? [null, null, '10'];
-      const size = +f[2]! * k, bold = !!f[1], w = L.doc.width(text, size);
-      const [x, y] = P(+a.x, +a.y, t), anchor = st['text-anchor'] ?? 'start';
-      L.doc.text(L.page, anchor === 'middle' ? x - w / 2 : anchor === 'end' ? x - w : x, y, text, size, { bold, color: fill ?? INK });
-    }
-  }
-  L.y += VH * k;
 }
 
 /** the pack as PDF bytes: the sections, then the notices (SW-PDF-5) */
-export function packPdf(font: Font, title: string, sections: Section[], notices: { demo: string; font: string }): Uint8Array {
-  return packDoc(font, title, sections, notices).save();
+export function packPdf(font: Font, title: string, sections: Section[], notices: { demo: string; font: string }, attachment?: (file: string) => Uint8Array): Uint8Array {
+  return packDoc(font, title, sections, notices, attachment).save();
 }
 /** the laid-out pack, before it is written: its pages' records also draw the previews (SW-REN-2) */
-export function packDoc(font: Font, title: string, sections: Section[], notices: { demo: string; font: string }): PdfDoc {
-  const L = new Layout(font, title);
+export function packDoc(font: Font, title: string, sections: Section[], notices: { demo: string; font: string }, attachment?: (file: string) => Uint8Array): PdfDoc {
+  const L = new Layout(font, title, attachment);
   sections.forEach((s, i) => {
     if (i > 0 && (s.cls === 'itp' || s.cls === 'iso') && L.y > L.top) L.newPage();
     for (const b of s.blocks) L.block(b);

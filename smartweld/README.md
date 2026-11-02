@@ -15,8 +15,8 @@ must accompany any distribution of the viewer. No published dimension tables, st
 | 4     | Pipe, flanges and 16 valve types, all sizes and classes offered (SW-VLV-11) | done |
 | 5     | Piping and routing: 203 lines with fittings, valves, welds and supports; all §40 checks pass | done |
 | 6     | Line classes (8) and ground-truth export: per-item metadata, spools, isometric data, BOM (`public/groundtruth/`) | done |
-| 7     | Equipment metadata; 25 shutdown work orders with isometrics, scope, isolations, demo welding specs, NDE, tests and ITPs (`public/workorders/`, `public/isometrics/`) | done |
-| 8     | The owner's isometric drawings (139 drawings, 240 sheets) imported and matched to the model; linked from the viewer, work orders and demo (`public/isometrics-imported/`) | done |
+| 7     | Equipment metadata; 25 shutdown work orders with scope, isolations, demo welding specs, NDE, tests and ITPs (`public/workorders/`); the generated isometrics of this stage were withdrawn in stage 8 | done |
+| 8     | The owner's isometric drawings (139 drawings, 240 sheets) imported and matched to the model; the project's only isometrics; their sheets are attached to the work-order packs (`public/isometrics-imported/`) | done |
 
 ## Run
 
@@ -28,7 +28,7 @@ npm run dev       # viewer at http://127.0.0.1:5173/
 npm run render     # review images by SmartWeld's own renderer (screenshots/, INDEX.md; about 30 min)
 npm run gen:piping # regenerate public/plant-piping.json (about a minute) after any stage-5 change
 npm run export:gt  # regenerate public/groundtruth/ from the plant piping (about a minute)
-npm run export:wo  # regenerate public/isometrics/ and public/workorders/, PDFs included (seconds)
+npm run export:wo  # regenerate public/workorders/, PDFs with the owner's sheets attached (seconds)
 python3 -I tools/isomatch.py import <parts.pdf…>  # receive the owner's isometric drawings (stage 8)
 python3 -I tools/isomatch.py [--check]            # re-match the committed drawings to the model
 python3 -I tools/isomatch.py --selftest           # prove the fix list clears every finding
@@ -84,7 +84,8 @@ Stage 7 work orders: `public/workorders/index.json` lists the 25 shutdown work o
 each `WO-*.json` holds the scope, affected items, isolation list (valves locked, blinds), parts,
 new welds (each tied to the weld it replaces), welding specification, NDE, inspections and
 thickness locations, test, bolt-up preloads and the ITP; `WO-*.html` and `pdf/WO-*.pdf` are the
-printable packs with the isometrics attached. Welding, NDE and test content is SmartWeld
+printable packs. The PDF pack ends with a table of where the work is on the owner's drawings and
+those drawings' sheets, attached unchanged (SW-IMP-8). Welding, NDE and test content is SmartWeld
 demonstration content — not qualified procedures; the facility owner's procedures and codes
 govern. In the viewer, open a work order from the left list: its items are highlighted, and the
 ITP can be signed off activity by activity (saved in the browser; "Download completion record").

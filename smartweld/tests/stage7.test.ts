@@ -6,7 +6,7 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import type { PipingModel } from '../src/generator/piping';
 import type { GTLine, GTEquipment, GroundTruth } from '../src/generator/groundtruth';
 import { buildWorkOrders, DEMO_NOTICE, type WorkOrder } from '../src/generator/workorders';
-import { workOrderFiles, isoFileName } from '../src/generator/woexport';
+import { workOrderFiles } from '../src/generator/woexport';
 import type { ImportedIndex } from '../src/generator/imported';
 import { areaOfLine, areaOfEquipment, equipmentAt } from '../src/generator/areas';
 import { generateInterior } from '../src/generator/interior';
@@ -107,25 +107,17 @@ describe('stage 7 — work orders tied to the plant model (SW-WO-7)', () => {
   });
 });
 
-describe('stage 7 — isometrics (SW-ISO-1/2)', () => {
-  it('every isometric contains every item, weld and support of its line', () => {
-    for (const L of lines) {
-      const svg = readFileSync(new URL(`isometrics/${isoFileName(L.header.line)}`, pub), 'utf8'), tags = new Set([...svg.matchAll(/data-tag="([^"]*)"/g)].map(x => x[1].replace(/&quot;/g, '"').replace(/&amp;/g, '&')));
-      for (const t of [...L.items.map(i => i.tag), ...L.welds.map(w => w.tag), ...L.supports.map(s => s.tag)]) expect(tags.has(t), `${L.header.line} ${t}`).toBe(true);
-    }
-  });
-});
-
 describe('stage 7 — export', () => {
-  it('the committed work orders, packs and isometrics equal a fresh export; every pack has its PDF', () => {
+  it('the committed work orders and packs equal a fresh export; every pack has its PDF; the generated isometrics are gone (SW-ISO-1 withdrawn)', () => {
     const impPath = new URL('isometrics-imported/index.json', pub), imported = existsSync(impPath) ? JSON.parse(readFileSync(impPath, 'utf8')) as ImportedIndex : undefined;
     const files = workOrderFiles(m, gt, eq, imported);
     for (const [p, c] of files) expect(readFileSync(new URL(p, pub), 'utf8') === c, p).toBe(true);
     for (const w of wos) expect(existsSync(new URL(`workorders/pdf/${w.number}.pdf`, pub)), w.number).toBe(true);
+    expect(existsSync(new URL('isometrics/', pub))).toBe(false);
   });
   it('every stage-7 rule ID used in code is written in DESIGN_BASIS.md', () => {
     const basis = readFileSync(new URL('../DESIGN_BASIS.md', import.meta.url), 'utf8');
-    for (const f of ['generator/workorders.ts', 'generator/isometric.ts', 'generator/wopack.ts', 'generator/woexport.ts', 'generator/areas.ts']) {
+    for (const f of ['generator/workorders.ts', 'generator/wopack.ts', 'generator/woexport.ts', 'generator/areas.ts']) {
       const src = readFileSync(new URL(`../src/${f}`, import.meta.url), 'utf8');
       for (const id of new Set(src.match(/SW-[A-Z]+-\d+[a-z]?/g) ?? [])) expect(basis.includes('`' + id + '`'), `${id} in ${f}`).toBe(true);
     }

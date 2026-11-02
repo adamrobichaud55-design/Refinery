@@ -218,11 +218,11 @@ export const saveCompletion = (c: Completion) => { c.updated = new Date().toISOS
 /** SW-ITP-3: complete when every activity is accepted or not applicable */
 export const progress = (c: Completion) => ({ done: c.activities.filter(a => a.status === 'accepted' || a.status === 'n/a').length, total: c.activities.length, rejected: c.activities.filter(a => a.status === 'rejected').length });
 export function woReport(wo: WorkOrder, c: Completion): string {
-  const p = progress(c), iso = (ln: string) => `isometrics/ISO-${lineFileName(ln).replace(/\.json$/, '.svg')}`;
+  const p = progress(c);
   const opt = (v: Status, cur: Status) => `<option value="${v}"${v === cur ? ' selected' : ''}>${v}</option>`;
   return `<div class="demo-note">${esc(wo.notice)}</div><h2>${esc(wo.number)} — ${esc(wo.title)}</h2>
     <div class="cat">${esc(wo.area)} ${esc(wo.areaName)} · ${esc(wo.typeName)} · priority ${wo.priority} · ${esc(wo.issuedBy)}</div>
-    <p><a href="workorders/${esc(wo.number)}.html" target="_blank">Work order pack (HTML)</a> · <a href="workorders/pdf/${esc(wo.number)}.pdf" target="_blank">PDF</a> · ${wo.lines.map(l => `<a href="${iso(l)}" target="_blank">ISO-${esc(l)}</a>`).join(' · ')}${wo.importedIsometrics?.length ? ` · owner's drawings: ${wo.importedIsometrics.map(r => `<a href="isometrics-imported/${esc(r.file)}" target="_blank">${esc(r.drawing)}</a>`).join(' · ')}` : ''}</p>
+    <p><a href="workorders/${esc(wo.number)}.html" target="_blank">Work order pack (HTML)</a> · <a href="workorders/pdf/${esc(wo.number)}.pdf" target="_blank">PDF</a>${wo.importedIsometrics?.length ? ` · drawings: ${wo.importedIsometrics.map(r => `<a href="isometrics-imported/${esc(r.file)}" target="_blank">${esc(r.drawing)}</a>`).join(' · ')}` : ''}</p>
     <p class="notes"><b>Primary asset:</b> <a href="#" class="asset" data-tag="${esc(wo.primaryAsset.tag)}" data-kind="${wo.primaryAsset.kind}" data-line="${esc(wo.primaryAsset.line ?? '')}">${esc(wo.primaryAsset.tag)}</a> — ${esc(wo.primaryAsset.description)} — ${esc(plantText(wo.primaryAsset.at))}</p>
     <p class="notes"><b>Reason:</b> ${esc(wo.reason)}</p><ol class="notes">${wo.scope.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
     <p class="notes">Orange: affected items · blue: isolation valves and blinds. ${wo.isolations.length} isolations, ${wo.newWelds.length} new welds${wo.weldSpecs.length ? ` (${wo.weldSpecs.join(', ')})` : ''}, ${wo.tmls.length} TMLs${wo.test ? `, test: ${esc(wo.test.kind)}${wo.test.pressure ? ` at ${Math.round(wo.test.pressure)} psi` : ''}` : ''}.</p>

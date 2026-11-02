@@ -110,6 +110,28 @@ describe('stage 8 — links (SW-IMP-6)', () => {
       for (const n of w.newWelds) if (n.ws !== 'WS-03') expect(n.drawingRef, `${w.number} ${n.replaces}`).toMatch(/^ISO-[A-Z]+-\d+ /);
     }
   });
+  it('every work-order pack attaches the owner\'s sheets that hold its work, unchanged (SW-IMP-8, SW-PDF-6)', async () => {
+    const { woSections } = await import('../src/generator/wopack');
+    const { packDoc } = await import('../src/pdf/wopdf');
+    const { parseFont } = await import('../src/pdf/ttf');
+    const { DEMO_NOTICE } = await import('../src/generator/workorders');
+    const font = parseFont(new Uint8Array(readFileSync(new URL('../assets/fonts/DejaVuSans.ttf', import.meta.url))));
+    const att = (f: string) => new Uint8Array(readFileSync(new URL(f, dir)));
+    const wos = readdirSync(new URL('workorders/', pub)).filter(f => /^WO-.*\.json$/.test(f)).map(f => JSON.parse(readFileSync(new URL(`workorders/${f}`, pub), 'utf8')) as WorkOrder);
+    for (const w of wos) {
+      expect(w.isometrics, w.number).toEqual((w.importedIsometrics ?? []).map(r => r.drawing));
+      const secs = woSections(w, idx), attach = secs.flatMap(x => x.blocks).filter(b => b.k === 'attach') as { drawing: string; sheets: number[] }[];
+      expect(attach.map(a => a.drawing), w.number).toEqual(w.isometrics);
+      const tags = [...w.items, ...w.newWelds.filter(n => n.ws !== 'WS-03').map(n => n.replaces), ...w.isolations.map(i => i.tag)];
+      for (const t of tags) {
+        const loc = idx.welds[t] ?? idx.items[t]; if (!loc || !loc.sheet || !w.isometrics.includes(loc.drawing)) continue;
+        expect(attach.find(a => a.drawing === loc.drawing)!.sheets, `${w.number} ${t}`).toContain(loc.sheet);
+      }
+      const doc = packDoc(font, w.number, secs, { demo: DEMO_NOTICE, font: '' }, att), attached = doc.pages.filter(p => p.attached);
+      expect(attached.length, w.number).toBe(attach.reduce((n, a) => n + a.sheets.length, 0));
+      expect(doc.pages.some(p => !p.attached && p.recs.length === 0), `${w.number} empty page`).toBe(false);
+    }
+  }, 120000);
   it('every stage-8 rule ID used in code is written in DESIGN_BASIS.md', () => {
     const basis = readFileSync(new URL('../DESIGN_BASIS.md', import.meta.url), 'utf8');
     for (const f of ['src/generator/imported.ts', 'tests/stage8.test.ts', 'src/generator/woexport.ts', 'src/generator/wopack.ts', 'src/viewer/pipingView.ts', 'tools/isomatch.py', 'tools/isoparse.py']) {

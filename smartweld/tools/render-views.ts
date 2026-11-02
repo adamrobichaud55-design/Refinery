@@ -18,7 +18,7 @@ import { pagePng } from '../src/render/page';
 import { packDoc } from '../src/pdf/wopdf';
 import { buildWorkOrders, DEMO_NOTICE } from '../src/generator/workorders';
 import { linkImported } from '../src/generator/woexport';
-import { woIsometrics, woSections } from '../src/generator/wopack';
+import { woSections } from '../src/generator/wopack';
 import type { GTLine, GTEquipment, GroundTruth } from '../src/generator/groundtruth';
 import type { ImportedIndex } from '../src/generator/imported';
 
@@ -79,10 +79,12 @@ views.push({ stage: 'stage6', name: 'piping-line-3-P300-P-1015', caption: 'Line 
 for (const num of ['WO-400-05', 'WO-200-01', 'WO-500-02']) views.push({ stage: 'stage7', name: `wo-${num}`, caption: `Work order ${num}: affected items orange, isolations blue`, make: () => {
   const wo = JSON.parse(readFileSync(`public/workorders/${num}.json`, 'utf8')) as WorkOrder;
   const mark = new Map<string, [number, number, number]>([...wo.isolations.filter(i => ['valve', 'blind', 'removal'].includes(i.kind)).map(i => [i.tag, ISOLATION] as const), ...wo.items.map(t => [t, HIGHLIGHT] as const)]);
-  const eq = I().equipment.filter(e => wo.items.includes(e.tag));
-  const ds = [...plantCut(), ...pipingDrawables(P(), { mark }), ...partDrawables(eq, () => HIGHLIGHT)];
+  const eq = I().equipment.filter(e => wo.items.includes(e.tag)), eqParts = new Set(eq.map(e => e.part));
+  // the equipment worked on is drawn once, in the highlight colour (not over its own grey copy)
+  const ds = [...partDrawables(cutaway([...B().instances, ...I().instances]).filter(i => !eqParts.has(i.part))), ...pipingDrawables(P(), { mark }), ...partDrawables(eq, () => HIGHLIGHT)];
   const hit = [...pipingDrawables(P(), { only: l => wo.lines.includes(l.no) }).filter((_, i) => true)];
-  const pts = [...wo.items.flatMap(t => { const it = P().lines.flatMap(l => [...l.comps.map(c => ({ t: c.tag, p: c.a })), ...l.welds.map(w => ({ t: w.id, p: [w.T[12], w.T[13], w.T[14]] }))]).find(x => x.t === t); return it ? [it.p] : []; }), ...eq.map(e => [e.transform[12], e.transform[13], e.transform[14]])];
+  const eqBox = eq.length ? bounds(partDrawables(eq)) : null;
+  const pts = [...wo.items.flatMap(t => { const it = P().lines.flatMap(l => [...l.comps.map(c => ({ t: c.tag, p: c.a })), ...l.welds.map(w => ({ t: w.id, p: [w.T[12], w.T[13], w.T[14]] }))]).find(x => x.t === t); return it ? [it.p] : []; }), ...(eqBox ? [eqBox[0], eqBox[1]] : [])];
   const [mn, mx] = pts.length ? [[0, 1, 2].map(k => Math.min(...pts.map(p => p[k]))), [0, 1, 2].map(k => Math.max(...pts.map(p => p[k])))] as [number[], number[]] : bounds(hit);
   const c = [(mn[0] + mx[0]) / 2, (mn[1] + mx[1]) / 2, (mn[2] + mx[2]) / 2] as [number, number, number], r = Math.max(150, Math.hypot(mx[0] - mn[0], mx[1] - mn[1], mx[2] - mn[2]) * 0.9);
   return { ds, cam: { eye: [c[0] + r * 0.6, Math.min(c[1] + r * 0.5, 340), c[2] + r * 0.75], target: c } };
@@ -108,9 +110,10 @@ if (!filter || 'pack'.includes(filter)) {
   const imp = JSON.parse(readFileSync('public/isometrics-imported/index.json', 'utf8')) as ImportedIndex;
   const wos = buildWorkOrders(P(), gt, eq); linkImported(wos, imp);
   const w = wos.find(x => x.number === 'WO-400-05')!;
-  const doc = packDoc(font, w.number, woSections(w, woIsometrics(w, new Map(lines.map(l => [l.header.line, l] as const))), imp), { demo: DEMO_NOTICE, font: readFileSync('assets/fonts/DejaVuSans-LICENSE.txt', 'utf8') });
+  const doc = packDoc(font, w.number, woSections(w, imp), { demo: DEMO_NOTICE, font: readFileSync('assets/fonts/DejaVuSans-LICENSE.txt', 'utf8') }, f => new Uint8Array(readFileSync(`public/isometrics-imported/${f}`)));
   mkdirSync(`${out}/stage8`, { recursive: true });
-  for (const [k, what] of [[1, 'cover, with the owner\'s drawings and their findings'], [4, 'inspection and test plan'], [5, 'isometric with the work clouded']] as const) {
+  const pageWith = (t: string) => doc.pages.findIndex(p => p.recs.some(r => r.k === 'text' && r.str.startsWith(t))) + 1;
+  for (const [k, what] of [[1, 'cover, with the owner\'s drawings and their findings'], [pageWith('Inspection and test plan'), 'inspection and test plan'], [pageWith('Where the work is'), 'where the work is on the owner\'s drawings; their sheets follow, attached unchanged']] as const) {
     writeFileSync(`${out}/stage8/pack-WO-400-05-page${k}.png`, pagePng(font, doc.pages[k - 1], doc.W, doc.H, 110));
     index.push(`| \`stage8/pack-WO-400-05-page${k}.png\` | Work-order pack WO-400-05, page ${k}: ${what} (page preview of the PDF, SW-REN-2) |`);
   }

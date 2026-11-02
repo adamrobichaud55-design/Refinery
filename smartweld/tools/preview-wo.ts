@@ -6,7 +6,7 @@ import type { GTLine, GTEquipment, GroundTruth } from '../src/generator/groundtr
 import type { ImportedIndex } from '../src/generator/imported';
 import { buildWorkOrders, DEMO_NOTICE } from '../src/generator/workorders';
 import { linkImported } from '../src/generator/woexport';
-import { woIsometrics, woSections } from '../src/generator/wopack';
+import { woSections } from '../src/generator/wopack';
 import { packDoc } from '../src/pdf/wopdf';
 import { parseFont } from '../src/pdf/ttf';
 import { pagePng } from '../src/render/page';
@@ -21,7 +21,7 @@ const imported = existsSync('public/isometrics-imported/index.json') ? JSON.pars
 const wos = buildWorkOrders(m, gt, eq); if (imported) linkImported(wos, imported);
 const w = wos.find(x => x.number === num); if (!w) throw new Error(`no work order ${num}`);
 const font = parseFont(new Uint8Array(readFileSync('assets/fonts/DejaVuSans.ttf')));
-const doc = packDoc(font, w.number, woSections(w, woIsometrics(w, new Map(lines.map(l => [l.header.line, l] as const))), imported), { demo: DEMO_NOTICE, font: readFileSync('assets/fonts/DejaVuSans-LICENSE.txt', 'utf8') });
+const doc = packDoc(font, w.number, woSections(w, imported), { demo: DEMO_NOTICE, font: readFileSync('assets/fonts/DejaVuSans-LICENSE.txt', 'utf8') }, f => new Uint8Array(readFileSync(`public/isometrics-imported/${f}`)));
 mkdirSync(out, { recursive: true });
-doc.pages.forEach((p, i) => { writeFileSync(`${out}/${num}-p${String(i + 1).padStart(2, '0')}.png`, pagePng(font, p, doc.W, doc.H, Number(dpi ?? 100))); });
-console.log(`${doc.pages.length} pages to ${out}`);
+doc.pages.forEach((p, i) => { if (p.attached) return; writeFileSync(`${out}/${num}-p${String(i + 1).padStart(2, '0')}.png`, pagePng(font, p, doc.W, doc.H, Number(dpi ?? 100))); });
+console.log(`${doc.pages.length} pages (${doc.pages.filter(p => p.attached).length} attached owner's sheets, not previewed) to ${out}`);

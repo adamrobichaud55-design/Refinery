@@ -13,7 +13,7 @@ truth in public/groundtruth/ and writes:
   match.json      every drawing, its sheets, the lines it covers, its welds and every finding (SW-IMP-6)
   report.md       the same as a readable report
   index.json      the slim index for the viewer, work orders and demo: drawing per line, label and sheet
-                  per weld, findings per drawing
+                  per weld, sheet per item and support (SW-IMP-8), findings per drawing
   FIXLIST.md, fixlist.json   the instructions for the drawings' author: one per finding, the rules for
                   the corrected revision and its acceptance checks (SW-IMP-7)
 --check compares these files with a fresh run instead of writing them.
@@ -407,6 +407,10 @@ def main(parsed):
         if abs(len_d - len_e) > TOL_LEN * len(sh):
             find('error', 'pipe-total', dn, f"pipe: bill total {fmt(len_d)}, model {fmt(len_e)} (difference {len_d - len_e:+.3f} in)")
 
+        # the sheet of every item and support of the line and its branches (SW-IMP-8)
+        item_index = [dict(tag=it['tag'], sheet=sheet_of(P(it['centre']))) for x in [line] + stubs[line] for it in lines[x]['items']] + \
+                     [dict(tag=sp['tag'], sheet=sheet_of(P(sp['at']))) for x in [line] + stubs[line] for sp in lines[x]['supports']]
+
         # ends (SW-IMP-2)
         ends = [(e['dir'], e['text'], s['title']['sheetNo']) for s in sh for e in s['ends']]
         for d_, key in (('from', 'from'), ('to', 'to')):
@@ -426,7 +430,7 @@ def main(parsed):
                              sheets=[dict(sheet=s['title']['sheetNo'], page=s['page'], origin=s.get('origin'),
                                           welds=s['welds'], bom=s['bom'], continuations=s['continuations'], ends=s['ends'])
                                      for s in sh],
-                             welds=weld_index, file=f'{dn}.pdf', breaks=[dict(after=k, station=round(v[0], 4), at=dict(E=v[1][0], N=v[1][1], EL=v[1][2])) for k, v in sorted(breaks.items())]))
+                             welds=weld_index, items=item_index, file=f'{dn}.pdf', breaks=[dict(after=k, station=round(v[0], 4), at=dict(E=v[1][0], N=v[1][1], EL=v[1][2])) for k, v in sorted(breaks.items())]))
 
     for f in findings:
         f['line'] = f.get('line') or next((d['line'] for d in out_dwgs if d['drawing'] == f['drawing']), None)
@@ -612,6 +616,7 @@ def outputs(rec):
               drawings={d['drawing']: dict(line=d['line'], file=d['file'], sheets=len(d['sheets']), branches=d['branches'],
                                            sha256=d['sha256'], findings=by[d['drawing']]) for d in dwgs},
               lines=dict(sorted(hosts.items())),
+              items={i['tag']: dict(drawing=d['drawing'], sheet=i['sheet']) for d in dwgs for i in d['items']},
               welds={w['tag']: dict(drawing=d['drawing'], label=w['label'], sheet=w['expected'], labelled=w['sheets'])
                      for d in dwgs for w in d['welds']})
     files = {'match.json': mj, 'report.md': report(rec, dwgs, hosts, findings, summary),

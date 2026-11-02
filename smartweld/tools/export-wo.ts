@@ -1,8 +1,8 @@
 // Stage-7 export: reads the committed plant piping and ground truth, writes
-//   public/isometrics/ISO-<line>.svg  — one isometric per line (SW-ISO-1)
 //   public/workorders/index.json, WO-*.json, WO-*.html — the owner's shutdown work orders with ITPs (SW-WO, SW-ITP),
 //   linked to the owner's imported drawings when public/isometrics-imported/index.json exists (SW-IMP-6)
-//   public/workorders/pdf/WO-*.pdf — the same packs as PDF, written by SmartWeld's own PDF writer (SW-PDF-*)
+//   public/workorders/pdf/WO-*.pdf — the same packs as PDF, written by SmartWeld's own PDF writer (SW-PDF-*), with the
+//   owner's drawing sheets that hold the work attached unchanged (SW-IMP-8)
 import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, existsSync } from 'node:fs';
 import type { PipingModel } from '../src/generator/piping';
 import type { GTLine, GTEquipment, GroundTruth } from '../src/generator/groundtruth';
@@ -18,11 +18,12 @@ const eq = JSON.parse(readFileSync('public/groundtruth/equipment.json', 'utf8'))
 // the owner's imported drawings, when present (stage 8, SW-IMP-6; written by tools/isomatch.py)
 const imported = existsSync('public/isometrics-imported/index.json') ? JSON.parse(readFileSync('public/isometrics-imported/index.json', 'utf8')) as ImportedIndex : undefined;
 const t0 = Date.now(), files = workOrderFiles(m, gt, eq, imported);
-rmSync('public/isometrics', { recursive: true, force: true }); mkdirSync('public/isometrics', { recursive: true });
+rmSync('public/isometrics', { recursive: true, force: true });   // the generated isometrics are withdrawn (SW-ISO-1, P-59)
 rmSync('public/workorders', { recursive: true, force: true }); mkdirSync('public/workorders', { recursive: true });
 let bytes = 0; for (const [p, c] of files) { writeFileSync(`public/${p}`, c); bytes += c.length; }
 // the packs as PDF, by SmartWeld's own PDF writer (SW-PDF-*), with the embedded font's licence notice (SW-LIC-3)
 mkdirSync('public/workorders/pdf', { recursive: true });
 const font = parseFont(new Uint8Array(readFileSync('assets/fonts/DejaVuSans.ttf'))), notice = readFileSync('assets/fonts/DejaVuSans-LICENSE.txt', 'utf8');
-for (const [p, c] of workOrderPdfs(m, gt, eq, font, notice, imported)) { writeFileSync(`public/${p}`, c); bytes += c.length; }
+if (!imported) throw new Error('the work-order packs need the owner\'s drawings: public/isometrics-imported/index.json (SW-IMP-8)');
+for (const [p, c] of workOrderPdfs(m, gt, eq, font, notice, imported, f => new Uint8Array(readFileSync(`public/isometrics-imported/${f}`)))) { writeFileSync(`public/${p}`, c); bytes += c.length; }
 console.log(`wrote ${files.size} files, ${(bytes / 1e6).toFixed(1)} MB, in ${((Date.now() - t0) / 1000).toFixed(1)} s`);

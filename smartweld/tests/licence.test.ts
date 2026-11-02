@@ -8,7 +8,7 @@ import type { GTLine, GTEquipment, GroundTruth } from '../src/generator/groundtr
 import type { ImportedIndex } from '../src/generator/imported';
 import { workOrderPdfs, linkImported } from '../src/generator/woexport';
 import { buildWorkOrders, DEMO_NOTICE } from '../src/generator/workorders';
-import { woIsometrics, woSections } from '../src/generator/wopack';
+import { woSections } from '../src/generator/wopack';
 import { packDoc } from '../src/pdf/wopdf';
 import { parseFont } from '../src/pdf/ttf';
 import { readOwnPng } from '../src/render/sheet';
@@ -49,8 +49,9 @@ describe('PDF writer (SW-PDF-1..5)', () => {
   const eq = JSON.parse(readFileSync(new URL('groundtruth/equipment.json', pub), 'utf8')) as GTEquipment[];
   const imported = JSON.parse(readFileSync(new URL('isometrics-imported/index.json', pub), 'utf8')) as ImportedIndex;
   const font = parseFont(new Uint8Array(rd('assets/fonts/DejaVuSans.ttf'))), notice = rd('assets/fonts/DejaVuSans-LICENSE.txt').toString();
+  const att = (f: string) => new Uint8Array(readFileSync(new URL(`isometrics-imported/${f}`, pub)));
   it('every committed work-order PDF equals a fresh run byte for byte (deterministic, SW-PDF-1)', () => {
-    const fresh = workOrderPdfs(m, gt, eq, font, notice, imported);
+    const fresh = workOrderPdfs(m, gt, eq, font, notice, imported, att);
     expect(fresh.size).toBe(readdirSync(new URL('workorders/pdf/', pub)).length);
     for (const [p, b] of fresh) expect(Buffer.compare(Buffer.from(b), readFileSync(new URL(p, pub))), p).toBe(0);
   }, 120000);
@@ -61,16 +62,17 @@ describe('PDF writer (SW-PDF-1..5)', () => {
       const xref = Number(/startxref\n(\d+)/.exec(s)![1]); expect(s.slice(xref, xref + 4)).toBe('xref');
       const offs = [...s.slice(xref).matchAll(/^(\d{10}) 00000 n $/gm)].map(x => Number(x[1]));
       offs.forEach((o, i) => expect(s.slice(o, o + String(i + 1).length + 6), `${f} object ${i + 1}`).toBe(`${i + 1} 0 obj`));
-      const names = [...s.matchAll(/\/BaseFont \/([A-Z]{6}\+[A-Za-z]+)/g)].map(x => x[1]);
+      const names = [...s.matchAll(/\/BaseFont \/([A-Z]{6}\+[A-Za-z-]+)/g)].map(x => x[1]);
       expect(names.length, f).toBeGreaterThan(0);
-      for (const n of names) { expect(n).toMatch(/^[A-Z]{6}\+DejaVuSans$/); expect(/Bitstream|Vera/.test(n)).toBe(false); }
+      // the font this writer embeds is the DejaVu Sans subset; the owner's attached sheets keep their own embedded fonts
+      for (const n of names) expect(/Bitstream|Vera/.test(n)).toBe(false);
+      expect(names.some(n => /^[A-Z]{6}\+DejaVuSans$/.test(n)), f).toBe(true);
     }
   });
   it('the layout keeps every text and path inside the page, and each pack ends with the notices (SW-PDF-3/5)', () => {
     const wos = buildWorkOrders(m, gt, eq); linkImported(wos, imported);
-    const lineGT = new Map(lines.map(l => [l.header.line, l] as const));
     for (const w of wos.slice(0, 6)) {
-      const doc = packDoc(font, w.number, woSections(w, woIsometrics(w, lineGT), imported), { demo: DEMO_NOTICE, font: notice });
+      const doc = packDoc(font, w.number, woSections(w, imported), { demo: DEMO_NOTICE, font: notice }, att);
       for (const p of doc.pages) for (const r of p.recs) {
         if (r.k === 'text') { expect(r.x, w.number).toBeGreaterThanOrEqual(doc.margin - 0.01); expect(r.x + doc.width(r.str, r.size), `${w.number} "${r.str}"`).toBeLessThanOrEqual(doc.W - doc.margin + 0.01); expect(r.y).toBeLessThanOrEqual(doc.H - doc.margin + 0.01); }
         else for (const [x, y] of r.pts) { expect(x).toBeGreaterThanOrEqual(doc.margin - 3); expect(x).toBeLessThanOrEqual(doc.W - doc.margin + 3); expect(y).toBeLessThanOrEqual(doc.H - doc.margin + 3); }

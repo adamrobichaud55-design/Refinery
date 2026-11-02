@@ -19,9 +19,8 @@ The owner's imported drawings name their own tools on their cover pages.
 | `viewer/` | The 3D viewer, built as a static website with its own copy of the data. |
 | `data/plant-piping.json` | The plant piping model: every line, component (part key + 4×4 transform), weld and support. |
 | `data/groundtruth/` | Ground truth for AI training, one record per item (below). |
-| `data/isometrics/` | One generated isometric per line (`ISO-<line>.svg`, 203 drawings). |
-| `data/isometrics-imported/` | The owner's isometric drawings matched to the model: one PDF per drawing (`ISO-*.pdf`, 139 drawings on 240 sheets covering all 203 lines), `index.json`, `match.json`, `report.md`, `RECEIPT.json` (below). |
-| `data/workorders/` | 25 shutdown work orders: `index.json`, `WO-*.json` (data), `WO-*.html` (printable pack), `pdf/WO-*.pdf` (written by SmartWeld's own PDF writer). |
+| `data/isometrics-imported/` | The isometric drawings (the owner's own, the only isometrics in the project), matched to the model: one PDF per drawing (`ISO-*.pdf`, 139 drawings on 240 sheets covering all 203 lines), `index.json`, `match.json`, `report.md`, `RECEIPT.json` (below). |
+| `data/workorders/` | 25 shutdown work orders: `index.json`, `WO-*.json` (data), `WO-*.html` (printable pack), `pdf/WO-*.pdf` (written by SmartWeld's own PDF writer, with the owner's drawing sheets that hold the work attached unchanged). |
 | `docs/` | Design basis (every rule and its reason), provenance log, IP review package, third-party notices, project README. |
 | `screenshots/` | Review images of every stage (`stage1` … `stage7`), made by SmartWeld's own renderer from the model's mesh data; `INDEX.md` names each view. Contact sheets of the valves are in `stage4/`. |
 | `source/` | The full project source: rules, generators, viewer, tests (`npm install`, `npm test`, `npm run dev`). |

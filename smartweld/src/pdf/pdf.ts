@@ -6,12 +6,14 @@
 import { deflateSync } from 'node:zlib';
 import { createHash } from 'node:crypto';
 import { subsetFont, type Font } from './ttf';
+import { writeVal, isRef, type PdfSource, type PVal } from './import';
 
 export type RGB = [number, number, number];
 export interface TextRec { k: 'text'; x: number; y: number; size: number; bold: boolean; color: RGB; str: string; gids: number[] }
 export interface PathRec { k: 'path'; pts: [number, number][]; closed: boolean; fill?: RGB; stroke?: RGB; width: number; dash?: number[] }
 export type Rec = TextRec | PathRec;
-export interface Page { recs: Rec[] }
+/** a page drawn here (recs), or a page of another PDF attached unchanged (SW-PDF-6) */
+export interface Page { recs: Rec[]; attached?: { src: PdfSource; dict: Map<string, PVal>; label: string } }
 
 const n = (v: number) => (Math.round(v * 1000) / 1000).toString();
 const col = (c: RGB) => c.map(v => n(v / 255)).join(' ');
@@ -24,6 +26,8 @@ export class PdfDoc {
   private slot = new Map<number, [number, number]>(); private uni = new Map<number, string>(); private nextSlot = 0;
   constructor(readonly font: Font, readonly title: string) {}
   newPage(): Page { const p = { recs: [] }; this.pages.push(p); return p; }
+  /** attach page i (0-based) of another PDF, unchanged (SW-PDF-6) */
+  attach(src: PdfSource, i: number, label: string): Page { const pages = src.pages(); if (!pages[i]) throw new Error(`${src.name}: no page ${i + 1}`); const p: Page = { recs: [], attached: { src, dict: pages[i], label } }; this.pages.push(p); return p; }
   /** the glyphs of a text; a character the font lacks is an error (SW-PDF-2) */
   glyphs(str: string): number[] {
     return [...str].map(ch => { const g = this.font.gid.get(ch.codePointAt(0)!); if (!g) throw new Error(`font has no glyph for '${ch}' (U+${ch.codePointAt(0)!.toString(16)}) in "${str}"`); return g; });
@@ -73,8 +77,8 @@ export class PdfDoc {
   }
 
   save(): Uint8Array {
-    const objs: (string | { dict: string; data: Uint8Array })[] = [];
-    const add = (o: string | { dict: string; data: Uint8Array }) => { objs.push(o); return objs.length; };
+    const objs: (string | { dict: string; data: Uint8Array } | { raw: string; data: Uint8Array })[] = [];
+    const add = (o: string | { dict: string; data: Uint8Array } | { raw: string; data: Uint8Array }) => { objs.push(o); return objs.length; };
     const catalog = add(''), pagesId = add('');
     // fonts: one subset per slot of 255 glyphs
     const bySlot = new Map<number, [number, number][]>();   // slot -> [code, gid]
@@ -101,7 +105,27 @@ export class PdfDoc {
     }
     const fontRes = `<< ${fontIds.map((id, s) => `/F${s + 1} ${id} 0 R`).join(' ')} >>`;
     const pageIds: number[] = [];
+    const copied = new Map<PdfSource, Map<number, number>>();
+    /** an attached page's objects, copied once per source; streams keep their dictionary and bytes (SW-PDF-6) */
+    const copy = (src: PdfSource, n: number): number => {
+      let m = copied.get(src); if (!m) { m = new Map(); copied.set(src, m); }
+      if (m.has(n)) return m.get(n)!;
+      const id = add(''); m.set(n, id);
+      const v = src.obj(n), ref = (k: number) => copy(src, k);
+      if (v && typeof v === 'object' && !Array.isArray(v) && v.t === 'stream') {
+        const d = new Map(v.dict); d.set('Length', v.data.length);
+        objs[id - 1] = { raw: writeVal({ t: 'dict', v: d }, ref), data: v.data };
+      } else objs[id - 1] = writeVal(v, ref);
+      return id;
+    };
     for (const p of this.pages) {
+      if (p.attached) {
+        const { src, dict } = p.attached, d = new Map(dict);
+        d.set('Type', { t: 'name', v: 'Page' });
+        const body = writeVal({ t: 'dict', v: d }, k => copy(src, k)).replace(/^<< /, `<< /Parent ${pagesId} 0 R `);
+        pageIds.push(add(body));
+        continue;
+      }
       const c = add({ dict: '', data: new TextEncoder().encode(this.content(p)) });
       pageIds.push(add(`<< /Type /Page /Parent ${pagesId} 0 R /MediaBox [0 0 ${this.W} ${this.H}] /Resources << /Font ${fontRes} >> /Contents ${c} 0 R >>`));
     }
@@ -116,6 +140,7 @@ export class PdfDoc {
     objs.forEach((o, i) => {
       offs.push(len);
       if (typeof o === 'string') put(`${i + 1} 0 obj\n${o}\nendobj\n`);
+      else if ('raw' in o) { put(`${i + 1} 0 obj\n${o.raw}\nstream\n`); put(o.data); put('\nendstream\nendobj\n'); }
       else { const z = deflateSync(o.data, { level: 9 }); put(`${i + 1} 0 obj\n<< /Length ${z.length} /Filter /FlateDecode ${o.dict} >>\nstream\n`); put(z); put('\nendstream\nendobj\n'); }
     });
     const body = Buffer.concat(parts), id = createHash('sha256').update(body).digest('hex').slice(0, 32);

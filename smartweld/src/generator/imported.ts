@@ -11,6 +11,8 @@ export interface ImportedIndex {
   lines: Record<string, string>;
   /** weld tag -> its label on the drawing and the sheet that holds it */
   welds: Record<string, { drawing: string; label: string; sheet: number | null; labelled: number[] }>;
+  /** item or support tag -> the drawing and sheet that hold it (SW-IMP-8) */
+  items: Record<string, { drawing: string; sheet: number | null }>;
 }
 export interface ImportedRef { line: string; drawing: string; file: string; sheets: number; branchOf?: string; errors: number; warnings: number }
 

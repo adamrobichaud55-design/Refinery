@@ -8,7 +8,7 @@ shutil.rmtree(out, ignore_errors=True); os.makedirs(out)
 cp = lambda a, b: shutil.copytree(os.path.join(root, a), os.path.join(out, b)) if os.path.isdir(os.path.join(root, a)) else (os.makedirs(os.path.dirname(os.path.join(out, b)), exist_ok=True), shutil.copy2(os.path.join(root, a), os.path.join(out, b)))
 cp('dist', 'viewer')
 cp('public/plant-piping.json', 'data/plant-piping.json')
-for d in ['groundtruth', 'isometrics', 'isometrics-imported', 'workorders']: cp(f'public/{d}', f'data/{d}')
+for d in ['groundtruth', 'isometrics-imported', 'workorders']: cp(f'public/{d}', f'data/{d}')
 for f in ['DESIGN_BASIS.md', 'PROVENANCE.md', 'IP_REVIEW.md', 'THIRD_PARTY_NOTICES.md']: cp(f, f'docs/{f}')
 cp('README.md', 'docs/PROJECT_README.md')
 cp('screenshots', 'screenshots')
@@ -29,7 +29,7 @@ for base, _, names in os.walk(out):
 files.sort(key=lambda f: f['path'])
 count = lambda prefix: sum(1 for f in files if f['path'].startswith(prefix))
 manifest = {'name': 'SmartWeld AI demonstration plant', 'sourceCommit': commit, 'files': len(files), 'bytes': sum(f['bytes'] for f in files),
-  'contents': {'viewer': count('viewer/'), 'data/groundtruth/lines': count('data/groundtruth/lines/'), 'data/isometrics': count('data/isometrics/'), 'data/isometrics-imported': count('data/isometrics-imported/'), 'data/workorders (json+html+pdf)': count('data/workorders/'), 'docs': count('docs/'), 'screenshots': count('screenshots/'), 'source': count('source/')},
+  'contents': {'viewer': count('viewer/'), 'data/groundtruth/lines': count('data/groundtruth/lines/'), 'data/isometrics-imported': count('data/isometrics-imported/'), 'data/workorders (json+html+pdf)': count('data/workorders/'), 'docs': count('docs/'), 'screenshots': count('screenshots/'), 'source': count('source/')},
   'notice': 'Welding, NDE and test content is DEMONSTRATION ONLY - NOT A QUALIFIED PROCEDURE; the facility owner\'s qualified procedures and applicable codes govern.', 'list': files}
 json.dump(manifest, open(os.path.join(out, 'MANIFEST.json'), 'w'), indent=1)
 zp = os.path.join(root, 'downloads', 'smartweld-demo.zip')

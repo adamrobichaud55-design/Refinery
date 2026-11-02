@@ -1624,7 +1624,11 @@ No code, standard or published procedure was used, and none should be inferred.
   activity is accepted or not applicable. The viewer records sign-offs and exports them as a
   completion record (JSON).
 
-## 51. Isometric drawings (`SW-ISO-*`)
+## 51. Isometric drawings (`SW-ISO-*`) — withdrawn 2026-11-02
+
+**Withdrawn (PROVENANCE P-59).** The owner's own drawings, imported and matched under §53, are the
+project's isometrics: the work-order packs carry their sheets (SW-IMP-8), and the generated set below
+was removed. The rules are kept here as the record of what was used until then.
 
 - `SW-ISO-1` One isometric per line, generated from the ground truth (SW-GT-5): the centreline
   projected on isometric axes (East to the lower right at 30°, North to the upper right at 30°,
@@ -1641,7 +1645,8 @@ No code, standard or published procedure was used, and none should be inferred.
 - Every work order has: an owner area matching its items, at least one ITP hold point, an
   isolation list for any work that opens the line or equipment, new welds exactly matching its
   replaced spools (SW-WO-4), NDE extents by SW-NDE-2, the test by SW-TEST-1..3.
-- Every isometric contains every item, weld and support of its line.
+- (Withdrawn with SW-ISO-1, P-59.) Every isometric contains every item, weld and support of its
+  line; replaced by the stage-8 test that every pack attaches the owner's sheets holding its work.
 - The committed work-order data equals a fresh run; every stage-7 rule ID used in code exists here.
 
 ## 53. Imported isometric drawings (`SW-IMP-*`) — stage 8
@@ -1722,6 +1727,20 @@ reported for the drawing's author to resolve.
   - The list requires the revision to be made with permissively licensed software and fonts
     only, with no copyleft licence of any kind (the user's instruction of 2026-11-02, P-57).
 
+- `SW-IMP-8` Work-order packs carry the owner's drawings (the user's instruction of 2026-11-02:
+  "the drawings should come from my generator"). For each drawing that shows a work line, either
+  as its own drawing or as the parent of a small branch, the pack attaches the sheets that hold
+  any of the following on that drawing: an affected item, a weld the work replaces, or an isolation
+  point.
+  - The sheet comes from the match: a weld's sheet, or for an item or support the sheet whose breaks
+    bracket its centre along the line (SW-IMP-3/4). If none of the work lies on a drawing's sheets,
+    the whole drawing is attached.
+  - The sheets are copied unchanged into the pack (SW-PDF-6). Before them, a table "Where the work
+    is on the owner's drawings" lists each affected item, replaced weld and isolation point with its
+    drawing, sheet and weld label, so the work can be found on the sheets without marking them.
+  - The HTML pack shows the same table and links each drawing's PDF. The work order lists the
+    owner's drawing numbers as its isometrics.
+
 ## 54. Tests required for stage 8
 
 - Every model line maps to one imported drawing, and every drawing to one model line.
@@ -1764,10 +1783,15 @@ Replaces the headless browser that printed the work-order packs (SW-LIC-2). Writ
   - The ITP and each isometric start a new page.
   - The layout is checked as it is built: no line of text is wider than its box, and nothing
     crosses the margins.
-- `SW-PDF-4` Isometrics: the SVG that SW-ISO-1 generates is drawn into the page by converting each
+- `SW-PDF-4` (withdrawn 2026-11-02 with SW-ISO-1, P-59.) Isometrics: the SVG that SW-ISO-1 generates is drawn into the page by converting each
   element (rect, line, polyline, polygon, circle, text) and its class style (fill, stroke, width,
   dash, font weight and size, anchor) to PDF operators, scaled to fit the page without
   distortion.
+- `SW-PDF-6` Attached documents: pages of another PDF are copied into the pack unchanged. The page
+  object and everything it refers to (contents, fonts, images, resources) are copied byte for byte,
+  with only the object numbers renumbered. Inherited page attributes are taken from the source page
+  tree. Only PDFs with classic cross-reference tables are accepted, and the owner's per-drawing files
+  are of that kind (SW-IMP-5). Anything else stops with an error rather than being redrawn.
 - `SW-PDF-5` Notices: every pack ends with the demonstration notice (SW-WPS-1) and the font's
   licence notice (SW-LIC-3).
 

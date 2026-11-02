@@ -115,7 +115,7 @@ export function buildWorkOrders(m: PipingModel, gt: GroundTruth, equipment: GTEq
       case 'UT': thicknessSurvey(ctx); break;
     }
     tieToAssets(wo, l, e, assetIndex);
-    wo.isometrics = wo.lines.map(x => `ISO-${x}`);
+    wo.isometrics = [];   // the owner's drawing numbers, filled in by linkImported (SW-IMP-8; the generated set is withdrawn)
     wo.weldSpecs = [...new Set(wo.newWelds.map(x => x.ws))];
     wo.rules = [...new Set(wo.rules)].sort();
     out.push(wo);
