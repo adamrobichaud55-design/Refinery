@@ -97,6 +97,11 @@ editing one rule in `DESIGN_BASIS.md` and its code, without touching anything el
 5. **Open-source licences.** three.js (MIT) ships in the viewer; its notice is in
    `THIRD_PARTY_NOTICES.md` and must accompany any distribution. The other libraries (Vite,
    Vitest, TypeScript, Playwright) are development tools and are not distributed.
+   No copyleft (GPL, LGPL, AGPL, MPL or similar) code is a dependency of SmartWeld. The stage-8 drawing
+   reader is SmartWeld's own code on pypdf (BSD-3-Clause); the GPL tool used for it at first was
+   removed (PROVENANCE P-57). Open item for decision: the headless Chromium used for screenshots and
+   for printing the work-order PDFs bundles LGPL FFmpeg, and those PDFs embed OFL-licensed font
+   subsets (P-57).
 
 ## 5. Record of SmartWeld's direction (human contribution)
 

@@ -17,8 +17,8 @@ truth in public/groundtruth/ and writes:
   FIXLIST.md, fixlist.json   the instructions for the drawings' author: one per finding, the rules for
                   the corrected revision and its acceptance checks (SW-IMP-7)
 --check compares these files with a fresh run instead of writing them.
-Standard library, pypdf (BSD-3-Clause) for the split, and pdftotext (poppler-utils) run as an external program
-by tools/isoparse.py to read the words and their positions.
+Standard library and pypdf (BSD-3-Clause), for the split and, in tools/isoparse.py, to read the words and their
+positions. No copyleft program or library is used (PROVENANCE P-57).
 """
 import collections
 import hashlib
@@ -533,8 +533,13 @@ FIX_RULES = [
     ('R5', 'Revision', f"Issue the corrected set as revision 1 of the same drawing numbers and sheet split: REV 1 in every title block "
      f"and a revision row '1 <date> REVISED TO MATCH THE MODEL ({FIX_ID})'. Change nothing else: the bills, pipe lengths, sheet breaks, "
      "title blocks and coverage already agree with the model."),
+    ('R6', 'Licences', "Make the revision with permissively licensed software and fonts only (for example MIT, BSD, Apache-2.0, ISC; "
+     "fonts under a permissive font licence such as the Bitstream Vera licence of DejaVu Sans). No GPL, LGPL, AGPL, MPL or other "
+     "copyleft program, library or font may be used to draw, render, combine or check the sheets. State the tools, versions and "
+     "licences used on the cover page, as Rev 0 did. Use no published standard, table, catalogue or third-party drawing."),
 ]
 FIX_ACCEPT = ['A re-import here (python3 -I tools/isomatch.py import <parts>) reports 0 errors and 0 warnings.',
+              'The cover page names only permissively licensed tools and fonts (R6).',
               'All 203 lines are covered; every bill, pipe length, title block and sheet break still agrees with the model.',
               'The set reads with the usual sign convention (summary coordinateSign: conventional).',
               'Every weld of every line and branch carries its model label once, on its own sheet.']

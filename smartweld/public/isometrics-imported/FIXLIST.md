@@ -15,10 +15,12 @@ Everything else on the drawings agrees with the model: the title blocks, every b
 - **R3 Branch welds.** A weld of a vent, drain, instrument or sample tap drawn on its parent line's sheets is labelled with its model tag's form {service}-{sequence}/W{n}: I-7001/W1 for the weld 3/4"-P300-I-7001/W1. Rev 0 continued the parent's numbering (W29, W30, ...), and those numbers do not exist in the model.
 - **R4 FROM / TO labels.** Print a FROM label at the start and a TO label at the end of every line whose end is an equipment nozzle ('TO P-101A NOZ. S'), a relief valve ('TO PSV', 'FROM PSV ON D-101 NOZ. N3') or a hose station ('TO HOSE STATION'). A tap end is shown by its CONT'D block, and a cap or blind by its symbol.
 - **R5 Revision.** Issue the corrected set as revision 1 of the same drawing numbers and sheet split: REV 1 in every title block and a revision row '1 <date> REVISED TO MATCH THE MODEL (FL-1)'. Change nothing else: the bills, pipe lengths, sheet breaks, title blocks and coverage already agree with the model.
+- **R6 Licences.** Make the revision with permissively licensed software and fonts only (for example MIT, BSD, Apache-2.0, ISC; fonts under a permissive font licence such as the Bitstream Vera licence of DejaVu Sans). No GPL, LGPL, AGPL, MPL or other copyleft program, library or font may be used to draw, render, combine or check the sheets. State the tools, versions and licences used on the cover page, as Rev 0 did. Use no published standard, table, catalogue or third-party drawing.
 
 ## Acceptance
 
 - A re-import here (python3 -I tools/isomatch.py import <parts>) reports 0 errors and 0 warnings.
+- The cover page names only permissively licensed tools and fonts (R6).
 - All 203 lines are covered; every bill, pipe length, title block and sheet break still agrees with the model.
 - The set reads with the usual sign convention (summary coordinateSign: conventional).
 - Every weld of every line and branch carries its model label once, on its own sheet.
@@ -170,8 +172,8 @@ Positions are the model's plant coordinates (E = east, N = north, EL = elevation
 
 | Id | Sheet | Change | Tag | Text to print | Model position | Instruction |
 |---|---|---|---|---|---|---|
-| 01 | 1 | Coordinate text | CONT'D ON ISO-P-1007 SH 2 | N -11'-6" | E 165'-3" N -11'-6" EL 102'-0" | print N -11'-6" (not -12'-6"): the minus sign applies to the whole value. |
-| 02 | 1 | Coordinate text | CONT'D FROM ISO-P-1006 SH 7 | N -11'-6" | E 164'-5" N -11'-6" EL 102'-0" | print N -11'-6" (not -12'-6"): the minus sign applies to the whole value. |
+| 01 | 1 | Coordinate text | CONT'D FROM ISO-P-1006 SH 7 | N -11'-6" | E 164'-5" N -11'-6" EL 102'-0" | print N -11'-6" (not -12'-6"): the minus sign applies to the whole value. |
+| 02 | 1 | Coordinate text | CONT'D ON ISO-P-1007 SH 2 | N -11'-6" | E 165'-3" N -11'-6" EL 102'-0" | print N -11'-6" (not -12'-6"): the minus sign applies to the whole value. |
 | 03 | 1 | Add weld label | 6"-P300-P-1007/W1 | W1 | E 164'-5" N -11'-6" EL 102'-0" | Label the weld dot W1. |
 | 04 | 2 | Coordinate text | CONT'D FROM ISO-P-1007 SH 1 | N -11'-6" | E 165'-3" N -11'-6" EL 102'-0" | print N -11'-6" (not -12'-6"): the minus sign applies to the whole value. |
 | 05 | 2 | Add weld label | 3/4"-P300-I-7007/W1 | I-7007/W1 | E 167'-6" N -11'-6" EL 102'-5" | Label the weld dot I-7007/W1, between W4 and W5. |

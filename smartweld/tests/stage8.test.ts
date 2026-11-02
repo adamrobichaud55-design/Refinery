@@ -62,9 +62,9 @@ describe('stage 8 — the drawings agree with the model (SW-IMP-3/4)', () => {
       expect(new Set(d.welds.map(w => w.tag))).toEqual(tags);
     }
   });
-  it('the committed match equals a fresh run over the committed drawings (needs python3 and pdftotext)', () => {
-    const tools = spawnSync('sh', ['-c', 'command -v python3 && command -v pdftotext'], { encoding: 'utf8' });
-    if (tools.status !== 0) return;   // tools absent: the SHA-256 and re-check tests above still hold
+  it('the committed match equals a fresh run over the committed drawings (needs python3 with pypdf)', () => {
+    const tools = spawnSync('python3', ['-I', '-c', 'import pypdf'], { encoding: 'utf8' });
+    if (tools.status !== 0) return;   // python3 or pypdf absent: the SHA-256 and re-check tests above still hold
     const r = spawnSync('python3', ['-I', 'tools/isomatch.py', '--check'], { cwd: new URL('..', import.meta.url), encoding: 'utf8' });
     expect(r.stdout + r.stderr).toContain('equal a fresh run');
     expect(r.status).toBe(0);
@@ -89,8 +89,8 @@ describe('stage 8 — fix list for the drawings\' author (SW-IMP-7)', () => {
       expect(c.instruction.length, c.id).toBeGreaterThan(10);
     }
   });
-  it('a set corrected by the fix list re-matches with no finding (self-test; needs python3 and pdftotext)', () => {
-    const tools = spawnSync('sh', ['-c', 'command -v python3 && command -v pdftotext'], { encoding: 'utf8' });
+  it('a set corrected by the fix list re-matches with no finding (self-test; needs python3 with pypdf)', () => {
+    const tools = spawnSync('python3', ['-I', '-c', 'import pypdf'], { encoding: 'utf8' });
     if (tools.status !== 0) return;
     const r = spawnSync('python3', ['-I', 'tools/isomatch.py', '--selftest'], { cwd: new URL('..', import.meta.url), encoding: 'utf8' });
     expect(r.stdout + r.stderr).toContain('corrected set: 0 findings, 0 changes left, coordinate sign conventional');

@@ -1686,6 +1686,8 @@ reported for the drawing's author to resolve.
     acceptance is a re-import with no error or warning.
   - Nothing in the model changes. The corrected drawings are a new revision of the same drawing
     numbers.
+  - The list requires the revision to be made with permissively licensed software and fonts
+    only, with no copyleft licence of any kind (the user's instruction of 2026-11-02, P-57).
 
 ## 54. Tests required for stage 8
 

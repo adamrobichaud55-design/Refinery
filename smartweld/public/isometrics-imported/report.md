@@ -72,8 +72,8 @@ Branches drawn here: 3/4"-P300-I-7006, 3/4"-P300-I-7032.
 
 ### ISO-P-1007 — 6"-P300-P-1007 (2 sheets) — 7 finding(s)
 Branches drawn here: 3/4"-P300-I-7007, 3/4"-P300-I-7033.
-- **error** `coordinate-sign` sheet 1: CONT'D ON ISO-P-1007 SH 2 prints E 165'-3" N -12'-6" EL 102'-0" for E 165'-3" N -11'-6" EL 102'-0": the minus sign applies to the feet only; read as written the point is 12.00 in away and 12.00 in off the line's centreline
 - **error** `coordinate-sign` sheet 1: CONT'D FROM ISO-P-1006 SH 7 prints E 164'-5" N -12'-6" EL 102'-0" for E 164'-5" N -11'-6" EL 102'-0": the minus sign applies to the feet only; read as written the point is 12.00 in away and 12.00 in off where 6"-P300-P-1007 meets 6"-P300-P-1006 (E 164'-5" N -11'-6" EL 102'-0")
+- **error** `coordinate-sign` sheet 1: CONT'D ON ISO-P-1007 SH 2 prints E 165'-3" N -12'-6" EL 102'-0" for E 165'-3" N -11'-6" EL 102'-0": the minus sign applies to the feet only; read as written the point is 12.00 in away and 12.00 in off the line's centreline
 - **error** `coordinate-sign` sheet 2: CONT'D FROM ISO-P-1007 SH 1 prints E 165'-3" N -12'-6" EL 102'-0" for E 165'-3" N -11'-6" EL 102'-0": the minus sign applies to the feet only; read as written the point is 12.00 in away and 12.00 in off the line's centreline
 - **warning** `weld-unlabelled` weld 6"-P300-P-1007/W1 (E 164'-5" N -11'-6" EL 102'-0", sheet 1) has no label
 - **warning** `weld-unlabelled` branch weld 3/4"-P300-I-7033/W1 (E 166'-6" N -11'-6" EL 102'-5", sheet 2) has no label
