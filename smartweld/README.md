@@ -32,6 +32,7 @@ npm run export:wo  # regenerate public/workorders/, PDFs with the owner's sheets
 python3 -I tools/isomatch.py import <parts.pdf…>  # receive the owner's isometric drawings (stage 8)
 python3 -I tools/isomatch.py [--check]            # re-match the committed drawings to the model
 python3 -I tools/isomatch.py --selftest           # prove the fix list clears every finding
+python3 -I tools/evalscore.py key|receive|clear|score|selftest   # external test drawings (eval/README.md)
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
@@ -102,3 +103,9 @@ and its PDF pack attaches the sheets that hold the work.
 `FIXLIST.md` and `fixlist.json` turn every finding into an instruction for the drawings' author
 (SW-IMP-7). Fix list FL-1 (in git history) took revision 0 to revision 1; for revision 1 they state that
 no change is needed. A new revision is received with `python3 -I tools/isomatch.py import <parts…>`.
+
+External test drawings: isometrics drawn by a third party's software from this model are a test set
+only (DESIGN_BASIS.md §57). `eval/README.md` describes the steps: the answer key from the model, a
+receipt and two clearances per set, SmartWeld's own detection format, and the scores. The received
+drawings and the detections on them are kept in git-ignored folders and are never shipped or used for
+training.

@@ -1814,3 +1814,55 @@ written with Node's built-in zlib.
   - Lines are stroked as quadrilaterals with round joins.
 - `SW-REN-3` The images are for review and for the demo. Each image's file name and caption name
   the view, and the renderer that made it.
+
+## 57. External test drawings (`SW-EVAL-*`)
+
+Isometrics drawn by a third party's software from this model (for example a piping designer
+importing an export of the model) are used **only to test** SmartWeld's detection model, and the
+results guide SmartWeld's own generator. These rules keep that use apart from SmartWeld's clean-room
+work (§0, SW-LIC-*). PROVENANCE P-61.
+
+- `SW-EVAL-1` Test only, kept apart. External drawings are a test set and never training data.
+  - They are stored only in `eval/external/` (not committed, never in a deliverable or the demo
+    package) with the detection results on them (`eval/detections/`, same treatment).
+  - No dataset or export may contain a file whose SHA-256 appears in an evaluation receipt.
+  - The model weights are therefore trained without them.
+- `SW-EVAL-2` Admission. Each received set gets a receipt (`eval/receipts/<set>.json`, committed)
+  before use, recording:
+  - the files and their SHA-256;
+  - the software and version that drew them, and who drew them;
+  - two clearances: the contract reference that gives SmartWeld the work product and allows this use,
+    and the reference of the review of that software's licence for using its output to test AI.
+  The harness refuses to score a set whose two clearances are not both recorded.
+- `SW-EVAL-3` Answer key. What each drawing must show comes from the model alone (`eval/answer-key.json`,
+  committed). For every line: its line number, and every object in SmartWeld's class list with its tag:
+  - fittings: elbow, tee, reducer, cap, flange, blind;
+  - valves, by type: gate, ball, check, control, relief;
+  - butt welds, with the model's weld labels;
+  - supports, by type: hanger, shoe, guide, trunnion, anchor, stanchion, trapeze.
+  Classes are scored coarse (valve) and fine (valve/gate). Pipe runs, gaskets and stud sets are not
+  scored, since an isometric does not draw them as separate symbols. A small branch line counts with
+  its parent when the set draws it there; the receipt says which.
+- `SW-EVAL-4` Detections arrive in SmartWeld's own format (`eval/README.md`). For each page of a
+  received file, the page carries the line number the detector read and each detection's class, score,
+  box and any text read. Every page must belong to a file in the receipt (by SHA-256), and every class
+  must be in the class list.
+- `SW-EVAL-5` Scores, per line and for the set:
+  - Per class: expected count, detected count (score ≥ the threshold, 0.5 unless stated), the count
+    matched (the lesser of the two), missed, extra, and precision, recall and F1.
+  - Weld labels: the expected labels found among the texts read.
+  - Lines: line numbers read correctly.
+  - Where a hand-annotated sample of boxes exists, also box precision and recall at IoU ≥ 0.5 and the
+    mean IoU. These are counted per class, each detection matched once, highest score first.
+  - Count scores cannot tell an extra detection from a missed object found elsewhere on the same line
+    (an extra weld can offset a missed weld). Only the box scores locate each object, so a sample of
+    annotated sheets is recommended for each set.
+- `SW-EVAL-6` The feedback firewall. A report holds only numbers, class names, line numbers and tags
+  from the model, and notes written in SmartWeld's own words. It holds no image, crop, symbol shape,
+  font, title-block layout or copied text from an external drawing.
+  - A change to SmartWeld's generator made in response is written as a SmartWeld rule here, with its
+    reason citing the report, never the external drawing.
+  - The generator may vary its own drawings (sizes, angles, crowding, line weights, scan noise) to
+    close a measured gap. It is never changed to reproduce another product's appearance.
+  - The person or process that views external drawings writes the notes; whoever changes the
+    generator works from the notes and the numbers only.
