@@ -33,6 +33,7 @@ python3 -I tools/isomatch.py import <parts.pdf…>  # receive the owner's isomet
 python3 -I tools/isomatch.py [--check]            # re-match the committed drawings to the model
 python3 -I tools/isomatch.py --selftest           # prove the fix list clears every finding
 python3 -I tools/evalscore.py key|receive|clear|score|selftest   # external test drawings (eval/README.md)
+npx vite-node tools/designer-package.ts          # the model for a piping designer (downloads/designer-package.zip)
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,

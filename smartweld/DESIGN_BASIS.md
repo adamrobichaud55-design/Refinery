@@ -1866,3 +1866,49 @@ work (§0, SW-LIC-*). PROVENANCE P-61.
     close a measured gap. It is never changed to reproduce another product's appearance.
   - The person or process that views external drawings writes the notes; whoever changes the
     generator works from the notes and the numbers only.
+
+## 58. Exchange package for a piping designer (`SW-XCH-*`)
+
+The model is handed to a piping designer as a neutral export in SmartWeld's own format. The designer
+converts it into his software's exchange format on his side, under his own licence. SmartWeld
+consults no outside format description (PROVENANCE P-62).
+
+- `SW-XCH-1` Content, all from the ground truth (§41–44) and the plant piping:
+  - one line list with every line's header;
+  - one component list with every item of every line and every equipment nozzle neck: pipe,
+    fittings, flanges, blinds, gaskets, stud sets, valves;
+  - one weld list with the two parts each weld joins;
+  - one support list.
+  Each component row carries its tag, line, order along the line, type, SmartWeld part code,
+  description, sizes, pressure and line class, end types, material, weight, spool and cut length.
+  The files are CSV (one row per object) and the same data as one JSON file.
+- `SW-XCH-2` Geometry and connection:
+  - Positions are plant coordinates (SW-GT-2) in inches to 1/10 000 in, with millimetres alongside
+    (× 25.4, exact).
+  - Every component gives its two end points, an elbow or tee its centre point, and a tee its branch
+    end point, taken from the weld that joins the tee to its branch line.
+  - An angle valve (the relief valves) gives its inlet face, its body corner as the centre, and its
+    outlet face, which is where its outlet line starts.
+  - Components connect where their end points coincide (within 1/32 in). A branch line starts at
+    its parent tee's branch end.
+  - Welds name the two parts they join, so connection can also be read from the weld list.
+- `SW-XCH-3` Spec request list: every distinct part per line class (one row per part code, pipe by
+  size and class), with its count in the plant and every dimension the part's rules set (§29–32 and
+  the fitting, flange and valve rules), with its label, value and basis. The designer builds the
+  matching spec in his software from this list, so the model keeps SmartWeld's dimensions rather than
+  a stock catalogue's.
+- `SW-XCH-4` Pilot: the same files for three lines first, with their branch lines:
+  - 6"-P150-P-1001, a routed process line with two instrument taps;
+  - 1"-P150-HS-5002, a hose-station line;
+  - 3"-P150-SC-2004, a rack header.
+  Every line that taps into a pilot line, at its start or its end, is included too (repeatedly), so
+  no tee in the pilot is left open. A pilot line
+  that starts on a line outside the pilot is named in the README. The designer settles the mapping
+  and spec on these before the full plant.
+- `SW-XCH-5` The package's README:
+  - describes every file and field;
+  - asks the designer to keep the SmartWeld tag on each component as an attribute, so his drawings can
+    be scored item by item (SW-EVAL-5);
+  - asks him to return his bill of materials as a CSV report with the drawings;
+  - states that the contents are SmartWeld's confidential work.
+  A manifest lists every file with its SHA-256. The package holds no drawing and no outside material.
