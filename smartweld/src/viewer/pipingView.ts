@@ -197,7 +197,7 @@ export function importedBlock(idx: ImportedIndex, line: string, tag?: string): s
   const d = idx.drawings[r.drawing], w = tag ? idx.welds[tag] : undefined;
   const fs = d.findings.filter(f => f.level !== 'info'), mine = tag ? fs.filter(f => f.message.includes(tag)) : fs;
   return `<h3>Owner's isometric drawing</h3><p class="notes"><a href="isometrics-imported/${esc(d.file)}" target="_blank"><b>${esc(r.drawing)}</b></a> — ${d.sheets} sheet${d.sheets > 1 ? 's' : ''}${r.branchOf ? `, drawn on the sheets of ${esc(r.branchOf)}` : ''}.
-    ${w ? `This weld: <b>${esc(w.label)}</b>${w.sheet ? ` on sheet ${w.sheet}` : ''}${w.labelled.length ? '' : ' (not labelled on the drawing)'}.` : ''}
+    ${w ? `This weld: <b>${esc(w.label)}</b>${w.sheet ? ` on sheet ${w.sheet}` : ''}${w.labelled.length ? '' : ' (not labelled on this revision; fix list FL-1 asks for it)'}.` : ''}
     Match to the model: ${fs.length ? `${r.errors} error(s), ${r.warnings} warning(s)` : 'agrees'}.</p>
     ${mine.length ? `<details${tag ? ' open' : ''}><summary>${tag ? 'Findings for this item' : 'Findings'} (${mine.length})</summary><ul class="notes">${mine.map(f => `<li><b>${f.level}</b> ${esc(f.message)}</li>`).join('')}</ul></details>` : ''}`;
 }

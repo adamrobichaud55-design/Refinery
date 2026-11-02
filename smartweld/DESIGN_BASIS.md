@@ -1628,7 +1628,9 @@ reported for the drawing's author to resolve.
   "{design pressure} PSIG", insulation YES/NONE = insulated, fluid = service code, title = the line
   class's fluid name. A small branch line (a vent, drain, instrument or sample tap off a line,
   `from = "tap {parent}"`) without its own drawing is covered by its parent's drawing. The FROM / TO
-  label at an equipment end reads "{equipment} NOZ. {nozzle}"; a hose station "HOSE STATION". A tap
+  label at an equipment end reads "{equipment} NOZ. {nozzle}"; a hose station "HOSE STATION"; a
+  relief valve "PSV", or "PSV ON {equipment} NOZ. {nozzle}" for the outlet of the valve on that
+  nozzle. A tap
   end is shown by its continuation block, and caps and blinds by their symbols, so these need no
   label.
 - `SW-IMP-3` Position: the drawings use the model's plant coordinates (SW-GT-2). Each continuation
@@ -1639,18 +1641,25 @@ reported for the drawing's author to resolve.
   for that rounding and still catches any whole-inch error. Each CONT'D ON must equal the next
   sheet's CONT'D FROM. The breaks divide the line, by distance along the centreline (station), into
   its sheets.
-  - The drawings print a negative value that is not a whole number of feet as the feet rounded
-    down plus positive inches: "-12'-6"" means −138 in (−11'-6"), not −150 in. Every continuation
-    point in the set fits that reading, so the matcher uses it to place the breaks. Each such
-    printed value is still reported, because a reader in the field takes "-12'-6"" as −150 in.
+  - The sign convention is read from the drawing set. A negative value that is not a whole number
+    of feet can be printed the usual way ("-11'-6"" for −138 in, the sign applying to the whole
+    value) or with the sign on the feet only ("-12'-6"" for −138 in). Every point where only one
+    reading lies on the centreline decides; the matcher uses the reading the set's decisive points
+    agree on to place the breaks. Rev 0 of the owner's set uses the feet-only form throughout.
+    Each value printed in the feet-only form is still reported, because a reader in the field
+    takes "-12'-6"" as −150 in. If decisive points disagree, each point is judged on its own and
+    every one in the feet-only form is reported.
 - `SW-IMP-4` Content: the bill of materials on each sheet is compared, row by row and by
   description, with the model's items and supports on that sheet. These are the items whose centre
   falls between the sheet's breaks, plus the items of branch lines drawn on it. The model's pipe is
   split exactly at the breaks. The comparison is repeated for the drawing's totals. Pipe lengths
   agree when they differ by no more than 1/16 in per bill row (the printing resolution).
-  - Weld labels: the line's own welds carry the model's numbers (W1…Wn). The welds of branch lines
-    drawn on the sheets continue the numbering in order along the line (Wn+1…). This is the
-    drawings' own scheme, read from them (ISO-P-1002 labels its branch welds W11 and W12).
+  - Weld labels: the line's own welds carry the model's numbers (W1…Wn). A weld of a branch line
+    drawn on the sheets is labelled with the branch's service and sequence and its own number,
+    as in the model's tag: "I-7001/W1" for `3/4"-P300-I-7001/W1`. Rev 0 of the owner's set instead
+    continues the parent's numbering in order along the line (Wn+1…; ISO-P-1002 labels its
+    branch welds W11 and W12). Both forms are accepted, and the fix list (SW-IMP-7) asks for the
+    model's form.
   - Each label must be on the sheet that holds the weld's position. A weld with no label, or a
     label repeated on a second sheet, is reported.
   - Not checked: printed dimension strings (set along the pipe at an angle, so they do not read
@@ -1668,6 +1677,16 @@ reported for the drawing's author to resolve.
   - The viewer's line inspector, the work-order data and packs, and the demo package link each
     line to its imported drawing beside the generated isometric (SW-ISO-1).
 
+- `SW-IMP-7` Fix list: every finding becomes an instruction to the drawings' author, written by
+  the matcher as `FIXLIST.md` (to read) and `fixlist.json` (for the generator).
+  - Each instruction names the drawing, the sheet, the item or weld by its model tag, the exact
+    text to print, and the model position (plant coordinates) it belongs at. Unlabelled welds also
+    name the labelled welds on either side.
+  - The list states the rules the corrected set must follow and the acceptance checks. Its
+    acceptance is a re-import with no error or warning.
+  - Nothing in the model changes. The corrected drawings are a new revision of the same drawing
+    numbers.
+
 ## 54. Tests required for stage 8
 
 - Every model line maps to one imported drawing, and every drawing to one model line.
@@ -1676,4 +1695,8 @@ reported for the drawing's author to resolve.
 - Every sheet's bill and every drawing's totals agree with the model. Every continuation point is
   on the centreline under SW-IMP-3. No weld label is unknown to the model.
 - Every work order that lists a line lists that line's imported drawing.
+- The fix list holds one instruction for every finding, and every instruction names a drawing,
+  sheet and tag of the model.
+- Applied to the parsed sheets, the fix list leaves no finding and no change, and the corrected set
+  reads with the usual sign convention (`tools/isomatch.py --selftest`).
 - Every stage-8 rule ID used in code is written here.

@@ -31,6 +31,7 @@ npm run export:wo  # regenerate public/isometrics/ and public/workorders/ (secon
 npm run wo:pdf     # print every work-order pack to PDF (public/workorders/pdf/)
 python3 -I tools/isomatch.py import <parts.pdf…>  # receive the owner's isometric drawings (stage 8)
 python3 -I tools/isomatch.py [--check]            # re-match the committed drawings to the model
+python3 -I tools/isomatch.py --selftest           # prove the fix list clears every finding
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
@@ -96,3 +97,7 @@ without a number, repeated labels, a few labels on the neighbouring sheet, and m
 labels (DESIGN_BASIS.md §53). In the viewer, a line or a clicked item shows its drawing, the weld's
 label and sheet, and the findings; each work order links its lines' drawings, and its new welds
 say where the weld they replace is on them.
+`FIXLIST.md` and `fixlist.json` (fix list FL-1) turn every finding into an instruction for the
+drawings' author: the rules for revision 1, the acceptance checks, and each change with its drawing,
+sheet, model tag, exact text and model position (SW-IMP-7). Re-import the corrected set with
+`python3 -I tools/isomatch.py import <parts…>`; it should report no findings.

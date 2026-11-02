@@ -1,0 +1,4052 @@
+{
+ "id": "FL-1",
+ "issued": "2026-11-02",
+ "forWhom": "The isometric generator that drew SmartWeld-plant-isometrics-27bc863.pdf (Rev 0).",
+ "basis": {
+  "groundTruth": "smartweld/public/groundtruth at commit c35ea3396121 (unchanged)",
+  "designBasis": "DESIGN_BASIS.md §53 SW-IMP-1..7",
+  "received": [
+   {
+    "file": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+    "sha256": "b5d33506236dc412d04acd66a42436dff5fe2a2fa393d6b1b93d9c0c696fb37b"
+   },
+   {
+    "file": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+    "sha256": "998e1cfac2c59d5d5561ba29a3e571663f307cc985a9b5431278646c860931ad"
+   },
+   {
+    "file": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+    "sha256": "e4fdddcec39265fb0533683d80d0769708f6baac45838182585519d580d6885f"
+   }
+  ]
+ },
+ "rules": [
+  {
+   "id": "R1",
+   "title": "Coordinates",
+   "rule": "A negative value's minus sign applies to the whole value: format the size of the value in feet and inches, then put '-' in front. -138 in prints -11'-6\" (Rev 0 printed -12'-6\", which a reader takes as -150 in); -6 in prints -6\". This applies wherever a coordinate is printed (continuation blocks and end points)."
+  },
+  {
+   "id": "R2",
+   "title": "Weld labels",
+   "rule": "Label every weld exactly once, on the sheet that holds its position: the sheet whose two breaks (CONT'D ON / FROM points) bracket the weld's distance along the line. Never leave a weld dot without its label because of crowding; move the label or lengthen its leader instead. A weld close to a break is labelled only on its own sheet."
+  },
+  {
+   "id": "R3",
+   "title": "Branch welds",
+   "rule": "A weld of a vent, drain, instrument or sample tap drawn on its parent line's sheets is labelled with its model tag's form {service}-{sequence}/W{n}: I-7001/W1 for the weld 3/4\"-P300-I-7001/W1. Rev 0 continued the parent's numbering (W29, W30, ...), and those numbers do not exist in the model."
+  },
+  {
+   "id": "R4",
+   "title": "FROM / TO labels",
+   "rule": "Print a FROM label at the start and a TO label at the end of every line whose end is an equipment nozzle ('TO P-101A NOZ. S'), a relief valve ('TO PSV', 'FROM PSV ON D-101 NOZ. N3') or a hose station ('TO HOSE STATION'). A tap end is shown by its CONT'D block, and a cap or blind by its symbol."
+  },
+  {
+   "id": "R5",
+   "title": "Revision",
+   "rule": "Issue the corrected set as revision 1 of the same drawing numbers and sheet split: REV 1 in every title block and a revision row '1 <date> REVISED TO MATCH THE MODEL (FL-1)'. Change nothing else: the bills, pipe lengths, sheet breaks, title blocks and coverage already agree with the model."
+  }
+ ],
+ "acceptance": [
+  "A re-import here (python3 -I tools/isomatch.py import <parts>) reports 0 errors and 0 warnings.",
+  "All 203 lines are covered; every bill, pipe length, title block and sheet break still agrees with the model.",
+  "The set reads with the usual sign convention (summary coordinateSign: conventional).",
+  "Every weld of every line and branch carries its model label once, on its own sheet."
+ ],
+ "counts": {
+  "drawings": 64,
+  "changes": 188,
+  "byKind": {
+   "coordinate-text": 22,
+   "end-label-add": 23,
+   "weld-label-add": 98,
+   "weld-label-move": 3,
+   "weld-label-remove": 17,
+   "weld-relabel": 25
+  }
+ },
+ "drawings": {
+  "ISO-P-1001": {
+   "line": "6\"-P150-P-1001",
+   "sheets": 5,
+   "branches": [
+    "3/4\"-P300-I-7001",
+    "3/4\"-P300-I-7030"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 4,
+     "tag": "3/4\"-P300-I-7001/W1",
+     "label": "I-7001/W1",
+     "at": {
+      "E": 1830,
+      "N": 0,
+      "EL": 1409
+     },
+     "between": {
+      "before": "W14",
+      "after": "W15"
+     },
+     "instruction": "Label the weld dot I-7001/W1, between W14 and W15.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1001/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 4,
+     "tag": "3/4\"-P300-I-7030/W1",
+     "label": "I-7030/W1",
+     "at": {
+      "E": 1818,
+      "N": 0,
+      "EL": 1409
+     },
+     "between": {
+      "before": "W12",
+      "after": "W13"
+     },
+     "instruction": "Label the weld dot I-7030/W1, between W12 and W13.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1001/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 4,
+     "tag": "6\"-P150-P-1001/W21",
+     "label": "W21",
+     "printed": "W21",
+     "keepOn": 5,
+     "instruction": "Remove label W21 from sheet 4; it stays on sheet 5, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1001/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 5,
+     "block": "CONT'D ON ISO-P-1002",
+     "at": {
+      "E": 1853,
+      "N": -138,
+      "EL": 1224
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-12'-6\"",
+       "correct": "-11'-6\""
+      }
+     ],
+     "instruction": "print N -11'-6\" (not -12'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1001/04",
+     "rule": "R1"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 5,
+     "text": "TO P-101A NOZ. S",
+     "at": {
+      "E": 1848,
+      "N": -184.4375,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-101A NOZ. S' at the line's end (E 154'-0\" N -15'-4 7/16\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1001/05",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-P-1002": {
+   "line": "6\"-P150-P-1002",
+   "sheets": 1,
+   "branches": [
+    "3/4\"-P300-I-7002",
+    "3/4\"-P300-I-7031"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D FROM ISO-P-1001 SH 5",
+     "at": {
+      "E": 1853,
+      "N": -138,
+      "EL": 1224
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-12'-6\"",
+       "correct": "-11'-6\""
+      }
+     ],
+     "instruction": "print N -11'-6\" (not -12'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1002/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7002/W1",
+     "label": "I-7002/W1",
+     "printed": "W12",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W12 as I-7002/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1002/02",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7031/W1",
+     "label": "I-7031/W1",
+     "printed": "W11",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W11 as I-7031/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1002/03",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-P-1003": {
+   "line": "4\"-P300-P-1003",
+   "sheets": 3,
+   "branches": [
+    "3/4\"-P300-I-7003",
+    "3/4\"-P300-SP-7022"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D ON ISO-P-1004",
+     "at": {
+      "E": 1851.3125,
+      "N": -198,
+      "EL": 1290
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-17'-6\"",
+       "correct": "-16'-6\""
+      }
+     ],
+     "instruction": "print N -16'-6\" (not -17'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1003/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 2,
+     "block": "CONT'D ON ISO-P-1003 SH 3",
+     "at": {
+      "E": 1326,
+      "N": -39,
+      "EL": 1422
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-4'-9\"",
+       "correct": "-3'-3\""
+      }
+     ],
+     "instruction": "print N -3'-3\" (not -4'-9\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1003/02",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "3/4\"-P300-I-7003/W1",
+     "label": "I-7003/W1",
+     "at": {
+      "E": 1326,
+      "N": -30,
+      "EL": 1425.3333
+     },
+     "between": {
+      "before": "W16",
+      "after": "W17"
+     },
+     "instruction": "Label the weld dot I-7003/W1, between W16 and W17.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1003/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 2,
+     "tag": "4\"-P300-P-1003/W18",
+     "label": "W18",
+     "printed": "W18",
+     "keepOn": 3,
+     "instruction": "Remove label W18 from sheet 2; it stays on sheet 3, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1003/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 3,
+     "block": "CONT'D FROM ISO-P-1003 SH 2",
+     "at": {
+      "E": 1326,
+      "N": -39,
+      "EL": 1422
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-4'-9\"",
+       "correct": "-3'-3\""
+      }
+     ],
+     "instruction": "print N -3'-3\" (not -4'-9\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1003/05",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "3/4\"-P300-SP-7022/W1",
+     "label": "SP-7022/W1",
+     "at": {
+      "E": 1326,
+      "N": -48,
+      "EL": 1425.3333
+     },
+     "between": {
+      "before": "W18",
+      "after": "W19"
+     },
+     "instruction": "Label the weld dot SP-7022/W1, between W18 and W19.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1003/06",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-P-1004": {
+   "line": "4\"-P300-P-1004",
+   "sheets": 1,
+   "branches": [
+    "3/4\"-P300-I-7004",
+    "3/4\"-P300-SP-7023"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D ON ISO-P-1003 SH 1",
+     "at": {
+      "E": 1851.3125,
+      "N": -198,
+      "EL": 1290
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-17'-6\"",
+       "correct": "-16'-6\""
+      }
+     ],
+     "instruction": "print N -16'-6\" (not -17'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1004/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7004/W1",
+     "label": "I-7004/W1",
+     "printed": "W11",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W11 as I-7004/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1004/02",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-SP-7023/W1",
+     "label": "SP-7023/W1",
+     "printed": "W10",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W10 as SP-7023/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1004/03",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-P-1005": {
+   "line": "4\"-P300-P-1005",
+   "sheets": 4,
+   "branches": [
+    "3/4\"-P300-I-7005"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "4\"-P300-P-1005/W11",
+     "label": "W11",
+     "at": {
+      "E": 1308.6667,
+      "N": -48,
+      "EL": 1398
+     },
+     "between": {
+      "before": "W10",
+      "after": null
+     },
+     "instruction": "Label the weld dot W11, after W10.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1005/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "3/4\"-P300-I-7005/W1",
+     "label": "I-7005/W1",
+     "at": {
+      "E": 1308,
+      "N": -24,
+      "EL": 1401.3333
+     },
+     "between": {
+      "before": "W16",
+      "after": "W17"
+     },
+     "instruction": "Label the weld dot I-7005/W1, between W16 and W17.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1005/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 2,
+     "tag": "4\"-P300-P-1005/W18",
+     "label": "W18",
+     "printed": "W18",
+     "keepOn": 3,
+     "instruction": "Remove label W18 from sheet 2; it stays on sheet 3, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1005/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "4\"-P300-P-1005/W19",
+     "label": "W19",
+     "at": {
+      "E": 408.6667,
+      "N": -24,
+      "EL": 1398
+     },
+     "between": {
+      "before": "W18",
+      "after": "W20"
+     },
+     "instruction": "Label the weld dot W19, between W18 and W20.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1005/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 4,
+     "tag": "4\"-P300-P-1005/W21",
+     "label": "W21",
+     "at": {
+      "E": 402,
+      "N": -24,
+      "EL": 1415.3333
+     },
+     "between": {
+      "before": null,
+      "after": "W22"
+     },
+     "instruction": "Label the weld dot W21, before W22.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1005/05",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-P-1006": {
+   "line": "6\"-P300-P-1006",
+   "sheets": 7,
+   "branches": [
+    "3/4\"-P300-I-7006",
+    "3/4\"-P300-I-7032"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "6\"-P300-P-1006/W9",
+     "label": "W9",
+     "at": {
+      "E": 412,
+      "N": 12,
+      "EL": 1404
+     },
+     "between": {
+      "before": "W8",
+      "after": null
+     },
+     "instruction": "Label the weld dot W9, after W8.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1006/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 5,
+     "tag": "3/4\"-P300-I-7006/W1",
+     "label": "I-7006/W1",
+     "at": {
+      "E": 1950,
+      "N": 12,
+      "EL": 1409
+     },
+     "between": {
+      "before": "W15",
+      "after": "W16"
+     },
+     "instruction": "Label the weld dot I-7006/W1, between W15 and W16.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1006/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 5,
+     "tag": "3/4\"-P300-I-7032/W1",
+     "label": "I-7032/W1",
+     "at": {
+      "E": 1938,
+      "N": 12,
+      "EL": 1409
+     },
+     "between": {
+      "before": "W13",
+      "after": "W14"
+     },
+     "instruction": "Label the weld dot I-7032/W1, between W13 and W14.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1006/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 5,
+     "tag": "6\"-P300-P-1006/W19",
+     "label": "W19",
+     "printed": "W19",
+     "keepOn": 6,
+     "instruction": "Remove label W19 from sheet 5; it stays on sheet 6, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1006/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 5,
+     "tag": "6\"-P300-P-1006/W20",
+     "label": "W20",
+     "printed": "W20",
+     "keepOn": 6,
+     "instruction": "Remove label W20 from sheet 5; it stays on sheet 6, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1006/05",
+     "rule": "R2"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 7,
+     "block": "CONT'D ON ISO-P-1007 SH 1",
+     "at": {
+      "E": 1973,
+      "N": -138,
+      "EL": 1224
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-12'-6\"",
+       "correct": "-11'-6\""
+      }
+     ],
+     "instruction": "print N -11'-6\" (not -12'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1006/06",
+     "rule": "R1"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 7,
+     "text": "TO P-102A NOZ. S",
+     "at": {
+      "E": 1968,
+      "N": -184.4375,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-102A NOZ. S' at the line's end (E 164'-0\" N -15'-4 7/16\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1006/07",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-P-1007": {
+   "line": "6\"-P300-P-1007",
+   "sheets": 2,
+   "branches": [
+    "3/4\"-P300-I-7007",
+    "3/4\"-P300-I-7033"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D ON ISO-P-1007 SH 2",
+     "at": {
+      "E": 1983,
+      "N": -138,
+      "EL": 1224
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-12'-6\"",
+       "correct": "-11'-6\""
+      }
+     ],
+     "instruction": "print N -11'-6\" (not -12'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1007/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D FROM ISO-P-1006 SH 7",
+     "at": {
+      "E": 1973,
+      "N": -138,
+      "EL": 1224
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-12'-6\"",
+       "correct": "-11'-6\""
+      }
+     ],
+     "instruction": "print N -11'-6\" (not -12'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1007/02",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "6\"-P300-P-1007/W1",
+     "label": "W1",
+     "at": {
+      "E": 1973,
+      "N": -138,
+      "EL": 1224
+     },
+     "between": {
+      "before": null,
+      "after": null
+     },
+     "instruction": "Label the weld dot W1.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1007/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 2,
+     "block": "CONT'D FROM ISO-P-1007 SH 1",
+     "at": {
+      "E": 1983,
+      "N": -138,
+      "EL": 1224
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-12'-6\"",
+       "correct": "-11'-6\""
+      }
+     ],
+     "instruction": "print N -11'-6\" (not -12'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1007/04",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "3/4\"-P300-I-7007/W1",
+     "label": "I-7007/W1",
+     "at": {
+      "E": 2010,
+      "N": -138,
+      "EL": 1229
+     },
+     "between": {
+      "before": "W4",
+      "after": "W5"
+     },
+     "instruction": "Label the weld dot I-7007/W1, between W4 and W5.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1007/05",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "3/4\"-P300-I-7033/W1",
+     "label": "I-7033/W1",
+     "at": {
+      "E": 1998,
+      "N": -138,
+      "EL": 1229
+     },
+     "between": {
+      "before": "W2",
+      "after": "W3"
+     },
+     "instruction": "Label the weld dot I-7033/W1, between W2 and W3.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1007/06",
+     "rule": "R2"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 2,
+     "text": "TO P-102B NOZ. S",
+     "at": {
+      "E": 2028,
+      "N": -184.4375,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-102B NOZ. S' at the line's end (E 169'-0\" N -15'-4 7/16\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1007/07",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-P-1008": {
+   "line": "4\"-P300-P-1008",
+   "sheets": 3,
+   "branches": [
+    "3/4\"-P300-I-7008",
+    "3/4\"-P300-SP-7024"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D ON ISO-P-1009",
+     "at": {
+      "E": 1971.3125,
+      "N": -198,
+      "EL": 1290
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-17'-6\"",
+       "correct": "-16'-6\""
+      }
+     ],
+     "instruction": "print N -16'-6\" (not -17'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1008/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "3/4\"-P300-I-7008/W1",
+     "label": "I-7008/W1",
+     "at": {
+      "E": 1620,
+      "N": 24,
+      "EL": 1401.3333
+     },
+     "between": {
+      "before": "W13",
+      "after": null
+     },
+     "instruction": "Label the weld dot I-7008/W1, after W13.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1008/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "3/4\"-P300-SP-7024/W1",
+     "label": "SP-7024/W1",
+     "at": {
+      "E": 1632,
+      "N": 24,
+      "EL": 1401.3333
+     },
+     "between": {
+      "before": "W11",
+      "after": "W12"
+     },
+     "instruction": "Label the weld dot SP-7024/W1, between W11 and W12.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1008/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "4\"-P300-P-1008/W14",
+     "label": "W14",
+     "at": {
+      "E": 1616.6667,
+      "N": 24,
+      "EL": 1398
+     },
+     "between": {
+      "before": "W13",
+      "after": null
+     },
+     "instruction": "Label the weld dot W14, after W13.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1008/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 2,
+     "tag": "4\"-P300-P-1008/W15",
+     "label": "W15",
+     "printed": "W15",
+     "keepOn": 3,
+     "instruction": "Remove label W15 from sheet 2; it stays on sheet 3, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1008/05",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-P-1009": {
+   "line": "4\"-P300-P-1009",
+   "sheets": 1,
+   "branches": [
+    "3/4\"-P300-I-7009",
+    "3/4\"-P300-SP-7025"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D ON ISO-P-1008 SH 1",
+     "at": {
+      "E": 1971.3125,
+      "N": -198,
+      "EL": 1290
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-17'-6\"",
+       "correct": "-16'-6\""
+      }
+     ],
+     "instruction": "print N -16'-6\" (not -17'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1009/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7009/W1",
+     "label": "I-7009/W1",
+     "printed": "W11",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W11 as I-7009/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1009/02",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-SP-7025/W1",
+     "label": "SP-7025/W1",
+     "printed": "W10",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W10 as SP-7025/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1009/03",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-P-1010": {
+   "line": "4\"-P300-P-1010",
+   "sheets": 4,
+   "branches": [
+    "3/4\"-P300-I-7010"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D ON ISO-P-1010 SH 2",
+     "at": {
+      "E": 1602,
+      "N": -185.6875,
+      "EL": 1350
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-16'-6 5/16\"",
+       "correct": "-15'-5 11/16\""
+      }
+     ],
+     "instruction": "print N -15'-5 11/16\" (not -16'-6 5/16\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1010/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 2,
+     "block": "CONT'D FROM ISO-P-1010 SH 1",
+     "at": {
+      "E": 1602,
+      "N": -185.6875,
+      "EL": 1350
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-16'-6 5/16\"",
+       "correct": "-15'-5 11/16\""
+      }
+     ],
+     "instruction": "print N -15'-5 11/16\" (not -16'-6 5/16\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1010/02",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "3/4\"-P300-I-7010/W1",
+     "label": "I-7010/W1",
+     "at": {
+      "E": 840,
+      "N": 36,
+      "EL": 1401.3333
+     },
+     "between": {
+      "before": "W13",
+      "after": "W14"
+     },
+     "instruction": "Label the weld dot I-7010/W1, between W13 and W14.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1010/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 4,
+     "text": "TO C-101 NOZ. N1",
+     "at": {
+      "E": 822,
+      "N": 267.9375,
+      "EL": 1392
+     },
+     "instruction": "Print 'TO C-101 NOZ. N1' at the line's end (E 68'-6\" N 22'-3 15/16\" EL 116'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1010/04",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-P-1011": {
+   "line": "6\"-P300-P-1011",
+   "sheets": 2,
+   "branches": [
+    "3/4\"-P300-I-7011"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7011/W1",
+     "label": "I-7011/W1",
+     "at": {
+      "E": 827,
+      "N": 6,
+      "EL": 1440
+     },
+     "between": {
+      "before": "W8",
+      "after": "W9"
+     },
+     "instruction": "Label the weld dot I-7011/W1, between W8 and W9.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1011/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 1,
+     "tag": "6\"-P300-P-1011/W14",
+     "label": "W14",
+     "printed": "W14",
+     "keepOn": 2,
+     "instruction": "Remove label W14 from sheet 1; it stays on sheet 2, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1011/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "6\"-P300-P-1011/W20",
+     "label": "W20",
+     "at": {
+      "E": 1068,
+      "N": 300,
+      "EL": 1322.4688
+     },
+     "between": {
+      "before": "W19",
+      "after": null
+     },
+     "instruction": "Label the weld dot W20, after W19.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1011/03",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-P-1012": {
+   "line": "6\"-P300-P-1012",
+   "sheets": 2,
+   "branches": [
+    "3/4\"-P300-I-7012"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7012/W1",
+     "label": "I-7012/W1",
+     "at": {
+      "E": 1194,
+      "N": 252,
+      "EL": 1367
+     },
+     "between": {
+      "before": "W8",
+      "after": "W9"
+     },
+     "instruction": "Label the weld dot I-7012/W1, between W8 and W9.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1012/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 1,
+     "tag": "6\"-P300-P-1012/W10",
+     "label": "W10",
+     "printed": "W10",
+     "keepOn": 2,
+     "instruction": "Remove label W10 from sheet 1; it stays on sheet 2, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1012/02",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-P-1013": {
+   "line": "4\"-P300-P-1013",
+   "sheets": 5,
+   "branches": [
+    "3/4\"-P300-I-7013",
+    "3/4\"-P300-I-7034"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "4\"-P300-P-1013/W11",
+     "label": "W11",
+     "at": {
+      "E": 1182.6667,
+      "N": 48,
+      "EL": 1398
+     },
+     "between": {
+      "before": "W10",
+      "after": "W12"
+     },
+     "instruction": "Label the weld dot W11, between W10 and W12.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1013/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "3/4\"-P300-I-7013/W1",
+     "label": "I-7013/W1",
+     "at": {
+      "E": 2070,
+      "N": 48,
+      "EL": 1401.3333
+     },
+     "between": {
+      "before": "W15",
+      "after": null
+     },
+     "instruction": "Label the weld dot I-7013/W1, after W15.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1013/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "3/4\"-P300-I-7034/W1",
+     "label": "I-7034/W1",
+     "at": {
+      "E": 2058,
+      "N": 48,
+      "EL": 1401.3333
+     },
+     "between": {
+      "before": "W13",
+      "after": "W14"
+     },
+     "instruction": "Label the weld dot I-7034/W1, between W13 and W14.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1013/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "4\"-P300-P-1013/W16",
+     "label": "W16",
+     "at": {
+      "E": 2073.3333,
+      "N": 48,
+      "EL": 1398
+     },
+     "between": {
+      "before": "W15",
+      "after": null
+     },
+     "instruction": "Label the weld dot W16, after W15.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1013/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 3,
+     "tag": "4\"-P300-P-1013/W17",
+     "label": "W17",
+     "printed": "W17",
+     "keepOn": 4,
+     "instruction": "Remove label W17 from sheet 3; it stays on sheet 4, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1013/05",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 3,
+     "tag": "4\"-P300-P-1013/W18",
+     "label": "W18",
+     "printed": "W18",
+     "keepOn": 4,
+     "instruction": "Remove label W18 from sheet 3; it stays on sheet 4, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1013/06",
+     "rule": "R2"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 4,
+     "block": "CONT'D ON ISO-P-1013 SH 5",
+     "at": {
+      "E": 2088,
+      "N": -116.1875,
+      "EL": 1224
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-10'-3 13/16\"",
+       "correct": "-9'-8 3/16\""
+      }
+     ],
+     "instruction": "print N -9'-8 3/16\" (not -10'-3 13/16\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1013/07",
+     "rule": "R1"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 5,
+     "block": "CONT'D FROM ISO-P-1013 SH 4",
+     "at": {
+      "E": 2088,
+      "N": -116.1875,
+      "EL": 1224
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-10'-3 13/16\"",
+       "correct": "-9'-8 3/16\""
+      }
+     ],
+     "instruction": "print N -9'-8 3/16\" (not -10'-3 13/16\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1013/08",
+     "rule": "R1"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 5,
+     "text": "TO P-103A NOZ. S",
+     "at": {
+      "E": 2088,
+      "N": -184.4375,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-103A NOZ. S' at the line's end (E 174'-0\" N -15'-4 7/16\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1013/09",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-P-1014": {
+   "line": "4\"-P300-P-1014",
+   "sheets": 1,
+   "branches": [
+    "3/4\"-P300-I-7014",
+    "3/4\"-P300-I-7035"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7035/W1",
+     "label": "I-7035/W1",
+     "at": {
+      "E": 2118,
+      "N": -132,
+      "EL": 1227.3333
+     },
+     "between": {
+      "before": "W2",
+      "after": "W3"
+     },
+     "instruction": "Label the weld dot I-7035/W1, between W2 and W3.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1014/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7014/W1",
+     "label": "I-7014/W1",
+     "printed": "W12",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W12 as I-7014/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1014/02",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-P-1015": {
+   "line": "3\"-P300-P-1015",
+   "sheets": 6,
+   "branches": [
+    "3/4\"-P300-I-7015",
+    "3/4\"-P300-SP-7026"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D ON ISO-P-1016",
+     "at": {
+      "E": 2090.5,
+      "N": -198,
+      "EL": 1290
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-17'-6\"",
+       "correct": "-16'-6\""
+      }
+     ],
+     "instruction": "print N -16'-6\" (not -17'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1015/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 5,
+     "tag": "3\"-P300-P-1015/W16",
+     "label": "W16",
+     "at": {
+      "E": 822,
+      "N": -60,
+      "EL": 1495
+     },
+     "between": {
+      "before": "W15",
+      "after": "W18"
+     },
+     "instruction": "Label the weld dot W16, between W15 and W18.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1015/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 5,
+     "tag": "3\"-P300-P-1015/W17",
+     "label": "W17",
+     "at": {
+      "E": 827,
+      "N": -60,
+      "EL": 1500
+     },
+     "between": {
+      "before": "W15",
+      "after": "W18"
+     },
+     "instruction": "Label the weld dot W17, between W15 and W18.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1015/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 5,
+     "tag": "3\"-P300-P-1015/W19",
+     "label": "W19",
+     "at": {
+      "E": 834,
+      "N": -55,
+      "EL": 1500
+     },
+     "between": {
+      "before": "W18",
+      "after": "W21"
+     },
+     "instruction": "Label the weld dot W19, between W18 and W21.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1015/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 5,
+     "tag": "3\"-P300-P-1015/W20",
+     "label": "W20",
+     "at": {
+      "E": 834,
+      "N": -50.5,
+      "EL": 1500
+     },
+     "between": {
+      "before": "W18",
+      "after": "W21"
+     },
+     "instruction": "Label the weld dot W20, between W18 and W21.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1015/05",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 5,
+     "tag": "3/4\"-P300-I-7015/W1",
+     "label": "I-7015/W1",
+     "at": {
+      "E": 824.5,
+      "N": -60,
+      "EL": 1488
+     },
+     "between": {
+      "before": "W14",
+      "after": "W15"
+     },
+     "instruction": "Label the weld dot I-7015/W1, between W14 and W15.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1015/06",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 5,
+     "tag": "3/4\"-P300-SP-7026/W1",
+     "label": "SP-7026/W1",
+     "at": {
+      "E": 831.5,
+      "N": -48,
+      "EL": 1500
+     },
+     "between": {
+      "before": "W18",
+      "after": "W21"
+     },
+     "instruction": "Label the weld dot SP-7026/W1, between W18 and W21.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1015/07",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 5,
+     "tag": "3\"-P300-P-1015/W22",
+     "label": "W22",
+     "printed": "W22",
+     "keepOn": 6,
+     "instruction": "Remove label W22 from sheet 5; it stays on sheet 6, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1015/08",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 5,
+     "tag": "3\"-P300-P-1015/W23",
+     "label": "W23",
+     "printed": "W23",
+     "keepOn": 6,
+     "instruction": "Remove label W23 from sheet 5; it stays on sheet 6, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1015/09",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 6,
+     "tag": "3\"-P300-P-1015/W26",
+     "label": "W26",
+     "at": {
+      "E": 822,
+      "N": 179.5625,
+      "EL": 1500
+     },
+     "between": {
+      "before": "W25",
+      "after": "W27"
+     },
+     "instruction": "Label the weld dot W26, between W25 and W27.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1015/10",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-P-1016": {
+   "line": "3\"-P300-P-1016",
+   "sheets": 1,
+   "branches": [
+    "3/4\"-P300-I-7016",
+    "3/4\"-P300-SP-7027"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D ON ISO-P-1015 SH 1",
+     "at": {
+      "E": 2090.5,
+      "N": -198,
+      "EL": 1290
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-17'-6\"",
+       "correct": "-16'-6\""
+      }
+     ],
+     "instruction": "print N -16'-6\" (not -17'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1016/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7016/W1",
+     "label": "I-7016/W1",
+     "printed": "W9",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W9 as I-7016/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1016/02",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-SP-7027/W1",
+     "label": "SP-7027/W1",
+     "printed": "W10",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W10 as SP-7027/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1016/03",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-P-1017": {
+   "line": "6\"-P300-P-1017",
+   "sheets": 4,
+   "branches": [
+    "3/4\"-P300-I-7017",
+    "3/4\"-P300-I-7036"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "3/4\"-P300-I-7017/W1",
+     "label": "I-7017/W1",
+     "at": {
+      "E": 1380,
+      "N": 24,
+      "EL": 1409
+     },
+     "between": {
+      "before": "W13",
+      "after": "W14"
+     },
+     "instruction": "Label the weld dot I-7017/W1, between W13 and W14.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1017/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "3/4\"-P300-I-7036/W1",
+     "label": "I-7036/W1",
+     "at": {
+      "E": 1368,
+      "N": 24,
+      "EL": 1409
+     },
+     "between": {
+      "before": "W11",
+      "after": "W12"
+     },
+     "instruction": "Label the weld dot I-7036/W1, between W11 and W12.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1017/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 3,
+     "tag": "6\"-P300-P-1017/W17",
+     "label": "W17",
+     "printed": "W17",
+     "keepOn": 4,
+     "instruction": "Remove label W17 from sheet 3; it stays on sheet 4, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1017/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 3,
+     "tag": "6\"-P300-P-1017/W18",
+     "label": "W18",
+     "printed": "W18",
+     "keepOn": 4,
+     "instruction": "Remove label W18 from sheet 3; it stays on sheet 4, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1017/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 4,
+     "text": "TO P-104A NOZ. S",
+     "at": {
+      "E": 1398,
+      "N": 184.4375,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-104A NOZ. S' at the line's end (E 116'-6\" N 15'-4 7/16\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1017/05",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-P-1018": {
+   "line": "6\"-P300-P-1018",
+   "sheets": 2,
+   "branches": [
+    "3/4\"-P300-I-7018",
+    "3/4\"-P300-I-7037"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "6\"-P300-P-1018/W1",
+     "label": "W1",
+     "at": {
+      "E": 1403,
+      "N": 138,
+      "EL": 1224
+     },
+     "between": {
+      "before": null,
+      "after": null
+     },
+     "instruction": "Label the weld dot W1.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1018/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "3/4\"-P300-I-7018/W1",
+     "label": "I-7018/W1",
+     "at": {
+      "E": 1440,
+      "N": 138,
+      "EL": 1229
+     },
+     "between": {
+      "before": "W4",
+      "after": "W5"
+     },
+     "instruction": "Label the weld dot I-7018/W1, between W4 and W5.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1018/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "3/4\"-P300-I-7037/W1",
+     "label": "I-7037/W1",
+     "at": {
+      "E": 1428,
+      "N": 138,
+      "EL": 1229
+     },
+     "between": {
+      "before": null,
+      "after": "W3"
+     },
+     "instruction": "Label the weld dot I-7037/W1, before W3.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1018/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "6\"-P300-P-1018/W2",
+     "label": "W2",
+     "at": {
+      "E": 1423,
+      "N": 138,
+      "EL": 1224
+     },
+     "between": {
+      "before": null,
+      "after": "W3"
+     },
+     "instruction": "Label the weld dot W2, before W3.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1018/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "6\"-P300-P-1018/W8",
+     "label": "W8",
+     "at": {
+      "E": 1458,
+      "N": 150.1079,
+      "EL": 1224
+     },
+     "between": {
+      "before": "W7",
+      "after": "W9"
+     },
+     "instruction": "Label the weld dot W8, between W7 and W9.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1018/05",
+     "rule": "R2"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 2,
+     "text": "TO P-104B NOZ. S",
+     "at": {
+      "E": 1458,
+      "N": 184.4375,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-104B NOZ. S' at the line's end (E 121'-6\" N 15'-4 7/16\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1018/06",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-P-1019": {
+   "line": "4\"-P300-P-1019",
+   "sheets": 5,
+   "branches": [
+    "3/4\"-P300-I-7019",
+    "3/4\"-P300-SP-7028"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "3/4\"-P300-I-7019/W1",
+     "label": "I-7019/W1",
+     "at": {
+      "E": 642,
+      "N": 42,
+      "EL": 1431.3333
+     },
+     "between": {
+      "before": "W16",
+      "after": "W17"
+     },
+     "instruction": "Label the weld dot I-7019/W1, between W16 and W17.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1019/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 4,
+     "block": "CONT'D ON ISO-P-1019 SH 5",
+     "at": {
+      "E": 642,
+      "N": -126,
+      "EL": 1440
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-11'-6\"",
+       "correct": "-10'-6\""
+      }
+     ],
+     "instruction": "print N -10'-6\" (not -11'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1019/02",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 4,
+     "tag": "3/4\"-P300-SP-7028/W1",
+     "label": "SP-7028/W1",
+     "at": {
+      "E": 642,
+      "N": 24,
+      "EL": 1431.3333
+     },
+     "between": {
+      "before": "W18",
+      "after": "W19"
+     },
+     "instruction": "Label the weld dot SP-7028/W1, between W18 and W19.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1019/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 5,
+     "block": "CONT'D FROM ISO-P-1019 SH 4",
+     "at": {
+      "E": 642,
+      "N": -126,
+      "EL": 1440
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-11'-6\"",
+       "correct": "-10'-6\""
+      }
+     ],
+     "instruction": "print N -10'-6\" (not -11'-6\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1019/04",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-label-move",
+     "sheet": 5,
+     "fromSheets": [
+      4
+     ],
+     "tag": "4\"-P300-P-1019/W22",
+     "label": "W22",
+     "printed": [
+      "W22"
+     ],
+     "at": {
+      "E": 642,
+      "N": -126,
+      "EL": 1445.3333
+     },
+     "instruction": "Show and label W22 on sheet 5, which holds its position; remove it from sheet 4.",
+     "finding": "weld-sheet",
+     "level": "error",
+     "id": "FL-1/ISO-P-1019/05",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-P-1020": {
+   "line": "4\"-P300-P-1020",
+   "sheets": 1,
+   "branches": [
+    "3/4\"-P300-I-7020",
+    "3/4\"-P300-SP-7029"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "3/4\"-P300-I-7020/W1",
+     "label": "I-7020/W1",
+     "at": {
+      "E": 1410,
+      "N": 198,
+      "EL": 1293.3333
+     },
+     "between": {
+      "before": "W8",
+      "after": "W9"
+     },
+     "instruction": "Label the weld dot I-7020/W1, between W8 and W9.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1020/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "4\"-P300-P-1020/W1",
+     "label": "W1",
+     "at": {
+      "E": 1401.3333,
+      "N": 198,
+      "EL": 1290
+     },
+     "between": {
+      "before": "W9",
+      "after": null
+     },
+     "instruction": "Label the weld dot W1, after W9.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-P-1020/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 1,
+     "tag": "3/4\"-P300-SP-7029/W1",
+     "label": "SP-7029/W1",
+     "printed": "W10",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W10 as SP-7029/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1020/03",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-P-1021": {
+   "line": "4\"-P300-P-1021",
+   "sheets": 4,
+   "branches": [
+    "3/4\"-P300-I-7021"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "coordinate-text",
+     "sheet": 1,
+     "block": "CONT'D ON ISO-P-1021 SH 2",
+     "at": {
+      "E": 642,
+      "N": -151.9375,
+      "EL": 1308
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-13'-4 1/16\"",
+       "correct": "-12'-7 15/16\""
+      }
+     ],
+     "instruction": "print N -12'-7 15/16\" (not -13'-4 1/16\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1021/01",
+     "rule": "R1"
+    },
+    {
+     "kind": "coordinate-text",
+     "sheet": 2,
+     "block": "CONT'D FROM ISO-P-1021 SH 1",
+     "at": {
+      "E": 642,
+      "N": -151.9375,
+      "EL": 1308
+     },
+     "replace": [
+      {
+       "field": "N",
+       "printed": "-13'-4 1/16\"",
+       "correct": "-12'-7 15/16\""
+      }
+     ],
+     "instruction": "print N -12'-7 15/16\" (not -13'-4 1/16\"): the minus sign applies to the whole value.",
+     "finding": "coordinate-sign",
+     "level": "error",
+     "id": "FL-1/ISO-P-1021/02",
+     "rule": "R1"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 4,
+     "tag": "3/4\"-P300-I-7021/W1",
+     "label": "I-7021/W1",
+     "printed": "W12",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W12 as I-7021/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-P-1021/03",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-CWS-2001": {
+   "line": "8\"-P150-CWS-2001",
+   "sheets": 4,
+   "branches": [
+    "3/4\"-P150-D-8001",
+    "3/4\"-P150-D-8002",
+    "3/4\"-P150-V-8003"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 4,
+     "tag": "3/4\"-P150-D-8002/W1",
+     "label": "D-8002/W1",
+     "at": {
+      "E": 2112,
+      "N": 0,
+      "EL": 1482.6667
+     },
+     "between": {
+      "before": "W12",
+      "after": "W13"
+     },
+     "instruction": "Label the weld dot D-8002/W1, between W12 and W13.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-CWS-2001/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 4,
+     "tag": "3/4\"-P150-D-8001/W1",
+     "label": "D-8001/W1",
+     "printed": "W19",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W19 as D-8001/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-CWS-2001/02",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 4,
+     "tag": "3/4\"-P150-V-8003/W1",
+     "label": "V-8003/W1",
+     "printed": "W17",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W17 as V-8003/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-CWS-2001/03",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-CWR-2002": {
+   "line": "8\"-P150-CWR-2002",
+   "sheets": 4,
+   "branches": [
+    "3/4\"-P150-D-8004",
+    "3/4\"-P150-D-8005",
+    "3/4\"-P150-V-8006"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-relabel",
+     "sheet": 4,
+     "tag": "3/4\"-P150-D-8004/W1",
+     "label": "D-8004/W1",
+     "printed": "W19",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W19 as D-8004/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-CWR-2002/01",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 4,
+     "tag": "3/4\"-P150-D-8005/W1",
+     "label": "D-8005/W1",
+     "printed": "W18",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W18 as D-8005/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-CWR-2002/02",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 4,
+     "tag": "3/4\"-P150-V-8006/W1",
+     "label": "V-8006/W1",
+     "printed": "W17",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W17 as V-8006/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-CWR-2002/03",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-LS-2003": {
+   "line": "6\"-P300-LS-2003",
+   "sheets": 7,
+   "branches": [
+    "3/4\"-P150-D-8007",
+    "3/4\"-P150-D-8008",
+    "3/4\"-P150-V-8009"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 6,
+     "tag": "3/4\"-P150-V-8009/W1",
+     "label": "V-8009/W1",
+     "at": {
+      "E": 2106,
+      "N": -12,
+      "EL": 1481
+     },
+     "between": {
+      "before": "W23",
+      "after": "W24"
+     },
+     "instruction": "Label the weld dot V-8009/W1, between W23 and W24.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-LS-2003/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 7,
+     "tag": "3/4\"-P150-D-8007/W1",
+     "label": "D-8007/W1",
+     "at": {
+      "E": 2136,
+      "N": -12,
+      "EL": 1481
+     },
+     "between": {
+      "before": "W27",
+      "after": "W28"
+     },
+     "instruction": "Label the weld dot D-8007/W1, between W27 and W28.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-LS-2003/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 7,
+     "tag": "3/4\"-P150-D-8008/W1",
+     "label": "D-8008/W1",
+     "printed": "W31",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W31 as D-8008/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-LS-2003/03",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-SC-2004": {
+   "line": "3\"-P150-SC-2004",
+   "sheets": 6,
+   "branches": [
+    "3/4\"-P150-D-8010",
+    "3/4\"-P150-D-8011",
+    "3/4\"-P150-V-8012"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 5,
+     "tag": "3/4\"-P150-V-8012/W1",
+     "label": "V-8012/W1",
+     "at": {
+      "E": 2100,
+      "N": -24,
+      "EL": 1472.5
+     },
+     "between": {
+      "before": "W9",
+      "after": "W10"
+     },
+     "instruction": "Label the weld dot V-8012/W1, between W9 and W10.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-SC-2004/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 5,
+     "tag": "3\"-P150-SC-2004/W11",
+     "label": "W11",
+     "printed": "W11",
+     "keepOn": 6,
+     "instruction": "Remove label W11 from sheet 5; it stays on sheet 6, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-SC-2004/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 6,
+     "tag": "3/4\"-P150-D-8010/W1",
+     "label": "D-8010/W1",
+     "at": {
+      "E": 2130,
+      "N": -24,
+      "EL": 1472.5
+     },
+     "between": {
+      "before": "W13",
+      "after": "W14"
+     },
+     "instruction": "Label the weld dot D-8010/W1, between W13 and W14.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-SC-2004/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 6,
+     "tag": "3/4\"-P150-D-8011/W1",
+     "label": "D-8011/W1",
+     "printed": "W17",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W17 as D-8011/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-SC-2004/04",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-IA-2005": {
+   "line": "2\"-P150-IA-2005",
+   "sheets": 8,
+   "branches": [
+    "3/4\"-P150-D-8013",
+    "3/4\"-P150-D-8014",
+    "3/4\"-P150-V-8015"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 7,
+     "tag": "2\"-P150-IA-2005/W18",
+     "label": "W18",
+     "at": {
+      "E": 2096,
+      "N": 30,
+      "EL": 1470
+     },
+     "between": {
+      "before": "W17",
+      "after": null
+     },
+     "instruction": "Label the weld dot W18, after W17.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-IA-2005/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 7,
+     "tag": "3/4\"-P150-V-8015/W1",
+     "label": "V-8015/W1",
+     "at": {
+      "E": 2094,
+      "N": 30,
+      "EL": 1472
+     },
+     "between": {
+      "before": "W17",
+      "after": null
+     },
+     "instruction": "Label the weld dot V-8015/W1, after W17.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-IA-2005/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 7,
+     "tag": "2\"-P150-IA-2005/W19",
+     "label": "W19",
+     "printed": "W19",
+     "keepOn": 8,
+     "instruction": "Remove label W19 from sheet 7; it stays on sheet 8, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-IA-2005/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 8,
+     "tag": "2\"-P150-IA-2005/W24",
+     "label": "W24",
+     "at": {
+      "E": 2132,
+      "N": 30,
+      "EL": 1470
+     },
+     "between": {
+      "before": "W23",
+      "after": "W25"
+     },
+     "instruction": "Label the weld dot W24, between W23 and W25.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-IA-2005/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 8,
+     "tag": "3/4\"-P150-D-8013/W1",
+     "label": "D-8013/W1",
+     "at": {
+      "E": 2118,
+      "N": 30,
+      "EL": 1472
+     },
+     "between": {
+      "before": "W21",
+      "after": "W22"
+     },
+     "instruction": "Label the weld dot D-8013/W1, between W21 and W22.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-IA-2005/05",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 8,
+     "tag": "3/4\"-P150-D-8014/W1",
+     "label": "D-8014/W1",
+     "at": {
+      "E": 2106,
+      "N": 30,
+      "EL": 1472
+     },
+     "between": {
+      "before": "W19",
+      "after": "W20"
+     },
+     "instruction": "Label the weld dot D-8014/W1, between W19 and W20.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-IA-2005/06",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-PA-2006": {
+   "line": "2\"-P150-PA-2006",
+   "sheets": 8,
+   "branches": [
+    "3/4\"-P150-D-8016",
+    "3/4\"-P150-D-8017",
+    "3/4\"-P150-V-8018"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 7,
+     "tag": "2\"-P150-PA-2006/W18",
+     "label": "W18",
+     "at": {
+      "E": 2078,
+      "N": -36,
+      "EL": 1470
+     },
+     "between": {
+      "before": "W17",
+      "after": null
+     },
+     "instruction": "Label the weld dot W18, after W17.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-PA-2006/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 8,
+     "tag": "2\"-P150-PA-2006/W19",
+     "label": "W19",
+     "at": {
+      "E": 2110,
+      "N": -36,
+      "EL": 1470
+     },
+     "between": {
+      "before": null,
+      "after": "W26"
+     },
+     "instruction": "Label the weld dot W19, before W26.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-PA-2006/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 8,
+     "tag": "2\"-P150-PA-2006/W22",
+     "label": "W22",
+     "at": {
+      "E": 2126,
+      "N": -36,
+      "EL": 1470
+     },
+     "between": {
+      "before": "W21",
+      "after": "W28"
+     },
+     "instruction": "Label the weld dot W22, between W21 and W28.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-PA-2006/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 8,
+     "tag": "2\"-P150-PA-2006/W23",
+     "label": "W23",
+     "at": {
+      "E": 2134,
+      "N": -36,
+      "EL": 1470
+     },
+     "between": {
+      "before": "W21",
+      "after": "W28"
+     },
+     "instruction": "Label the weld dot W23, between W21 and W28.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-PA-2006/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 8,
+     "tag": "3/4\"-P150-D-8017/W1",
+     "label": "D-8017/W1",
+     "at": {
+      "E": 2124,
+      "N": -36,
+      "EL": 1472
+     },
+     "between": {
+      "before": "W21",
+      "after": "W28"
+     },
+     "instruction": "Label the weld dot D-8017/W1, between W21 and W28.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-PA-2006/05",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 8,
+     "tag": "3/4\"-P150-D-8016/W1",
+     "label": "D-8016/W1",
+     "printed": "W28",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W28 as D-8016/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-PA-2006/06",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 8,
+     "tag": "3/4\"-P150-V-8018/W1",
+     "label": "V-8018/W1",
+     "printed": "W26",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W26 as V-8018/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-PA-2006/07",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-N-2007": {
+   "line": "2\"-P150-N-2007",
+   "sheets": 9,
+   "branches": [
+    "3/4\"-P150-D-8019",
+    "3/4\"-P150-D-8020",
+    "3/4\"-P150-V-8021"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 4,
+     "tag": "2\"-P150-N-2007/W21",
+     "label": "W21",
+     "at": {
+      "E": 1100,
+      "N": 42,
+      "EL": 1470
+     },
+     "between": {
+      "before": "W20",
+      "after": null
+     },
+     "instruction": "Label the weld dot W21, after W20.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-N-2007/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-move",
+     "sheet": 8,
+     "fromSheets": [
+      9
+     ],
+     "tag": "3/4\"-P150-V-8021/W1",
+     "label": "V-8021/W1",
+     "printed": [
+      "W38"
+     ],
+     "at": {
+      "E": 2100,
+      "N": 42,
+      "EL": 1472
+     },
+     "instruction": "Show and label V-8021/W1 on sheet 8, which holds its position; remove it from sheet 9.",
+     "finding": "weld-sheet",
+     "level": "error",
+     "id": "FL-1/ISO-N-2007/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 8,
+     "tag": "3/4\"-P150-V-8021/W1",
+     "label": "V-8021/W1",
+     "printed": "W38",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W38 as V-8021/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-N-2007/03",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 9,
+     "tag": "3/4\"-P150-D-8019/W1",
+     "label": "D-8019/W1",
+     "at": {
+      "E": 2136,
+      "N": 42,
+      "EL": 1472
+     },
+     "between": {
+      "before": "W35",
+      "after": "W36"
+     },
+     "instruction": "Label the weld dot D-8019/W1, between W35 and W36.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-N-2007/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 9,
+     "tag": "3/4\"-P150-D-8020/W1",
+     "label": "D-8020/W1",
+     "printed": "W39",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W39 as D-8020/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-N-2007/05",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-W-2008": {
+   "line": "3\"-P150-W-2008",
+   "sheets": 10,
+   "branches": [
+    "3/4\"-P150-D-8022",
+    "3/4\"-P150-D-8023",
+    "3/4\"-P150-V-8024"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 7,
+     "tag": "3\"-P150-W-2008/W22",
+     "label": "W22",
+     "at": {
+      "E": 1947.5,
+      "N": -48,
+      "EL": 1470
+     },
+     "between": {
+      "before": "W21",
+      "after": "W23"
+     },
+     "instruction": "Label the weld dot W22, between W21 and W23.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-W-2008/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 8,
+     "tag": "3\"-P150-W-2008/W29",
+     "label": "W29",
+     "at": {
+      "E": 2054.5,
+      "N": -48,
+      "EL": 1470
+     },
+     "between": {
+      "before": "W28",
+      "after": null
+     },
+     "instruction": "Label the weld dot W29, after W28.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-W-2008/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 8,
+     "tag": "3/4\"-P150-V-8024/W1",
+     "label": "V-8024/W1",
+     "at": {
+      "E": 2028,
+      "N": -48,
+      "EL": 1472.5
+     },
+     "between": {
+      "before": "W26",
+      "after": "W27"
+     },
+     "instruction": "Label the weld dot V-8024/W1, between W26 and W27.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-W-2008/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-remove",
+     "sheet": 8,
+     "tag": "3\"-P150-W-2008/W30",
+     "label": "W30",
+     "printed": "W30",
+     "keepOn": 9,
+     "instruction": "Remove label W30 from sheet 8; it stays on sheet 9, which holds the weld.",
+     "finding": "weld-repeated",
+     "level": "warning",
+     "id": "FL-1/ISO-W-2008/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 9,
+     "tag": "3/4\"-P150-D-8023/W1",
+     "label": "D-8023/W1",
+     "at": {
+      "E": 2088,
+      "N": -48,
+      "EL": 1472.5
+     },
+     "between": {
+      "before": "W32",
+      "after": "W33"
+     },
+     "instruction": "Label the weld dot D-8023/W1, between W32 and W33.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-W-2008/05",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 10,
+     "tag": "3/4\"-P150-D-8022/W1",
+     "label": "D-8022/W1",
+     "at": {
+      "E": 2100,
+      "N": -48,
+      "EL": 1472.5
+     },
+     "between": {
+      "before": null,
+      "after": "W35"
+     },
+     "instruction": "Label the weld dot D-8022/W1, before W35.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-W-2008/06",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-move",
+     "sheet": 10,
+     "fromSheets": [
+      9
+     ],
+     "tag": "3\"-P150-W-2008/W34",
+     "label": "W34",
+     "printed": [
+      "W34"
+     ],
+     "at": {
+      "E": 2097.5,
+      "N": -48,
+      "EL": 1470
+     },
+     "instruction": "Show and label W34 on sheet 10, which holds its position; remove it from sheet 9.",
+     "finding": "weld-sheet",
+     "level": "error",
+     "id": "FL-1/ISO-W-2008/07",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-FL-2009": {
+   "line": "8\"-P150-FL-2009",
+   "sheets": 5,
+   "branches": [
+    "3/4\"-P150-D-8025",
+    "3/4\"-P150-D-8026",
+    "3/4\"-P150-V-8027"
+   ],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "8\"-P150-FL-2009/W2",
+     "label": "W2",
+     "at": {
+      "E": 263.3333,
+      "N": 54,
+      "EL": 1476
+     },
+     "between": {
+      "before": "W1",
+      "after": "W3"
+     },
+     "instruction": "Label the weld dot W2, between W1 and W3.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-FL-2009/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 5,
+     "tag": "3/4\"-P150-D-8025/W1",
+     "label": "D-8025/W1",
+     "printed": "W20",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W20 as D-8025/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-FL-2009/02",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 5,
+     "tag": "3/4\"-P150-D-8026/W1",
+     "label": "D-8026/W1",
+     "printed": "W19",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W19 as D-8026/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-FL-2009/03",
+     "rule": "R3"
+    },
+    {
+     "kind": "weld-relabel",
+     "sheet": 5,
+     "tag": "3/4\"-P150-V-8027/W1",
+     "label": "V-8027/W1",
+     "printed": "W18",
+     "finding": null,
+     "level": "conform",
+     "instruction": "Relabel W18 as V-8027/W1, the model's tag of this branch weld.",
+     "id": "FL-1/ISO-FL-2009/04",
+     "rule": "R3"
+    }
+   ]
+  },
+  "ISO-CWS-3005": {
+   "line": "4\"-P150-CWS-3005",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "4\"-P150-CWS-3005/W1",
+     "label": "W1",
+     "at": {
+      "E": 1032,
+      "N": 0,
+      "EL": 1482.6667
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-CWS-3005/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-CWR-3006": {
+   "line": "4\"-P150-CWR-3006",
+   "sheets": 2,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "4\"-P150-CWR-3006/W12",
+     "label": "W12",
+     "at": {
+      "E": 1020,
+      "N": 18,
+      "EL": 1511.3333
+     },
+     "between": {
+      "before": "W11",
+      "after": "W13"
+     },
+     "instruction": "Label the weld dot W12, between W11 and W13.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-CWR-3006/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "4\"-P150-CWR-3006/W9",
+     "label": "W9",
+     "at": {
+      "E": 1013.3333,
+      "N": 300,
+      "EL": 1518
+     },
+     "between": {
+      "before": "W8",
+      "after": "W10"
+     },
+     "instruction": "Label the weld dot W9, between W8 and W10.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-CWR-3006/02",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-SC-3008": {
+   "line": "2\"-P150-SC-3008",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "2\"-P150-SC-3008/W1",
+     "label": "W1",
+     "at": {
+      "E": 282,
+      "N": -24,
+      "EL": 1472.5
+     },
+     "between": {
+      "before": "W13",
+      "after": null
+     },
+     "instruction": "Label the weld dot W1, after W13.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-SC-3008/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "2\"-P150-SC-3008/W11",
+     "label": "W11",
+     "at": {
+      "E": 282,
+      "N": -20.6667,
+      "EL": 1500
+     },
+     "between": {
+      "before": "W10",
+      "after": "W12"
+     },
+     "instruction": "Label the weld dot W11, between W10 and W12.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-SC-3008/02",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-LS-3009": {
+   "line": "2\"-P300-LS-3009",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "2\"-P300-LS-3009/W1",
+     "label": "W1",
+     "at": {
+      "E": 426,
+      "N": -12,
+      "EL": 1481
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-LS-3009/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-SC-3010": {
+   "line": "2\"-P150-SC-3010",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "FROM T-102 NOZ. N8",
+     "at": {
+      "E": 450.125,
+      "N": 318,
+      "EL": 1254
+     },
+     "instruction": "Print 'FROM T-102 NOZ. N8' at the line's start (E 37'-6 1/8\" N 26'-6\" EL 104'-6\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-SC-3010/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-N-3011": {
+   "line": "1\"-P150-N-3011",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-N-3011/W10",
+     "label": "W10",
+     "at": {
+      "E": 466.3333,
+      "N": -300,
+      "EL": 1446
+     },
+     "between": {
+      "before": "W9",
+      "after": null
+     },
+     "instruction": "Label the weld dot W10, after W9.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-N-3011/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-N-3011/W11",
+     "label": "W11",
+     "at": {
+      "E": 461.475,
+      "N": -300,
+      "EL": 1446
+     },
+     "between": {
+      "before": "W9",
+      "after": null
+     },
+     "instruction": "Label the weld dot W11, after W9.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-N-3011/02",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-N-3012": {
+   "line": "1\"-P150-N-3012",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-N-3012/W11",
+     "label": "W11",
+     "at": {
+      "E": 582.525,
+      "N": -300,
+      "EL": 1446
+     },
+     "between": {
+      "before": "W10",
+      "after": null
+     },
+     "instruction": "Label the weld dot W11, after W10.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-N-3012/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-N-3015": {
+   "line": "1\"-P150-N-3015",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-N-3015/W1",
+     "label": "W1",
+     "at": {
+      "E": 336,
+      "N": 42,
+      "EL": 1472
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-N-3015/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-N-3016": {
+   "line": "1\"-P150-N-3016",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-N-3016/W3",
+     "label": "W3",
+     "at": {
+      "E": 564,
+      "N": 42,
+      "EL": 1498.3333
+     },
+     "between": {
+      "before": "W2",
+      "after": "W4"
+     },
+     "instruction": "Label the weld dot W3, between W2 and W4.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-N-3016/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-W-3018": {
+   "line": "3/4\"-P150-W-3018",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO P-101B NOZ. F",
+     "at": {
+      "E": 1923.0313,
+      "N": -198,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-101B NOZ. F' at the line's end (E 160'-3 1/16\" N -16'-6\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3018/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-W-3019": {
+   "line": "3/4\"-P150-W-3019",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "3/4\"-P150-W-3019/W10",
+     "label": "W10",
+     "at": {
+      "E": 1990.75,
+      "N": -198,
+      "EL": 1224
+     },
+     "between": {
+      "before": "W9",
+      "after": "W11"
+     },
+     "instruction": "Label the weld dot W10, between W9 and W11.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3019/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO P-102A NOZ. F",
+     "at": {
+      "E": 1983.0313,
+      "N": -198,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-102A NOZ. F' at the line's end (E 165'-3 1/16\" N -16'-6\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3019/02",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-W-3020": {
+   "line": "3/4\"-P150-W-3020",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO P-102B NOZ. F",
+     "at": {
+      "E": 2043.0313,
+      "N": -198,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-102B NOZ. F' at the line's end (E 170'-3 1/16\" N -16'-6\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3020/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-W-3021": {
+   "line": "3/4\"-P150-W-3021",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO P-103A NOZ. F",
+     "at": {
+      "E": 2103.0313,
+      "N": -198,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-103A NOZ. F' at the line's end (E 175'-3 1/16\" N -16'-6\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3021/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-W-3022": {
+   "line": "3/4\"-P150-W-3022",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "3/4\"-P150-W-3022/W8",
+     "label": "W8",
+     "at": {
+      "E": 2172,
+      "N": -198,
+      "EL": 1498.75
+     },
+     "between": {
+      "before": "W7",
+      "after": "W9"
+     },
+     "instruction": "Label the weld dot W8, between W7 and W9.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3022/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-W-3023": {
+   "line": "3/4\"-P150-W-3023",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO P-104A NOZ. F",
+     "at": {
+      "E": 1413.0313,
+      "N": 198,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-104A NOZ. F' at the line's end (E 117'-9 1/16\" N 16'-6\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3023/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-W-3024": {
+   "line": "3/4\"-P150-W-3024",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "3/4\"-P150-W-3024/W1",
+     "label": "W1",
+     "at": {
+      "E": 1482,
+      "N": -48,
+      "EL": 1472.5
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3024/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "3/4\"-P150-W-3024/W4",
+     "label": "W4",
+     "at": {
+      "E": 1482,
+      "N": -46.75,
+      "EL": 1500
+     },
+     "between": {
+      "before": "W3",
+      "after": "W5"
+     },
+     "instruction": "Label the weld dot W4, between W3 and W5.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3024/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO P-104B NOZ. F",
+     "at": {
+      "E": 1473.0313,
+      "N": 198,
+      "EL": 1224
+     },
+     "instruction": "Print 'TO P-104B NOZ. F' at the line's end (E 122'-9 1/16\" N 16'-6\" EL 102'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-W-3024/03",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-RV-4001": {
+   "line": "3\"-P300-RV-4001",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO PSV",
+     "at": {
+      "E": 1128,
+      "N": -300,
+      "EL": 1338
+     },
+     "instruction": "Print 'TO PSV' at the line's end (E 94'-0\" N -25'-0\" EL 111'-6\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-RV-4001/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-RV-4002": {
+   "line": "3\"-P150-RV-4002",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO PSV",
+     "at": {
+      "E": 264,
+      "N": 318,
+      "EL": 1488
+     },
+     "instruction": "Print 'TO PSV' at the line's end (E 22'-0\" N 26'-6\" EL 124'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-RV-4002/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-RV-4003": {
+   "line": "3\"-P150-RV-4003",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO PSV",
+     "at": {
+      "E": 492,
+      "N": 318,
+      "EL": 1488
+     },
+     "instruction": "Print 'TO PSV' at the line's end (E 41'-0\" N 26'-6\" EL 124'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-RV-4003/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-FL-4004": {
+   "line": "4\"-P150-FL-4004",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "FROM PSV ON D-101 NOZ. N3",
+     "at": {
+      "E": 1128,
+      "N": -292.1438,
+      "EL": 1338
+     },
+     "instruction": "Print 'FROM PSV ON D-101 NOZ. N3' at the line's start (E 94'-0\" N -24'-4 1/8\" EL 111'-6\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-FL-4004/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-FL-4005": {
+   "line": "4\"-P150-FL-4005",
+   "sheets": 3,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "FROM PSV ON T-101 NOZ. N3",
+     "at": {
+      "E": 264,
+      "N": 310.1437,
+      "EL": 1488
+     },
+     "instruction": "Print 'FROM PSV ON T-101 NOZ. N3' at the line's start (E 22'-0\" N 25'-10 1/8\" EL 124'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-FL-4005/01",
+     "rule": "R4"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 3,
+     "tag": "4\"-P150-FL-4005/W1",
+     "label": "W1",
+     "at": {
+      "E": 270,
+      "N": 54,
+      "EL": 1482.6667
+     },
+     "between": {
+      "before": "W12",
+      "after": null
+     },
+     "instruction": "Label the weld dot W1, after W12.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-FL-4005/02",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-FL-4006": {
+   "line": "4\"-P150-FL-4006",
+   "sheets": 2,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "FROM PSV ON T-102 NOZ. N3",
+     "at": {
+      "E": 492,
+      "N": 310.1437,
+      "EL": 1488
+     },
+     "instruction": "Print 'FROM PSV ON T-102 NOZ. N3' at the line's start (E 41'-0\" N 25'-10 1/8\" EL 124'-0\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-FL-4006/01",
+     "rule": "R4"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 2,
+     "tag": "4\"-P150-FL-4006/W1",
+     "label": "W1",
+     "at": {
+      "E": 498,
+      "N": 54,
+      "EL": 1482.6667
+     },
+     "between": {
+      "before": "W12",
+      "after": null
+     },
+     "instruction": "Label the weld dot W1, after W12.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-FL-4006/02",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-HS-5002": {
+   "line": "1\"-P150-HS-5002",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO HOSE STATION",
+     "at": {
+      "E": 288,
+      "N": 132,
+      "EL": 1242
+     },
+     "instruction": "Print 'TO HOSE STATION' at the line's end (E 24'-0\" N 11'-0\" EL 103'-6\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5002/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-HS-5007": {
+   "line": "1\"-P150-HS-5007",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-HS-5007/W1",
+     "label": "W1",
+     "at": {
+      "E": 528,
+      "N": -36,
+      "EL": 1472
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5007/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-HS-5009": {
+   "line": "1\"-P150-HS-5009",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO HOSE STATION",
+     "at": {
+      "E": 564,
+      "N": 132,
+      "EL": 1242
+     },
+     "instruction": "Print 'TO HOSE STATION' at the line's end (E 47'-0\" N 11'-0\" EL 103'-6\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5009/01",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-HS-5012": {
+   "line": "1\"-P150-HS-5012",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-HS-5012/W1",
+     "label": "W1",
+     "at": {
+      "E": 768,
+      "N": -36,
+      "EL": 1472
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5012/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-HS-5015": {
+   "line": "1/2\"-P150-HS-5015",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1/2\"-P150-HS-5015/W1",
+     "label": "W1",
+     "at": {
+      "E": 816,
+      "N": 30,
+      "EL": 1472
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5015/01",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1/2\"-P150-HS-5015/W10",
+     "label": "W10",
+     "at": {
+      "E": 810.8333,
+      "N": 132,
+      "EL": 1266
+     },
+     "between": {
+      "before": "W9",
+      "after": "W11"
+     },
+     "instruction": "Label the weld dot W10, between W9 and W11.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5015/02",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1/2\"-P150-HS-5015/W12",
+     "label": "W12",
+     "at": {
+      "E": 822,
+      "N": 132,
+      "EL": 1265.1667
+     },
+     "between": {
+      "before": "W11",
+      "after": "W13"
+     },
+     "instruction": "Label the weld dot W12, between W11 and W13.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5015/03",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1/2\"-P150-HS-5015/W3",
+     "label": "W3",
+     "at": {
+      "E": 816,
+      "N": 30,
+      "EL": 1505.1667
+     },
+     "between": {
+      "before": "W2",
+      "after": "W4"
+     },
+     "instruction": "Label the weld dot W3, between W2 and W4.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5015/04",
+     "rule": "R2"
+    },
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1/2\"-P150-HS-5015/W5",
+     "label": "W5",
+     "at": {
+      "E": 810.8333,
+      "N": 30,
+      "EL": 1506
+     },
+     "between": {
+      "before": "W4",
+      "after": "W6"
+     },
+     "instruction": "Label the weld dot W5, between W4 and W6.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5015/05",
+     "rule": "R2"
+    },
+    {
+     "kind": "end-label-add",
+     "sheet": 1,
+     "text": "TO HOSE STATION",
+     "at": {
+      "E": 822,
+      "N": 132,
+      "EL": 1242
+     },
+     "instruction": "Print 'TO HOSE STATION' at the line's end (E 68'-6\" N 11'-0\" EL 103'-6\").",
+     "finding": "end-label",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5015/06",
+     "rule": "R4"
+    }
+   ]
+  },
+  "ISO-HS-5016": {
+   "line": "1\"-P150-HS-5016",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-HS-5016/W1",
+     "label": "W1",
+     "at": {
+      "E": 990,
+      "N": -48,
+      "EL": 1472.5
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5016/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-HS-5019": {
+   "line": "1\"-P150-HS-5019",
+   "sheets": 2,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-HS-5019/W1",
+     "label": "W1",
+     "at": {
+      "E": 1044,
+      "N": 42,
+      "EL": 1472
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5019/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-HS-5023": {
+   "line": "1\"-P300-HS-5023",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P300-HS-5023/W1",
+     "label": "W1",
+     "at": {
+      "E": 1266,
+      "N": -12,
+      "EL": 1481
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5023/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-HS-5027": {
+   "line": "1\"-P150-HS-5027",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-HS-5027/W1",
+     "label": "W1",
+     "at": {
+      "E": 1728,
+      "N": -36,
+      "EL": 1472
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5027/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-HS-5030": {
+   "line": "1/2\"-P150-HS-5030",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1/2\"-P150-HS-5030/W10",
+     "label": "W10",
+     "at": {
+      "E": 1782,
+      "N": 132,
+      "EL": 1265.1667
+     },
+     "between": {
+      "before": "W9",
+      "after": "W11"
+     },
+     "instruction": "Label the weld dot W10, between W9 and W11.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5030/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-HS-5031": {
+   "line": "1\"-P150-HS-5031",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-HS-5031/W1",
+     "label": "W1",
+     "at": {
+      "E": 1950,
+      "N": -48,
+      "EL": 1472.5
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5031/01",
+     "rule": "R2"
+    }
+   ]
+  },
+  "ISO-HS-5032": {
+   "line": "1\"-P150-HS-5032",
+   "sheets": 1,
+   "branches": [],
+   "revision": 1,
+   "changes": [
+    {
+     "kind": "weld-label-add",
+     "sheet": 1,
+     "tag": "1\"-P150-HS-5032/W1",
+     "label": "W1",
+     "at": {
+      "E": 1968,
+      "N": -36,
+      "EL": 1472
+     },
+     "between": {
+      "before": null,
+      "after": "W2"
+     },
+     "instruction": "Label the weld dot W1, before W2.",
+     "finding": "weld-unlabelled",
+     "level": "warning",
+     "id": "FL-1/ISO-HS-5032/01",
+     "rule": "R2"
+    }
+   ]
+  }
+ }
+}

@@ -18,6 +18,15 @@ import sys
 WORD = re.compile(r'<word xMin="([\d.]+)" yMin="([\d.]+)" xMax="([\d.]+)" yMax="([\d.]+)">(.*?)</word>')
 LINE_NO = re.compile(r'^\d[0-9/-]*"-[A-Z]\d+-[A-Z]+-\d+$')
 DWG_NO = re.compile(r'^ISO-[A-Z]+-\d+$')
+WELD_LABEL = re.compile(r'W\d+|[A-Z]+-\d+/W\d+')
+
+
+def weld_key(s):
+    """own welds first in number order, then branch welds by branch and number"""
+    m = re.fullmatch(r'(?:([A-Z]+-\d+)/)?W(\d+)', s)
+    return (m.group(1) or '', int(m.group(2))) if m else ('~', 0)
+
+
 FT_IN = re.compile(r'''^(-?)(?:(\d+)'-?)?(?:(\d+)?(?:[- ]?(\d+)/(\d+))?")?$''')
 
 
@@ -155,7 +164,8 @@ def bom(words):
 def drawing_area(words, x_bom):
     tb_top = min([w['y0'] for w in words if w['t'] in ('NOTES:', 'TEST', 'INSULATION') and w['y0'] > 500] or [1e9])
     area = [w for w in words if w['x1'] < (x_bom or 1e9) - 6 and w['y1'] < tb_top - 2]
-    welds = sorted({w['t'] for w in area if re.fullmatch(r'W\d+', w['t'])}, key=lambda s: int(s[1:]))
+    # a weld label: the line's own 'W12', or a branch weld in the model's form 'I-7001/W1' (SW-IMP-4)
+    welds = sorted({w['t'] for w in area if WELD_LABEL.fullmatch(w['t'])}, key=weld_key)
     # continuation blocks: CONT'D <ON|FROM> / ISO-x SH n / E .. / N .. / EL ..
     conts = []
     for c in [w for w in area if w['t'] == "CONT'D"]:
@@ -188,7 +198,7 @@ def drawing_area(words, x_bom):
                     seg.append(x)
                 if len(seg) > 1:
                     ends.append(dict(dir=w['t'].lower(), text=' '.join(x['t'] for x in seg[1:])))
-    labels = sorted({w['t'] for w in area if not re.fullmatch(r"W\d+|\d+|[\d/'\"-]+|CONT'D|ON|FROM|TO|SH|E|N|EL", w['t'])})
+    labels = sorted({w['t'] for w in area if not re.fullmatch(r"W\d+|[A-Z]+-\d+/W\d+|\d+|[\d/'\"-]+|CONT'D|ON|FROM|TO|SH|E|N|EL", w['t'])})
     return dict(welds=welds, continuations=conts, ends=ends, otherText=labels)
 
 

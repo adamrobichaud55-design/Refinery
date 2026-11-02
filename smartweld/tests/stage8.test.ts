@@ -71,6 +71,35 @@ describe('stage 8 — the drawings agree with the model (SW-IMP-3/4)', () => {
   }, 60000);
 });
 
+describe('stage 8 — fix list for the drawings\' author (SW-IMP-7)', () => {
+  const fl = JSON.parse(readFileSync(new URL('fixlist.json', dir), 'utf8')) as { rules: { id: string }[]; acceptance: string[]; drawings: Record<string, { line: string; changes: { id: string; kind: string; finding: string | null; sheet: number | number[]; tag?: string; rule: string; instruction: string }[] }> };
+  const changes = Object.entries(fl.drawings).flatMap(([dn, d]) => d.changes.map(c => ({ dn, ...c })));
+  const weldTags = new Set([...lines.values()].flatMap(L => L.welds.map(w => w.tag)));
+  it('holds one instruction for every finding', () => {
+    const byCode = (xs: { code?: string; finding?: string | null }[], k: 'code' | 'finding') => xs.reduce((m, x) => m.set(x[k]!, (m.get(x[k]!) ?? 0) + 1), new Map<string, number>());
+    const fromFindings = byCode(match.findings.filter(f => f.level !== 'info'), 'code');
+    expect(Object.fromEntries(byCode(changes.filter(c => c.finding), 'finding'))).toEqual(Object.fromEntries(fromFindings));
+  });
+  it('every instruction names a drawing of the set, a sheet of it, a rule, and the weld by its model tag', () => {
+    for (const c of changes) {
+      const d = match.drawings.find(x => x.drawing === c.dn)!; expect(d, c.id).toBeTruthy();
+      for (const k of Array.isArray(c.sheet) ? c.sheet : [c.sheet]) expect(d.sheets.some(s => s.sheet === k), c.id).toBe(true);
+      expect(fl.rules.map(r => r.id), c.id).toContain(c.rule);
+      if (c.kind.startsWith('weld')) expect(weldTags.has(c.tag!), c.id).toBe(true);
+      expect(c.instruction.length, c.id).toBeGreaterThan(10);
+    }
+  });
+  it('a set corrected by the fix list re-matches with no finding (self-test; needs python3 and pdftotext)', () => {
+    const tools = spawnSync('sh', ['-c', 'command -v python3 && command -v pdftotext'], { encoding: 'utf8' });
+    if (tools.status !== 0) return;
+    const r = spawnSync('python3', ['-I', 'tools/isomatch.py', '--selftest'], { cwd: new URL('..', import.meta.url), encoding: 'utf8' });
+    expect(r.stdout + r.stderr).toContain('corrected set: 0 findings, 0 changes left, coordinate sign conventional');
+    expect(r.status).toBe(0);
+    const p = spawnSync('python3', ['-I', '-c', "import sys; sys.path.insert(0, 'tools'); import isoparse as p; print(bool(p.WELD_LABEL.fullmatch('I-7001/W1')), bool(p.WELD_LABEL.fullmatch('W12')), p.coord('-11\\'-6\"'))"], { cwd: new URL('..', import.meta.url), encoding: 'utf8' });
+    expect(p.stdout.trim()).toBe('True True -138');
+  }, 60000);
+});
+
 describe('stage 8 — links (SW-IMP-6)', () => {
   it('every work order lists the imported drawing of each of its lines, and each replaced butt weld\'s place on it', () => {
     const wos = readdirSync(new URL('workorders/', pub)).filter(f => /^WO-.*\.json$/.test(f)).map(f => JSON.parse(readFileSync(new URL(`workorders/${f}`, pub), 'utf8')) as WorkOrder);
@@ -83,7 +112,7 @@ describe('stage 8 — links (SW-IMP-6)', () => {
   });
   it('every stage-8 rule ID used in code is written in DESIGN_BASIS.md', () => {
     const basis = readFileSync(new URL('../DESIGN_BASIS.md', import.meta.url), 'utf8');
-    for (const f of ['src/generator/imported.ts', 'src/generator/woexport.ts', 'src/generator/wopack.ts', 'src/viewer/pipingView.ts', 'tools/isomatch.py', 'tools/isoparse.py']) {
+    for (const f of ['src/generator/imported.ts', 'tests/stage8.test.ts', 'src/generator/woexport.ts', 'src/generator/wopack.ts', 'src/viewer/pipingView.ts', 'tools/isomatch.py', 'tools/isoparse.py']) {
       const src = readFileSync(new URL(`../${f}`, import.meta.url), 'utf8');
       for (const id of new Set(src.match(/SW-IMP-\d+/g) ?? [])) expect(basis.includes('`' + id + '`'), `${id} in ${f}`).toBe(true);
       expect(existsSync(new URL(`../${f}`, import.meta.url))).toBe(true);

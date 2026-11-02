@@ -22,8 +22,9 @@ export function importedFor(idx: ImportedIndex, line: string): ImportedRef | nul
     errors: d.findings.filter(f => f.level === 'error').length, warnings: d.findings.filter(f => f.level === 'warning').length };
 }
 
-/** "ISO-P-1001 sh 4 W12" — where a weld is found on the imported drawing; '(no label)' when the drawing shows none */
+/** "ISO-P-1001 sh 4 W12" — where a weld is found on the imported drawing; for a weld the drawing leaves unlabelled,
+ *  the label the fix list asks for (SW-IMP-7) */
 export function weldRef(idx: ImportedIndex, tag: string): string | null {
   const w = idx.welds[tag]; if (!w) return null;
-  return `${w.drawing}${w.sheet ? ` sh ${w.sheet}` : ''} ${w.labelled.length ? w.label : `(no label; ${w.label} by numbering)`}`;
+  return `${w.drawing}${w.sheet ? ` sh ${w.sheet}` : ''} ${w.labelled.length ? w.label : `(not labelled; to read ${w.label})`}`;
 }

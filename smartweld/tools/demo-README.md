@@ -69,11 +69,12 @@ Each drawing's sheets were copied unchanged into `ISO-*.pdf`, then read and matc
 | `index.json` | For every model line, the drawing that shows it (small vents, drains and instrument taps are drawn on their parent line's sheets); for every weld, its label (W-number) and sheet on the drawing; for every drawing, its findings. |
 | `match.json` | Everything read from every sheet: title block, bill of materials, weld labels, continuation points (CONT'D ON / FROM with E, N, EL), end labels. |
 | `report.md` | The match report, drawing by drawing. |
+| `FIXLIST.md`, `fixlist.json` | Fix list FL-1: every finding as an instruction for the drawings' author (rules for revision 1, acceptance checks, and each change with drawing, sheet, model tag, exact text and model position). |
 
 All 203 lines are covered. Every sheet's bill of materials and pipe length, and every sheet break, agree
 with the model. The findings are drafting points: negative coordinates printed with the minus on the
 feet only ("-12'-6"" for −11'-6"), weld dots without a number, repeated labels, a few labels on the
-neighbouring sheet, and missing FROM/TO labels. Branch welds are numbered on from the parent line's
-welds, as on the drawings (for example, on ISO-P-1002, W11 and W12 are the welds of its two
-instrument taps). In the viewer, a line or a clicked item links to its drawing. Each work order lists
+neighbouring sheet, and missing FROM/TO labels. In this revision, branch welds are numbered on from the parent line's welds
+(on ISO-P-1002, W11 and W12 are the welds of its two instrument taps). The fix list asks for the
+model's own form instead (I-7031/W1). In the viewer, a line or a clicked item links to its drawing. Each work order lists
 its lines' drawings, and gives each new weld's place on them ("ISO-P-1019 sh 2 W12").
