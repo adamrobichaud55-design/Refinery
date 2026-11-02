@@ -108,6 +108,32 @@ editing one rule in `DESIGN_BASIS.md` and its code, without touching anything el
    (GPL/LGPL) run the commands but are not linked into, modified for or shipped with SmartWeld, and
    are treated as outside the policy.
 
+
+6. **Licence review for external test drawings** (DESIGN_BASIS.md §57, SW-EVAL-2). Before any drawing
+   made by a piping designer's commercial software is scored, counsel should review the agreement that
+   designer actually holds. That means the version and edition in force for his licence, plus any signed
+   contract with the vendor, not a public summary. Questions to answer, written by SmartWeld without
+   reference to any vendor's text:
+   1. **Ownership of output.** Who owns drawings, reports and files the software produces? Do any parts
+      of them (symbols, fonts, title blocks, templates) remain the vendor's?
+   2. **Use for a client.** May the designer use his licence to produce deliverables for SmartWeld, and
+      hand over the files, or is use limited to his own internal business?
+   3. **AI and machine-learning clauses.** Does any clause restrict using the software, or its output,
+      with AI or machine learning? Is the restriction on training only, or on any use, including testing
+      or evaluating a model? Does it turn on copying or replicating the software's own functionality?
+   4. **Benchmarking.** Is testing or comparing performance restricted, or is publishing results
+      restricted? (Scoring SmartWeld's own detector on the drawings is not a test of the vendor's software,
+      but counsel should confirm that reading.)
+   5. **Competition.** Is use for developing a competing product restricted? Could SmartWeld's detector
+      be seen as one?
+   6. **Reverse engineering.** Could analysing output files be treated as reverse engineering?
+   7. **Confidentiality and data.** Does the vendor claim rights to analyse project data the designer
+      processes, including SmartWeld's model sent in the exchange package?
+   8. **Which terms govern.** Do the vendor's online terms override the designer's signed agreement, or
+      the reverse, and which version applies by date?
+   The answer is recorded as the `licenceReview` reference in the set's receipt; scoring stays locked
+   until it and the designer's contract reference are both recorded.
+
 ## 5. Record of SmartWeld's direction (human contribution)
 
 All dated 2026-10-31 to 2026-11-01, from the session record:
