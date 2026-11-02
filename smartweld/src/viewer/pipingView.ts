@@ -6,6 +6,7 @@
  *  - tees are drawn as their run and branch pipes meeting at a sharp crotch (the catalogue view shows the
  *    blended casting, whose thin wall needs a very fine grid).
  */
+import { importedFor, type ImportedIndex } from '../generator/imported';
 import * as THREE from 'three';
 import { partFromKey, solidBoxes, type PipingModel, type Comp, type LineRun } from '../generator/piping';
 import { buildGeometry, type Role } from '../geometry/partGeometry';
@@ -187,6 +188,20 @@ export function equipmentReport(e: GTEquipment): string {
     <h3>Nozzles</h3><table><tr><th>Nozzle</th><th>Service</th><th>Size</th><th>Line</th><th>Class</th></tr>${e.nozzles.map(n => `<tr><td>${esc(n.id)}</td><td>${esc(n.service)}</td><td>${n.NPS}" ${n.cls}</td><td>${esc(n.line ?? '—')}</td><td>${esc(n.lineClass ?? '')}</td></tr>`).join('')}</table>`;
 }
 
+// ---- the owner's imported isometric drawings (stage 8, SW-IMP-6) ------------------------------------------------------
+let impIdx: Promise<ImportedIndex | null> | null = null;
+export const loadImported = () => (impIdx ??= fetch('isometrics-imported/index.json').then(r => (r.ok ? r.json() : null)).catch(() => null));
+/** the drawing that shows a line, the weld's label and sheet on it, and what matching it to the model found */
+export function importedBlock(idx: ImportedIndex, line: string, tag?: string): string {
+  const r = importedFor(idx, line); if (!r) return '';
+  const d = idx.drawings[r.drawing], w = tag ? idx.welds[tag] : undefined;
+  const fs = d.findings.filter(f => f.level !== 'info'), mine = tag ? fs.filter(f => f.message.includes(tag)) : fs;
+  return `<h3>Owner's isometric drawing</h3><p class="notes"><a href="isometrics-imported/${esc(d.file)}" target="_blank"><b>${esc(r.drawing)}</b></a> — ${d.sheets} sheet${d.sheets > 1 ? 's' : ''}${r.branchOf ? `, drawn on the sheets of ${esc(r.branchOf)}` : ''}.
+    ${w ? `This weld: <b>${esc(w.label)}</b>${w.sheet ? ` on sheet ${w.sheet}` : ''}${w.labelled.length ? '' : ' (not labelled on the drawing)'}.` : ''}
+    Match to the model: ${fs.length ? `${r.errors} error(s), ${r.warnings} warning(s)` : 'agrees'}.</p>
+    ${mine.length ? `<details${tag ? ' open' : ''}><summary>${tag ? 'Findings for this item' : 'Findings'} (${mine.length})</summary><ul class="notes">${mine.map(f => `<li><b>${f.level}</b> ${esc(f.message)}</li>`).join('')}</ul></details>` : ''}`;
+}
+
 // ---- work orders (stage 7) -------------------------------------------------------------------------------------------
 export interface WOIndexEntry { number: string; title: string; area: string; areaName: string; type: string; typeName: string; priority: number; equipment: string | null; lines: string[]; pdf: string; pack: string }
 let woIdx: Promise<{ notice: string; workOrders: WOIndexEntry[] }> | null = null;
@@ -207,7 +222,7 @@ export function woReport(wo: WorkOrder, c: Completion): string {
   const opt = (v: Status, cur: Status) => `<option value="${v}"${v === cur ? ' selected' : ''}>${v}</option>`;
   return `<div class="demo-note">${esc(wo.notice)}</div><h2>${esc(wo.number)} — ${esc(wo.title)}</h2>
     <div class="cat">${esc(wo.area)} ${esc(wo.areaName)} · ${esc(wo.typeName)} · priority ${wo.priority} · ${esc(wo.issuedBy)}</div>
-    <p><a href="workorders/${esc(wo.number)}.html" target="_blank">Work order pack (HTML)</a> · <a href="workorders/pdf/${esc(wo.number)}.pdf" target="_blank">PDF</a> · ${wo.lines.map(l => `<a href="${iso(l)}" target="_blank">ISO-${esc(l)}</a>`).join(' · ')}</p>
+    <p><a href="workorders/${esc(wo.number)}.html" target="_blank">Work order pack (HTML)</a> · <a href="workorders/pdf/${esc(wo.number)}.pdf" target="_blank">PDF</a> · ${wo.lines.map(l => `<a href="${iso(l)}" target="_blank">ISO-${esc(l)}</a>`).join(' · ')}${wo.importedIsometrics?.length ? ` · owner's drawings: ${wo.importedIsometrics.map(r => `<a href="isometrics-imported/${esc(r.file)}" target="_blank">${esc(r.drawing)}</a>`).join(' · ')}` : ''}</p>
     <p class="notes"><b>Primary asset:</b> <a href="#" class="asset" data-tag="${esc(wo.primaryAsset.tag)}" data-kind="${wo.primaryAsset.kind}" data-line="${esc(wo.primaryAsset.line ?? '')}">${esc(wo.primaryAsset.tag)}</a> — ${esc(wo.primaryAsset.description)} — ${esc(plantText(wo.primaryAsset.at))}</p>
     <p class="notes"><b>Reason:</b> ${esc(wo.reason)}</p><ol class="notes">${wo.scope.map(x => `<li>${esc(x)}</li>`).join('')}</ol>
     <p class="notes">Orange: affected items · blue: isolation valves and blinds. ${wo.isolations.length} isolations, ${wo.newWelds.length} new welds${wo.weldSpecs.length ? ` (${wo.weldSpecs.join(', ')})` : ''}, ${wo.tmls.length} TMLs${wo.test ? `, test: ${esc(wo.test.kind)}${wo.test.pressure ? ` at ${Math.round(wo.test.pressure)} psi` : ''}` : ''}.</p>

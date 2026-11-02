@@ -7,6 +7,7 @@ import type { PipingModel } from '../src/generator/piping';
 import type { GTLine, GTEquipment, GroundTruth } from '../src/generator/groundtruth';
 import { buildWorkOrders, DEMO_NOTICE, type WorkOrder } from '../src/generator/workorders';
 import { workOrderFiles, isoFileName } from '../src/generator/woexport';
+import type { ImportedIndex } from '../src/generator/imported';
 import { areaOfLine, areaOfEquipment, equipmentAt } from '../src/generator/areas';
 import { generateInterior } from '../src/generator/interior';
 import { CLASS_PRESSURE, pipeDims } from '../src/catalogue';
@@ -117,7 +118,8 @@ describe('stage 7 — isometrics (SW-ISO-1/2)', () => {
 
 describe('stage 7 — export', () => {
   it('the committed work orders, packs and isometrics equal a fresh export; every pack has its PDF', () => {
-    const files = workOrderFiles(m, gt, eq);
+    const impPath = new URL('isometrics-imported/index.json', pub), imported = existsSync(impPath) ? JSON.parse(readFileSync(impPath, 'utf8')) as ImportedIndex : undefined;
+    const files = workOrderFiles(m, gt, eq, imported);
     for (const [p, c] of files) expect(readFileSync(new URL(p, pub), 'utf8') === c, p).toBe(true);
     for (const w of wos) expect(existsSync(new URL(`workorders/pdf/${w.number}.pdf`, pub)), w.number).toBe(true);
   });

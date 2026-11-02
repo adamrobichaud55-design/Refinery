@@ -15,6 +15,7 @@ must accompany any distribution of the viewer. No published dimension tables, st
 | 5     | Piping and routing: 203 lines with fittings, valves, welds and supports; all §40 checks pass | done |
 | 6     | Line classes (8) and ground-truth export: per-item metadata, spools, isometric data, BOM (`public/groundtruth/`) | done |
 | 7     | Equipment metadata; 25 shutdown work orders with isometrics, scope, isolations, demo welding specs, NDE, tests and ITPs (`public/workorders/`, `public/isometrics/`) | done |
+| 8     | The owner's isometric drawings (139 drawings, 240 sheets) imported and matched to the model; linked from the viewer, work orders and demo (`public/isometrics-imported/`) | done |
 
 ## Run
 
@@ -28,6 +29,8 @@ npm run gen:piping # regenerate public/plant-piping.json (about a minute) after 
 npm run export:gt  # regenerate public/groundtruth/ from the plant piping (about a minute)
 npm run export:wo  # regenerate public/isometrics/ and public/workorders/ (seconds)
 npm run wo:pdf     # print every work-order pack to PDF (public/workorders/pdf/)
+python3 -I tools/isomatch.py import <parts.pdf…>  # receive the owner's isometric drawings (stage 8)
+python3 -I tools/isomatch.py [--check]            # re-match the committed drawings to the model
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
@@ -81,3 +84,15 @@ printable packs with the isometrics attached. Welding, NDE and test content is S
 demonstration content — not qualified procedures; the facility owner's procedures and codes
 govern. In the viewer, open a work order from the left list: its items are highlighted, and the
 ITP can be signed off activity by activity (saved in the browser; "Download completion record").
+
+Stage 8 imported drawings: `public/isometrics-imported/` holds the owner's isometric drawings, one
+PDF per drawing (`ISO-*.pdf`, copied unchanged from the received parts), `RECEIPT.json` (each received
+file's SHA-256 and the part and page of every sheet), `index.json` (the drawing for each line, each
+weld's label and sheet, and the findings per drawing), `match.json` (everything read from every
+sheet) and `report.md` (the match report). Every one of the 203 lines is covered; every sheet's bill of
+materials, every pipe length and every sheet break agree with the model. The findings are drafting
+points on the drawings: negative coordinates printed with the minus on the feet only, weld dots
+without a number, repeated labels, a few labels on the neighbouring sheet, and missing FROM/TO
+labels (DESIGN_BASIS.md §53). In the viewer, a line or a clicked item shows its drawing, the weld's
+label and sheet, and the findings; each work order links its lines' drawings, and its new welds
+say where the weld they replace is on them.

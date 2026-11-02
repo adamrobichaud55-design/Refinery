@@ -1610,3 +1610,70 @@ No code, standard or published procedure was used, and none should be inferred.
   replaced spools (SW-WO-4), NDE extents by SW-NDE-2, the test by SW-TEST-1..3.
 - Every isometric contains every item, weld and support of its line.
 - The committed work-order data equals a fresh run; every stage-7 rule ID used in code exists here.
+
+## 53. Imported isometric drawings (`SW-IMP-*`) — stage 8
+
+The owner supplies isometric drawings made outside this repository (from this model's own
+ground-truth export) and asks for them to be matched to the 3D model. These rules govern the
+import. The model stays the reference: a drawing never changes the model, and any disagreement is
+reported for the drawing's author to resolve.
+
+- `SW-IMP-1` Receipt: only the document is imported (the owner's instruction). Each received file
+  is recorded with its name, size, page count, SHA-256 and the provenance statement printed on its
+  cover page, in `public/isometrics-imported/RECEIPT.json` and in PROVENANCE.md. Nothing else from
+  the drawings' origin is read or imported.
+- `SW-IMP-2` Identification: each sheet is identified by its title block (line number, drawing
+  number, sheet n of m). A drawing matches the model line with the same line number. The title
+  block must agree with the model's line header: piping class = line class, design pressure =
+  "{design pressure} PSIG", insulation YES/NONE = insulated, fluid = service code, title = the line
+  class's fluid name. A small branch line (a vent, drain, instrument or sample tap off a line,
+  `from = "tap {parent}"`) without its own drawing is covered by its parent's drawing. The FROM / TO
+  label at an equipment end reads "{equipment} NOZ. {nozzle}"; a hose station "HOSE STATION". A tap
+  end is shown by its continuation block, and caps and blinds by their symbols, so these need no
+  label.
+- `SW-IMP-3` Position: the drawings use the model's plant coordinates (SW-GT-2). Each continuation
+  point (CONT'D ON / FROM, with E / N / EL) must lie within 0.5 in of the line's centreline (its
+  nodes, elbow work points included). For a continuation to another drawing, it must be within
+  0.5 in of the point where the two lines meet. The reason for 0.5 in: points are printed to 1/16 in
+  and break points lie on straight pipe, so a correct point is within 1/32 in. 0.5 in leaves margin
+  for that rounding and still catches any whole-inch error. Each CONT'D ON must equal the next
+  sheet's CONT'D FROM. The breaks divide the line, by distance along the centreline (station), into
+  its sheets.
+  - The drawings print a negative value that is not a whole number of feet as the feet rounded
+    down plus positive inches: "-12'-6"" means −138 in (−11'-6"), not −150 in. Every continuation
+    point in the set fits that reading, so the matcher uses it to place the breaks. Each such
+    printed value is still reported, because a reader in the field takes "-12'-6"" as −150 in.
+- `SW-IMP-4` Content: the bill of materials on each sheet is compared, row by row and by
+  description, with the model's items and supports on that sheet. These are the items whose centre
+  falls between the sheet's breaks, plus the items of branch lines drawn on it. The model's pipe is
+  split exactly at the breaks. The comparison is repeated for the drawing's totals. Pipe lengths
+  agree when they differ by no more than 1/16 in per bill row (the printing resolution).
+  - Weld labels: the line's own welds carry the model's numbers (W1…Wn). The welds of branch lines
+    drawn on the sheets continue the numbering in order along the line (Wn+1…). This is the
+    drawings' own scheme, read from them (ISO-P-1002 labels its branch welds W11 and W12).
+  - Each label must be on the sheet that holds the weld's position. A weld with no label, or a
+    label repeated on a second sheet, is reported.
+  - Not checked: printed dimension strings (set along the pipe at an angle, so they do not read
+    reliably as text) and the drawing symbols.
+- `SW-IMP-5` Storage: each drawing's sheets are copied, unchanged, into one PDF per drawing
+  (`public/isometrics-imported/ISO-*.pdf`), recorded with its SHA-256 and the part and page each
+  sheet came from. The matcher reads these files, so the match can be re-run from the repository.
+  The received part files are not committed. The drawings stay SmartWeld's confidential documents, as their cover page states.
+- `SW-IMP-6` Findings and links:
+  - Every finding has a level. An error is where the drawing contradicts the model or a reader
+    would be misled. A warning is something missing or repeated that does not contradict the model.
+  - Each finding names the drawing, the sheet and the weld or item where there is one. Findings go
+    in `match.json` and `report.md`.
+  - `match.json` also maps every model line to its drawing and every weld to its label and sheet.
+  - The viewer's line inspector, the work-order data and packs, and the demo package link each
+    line to its imported drawing beside the generated isometric (SW-ISO-1).
+
+## 54. Tests required for stage 8
+
+- Every model line maps to one imported drawing, and every drawing to one model line.
+- The committed `match.json` and `report.md` equal a fresh run over the committed per-drawing PDFs,
+  whose SHA-256 match `RECEIPT.json`.
+- Every sheet's bill and every drawing's totals agree with the model. Every continuation point is
+  on the centreline under SW-IMP-3. No weld label is unknown to the model.
+- Every work order that lists a line lists that line's imported drawing.
+- Every stage-8 rule ID used in code is written here.

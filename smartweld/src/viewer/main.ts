@@ -12,7 +12,7 @@ import { basisText } from '../core/basis';
 import { formatLength } from '../core/units';
 import { generateBuilding, billOfMaterials, type BuildingModel } from '../generator/building';
 import { generateInterior, type InteriorModel } from '../generator/interior';
-import { loadPiping, buildPipingObject, lineReport, plantSummary, pickedItem, itemRecord, itemReport, itemHighlight, classLegend, equipmentPickGroup, loadEquipment, equipmentReport, loadWOIndex, loadWO, loadCompletion, saveCompletion, woReport } from './pipingView';
+import { loadPiping, buildPipingObject, lineReport, plantSummary, pickedItem, itemRecord, itemReport, itemHighlight, classLegend, equipmentPickGroup, loadEquipment, equipmentReport, loadWOIndex, loadWO, loadCompletion, saveCompletion, woReport, loadImported, importedBlock } from './pipingView';
 import type { WorkOrder } from '../generator/workorders';
 import { classColour } from '../generator/lineclass';
 
@@ -226,6 +226,7 @@ function showPiping(t0: number, line?: string, byClass = false, item?: string, w
     const view = decodeURIComponent(location.hash.slice(1)).split(';')[0];
     const pick = `<div class="cfg"><label>Line inspector: <select id="linesel"><option value="">— choose a line —</option>${m.lines.map(l => `<option${l.no === line ? ' selected' : ''}>${l.no}</option>`).join('')}</select></label></div>`;
     note.outerHTML = `<div id="pickinfo"></div><div id="pipinginfo">${pick}${byClass ? classLegend(m) : ''}${sel ? lineReport(sel) : ''}${plantSummary(m)}<p class="notes">Plant and piping built in ${((performance.now() - t0) / 1000).toFixed(1)} s. Valves in plant views use a coarser marching grid (same dimensions).</p></div>`;
+    if (sel) loadImported().then(imp => { const el = document.querySelector('#pipinginfo h2 + .cat') ?? document.querySelector('#pipinginfo h2'); if (imp && el) el.insertAdjacentHTML('afterend', importedBlock(imp, sel.no)); });   // SW-IMP-6
     document.getElementById('linesel')!.addEventListener('change', ev => { const v = (ev.target as HTMLSelectElement).value; location.hash = `${view}${v ? ';line=' + v : ''}`; });
     for (const box of Array.from(document.querySelectorAll<HTMLInputElement>('.lcbox'))) box.addEventListener('change', () => { const o = pipingRoot?.getObjectByName('class:' + box.dataset.class); if (o) { o.visible = box.checked; needsRender = true; } });
     pipingModel = m;
@@ -244,8 +245,8 @@ function showItem(sel: { tag: string; line: string }, frameIt = false) {
   if (pickObj) { pickObj.parent?.remove(pickObj); pickObj = null; }
   if (pipingModel && pipingRoot) { pickObj = itemHighlight(pipingModel, sel.tag, HIGHLIGHT, toBufferGeometry); if (pickObj) pipingRoot.add(pickObj); needsRender = true; }
   if (frameIt && pickObj) { const b = new THREE.Box3().setFromObject(pickObj), c = b.getCenter(new THREE.Vector3()), r = Math.max(48, b.getSize(new THREE.Vector3()).length() * 2.5); lookFrom([c.x + r * 0.7, c.y + r * 0.5, c.z + r * 0.8], [c.x, c.y, c.z]); }
-  itemRecord(sel).then(res => {
-    const el = document.getElementById('pickinfo'); if (el) el.innerHTML = res ? itemReport(res.rec, res.header) + '<hr>' : `<p class="notes">No record for ${sel.tag}</p>`;
+  Promise.all([itemRecord(sel), loadImported()]).then(([res, imp]) => {
+    const el = document.getElementById('pickinfo'); if (el) el.innerHTML = res ? itemReport(res.rec, res.header) + (imp ? importedBlock(imp, sel.line, sel.tag) : '') + '<hr>' : `<p class="notes">No record for ${sel.tag}</p>`;
     (window as any).__pipingReady = true;
   }).catch(showError);
 }

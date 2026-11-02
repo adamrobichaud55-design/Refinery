@@ -6,6 +6,7 @@
  *
  * DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE; THE FACILITY OWNER'S QUALIFIED PROCEDURES AND APPLICABLE CODES GOVERN.
  */
+import type { ImportedRef } from './imported';
 import { CLASS_PRESSURE, pipeDims, STUD_FU, elbowRadius, type PipeClass } from '../catalogue';
 import { partFromKey, type PipingModel } from './piping';
 import { plantText, type GroundTruth, type GTLine, type GTItem, type GTEquipment, type PlantPt } from './groundtruth';
@@ -51,7 +52,7 @@ export const OWNER_WORK_LIST: WorkListEntry[] = [
 export type Point = 'H' | 'W' | 'R' | 'S' | '—';
 export interface ITPActivity { step: number; activity: string; reference: string; acceptance: string; record: string; contractor: Point; owner: Point; thirdParty: Point; status: 'open'; signoffs: { contractor: null; owner: null; thirdParty: null }; date: null; remark: '' }
 export interface Isolation { seq: number; kind: 'valve' | 'blind' | 'electrical' | 'equipment' | 'removal'; tag: string; line: string; description: string; at?: PlantPt }
-export interface NewWeld { id: string; replaces: string; line: string; NPS: number; cls: PipeClass; wall: number; shopField: 'shop' | 'field'; ws: string; nde: string[]; at: PlantPt; joins: [string, string] }
+export interface NewWeld { id: string; replaces: string; line: string; NPS: number; cls: PipeClass; wall: number; shopField: 'shop' | 'field'; ws: string; nde: string[]; at: PlantPt; joins: [string, string]; drawingRef?: string }
 export interface Asset { tag: string; kind: 'equipment' | 'motor' | 'nozzle' | 'item' | 'weld' | 'support' | 'structure'; description: string; line?: string; at: PlantPt }
 export interface TML { id: string; item: string; description: string; at: PlantPt; readings: string[]; nominalWall?: number }
 export interface WorkOrder {
@@ -63,6 +64,8 @@ export interface WorkOrder {
   tmls: TML[]; test: { kind: string; description: string; pressure?: number; hold?: string; basis: string } | null;
   bolting: { joint: string; studs: string; preloadPerStud: number; passes: number; basis: string }[];
   parts: { description: string; qty: number; replaces?: string }[]; itp: ITPActivity[]; rules: string[];
+  /** the owner's imported drawings of the work lines, when imported (SW-IMP-6) */
+  importedIsometrics?: ImportedRef[];
 }
 
 // ---- rule data -----------------------------------------------------------------------------------------------

@@ -16,7 +16,8 @@ with its size and SHA-256.
 | `viewer/` | The 3D viewer, built as a static website with its own copy of the data. |
 | `data/plant-piping.json` | The plant piping model: every line, component (part key + 4×4 transform), weld and support. |
 | `data/groundtruth/` | Ground truth for AI training, one record per item (below). |
-| `data/isometrics/` | One isometric drawing per line (`ISO-<line>.svg`, 203 drawings). |
+| `data/isometrics/` | One generated isometric per line (`ISO-<line>.svg`, 203 drawings). |
+| `data/isometrics-imported/` | The owner's isometric drawings matched to the model: one PDF per drawing (`ISO-*.pdf`, 139 drawings on 240 sheets covering all 203 lines), `index.json`, `match.json`, `report.md`, `RECEIPT.json` (below). |
 | `data/workorders/` | 25 shutdown work orders: `index.json`, `WO-*.json` (data), `WO-*.html` (printable pack), `pdf/WO-*.pdf`. |
 | `docs/` | Design basis (every rule and its reason), provenance log, IP review package, third-party notices, project README. |
 | `screenshots/` | Renders of every stage (`stage1` … `stage7`). |
@@ -57,3 +58,22 @@ and the ITP (each activity with hold/witness/review/surveillance points per part
 sign-off fields for completion capture).
 
 Areas: A100 tank farm, A200 vessels and column, A300 exchangers and drum, A400 pumps, A500 pipe rack.
+
+## Owner's isometric drawings (`data/isometrics-imported/`)
+
+The owner's drawings were received as three PDF parts and recorded with their SHA-256 (`RECEIPT.json`).
+Each drawing's sheets were copied unchanged into `ISO-*.pdf`, then read and matched to the model:
+
+| File | Content |
+|---|---|
+| `index.json` | For every model line, the drawing that shows it (small vents, drains and instrument taps are drawn on their parent line's sheets); for every weld, its label (W-number) and sheet on the drawing; for every drawing, its findings. |
+| `match.json` | Everything read from every sheet: title block, bill of materials, weld labels, continuation points (CONT'D ON / FROM with E, N, EL), end labels. |
+| `report.md` | The match report, drawing by drawing. |
+
+All 203 lines are covered. Every sheet's bill of materials and pipe length, and every sheet break, agree
+with the model. The findings are drafting points: negative coordinates printed with the minus on the
+feet only ("-12'-6"" for −11'-6"), weld dots without a number, repeated labels, a few labels on the
+neighbouring sheet, and missing FROM/TO labels. Branch welds are numbered on from the parent line's
+welds, as on the drawings (for example, on ISO-P-1002, W11 and W12 are the welds of its two
+instrument taps). In the viewer, a line or a clicked item links to its drawing. Each work order lists
+its lines' drawings, and gives each new weld's place on them ("ISO-P-1019 sh 2 W12").

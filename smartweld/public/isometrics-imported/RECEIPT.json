@@ -1,0 +1,2204 @@
+{
+ "note": "Received documents (SW-IMP-1). Only the documents were imported; see PROVENANCE.md.",
+ "received": [
+  {
+   "file": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+   "bytes": 3817849,
+   "sha256": "b5d33506236dc412d04acd66a42436dff5fe2a2fa393d6b1b93d9c0c696fb37b",
+   "pages": 81,
+   "sheets": 80,
+   "cover": "SmartWeld plant isometrics: provenance 139 drawings on 240 sheets, covering 203 of the 203 pipe lines in the plant. Each line has its own drawing, except small vents and drains, which are drawn on the sheet of the line they come off. Source: SmartWeld's clean-room 3D model, https://github.com/adamrobichaud55-design/Refinery, branch ccr-b60fa7fe-eo6rly, commit c35ea3396121 (smartweld/public/groundtruth). Its export is copied unchanged into the generator's repository; SOURCE.json fingerprints every file (SOURCE.json SHA-256 773a30e37cefa94b...). Drawn by SmartWeld's isometric generator, commit 27bc863867ee, on 2026-11-01. Every sheet was checked against the export as it was drawn: positions, printed dimensions and coordinates, the bill, and every item, weld and support linked to its tag in the model. What the drawings contain: only the model's own data (lines, parts, lengths, welds, supports, bill rows), drawn with SmartWeld's own symbols (the owner's freehand sketches and own-words descriptions, SPEC.md). No published dimension table, catalogue, standard figure, symbol library or third-party drawing was used to make them. Rendered with resvg and ReportLab (permissive licences); text in DejaVu Sans (Bitstream Vera licence). Confidential: SmartWeld's own work. Nothing else from the generator's repository or working sessions accompanies this file. Record its receipt, with this file's SHA-256, wherever it is imported. Part 1 of 3: sheets 1 to 80 of 240 (pages 2 to 81 of this file). Split from SmartWeld-plant-isometrics-27bc863.pdf (SHA-256 16d365ec5ad4469a...) without other change, so that each part can be uploaded; the three parts together are the whole set."
+  },
+  {
+   "file": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+   "bytes": 3789608,
+   "sha256": "998e1cfac2c59d5d5561ba29a3e571663f307cc985a9b5431278646c860931ad",
+   "pages": 81,
+   "sheets": 80,
+   "cover": "SmartWeld plant isometrics: provenance 139 drawings on 240 sheets, covering 203 of the 203 pipe lines in the plant. Each line has its own drawing, except small vents and drains, which are drawn on the sheet of the line they come off. Source: SmartWeld's clean-room 3D model, https://github.com/adamrobichaud55-design/Refinery, branch ccr-b60fa7fe-eo6rly, commit c35ea3396121 (smartweld/public/groundtruth). Its export is copied unchanged into the generator's repository; SOURCE.json fingerprints every file (SOURCE.json SHA-256 773a30e37cefa94b...). Drawn by SmartWeld's isometric generator, commit 27bc863867ee, on 2026-11-01. Every sheet was checked against the export as it was drawn: positions, printed dimensions and coordinates, the bill, and every item, weld and support linked to its tag in the model. What the drawings contain: only the model's own data (lines, parts, lengths, welds, supports, bill rows), drawn with SmartWeld's own symbols (the owner's freehand sketches and own-words descriptions, SPEC.md). No published dimension table, catalogue, standard figure, symbol library or third-party drawing was used to make them. Rendered with resvg and ReportLab (permissive licences); text in DejaVu Sans (Bitstream Vera licence). Confidential: SmartWeld's own work. Nothing else from the generator's repository or working sessions accompanies this file. Record its receipt, with this file's SHA-256, wherever it is imported. Part 2 of 3: sheets 81 to 160 of 240 (pages 2 to 81 of this file). Split from SmartWeld-plant-isometrics-27bc863.pdf (SHA-256 16d365ec5ad4469a...) without other change, so that each part can be uploaded; the three parts together are the whole set."
+  },
+  {
+   "file": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+   "bytes": 3735867,
+   "sha256": "e4fdddcec39265fb0533683d80d0769708f6baac45838182585519d580d6885f",
+   "pages": 81,
+   "sheets": 80,
+   "cover": "SmartWeld plant isometrics: provenance 139 drawings on 240 sheets, covering 203 of the 203 pipe lines in the plant. Each line has its own drawing, except small vents and drains, which are drawn on the sheet of the line they come off. Source: SmartWeld's clean-room 3D model, https://github.com/adamrobichaud55-design/Refinery, branch ccr-b60fa7fe-eo6rly, commit c35ea3396121 (smartweld/public/groundtruth). Its export is copied unchanged into the generator's repository; SOURCE.json fingerprints every file (SOURCE.json SHA-256 773a30e37cefa94b...). Drawn by SmartWeld's isometric generator, commit 27bc863867ee, on 2026-11-01. Every sheet was checked against the export as it was drawn: positions, printed dimensions and coordinates, the bill, and every item, weld and support linked to its tag in the model. What the drawings contain: only the model's own data (lines, parts, lengths, welds, supports, bill rows), drawn with SmartWeld's own symbols (the owner's freehand sketches and own-words descriptions, SPEC.md). No published dimension table, catalogue, standard figure, symbol library or third-party drawing was used to make them. Rendered with resvg and ReportLab (permissive licences); text in DejaVu Sans (Bitstream Vera licence). Confidential: SmartWeld's own work. Nothing else from the generator's repository or working sessions accompanies this file. Record its receipt, with this file's SHA-256, wherever it is imported. Part 3 of 3: sheets 161 to 240 of 240 (pages 2 to 81 of this file). Split from SmartWeld-plant-isometrics-27bc863.pdf (SHA-256 16d365ec5ad4469a...) without other change, so that each part can be uploaded; the three parts together are the whole set."
+  }
+ ],
+ "drawings": {
+  "ISO-P-1001": {
+   "file": "ISO-P-1001.pdf",
+   "line": "6\"-P150-P-1001",
+   "sha256": "72a572f218b7c35b66454bcb970ae8ff8f682cc4da7a7ec0f17aa35b3df981fe",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 2
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 3
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 4
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 5
+    },
+    {
+     "sheet": 5,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 6
+    }
+   ]
+  },
+  "ISO-P-1002": {
+   "file": "ISO-P-1002.pdf",
+   "line": "6\"-P150-P-1002",
+   "sha256": "50670e2e0bbf57bd921d24079e2ac5680c5a9b7f95fcd301b3a9de713739157c",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 7
+    }
+   ]
+  },
+  "ISO-P-1003": {
+   "file": "ISO-P-1003.pdf",
+   "line": "4\"-P300-P-1003",
+   "sha256": "2f068c56dd78159428a44ecfbcd7a9fe1681e3e2ec4d68ef1449383ab881904f",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 8
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 9
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 10
+    }
+   ]
+  },
+  "ISO-P-1004": {
+   "file": "ISO-P-1004.pdf",
+   "line": "4\"-P300-P-1004",
+   "sha256": "0844e259c09b9077c0937d4b9d7f4a55b70e8780e30843e3c8761e466b74aa5e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 11
+    }
+   ]
+  },
+  "ISO-P-1005": {
+   "file": "ISO-P-1005.pdf",
+   "line": "4\"-P300-P-1005",
+   "sha256": "4d7168559391ea5281bc9f1c128e9c2cebd70a810000391815d3cc8d670a1e51",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 12
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 13
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 14
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 15
+    }
+   ]
+  },
+  "ISO-P-1006": {
+   "file": "ISO-P-1006.pdf",
+   "line": "6\"-P300-P-1006",
+   "sha256": "7f57abaf65d1d9873093959e70c908e9be49bf151bf7e252d7be6e344c466a70",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 16
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 17
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 18
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 19
+    },
+    {
+     "sheet": 5,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 20
+    },
+    {
+     "sheet": 6,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 21
+    },
+    {
+     "sheet": 7,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 22
+    }
+   ]
+  },
+  "ISO-P-1007": {
+   "file": "ISO-P-1007.pdf",
+   "line": "6\"-P300-P-1007",
+   "sha256": "3ff77ce9d2ca87b439f6da53d8d7984b9a40432cd99fbb798018cf22ebda82cd",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 23
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 24
+    }
+   ]
+  },
+  "ISO-P-1008": {
+   "file": "ISO-P-1008.pdf",
+   "line": "4\"-P300-P-1008",
+   "sha256": "142b5e96124fb1fc468f638f9adb283881c5746b788f9144090495f01f71f57a",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 25
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 26
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 27
+    }
+   ]
+  },
+  "ISO-P-1009": {
+   "file": "ISO-P-1009.pdf",
+   "line": "4\"-P300-P-1009",
+   "sha256": "8cd102fc2ba1da38e94f7b28e72324b089360b2859dfa4917f70fb315b5abfa8",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 28
+    }
+   ]
+  },
+  "ISO-P-1010": {
+   "file": "ISO-P-1010.pdf",
+   "line": "4\"-P300-P-1010",
+   "sha256": "0d033d596a9dbda7e3e09e431942efb60e13571619157d8f817a44ddfb57d143",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 29
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 30
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 31
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 32
+    }
+   ]
+  },
+  "ISO-P-1011": {
+   "file": "ISO-P-1011.pdf",
+   "line": "6\"-P300-P-1011",
+   "sha256": "103f0ec38f6577102930fa96e602dca0b06749a350d23b97dbf9f5cee8a32bf7",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 33
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 34
+    }
+   ]
+  },
+  "ISO-P-1012": {
+   "file": "ISO-P-1012.pdf",
+   "line": "6\"-P300-P-1012",
+   "sha256": "1846a92fd5d11c960b4cc0bceabc21d13106a1f51cd38f6b0156e0d4a444abea",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 35
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 36
+    }
+   ]
+  },
+  "ISO-P-1013": {
+   "file": "ISO-P-1013.pdf",
+   "line": "4\"-P300-P-1013",
+   "sha256": "21a63942c22d633f548b0860ef13e49b5f2d8d835676d748218a5b992dc2b582",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 37
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 38
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 39
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 40
+    },
+    {
+     "sheet": 5,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 41
+    }
+   ]
+  },
+  "ISO-P-1014": {
+   "file": "ISO-P-1014.pdf",
+   "line": "4\"-P300-P-1014",
+   "sha256": "a1ec33f0222fa8e6e6751edd4df5064d78c27c908d177403755646c7349c38af",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 42
+    }
+   ]
+  },
+  "ISO-P-1015": {
+   "file": "ISO-P-1015.pdf",
+   "line": "3\"-P300-P-1015",
+   "sha256": "330f34040f1fc9ec6a7faa7f384c6bac7505bbb459177d174a10a82fdbe3e8dd",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 43
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 44
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 45
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 46
+    },
+    {
+     "sheet": 5,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 47
+    },
+    {
+     "sheet": 6,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 48
+    }
+   ]
+  },
+  "ISO-P-1016": {
+   "file": "ISO-P-1016.pdf",
+   "line": "3\"-P300-P-1016",
+   "sha256": "e38b9cbf2d07ff16aac4f01c3f70b0b18f88f6c568230437d513e669a0e5cf8f",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 49
+    }
+   ]
+  },
+  "ISO-P-1017": {
+   "file": "ISO-P-1017.pdf",
+   "line": "6\"-P300-P-1017",
+   "sha256": "0baa291d4af636c41a83e9d6df886a120dc0771bb1e6db4f084167c038dabd1b",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 50
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 51
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 52
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 53
+    }
+   ]
+  },
+  "ISO-P-1018": {
+   "file": "ISO-P-1018.pdf",
+   "line": "6\"-P300-P-1018",
+   "sha256": "c31f3b60cd0a1ac39a24167c75f57eee1cbbc89b3bf97e35b81f044887a1755f",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 54
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 55
+    }
+   ]
+  },
+  "ISO-P-1019": {
+   "file": "ISO-P-1019.pdf",
+   "line": "4\"-P300-P-1019",
+   "sha256": "badd5cf92165194a87d0558a02966b54d2d64db39c363ee42e3f1146357fb4ed",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 56
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 57
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 58
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 59
+    },
+    {
+     "sheet": 5,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 60
+    }
+   ]
+  },
+  "ISO-P-1020": {
+   "file": "ISO-P-1020.pdf",
+   "line": "4\"-P300-P-1020",
+   "sha256": "caf0690565085f04cbd4689bde77858a9f061e705f15f0efe60147cb66ac8834",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 61
+    }
+   ]
+  },
+  "ISO-P-1021": {
+   "file": "ISO-P-1021.pdf",
+   "line": "4\"-P300-P-1021",
+   "sha256": "9f1904633f8d552a20b3d98c29cc692235248aedea4371675e6d7564bd1c3a6c",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 62
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 63
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 64
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 65
+    }
+   ]
+  },
+  "ISO-CWS-2001": {
+   "file": "ISO-CWS-2001.pdf",
+   "line": "8\"-P150-CWS-2001",
+   "sha256": "e14b0a4ec332b59f020bed28c11e8e14935adda80d9ff9f7d11de89c5a4a7947",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 66
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 67
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 68
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 69
+    }
+   ]
+  },
+  "ISO-CWR-2002": {
+   "file": "ISO-CWR-2002.pdf",
+   "line": "8\"-P150-CWR-2002",
+   "sha256": "8b5db8a5b2ef935d3ff1091b3f0e639408c9e29a5cd95749bef324dc5d0b632a",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 70
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 71
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 72
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 73
+    }
+   ]
+  },
+  "ISO-LS-2003": {
+   "file": "ISO-LS-2003.pdf",
+   "line": "6\"-P300-LS-2003",
+   "sha256": "81a901a2f280cbf7a7eb93023831fd027731de0381df17a7ebd4d4e4d38d210c",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 74
+    },
+    {
+     "sheet": 2,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 75
+    },
+    {
+     "sheet": 3,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 76
+    },
+    {
+     "sheet": 4,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 77
+    },
+    {
+     "sheet": 5,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 78
+    },
+    {
+     "sheet": 6,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 79
+    },
+    {
+     "sheet": 7,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 80
+    }
+   ]
+  },
+  "ISO-SC-2004": {
+   "file": "ISO-SC-2004.pdf",
+   "line": "3\"-P150-SC-2004",
+   "sha256": "3338c7d2a33c0475aa06c5b73e0a4d29e48bb51fbbdda60575f108f43e008b79",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "2beea050-SmartWeld-plant-isometrics-27bc863-part1of3.pdf",
+     "page": 81
+    },
+    {
+     "sheet": 2,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 2
+    },
+    {
+     "sheet": 3,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 3
+    },
+    {
+     "sheet": 4,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 4
+    },
+    {
+     "sheet": 5,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 5
+    },
+    {
+     "sheet": 6,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 6
+    }
+   ]
+  },
+  "ISO-IA-2005": {
+   "file": "ISO-IA-2005.pdf",
+   "line": "2\"-P150-IA-2005",
+   "sha256": "eaa1223f7f32d7ae7c5891a98b2a4eb83dfd4e3a17125ef2effc8d2802c8cc2e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 7
+    },
+    {
+     "sheet": 2,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 8
+    },
+    {
+     "sheet": 3,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 9
+    },
+    {
+     "sheet": 4,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 10
+    },
+    {
+     "sheet": 5,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 11
+    },
+    {
+     "sheet": 6,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 12
+    },
+    {
+     "sheet": 7,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 13
+    },
+    {
+     "sheet": 8,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 14
+    }
+   ]
+  },
+  "ISO-PA-2006": {
+   "file": "ISO-PA-2006.pdf",
+   "line": "2\"-P150-PA-2006",
+   "sha256": "85c1998a1b012e111431678e702e0cbbae81eda677bf37c7dcb6ed2dd2a014ec",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 15
+    },
+    {
+     "sheet": 2,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 16
+    },
+    {
+     "sheet": 3,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 17
+    },
+    {
+     "sheet": 4,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 18
+    },
+    {
+     "sheet": 5,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 19
+    },
+    {
+     "sheet": 6,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 20
+    },
+    {
+     "sheet": 7,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 21
+    },
+    {
+     "sheet": 8,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 22
+    }
+   ]
+  },
+  "ISO-N-2007": {
+   "file": "ISO-N-2007.pdf",
+   "line": "2\"-P150-N-2007",
+   "sha256": "d44fadca8dad6b7b3b5fe2da38de98d1cfe30bfc22bfe50324d65a98ad7952f9",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 23
+    },
+    {
+     "sheet": 2,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 24
+    },
+    {
+     "sheet": 3,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 25
+    },
+    {
+     "sheet": 4,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 26
+    },
+    {
+     "sheet": 5,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 27
+    },
+    {
+     "sheet": 6,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 28
+    },
+    {
+     "sheet": 7,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 29
+    },
+    {
+     "sheet": 8,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 30
+    },
+    {
+     "sheet": 9,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 31
+    }
+   ]
+  },
+  "ISO-W-2008": {
+   "file": "ISO-W-2008.pdf",
+   "line": "3\"-P150-W-2008",
+   "sha256": "4177b53c358850999ab4fa59b48563797cf047a9774b9297df8678b4207da35b",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 32
+    },
+    {
+     "sheet": 2,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 33
+    },
+    {
+     "sheet": 3,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 34
+    },
+    {
+     "sheet": 4,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 35
+    },
+    {
+     "sheet": 5,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 36
+    },
+    {
+     "sheet": 6,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 37
+    },
+    {
+     "sheet": 7,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 38
+    },
+    {
+     "sheet": 8,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 39
+    },
+    {
+     "sheet": 9,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 40
+    },
+    {
+     "sheet": 10,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 41
+    }
+   ]
+  },
+  "ISO-FL-2009": {
+   "file": "ISO-FL-2009.pdf",
+   "line": "8\"-P150-FL-2009",
+   "sha256": "39acd92d0e5ea88125cbee8f1fc23126525c4be48da54eade8d21214c7b445e5",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 42
+    },
+    {
+     "sheet": 2,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 43
+    },
+    {
+     "sheet": 3,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 44
+    },
+    {
+     "sheet": 4,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 45
+    },
+    {
+     "sheet": 5,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 46
+    }
+   ]
+  },
+  "ISO-CWS-3001": {
+   "file": "ISO-CWS-3001.pdf",
+   "line": "4\"-P150-CWS-3001",
+   "sha256": "2510690e4fff8df8dfe2659e2c516ba1a8c7072d9ad894440c7c8c20440a52ee",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 47
+    }
+   ]
+  },
+  "ISO-CWR-3002": {
+   "file": "ISO-CWR-3002.pdf",
+   "line": "4\"-P150-CWR-3002",
+   "sha256": "8437db2e7b071274dbb6ea7a1ace798169fcfc244e0c7b6073af8ad2126e1f61",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 48
+    }
+   ]
+  },
+  "ISO-CWS-3003": {
+   "file": "ISO-CWS-3003.pdf",
+   "line": "4\"-P150-CWS-3003",
+   "sha256": "d5b76a05227b5a7a03471d8baa3d454db0978288300ea98df6deb473baebdd31",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 49
+    }
+   ]
+  },
+  "ISO-CWR-3004": {
+   "file": "ISO-CWR-3004.pdf",
+   "line": "4\"-P150-CWR-3004",
+   "sha256": "589c92bf59ae5b2d3b1cffbd82ef6f21282ee4b362aa5dc312c48785b81d54fe",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 50
+    }
+   ]
+  },
+  "ISO-CWS-3005": {
+   "file": "ISO-CWS-3005.pdf",
+   "line": "4\"-P150-CWS-3005",
+   "sha256": "2ae9c8bffc87cd2a040ff7c86f47f8f779ae2d45f7853f07b453cfb0fdbe8ea0",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 51
+    }
+   ]
+  },
+  "ISO-CWR-3006": {
+   "file": "ISO-CWR-3006.pdf",
+   "line": "4\"-P150-CWR-3006",
+   "sha256": "8cb3d3deb0685622182ab4d3e0ed4e32201830655c6bb0ea78fc4c7dfc4ceb59",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 52
+    },
+    {
+     "sheet": 2,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 53
+    }
+   ]
+  },
+  "ISO-LS-3007": {
+   "file": "ISO-LS-3007.pdf",
+   "line": "2\"-P300-LS-3007",
+   "sha256": "85b39844276c7b75dab8afc14e4f9d2e44323026f5dba9b4b5230a1002736abf",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 54
+    }
+   ]
+  },
+  "ISO-SC-3008": {
+   "file": "ISO-SC-3008.pdf",
+   "line": "2\"-P150-SC-3008",
+   "sha256": "7979c65e136acae2f889b8f71c17f05fc555a0873a796ed0b604063b74ed8151",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 55
+    }
+   ]
+  },
+  "ISO-LS-3009": {
+   "file": "ISO-LS-3009.pdf",
+   "line": "2\"-P300-LS-3009",
+   "sha256": "73a0f9fb2e09584842379ed80b8bafcb4ec2676f91e6de7d6f141a8954dcf9b2",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 56
+    }
+   ]
+  },
+  "ISO-SC-3010": {
+   "file": "ISO-SC-3010.pdf",
+   "line": "2\"-P150-SC-3010",
+   "sha256": "445bf954825634d0c6d3dd04019c088362c3e8b195ffbc6be67cbfcf6d39bf6e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 57
+    }
+   ]
+  },
+  "ISO-N-3011": {
+   "file": "ISO-N-3011.pdf",
+   "line": "1\"-P150-N-3011",
+   "sha256": "69f38d075f4912c8de8fe8a17fcd158796d080dd5e0616cc901d683ddc6367d5",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 58
+    }
+   ]
+  },
+  "ISO-N-3012": {
+   "file": "ISO-N-3012.pdf",
+   "line": "1\"-P150-N-3012",
+   "sha256": "215493c38a7fd7166d29622b1c3c3ccfc2c51ed64208156ac57558e8bf2686f6",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 59
+    }
+   ]
+  },
+  "ISO-N-3013": {
+   "file": "ISO-N-3013.pdf",
+   "line": "1\"-P150-N-3013",
+   "sha256": "3fedf5fc3ed36b8e34e20382a8dabde7e6f8be1850073cb6f2e5ad90489dc3a7",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 60
+    }
+   ]
+  },
+  "ISO-N-3014": {
+   "file": "ISO-N-3014.pdf",
+   "line": "1\"-P150-N-3014",
+   "sha256": "52eeca6f9775630a2b5ad9d5d996e209092808c4cf40be739287bf7248a94c72",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 61
+    }
+   ]
+  },
+  "ISO-N-3015": {
+   "file": "ISO-N-3015.pdf",
+   "line": "1\"-P150-N-3015",
+   "sha256": "d583212eb819e5eba145b1b822242de9a9d6de4046e7c9b5368f9c7426346224",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 62
+    }
+   ]
+  },
+  "ISO-N-3016": {
+   "file": "ISO-N-3016.pdf",
+   "line": "1\"-P150-N-3016",
+   "sha256": "777166a76126069e4887d3a81bfa243446025a8cc2690fb319ad306c7672a10b",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 63
+    }
+   ]
+  },
+  "ISO-W-3017": {
+   "file": "ISO-W-3017.pdf",
+   "line": "3/4\"-P150-W-3017",
+   "sha256": "defeca8ea8e72cdc23d1c524d7929a774acd71cd69c18b020faaf16782c0805e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 64
+    }
+   ]
+  },
+  "ISO-W-3018": {
+   "file": "ISO-W-3018.pdf",
+   "line": "3/4\"-P150-W-3018",
+   "sha256": "66b2e080693e15122076b16d7d8df88941a2bf516749b6414a90b8baa0829832",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 65
+    }
+   ]
+  },
+  "ISO-W-3019": {
+   "file": "ISO-W-3019.pdf",
+   "line": "3/4\"-P150-W-3019",
+   "sha256": "5a20317c4753d5874e03937bdd329eb4e25f8a03748718fb39e7b4e06fcd1033",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 66
+    }
+   ]
+  },
+  "ISO-W-3020": {
+   "file": "ISO-W-3020.pdf",
+   "line": "3/4\"-P150-W-3020",
+   "sha256": "9a4d1ef699ab97cc1fdb4536333926cc083a0eda445b8a8f520f99e39acaf956",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 67
+    }
+   ]
+  },
+  "ISO-W-3021": {
+   "file": "ISO-W-3021.pdf",
+   "line": "3/4\"-P150-W-3021",
+   "sha256": "5c4c081c52a05327e3168d145f4ad98f837dd944f8e0e4bf20c5f9bbc420182e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 68
+    }
+   ]
+  },
+  "ISO-W-3022": {
+   "file": "ISO-W-3022.pdf",
+   "line": "3/4\"-P150-W-3022",
+   "sha256": "951c5003f4a399996f00eda2b193d3bfae1ad11d072743c95e564dc6ead782f6",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 69
+    }
+   ]
+  },
+  "ISO-W-3023": {
+   "file": "ISO-W-3023.pdf",
+   "line": "3/4\"-P150-W-3023",
+   "sha256": "a65dd3203b1403cc5766275dcdbb8782bbb4e19464abf78fc20730f4ed20c441",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 70
+    }
+   ]
+  },
+  "ISO-W-3024": {
+   "file": "ISO-W-3024.pdf",
+   "line": "3/4\"-P150-W-3024",
+   "sha256": "ffda7c49b26fe38135e438e40932eda69efab42994db285272d83a1984a064f5",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 71
+    }
+   ]
+  },
+  "ISO-RV-4001": {
+   "file": "ISO-RV-4001.pdf",
+   "line": "3\"-P300-RV-4001",
+   "sha256": "c37a2e9b95882be4b96a314e51afd2308e15bcf47f3ed85301e1e403592414dc",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 72
+    }
+   ]
+  },
+  "ISO-RV-4002": {
+   "file": "ISO-RV-4002.pdf",
+   "line": "3\"-P150-RV-4002",
+   "sha256": "b9245a2b87be55c27243ba04dfab7eada2054ffe44efd89f16a219d892095c3e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 73
+    }
+   ]
+  },
+  "ISO-RV-4003": {
+   "file": "ISO-RV-4003.pdf",
+   "line": "3\"-P150-RV-4003",
+   "sha256": "3e48552ba9b63a4dde80ee2925856e3505dd00685a8106851f03dac00385a965",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 74
+    }
+   ]
+  },
+  "ISO-FL-4004": {
+   "file": "ISO-FL-4004.pdf",
+   "line": "4\"-P150-FL-4004",
+   "sha256": "582c62dd95de964bc430de943b873c058cbb0feeed12c0a46135d3af0e38bffa",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 75
+    }
+   ]
+  },
+  "ISO-FL-4005": {
+   "file": "ISO-FL-4005.pdf",
+   "line": "4\"-P150-FL-4005",
+   "sha256": "cc4222070c8895518229bb4fe58f1855a49dd385bebcd0df7157102f64728218",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 76
+    },
+    {
+     "sheet": 2,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 77
+    },
+    {
+     "sheet": 3,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 78
+    }
+   ]
+  },
+  "ISO-FL-4006": {
+   "file": "ISO-FL-4006.pdf",
+   "line": "4\"-P150-FL-4006",
+   "sha256": "56a0454d2a234e7c0dd2906c25066bffb4e7fe399151b07ade74d24ce1cd9c6d",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 79
+    },
+    {
+     "sheet": 2,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 80
+    }
+   ]
+  },
+  "ISO-HS-5001": {
+   "file": "ISO-HS-5001.pdf",
+   "line": "1\"-P150-HS-5001",
+   "sha256": "e59633e13217cb132849ac590eb7e98e994b4a4d230704c1a9ed79ce8eb9fd66",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "cc901c7a-SmartWeld-plant-isometrics-27bc863-part2of3.pdf",
+     "page": 81
+    }
+   ]
+  },
+  "ISO-HS-5002": {
+   "file": "ISO-HS-5002.pdf",
+   "line": "1\"-P150-HS-5002",
+   "sha256": "ecbad51105e14e5937d6506090d8094a0ac07a533810c4124705e758e2bf6576",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 2
+    }
+   ]
+  },
+  "ISO-HS-5003": {
+   "file": "ISO-HS-5003.pdf",
+   "line": "1\"-P300-HS-5003",
+   "sha256": "e5322d50dcb933a806402d159833397a77ee33579c50b3a893064b95ee3515e8",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 3
+    }
+   ]
+  },
+  "ISO-HS-5004": {
+   "file": "ISO-HS-5004.pdf",
+   "line": "1\"-P150-HS-5004",
+   "sha256": "4e2f465456e47ba598f5bf4f1644dacad00af21d76c816e2949645ed4c032e40",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 4
+    }
+   ]
+  },
+  "ISO-HS-5005": {
+   "file": "ISO-HS-5005.pdf",
+   "line": "1/2\"-P150-HS-5005",
+   "sha256": "1f401966dedefbddfb2e9e3e55fa70bff304d427ef02a52180018e9e67080aed",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 5
+    }
+   ]
+  },
+  "ISO-HS-5006": {
+   "file": "ISO-HS-5006.pdf",
+   "line": "1\"-P150-HS-5006",
+   "sha256": "90353b5c7130e78874f996a1006e2cad105fdf77cd5dd9c0799a92403107bf1c",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 6
+    }
+   ]
+  },
+  "ISO-HS-5007": {
+   "file": "ISO-HS-5007.pdf",
+   "line": "1\"-P150-HS-5007",
+   "sha256": "ef7e5810b74f4762c82a07a0cfa43c824e23bc0d9a5e9f6c5c45e5e43356b7b3",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 7
+    }
+   ]
+  },
+  "ISO-HS-5008": {
+   "file": "ISO-HS-5008.pdf",
+   "line": "1\"-P300-HS-5008",
+   "sha256": "0cb481ae43168dd59e130af10a2da6f647cf2a1540d68f2ab4deb621d54bd795",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 8
+    }
+   ]
+  },
+  "ISO-HS-5009": {
+   "file": "ISO-HS-5009.pdf",
+   "line": "1\"-P150-HS-5009",
+   "sha256": "a7324af24f320a3ad6a238c42edc7070258886772d40a5e9046d2629513972ba",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 9
+    }
+   ]
+  },
+  "ISO-HS-5010": {
+   "file": "ISO-HS-5010.pdf",
+   "line": "1/2\"-P150-HS-5010",
+   "sha256": "5da1b2d2a6700f41d29ec66f46ed0654f7d374419c38257f507901d8da78926c",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 10
+    }
+   ]
+  },
+  "ISO-HS-5011": {
+   "file": "ISO-HS-5011.pdf",
+   "line": "1\"-P150-HS-5011",
+   "sha256": "7b80c3e41fd1f4784a761cd5f659b155c4bb88749cfd0eba38bdbb9ee363a967",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 11
+    }
+   ]
+  },
+  "ISO-HS-5012": {
+   "file": "ISO-HS-5012.pdf",
+   "line": "1\"-P150-HS-5012",
+   "sha256": "177710fb3f10416ac420b5e4b4e79bb23775040928486650fe2aee23545ab207",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 12
+    }
+   ]
+  },
+  "ISO-HS-5013": {
+   "file": "ISO-HS-5013.pdf",
+   "line": "1\"-P300-HS-5013",
+   "sha256": "3a488bcc452db8c07c5cc9b4a59ffff72311e141a7e05b1a612f1caddab324c4",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 13
+    }
+   ]
+  },
+  "ISO-HS-5014": {
+   "file": "ISO-HS-5014.pdf",
+   "line": "1\"-P150-HS-5014",
+   "sha256": "f047b04294e6683b43e6a45d8d3893cc74db14e6ad7dfd94ed8ea2f9fc3e8092",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 14
+    }
+   ]
+  },
+  "ISO-HS-5015": {
+   "file": "ISO-HS-5015.pdf",
+   "line": "1/2\"-P150-HS-5015",
+   "sha256": "cf9129ad4722162509ca4ae6d333cfa9d73050d03be490aaf940d31d298db3d1",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 15
+    }
+   ]
+  },
+  "ISO-HS-5016": {
+   "file": "ISO-HS-5016.pdf",
+   "line": "1\"-P150-HS-5016",
+   "sha256": "ef61ab6c4acc77c6292672c93d2111135fce0b5dbbf22d83d05fa1f11ed43b1b",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 16
+    }
+   ]
+  },
+  "ISO-HS-5017": {
+   "file": "ISO-HS-5017.pdf",
+   "line": "1\"-P150-HS-5017",
+   "sha256": "69e082d01fc6c4062846186813dcef2979b0d94302bfca9ed0f82d9ca0913472",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 17
+    }
+   ]
+  },
+  "ISO-HS-5018": {
+   "file": "ISO-HS-5018.pdf",
+   "line": "1\"-P300-HS-5018",
+   "sha256": "1c4c73e699782b7fbc37f138e4945485f822644e2e404a3c4288cfd12a7a3950",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 18
+    }
+   ]
+  },
+  "ISO-HS-5019": {
+   "file": "ISO-HS-5019.pdf",
+   "line": "1\"-P150-HS-5019",
+   "sha256": "abc38758c6a4484069a6564bfcb9f5c2a2c3d958fc8cbdba79d7f1badd9fc517",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 19
+    },
+    {
+     "sheet": 2,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 20
+    }
+   ]
+  },
+  "ISO-HS-5020": {
+   "file": "ISO-HS-5020.pdf",
+   "line": "1/2\"-P150-HS-5020",
+   "sha256": "b0a880e0d1c193e64f9949b30563cdddac6ec37c3d111d95210116ed4eafeb3e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 21
+    },
+    {
+     "sheet": 2,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 22
+    }
+   ]
+  },
+  "ISO-HS-5021": {
+   "file": "ISO-HS-5021.pdf",
+   "line": "1\"-P150-HS-5021",
+   "sha256": "3b0f560de4b08e4624da7130006d7d02d1164cc339f53cb30b553667872a3c77",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 23
+    }
+   ]
+  },
+  "ISO-HS-5022": {
+   "file": "ISO-HS-5022.pdf",
+   "line": "1\"-P150-HS-5022",
+   "sha256": "1b0c5fa15c9b11c40d6bd564da46ea79431340888f8f76a8bb07a1d472a5c00a",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 24
+    }
+   ]
+  },
+  "ISO-HS-5023": {
+   "file": "ISO-HS-5023.pdf",
+   "line": "1\"-P300-HS-5023",
+   "sha256": "1a9d0ff20ba5b87cfab943a1c7cbc18127173f43c177343624f9f2daeb3691eb",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 25
+    }
+   ]
+  },
+  "ISO-HS-5024": {
+   "file": "ISO-HS-5024.pdf",
+   "line": "1\"-P150-HS-5024",
+   "sha256": "ed4d8fbc36a4ff35d7bc43141130e5efba640a178bb4ccd2e5ab4a5c4a3b228f",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 26
+    }
+   ]
+  },
+  "ISO-HS-5025": {
+   "file": "ISO-HS-5025.pdf",
+   "line": "1/2\"-P150-HS-5025",
+   "sha256": "5e1b06bd84e2e626ff33fa1abff811fb86b696a015184a5c53d42da6955456db",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 27
+    }
+   ]
+  },
+  "ISO-HS-5026": {
+   "file": "ISO-HS-5026.pdf",
+   "line": "1\"-P150-HS-5026",
+   "sha256": "31d0bd5e58d1a8236bc2ae28b5a5ba41fd02d9fe1b318852dbee20967b67c361",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 28
+    }
+   ]
+  },
+  "ISO-HS-5027": {
+   "file": "ISO-HS-5027.pdf",
+   "line": "1\"-P150-HS-5027",
+   "sha256": "fc7caeb35b677128aefabc763afe1790c2a05311855d80abe048ff68efdb34f0",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 29
+    }
+   ]
+  },
+  "ISO-HS-5028": {
+   "file": "ISO-HS-5028.pdf",
+   "line": "1\"-P300-HS-5028",
+   "sha256": "7fe161c03828a24d9150c94a04630da64edd4f0578320c8f0a15b3e36f1f4dd6",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 30
+    }
+   ]
+  },
+  "ISO-HS-5029": {
+   "file": "ISO-HS-5029.pdf",
+   "line": "1\"-P150-HS-5029",
+   "sha256": "dfe791323204fe801f45cf61fffb1eb925023c8da05f96d640cef08f9b569242",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 31
+    }
+   ]
+  },
+  "ISO-HS-5030": {
+   "file": "ISO-HS-5030.pdf",
+   "line": "1/2\"-P150-HS-5030",
+   "sha256": "6524e3bf06539daee5af4c626c35311d908840b1737a0e8ac4014813bd76dd86",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 32
+    }
+   ]
+  },
+  "ISO-HS-5031": {
+   "file": "ISO-HS-5031.pdf",
+   "line": "1\"-P150-HS-5031",
+   "sha256": "62466e4ccc0d78756d220778ab35acc36ded51b54fddc22f5c203ae1544f1310",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 33
+    }
+   ]
+  },
+  "ISO-HS-5032": {
+   "file": "ISO-HS-5032.pdf",
+   "line": "1\"-P150-HS-5032",
+   "sha256": "a0314d34750050a6d06c40a88e23c562308ffd736343ab5c337599948ef68ac2",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 34
+    }
+   ]
+  },
+  "ISO-HS-5033": {
+   "file": "ISO-HS-5033.pdf",
+   "line": "1\"-P300-HS-5033",
+   "sha256": "60d9155fac4317ed147d4d067899f181a9fd1d44fb4d3c77683ecd5ed1aa6730",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 35
+    }
+   ]
+  },
+  "ISO-HS-5034": {
+   "file": "ISO-HS-5034.pdf",
+   "line": "1\"-P150-HS-5034",
+   "sha256": "26b6b0bb5f523def4aff53b22b4a3eb3b5e8b7affbe53ef82d23c3cbb76ddaa3",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 36
+    }
+   ]
+  },
+  "ISO-HS-5035": {
+   "file": "ISO-HS-5035.pdf",
+   "line": "1/2\"-P150-HS-5035",
+   "sha256": "65186d4afd48b247c5b94d900f65af325a45ab3950199d55e5fd73af8fad7c0d",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 37
+    }
+   ]
+  },
+  "ISO-HS-5036": {
+   "file": "ISO-HS-5036.pdf",
+   "line": "1\"-P150-HS-5036",
+   "sha256": "23a1fab7c10dbd103f31054b108169c698c6d75cb07498244b93a2abf68d6648",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 38
+    }
+   ]
+  },
+  "ISO-HS-5037": {
+   "file": "ISO-HS-5037.pdf",
+   "line": "1\"-P150-HS-5037",
+   "sha256": "ec9ca5a0016b1975123ea79cd314a55ff0a5855415baf5722dc013b46c8d9a73",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 39
+    }
+   ]
+  },
+  "ISO-HS-5038": {
+   "file": "ISO-HS-5038.pdf",
+   "line": "1\"-P300-HS-5038",
+   "sha256": "9c2ebfd442b57320777a90fb4ce78b799fcf5c2fb31ba1aa3127c71defed5762",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 40
+    }
+   ]
+  },
+  "ISO-HS-5039": {
+   "file": "ISO-HS-5039.pdf",
+   "line": "1\"-P150-HS-5039",
+   "sha256": "64b7d1c997a12cea6468f990f70349df0305c29a359ec6d54555b22e8cbcb6a2",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 41
+    }
+   ]
+  },
+  "ISO-HS-5040": {
+   "file": "ISO-HS-5040.pdf",
+   "line": "1/2\"-P150-HS-5040",
+   "sha256": "b734298cdc9a943a75ff546ed78b4478c80cca037d40543500628a6ac6a42c0e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 42
+    }
+   ]
+  },
+  "ISO-V-6001": {
+   "file": "ISO-V-6001.pdf",
+   "line": "1\"-P150-V-6001",
+   "sha256": "fafbf2ffc2cb169a19f22d1b13e33ce8f62e1adb830be35bcfa49911d4e3174b",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 43
+    }
+   ]
+  },
+  "ISO-D-6002": {
+   "file": "ISO-D-6002.pdf",
+   "line": "1\"-P150-D-6002",
+   "sha256": "6726ed2288ad293a4a4e73571e8a4051278ea782b4d876ba70233e53ffb1dc9b",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 44
+    }
+   ]
+  },
+  "ISO-I-6003": {
+   "file": "ISO-I-6003.pdf",
+   "line": "3/4\"-P300-I-6003",
+   "sha256": "b4cdeb987c3f7d5abc0353130682c2200dccfe2a2709c27d4d3a9da30e9f79e6",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 45
+    }
+   ]
+  },
+  "ISO-I-6004": {
+   "file": "ISO-I-6004.pdf",
+   "line": "3/4\"-P300-I-6004",
+   "sha256": "8d7e689b19aaf4b3d9f2bb1349d68d5df2f8559295cd311ae00cbd30282adbe7",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 46
+    }
+   ]
+  },
+  "ISO-SP-6005": {
+   "file": "ISO-SP-6005.pdf",
+   "line": "3/4\"-P300-SP-6005",
+   "sha256": "657620ff1b9e9286976d6a431d1ceee27396eeda0eb6b68228fb7d82c9c2bf11",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 47
+    }
+   ]
+  },
+  "ISO-V-6006": {
+   "file": "ISO-V-6006.pdf",
+   "line": "1\"-P150-V-6006",
+   "sha256": "c9ee616c854333a80ec02f1327dcaf90bff053acb6bac049aba3029edb2339b4",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 48
+    }
+   ]
+  },
+  "ISO-D-6007": {
+   "file": "ISO-D-6007.pdf",
+   "line": "1\"-P150-D-6007",
+   "sha256": "a5f1de52ed02bfa649aaf1490c0c075f3cbd48152cdc5e204bb489a0e441a293",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 49
+    }
+   ]
+  },
+  "ISO-I-6008": {
+   "file": "ISO-I-6008.pdf",
+   "line": "3/4\"-P300-I-6008",
+   "sha256": "659b06d448142600d8b41b376b4a3b9ea5c1c5955e5d1bb037e1a1f99be2a682",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 50
+    }
+   ]
+  },
+  "ISO-I-6009": {
+   "file": "ISO-I-6009.pdf",
+   "line": "3/4\"-P300-I-6009",
+   "sha256": "7ee4236fbfdab9360ee2e0655c9a1ee92b647250431329e6e8c81fa731325f44",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 51
+    }
+   ]
+  },
+  "ISO-SP-6010": {
+   "file": "ISO-SP-6010.pdf",
+   "line": "3/4\"-P300-SP-6010",
+   "sha256": "7889814ca9689691b4de81d0104b3d1fcdb4ef9a3a6492b653314e54964869a2",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 52
+    }
+   ]
+  },
+  "ISO-V-6011": {
+   "file": "ISO-V-6011.pdf",
+   "line": "1\"-P150-V-6011",
+   "sha256": "68daebaf5eb25f47c36a92441fef62a1b451131f4c4c7f3e9aa222c763ba8591",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 53
+    }
+   ]
+  },
+  "ISO-D-6012": {
+   "file": "ISO-D-6012.pdf",
+   "line": "1\"-P150-D-6012",
+   "sha256": "d39809cf0aeb97e0c03b978a79f882704dc4880ae294c6a4110ea9b314005413",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 54
+    }
+   ]
+  },
+  "ISO-I-6013": {
+   "file": "ISO-I-6013.pdf",
+   "line": "3/4\"-P300-I-6013",
+   "sha256": "598fa1a24121b0f78b0e00f9aa5274bfceff26bb69257e2520b09eb720dc0a56",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 55
+    }
+   ]
+  },
+  "ISO-I-6014": {
+   "file": "ISO-I-6014.pdf",
+   "line": "3/4\"-P300-I-6014",
+   "sha256": "f64620c3ef16484c9f6133db5599b64414682715dfeabde8d83eb1d8e8bac5ea",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 56
+    }
+   ]
+  },
+  "ISO-SP-6015": {
+   "file": "ISO-SP-6015.pdf",
+   "line": "3/4\"-P300-SP-6015",
+   "sha256": "e4c97a60f2de999509733fe666cbf59b6a50473538f2038f24070e06f1d00793",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 57
+    }
+   ]
+  },
+  "ISO-V-6016": {
+   "file": "ISO-V-6016.pdf",
+   "line": "1\"-P150-V-6016",
+   "sha256": "27ca33fa2e2a6d6f817a3a94e3b349030de67f26a1f838283342adc72e809a75",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 58
+    }
+   ]
+  },
+  "ISO-D-6017": {
+   "file": "ISO-D-6017.pdf",
+   "line": "1\"-P150-D-6017",
+   "sha256": "65d2b7fb78f14863a2ba23191c4b9288f5c941a13702a3b2c07a5374f3307de0",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 59
+    }
+   ]
+  },
+  "ISO-I-6018": {
+   "file": "ISO-I-6018.pdf",
+   "line": "3/4\"-P300-I-6018",
+   "sha256": "3b07a21304a219419be02179317c42ff3048cc775c95da08d9e01052ca908a6a",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 60
+    }
+   ]
+  },
+  "ISO-I-6019": {
+   "file": "ISO-I-6019.pdf",
+   "line": "3/4\"-P300-I-6019",
+   "sha256": "2921769780085c1971921a9253f1949bdde880acafca3f4a704a7b5b12f8cd81",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 61
+    }
+   ]
+  },
+  "ISO-SP-6020": {
+   "file": "ISO-SP-6020.pdf",
+   "line": "3/4\"-P300-SP-6020",
+   "sha256": "3e67df8ce2a7c9b259b9c89f3987731ded2df8d21e38477737a7a0fb6a5e0880",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 62
+    }
+   ]
+  },
+  "ISO-V-6021": {
+   "file": "ISO-V-6021.pdf",
+   "line": "1\"-P150-V-6021",
+   "sha256": "ca6800b53ab5f0fdd3d7848727f77479eec585913b4150267e61b769120f2676",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 63
+    }
+   ]
+  },
+  "ISO-D-6022": {
+   "file": "ISO-D-6022.pdf",
+   "line": "1\"-P150-D-6022",
+   "sha256": "03cdf0f7b32c9fe67fa81264247a0cdf6140f4395d6660a77aabb7bc81b2e32b",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 64
+    }
+   ]
+  },
+  "ISO-I-6023": {
+   "file": "ISO-I-6023.pdf",
+   "line": "3/4\"-P300-I-6023",
+   "sha256": "32c8ab50a73a6cdaa77549acda7330bea85718bdd4afc9db9cc20f254fde272d",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 65
+    }
+   ]
+  },
+  "ISO-V-6024": {
+   "file": "ISO-V-6024.pdf",
+   "line": "1\"-P150-V-6024",
+   "sha256": "73c0cb696263bb74118ff2f392432d6804d82f4633bd857c1fc190aed1edb2c3",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 66
+    }
+   ]
+  },
+  "ISO-D-6025": {
+   "file": "ISO-D-6025.pdf",
+   "line": "1\"-P150-D-6025",
+   "sha256": "4e6dbb8c1e7ac01afabb65810b41e4b65c8dfd2f68d43671c9cce65a6d3d285d",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 67
+    }
+   ]
+  },
+  "ISO-I-6026": {
+   "file": "ISO-I-6026.pdf",
+   "line": "3/4\"-P300-I-6026",
+   "sha256": "d2f3cf0646e4b2a6a48e3ae99172731bf26bba99ef63329b7cc04f6bb8e25715",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 68
+    }
+   ]
+  },
+  "ISO-V-6027": {
+   "file": "ISO-V-6027.pdf",
+   "line": "1\"-P150-V-6027",
+   "sha256": "949f8568cb669028d5794833de130fcce1d5c0869f46536e8b7a3fc4608cd7e3",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 69
+    }
+   ]
+  },
+  "ISO-D-6028": {
+   "file": "ISO-D-6028.pdf",
+   "line": "1\"-P150-D-6028",
+   "sha256": "c2b22128e574c004c7ef3588377fbbcbb0394b8bf20ed090df823d71f9cefbab",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 70
+    }
+   ]
+  },
+  "ISO-I-6029": {
+   "file": "ISO-I-6029.pdf",
+   "line": "3/4\"-P300-I-6029",
+   "sha256": "2418d01c18dd9af35a0633b0957aeecda00e749ec6898546218094274244b4c4",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 71
+    }
+   ]
+  },
+  "ISO-V-6030": {
+   "file": "ISO-V-6030.pdf",
+   "line": "1\"-P150-V-6030",
+   "sha256": "c7cea536182abc474343a70538647f6f71834bd36a339845b16ed9907af3832e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 72
+    }
+   ]
+  },
+  "ISO-D-6031": {
+   "file": "ISO-D-6031.pdf",
+   "line": "1\"-P150-D-6031",
+   "sha256": "14f6b67410c97447f34d5b26a6b36a2cfae3fbaeeaffaece59b2236574405b2b",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 73
+    }
+   ]
+  },
+  "ISO-I-6032": {
+   "file": "ISO-I-6032.pdf",
+   "line": "3/4\"-P150-I-6032",
+   "sha256": "a3679a002329c130b5f34b9652a33de4c4cd0e14c3ce3c6bb33452412dda9976",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 74
+    }
+   ]
+  },
+  "ISO-I-6033": {
+   "file": "ISO-I-6033.pdf",
+   "line": "3/4\"-P150-I-6033",
+   "sha256": "d80b01a6e7574dc95763613c16e12b8ca6499e6c70be876588c99f92a9fc93e7",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 75
+    }
+   ]
+  },
+  "ISO-V-6034": {
+   "file": "ISO-V-6034.pdf",
+   "line": "1\"-P150-V-6034",
+   "sha256": "262dbfcd3df40512abdf0e83b682b8f961adb4b398ebd9834f3f003009612f3d",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 76
+    }
+   ]
+  },
+  "ISO-D-6035": {
+   "file": "ISO-D-6035.pdf",
+   "line": "1\"-P150-D-6035",
+   "sha256": "3840118f39de606562949980cec987e7c23625a217b9f0607d667b955b29868e",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 77
+    }
+   ]
+  },
+  "ISO-I-6036": {
+   "file": "ISO-I-6036.pdf",
+   "line": "3/4\"-P150-I-6036",
+   "sha256": "aa55d8fe3890b09e9faf66c30b2e3b192cb67df1dd2c2a456eda93d95d20c529",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 78
+    }
+   ]
+  },
+  "ISO-I-6037": {
+   "file": "ISO-I-6037.pdf",
+   "line": "3/4\"-P150-I-6037",
+   "sha256": "8c38eebd540accea359b5edf80a370a299287e3da5d70c9bffa22034dfd5ce5d",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 79
+    }
+   ]
+  },
+  "ISO-P-6038": {
+   "file": "ISO-P-6038.pdf",
+   "line": "4\"-P150-P-6038",
+   "sha256": "cf8a53bd9ea796be9d7ff66152e1423f663d406623a5c753085a7b8675aa7160",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 80
+    }
+   ]
+  },
+  "ISO-P-6039": {
+   "file": "ISO-P-6039.pdf",
+   "line": "6\"-P150-P-6039",
+   "sha256": "e3e3b626036e14e6da97148138a97665f17fb142257488de9ebc2b9bd664cc70",
+   "sheets": [
+    {
+     "sheet": 1,
+     "part": "a3077a74-SmartWeld-plant-isometrics-27bc863-part3of3.pdf",
+     "page": 81
+    }
+   ]
+  }
+ }
+}
