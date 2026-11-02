@@ -1,7 +1,8 @@
 # SmartWeld 3D Catalogue and Plant Generator
 
 Clean-room build. Read `DESIGN_BASIS.md` (every rule with its reason) and `PROVENANCE.md`
-(the audit log) first. `IP_REVIEW.md` is the package for IP counsel; `THIRD_PARTY_NOTICES.md`
+(the audit log) first. No GPL or other copyleft code, tool or font is used anywhere in the process
+(`DESIGN_BASIS.md` §0.1, SW-LIC-1..5). `IP_REVIEW.md` is the package for IP counsel; `THIRD_PARTY_NOTICES.md`
 must accompany any distribution of the viewer. No published dimension tables, standards or catalogues were used.
 
 ## Stage status
@@ -24,11 +25,10 @@ npm install
 npm test          # rule and geometry tests (vitest)
 npm run typecheck
 npm run dev       # viewer at http://127.0.0.1:5173/
-npm run screenshot -- screenshots/stageN  # headless-browser verification
+npm run render     # review images by SmartWeld's own renderer (screenshots/, INDEX.md; about 30 min)
 npm run gen:piping # regenerate public/plant-piping.json (about a minute) after any stage-5 change
 npm run export:gt  # regenerate public/groundtruth/ from the plant piping (about a minute)
-npm run export:wo  # regenerate public/isometrics/ and public/workorders/ (seconds)
-npm run wo:pdf     # print every work-order pack to PDF (public/workorders/pdf/)
+npm run export:wo  # regenerate public/isometrics/ and public/workorders/, PDFs included (seconds)
 python3 -I tools/isomatch.py import <parts.pdf…>  # receive the owner's isometric drawings (stage 8)
 python3 -I tools/isomatch.py [--check]            # re-match the committed drawings to the model
 python3 -I tools/isomatch.py --selftest           # prove the fix list clears every finding
@@ -53,7 +53,10 @@ src/generator          building shell, interior, nozzles, line list, router and 
 public/plant-piping.json  the generated plant piping (committed; a test checks it is current)
 src/viewer             three.js browser viewer (rendering only)
 tests                  vitest rule/geometry/audit tests
-tools/screenshot.mjs   Playwright verification
+src/pdf                SmartWeld's own PDF writer: font subsetting, layout, the work-order packs (SW-PDF-*)
+src/render             SmartWeld's own renderer: 3D views, page previews, contact sheets, PNG (SW-REN-*)
+assets/fonts           DejaVu Sans and its licence (the only font; SW-LIC-3)
+tools/render-views.ts  renders the review images in screenshots/
 tools/gen-piping.ts    runs the piping generator and the §40 checks; writes the plant data
 ```
 

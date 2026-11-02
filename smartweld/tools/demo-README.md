@@ -4,7 +4,10 @@ A complete, generated demonstration process facility: an 80 ft × 200 ft buildin
 steel, a pipe rack, platforms and access steel, 17 pieces of equipment, 203 pipe lines in 8 line
 classes, and 25 shutdown work orders. Imperial units throughout (inches unless stated).
 Every item is SmartWeld's own design (see `docs/PROVENANCE.md`); `MANIFEST.json` lists every file
-with its size and SHA-256.
+with its size and SHA-256. Everything SmartWeld made for this package was made without any GPL or other copyleft code, tool
+or font (`docs/DESIGN_BASIS.md` §0.1). The third-party works it contains are permissively licensed,
+with their notices in `docs/THIRD_PARTY_NOTICES.md`: three.js and a subset of the DejaVu Sans font.
+The owner's imported drawings name their own tools on their cover pages.
 
 > **Welding, NDE and test content is DEMONSTRATION ONLY — NOT A QUALIFIED PROCEDURE. The facility
 > owner's qualified procedures and the applicable codes govern.**
@@ -18,9 +21,9 @@ with its size and SHA-256.
 | `data/groundtruth/` | Ground truth for AI training, one record per item (below). |
 | `data/isometrics/` | One generated isometric per line (`ISO-<line>.svg`, 203 drawings). |
 | `data/isometrics-imported/` | The owner's isometric drawings matched to the model: one PDF per drawing (`ISO-*.pdf`, 139 drawings on 240 sheets covering all 203 lines), `index.json`, `match.json`, `report.md`, `RECEIPT.json` (below). |
-| `data/workorders/` | 25 shutdown work orders: `index.json`, `WO-*.json` (data), `WO-*.html` (printable pack), `pdf/WO-*.pdf`. |
+| `data/workorders/` | 25 shutdown work orders: `index.json`, `WO-*.json` (data), `WO-*.html` (printable pack), `pdf/WO-*.pdf` (written by SmartWeld's own PDF writer). |
 | `docs/` | Design basis (every rule and its reason), provenance log, IP review package, third-party notices, project README. |
-| `screenshots/` | Renders of every stage (`stage1` … `stage7`). |
+| `screenshots/` | Review images of every stage (`stage1` … `stage7`), made by SmartWeld's own renderer from the model's mesh data; `INDEX.md` names each view. Contact sheets of the valves are in `stage4/`. |
 | `source/` | The full project source: rules, generators, viewer, tests (`npm install`, `npm test`, `npm run dev`). |
 
 ## Running the viewer

@@ -1,15 +1,25 @@
 /**
- * Work-order packs (stage 7): the printable HTML of a work order — cover and scope, isolation list, parts, new welds,
- * welding specifications, NDE, inspections and TMLs, test, bolting, the ITP with sign-off columns (SW-ITP-1..3), and
- * the attached isometrics (SW-ISO-2). Printed to PDF by tools/wo-pdf.mjs.
+ * Work-order packs (stage 7): the content of a work order's pack — cover and scope, the owner's drawings, assets,
+ * isolation list, parts, new welds, welding specifications, NDE, inspections and TMLs, test, bolting, the ITP with
+ * sign-off columns (SW-ITP-1..3), and the attached isometrics (SW-ISO-2) — as one list of blocks. The HTML pack
+ * (woHtml) and SmartWeld's own PDF writer (src/pdf/wopdf.ts, SW-PDF-3) both render these same blocks.
  */
 import { plantText, type GTLine } from './groundtruth';
 import { makeIsometric } from './isometric';
 import { WELD_SPECS, DEMO_NOTICE, type WorkOrder } from './workorders';
 import type { ImportedIndex } from './imported';
 
-const esc = (s: unknown) => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
-const table = (head: string[], rows: unknown[][]) => `<table><thead><tr>${head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+export type Block =
+  | { k: 'demo'; text: string }
+  | { k: 'h1'; text: string }
+  | { k: 'h2'; text: string }
+  | { k: 'p'; text: string; small?: boolean }
+  | { k: 'links'; links: { text: string; href: string }[]; after: string }
+  | { k: 'ol'; items: string[] }
+  | { k: 'kv'; rows: [string, string][][]; strong?: string[] }      // each row: one pair (spanning) or two pairs
+  | { k: 'table'; head: string[]; rows: string[][] }
+  | { k: 'svg'; svg: string };
+export interface Section { cls?: 'cover' | 'itp' | 'iso'; blocks: Block[] }
 
 /** the work order's isometrics: the work line(s) clouded with the affected items, other attached lines with isolations clouded */
 export function woIsometrics(wo: WorkOrder, lineGT: Map<string, GTLine>): Map<string, string> {
@@ -21,36 +31,69 @@ export function woIsometrics(wo: WorkOrder, lineGT: Map<string, GTLine>): Map<st
   return out;
 }
 
-export function woHtml(wo: WorkOrder, isos: Map<string, string>, imported?: ImportedIndex): string {
-  const sec: string[] = [];
-  sec.push(`<section class="cover"><div class="demo">${esc(DEMO_NOTICE)}</div>
-    <h1>${esc(wo.number)} — ${esc(wo.title)}</h1>
-    <table class="kv"><tr><td>Area</td><td>${esc(wo.area)} ${esc(wo.areaName)}</td><td>Task</td><td>${esc(wo.type)} ${esc(wo.typeName)}</td></tr>
-    <tr><td>Priority</td><td>${wo.priority} (${['', 'safety', 'integrity', 'reliability'][wo.priority]})</td><td>Issued by</td><td>${esc(wo.issuedBy)}</td></tr>
-    <tr><td>Primary asset</td><td colspan="3"><b>${esc(wo.primaryAsset.tag)}</b> — ${esc(wo.primaryAsset.description)} — ${esc(plantText(wo.primaryAsset.at))}</td></tr>
-    <tr><td>Equipment</td><td>${esc(wo.equipment ?? '—')}</td><td>Lines</td><td>${esc(wo.lines.join(', '))}</td></tr>
-    <tr><td>Isometrics</td><td colspan="3">${esc(wo.isometrics.join(', '))}${wo.importedIsometrics?.length ? ` (generated); owner's drawings ${esc(wo.importedIsometrics.map(r => r.drawing).join(', '))}` : ''}</td></tr>
-    <tr><td>Permits</td><td colspan="3">${esc(wo.permits.join(', '))}</td></tr></table>
-    <h2>Reason</h2><p>${esc(wo.reason)}</p><h2>Scope of work</h2><ol>${wo.scope.map(s => `<li>${esc(s)}</li>`).join('')}</ol>
-    <p class="small">Affected items: ${esc(wo.items.join(', '))}</p><p class="small">Rules: ${esc(wo.rules.join(', '))}</p></section>`);
+const s = (v: unknown) => String(v ?? '');
+const table = (head: string[], rows: unknown[][]): Block => ({ k: 'table', head, rows: rows.map(r => r.map(s)) });
+
+/** the pack's content, in order */
+export function woSections(wo: WorkOrder, isos: Map<string, string>, imported?: ImportedIndex): Section[] {
+  const sec: Section[] = [];
+  sec.push({ cls: 'cover', blocks: [
+    { k: 'demo', text: DEMO_NOTICE },
+    { k: 'h1', text: `${wo.number} — ${wo.title}` },
+    { k: 'kv', strong: [wo.primaryAsset.tag], rows: [
+      [['Area', `${wo.area} ${wo.areaName}`], ['Task', `${wo.type} ${wo.typeName}`]],
+      [['Priority', `${wo.priority} (${['', 'safety', 'integrity', 'reliability'][wo.priority]})`], ['Issued by', wo.issuedBy]],
+      [['Primary asset', `${wo.primaryAsset.tag} — ${wo.primaryAsset.description} — ${plantText(wo.primaryAsset.at)}`]],
+      [['Equipment', wo.equipment ?? '—'], ['Lines', wo.lines.join(', ')]],
+      [['Isometrics', `${wo.isometrics.join(', ')}${wo.importedIsometrics?.length ? ` (generated); owner's drawings ${wo.importedIsometrics.map(r => r.drawing).join(', ')}` : ''}`]],
+      [['Permits', wo.permits.join(', ')]]] },
+    { k: 'h2', text: 'Reason' }, { k: 'p', text: wo.reason },
+    { k: 'h2', text: 'Scope of work' }, { k: 'ol', items: wo.scope },
+    { k: 'p', small: true, text: `Affected items: ${wo.items.join(', ')}` }, { k: 'p', small: true, text: `Rules: ${wo.rules.join(', ')}` }] });
   if (wo.importedIsometrics?.length && imported) {   // SW-IMP-6: the owner's drawings of the work lines and what the match to the model found
     const fs = wo.importedIsometrics.flatMap(r => imported.drawings[r.drawing].findings.filter(f => f.level !== 'info').map(f => [r.drawing, f.sheet ?? '', f.level, f.message]));
-    sec.push(`<section><h2>Owner's isometric drawings (SW-IMP-6)</h2>${table(['Drawing', 'Line drawn', 'Work line', 'Sheets', 'Match to the plant model'], wo.importedIsometrics.map(r => [r.drawing, imported.drawings[r.drawing].line, r.line, r.sheets, r.errors + r.warnings ? `${r.errors} error(s), ${r.warnings} warning(s) — see below` : 'agrees with the model']))}
-    <p class="small">${wo.importedIsometrics.map(r => `<a href="../isometrics-imported/${esc(r.file)}">${esc(r.drawing)} (PDF)</a>`).join(' · ')} — the generated isometrics follow the ITP.</p>
-    ${fs.length ? table(['Drawing', 'Sheet', 'Level', 'Finding'], fs) : ''}</section>`);
+    sec.push({ blocks: [{ k: 'h2', text: "Owner's isometric drawings (SW-IMP-6)" },
+      table(['Drawing', 'Line drawn', 'Work line', 'Sheets', 'Match to the plant model'], wo.importedIsometrics.map(r => [r.drawing, imported.drawings[r.drawing].line, r.line, r.sheets, r.errors + r.warnings ? `${r.errors} error(s), ${r.warnings} warning(s) — see below` : 'agrees with the model'])),
+      { k: 'links', links: wo.importedIsometrics.map(r => ({ text: `${r.drawing} (PDF)`, href: `../isometrics-imported/${r.file}` })), after: ' — the generated isometrics follow the ITP.' },
+      ...(fs.length ? [table(['Drawing', 'Sheet', 'Level', 'Finding'], fs)] : [])] });
   }
-  sec.push(`<section><h2>Assets in the plant model (SW-WO-7)</h2>${table(['Tag', 'Kind', 'Description', 'Line', 'Location'], wo.assets.map(x => [x.tag, x.kind, x.description, x.line ?? '', plantText(x.at)]))}</section>`);
-  if (wo.isolations.length) sec.push(`<section><h2>Isolation list (SW-WO-3)</h2>${table(['#', 'Kind', 'Tag', 'Line', 'Action', 'Location', 'Fitted ✓', 'Removed ✓'], wo.isolations.map(i => [i.seq, i.kind, i.tag, i.line, i.description, i.at ? plantText(i.at) : '', '', '']))}</section>`);
-  if (wo.parts.length) sec.push(`<section><h2>Parts</h2>${table(['Description', 'Qty', 'Replaces'], wo.parts.map(p => [p.description, p.qty, p.replaces ?? '']))}</section>`);
-  if (wo.newWelds.length) sec.push(`<section><h2>New welds (SW-WO-4)</h2>${table(['Weld', 'Replaces', ...(imported ? ['On drawing'] : []), 'Line', 'Size', 'Wall', 'Shop/field', 'Spec', 'NDE', 'Location', 'Welder', 'Date'], wo.newWelds.map(w => [w.id, w.replaces, ...(imported ? [w.drawingRef ?? '—'] : []), w.line, `${w.NPS}" ${w.cls}`, w.wall ? `${w.wall} in` : '—', w.shopField, w.ws, w.nde.join(' + '), plantText(w.at), '', '']))}</section>`);
-  for (const id of wo.weldSpecs) { const s = WELD_SPECS[id]; sec.push(`<section><h2>Welding specification ${esc(id)} — ${esc(s.title)}</h2><div class="demo">${esc(DEMO_NOTICE)}</div><table class="kv">${[['Scope', s.scope], ['Joint', s.joint], ['Process', s.process], ['Filler', s.filler], ['Preheat', s.preheat], ['Interpass', s.interpass], ['Post-weld heat treatment', s.pwht], ['Rules', s.rules.join(', ')]].map(([k, v]) => `<tr><td>${esc(k)}</td><td>${esc(v)}</td></tr>`).join('')}</table></section>`); }
-  if (wo.nde.length) sec.push(`<section><h2>NDE</h2>${table(['Method', 'Extent', 'Welds', 'Basis'], wo.nde.map(n => [n.method, n.extent, n.welds.join(', '), n.basis]))}</section>`);
-  if (wo.inspections.length) sec.push(`<section><h2>Inspections</h2>${table(['Id', 'Inspection', 'Criteria', 'Basis'], wo.inspections.map(i => [i.id, i.description, i.criteria, i.basis]))}</section>`);
-  if (wo.tmls.length) sec.push(`<section><h2>Thickness monitoring locations (SW-WO-6)</h2>${table(['TML', 'Item', 'Location', 'Position', 'Nominal wall', ...['R1', 'R2', 'R3', 'R4']], wo.tmls.map(t => [t.id, t.item, t.description, plantText(t.at), t.nominalWall ? `${t.nominalWall} in` : '', ...t.readings.map(r => `${r}: ____`), ...Array(Math.max(0, 4 - t.readings.length)).fill('')]))}</section>`);
-  if (wo.bolting.length) sec.push(`<section><h2>Bolt-up (SW-WO-5)</h2>${table(['Joint', 'Studs', 'Preload per stud (lbf)', 'Passes', 'Done ✓'], wo.bolting.map(b => [b.joint, b.studs, Math.round(b.preloadPerStud).toLocaleString('en-US'), b.passes, '']))}</section>`);
-  if (wo.test) sec.push(`<section><h2>Test — ${esc(wo.test.kind)}</h2><table class="kv"><tr><td>Description</td><td>${esc(wo.test.description)}</td></tr>${wo.test.pressure ? `<tr><td>Pressure</td><td>${Math.round(wo.test.pressure)} psi</td></tr>` : ''}${wo.test.hold ? `<tr><td>Hold</td><td>${esc(wo.test.hold)}</td></tr>` : ''}<tr><td>Basis</td><td>${esc(wo.test.basis)}</td></tr></table></section>`);
-  sec.push(`<section class="itp"><h2>Inspection and test plan (SW-ITP-1..3)</h2><p class="small">H hold · W witness · R review · S surveillance. Status: accepted / rejected / not applicable.</p>${table(['#', 'Activity', 'Reference', 'Acceptance', 'Record', 'Contr.', 'Owner', '3rd party', 'Status', 'Signed (contr. / owner / 3rd)', 'Date', 'Remark'], wo.itp.map(a => [a.step, a.activity, a.reference, a.acceptance, a.record, a.contractor, a.owner, a.thirdParty, '', '', '', '']))}</section>`);
-  for (const [ln, svg] of isos) sec.push(`<section class="iso"><h2>Isometric ISO-${esc(ln)}</h2>${svg}</section>`);
+  sec.push({ blocks: [{ k: 'h2', text: 'Assets in the plant model (SW-WO-7)' }, table(['Tag', 'Kind', 'Description', 'Line', 'Location'], wo.assets.map(x => [x.tag, x.kind, x.description, x.line ?? '', plantText(x.at)]))] });
+  if (wo.isolations.length) sec.push({ blocks: [{ k: 'h2', text: 'Isolation list (SW-WO-3)' }, table(['#', 'Kind', 'Tag', 'Line', 'Action', 'Location', 'Fitted ✓', 'Removed ✓'], wo.isolations.map(i => [i.seq, i.kind, i.tag, i.line, i.description, i.at ? plantText(i.at) : '', '', '']))] });
+  if (wo.parts.length) sec.push({ blocks: [{ k: 'h2', text: 'Parts' }, table(['Description', 'Qty', 'Replaces'], wo.parts.map(p => [p.description, p.qty, p.replaces ?? '']))] });
+  if (wo.newWelds.length) sec.push({ blocks: [{ k: 'h2', text: 'New welds (SW-WO-4)' }, table(['Weld', 'Replaces', ...(imported ? ['On drawing'] : []), 'Line', 'Size', 'Wall', 'Shop/field', 'Spec', 'NDE', 'Location', 'Welder', 'Date'], wo.newWelds.map(w => [w.id, w.replaces, ...(imported ? [w.drawingRef ?? '—'] : []), w.line, `${w.NPS}" ${w.cls}`, w.wall ? `${w.wall} in` : '—', w.shopField, w.ws, w.nde.join(' + '), plantText(w.at), '', '']))] });
+  for (const id of wo.weldSpecs) {
+    const x = WELD_SPECS[id];
+    sec.push({ blocks: [{ k: 'h2', text: `Welding specification ${id} — ${x.title}` }, { k: 'demo', text: DEMO_NOTICE },
+      { k: 'kv', rows: [['Scope', x.scope], ['Joint', x.joint], ['Process', x.process], ['Filler', x.filler], ['Preheat', x.preheat], ['Interpass', x.interpass], ['Post-weld heat treatment', x.pwht], ['Rules', x.rules.join(', ')]].map(([a, b]) => [[a, b]] as [string, string][]) }] });
+  }
+  if (wo.nde.length) sec.push({ blocks: [{ k: 'h2', text: 'NDE' }, table(['Method', 'Extent', 'Welds', 'Basis'], wo.nde.map(n => [n.method, n.extent, n.welds.join(', '), n.basis]))] });
+  if (wo.inspections.length) sec.push({ blocks: [{ k: 'h2', text: 'Inspections' }, table(['Id', 'Inspection', 'Criteria', 'Basis'], wo.inspections.map(i => [i.id, i.description, i.criteria, i.basis]))] });
+  if (wo.tmls.length) sec.push({ blocks: [{ k: 'h2', text: 'Thickness monitoring locations (SW-WO-6)' }, table(['TML', 'Item', 'Location', 'Position', 'Nominal wall', 'R1', 'R2', 'R3', 'R4'], wo.tmls.map(t => [t.id, t.item, t.description, plantText(t.at), t.nominalWall ? `${t.nominalWall} in` : '', ...t.readings.map(r => `${r}: ____`), ...Array(Math.max(0, 4 - t.readings.length)).fill('')]))] });
+  if (wo.bolting.length) sec.push({ blocks: [{ k: 'h2', text: 'Bolt-up (SW-WO-5)' }, table(['Joint', 'Studs', 'Preload per stud (lbf)', 'Passes', 'Done ✓'], wo.bolting.map(b => [b.joint, b.studs, Math.round(b.preloadPerStud).toLocaleString('en-US'), b.passes, '']))] });
+  if (wo.test) sec.push({ blocks: [{ k: 'h2', text: `Test — ${wo.test.kind}` }, { k: 'kv', rows: [[['Description', wo.test.description]], ...(wo.test.pressure ? [[['Pressure', `${Math.round(wo.test.pressure)} psi`]] as [string, string][]] : []), ...(wo.test.hold ? [[['Hold', wo.test.hold]] as [string, string][]] : []), [['Basis', wo.test.basis]]] }] });
+  sec.push({ cls: 'itp', blocks: [{ k: 'h2', text: 'Inspection and test plan (SW-ITP-1..3)' }, { k: 'p', small: true, text: 'H hold · W witness · R review · S surveillance. Status: accepted / rejected / not applicable.' },
+    table(['#', 'Activity', 'Reference', 'Acceptance', 'Record', 'Contr.', 'Owner', '3rd party', 'Status', 'Signed (contr. / owner / 3rd)', 'Date', 'Remark'], wo.itp.map(a => [a.step, a.activity, a.reference, a.acceptance, a.record, a.contractor, a.owner, a.thirdParty, '', '', '', '']))] });
+  for (const [ln, svg] of isos) sec.push({ cls: 'iso', blocks: [{ k: 'h2', text: `Isometric ISO-${ln}` }, { k: 'svg', svg }] });
+  return sec;
+}
+
+const esc = (v: unknown) => String(v ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]!));
+function blockHtml(b: Block): string {
+  switch (b.k) {
+    case 'demo': return `<div class="demo">${esc(b.text)}</div>`;
+    case 'h1': return `<h1>${esc(b.text)}</h1>`;
+    case 'h2': return `<h2>${esc(b.text)}</h2>`;
+    case 'p': return `<p${b.small ? ' class="small"' : ''}>${esc(b.text)}</p>`;
+    case 'links': return `<p class="small">${b.links.map(l => `<a href="${esc(l.href)}">${esc(l.text)}</a>`).join(' · ')}${esc(b.after)}</p>`;
+    case 'ol': return `<ol>${b.items.map(x => `<li>${esc(x)}</li>`).join('')}</ol>`;
+    case 'kv': return `<table class="kv">${b.rows.map(r => `<tr>${r.map(([k, v]) => `<td>${esc(k)}</td><td${r.length === 1 && b.rows.some(x => x.length === 2) ? ' colspan="3"' : ''}>${b.strong?.some(t => v.startsWith(t)) ? `<b>${esc(b.strong.find(t => v.startsWith(t)))}</b>${esc(v.slice(b.strong.find(t => v.startsWith(t))!.length))}` : esc(v)}</td>`).join('')}</tr>`).join('')}</table>`;
+    case 'table': return `<table><thead><tr>${b.head.map(h => `<th>${esc(h)}</th>`).join('')}</tr></thead><tbody>${b.rows.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+    case 'svg': return b.svg;
+  }
+}
+
+export function woHtml(wo: WorkOrder, isos: Map<string, string>, imported?: ImportedIndex): string {
+  const sec = woSections(wo, isos, imported).map(x => `<section${x.cls ? ` class="${x.cls}"` : ''}>${x.blocks.map(blockHtml).join('')}</section>`);
   return `<!doctype html><html><head><meta charset="utf-8"><title>${esc(wo.number)} — ${esc(wo.title)}</title><style>
   @page { size: 17in 11in; margin: 0.4in; } body { font: 11px/1.35 system-ui, sans-serif; color: #1b1f24; }
   h1 { font-size: 20px; margin: 6px 0 10px; } h2 { font-size: 14px; margin: 14px 0 6px; border-bottom: 1px solid #1b1f24; }

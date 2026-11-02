@@ -3,7 +3,10 @@ import type { PipingModel } from './piping';
 import { lineFileName, type GroundTruth, type GTEquipment } from './groundtruth';
 import { buildWorkOrders } from './workorders';
 import { makeIsometric } from './isometric';
-import { woHtml, woIsometrics } from './wopack';
+import { woHtml, woIsometrics, woSections } from './wopack';
+import { packPdf } from '../pdf/wopdf';
+import type { Font } from '../pdf/ttf';
+import { DEMO_NOTICE } from './workorders';
 import { importedFor, weldRef, type ImportedIndex, type ImportedRef } from './imported';
 
 const r4 = (_k: string, v: unknown) => (typeof v === 'number' ? Math.round(v * 1e4) / 1e4 : v);
@@ -27,5 +30,14 @@ export function workOrderFiles(m: PipingModel, gt: GroundTruth, eq: GTEquipment[
     f.set(`workorders/${w.number}.json`, JSON.stringify(w, r4, 1));
     f.set(`workorders/${w.number}.html`, woHtml(w, woIsometrics(w, lineGT), imported));
   }
+  return f;
+}
+
+/** each work order's pack as a PDF, written by SmartWeld's own PDF writer (SW-PDF-1..5; SW-LIC-2) */
+export function workOrderPdfs(m: PipingModel, gt: GroundTruth, eq: GTEquipment[], font: Font, fontNotice: string, imported?: ImportedIndex): Map<string, Uint8Array> {
+  const f = new Map<string, Uint8Array>(), lineGT = new Map(gt.lines.map(l => [l.header.line, l] as const));
+  const wos = buildWorkOrders(m, gt, eq);
+  if (imported) linkImported(wos, imported);
+  for (const w of wos) f.set(`workorders/pdf/${w.number}.pdf`, packPdf(font, `${w.number} — ${w.title}`, woSections(w, woIsometrics(w, lineGT), imported), { demo: DEMO_NOTICE, font: fontNotice }));
   return f;
 }

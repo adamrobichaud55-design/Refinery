@@ -27,6 +27,39 @@ not checked against any table (see PROVENANCE.md for the log).
 Any dimension not fixed by the drawing is reported as "proportioned by SmartWeld rule
 SW-…" in the viewer and in every export.
 
+### 0.1 Licences: no copyleft of any kind (`SW-LIC-*`)
+
+The user's instruction of 2026-11-02: nothing that involves the GPL or any other copyleft licence,
+and no copyright infringement anywhere in the process (PROVENANCE P-57, P-58).
+
+- `SW-LIC-1` Code and dependencies: SmartWeld's own code is the only code in the deliverables
+  apart from libraries under permissive licences (MIT, BSD, ISC, Apache-2.0 or similar). No library
+  under the GPL, LGPL, AGPL, MPL, EPL, CDDL, SSPL, EUPL, OSL or any other copyleft licence is used,
+  in development or in what is shipped. Each library, version and licence is recorded in PROVENANCE.md.
+- `SW-LIC-2` Tools: every program that reads, produces, converts, renders or checks SmartWeld's data,
+  drawings, documents or images is SmartWeld's own code or permissively licensed. A program that
+  contains copyleft parts is not used for these tasks, even when its own licence is permissive. This
+  is why the headless browser is no longer used: it bundles an LGPL media library. PDFs are written by
+  SmartWeld's own writer (SW-PDF-*); images by SmartWeld's own renderer (SW-REN-*); received PDFs
+  are read by SmartWeld's own reader on pypdf (SW-IMP-*).
+- `SW-LIC-3` Fonts: no font file is embedded in, or shipped with, a deliverable unless its licence is
+  permissive and has no copyleft term. The work-order PDFs embed a subset of DejaVu Sans, under the
+  Bitstream Vera licence: permissive, with a notice to carry and a renaming condition on modified
+  copies. The subset keeps the name "DejaVuSans", which contains neither "Bitstream" nor "Vera",
+  and each PDF carries the licence notice. Fonts under the SIL Open Font License are not used: it is
+  a copyleft-style licence for the font itself.
+- `SW-LIC-4` The operating environment is outside SW-LIC-1..3. That means the container's
+  operating-system kernel, shell, version control (git) and the system C library that Node and
+  Python load. Copyleft obligations attach to distributing or modifying the licensed software, not
+  to running it, and they do not pass to what is made with it. These programs run the commands but
+  are not linked into, modified for, or shipped with SmartWeld. Only programs from the
+  environment's base system are allowed under this rule; no further copyleft program is added to
+  it. To be confirmed by counsel (IP_REVIEW.md).
+- `SW-LIC-5` Copyright: SmartWeld's deliverables contain only SmartWeld's own work, the user's own
+  documents, and the permissively licensed parts recorded under SW-LIC-1 and SW-LIC-3 with their
+  notices (THIRD_PARTY_NOTICES.md). Nothing from a published standard, table, catalogue, drawing or
+  other third-party work is copied (section 0).
+
 ## 1. Physical constants
 
 | ID       | Constant                         | Value                       | Reason / nature                                               |
@@ -1702,3 +1735,56 @@ reported for the drawing's author to resolve.
 - Applied to the parsed sheets, the fix list leaves no finding and no change, and the corrected set
   reads with the usual sign convention (`tools/isomatch.py --selftest`).
 - Every stage-8 rule ID used in code is written here.
+
+## 55. SmartWeld's own PDF writer (`SW-PDF-*`)
+
+Replaces the headless browser that printed the work-order packs (SW-LIC-2). Written in
+`src/pdf/`; uses only Node's built-in zlib to compress streams.
+
+- `SW-PDF-1` File: PDF 1.7 written object by object by SmartWeld code.
+  - Tabloid landscape pages, 17 × 11 in (1224 × 792 pt), margins 0.4 in, as the HTML pack's print style.
+  - Streams are Flate-compressed.
+  - The file is deterministic: no creation date. The /ID is derived from the SHA-256 of the
+    content, so a fresh run reproduces the committed file byte for byte.
+- `SW-PDF-2` Font: DejaVu Sans (SW-LIC-3) is embedded as a CID TrueType font with Identity
+  encoding. SmartWeld's own subsetter keeps the glyphs used, glyph 0 and the parts of composite
+  glyphs, and empties the rest. The advance widths come from the font's own metrics table. A
+  ToUnicode map lets the text be searched and copied. Bold is drawn by filling and stroking the
+  regular glyphs (stroke 0.04 em), so only one font file is embedded. A character the font lacks
+  stops the run with an error rather than printing a blank.
+- `SW-PDF-3` Layout, as in the HTML pack and with the same blocks in the same order:
+  - Text sizes: body 8 pt; small notes 7 pt; headings 10.5 pt with a rule under them; title 15 pt; line height 1.3.
+  - Each table column gets at least its longest word and at most its full single-line text. The
+    width left over is shared in proportion to the difference.
+  - A column left blank for hand entry is at least 1 in wide, or the width of its heading if more.
+    These are sign-off, date, welder, remark, reading and tick columns; a person writes in them, so
+    they keep room for it. Rows of such a table are at least 0.3 in tall, for the same reason.
+  - Text wraps at spaces; a word wider than its column is broken between characters.
+  - A row never splits across pages; the header row repeats on each new page.
+  - The ITP and each isometric start a new page.
+  - The layout is checked as it is built: no line of text is wider than its box, and nothing
+    crosses the margins.
+- `SW-PDF-4` Isometrics: the SVG that SW-ISO-1 generates is drawn into the page by converting each
+  element (rect, line, polyline, polygon, circle, text) and its class style (fill, stroke, width,
+  dash, font weight and size, anchor) to PDF operators, scaled to fit the page without
+  distortion.
+- `SW-PDF-5` Notices: every pack ends with the demonstration notice (SW-WPS-1) and the font's
+  licence notice (SW-LIC-3).
+
+## 56. SmartWeld's own renderer (`SW-REN-*`)
+
+Replaces the headless-browser screenshots (SW-LIC-2). Written in `src/render/`; PNG files are
+written with Node's built-in zlib.
+
+- `SW-REN-1` 3D views: a depth-buffered triangle rasterizer of the model's own mesh data (the same
+  part meshes the viewer draws).
+  - Perspective camera; each surface is shaded by one directional light and an ambient term, in the viewer's material colours.
+  - Edges are smoothed by 3 × 3 supersampling.
+  - The scenes and cameras are those of the viewer's views.
+  - It shows the 3D model only, without the viewer's side panels.
+- `SW-REN-2` Page previews: a PDF page from SW-PDF is drawn from the same layout record that
+  wrote it, so the page can be reviewed as an image.
+  - Glyphs are filled from their outlines in the embedded font (quadratic curves flattened, nonzero fill).
+  - Lines are stroked as quadrilaterals with round joins.
+- `SW-REN-3` The images are for review and for the demo. Each image's file name and caption name
+  the view, and the renderer that made it.

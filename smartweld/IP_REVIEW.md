@@ -86,7 +86,8 @@ editing one rule in `DESIGN_BASIS.md` and its code, without touching anything el
 ## 4. What counsel needs to decide or search
 
 1. **Design patents and registered designs.** Search each of the 16 valve forms (renders in
-   `screenshots/stage4/`, contact sheets `sheet-1.png`, `sheet-2.png`) in every market where
+   `screenshots/stage4/`, contact sheets `sheet-1.png`, `sheet-2.png`, all made by SmartWeld's own
+   renderer) in every market where
    SmartWeld will use or sell this product. This session had no access to patent databases.
 2. **Trade dress.** Review the colour scheme (§3) and any overall look against marks in use.
 3. **Ownership of AI-assisted work.** Advise how far SmartWeld can claim copyright or other
@@ -94,14 +95,18 @@ editing one rule in `DESIGN_BASIS.md` and its code, without touching anything el
    trade secrets or by contract). The record of SmartWeld's own creative direction is §5.
 4. **AI provider terms.** Confirm SmartWeld's rights in the output under the terms of the AI
    service used.
-5. **Open-source licences.** three.js (MIT) ships in the viewer; its notice is in
-   `THIRD_PARTY_NOTICES.md` and must accompany any distribution. The other libraries (Vite,
-   Vitest, TypeScript, Playwright) are development tools and are not distributed.
-   No copyleft (GPL, LGPL, AGPL, MPL or similar) code is a dependency of SmartWeld. The stage-8 drawing
-   reader is SmartWeld's own code on pypdf (BSD-3-Clause); the GPL tool used for it at first was
-   removed (PROVENANCE P-57). Open item for decision: the headless Chromium used for screenshots and
-   for printing the work-order PDFs bundles LGPL FFmpeg, and those PDFs embed OFL-licensed font
-   subsets (P-57).
+5. **Open-source licences.** three.js (MIT) ships in the viewer and a subset of the DejaVu Sans
+   font (Bitstream Vera licence, permissive) is embedded in every work-order PDF; both notices are in
+   `THIRD_PARTY_NOTICES.md` and must accompany any distribution. The other libraries (Vite, Vitest,
+   TypeScript, pypdf) are development tools and are not distributed. SmartWeld's licence policy
+   (DESIGN_BASIS.md §0.1, SW-LIC-1..5) admits no copyleft (GPL, LGPL, AGPL, MPL, OFL or similar) code,
+   tool or font: the drawing reader is SmartWeld's own code on pypdf (BSD-3-Clause); the work-order
+   PDFs are written by SmartWeld's own PDF writer; the review images and contact sheets are made by
+   SmartWeld's own renderer. The headless browser (which bundles an LGPL media library) and its
+   OFL-font PDFs and screenshots were replaced (PROVENANCE P-57, P-58). **For counsel to confirm:**
+   the line drawn in SW-LIC-4 — the cloud container's operating system, shell, git and C library
+   (GPL/LGPL) run the commands but are not linked into, modified for or shipped with SmartWeld, and
+   are treated as outside the policy.
 
 ## 5. Record of SmartWeld's direction (human contribution)
 

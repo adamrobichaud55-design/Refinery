@@ -2,11 +2,12 @@
 //   public/isometrics/ISO-<line>.svg  — one isometric per line (SW-ISO-1)
 //   public/workorders/index.json, WO-*.json, WO-*.html — the owner's shutdown work orders with ITPs (SW-WO, SW-ITP),
 //   linked to the owner's imported drawings when public/isometrics-imported/index.json exists (SW-IMP-6)
-// Then `npm run wo:pdf` prints each HTML pack to public/workorders/pdf/WO-*.pdf.
+//   public/workorders/pdf/WO-*.pdf — the same packs as PDF, written by SmartWeld's own PDF writer (SW-PDF-*)
 import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, existsSync } from 'node:fs';
 import type { PipingModel } from '../src/generator/piping';
 import type { GTLine, GTEquipment, GroundTruth } from '../src/generator/groundtruth';
-import { workOrderFiles } from '../src/generator/woexport';
+import { workOrderFiles, workOrderPdfs } from '../src/generator/woexport';
+import { parseFont } from '../src/pdf/ttf';
 import type { ImportedIndex } from '../src/generator/imported';
 
 const m = JSON.parse(readFileSync('public/plant-piping.json', 'utf8')) as PipingModel;
@@ -20,4 +21,8 @@ const t0 = Date.now(), files = workOrderFiles(m, gt, eq, imported);
 rmSync('public/isometrics', { recursive: true, force: true }); mkdirSync('public/isometrics', { recursive: true });
 rmSync('public/workorders', { recursive: true, force: true }); mkdirSync('public/workorders', { recursive: true });
 let bytes = 0; for (const [p, c] of files) { writeFileSync(`public/${p}`, c); bytes += c.length; }
+// the packs as PDF, by SmartWeld's own PDF writer (SW-PDF-*), with the embedded font's licence notice (SW-LIC-3)
+mkdirSync('public/workorders/pdf', { recursive: true });
+const font = parseFont(new Uint8Array(readFileSync('assets/fonts/DejaVuSans.ttf'))), notice = readFileSync('assets/fonts/DejaVuSans-LICENSE.txt', 'utf8');
+for (const [p, c] of workOrderPdfs(m, gt, eq, font, notice, imported)) { writeFileSync(`public/${p}`, c); bytes += c.length; }
 console.log(`wrote ${files.size} files, ${(bytes / 1e6).toFixed(1)} MB, in ${((Date.now() - t0) / 1000).toFixed(1)} s`);
