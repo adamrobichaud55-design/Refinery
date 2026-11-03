@@ -71,7 +71,12 @@ function toBufferGeometry(m: MeshData): THREE.BufferGeometry {
   if (m.indices.length / 3 > 600000) { const flat = g.toNonIndexed(); flat.computeVertexNormals(); return flat; }   // whole-plant views: flat shading for speed
   return toCreasedNormals(g.toNonIndexed(), (35 * Math.PI) / 180);   // parts: smooth curved surfaces, hard edges kept
 }
-function resize() { const w = viewEl.clientWidth, h = viewEl.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); needsRender = true; }
+let lastSize = '';
+function resize() {   // only when the view's box really changed size, so a resize can never feed itself
+  const w = Math.max(1, viewEl.clientWidth), h = Math.max(1, viewEl.clientHeight), k = `${w}x${h}`;
+  if (k === lastSize) return; lastSize = k;
+  renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); needsRender = true;
+}
 window.addEventListener('resize', resize);
 if ('ResizeObserver' in window) new ResizeObserver(resize).observe(viewEl);   // the phone layout changes the view's size without a window resize
 function frame(box: THREE.Box3, dir = new THREE.Vector3(0.8, 0.55, 1)) {
