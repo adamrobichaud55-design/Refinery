@@ -614,7 +614,9 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean } = {}): P
       const w = unit(sub(sr.b, sr.a)); if (Math.abs(w[1]) < 0.5 || len(sub(sr.b, sr.a)) < 120) continue;
       const lowEnd = sr.a[1] < sr.b[1] ? sr.a : sr.b, el = els.find(e => len(sub(e.a, lowEnd)) < 1e-3 || len(sub(e.b, lowEnd)) < 1e-3); if (!el) continue;
       const vtx = add(lowEnd, [0, -1, 0], R(l.NPS, l.cls)), top: V3 = [vtx[0], vtx[1] - r, vtx[2]];
-      if (top[1] <= 120 && top[1] > 6 && floorClear(add(top, [0, r, 0]), r, id)) push('trunnion', top, `TRUN|${l.NPS}|${l.cls}|${top[1].toFixed(2)}`, frameFromAxes(top, [0, 1, 0], [1, 0, 0]));
+      // the leg's local +x is the direction the elbow turns into, so its saddle top fits the elbow (SW-PS-4)
+      const other = len(sub(el.a, lowEnd)) < 1e-3 ? el.b : el.a, turn = unit([other[0] - lowEnd[0], 0, other[2] - lowEnd[2]]);
+      if (top[1] <= 120 && top[1] > 6 && floorClear(add(top, [0, r, 0]), r, id)) push('trunnion', top, `TRUN|${l.NPS}|${l.cls}|${top[1].toFixed(2)}`, frameFromAxes(top, [0, 1, 0], cross(turn, [0, 1, 0])));
     }
     return out;
   }

@@ -5,13 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <title>SmartWeld 3D Catalogue</title>
 <style>
+  /* one light look on every device: a phone in dark mode must not turn the controls' text white on this white panel */
+  :root { color-scheme: light; }
   html, body { margin: 0; height: 100%; font: 13px/1.4 system-ui, sans-serif; color: #1b1f24; background: #f4f5f7; }
+  button, select, input, textarea { color: #1b1f24; color-scheme: light; }
+  select, input:not([type=checkbox]), textarea { background: #fff; border: 1px solid #c8ccd2; border-radius: 3px; }
+  #info button { background: #fff; border: 1px solid #c8ccd2; border-radius: 4px; padding: 3px 8px; cursor: pointer; }
   #app { display: grid; grid-template-columns: 230px 1fr 380px; height: 100%; }
   #list { overflow: auto; min-height: 0; border-right: 1px solid #d0d4da; background: #fff; }
   #list h1 { font-size: 14px; margin: 10px 12px 4px; }
   #list .sub { margin: 0 12px 8px; color: #666; font-size: 11px; }
   #list h2 { font-size: 11px; text-transform: uppercase; letter-spacing: .05em; color: #666; margin: 12px 12px 2px; }
-  #list button { display: block; width: 100%; text-align: left; border: 0; background: none; padding: 5px 12px; cursor: pointer; font: inherit; }
+  #list button { display: block; width: 100%; text-align: left; border: 0; background: none; color: #1b1f24; padding: 5px 12px; cursor: pointer; font: inherit; }
+  #list form button, #list .cfg button { display: inline-block; width: auto; background: #fff; border: 1px solid #c8ccd2; border-radius: 4px; padding: 3px 10px; }
   #list button:hover { background: #eef2f7; }
   #list button.active { background: #dbe7f6; font-weight: 600; }
   #list form { margin: 10px 12px; display: flex; gap: 4px; }

@@ -693,9 +693,19 @@ Geometry built in stage 5 once `OD` is known; rules fixed here.
 - `SW-PS-2` Guide: two `L3x3x1/4` × 6 in each side of the shoe with 1/8 in clearance,
   welded to the beam. Reason: lets the line slide axially and stops it moving sideways.
 - `SW-PS-3` Anchor: the shoe base welded to the beam all around (SW-WD-1).
-- `SW-PS-4` Trunnion (for vertical runs at an elbow): a cylinder of OD × 3/8 in wall
-  (round HSS of the pipe's OD, SW-HSS-*) × 12 in long, welded to the elbow, on a `PL1/2`
-  base. Reason: carries a riser's weight at its lowest elbow.
+- `SW-PS-4` Trunnion, or dummy leg (for vertical runs at an elbow): a cylinder of OD × 3/8 in
+  wall (round HSS of the pipe's OD, SW-HSS-*) on the riser's own axis, continued down to a `PL1/2`
+  base on the floor.
+  - Its top is cut to the elbow's outer surface (a saddle), so it bears on and is welded to the elbow
+    all along the line where they meet.
+  - Where the cut reaches the riser's side, the leg's outer wall is flush with the riser's.
+  - Its designation gives the height of the bottom of the horizontal run's pipe above the floor
+    (the run the elbow turns into).
+  - Reason: carries a riser's weight at its lowest elbow, with the load going straight down the
+    riser's axis.
+  - Amended 2026-11-03 (P-64): the leg had stood under the elbow's corner point, the work point
+    where the two centrelines meet. A long-radius elbow curves away from that point, so the leg
+    did not touch it.
 - `SW-PS-5` U-bolt (small lines, OD ≤ 2.5 in): `RD3/8` bent around the pipe with 1/16 in
   clearance, legs through the beam flange with nuts (SW-B-3). Reason: the simplest hold-down
   for a light line.

@@ -169,12 +169,37 @@ export function makeTrapeze(id: string, NPS: number, cls: PipeClass, h1: number,
   ];
   return finish(id, 'SUPPORT', `TRAPEZE-${NPS}x${Math.max(h1, h2).toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), rod: rule(d, 'SW-PS-9', 'Rod diameter'), a: rule(a, 'SW-PS-13', 'Rod offset from the pipe axis'), H1: rule(h1, 'SW-PS-13', 'Rod length, side 1'), H2: rule(h2, 'SW-PS-13', 'Rod length, side 2') }, solids, 'SW-PS-13', { supportKind: 'trapeze' }, undefined, DEFAULT_MATERIAL);
 }
-/** Trunnion (SW-PS-4/10): a pipe of the line's OD × 3/8 wall standing under an elbow (top at y = 0) down to y = −h on a base plate. */
+/**
+ * Trunnion or dummy leg (SW-PS-4/10): a tube of the line's OD × 3/8 in wall on the riser's axis, from a base plate on
+ * the floor up to the elbow, its top cut to the elbow's outer surface (a saddle).
+ * Local frame: origin under the elbow's work point at the bottom of the horizontal run's pipe (h above the floor, so
+ * the floor is at y = −h); +y up the riser; +x the direction the elbow turns into. The elbow (bend radius R, outer
+ * radius r) is the torus whose ring centre is (R, R + r, 0) in the x–y plane; the riser's end is at y = R + r.
+ */
 export function makeTrunnion(id: string, NPS: number, cls: PipeClass, h: number): PartSpec {
-  const p = pipeDims(NPS, cls), ro = p.OD / 2, ri = Math.max(0.1, ro - 0.375), sb = p.OD + 4;
-  const tube = transformMesh(extrude({ outer: circle(0, 0, ro, 32), inner: circle(0, 0, ri, 32) }, h - 0.5), multiply(translate(0, -h + 0.5, 0), rotateX(-Math.PI / 2)));
+  const p = pipeDims(NPS, cls), r = p.OD / 2, ro = r, ri = Math.max(0.1, ro - 0.375), sb = p.OD + 4, R = elbowRadius(p.OD), N = 48;
+  const yc = R + r;
+  /** the height of the elbow's outer surface above (x, z), or the riser's end where the leg's edge meets the riser's side */
+  const top = (x: number, z: number) => { const s = Math.sqrt(Math.max(0, r * r - z * z)), q = (R + s) ** 2 - (x - R) ** 2; return q > 0 ? yc - Math.sqrt(q) : yc; };
+  const yb = -h + 0.5, pos: number[] = [], idx: number[] = [];
+  const v = (x: number, y: number, z: number) => { pos.push(x, y, z); return pos.length / 3 - 1; };
+  const ob: number[] = [], ot: number[] = [], ib: number[] = [], it: number[] = [];
+  for (let i = 0; i < N; i++) {
+    const a = (2 * Math.PI * i) / N, c = Math.cos(a), sn = Math.sin(a);
+    ob.push(v(ro * c, yb, ro * sn)); ot.push(v(ro * c, top(ro * c, ro * sn), ro * sn));
+    ib.push(v(ri * c, yb, ri * sn)); it.push(v(ri * c, top(ri * c, ri * sn), ri * sn));
+  }
+  for (let i = 0; i < N; i++) {
+    const j = (i + 1) % N;
+    idx.push(ob[i], ot[i], ot[j], ob[i], ot[j], ob[j]);      // outer wall, facing out
+    idx.push(ib[i], ib[j], it[j], ib[i], it[j], it[i]);      // inner wall, facing the axis
+    idx.push(ot[i], it[i], it[j], ot[i], it[j], ot[j]);      // the saddle-cut top edge
+    idx.push(ob[i], ob[j], ib[j], ob[i], ib[j], ib[i]);      // the foot on the base plate
+  }
+  let tube: MeshData = { positions: pos, indices: idx };
+  if (signedVolume(tube) < 0) tube = { positions: pos, indices: idx.map((_, k) => idx[k - (k % 3) + [0, 2, 1][k % 3]]) };
   const solids: FitSolid[] = [{ name: 'trunnion', mesh: tube, role: 'steel' }, { name: 'base plate', mesh: boxM(-sb / 2, -h, -sb / 2, sb / 2, -h + 0.5, sb / 2), role: 'steel' }];
-  return finish(id, 'SUPPORT', `TRUNNION-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), H: rule(h, 'SW-PS-10', 'Height') }, solids, 'SW-PS-4', { supportKind: 'trunnion' }, undefined, DEFAULT_MATERIAL);
+  return finish(id, 'SUPPORT', `TRUNNION-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), H: rule(h, 'SW-PS-10', 'Height of the run\'s pipe bottom above the floor'), R: rule(R, 'SW-FIT-1', 'Bend radius of the elbow it carries'), top: rule(yc + h, 'SW-PS-4', 'Height of the riser\'s end above the floor (highest point of the saddle)') }, solids, 'SW-PS-4', { supportKind: 'trunnion' }, undefined, DEFAULT_MATERIAL);
 }
 void DEFAULT_MATERIAL;
 
