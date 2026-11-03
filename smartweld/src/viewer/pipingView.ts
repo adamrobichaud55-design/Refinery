@@ -214,7 +214,7 @@ export function loadCompletion(wo: WorkOrder): Completion {
   try { const c = JSON.parse(localStorage.getItem(key(wo.number)) ?? 'null') as Completion | null; if (c && c.activities.length === wo.itp.length) return c; } catch { /* fresh record */ }
   return { workOrder: wo.number, updated: '', activities: wo.itp.map(a => ({ step: a.step, status: 'open', contractor: '', owner: '', thirdParty: '', date: '', remark: '' })) };
 }
-export const saveCompletion = (c: Completion) => { c.updated = new Date().toISOString(); localStorage.setItem(key(c.workOrder), JSON.stringify(c)); };
+export const saveCompletion = (c: Completion) => { c.updated = new Date().toISOString(); try { localStorage.setItem(key(c.workOrder), JSON.stringify(c)); } catch { /* storage unavailable: sign-offs last for this visit */ } };
 /** SW-ITP-3: complete when every activity is accepted or not applicable */
 export const progress = (c: Completion) => ({ done: c.activities.filter(a => a.status === 'accepted' || a.status === 'n/a').length, total: c.activities.length, rejected: c.activities.filter(a => a.status === 'rejected').length });
 export function woReport(wo: WorkOrder, c: Completion): string {
@@ -234,5 +234,6 @@ export function woReport(wo: WorkOrder, c: Completion): string {
       <td><select data-i="${i}" data-f="status">${(['open', 'accepted', 'rejected', 'n/a'] as Status[]).map(v => opt(v, r.status)).join('')}</select></td>
       ${(['contractor', 'owner', 'thirdParty'] as const).map(f => `<td><input data-i="${i}" data-f="${f}" size="3" value="${esc(r[f])}"></td>`).join('')}
       <td><input type="date" data-i="${i}" data-f="date" value="${esc(r.date)}"></td><td><input data-i="${i}" data-f="remark" size="8" value="${esc(r.remark)}"></td></tr>`; }).join('')}</table>
-    <p><button id="wo-download" type="button">Download completion record (JSON)</button> <button id="wo-reset" type="button">Clear sign-offs</button></p>`;
+    <p><button id="wo-download" type="button">Download completion record (JSON)</button> <button id="wo-reset" type="button">Clear sign-offs</button></p>
+    <p><button id="wo-copy" type="button" hidden>Copy record</button></p><textarea id="wo-record" readonly rows="8" style="width:100%;box-sizing:border-box;font:11px ui-monospace,monospace" hidden></textarea>`;
 }

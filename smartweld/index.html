@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>SmartWeld 3D Catalogue — Stage 1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>SmartWeld 3D Catalogue</title>
 <style>
   html, body { margin: 0; height: 100%; font: 13px/1.4 system-ui, sans-serif; color: #1b1f24; background: #f4f5f7; }
   #app { display: grid; grid-template-columns: 230px 1fr 380px; height: 100%; }
@@ -33,6 +34,23 @@
   .demo-note { color: #d0021b; font-weight: 700; border: 2px solid #d0021b; padding: 4px 6px; font-size: 11px; margin-bottom: 6px; }
   table.itp td, table.itp th { font-size: 11px; padding: 2px 3px; } table.itp input { font: inherit; width: 100%; box-sizing: border-box; } table.itp select { font: inherit; }
   #info a { color: #1f5fbf; }
+  #menu-btn, #menu-shade { display: none; }
+  /* phone width: the 3D view on top, the details below, the list as a slide-out menu */
+  @media (max-width: 760px) {
+    #app { grid-template-columns: 1fr; grid-template-rows: 58% 42%; }
+    #view { grid-row: 1; touch-action: none; }
+    #info { grid-row: 2; border-left: 0; border-top: 1px solid #d0d4da; padding: 12px max(12px, env(safe-area-inset-right, 0px)) calc(12px + env(safe-area-inset-bottom, 0px)) max(12px, env(safe-area-inset-left, 0px)); }
+    #list { position: fixed; z-index: 20; top: 0; bottom: 0; left: 0; width: min(86vw, 330px); border-right: 1px solid #d0d4da; box-shadow: 0 0 24px rgba(27, 31, 36, .25);
+      padding: env(safe-area-inset-top, 0px) 0 env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px); transform: translateX(-105%); transition: transform .2s ease; }
+    body.menu-open #list { transform: none; }
+    #menu-btn { display: block; position: absolute; z-index: 5; top: calc(8px + env(safe-area-inset-top, 0px)); left: calc(8px + env(safe-area-inset-left, 0px));
+      font: 600 13px system-ui, sans-serif; color: #1b1f24; background: #fff; border: 1px solid #c8ccd2; border-radius: 6px; padding: 8px 12px; }
+    #menu-shade { position: fixed; inset: 0; z-index: 15; background: rgba(27, 31, 36, .35); }
+    body.menu-open #menu-shade { display: block; }
+    #list button { padding: 9px 12px; }
+    table { font-size: 11px; } #info { -webkit-overflow-scrolling: touch; }
+  }
+  @media (prefers-reduced-motion: reduce) { #list { transition: none; } }
 </style>
 </head>
 <body>
@@ -46,9 +64,20 @@
     <div class="cfg"><select id="vtype"></select><select id="vsize"></select><select id="vcls"></select><button id="vbuild" type="button">Build</button></div>
     <div id="entries"></div>
   </nav>
-  <div id="view"><div id="err"></div></div>
+  <div id="view"><button id="menu-btn" type="button" aria-controls="list">Menu</button><div id="err"></div></div>
+  <div id="menu-shade"></div>
   <aside id="info"></aside>
 </div>
 <script type="module" src="/src/viewer/main.ts"></script>
+<script>
+  // phone menu: open from the button, close on the shade or after choosing a view
+  (function () {
+    var b = document.body, btn = document.getElementById('menu-btn');
+    btn.addEventListener('click', function () { b.classList.toggle('menu-open'); });
+    document.getElementById('menu-shade').addEventListener('click', function () { b.classList.remove('menu-open'); });
+    document.getElementById('list').addEventListener('click', function (e) { var t = e.target; if (t && t.tagName === 'BUTTON') b.classList.remove('menu-open'); });
+    document.getElementById('typed').addEventListener('submit', function () { b.classList.remove('menu-open'); });
+  })();
+</script>
 </body>
 </html>

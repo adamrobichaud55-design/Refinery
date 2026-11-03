@@ -73,6 +73,7 @@ function toBufferGeometry(m: MeshData): THREE.BufferGeometry {
 }
 function resize() { const w = viewEl.clientWidth, h = viewEl.clientHeight; renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix(); needsRender = true; }
 window.addEventListener('resize', resize);
+if ('ResizeObserver' in window) new ResizeObserver(resize).observe(viewEl);   // the phone layout changes the view's size without a window resize
 function frame(box: THREE.Box3, dir = new THREE.Vector3(0.8, 0.55, 1)) {
   const size = box.getSize(new THREE.Vector3()), centre = box.getCenter(new THREE.Vector3());
   const radius = Math.max(size.length() / 2, 1);
@@ -289,10 +290,23 @@ async function showWorkOrder(m: NonNullable<typeof pipingModel>, number: string)
       showItem({ tag, line }, true);
     }));
     document.getElementById('wo-download')!.addEventListener('click', () => {
-      const blob = new Blob([JSON.stringify({ ...comp, title: wo.title, notice: wo.notice, itp: wo.itp.map((x, i) => ({ ...x, ...comp.activities[i] })) }, null, 1)], { type: 'application/json' });
-      const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = `${wo.number}-completion.json`; a.click();
+      const json = JSON.stringify({ ...comp, title: wo.title, notice: wo.notice, itp: wo.itp.map((x, i) => ({ ...x, ...comp.activities[i] })) }, null, 1);
+      try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([json], { type: 'application/json' })); a.download = `${wo.number}-completion.json`; a.click(); } catch { /* downloads blocked: the record is shown below */ }
+      // where downloads are blocked (a phone app or an embedded page), the record is shown to copy
+      const box = document.getElementById('wo-record') as HTMLTextAreaElement; box.value = json; box.hidden = false;
+      const copy = document.getElementById('wo-copy')!; copy.hidden = false;
     });
-    document.getElementById('wo-reset')!.addEventListener('click', () => { if (!confirm(`Clear all sign-offs for ${wo.number}?`)) return; localStorage.removeItem(`smartweld-wo-completion:${wo.number}`); Object.assign(comp, loadCompletion(wo)); render(); });
+    document.getElementById('wo-copy')!.addEventListener('click', async ev => {
+      const box = document.getElementById('wo-record') as HTMLTextAreaElement, btn = ev.currentTarget as HTMLButtonElement;
+      try { await navigator.clipboard.writeText(box.value); btn.textContent = 'Copied'; } catch { box.select(); btn.textContent = 'Selected: copy it'; }
+    });
+    let armed = 0;   // clearing sign-offs takes two taps (no browser dialog: some viewers block them)
+    document.getElementById('wo-reset')!.addEventListener('click', ev => {
+      const btn = ev.currentTarget as HTMLButtonElement;
+      if (Date.now() - armed > 4000) { armed = Date.now(); btn.textContent = 'Tap again to clear all sign-offs'; return; }
+      try { localStorage.removeItem(`smartweld-wo-completion:${wo.number}`); } catch { /* storage unavailable */ }
+      Object.assign(comp, loadCompletion(wo)); render();
+    });
   };
   render();
   (window as any).__pipingReady = true;
@@ -313,7 +327,10 @@ renderer.domElement.addEventListener('pointerup', e => {
 const keys = new Set<string>();
 let walking = false, yaw = 0, pitch = 0;
 const EYE = 66; // 5 ft 6 in eye height
-renderer.domElement.addEventListener('dblclick', () => { if (building && group.children.length) renderer.domElement.requestPointerLock(); });
+renderer.domElement.addEventListener('dblclick', () => {   // walk mode needs pointer lock, which phones and some app views refuse
+  if (!(building && group.children.length)) return;
+  try { const p = renderer.domElement.requestPointerLock() as unknown as Promise<void> | undefined; p?.catch?.(() => {}); } catch { /* not available here */ }
+});
 document.addEventListener('pointerlockchange', () => {
   walking = document.pointerLockElement === renderer.domElement;
   controls.enabled = !walking;
