@@ -580,7 +580,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     const columnFree = (at: V3, out: V3) => {
       for (let s = snapUp(pOD / 2 + 3); s <= reach + 1e-6; s += H) {
         const cc = g.cellOf(add(at, out, s)); if (!g.inside(cc[0], cc[1], cc[2])) return false;
-        if (!g.clear(cc[0], cc[1], cc[2], rr, station ? [cid] : [pid, cid])) return false;   // a station's branch may not run into the parent's own end stack
+        if (!g.clear(cc[0], cc[1], cc[2], rr, station && s > pOD / 2 + rr + 4 ? [cid] : [pid, cid])) return false;   // a station's branch may not run into the parent's own end stack (its run is next to the column only at the start)
       }
       return true;
     };
@@ -868,7 +868,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
       else {
         const ab = sub(o.b, o.a), L = len(ab); if (L < 1e-6 || Math.abs(ab[1]) / L > 0.5) continue;      // horizontal-ish members only
         const t = Math.max(0, Math.min(1, ((p[0] - o.a[0]) * ab[0] + (p[2] - o.a[2]) * ab[2]) / (ab[0] ** 2 + ab[2] ** 2 || 1))), q = add(o.a, ab, t);
-        if (Math.hypot(q[0] - p[0], q[2] - p[2]) > o.r * 0.6) continue; bottom = q[1] - o.r * 0.7;
+        if (Math.hypot(q[0] - p[0], q[2] - p[2]) > (P2 && /purlin/.test(o.tag) ? 30 : o.r * 0.6)) continue; bottom = q[1] - o.r * 0.7;   // SW-PS-9 amended: a purlin bridge reaches 30 in
       }
       if (bottom > p[1] + r + 6 && bottom < best) best = bottom;
     }
