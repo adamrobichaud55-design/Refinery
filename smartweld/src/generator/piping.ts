@@ -687,11 +687,11 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   // ---- 3. route ----
   let lastWhy = '', exp = 0;
   const perLine: [string, number, number][] = [];
-  const doRoute = (l: LineDef, id: number, from: EndPlan, goal: V3, goalDirs: number[] | undefined, runDir: number | undefined, zones: V3[]) => {
+  const doRoute = (l: LineDef, id: number, from: EndPlan, goal: V3, goalDirs: number[] | undefined, runDir: number | undefined, zones: V3[], opts?: { margins?: number[]; budget?: number }) => {
     const r = pipeDims(l.NPS, l.cls).OD / 2, k = kOf(l.NPS, l.cls, jointOf(l));
     let why = '';
-    for (const margin of [180, 420, 900]) {
-      const res = route(g, { id, r, start: from.P1, startDir: dirIndex(from.dirOut), goal, goalDirs, runDir, k, zones, margin, vertThrough: plant.verticalThroughPlatforms, zoneR: P2 ? 72 : 48, maxExpand: P2 ? 1_500_000 : undefined });
+    for (const margin of opts?.margins ?? [180, 420, 900]) {
+      const res = route(g, { id, r, start: from.P1, startDir: dirIndex(from.dirOut), goal, goalDirs, runDir, k, zones, margin, vertThrough: plant.verticalThroughPlatforms, zoneR: P2 ? 72 : 48, maxExpand: opts?.budget ?? (P2 ? 1_500_000 : undefined) });
       exp += res.expanded;
       if (res.ok) return res;
       why = res.why ?? ''; if (!why.startsWith('exhausted')) break;
@@ -736,17 +736,20 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     } else if (plant.wallX !== undefined && (A.P1[0] - plant.wallX) * (B.P1[0] - plant.wallX) < 0) {
       // SW-RT-9: through the end wall in two legs meeting at a wall gate, both heading straight through it
       const wx = plant.wallX, sgn = Math.sign(B.P1[0] - A.P1[0]), outdoor = A.P1[0] > wx ? A : B, gateX = wx + 30, zMax = building.drawing.widthFt * 6 - 60;
-      const z0 = Math.round(outdoor.P1[2] / H) * H, zs: number[] = []; for (let d = 0; d <= zMax; d += 12) { if (Math.abs(z0 + d) <= zMax) zs.push(z0 + d); if (d && Math.abs(z0 - d) <= zMax) zs.push(z0 - d); }
+      const z0 = Math.round(outdoor.P1[2] / H) * H, zs: number[] = []; for (let d = 0; d <= 120; d += 12) { if (Math.abs(z0 + d) <= zMax) zs.push(z0 + d); if (d && Math.abs(z0 - d) <= zMax) zs.push(z0 - d); }   // within 10 ft of the outdoor end's z
       const gateFree = (p: V3) => { const c = g.cellOf(p); return g.inside(c[0], c[1], c[2]) && !g.head[g.idx(c[0], c[1], c[2])] && g.clear(c[0], c[1], c[2], r, [id]); };
       let ra: ReturnType<typeof doRoute> = null, rb: ReturnType<typeof doRoute> = null, done = false;
       const restore = () => { unoccupy(id); occupy(id, compSegs([...(A.built?.comps ?? []), ...(B.built?.comps ?? [])])); for (const P of [A, B]) if (P.built) occupy(id, [[P.built.end, P.P1, r]]); };
+      const legOpts = { margins: [420], budget: 400_000 }, outIsA = outdoor === A;   // each leg is short; a candidate that needs more is not the gate
       for (const y of [150]) for (const z of zs) { if (done) break;
         const gate: V3 = [gateX, y, z]; if (!gateFree(gate)) continue;
-        ra = doRoute(l, id, A, gate, [dirIndex([sgn, 0, 0])], undefined, [A.zone, A.P1]); if (!ra) continue;
-        occupy(id, segsOf(ra.cells, r));
-        rb = doRoute(l, id, B, gate, [dirIndex([-sgn, 0, 0])], undefined, [B.zone, B.P1]);
-        if (!rb) { restore(); continue; }
-        occupy(id, segsOf(rb.cells, r)); done = true; break;
+        // the outdoor leg first (short, and the one a blocked approach to the equipment fails), then the indoor leg
+        const first = outIsA ? A : B, second = outIsA ? B : A, dFirst = outIsA ? sgn : -sgn;
+        const r1 = doRoute(l, id, first, gate, [dirIndex([dFirst, 0, 0])], undefined, [first.zone, first.P1], legOpts); if (!r1) continue;
+        occupy(id, segsOf(r1.cells, r));
+        const r2 = doRoute(l, id, second, gate, [dirIndex([-dFirst, 0, 0])], undefined, [second.zone, second.P1], legOpts);
+        if (!r2) { restore(); continue; }
+        occupy(id, segsOf(r2.cells, r)); ra = outIsA ? r1 : r2; rb = outIsA ? r2 : r1; done = true; break;
       }
       if (!done) return fail(l, 'no wall gate with routes to both ends: ' + lastWhy);
       path = [...corners(ra!.cells), ...corners(rb!.cells).reverse()];
