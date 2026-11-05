@@ -280,7 +280,10 @@ function showItem(sel: { tag: string; line: string }, frameIt = false) {
   Promise.all([itemRecord(sel), loadImported()]).then(([res, imp]) => {
     const el = document.getElementById('pickinfo'); if (el) el.innerHTML = res ? itemReport(res.rec, res.header) + (imp ? importedBlock(imp, sel.line, sel.tag) : '') + '<hr>' : `<p class="notes">No record for ${sel.tag}</p>`;
     (window as any).__pipingReady = true;
-  }).catch(showError);
+  }).catch(e => {   // the published page may carry a plant's model without its per-line ground truth (the repository has it)
+    const el = document.getElementById('pickinfo'); if (el && /ground truth .* not found/.test(String(e))) { el.innerHTML = `<p class="notes">${sel.tag}: the item record is in the repository's ground truth (public/plants/…/groundtruth), not on this page.</p><hr>`; (window as any).__pipingReady = true; return; }
+    showError(e);
+  });
 }
 function showEquipment(tag: string) {
   if (pickObj) { pickObj.parent?.remove(pickObj); pickObj = null; }
