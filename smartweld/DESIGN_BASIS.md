@@ -1378,6 +1378,13 @@ bore is continuous and every end is a butt-weld bevel.
   and find a floor path or steel above, never more than one span from the last.
   Reason: low pipes are carried from the floor, high ones from the structure, so nobody walks into
   a hanger rod.
+  Amended (stage 9, plant 2): a stanchion base may stand on an equipment pad (6 in above grade)
+  as well as on the slab; a line running over the rack's top tier within the rack's width stands
+  on a short stanchion whose base plate sits on the top-tier beam at a bent where the pipe bottom
+  is at most 4 ft above the beam (a post welded to the beam flange, as a shoe would be bolted); and
+  a hanger may hang from a roof purlin directly above (the purlin is a cold-formed Z, SW-CF-*, a
+  member like any other for this purpose). Reason: the end bay and the rack top of plant 2 left
+  runs with no floor path and no hot-rolled steel above.
 - `SW-PS-10` Vertical runs longer than 10 ft get a trunnion (SW-PS-4) under their lowest elbow,
   standing on a stanchion base when that elbow is at most 10 ft up; otherwise they hang from the
   hanger nearest their top. (Plant 2: vertical runs longer than 6 ft, since its small-bore risers
@@ -1971,9 +1978,11 @@ sent to the piping designer, and with erection drawings and weld details for tha
   stair tower as SW-LAY-3, a column C-201 with two platforms and ladders, a knock-out drum D-201
   and an air receiver D-202, four exchangers E-201…E-204 in two pairs, ten pumps P-201A/B …
   P-205A/B, ten solids receivers R-201…R-210 (small vertical vessels) in a row along the north wall under a
-  walkway, a 3 ft grating access walkway along the rack's south edge at the second tier (posts at
-  every bent, guardrail, a ladder at each end: it reaches the header take-off valves and their
-  branches drop through it in sleeves, SW-PEN-1), and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
+  walkway, a 3 ft grating access walkway along the rack's south edge at the first tier (posts at
+  every bent, guardrail, a ladder at each end: it reaches the branch valves and their drops pass
+  through it in sleeves, SW-PEN-1), a 16 ft access platform over each exchanger and over the
+  drum D-201 at 16 ft (four posts, guardrail, ladder) for the valves on their top nozzles, whose
+  lines come down through the grating in sleeves, and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
   receivers R-211/R-212, an air receiver D-202 and a flare knock-out drum D-203 on pads on grade.
   (Amended 2026-11-05: the hopper and silos became vertical vessels, P-67.) Reason: the pairs of exchangers carry three-way diverting valves, the
   adsorbers a four-way switching valve, the hopper the rotary feeder, and the outdoor tanks give
@@ -2057,7 +2066,8 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
 - `SW-SWT-5` Couplings: a full coupling is a cylinder of diameter OD + 2 t_f holding two sockets
   (or threads) back to back with a stop ring t_f wide between them, length 2 e + t_f. A half
   coupling is one socket (or thread) of length e + t_f with its other end welded. Couplings join
-  two pipe lengths of a small-bore line (SW-RT-5 applied to small bore: every 20 ft), and a half
+  two pipe lengths of a small-bore line (SW-RT-5 applied to small bore: every 20 ft; on socket-weld
+  lines of plant 2 every 10 ft, the shop spool length one fitter handles, SW-COV-2), and a half
   coupling is the connection a threaded or socket-weld instrument tap (SW-LL-3 instruments)
   makes on a vessel or line where no olet is used.
 - `SW-SWT-6` Branch outlets (olets): a forged outlet fitting welded to the run for a branch of at
@@ -2161,7 +2171,9 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
     nipple and threaded gate valve; at the equipment a threaded check valve and a threaded globe
     valve (throttling) on nipples behind the flange;
   - hose stations (threaded): threaded gate valve at the header take-off; at the station a swage to
-    3/4 in, a threaded gate valve and a plug;
+    3/4 in, a threaded gate valve and a plug; the riser above the station offsets 18 in outward
+    (away from the rack) at 12.5 ft through two 45° elbows (SW-SWT-3), so the drop from the header
+    comes down behind the station post and the valve and hose face the walkway;
   - small-bore lines are joined every 20 ft with a coupling (SW-SWT-5);
   - isolation valves by class and size (SW-LL-3 extended; amended in stage 9 for SW-COV-2):
     butterfly (wafer) on water and on air and gas lines 2 in and above and at the storage tanks'
@@ -2223,7 +2235,12 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
     vessel, column and drum drains) and swage down to the stub's size in the first fitting
     (SW-SWT-7, a butt-weld swage): the larger nozzle takes a vessel's own blowdown;
   - the pumps' thermal-relief outlets are 1 in lines (the exchangers' 1-1/2 in), so the socket-weld
-    flare lines come in two sizes.
+    flare lines come in two sizes; the tanks' and silos' vent nozzles are 3 in (swaged to the
+    1 in vent), the receivers' and exchangers' 2 in;
+  - control stations at a header take-off would reach the rafters above the top tier, so the lines
+    into headers (the air receiver's two, the condensate returns) carry a check valve only, and
+    the control valves of SW-LL-3 stand instead on the second cooler's and heater's feeds, the
+    second adsorber's feed and outlet, and the column overhead to its drum.
   Reason: SW-COV-2 asks for 20 of every class over 4 lines and 2 sizes; each measure is a
   sequence a designer would draw, not a symbol placed for its own sake.
 

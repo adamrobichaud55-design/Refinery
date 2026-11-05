@@ -143,11 +143,21 @@ export function generateInterior2(cuts: GratingCut[] = []): InteriorModel {
   const stW = stairTower(wx0, laneW, wt, 'bin-stair', -1);   // descends west of the walkway's west end (its east end is 7.5 ft from the end wall)
   derived.binStair = rule(stW.risers, 'SW-SR-1', `Bin walkway stair: ${stW.risers} risers`, 'count');
   // ---- rack access walkway (SW-PLANT-5 amended): 3 ft grating along the rack's south edge at the second tier, posts at every bent, guardrail, a ladder at each end ----
-  const rwz0 = rk.halfWidth + 12, rwz1 = rwz0 + 36, rwt = rk.tiers[1] + 6, rx0 = rk.x0 + 12, rx1 = rk.x1 - 12;
+  const rwz0 = rk.halfWidth + 12, rwz1 = rwz0 + 36, rwt = rk.tiers[0] + 6, rx0 = rk.x0 + 12, rx1 = rk.x1 - 12;
   platform(rx0, rwz0, rx1, rwz1, rwt, { span: 'z', tag: 'rack-walkway' });
   for (let x = rx0; x <= rx1 + 1e-6; x += rk.bentSpacing) postColumn(x, rwz1, rwt - barDepth - platformBeam.dims.d, 'rack-walkway');
   guardrail([[rx0, rwt, rwz1], [rx1, rwt, rwz1]], [(rx0 + rx1) / 2, (rwz0 + rwz1) / 2], 'rack-walkway'); guardrail([[rx1, rwt, rwz0], [rx0, rwt, rwz0]], [(rx0 + rx1) / 2, (rwz0 + rwz1) / 2], 'rack-walkway');
   ladder([rx1 + CAGE.standoff, 0, (rwz0 + rwz1) / 2], rwt, [1, 0], 'rack-walkway'); ladder([rx0 - CAGE.standoff, 0, (rwz0 + rwz1) / 2], rwt, [-1, 0], 'rack-walkway');
+  // ---- access platforms over the exchangers and the drum (SW-PLANT-5 amended): 16 ft up, four posts, guardrail, ladder on the rack side ----
+  const ept = 192;
+  const topPlatform = (x0: number, z0: number, x1: number, z1: number, tag: string, rackSide: 1 | -1) => {
+    platform(x0, z0, x1, z1, ept, { span: 'z', tag, cuts: cuts.filter(c => c.y === ept).map(c => ({ cx: c.x, cy: c.z, r: c.r })) });
+    for (const [x, z] of [[x0, z0], [x1, z0], [x1, z1], [x0, z1]]) postColumn(x, z, ept - barDepth - platformBeam.dims.d, tag);
+    guardrail([[x0, ept, z0], [x1, ept, z0], [x1, ept, z1], [x0, ept, z1]], [(x0 + x1) / 2, (z0 + z1) / 2], tag, true);
+    ladder([(x0 + x1) / 2, 0, rackSide > 0 ? z0 - CAGE.standoff : z1 + CAGE.standoff], ept, [0, rackSide > 0 ? -1 : 1], tag);
+  };
+  for (const [tag, pos] of [['E-201', Y.E201], ['E-202', Y.E202], ['E-203', Y.E203], ['E-204', Y.E204]] as const) topPlatform(pos.x - Y.exchanger.TT / 2 - 12, pos.z - 36, pos.x + Y.exchanger.TT / 2 + 12, pos.z + 36, `${tag}-platform`, pos.z > 0 ? 1 : -1);
+  topPlatform(Y.D201.x - Y.D201.TT / 2 - 12, Y.D201.z - 42, Y.D201.x + Y.D201.TT / 2 + 12, Y.D201.z + 42, 'D-201-platform', 1);
   void guardrail;
 
   notes.push(`Pipe rack: bents at ${rk.bentSpacing / 12} ft, tiers at ${rk.tiers.map(t => t / 12).join(', ')} ft, beams W${Db}x${beamSize.w}, columns W${Dc}x${colSize.w}, struts W${Ds}x${wS} (SW-RK-*).`);
@@ -206,14 +216,14 @@ export const PLANT2_NOZZLES: NozzleDef[] = (() => {
   for (const p of [...PUMPS2_S, ...PUMPS2_N]) { const [sN, dN] = pumpNz[p.slice(0, 5)]; n(p, 'S', 'suction', sN, 'P150', { on: 'suction' }); n(p, 'D', 'discharge', dN, 'P300', { on: 'discharge' }); n(p, 'F', 'seal flush', 0.75, 'P150', { on: 'flush' }); }
   for (const t of ['T-201', 'T-202']) {
     n(t, 'N1', 'outlet', 6, 'P150', { on: 'shell', e: 18, dir: '-x' }); n(t, 'N2', 'inlet', 4, 'P300', { on: 'top', dx: 0, dz: 48 }); n(t, 'N3', 'relief', 3, 'P150', { on: 'top', dx: -36, dz: 0 });
-    n(t, 'N4', 'vent', 2, 'P150', { on: 'top', dx: 0, dz: 0 }); n(t, 'N5', 'drain', 1, 'P150', { on: 'shell', e: 12, dir: '+x' }); n(t, 'N6', 'nitrogen', 1, 'P150', { on: 'top', dx: 36, dz: 0 });
+    n(t, 'N4', 'vent', 3, 'P150', { on: 'top', dx: 0, dz: 0 }); n(t, 'N5', 'drain', 1, 'P150', { on: 'shell', e: 12, dir: '+x' }); n(t, 'N6', 'nitrogen', 1, 'P150', { on: 'top', dx: 36, dz: 0 });
     n(t, 'N7', 'instrument', 0.75, 'P150', { on: 'shell', e: 84, dir: '-x' }); n(t, 'N8', 'instrument', 0.75, 'P150', { on: 'shell', e: 204, dir: '-x' }); n(t, 'N9', 'water', 2, 'P150', { on: 'shell', e: 60, dir: '+x' });
   }
   const yb = Y.padHeight + 1.5 + 0.75;   // vessel base ring
   for (const b of BINS2) { const e0 = yb + Y.bin.skirtH + (Y.bin.ID / 2 + Y.bin.t) / 2; n(b, 'N1', 'fill', 4, 'P150', { on: 'top', dx: 0, dz: 0 }); n(b, 'N2', 'solids outlet', 4, 'P150', { on: 'shell', e: Math.ceil((e0 + 12) / 6) * 6, dir: '+z' }); n(b, 'N3', 'vent', 2, 'P150', { on: 'top', dx: 16, dz: 0 }); n(b, 'N4', 'fluidizing air', 1, 'P150', { on: 'shell', e: Math.ceil((e0 + 36) / 6) * 6, dir: '+x' }); }
   for (const s of SILOS2) {
     const e0 = yb + Y.silo.skirtH + (Y.silo.ID / 2 + Y.silo.t) / 2;
-    n(s, 'N1', 'fill', 4, 'P150', { on: 'top', dx: 0, dz: 0 }); n(s, 'N2', 'solids outlet', 6, 'P150', { on: 'shell', e: Math.ceil((e0 + 12) / 6) * 6, dir: '-x' }); n(s, 'N3', 'vent', 2, 'P150', { on: 'top', dx: 30, dz: 0 });
+    n(s, 'N1', 'fill', 4, 'P150', { on: 'top', dx: 0, dz: 0 }); n(s, 'N2', 'solids outlet', 6, 'P150', { on: 'shell', e: Math.ceil((e0 + 12) / 6) * 6, dir: '-x' }); n(s, 'N3', 'vent', 3, 'P150', { on: 'top', dx: 30, dz: 0 });
     n(s, 'N4', 'relief', 3, 'P150', { on: 'top', dx: -30, dz: 0 }); n(s, 'N5', 'instrument', 0.75, 'P150', { on: 'shell', e: Math.ceil((e0 + 120) / 6) * 6, dir: '-x' }); n(s, 'N6', 'fluidizing air', 1, 'P150', { on: 'shell', e: Math.ceil((e0 + 48) / 6) * 6, dir: '-x' });
   }
   return d;
@@ -231,18 +241,18 @@ export function buildLineList2(): LineDef[] {
   const proc = (a: EndRef, b: EndRef, NPS: number, cls: PipeClass, cv = false) => add(q++, 'P', NPS, cls, a, b, 'routed', cv);
   const s203 = proc(nz('T-201-N1'), nz('P-203A-S'), 6, 'P150'); proc(tap(s203), nz('P-203B-S'), 6, 'P150');
   const d203 = proc(nz('P-203A-D'), nz('E-201-N1'), 4, 'P300', true); proc(nz('P-203B-D'), tap(d203), 4, 'P300');
-  proc(tap(d203, false, 'tway'), nz('E-202-N1'), 4, 'P300');                                  // the three-way diverts to the second cooler
+  proc(tap(d203, false, 'tway'), nz('E-202-N1'), 4, 'P300', true);                            // the three-way diverts to the second cooler (SW-LL-7: control valve)
   const o201 = proc(nz('E-201-N2'), nz('V-201-N1'), 4, 'P300', true); proc(nz('E-202-N2'), tap(o201, false, 'tway'), 4, 'P300');   // the second cooler's outlet combines by a three-way
-  proc(tap(o201, false, 'fway'), nz('V-202-N1'), 4, 'P300');                                  // the four-way switches the adsorbers
-  const f201 = proc(nz('V-201-N2'), nz('C-201-N1'), 4, 'P300', true); proc(nz('V-202-N2'), tap(f201), 4, 'P300');
-  proc(nz('C-201-N2'), nz('D-201-N1'), 6, 'P300');
+  proc(tap(o201, false, 'fway'), nz('V-202-N1'), 4, 'P300', true);                            // the four-way switches the adsorbers (SW-LL-7: control valve)
+  const f201 = proc(nz('V-201-N2'), nz('C-201-N1'), 4, 'P300', true); proc(nz('V-202-N2'), tap(f201), 4, 'P300', true);
+  proc(nz('C-201-N2'), nz('D-201-N1'), 6, 'P300', true);                                      // overhead pressure control (SW-LL-7)
   const s201 = proc(nz('D-201-N2'), nz('P-201A-S'), 4, 'P300'); proc(tap(s201), nz('P-201B-S'), 4, 'P300');
   const r201 = proc(nz('P-201A-D'), nz('C-201-N4'), 3, 'P300', true); proc(nz('P-201B-D'), tap(r201), 3, 'P300');
   const s202 = proc(tap(s201), nz('P-202A-S'), 4, 'P300'); proc(tap(s202), nz('P-202B-S'), 4, 'P300');
   const d202 = proc(nz('P-202A-D'), nz('T-202-N2'), 4, 'P300', true); proc(nz('P-202B-D'), tap(d202), 4, 'P300');
   const s204 = proc(nz('C-201-N3'), nz('P-204A-S'), 6, 'P300'); proc(tap(s204), nz('P-204B-S'), 6, 'P300');
   const d204 = proc(nz('P-204A-D'), nz('E-203-N1'), 4, 'P300', true); proc(nz('P-204B-D'), tap(d204), 4, 'P300');
-  proc(tap(d204, false, 'tway'), nz('E-204-N1'), 4, 'P300');
+  proc(tap(d204, false, 'tway'), nz('E-204-N1'), 4, 'P300', true);   // SW-LL-7: control valve
   const o203 = proc(nz('E-203-N2'), nz('T-201-N2'), 4, 'P300', true); proc(nz('E-204-N2'), tap(o203, false, 'tway'), 4, 'P300');
   const s205 = proc(nz('D-203-N2'), nz('P-205A-S'), 4, 'P150'); proc(tap(s205), nz('P-205B-S'), 4, 'P150');
   const d205 = proc(nz('P-205A-D'), nz('D-201-N11'), 3, 'P300', true); proc(nz('P-205B-D'), tap(d205), 3, 'P300');
@@ -254,15 +264,15 @@ export function buildLineList2(): LineDef[] {
   // ---- utility branches ----
   q = 3201;
   for (const e of ['E-201', 'E-202']) { add(q++, 'CWS', 4, 'P150', tap(hdr.CWS, true), nz(`${e}-N3`), 'routed', true); add(q++, 'CWR', 4, 'P150', nz(`${e}-N4`), tap(hdr.CWR, true), 'routed', false, true); }
-  for (const e of ['E-203', 'E-204']) { add(q++, 'LS', 3, 'P300', tap(hdr.LS, true), nz(`${e}-N3`), 'routed', true, true); add(q++, 'SC', 2, 'P150', nz(`${e}-N4`), tap(hdr.SC, true), 'routed', true, true); }
-  for (const v of ['V-201', 'V-202']) { add(q++, 'LS', 3, 'P300', tap(hdr.LS, true), nz(`${v}-N12`), 'routed', true, true); add(q++, 'SC', 2, 'P150', nz(`${v}-N13`), tap(hdr.SC, true), 'routed', true, true); }   // SW-LL-7: regeneration steam
+  for (const e of ['E-203', 'E-204']) { add(q++, 'LS', 3, 'P300', tap(hdr.LS, true), nz(`${e}-N3`), 'routed', true, true); add(q++, 'SC', 2, 'P150', nz(`${e}-N4`), tap(hdr.SC, true), 'routed', false, true); }
+  for (const v of ['V-201', 'V-202']) { add(q++, 'LS', 3, 'P300', tap(hdr.LS, true), nz(`${v}-N12`), 'routed', true, true); add(q++, 'SC', 2, 'P150', nz(`${v}-N13`), tap(hdr.SC, true), 'routed', false, true); }   // SW-LL-7: regeneration steam
   for (const id of ['V-201-N5', 'V-202-N5', 'C-201-N7', 'D-201-N6', 'T-201-N6', 'T-202-N6', 'D-202-N6', 'D-203-N6']) add(q++, 'N', 1, 'P150', tap(hdr.N, true), nz(id));
   for (const p of [...PUMPS2_S, ...PUMPS2_N]) add(q++, 'W', 0.75, 'P150', tap(hdr.W, true), nz(`${p}-F`));
   for (const t of ['T-201', 'T-202']) add(q++, 'W', 2, 'P150', tap(hdr.W, true), nz(`${t}-N9`), 'routed', true, true);
   for (const b of BINS2) add(q++, 'PA', 1, 'P150', tap(hdr.PA, true), nz(`${b}-N4`));
   for (const s of SILOS2) add(q++, 'PA', 1, 'P150', tap(hdr.PA, true), nz(`${s}-N6`));
-  add(q++, 'IA', 2, 'P150', nz('D-202-N10'), tap(hdr.IA, true), 'routed', true, true);              // the air receiver feeds the instrument-air header (pressure control, check)
-  add(q++, 'PA', 3, 'P150', nz('D-202-N2'), tap(hdr.PA, true), 'routed', true, true);               // and the plant-air header
+  add(q++, 'IA', 2, 'P150', nz('D-202-N10'), tap(hdr.IA, true), 'routed', false, true);             // the air receiver feeds the instrument-air header (check; SW-LL-7)
+  add(q++, 'PA', 3, 'P150', nz('D-202-N2'), tap(hdr.PA, true), 'routed', false, true);              // and the plant-air header
   add(q++, 'FL', 8, 'P150', tap(hdr.FL, false), nz('D-203-N1'));                                    // the flare header runs out to the knock-out drum
   add(q++, 'CA', 3, 'P150', tap(hdr.PA, true), tap(hdr.CA, true), 'routed', false, true);           // conveying air from the plant-air header (check; its control station would reach the rafters)
   // ---- solids: the outdoor receivers' outlets (rotary valves inline) → fill headers over the indoor receivers (rotary valves at every inlet); their outlets → the conveying header → the adsorbers ----

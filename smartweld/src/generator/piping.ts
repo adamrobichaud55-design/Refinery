@@ -444,7 +444,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   /** the isolation valve type (SW-LL-3; SW-LL-6 as amended in stage 9): by class group and size, the line and the nozzle it stands at */
   const isoValve = (NPS: number, cls: PipeClass, group = 'H', l?: LineDef, nz?: Nozzle, atDest?: boolean): ValveType => {
     if (!P2 || NPS < 2) return NPS >= 2 ? 'GATE' : isOffered('BALL', NPS, cls) ? 'BALL' : 'GATE';
-    if (l?.service === 'CA' && (l.to.k === 'nozzle' || nz)) {                                   // solids: ball where the line fills a vessel, plug where it empties one
+    if (l?.service === 'CA' && l.NPS >= 4) {                                                    // solids: ball where the line fills a vessel, plug where it empties one
       const svc = nz?.service ?? '';
       if (nz) return svc === 'fill' || svc === 'solids inlet' ? 'BALL' : 'PLUG';
       return l.to.k === 'nozzle' ? 'BALL' : 'PLUG';
@@ -656,6 +656,13 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
         : joint === 'SW' ? [{ k: 'plug', NPS, cls, socket: true }, { k: 'valve', type: 'BALL', NPS, cls, ends: 'SW' }, NIP(NPS, cls, 'PBE')]
         : [{ k: 'blindR', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: isoValve(NPS, cls, groupOf(l)), NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
       const b = orient(items, it => buildStack(l.no, at, [0, 1, 0], it, 'station'), lineId.get(l.no)!, [0, 1, 0]).b;
+      if (P2 && l.service === 'HS') {   // SW-LL-6 (amended): the riser offsets 18 in outward at 12.5 ft through two 45° elbows
+        const up: V3 = [0, 1, 0], d1 = unit([0, 1, -1]), A45 = R(NPS, cls, joint), C1: V3 = [at[0], 150, at[2]], C2 = add(C1, [0, 18, -18]);
+        const ein1 = add(C1, up, -A45), eout1 = add(C1, d1, A45), ein2 = add(C2, d1, -A45), eout2 = add(C2, up, A45);
+        const el = (ein: V3, eout: V3, a: V3, bb: V3): Comp => ({ tag: `${l.no}/x`, kind: 'elbow', key: joint === 'BW' ? `EL|${NPS}|${cls}|45` : `SWEL|${NPS}|${cls}|45|${joint}`, T: frameFromAxes(ein, cross(a, bb), a), a: ein, b: eout, NPS, cls, e1: joint === 'BW' ? 'BW' : joint, e2: joint === 'BW' ? 'BW' : joint });
+        const s1 = buildStack(l.no, b.end, up, [{ k: 'pipe', NPS, cls, L: len(sub(ein1, b.end)), joint }], 'station'), s2 = buildStack(l.no, eout1, d1, [{ k: 'pipe', NPS, cls, L: len(sub(ein2, eout1)), joint }], 'station');
+        b.comps.push(...s1.comps, el(ein1, eout1, up, d1), ...s2.comps, el(ein2, eout2, d1, up)); b.end = eout2;
+      }
       const P1 = leadP1(b.end, [0, 1, 0], R(l.NPS, l.cls, joint));
       e.B = { P1, dirOut: [0, 1, 0], built: b, startFace: at, zone: at };
     }
@@ -740,14 +747,14 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
       const gateFree = (p: V3) => { const c = g.cellOf(p); return g.inside(c[0], c[1], c[2]) && !g.head[g.idx(c[0], c[1], c[2])] && g.clear(c[0], c[1], c[2], r, [id]); };
       let ra: ReturnType<typeof doRoute> = null, rb: ReturnType<typeof doRoute> = null, done = false;
       const restore = () => { unoccupy(id); occupy(id, compSegs([...(A.built?.comps ?? []), ...(B.built?.comps ?? [])])); for (const P of [A, B]) if (P.built) occupy(id, [[P.built.end, P.P1, r]]); };
-      const legOpts = { margins: [420], budget: 400_000 }, outIsA = outdoor === A;   // each leg is short; a candidate that needs more is not the gate
+      const legOpts = { margins: [420], budget: 400_000 }, inOpts = { margins: [420], budget: 1_500_000 }, outIsA = outdoor === A;   // the outdoor leg is short; the indoor leg falls from the rack
       for (const y of [150]) for (const z of zs) { if (done) break;
         const gate: V3 = [gateX, y, z]; if (!gateFree(gate)) continue;
         // the outdoor leg first (short, and the one a blocked approach to the equipment fails), then the indoor leg
         const first = outIsA ? A : B, second = outIsA ? B : A, dFirst = outIsA ? sgn : -sgn;
         const r1 = doRoute(l, id, first, gate, [dirIndex([dFirst, 0, 0])], undefined, [first.zone, first.P1], legOpts); if (!r1) continue;
         occupy(id, segsOf(r1.cells, r));
-        const r2 = doRoute(l, id, second, gate, [dirIndex([-dFirst, 0, 0])], undefined, [second.zone, second.P1], legOpts);
+        const r2 = doRoute(l, id, second, gate, [dirIndex([-dFirst, 0, 0])], undefined, [second.zone, second.P1], inOpts);
         if (!r2) { restore(); continue; }
         occupy(id, segsOf(r2.cells, r)); ra = outIsA ? r1 : r2; rb = outIsA ? r2 : r1; done = true; break;
       }
@@ -791,7 +798,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     const t = chooseTap(e.line, toward, l, items, parent.kind === 'header', via);
     if (!t) { fail(l, 'no tap position on ' + e.line); return null; }
     const { out: C, half } = tapGeom(parent, l, via), outEnd = add(t.at, t.out, C);
-    const lst = taps.get(e.line) ?? []; lst.push({ at: t.at, out: t.out, NPS: l.NPS, child: l.no, flR: designFlange(l.NPS, l.cls).OD / 2, via, half }); taps.set(e.line, lst);
+    const lst = taps.get(e.line) ?? []; lst.push({ at: t.at, out: t.out, NPS: l.NPS, child: l.no, flR: designFlange(l.NPS, l.cls).OD / 2, via, half: l.service === 'RV' ? half + 12 : half }); taps.set(e.line, lst);   // a safety valve's outlet lead keeps the next tap a foot off
     return { t, outEnd, via, id };
   };
   for (const l of list.filter(l => l.kind === 'stub' && (l.service !== 'RV' || l.from.k === 'tap'))) {
@@ -840,6 +847,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     let best = Infinity;
     for (let y = Math.floor((p[1] + r) / SB); y <= Math.floor(plant.grid.y1 / SB); y++) for (const i of sidx.get(`${Math.floor(p[0] / SB)},${y},${Math.floor(p[2] / SB)}`) ?? []) {
       const o = st.obstacles[i]; if (!HANG_FROM(o.tag)) continue;
+      if (P2 && o.kind === 'box' && /purlin/.test(o.tag)) { if (p[0] >= o.mn[0] && p[0] <= o.mx[0] && p[2] >= o.mn[2] - 1 && p[2] <= o.mx[2] + 1 && o.mn[1] > p[1] + r) best = Math.min(best, o.mn[1]); continue; }   // SW-PS-9 amended: a purlin directly above
       let bottom: number;
       if (o.kind === 'box') { if (p[0] < o.mn[0] || p[0] > o.mx[0] || p[2] < o.mn[2] || p[2] > o.mx[2]) continue; bottom = o.mn[1]; }
       else {
@@ -854,7 +862,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     return best;
   };
   /** clear path straight down to the floor for a stanchion */
-  const floorClear = (p: V3, r: number, id: number) => { for (let y = p[1] - r - 3; y > 3; y -= H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return false; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id) { if (envVar("PIPE_DEBUG_FLOOR")) console.log('floor blocked at', p.map(v => v.toFixed(0)).join(','), 'y', y.toFixed(1), 'by', o); return false; } } return true; };
+  const floorClear = (p: V3, r: number, id: number, floorY = 3) => { for (let y = p[1] - r - 3; y > floorY; y -= H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return false; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id) { if (envVar("PIPE_DEBUG_FLOOR")) console.log('floor blocked at', p.map(v => v.toFixed(0)).join(','), 'y', y.toFixed(1), 'by', o); return false; } } return true; };
 
   function placeSupports(run: LineRun, l: LineDef): SupportRec[] {
     const out: SupportRec[] = [], OD = pipeDims(l.NPS, l.cls).OD, r = OD / 2, span = spanOf(OD), id = lineId.get(run.no)!;
@@ -908,8 +916,11 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
           const p = add(sr.a, w, sPos); if (!clearOf(p, 3)) { if (dbg) console.log('  ', sPos, 'not clear of fittings'); continue; }
           if (dbg) console.log('  ', sPos, 'floor', p[1] - r <= 120 && floorClear(p, r, id), 'steel', steelAboveExact(p, r, id));
           const bottom = p[1] - r;
-          const stanMax = plant.wallX !== undefined && p[0] > rk.x1 - 24 ? 168 : 120;   // SW-PLANT-6: stanchions to 14 ft from 2 ft west of the rack's east end outward
-          if (bottom <= stanMax && floorClear(p, r, id)) { push('stanchion', p, `STAN|${l.NPS}|${l.cls}|${bottom.toFixed(2)}`, frameFromAxes([p[0], 0, p[2]], [0, 1, 0], [w[0], 0, w[2]])); placed = sPos; break; }
+          const stanMax = plant.wallX !== undefined && p[0] > rk.x1 - 48 ? 168 : 120;   // SW-PLANT-6: stanchions to 14 ft from 4 ft west of the rack's east end outward
+          const topT = rk.tiers[rk.tiers.length - 1];
+          if (P2 && bottom > topT && bottom - topT <= 48 && Math.abs(p[2]) < rk.halfWidth - 6 && p[0] > rk.x0 - 1 && p[0] < rk.x1 + 1 && bentXs.some(xb => Math.abs(xb - p[0]) < 1) && floorClear(p, r, id, topT + 1)) {   // SW-PS-9 amended: a post on the top-tier beam
+            push('stanchion', p, `STAN|${l.NPS}|${l.cls}|${(bottom - topT).toFixed(2)}`, frameFromAxes([p[0], topT, p[2]], [0, 1, 0], [w[0], 0, w[2]])); placed = sPos; break; }
+          if (bottom <= stanMax && floorClear(p, r, id, P2 ? 9 : 3)) { push('stanchion', p, `STAN|${l.NPS}|${l.cls}|${bottom.toFixed(2)}`, frameFromAxes([p[0], 0, p[2]], [0, 1, 0], [w[0], 0, w[2]])); placed = sPos; break; }
           const top = steelAboveExact(p, r, id);
           if (top !== null) { push('hanger', p, `HANG|${l.NPS}|${l.cls}|${(top - p[1]).toFixed(2)}`, frameFromAxes(p, [0, 1, 0], [w[0], 0, w[2]])); placed = sPos; break; }
         }
@@ -962,7 +973,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
         corner.splice(i, 2, { p: Q1, ang: 45 }, { p: Q2, ang: 45 }); pts = corner.map(c => c.p); i++;
       }
     }
-    const pieceMax = P2 && joint !== 'BW' ? 240 : 480;
+    const pieceMax = P2 && joint === 'SW' ? 120 : P2 && joint !== 'BW' ? 240 : 480;   // SW-SWT-5: socket-weld spools 10 ft in plant 2
     const pipeTo = (from: V3, to: V3) => {
       const rem = len(sub(to, from)); if (rem < 0.05) return;
       const w = unit(sub(to, from)), n = Math.ceil((rem + 48) / pieceMax);    // SW-RT-5: ≤ 40 ft lengths, butt-weld splices between (20 ft and couplings in small bore, SW-SWT-5)
