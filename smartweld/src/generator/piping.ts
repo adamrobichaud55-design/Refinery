@@ -356,7 +356,13 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   // SW-RT-7: the 2 ft above each rack tier is kept for lines running along the rack (handled like headroom)
   for (const t of rk.tiers) g.markBox([rk.x0 - 12, t, -rk.halfWidth], [rk.x1 + 12, t + 24, rk.halfWidth], 0, 'head');
   g.markBox([-1e6, -1e6, -1e6], [1e6, 96 - 1e-6, 1e6], 0, 'head');          // SW-RT-3: floor walkway headroom
-  if (plant.wallX !== undefined) g.markBox([plant.wallX + 1, 168, -1e6], [1e6, 1e6, 1e6], 0, 'head');   // SW-PLANT-6: outdoor lines stay low (sleepers and short stanchions) except at their equipment
+  if (plant.wallX !== undefined) {   // SW-PLANT-6: from 3 ft beyond the rack's end outward one band at 150 in, except at the lines' own equipment
+    const bx = rk.x1 + 36; g.markBox([bx, -1e6, -1e6], [1e6, 147 - 1e-6, 1e6], 0, 'head'); g.markBox([bx, 153 + 1e-6, -1e6], [1e6, 1e6, 1e6], 0, 'head');
+    // SW-RT-10: the roof plane, the side walls and the west wall bound the grid
+    const dr = building.drawing, He = dr.eaveFt * 12, halfW = dr.widthFt * 6, tanT = dr.slopeRisePer12 / 12;
+    for (let z = -halfW; z < halfW; z += H) { const yr = He + (halfW - Math.abs(z + H / 2)) * tanT - 1; g.markBox([-1e6, yr, z], [plant.wallX, 1e6, z + H], STATIC); }
+    g.markBox([-1e6, -1e6, -1e6], [plant.wallX, 1e6, -halfW], STATIC); g.markBox([-1e6, -1e6, halfW], [plant.wallX, 1e6, 1e6], STATIC); g.markBox([-1e6, -1e6, -1e6], [0, 1e6, 1e6], STATIC);
+  }
   g.markBox([-1e6, -1e6, -1e6], [1e6, 0, 1e6], STATIC);                     // floor
   g.computeDistance();
   tm.t_static = Date.now() - T0;
@@ -423,11 +429,12 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     items.forEach((it, i) => {
       if (it.k !== 'valve' && it.k !== 'psv') return;
       const comp = () => b.comps.filter(c => c.kind === 'valve')[items.slice(0, i).filter(x => x.k === 'valve' || x.k === 'psv').length];
-      if (boxClear(worldBox(partFromKey(comp().key), comp().T)!, id, ownEquip, parentId)) return;
+      const sidesClear = () => (b.extra?.side ?? []).every(c => boxClear(worldBox(partFromKey(c.key), c.T)!, id, ownEquip, parentId));   // SW-LL-7 side ports
+      if (boxClear(worldBox(partFromKey(comp().key), comp().T)!, id, ownEquip, parentId) && sidesClear()) return;
       if (it.k === 'psv') { ok = false; return; }                                       // a safety valve stands as it is; the tap moves instead
       // a control valve keeps its actuator up and a swing check its cover up in a horizontal run (SW-LL-5)
       if (Math.abs(w[1]) < 0.9 && (it.type === 'CONTROL' || it.type === 'CHECK')) { ok = false; return; }
-      for (const sd of cands) { it.stem = sd; b = build(items); if (boxClear(worldBox(partFromKey(comp().key), comp().T)!, id, ownEquip, parentId)) return; }
+      for (const sd of cands) { it.stem = sd; b = build(items); if (boxClear(worldBox(partFromKey(comp().key), comp().T)!, id, ownEquip, parentId) && sidesClear()) return; }
       delete it.stem; b = build(items); ok = false;
     });
     return { b, ok };
@@ -445,7 +452,6 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     if (l?.service === 'CA' && l.NPS <= 3) return 'BFLY';                                        // the conveying-air line is an air line
     if (group[0] === 'S' || group[0] === 'C') return 'GLOBE';                                     // steam and condensate: throttled at both ends
     if (nz && nz.equip.startsWith('T-') && group[0] === 'H') return 'BFLY';                       // storage tanks' process nozzles
-    if (group[0] === 'W' && ((nz && atDest) || (l?.service === 'CWR' && atDest))) return 'GLOBE';   // a water supply at its consumer; a cooling-water return at the header
     if (group[0] === 'W' || group[0] === 'G') return 'BFLY';
     return 'GATE';
   };
@@ -482,17 +488,22 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
       if (NPS !== nz.NPS) feeder.push({ k: 'reducer', from: nz.NPS, to: NPS, cls });
       return feeder;
     }
-    if (P2 && joint === 'TH' && nz.service === 'nitrogen') return [gasket, fl(l, 'wnf', nz.NPS), NIP(NPS, cls, 'TOE'), { k: 'valve', type: 'LCHECK', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE'), { k: 'valve', type: 'GLOBE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE')];
+    if (P2 && joint === 'TH' && (nz.service === 'nitrogen' || nz.service === 'fluidizing air')) return [gasket, fl(l, 'wnf', nz.NPS), NIP(NPS, cls, 'TOE'), { k: 'valve', type: 'LCHECK', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE'), { k: 'valve', type: 'GLOBE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE')];
     if (P2 && joint === 'TH') return [gasket, fl(l, 'wnf', nz.NPS), NIP(NPS, cls, 'TOE'), { k: 'valve', type: 'GATE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE')];
     if (P2 && joint === 'SW') return [gasket, { k: 'swf', NPS, cls }, NIP(NPS, cls, 'PBE'), { k: 'valve', type: 'GATE', NPS, cls, ends: 'SW' }, NIP(NPS, cls, 'PBE')];
-    const base: Item[] = [...lead, { k: 'valve', type: iso, NPS, cls }, { k: 'gasket', NPS, cls }, ...chk, fl(l, 'wnf')];
-    if (l.cv && isDest) return [...base, { k: 'pipe', NPS, cls, L: 18 }, fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls },
-      { k: 'valve', type: 'CONTROL', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
+    const thr: Item[] = P2 && isDest && groupOf(l)[0] === 'W' ? [{ k: 'valve', type: 'GLOBE', NPS: nz.NPS, cls }, { k: 'gasket', NPS: nz.NPS, cls }] : [];   // SW-LL-7: throttling globe at a water consumer
+    const nN = P2 ? nz.NPS : NPS;   // plant 2: the stack at the nozzle's size up to its first flange, then a reducer to the line
+    const base: Item[] = [...lead, { k: 'valve', type: iso, NPS: nN, cls }, { k: 'gasket', NPS: nN, cls }, ...thr, ...chk.map(x => (x.k === 'valve' || x.k === 'gasket' ? { ...x, NPS: nN } : x)), fl(l, 'wnf', nN), ...(nN !== NPS ? [{ k: 'reducer', from: nN, to: NPS, cls } as Item] : [])];
+    if (l.cv && isDest) return [...base, { k: 'pipe', NPS, cls, L: 18 }, ...cvStation(l)];
     return base;
   }
   /** SW-LL-6: the items of a small-bore stub by service, after its first fitting (the nozzle flange or the branch outlet) */
-  function smallStub(l: LineDef, joint: 'SW' | 'TH', atNozzle: boolean): Item[] {
+  function smallStub(l: LineDef, joint: 'SW' | 'TH', atNozzle: boolean, nzNPS?: number): Item[] {
     const NPS = l.NPS, cls = l.cls;
+    if (nzNPS) {   // SW-LL-7: a 2 in vent or drain nozzle swages down to the stub in its first fitting (a butt-weld swage, SW-SWT-7)
+      const rest = smallStub(l, joint, false).filter((x, i, arr) => !(i === 0 && x.k === 'nipple' && arr.length && joint === 'TH'));   // the tap's leading nipple is not needed behind a swage
+      return [{ k: 'gasket', NPS: nzNPS, cls }, { k: 'wnf', NPS: nzNPS, cls }, { k: 'swage', from: nzNPS, to: NPS, cls, e1: 'BW', e2: joint }, ...(joint === 'TH' ? [NIP(NPS, cls, 'TBE')] : []), ...rest];
+    }
     // on a tap, the stack starts with a nipple that clears the parent's clearance band (3 in beyond its 4 in): on a threaded tap a nipple of
     // its own ahead of the valve; on a socket-weld tap the stack's own first nipple, lengthened, since two plain-end nipples make no joint
     const open: Item[] = atNozzle ? (joint === 'SW' ? [{ k: 'gasket', NPS, cls }, { k: 'swf', NPS, cls }] : [{ k: 'gasket', NPS, cls }, { k: 'wnf', NPS, cls }, NIP(NPS, cls, 'TOE')]) : joint === 'SW' ? [] : [NIP(NPS, cls, 'TBE', 3)];
@@ -513,9 +524,16 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   }
   const stubItems = (l: LineDef, nz?: Nozzle): Item[] => {
     const NPS = l.NPS, cls = l.cls, joint = jointOf(l);
-    if (P2 && joint !== 'BW') return smallStub(l, joint, !!nz);
+    if (P2 && joint !== 'BW') return smallStub(l, joint, !!nz, nz && nz.NPS > NPS ? nz.NPS : undefined);
     if (nz && P2 && nz.service === 'outlet 2') return [{ k: 'gasket', NPS, cls }, { k: 'spec', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: isoValve(NPS, cls, groupOf(l), l, nz), NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'blind', NPS, cls }];
     return [{ k: 'gasket', NPS, cls }, { k: 'valve', type: isoValve(NPS, cls, groupOf(l), l, nz), NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'blind', NPS, cls }];
+  };
+  /** SW-LL-3 control station; plant 2 (SW-LL-7): the control valve one size smaller between two eccentric reducers when the line is 3 in or more */
+  const cvStation = (l: LineDef): Item[] => {
+    const NPS = l.NPS, cls = l.cls, sN = P2 && NPS >= 3 ? (NPS === 4 ? 3 : NPS === 3 ? 2 : NPS - 1) : NPS;
+    const gate: Item[] = [fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
+    if (sN === NPS) return [fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: 'CONTROL', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
+    return [...gate, { k: 'reducer', from: NPS, to: sN, cls, flat: 'top' }, fl(l, 'wnfR', sN), { k: 'gasket', NPS: sN, cls }, { k: 'valve', type: 'CONTROL', NPS: sN, cls }, { k: 'gasket', NPS: sN, cls }, fl(l, 'wnf', sN), { k: 'reducer', from: sN, to: NPS, cls, flat: 'top' }, ...gate];
   };
   /** the items at a branch take-off: after a tee outlet a flange, after an olet nothing; the take-off valve by joint type */
   const takeOffItems = (l: LineDef, via: TapVia, valve: boolean, isDest = false): Item[] => {
@@ -525,9 +543,9 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     if (joint === 'TH') return [NIP(NPS, cls, 'TBE'), { k: 'valve', type: 'GATE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE')];
     if (joint === 'SW') return [NIP(NPS, cls, 'PBE'), { k: 'valve', type: 'GATE', NPS, cls, ends: 'SW' }, NIP(NPS, cls, 'PBE')];
     const chk: Item[] = P2 && l.check && isDest ? [{ k: 'valve', type: 'CHECK', NPS, cls }, { k: 'gasket', NPS, cls }] : [];   // SW-LL-7: check ahead of the block valve, seen from the header
-    const base: Item[] = [...lead, fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: isoValve(NPS, cls, groupOf(l), l, undefined, isDest), NPS, cls }, { k: 'gasket', NPS, cls }, ...chk, fl(l, 'wnf')];
-    if (P2 && l.cv && isDest && l.to.k === 'tap') return [...base, { k: 'pipe', NPS, cls, L: 18 }, fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls },   // SW-LL-7: the control station at a destination take-off
-      { k: 'valve', type: 'CONTROL', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
+    const thr: Item[] = P2 && isDest && l.service === 'CWR' ? [{ k: 'valve', type: 'GLOBE', NPS, cls }, { k: 'gasket', NPS, cls }] : [];   // SW-LL-7: balancing globe where a return meets its header
+    const base: Item[] = [...lead, fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: isoValve(NPS, cls, groupOf(l), l, undefined, isDest), NPS, cls }, { k: 'gasket', NPS, cls }, ...thr, ...chk, fl(l, 'wnf')];
+    if (P2 && l.cv && isDest && l.to.k === 'tap') return [...base, { k: 'pipe', NPS, cls, L: 18 }, ...cvStation(l)];   // SW-LL-7: the control station at a destination take-off
     return base;
   };
   /** SW-SWT-6: the branch fitting: an olet when the branch is at most half the run, a tee otherwise, unless the tap names a valve station */
@@ -722,7 +740,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
       const gateFree = (p: V3) => { const c = g.cellOf(p); return g.inside(c[0], c[1], c[2]) && !g.head[g.idx(c[0], c[1], c[2])] && g.clear(c[0], c[1], c[2], r, [id]); };
       let ra: ReturnType<typeof doRoute> = null, rb: ReturnType<typeof doRoute> = null, done = false;
       const restore = () => { unoccupy(id); occupy(id, compSegs([...(A.built?.comps ?? []), ...(B.built?.comps ?? [])])); for (const P of [A, B]) if (P.built) occupy(id, [[P.built.end, P.P1, r]]); };
-      for (let y = 162; y >= 102 && !done; y -= 12) for (const z of zs) {
+      for (const y of [150]) for (const z of zs) { if (done) break;
         const gate: V3 = [gateX, y, z]; if (!gateFree(gate)) continue;
         ra = doRoute(l, id, A, gate, [dirIndex([sgn, 0, 0])], undefined, [A.zone, A.P1]); if (!ra) continue;
         occupy(id, segsOf(ra.cells, r));
@@ -833,7 +851,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     return best;
   };
   /** clear path straight down to the floor for a stanchion */
-  const floorClear = (p: V3, r: number, id: number) => { for (let y = p[1] - r - 3; y > 3; y -= H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return false; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id) return false; } return true; };
+  const floorClear = (p: V3, r: number, id: number) => { for (let y = p[1] - r - 3; y > 3; y -= H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return false; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id) { if (envVar("PIPE_DEBUG_FLOOR")) console.log('floor blocked at', p.map(v => v.toFixed(0)).join(','), 'y', y.toFixed(1), 'by', o); return false; } } return true; };
 
   function placeSupports(run: LineRun, l: LineDef): SupportRec[] {
     const out: SupportRec[] = [], OD = pipeDims(l.NPS, l.cls).OD, r = OD / 2, span = spanOf(OD), id = lineId.get(run.no)!;
@@ -887,7 +905,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
           const p = add(sr.a, w, sPos); if (!clearOf(p, 3)) { if (dbg) console.log('  ', sPos, 'not clear of fittings'); continue; }
           if (dbg) console.log('  ', sPos, 'floor', p[1] - r <= 120 && floorClear(p, r, id), 'steel', steelAboveExact(p, r, id));
           const bottom = p[1] - r;
-          const stanMax = plant.wallX !== undefined && p[0] > rk.x1 ? 168 : 120;   // SW-PLANT-6: stanchions to 14 ft from the rack's east end outward
+          const stanMax = plant.wallX !== undefined && p[0] > rk.x1 - 24 ? 168 : 120;   // SW-PLANT-6: stanchions to 14 ft from 2 ft west of the rack's east end outward
           if (bottom <= stanMax && floorClear(p, r, id)) { push('stanchion', p, `STAN|${l.NPS}|${l.cls}|${bottom.toFixed(2)}`, frameFromAxes([p[0], 0, p[2]], [0, 1, 0], [w[0], 0, w[2]])); placed = sPos; break; }
           const top = steelAboveExact(p, r, id);
           if (top !== null) { push('hanger', p, `HANG|${l.NPS}|${l.cls}|${(top - p[1]).toFixed(2)}`, frameFromAxes(p, [0, 1, 0], [w[0], 0, w[2]])); placed = sPos; break; }
@@ -905,7 +923,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     // trunnions under the lowest elbow of vertical runs longer than 10 ft, when that elbow is at most 10 ft up (SW-PS-10)
     const els = run.comps.filter(c => c.kind === 'elbow' && c.key.split('|')[3] === '90' && !c.key.startsWith('SWEL'));
     for (const sr of runs0) {
-      const w = unit(sub(sr.b, sr.a)); if (Math.abs(w[1]) < 0.5 || len(sub(sr.b, sr.a)) < 120) continue;
+      const w = unit(sub(sr.b, sr.a)); if (Math.abs(w[1]) < 0.5 || len(sub(sr.b, sr.a)) < (P2 ? 72 : 120)) continue;   // SW-PS-10 (plant 2: 6 ft)
       const lowEnd = sr.a[1] < sr.b[1] ? sr.a : sr.b, el = els.find(e => len(sub(e.a, lowEnd)) < 1e-3 || len(sub(e.b, lowEnd)) < 1e-3); if (!el) continue;
       const vtx = add(lowEnd, [0, -1, 0], Rbw(l.NPS, l.cls)), top: V3 = [vtx[0], vtx[1] - r, vtx[2]];
       // the leg's local +x is the direction the elbow turns into, so its saddle top fits the elbow (SW-PS-4)

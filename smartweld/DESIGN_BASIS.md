@@ -1380,7 +1380,8 @@ bore is continuous and every end is a butt-weld bevel.
   a hanger rod.
 - `SW-PS-10` Vertical runs longer than 10 ft get a trunnion (SW-PS-4) under their lowest elbow,
   standing on a stanchion base when that elbow is at most 10 ft up; otherwise they hang from the
-  hanger nearest their top.
+  hanger nearest their top. (Plant 2: vertical runs longer than 6 ft, since its small-bore risers
+  off the rack are short and still want a base under their bottom elbow; SW-COV-2.)
 - `SW-PS-11` Small-bore stubs (vents, drains, instrument connections, sample points) shorter than
   4 ft are carried by their nozzle and need no support.
 - `SW-PS-12` Shoes, guides and anchors are fillet-welded (SW-WD-1); stanchion bases are anchored
@@ -1970,7 +1971,9 @@ sent to the piping designer, and with erection drawings and weld details for tha
   stair tower as SW-LAY-3, a column C-201 with two platforms and ladders, a knock-out drum D-201
   and an air receiver D-202, four exchangers E-201…E-204 in two pairs, ten pumps P-201A/B …
   P-205A/B, ten solids receivers R-201…R-210 (small vertical vessels) in a row along the north wall under a
-  walkway, and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
+  walkway, a 3 ft grating access walkway along the rack's south edge at the second tier (posts at
+  every bent, guardrail, a ladder at each end: it reaches the header take-off valves and their
+  branches drop through it in sleeves, SW-PEN-1), and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
   receivers R-211/R-212, an air receiver D-202 and a flare knock-out drum D-203 on pads on grade.
   (Amended 2026-11-05: the hopper and silos became vertical vessels, P-67.) Reason: the pairs of exchangers carry three-way diverting valves, the
   adsorbers a four-way switching valve, the hopper the rotary feeder, and the outdoor tanks give
@@ -1980,27 +1983,34 @@ sent to the piping designer, and with erection drawings and weld details for tha
   (SW-PEN-2); outdoor equipment stands on 6 in pads on grade and its tanks have caged ladders as
   SW-LAY-3. Reason: a tank farm is outside the process building in practice; a short run keeps the
   routing search bounded.
-  Amended (stage 9, routing): outside the steel line, horizontal runs are kept between the grade
-  walkway headroom of SW-RT-3 (8 ft) and 14 ft (168 in) above grade except within the end zone of
-  their own equipment, so the outdoor lines form one low band that crosses the end wall between
-  its girts; there is no steel above them to hang from, so the stanchion of SW-PS-9 is allowed up
-  to a pipe bottom of 14 ft from the rack's east end outward (the end bay, where the lines fall
-  to the band under a roof too high for a 20 ft rod near the ridge, and the outdoor area); west
-  of the rack's end its 10 ft limit stands, a hanger taking over above it. Reason: a sleeper way
-  at grade would cross every walkway; one band at head height leaves the ground free and every
-  line in it supportable from grade. A safety valve on a tap stands with its outlet square to the
+  Amended (stage 9, routing): from 3 ft beyond the rack's east end outward, through the end wall
+  and across the outdoor area, horizontal runs lie at one elevation, a centreline of 12.5 ft
+  (150 in) above grade, side by side as on a sleeper way, except within the end zone of their own
+  equipment; the band crosses the end wall between its girts. There is no steel above them to
+  hang from, so the stanchion of SW-PS-9 is allowed up to a pipe bottom of 14 ft from 2 ft west of
+  the rack's east end outward (the end bay, where the lines fall to the band under a roof too
+  high for a 20 ft rod near the ridge, and the outdoor area); further west its 10 ft limit
+  stands, a hanger taking over above it. Reason: a sleeper way at grade would cross every
+  walkway; one band at head height leaves the ground free, and at a single elevation no line
+  runs under another, so every line in the band stands on its own post (a first cut with a
+  60 in deep band stacked lines and left the upper ones unsupportable). A safety valve on a tap stands with its outlet square to the
   run it taps (so its flare line leaves across the run, clear of the next tap), and the flare
   line's lead is held in the grid as soon as the valve stands.
 - `SW-RT-9` Plant 2 only, lines through the end wall: a line with one end inside the building and
   the other outside is searched in two legs that meet at a wall gate 30 in outside the steel
   line, heading straight through the wall (so its sleeve of SW-PEN-2 is square to the panel). The
-  gate is tried at the band elevations of SW-PLANT-6 from 162 in downward in 12 in steps, and in
+  gate is at the band elevation of SW-PLANT-6 (150 in), and is tried in
   plan at the outdoor end's z moved outward in 12 in steps (within the wall's width less 5 ft),
   the first gate from which both legs route being taken; each leg is searched as SW-RT-3 with the
   gate as an end. Reason: the one-piece search of SW-RT-3 from a rack tier to a tank nozzle 60 ft
   away exhausts its budget (measured: 3.9 million expansions) because the fall to the band and the
   wall between make its straight-line estimate poor; through a gate each leg is short and the
   gate is where the sleeve is set anyway.
+- `SW-RT-10` Plant 2: the roof (the plane of the rafters' top flange) and the side walls and west
+  wall (the steel line) bound the routing grid as obstacles, the east wall alone being passable
+  (SW-PEN-2). Reason: the cladding is not a routing obstacle (SW-RT-3 treats members only), and
+  plant 2's grid reaches above the eave, so without this a line could run between purlins above
+  the roof.
 - `SW-PLANT-7` Areas (SW-AREA-1 applied to plant 2): A200 tank farm (outdoor), A210 adsorption
   (V-201, V-202, C-201, D-201, D-202), A220 exchangers, A230 pumps, A240 solids (H-201,
   RV-201), A250 pipe rack.
@@ -2197,7 +2207,23 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
   - the water hose stations are 1-1/2 in (swaged to 3/4 in at the station, SW-LL-6);
   - spectacle blinds also in the solids stacks of the adsorbers' solids inlets and the silos'
     outlets (positive isolation for vessel entry); the adsorbers' solids inlet nozzles are 3 in
-    (the 4 in line reduces at the nozzle).
+    (the 4 in line reduces at the nozzle);
+  - a control valve is one size smaller than its line where the line is 3 in or more, between two
+    eccentric reducers (flat on the outer side of the station, so the station drains to the line),
+    its block valves at line size: the usual sizing of a throttling valve;
+  - the receivers' fluidizing-air nozzles carry the nitrogen stack of SW-LL-6 (threaded check
+    and globe), since they too are a gas supply into a vessel;
+  - a water or cooling-water supply has at its consumer a block (butterfly) and a throttling globe
+    valve; a cooling-water return has the same pair at the header take-off;
+  - solids branches carry their valve at the take-off too: a ball valve where the branch fills
+    (the receivers' fill branches off the fill lines, the adsorbers' feeds) and a plug valve where
+    it empties (the receivers' outlet lines into the conveying header);
+  - the exchangers' tube-side nozzles are 3 in on 4 in lines (concentric reducer at a vertical
+    nozzle); vents and drains stand on 2 in nozzles (receivers', tanks' and exchangers' vents;
+    vessel, column and drum drains) and swage down to the stub's size in the first fitting
+    (SW-SWT-7, a butt-weld swage): the larger nozzle takes a vessel's own blowdown;
+  - the pumps' thermal-relief outlets are 1 in lines (the exchangers' 1-1/2 in), so the socket-weld
+    flare lines come in two sizes.
   Reason: SW-COV-2 asks for 20 of every class over 4 lines and 2 sizes; each measure is a
   sequence a designer would draw, not a symbol placed for its own sake.
 
