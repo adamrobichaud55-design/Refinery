@@ -96,3 +96,14 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage8/pack-WO-400-05-page5.png` | Work-order pack WO-400-05, page 5: where the work is on the owner's drawings; their sheets follow, attached unchanged (page preview of the PDF, SW-REN-2) |
 | `stage4/sheet-1.png` | Valve contact sheet 1 of 2 (the renders above, tiled and labelled with DejaVu Sans) |
 | `stage4/sheet-2.png` | Valve contact sheet 2 of 2 (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage9/P2-exterior.png` | Building shell and outdoor area, from the south-east |
+| `stage9/P2-overview.png` | Steel, equipment and piping, cut-away overview |
+| `stage9/P2-line-classes.png` | Piping coloured by line class (SW-LC-1) |
+| `stage9/P2-rack.png` | Pipe rack and headers |
+| `stage9/P2-vessels.png` | Adsorber vessels, platforms and stair tower |
+| `stage9/P2-column.png` | Column C-201, platforms and ladders |
+| `stage9/P2-exchangers.png` | Exchanger pairs with their three-way valves |
+| `stage9/P2-pumps.png` | Pumps with seal-flush, sample and thermal-relief small bore |
+| `stage9/P2-bins.png` | Bins, rotary feeders, walkway and fill lines |
+| `stage9/P2-outdoor.png` | Outdoor tanks, drums and silos with the lines through the end wall |
+| `stage9/P2-above.png` | Plan view from above |

@@ -33,4 +33,4 @@ for (const v of views) {
   writeFileSync(`${out}/${plant.id}-${v.name}.png`, render3d(ds, v.cam, 1400, 900, 2));
   index.push(`| \`${plant.id}-${v.name}.png\` | ${v.caption} |`); console.log(`${v.name} ${((Date.now() - t0) / 1000).toFixed(1)} s (${ds.length} drawables)`);
 }
-writeFileSync(`${out}/INDEX-${plant.id}.md`, index.join('\n') + '\n');
+writeFileSync(`${out}/../INDEX-${plant.id}.md`, index.join('\n') + '\n');   // beside screenshots/INDEX.md (the image folders hold images only)

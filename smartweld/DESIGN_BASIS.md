@@ -1940,6 +1940,12 @@ consults no outside format description (PROVENANCE P-62).
   - asks him to return his bill of materials as a CSV report with the drawings;
   - states that the contents are SmartWeld's confidential work.
   A manifest lists every file with its SHA-256. The package holds no drawing and no outside material.
+- `SW-XCH-6` (stage 9) The package also carries `equipment.csv`: every item of equipment a line
+  connects to, with its tag, type, every stated and rule-set dimension, its origin and its axis in
+  plant coordinates, so the designer can stand the equipment in the modelling software before
+  connecting the lines (the owner's instruction: the model sent to the designer holds the equipment
+  but not the structural steel). Reason: a line's end at a nozzle is only meaningful against the
+  equipment it stands on.
 
 ---
 
