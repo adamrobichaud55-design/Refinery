@@ -1982,8 +1982,8 @@ sent to the piping designer, and with erection drawings and weld details for tha
   P-205A/B, ten solids receivers R-201…R-210 (small vertical vessels) in a row along the north wall under a
   walkway, a 3 ft grating access walkway along the rack's south edge at the first tier (posts at
   every bent, guardrail, a ladder at each end: it reaches the branch valves and their drops pass
-  through it in sleeves, SW-PEN-1), a 16 ft access platform over each exchanger at 20 ft and over
-  the drum D-201 at 23 ft (four posts, guardrail, ladder), each just above the control stations
+  through it in sleeves, SW-PEN-1), a 16 ft access platform over each exchanger at 22 ft and over
+  the drum D-201 at 25 ft (four posts, guardrail, ladder), each just above the control stations
   on the top nozzles (SW-LL-7) so the lines come down through the grating in sleeves and the
   stations are reached from below and from the platform, and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
   receivers R-211/R-212, an air receiver D-202 and a flare knock-out drum D-203 on pads on grade.
@@ -2000,13 +2000,15 @@ sent to the piping designer, and with erection drawings and weld details for tha
   and across the outdoor area, horizontal runs lie at one elevation, a centreline of 12.5 ft
   (150 in) above grade, side by side as on a sleeper way, except within the end zone of their own
   equipment; the band crosses the end wall between its girts. There is no steel above them to
-  hang from, so the stanchion of SW-PS-9 is allowed up to a pipe bottom of 14 ft from 2 ft west of
+  hang from, so the stanchion of SW-PS-9 is allowed up to a pipe bottom of 14 ft from 6 ft west of
   the rack's east end outward (the end bay, where the lines fall to the band under a roof too
   high for a 20 ft rod near the ridge, and the outdoor area); further west its 10 ft limit
   stands, a hanger taking over above it. Reason: a sleeper way at grade would cross every
   walkway; one band at head height leaves the ground free, and at a single elevation no line
   runs under another, so every line in the band stands on its own post (a first cut with a
-  60 in deep band stacked lines and left the upper ones unsupportable). A safety valve on a tap stands with its outlet square to the
+  60 in deep band stacked lines and left the upper ones unsupportable). In plant 2 the stubs on
+  nozzles (vents, drains, instruments, samples) stand before any line is routed, so no line takes
+  their room (a band line over the air receiver had, and its vent could not stand). A safety valve on a tap stands with its outlet square to the
   run it taps (so its flare line leaves across the run, clear of the next tap), and the flare
   line's lead is held in the grid as soon as the valve stands.
 - `SW-RT-9` Plant 2 only, lines through the end wall: a line with one end inside the building and

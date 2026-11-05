@@ -696,6 +696,16 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     occupy(lineId.get(l.no)!, [...compSegs(b.comps), ...(P2 ? [[b.end, P1, pipeDims(l.NPS, l.cls).OD / 2] as Seg] : [])]);
   }
 
+  /** a stub on a nozzle: its stack oriented clear of what stands, then held in the grid */
+  function nozzleStub(l: LineDef, id: number) {
+    const nz = nozzles.get((l.from as { id: string }).id)!, o = orient(stubItems(l, nz), it => buildStack(l.no, nz.face, nz.u, it, nz.id), id, nz.u, nz.equip), b = o.b;
+    if (!o.ok) failures.push(`${l.no}: the valve at ${nz.id} strikes ${blockedBy} in every stem direction`);
+    runs.set(l.no, { no: l.no, service: l.service, NPS: l.NPS, cls: l.cls, kind: 'stub', from: nz.id, to: 'blind', comps: b.comps, welds: [], supports: [], path: [nz.face, b.end], ok: true, ...(b.extra?.side ? { side: b.extra.side } : {}) });
+    occupy(id, compSegs([...b.comps, ...(b.extra?.side ?? [])]));
+  }
+  // plant 2: the stubs on nozzles stand before any line is routed, so no line takes a vent's or drain's room (SW-PLANT-6)
+  if (P2) for (const l of list.filter(l => l.kind === 'stub' && l.service !== 'RV' && l.from.k === 'nozzle')) nozzleStub(l, lineId.get(l.no)!);
+
   // ---- 3. route ----
   let lastWhy = '', exp = 0;
   const perLine: [string, number, number][] = [];
@@ -809,10 +819,8 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   for (const l of list.filter(l => l.kind === 'stub' && (l.service !== 'RV' || l.from.k === 'tap'))) {
     const id = lineId.get(l.no)!;
     if (l.from.k === 'nozzle') {
-      const nz = nozzles.get(l.from.id)!, o = orient(stubItems(l, nz), it => buildStack(l.no, nz.face, nz.u, it, nz.id), id, nz.u, nz.equip), b = o.b;
-      if (!o.ok) failures.push(`${l.no}: the valve at ${nz.id} strikes ${blockedBy} in every stem direction`);
-      runs.set(l.no, { no: l.no, service: l.service, NPS: l.NPS, cls: l.cls, kind: 'stub', from: nz.id, to: 'blind', comps: b.comps, welds: [], supports: [], path: [nz.face, b.end], ok: true, ...(b.extra?.side ? { side: b.extra.side } : {}) });
-      occupy(id, compSegs([...b.comps, ...(b.extra?.side ?? [])]));
+      if (P2) continue;   // plant 2: nozzle stubs stood before the routing (above)
+      nozzleStub(l, id);
     } else if (l.from.k === 'tap') {
       const s = stubOnTap(l); if (!s) continue;
       const { t, outEnd, via } = s;
@@ -921,7 +929,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
           const p = add(sr.a, w, sPos); if (!clearOf(p, 3)) { if (dbg) console.log('  ', sPos, 'not clear of fittings'); continue; }
           if (dbg) console.log('  ', sPos, 'floor', p[1] - r <= 120 && floorClear(p, r, id), 'steel', steelAboveExact(p, r, id));
           const bottom = p[1] - r;
-          const stanMax = plant.wallX !== undefined && p[0] > rk.x1 - 48 ? 168 : 120;   // SW-PLANT-6: stanchions to 14 ft from 4 ft west of the rack's east end outward
+          const stanMax = plant.wallX !== undefined && p[0] > rk.x1 - 72 ? 168 : 120;   // SW-PLANT-6: stanchions to 14 ft from 6 ft west of the rack's east end outward
           const topT = rk.tiers[rk.tiers.length - 1];
           if (P2 && bottom > topT && bottom - topT <= 48 && Math.abs(p[2]) < rk.halfWidth - 6 && p[0] > rk.x0 - 1 && p[0] < rk.x1 + 1 && bentXs.some(xb => Math.abs(xb - p[0]) < 1) && floorClear(p, r, id, topT + 1)) {   // SW-PS-9 amended: a post on the top-tier beam
             push('stanchion', p, `STAN|${l.NPS}|${l.cls}|${(bottom - topT).toFixed(2)}`, frameFromAxes([p[0], topT, p[2]], [0, 1, 0], [w[0], 0, w[2]])); placed = sPos; break; }
