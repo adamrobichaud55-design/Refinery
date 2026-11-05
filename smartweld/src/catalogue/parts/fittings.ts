@@ -117,6 +117,22 @@ export function makeButtWeld(id: string, NPS: number, cls: PipeClass): PartSpec 
   }, [{ name: 'butt weld', mesh, role: 'weld' }], 'SW-WD-5', {}, g.area * Math.PI * (p.OD - p.t) * RHO);
 }
 
+/** Socket weld (SW-SWT-1): the fillet ring at a socket mouth, leg w, centred on the mouth plane z = 0; the socket body is at z < 0. */
+export function makeSocketWeld(id: string, NPS: number, cls: PipeClass): PartSpec {
+  const p = pipeDims(NPS, cls), s = roundUpToSixteenth(Math.max(3 / 8, p.OD / 3)), tf = Math.max(3 / 16, roundUpToSixteenth(1.5 * p.t)), w = roundUpToSixteenth(1.4 * p.t), r = p.OD / 2;
+  const mesh = revolve([{ r: r - 0.01, z: 0 }, { r: r + tf + 0.01, z: 0 }, { r: r + tf + 0.01, z: 0.02 }, { r: r - 0.01, z: w }], NC);
+  void s;
+  return finish(id, 'BUTT_WELD', `SW${NPS}-${cls}`, { NPS: drawing(NPS, 'Size'), leg: rule(w, 'SW-SWT-1', 'Fillet leg (throat = pipe wall)'), throat: rule(w * Math.SQRT1_2, 'SW-WD-2', 'Throat'), area: rule(0.5 * w * w, 'SW-WD-2', 'Cross-section area', 'in2') },
+    [{ name: 'socket weld', mesh, role: 'weld' }], 'SW-WD-3', { socket: true }, 0.5 * w * w * Math.PI * (p.OD + w) * RHO);
+}
+/** Fillet weld ring (SW-WD-1/2) of leg w around a pipe of radius r (an olet base, a slip-on flange, a sleeve collar), on the plane z = 0 with the part at z < 0 */
+export function makeFilletRing(id: string, r: number, w: number): PartSpec {
+  const mesh = revolve([{ r: r - 0.01, z: 0 }, { r: r + w, z: 0 }, { r: r - 0.01, z: w }], NC);
+  return finish(id, 'BUTT_WELD', `FW${w}-R${r}`, { r: drawing(r, 'Pipe radius'), leg: rule(w, 'SW-WD-1', 'Fillet leg'), throat: rule(w * Math.SQRT1_2, 'SW-WD-2', 'Throat'), area: rule(0.5 * w * w, 'SW-WD-2', 'Cross-section area', 'in2') },
+    [{ name: 'fillet weld', mesh, role: 'weld' }], 'SW-WD-3', { fillet: true }, 0.5 * w * w * 2 * Math.PI * (r + w / 2) * RHO);
+}
+const roundUpToSixteenth = (v: number) => Math.ceil(v * 16 - 1e-9) / 16;
+
 // ---- supports (SW-PS-*) ---------------------------------------------------------------------------------
 const boxM = (x0: number, y0: number, z0: number, x1: number, y1: number, z1: number) => transformMesh(extrude({ outer: rect(x0, y0, x1, y1) }, z1 - z0), translate(0, 0, z0));
 const cylYM = (r: number, y0: number, y1: number, x = 0, z = 0) => transformMesh(extrude({ outer: circle(0, 0, r, 24) }, y1 - y0), multiply(translate(x, y0, z), rotateX(-Math.PI / 2)));
@@ -205,7 +221,8 @@ void DEFAULT_MATERIAL;
 
 /** Stud bolting of one flanged joint (SW-FLG-4/7): n studs on the bolt circle, centred on the joint plane z = 0, nuts outside a stack of thickness `stack`. */
 export function makeStudSet(id: string, NPS: number, cls: PipeClass, stack: number): PartSpec {
-  const f = designFlange(NPS, cls), h = hexHardware(f.d), L = f.studLen, parts: MeshData[] = [];
+  // SW-FLG-13: a spade or spectacle blind in the joint lengthens the studs by its thickness and the extra gasket
+  const f = designFlange(NPS, cls), h = hexHardware(f.d), L = f.studLen + Math.max(0, stack - (2 * (f.tf + f.rfH) + f.gasketT)), parts: MeshData[] = [];
   for (let i = 0; i < f.n; i++) {
     const a = (2 * Math.PI * (i + 0.5)) / f.n, x = (f.BC / 2) * Math.cos(a), y = (f.BC / 2) * Math.sin(a);
     parts.push(transformMesh(extrude({ outer: circle(0, 0, f.d / 2, 16) }, L), translate(x, y, -L / 2)));

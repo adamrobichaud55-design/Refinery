@@ -3,7 +3,8 @@
 **Confidential.** This package is SmartWeld's own work, provided to you under your agreement with
 SmartWeld. Do not share it or use it for anything other than that agreement.
 
-This package holds a complete process-plant piping model in a neutral format. It's for import into your
+This package holds the complete piping model of the {{PLANT}} in a neutral format, with the
+equipment the lines connect to (the structural steel of the plant is not included: it is not needed for the isometrics). It's for import into your
 piping design software, so that you can produce isometric drawings of its lines in your software's
 own format.
 
@@ -37,6 +38,7 @@ drawings, and once we've confirmed them, run the full plant.
 | `components.csv` | component | Every pipe piece, fitting, flange, blind, gasket, stud set and valve of every line, plus the equipment nozzle necks and flanges the lines connect to |
 | `welds.csv` | butt weld | The two components each weld joins, shop or field, size, position |
 | `supports.csv` | support | Type, designation, position |
+| `equipment.csv` | equipment item | Tag, type, every dimension (stated or rule-set), origin and axis in plant coordinates, its nozzles: enough to model the vessel, drum, exchanger, pump, tank or hopper envelope and place its nozzles |
 | `equipment-nozzles.csv` | equipment nozzle | Equipment, nozzle, size, class, the line connected, the face position and the direction it faces |
 | `spec-request.csv` | distinct part per line class | What your spec must contain: part code, description, sizes, class, ends, material, count in the plant, unit weight, every dimension |
 | `model.json` | — | All of the above in one file |
@@ -56,10 +58,10 @@ drawings, and once we've confirmed them, run the full plant.
 | Field | Meaning |
 |---|---|
 | `line`, `tag`, `seq` | The line, our unique tag, and the order along the line from its start. |
-| `type` | `pipe`, `elbow`, `tee`, `reducer`, `cap`, `flange` (weld neck), `blind`, `gasket`, `studs` (one stud set per flanged joint) or `valve`. |
+| `type` | `pipe`, `elbow`, `tee`, `reducer`, `cap`, `flange` (weld neck, slip-on or socket-weld: see `partCode` WNF/SOF/SWF), `blind`, `gasket`, `studs` (one stud set per flanged joint), `valve`; and in plant 2 also `nipple`, `coupling`, `olet` (branch outlet), `swage`, `plug`, `spade`, `spectacle` and `penetration` (a floor or wall sleeve). |
 | `partCode` | Our part code, for example `VLV\|GATE\|6\|P150` (valve type, size, class) or `EL\|6\|P150` (elbow). It's the key to the matching row of `spec-request.csv`. |
 | `description` | Our description, for example `VALVE, GATE, WEDGE, OS&Y 6" P150`. |
-| `ends` | The end types: `BW` butt weld, `RF` raised-face flange. `BW×BW` is a fitting welded at both ends; `RF×RF` is a flanged valve. |
+| `ends` | The end types: `BW` butt weld, `RF` raised-face flange, `SW` socket weld, `TH` threaded, `SO` slip-on bore, `FW` fillet-welded base. `BW×BW` is a fitting welded at both ends; `RF×RF` is a flanged valve; `SW×SW` a socket-weld fitting or valve. A line's `joint` column in `lines.csv` says whether its small-bore joints are socket-welded or threaded. |
 | `end1…`, `end2…` | The two connection points. For a valve, flange, gasket or blind they are its two faces; for pipe and fittings, the weld ends. |
 | `centre…` | Elbows: the corner (work point) where the two legs' centrelines meet. Tees: the centre of the run. Angle valves (the relief valves): the body's corner, where the inlet and outlet centrelines meet; their `end1` is the inlet face and `end2` the outlet face. |
 | `branch…`, `branchLine` | Tees: the branch's connection point, and the line that starts there. |

@@ -21,7 +21,10 @@ import type { PartSpec } from '../catalogue';
 import { FLUID_GROUPS, classColour, type FluidGroup } from '../generator/lineclass';
 
 let cached: Promise<PipingModel> | null = null;
-export const loadPiping = (): Promise<PipingModel> => (cached ??= fetch('plant-piping.json').then((r): Promise<PipingModel> => { if (!r.ok) throw new Error('plant-piping.json not found: run npm run gen:piping'); return r.json(); }));
+/** the plant shown (SW-PLANT-2): plant 1's files sit at the root, the others under plants/<id>/ */
+export let BASE = '';
+export function setPlantBase(id: string) { BASE = id === 'P1' ? '' : `plants/${id}/`; cached = null; gtCache.clear(); eqCache = null; impIdx = null; woIdx = null; }
+export const loadPiping = (): Promise<PipingModel> => (cached ??= fetch(BASE + 'plant-piping.json').then((r): Promise<PipingModel> => { if (!r.ok) throw new Error('plant-piping.json not found: run npm run gen:piping'); return r.json(); }));
 
 type Placed = { key: string; T: Mat4; scaleZ?: number; tag: string; line: string };
 const NEAR_CELLS = 40, FAR_CELLS = 18, NEAR_DIST = 480;
@@ -29,10 +32,10 @@ const NEAR_CELLS = 40, FAR_CELLS = 18, NEAR_DIST = 480;
 function placedItems(m: PipingModel, only?: (l: LineRun) => boolean, nozzles = !only): Placed[] {
   const out: Placed[] = [];
   const comp = (c: Comp, line: string) => {
-    if (c.kind === 'pipe') { const [, n, k] = c.key.split('|'); out.push({ key: `PIPE|${n}|${k}|1.000`, T: c.T, scaleZ: Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), tag: c.tag, line }); }
+    if (c.kind === 'pipe' || c.kind === 'nipple') { const k = c.key.split('|'), ins = c.ins ? c.ins[0] + c.ins[1] : 0; out.push({ key: c.kind === 'pipe' ? `PIPE|${k[1]}|${k[2]}|1.000${k[4] ? '|' + k[4] : ''}` : `NIP|${k[1]}|${k[2]}|1.000|${k[4]}`, T: c.T, scaleZ: Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]) + ins, tag: c.tag, line }); }
     else out.push({ key: c.key, T: c.T, tag: c.tag, line });
   };
-  for (const l of m.lines) { if (only && !only(l)) continue; l.comps.forEach(c => comp(c, l.no)); for (const w of l.welds) out.push({ key: w.key, T: w.T, tag: w.id, line: l.no }); for (const s of l.supports) out.push({ key: s.key, T: s.T, tag: s.id, line: l.no }); }
+  for (const l of m.lines) { if (only && !only(l)) continue; [...l.comps, ...(l.side ?? []), ...(l.pens ?? [])].forEach(c => comp(c, l.no)); for (const w of l.welds) out.push({ key: w.key, T: w.T, tag: w.id, line: l.no }); for (const s of l.supports) out.push({ key: s.key, T: s.T, tag: s.id, line: l.no }); }
   if (nozzles) for (const n of m.nozzles) { n.comps.forEach(c => comp(c, `nozzle:${n.id}`)); for (const w of n.welds) out.push({ key: w.key, T: w.T, tag: w.id, line: `nozzle:${n.id}` }); }
   return out;
 }
@@ -103,9 +106,9 @@ const fmtKey = (k: string) => {
 /** line inspector: a line's components (bill of materials), welds and supports — the stage-6 ground truth in table form */
 export function lineReport(l: LineRun): string {
   const bom = new Map<string, { n: number; len: number }>();
-  for (const c of l.comps) {
-    const k = c.kind === 'pipe' ? c.key.split('|').slice(0, 3).join('|') : c.key, e = bom.get(k) ?? { n: 0, len: 0 };
-    e.n++; if (c.kind === 'pipe') e.len += Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]); bom.set(k, e);
+  for (const c of [...l.comps, ...(l.side ?? []), ...(l.pens ?? [])]) {
+    const k = c.kind === 'pipe' ? c.key.split('|').slice(0, 3).join('|') + (c.key.split('|')[4] ? '|TH' : '') : c.key, e = bom.get(k) ?? { n: 0, len: 0 };
+    e.n++; if (c.kind === 'pipe' || c.kind === 'nipple') e.len += Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]) + (c.ins ? c.ins[0] + c.ins[1] : 0); bom.set(k, e);
   }
   const pipeLen = [...bom.entries()].filter(([k]) => k.startsWith('PIPE')).reduce((s, [, e]) => s + e.len, 0);
   const shop = l.welds.filter(w => !w.field).length, field = l.welds.length - shop;
@@ -135,7 +138,7 @@ export function pickedItem(hit: THREE.Intersection): { tag: string; line: string
   return { tag: ud.tags[hit.instanceId], line: ud.lines![hit.instanceId] };
 }
 const gtCache = new Map<string, Promise<GTLine | GTItem[]>>();
-const loadGT = (path: string) => { let p = gtCache.get(path); if (!p) { p = fetch(`groundtruth/${path}`).then(r => { if (!r.ok) throw new Error(`ground truth ${path} not found: run npm run export:gt`); return r.json(); }); gtCache.set(path, p); } return p; };
+const loadGT = (path: string) => { let p = gtCache.get(path); if (!p) { p = fetch(`${BASE}groundtruth/${path}`).then(r => { if (!r.ok) throw new Error(`ground truth ${path} not found: run npm run export:gt`); return r.json(); }); gtCache.set(path, p); } return p; };
 /** the metadata record of a picked item, from the committed ground-truth export (SW-GT-1) */
 export async function itemRecord(sel: { tag: string; line: string }): Promise<{ rec: Record<string, unknown>; header?: GTLine['header'] } | null> {
   if (sel.line.startsWith('nozzle:')) { const all = await loadGT('nozzles.json') as GTItem[]; const r = all.find(x => x.tag === sel.tag); return r ? { rec: r as unknown as Record<string, unknown> } : null; }
@@ -158,7 +161,7 @@ export function itemReport(rec: Record<string, unknown>, header?: GTLine['header
 }
 /** the picked item drawn on top in the highlight finish */
 export function itemHighlight(m: PipingModel, tag: string, mat: THREE.Material, toGeo: (m: MeshData) => THREE.BufferGeometry): THREE.Object3D | null {
-  for (const l of m.lines) for (const it of [...l.comps.map(c => ({ key: c.kind === 'pipe' ? c.key.split('|').slice(0, 3).join('|') + '|1.000' : c.key, T: c.T, tag: c.tag, sz: c.kind === 'pipe' ? Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]) : 1 })), ...l.welds.map(w => ({ key: w.key, T: w.T, tag: w.id, sz: 1 })), ...l.supports.map(s => ({ key: s.key, T: s.T, tag: s.id, sz: 1 }))])
+  for (const l of m.lines) for (const it of [...[...l.comps, ...(l.side ?? []), ...(l.pens ?? [])].map(c => ({ key: c.kind === 'pipe' ? c.key.split('|').slice(0, 3).join('|') + '|1.000' + (c.key.split('|')[4] ? '|TH' : '') : c.kind === 'nipple' ? c.key.split('|').slice(0, 3).join('|') + '|1.000|' + c.key.split('|')[4] : c.key, T: c.T, tag: c.tag, sz: c.kind === 'pipe' || c.kind === 'nipple' ? Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]) + (c.ins ? c.ins[0] + c.ins[1] : 0) : 1 })), ...l.welds.map(w => ({ key: w.key, T: w.T, tag: w.id, sz: 1 })), ...l.supports.map(s => ({ key: s.key, T: s.T, tag: s.id, sz: 1 }))])
     if (it.tag === tag) { const g = new THREE.Group(); for (const s of solidsOf(it.key, it.key.startsWith('VLV') ? NEAR_CELLS : undefined)) { const mesh = new THREE.Mesh(toGeo(s.mesh), mat); mesh.matrixAutoUpdate = false; mesh.matrix.copy(m4(it.T, it.sz)); g.add(mesh); } return g; }
   return null;
 }
@@ -181,7 +184,7 @@ export function equipmentPickGroup(equipment: { tag: string; part: PartSpec; tra
   return g;
 }
 let eqCache: Promise<GTEquipment[]> | null = null;
-export const loadEquipment = (): Promise<GTEquipment[]> => (eqCache ??= fetch('groundtruth/equipment.json').then(r => r.json()));
+export const loadEquipment = (): Promise<GTEquipment[]> => (eqCache ??= fetch(BASE + 'groundtruth/equipment.json').then(r => r.json()));
 export function equipmentReport(e: GTEquipment): string {
   return `<h2>${esc(e.tag)} — ${esc(e.type)}</h2><div class="cat">${esc(e.description)} · area ${esc(e.area)} ${esc(e.areaName)} · ${esc(e.material)} · ${Math.round(e.weight).toLocaleString('en-US')} lb empty · origin ${esc(plantText(e.origin))}</div>
     <table>${e.dims.map(d => `<tr><td>${esc(d.label)}</td><td class="v">${esc(d.unit === 'in' ? formatLength(d.value) : `${Math.round(d.value * 1000) / 1000} ${d.unit}`)}</td><td>${esc(d.basis)}</td></tr>`).join('')}</table>
@@ -190,7 +193,7 @@ export function equipmentReport(e: GTEquipment): string {
 
 // ---- the owner's imported isometric drawings (stage 8, SW-IMP-6) ------------------------------------------------------
 let impIdx: Promise<ImportedIndex | null> | null = null;
-export const loadImported = () => (impIdx ??= fetch('isometrics-imported/index.json').then(r => (r.ok ? r.json() : null)).catch(() => null));
+export const loadImported = () => (impIdx ??= fetch(BASE + 'isometrics-imported/index.json').then(r => (r.ok ? r.json() : null)).catch(() => null));
 /** the drawing that shows a line, the weld's label and sheet on it, and what matching it to the model found */
 export function importedBlock(idx: ImportedIndex, line: string, tag?: string): string {
   const r = importedFor(idx, line); if (!r) return '';
@@ -205,7 +208,7 @@ export function importedBlock(idx: ImportedIndex, line: string, tag?: string): s
 // ---- work orders (stage 7) -------------------------------------------------------------------------------------------
 export interface WOIndexEntry { number: string; title: string; area: string; areaName: string; type: string; typeName: string; priority: number; equipment: string | null; lines: string[]; pdf: string; pack: string }
 let woIdx: Promise<{ notice: string; workOrders: WOIndexEntry[] }> | null = null;
-export const loadWOIndex = () => (woIdx ??= fetch('workorders/index.json').then(r => r.json()));
+export const loadWOIndex = () => (woIdx ??= fetch(BASE + 'workorders/index.json').then(r => (r.ok ? r.json() : { workOrders: [] })).catch(() => ({ workOrders: [] })));
 export const loadWO = (n: string): Promise<WorkOrder> => fetch(`workorders/${n}.json`).then(r => r.json());
 type Status = 'open' | 'accepted' | 'rejected' | 'n/a';
 export interface Completion { workOrder: string; updated: string; activities: { step: number; status: Status; contractor: string; owner: string; thirdParty: string; date: string; remark: string }[] }

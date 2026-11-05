@@ -7,19 +7,21 @@ import { designFlange, makeValve, type PipeClass } from '../catalogue';
 import { DEMO_LAYOUT } from './interior';
 
 export type V3 = [number, number, number];
-export interface Nozzle { id: string; equip: string; service: string; NPS: number; cls: PipeClass; A: V3; u: V3; face: V3; S: number }
+export interface Nozzle { id: string; equip: string; service: string; NPS: number; cls: PipeClass; A: V3; u: V3; face: V3; S: number; z0?: number }
 
-type Place =
+export type Place =
   | { on: 'shell'; e: number; dir: '+x' | '-x' | '+z' | '-z' }                 // radial on a vertical shell at absolute elevation e
-  | { on: 'top'; dx: number; dz: number }                                   // on a vertical vessel's top head / tank roof at a plan offset
+  | { on: 'top'; dx: number; dz: number }                                   // on a vertical vessel's top head / tank roof / hopper top at a plan offset
   | { on: 'hshell'; x: number; side: 'top' | 'bottom' | '+z' | '-z' }        // on a horizontal shell at an absolute x
+  | { on: 'bottom' }                                                        // a hopper's outlet on its axis, facing down (SW-EQ-8)
   | { on: 'suction' } | { on: 'discharge' } | { on: 'flush' };
 
-interface NozzleDef { equip: string; id: string; service: string; NPS: number; cls: PipeClass; at: Place }
+export interface NozzleDef { equip: string; id: string; service: string; NPS: number; cls: PipeClass; at: Place }
 
 const L = DEMO_LAYOUT, E = L.equipment, yVessel = L.padHeight + 1.5 + 0.75;
-/** equipment geometry needed to place nozzles */
-interface Geo { kind: 'vv' | 'hv' | 'pump' | 'tank'; x: number; z: number; R: number; yb?: number; yt?: number; yc?: number; s?: 1 | -1; xo?: number; roof?: (r: number) => number }
+/** equipment geometry needed to place nozzles: vv vertical vessel (yb bottom tangent, yt top tangent), hv horizontal
+ *  (yc centreline), pump (s = ±1 the side it faces), tank (roof profile), hopper (yb outlet, yt top plate) */
+export interface Geo { kind: 'vv' | 'hv' | 'pump' | 'tank' | 'hopper'; x: number; z: number; R: number; yb?: number; yt?: number; yc?: number; s?: 1 | -1; xo?: number; roof?: (r: number) => number; pumpPad?: number }
 function geometry(): Record<string, Geo> {
   const g: Record<string, Geo> = {};
   const vv = (tag: string, x: number, z: number, ID: number, t: number, TT: number, skirt: number) => { const R = ID / 2 + t, yb = yVessel + skirt + R / 2; g[tag] = { kind: 'vv', x, z, R, yb, yt: yb + TT }; };
@@ -108,29 +110,32 @@ const dirVec = (d: '+x' | '-x' | '+z' | '-z'): V3 => (d === '+x' ? [1, 0, 0] : d
 /** SW-NOZ-1 standout: flange face at flange OD/2 + 3 in from the shell */
 export const nozzleStandout = (NPS: number, cls: PipeClass) => designFlange(NPS, cls).OD / 2 + 3;
 
-export function buildNozzles(): Map<string, Nozzle> {
-  const g = geometry(), out = new Map<string, Nozzle>();
-  for (const d of DEMO_NOZZLES) {
+export function buildNozzles(): Map<string, Nozzle> { return buildNozzlesFrom(DEMO_NOZZLES, geometry(), E.pumpPad); }
+/** SW-NOZ-1 applied to any plant's schedule and equipment geometry */
+export function buildNozzlesFrom(defs: NozzleDef[], g: Record<string, Geo>, pumpPad: number): Map<string, Nozzle> {
+  const out = new Map<string, Nozzle>();
+  for (const d of defs) {
     const q = g[d.equip], at = d.at; let S = nozzleStandout(d.NPS, d.cls);
     let A: V3, u: V3;
     if (at.on === 'shell') { u = dirVec(at.dir); A = [q.x + u[0] * q.R, at.e, q.z + u[2] * q.R]; }
     else if (at.on === 'top') {
       const r = Math.hypot(at.dx, at.dz);
-      const y = q.kind === 'tank' ? q.roof!(r) : q.yt! + (q.R / 2) * Math.sqrt(Math.max(0, 1 - (r / q.R) ** 2));
+      const y = q.kind === 'tank' ? q.roof!(r) : q.kind === 'hopper' ? q.yt! : q.yt! + (q.R / 2) * Math.sqrt(Math.max(0, 1 - (r / q.R) ** 2));
       A = [q.x + at.dx, y, q.z + at.dz]; u = [0, 1, 0];
-    } else if (at.on === 'hshell') {
+    } else if (at.on === 'bottom') { A = [q.x, q.yb!, q.z]; u = [0, -1, 0]; }
+    else if (at.on === 'hshell') {
       u = at.side === 'top' ? [0, 1, 0] : at.side === 'bottom' ? [0, -1, 0] : dirVec(at.side);
       A = [at.x, q.yc! + u[1] * q.R, q.z + u[2] * q.R];
-    } else if (at.on === 'suction') { A = [q.x, E.pumpPad + 15, q.z - 30 * q.s!]; u = [0, 0, -q.s!]; }
-    else if (at.on === 'discharge') { A = [q.x, E.pumpPad + 15 + q.R, q.z - 24 * q.s!]; u = [0, 1, 0]; }
-    else { A = [q.x + q.R, E.pumpPad + 15, q.z - 24 * q.s!]; u = [1, 0, 0]; }
+    } else if (at.on === 'suction') { A = [q.x, pumpPad + 15, q.z - 30 * q.s!]; u = [0, 0, -q.s!]; }
+    else if (at.on === 'discharge') { A = [q.x, pumpPad + 15 + q.R, q.z - 24 * q.s!]; u = [0, 1, 0]; }
+    else { A = [q.x + q.R, pumpPad + 15, q.z - 24 * q.s!]; u = [1, 0, 0]; }
     if (d.service === 'relief') {
       // SW-NOZ-4: the standout grows by less than one grid step so the safety valve's outlet centreline is on the 6 in grid
       const f = designFlange(d.NPS, d.cls), v = makeValve('psv-geometry', 'PSV', d.NPS, d.cls), up = A[1] + S + f.gasketT + f.rfH + v.dims.CFin.value;
       S += Math.ceil(up / 6 - 1e-9) * 6 - up;
     }
     const face: V3 = [A[0] + u[0] * S, A[1] + u[1] * S, A[2] + u[2] * S];
-    out.set(d.id, { id: d.id, equip: d.equip, service: d.service, NPS: d.NPS, cls: d.cls, A, u, face, S });
+    out.set(d.id, { id: d.id, equip: d.equip, service: d.service, NPS: d.NPS, cls: d.cls, A, u, face, S, z0: q.z });
   }
   return out;
 }

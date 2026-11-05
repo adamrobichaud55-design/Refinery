@@ -9,6 +9,9 @@ cp = lambda a, b: shutil.copytree(os.path.join(root, a), os.path.join(out, b)) i
 cp('dist', 'viewer')
 cp('public/plant-piping.json', 'data/plant-piping.json')
 for d in ['groundtruth', 'isometrics-imported', 'workorders']: cp(f'public/{d}', f'data/{d}')
+if os.path.isdir(os.path.join(root, 'public/plants')): cp('public/plants', 'data/plants')        # plant 2 (stage 9): its piping and ground truth
+for pid in ['P1', 'P2']:                                                                              # the structural erection drawings (stage 9), when drawn
+    if os.path.exists(os.path.join(root, f'downloads/erection-{pid}.pdf')): cp(f'downloads/erection-{pid}.pdf', f'drawings/erection-{pid}.pdf'); cp(f'downloads/erection-{pid}', f'drawings/erection-{pid}')
 for f in ['DESIGN_BASIS.md', 'PROVENANCE.md', 'IP_REVIEW.md', 'THIRD_PARTY_NOTICES.md']: cp(f, f'docs/{f}')
 cp('README.md', 'docs/PROJECT_README.md')
 cp('screenshots', 'screenshots')

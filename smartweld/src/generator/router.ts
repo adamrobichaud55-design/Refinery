@@ -12,6 +12,7 @@ export const dirIndex = (d: V3) => DIRS.findIndex(e => e[0] === Math.sign(d[0]) 
 export class Grid {
   readonly nx: number; readonly ny: number; readonly nz: number; readonly N: number;
   occ: Uint16Array; dist: Float32Array; near: Uint16Array; head: Uint8Array;   // head: 1 = headroom zone (floor walkway or above a platform)
+  plat: Uint8Array;                                                           // 1 = a platform grating or the headroom above it that only vertical moves may cross (SW-PEN-4)
   /** reach: how far (in) the occupant's surface may extend beyond this occupied cell's centre, so that for any
    *  point P the gap to that occupant is at least |P − centre| − reach (SW-RT-3 clearance is checked with it) */
   reach: Float32Array; maxReach = 0;
@@ -19,7 +20,7 @@ export class Grid {
   boxy: Uint8Array;
   constructor(readonly ox: number, readonly oy: number, readonly oz: number, x1: number, y1: number, z1: number) {
     this.nx = Math.ceil((x1 - ox) / H) + 1; this.ny = Math.ceil((y1 - oy) / H) + 1; this.nz = Math.ceil((z1 - oz) / H) + 1; this.N = this.nx * this.ny * this.nz;
-    this.occ = new Uint16Array(this.N); this.dist = new Float32Array(this.N).fill(1e6); this.near = new Uint16Array(this.N); this.head = new Uint8Array(this.N); this.reach = new Float32Array(this.N); this.boxy = new Uint8Array(this.N);
+    this.occ = new Uint16Array(this.N); this.dist = new Float32Array(this.N).fill(1e6); this.near = new Uint16Array(this.N); this.head = new Uint8Array(this.N); this.plat = new Uint8Array(this.N); this.reach = new Float32Array(this.N); this.boxy = new Uint8Array(this.N);
   }
   idx(i: number, j: number, k: number) { return i + this.nx * (j + this.ny * k); }
   ijk(c: number): V3 { const i = c % this.nx, j = Math.floor(c / this.nx) % this.ny, k = Math.floor(c / (this.nx * this.ny)); return [i, j, k]; }
@@ -31,7 +32,7 @@ export class Grid {
   /** mark cells whose centres lie inside an axis-aligned box */
   /** occupancy: cells within half a cell of the box (so every face has marked centres within H/2 of it), reach H/2;
    *  headroom: cells whose centres are inside the box */
-  markBox(mn0: V3, mx0: V3, id: number, field: 'occ' | 'head' = 'occ') {
+  markBox(mn0: V3, mx0: V3, id: number, field: 'occ' | 'head' | 'plat' = 'occ') {
     const e = field === 'occ' ? H / 2 : 0, mn: V3 = [mn0[0] - e, mn0[1] - e, mn0[2] - e], mx: V3 = [mx0[0] + e, mx0[1] + e, mx0[2] + e];
     const i0 = Math.max(0, Math.ceil((mn[0] - this.ox) / H - 1e-9)), i1 = Math.min(this.nx - 1, Math.floor((mx[0] - this.ox) / H + 1e-9));
     const j0 = Math.max(0, Math.ceil((mn[1] - this.oy) / H - 1e-9)), j1 = Math.min(this.ny - 1, Math.floor((mx[1] - this.oy) / H + 1e-9));
@@ -39,7 +40,7 @@ export class Grid {
     const out: number[] = [];
     for (let k = k0; k <= k1; k++) for (let j = j0; j <= j1; j++) for (let i = i0; i <= i1; i++) {
       const c = this.idx(i, j, k);
-      if (field === 'head') this.head[c] = 1; else if (this.occ[c] === 0 || id === STATIC) { this.occ[c] = id; this.reach[c] = Math.max(this.reach[c], H / 2); this.boxy[c] = 1; out.push(c); }
+      if (field === 'head') this.head[c] = 1; else if (field === 'plat') this.plat[c] = 1; else if (this.occ[c] === 0 || id === STATIC) { this.occ[c] = id; this.reach[c] = Math.max(this.reach[c], H / 2); this.boxy[c] = 1; out.push(c); }
     }
     if (field === 'occ') this.maxReach = Math.max(this.maxReach, H / 2);
     return out;
@@ -121,6 +122,9 @@ export interface RouteReq {
   zones: V3[];                // end points whose 4 ft plan neighbourhood is exempt from headroom (SW-RT-3)
   margin?: number;            // search box margin (in)
   clearance?: number;         // SW-RT-3 clearance (in)
+  vertThrough?: boolean;      // SW-PEN-4: vertical moves may cross platform gratings and their headroom
+  zoneR?: number;             // plan radius of the headroom-exempt zone around each end point (48 in; 72 in in plant 2 for its tanks and silos)
+  maxExpand?: number;         // search budget (states expanded) before giving up; 3,000,000 unless stated
 }
 export interface RouteResult { ok: boolean; cells: V3[]; turns: number; expanded: number; why?: string }
 
@@ -135,11 +139,12 @@ export function route(g: Grid, q: RouteReq): RouteResult {
   const b0: V3 = [Math.max(0, Math.min(s[0], t[0]) - M), Math.max(0, Math.min(s[1], t[1]) - M), Math.max(0, Math.min(s[2], t[2]) - M)];
   const b1: V3 = [Math.min(g.nx - 1, Math.max(s[0], t[0]) + M), Math.min(g.ny - 1, Math.max(s[1], t[1]) + M), Math.min(g.nz - 1, Math.max(s[2], t[2]) + M)];
   const lx = b1[0] - b0[0] + 1, ly = b1[1] - b0[1] + 1, lz = b1[2] - b0[2] + 1, K = q.k + 1;
-  const zoneR2 = 48 * 48;
+  const zoneR2 = (q.zoneR ?? 48) ** 2;
   const own = [q.id];
-  const free = (i: number, j: number, k: number) => {
+  const free = (i: number, j: number, k: number, vertical = false) => {
     if (i < b0[0] || j < b0[1] || k < b0[2] || i > b1[0] || j > b1[1] || k > b1[2]) return false;
-    if (g.head[g.idx(i, j, k)]) { const p = g.pos(i, j, k); if (!q.zones.some(z => (p[0] - z[0]) ** 2 + (p[2] - z[2]) ** 2 <= zoneR2)) return false; }
+    const c = g.idx(i, j, k);
+    if (g.head[c] || (g.plat[c] && !vertical)) { const p = g.pos(i, j, k); if (!q.zones.some(z => (p[0] - z[0]) ** 2 + (p[2] - z[2]) ** 2 <= zoneR2)) return false; }
     return g.clear(i, j, k, q.r, own, clr);
   };
   const enc = (i: number, j: number, k: number, d: number, run: number) => ((((i - b0[0]) + lx * ((j - b0[1]) + ly * (k - b0[2]))) * 6 + d) * K + run);
@@ -154,12 +159,13 @@ export function route(g: Grid, q: RouteReq): RouteResult {
     for (let dk = -Rc; dk <= Rc; dk++) for (let dj = -Rc; dj <= Rc; dj++) for (let di = -Rc; di <= Rc; di++) { if (!g.inside(i + di, j + dj, k + dk)) continue; const qq = g.idx(i + di, j + dj, k + dk), o2 = g.occ[qq]; if (o2 && o2 !== q.id && Math.hypot(di, dj, dk) * H - g.reach[qq] < q.r + clr) return `clearance to ${o2} at ${g.pos(i + di, j + dj, k + dk)}`; }
     return 'free?';
   };
-  if (!free(s[0], s[1], s[2])) return { ok: false, cells: [], turns: 0, expanded: 0, why: 'start ' + blockedWhy(s[0], s[1], s[2]) };
-  if (!free(t[0], t[1], t[2])) return { ok: false, cells: [], turns: 0, expanded: 0, why: 'goal ' + blockedWhy(t[0], t[1], t[2]) };
+  if (!free(s[0], s[1], s[2], true)) return { ok: false, cells: [], turns: 0, expanded: 0, why: 'start ' + blockedWhy(s[0], s[1], s[2]) };
+  if (!free(t[0], t[1], t[2], true)) return { ok: false, cells: [], turns: 0, expanded: 0, why: 'goal ' + blockedWhy(t[0], t[1], t[2]) };
   gs.set(st0, 0); heap.push(hfun(s[0], s[1], s[2]), st0);
   const rev = (d: number) => d ^ 1;
   let expanded = 0, found = -1;
-  while (heap.size && expanded < 3_000_000) {
+  const budget = q.maxExpand ?? 3_000_000;
+  while (heap.size && expanded < budget) {
     const st = heap.pop(); const [i, j, k, d, run] = dec(st); const gc = gs.get(st)!;
     expanded++;
     if (i === t[0] && j === t[1] && k === t[2]) {
@@ -170,7 +176,7 @@ export function route(g: Grid, q: RouteReq): RouteResult {
       if (nd === rev(d)) continue;
       if (nd !== d && run < q.k) continue;                              // SW-RT-4: no elbow until the straight is long enough
       const v = DIRS[nd], ni = i + v[0], nj = j + v[1], nk = k + v[2];
-      if (!free(ni, nj, nk)) continue;
+      if (!free(ni, nj, nk, !!q.vertThrough && v[1] !== 0)) continue;
       const nrun = nd === d ? Math.min(run + 1, q.k) : 1, ns = enc(ni, nj, nk, nd, nrun), ng = gc + 1 + (nd === d ? 0 : TURN);
       if (ng < (gs.get(ns) ?? Infinity)) { gs.set(ns, ng); par.set(ns, st); heap.push(ng + hfun(ni, nj, nk), ns); }
     }

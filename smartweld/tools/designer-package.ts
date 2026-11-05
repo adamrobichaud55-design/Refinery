@@ -9,13 +9,14 @@ import { deflateRawSync } from 'node:zlib';
 import { partFromKey } from '../src/generator/piping';
 import type { GTLine, GTItem, GTEquipment } from '../src/generator/groundtruth';
 
-const OUT = 'downloads/designer-package';
-const PILOT = ['6"-P150-P-1001', '1"-P150-HS-5002', '3"-P150-SC-2004'];
+import { plantById } from '../src/generator/plants';
+const plant = plantById(process.argv[2] ?? 'P1'), OUT = plant.paths.designer, GT = plant.paths.groundtruth;
+const PILOT = plant.pilot;
 type P = { E: number; N: number; EL: number };
-const idx = JSON.parse(readFileSync('public/groundtruth/index.json', 'utf8')) as { lines: { line: string; file: string }[] };
-const lines = idx.lines.map(l => JSON.parse(readFileSync(`public/groundtruth/${l.file}`, 'utf8')) as GTLine);
-const nozzles = JSON.parse(readFileSync('public/groundtruth/nozzles.json', 'utf8')) as GTItem[];
-const equipment = JSON.parse(readFileSync('public/groundtruth/equipment.json', 'utf8')) as GTEquipment[];
+const idx = JSON.parse(readFileSync(`${GT}/index.json`, 'utf8')) as { lines: { line: string; file: string }[] };
+const lines = idx.lines.map(l => JSON.parse(readFileSync(`${GT}/${l.file}`, 'utf8')) as GTLine);
+const nozzles = JSON.parse(readFileSync(`${GT}/nozzles.json`, 'utf8')) as GTItem[];
+const equipment = JSON.parse(readFileSync(`${GT}/equipment.json`, 'utf8')) as GTEquipment[];
 
 const r4 = (v: number) => (Math.round(v * 1e4) / 1e4).toFixed(4);
 const mm = (v: number) => (Math.round(v * 25.4 * 100) / 100).toFixed(2);
@@ -41,8 +42,8 @@ for (const L of lines) for (const it of L.items) if (it.kind === 'valve' && it.k
   outletFace.set(it.tag, out.items[0].a as P);
 }
 
-const LINE_HEAD = ['line', 'lineClass', 'fluid', 'service', 'sizeIn', 'pressureClass', 'designPressurePsi', 'insulated', 'kind', 'from', 'to', 'tapsLine', 'components', 'welds', 'supports', 'pipeLengthIn'];
-const lineRow = (L: GTLine) => { const H = L.header; return [H.line, H.lineClass, H.fluid, H.service, H.NPS, H.cls, H.designPressure, H.insulated ? 'yes' : 'no', H.kind, H.from, H.to, [H.from, H.to].filter(x => x.startsWith('tap ')).map(x => x.slice(4)).join(' '), L.items.length, L.welds.length, L.supports.length, r4(L.totals.pipeLength)]; };
+const LINE_HEAD = ['line', 'lineClass', 'fluid', 'service', 'sizeIn', 'pressureClass', 'designPressurePsi', 'insulated', 'kind', 'joint', 'from', 'to', 'tapsLine', 'components', 'welds', 'supports', 'pipeLengthIn'];
+const lineRow = (L: GTLine) => { const H = L.header; return [H.line, H.lineClass, H.fluid, H.service, H.NPS, H.cls, H.designPressure, H.insulated ? 'yes' : 'no', H.kind, H.joint ?? 'BW', H.from, H.to, [H.from, H.to].filter(x => x.startsWith('tap ')).map(x => x.slice(4)).join(' '), L.items.length, L.welds.length, L.supports.length, r4(L.totals.pipeLength)]; };
 const XYZ = (p: string) => [`${p}E_in`, `${p}N_in`, `${p}EL_in`, `${p}E_mm`, `${p}N_mm`, `${p}EL_mm`];
 const COMP_HEAD = ['line', 'tag', 'seq', 'type', 'partCode', 'description', 'sizeIn', 'branchSizeIn', 'pressureClass', 'lineClass', 'ends', 'material', 'weightLb', 'spool', 'cutLengthIn', ...XYZ('end1'), ...XYZ('end2'), ...XYZ('centre'), ...XYZ('branch'), 'branchLine'];
 const compRow = (line: string, it: GTItem, seq: number) => {
@@ -57,7 +58,10 @@ const weldRow = (L: GTLine, w: GTLine['welds'][number]) =>
 const SUP_HEAD = ['line', 'tag', 'type', 'designation', 'description', 'material', 'weightLb', ...XYZ('')];
 const supRow = (L: GTLine, s: GTLine['supports'][number]) => [L.header.line, s.tag, s.type, s.designation, s.description, s.material, r4(s.weight), ...pt(s.at as P)];
 const EQ_HEAD = ['equipment', 'type', 'description', 'nozzle', 'service', 'sizeIn', 'pressureClass', 'line', 'lineClass', ...XYZ('face'), 'facingE', 'facingN', 'facingEL'];
-const eqRows = () => equipment.flatMap(e => e.nozzles.map(n => [e.tag, e.type, e.description, n.id, n.service, n.NPS, n.cls, n.line ?? '', n.lineClass ?? '', ...pt(n.face as P), n.facing.E, n.facing.N, n.facing.EL]));
+const eqRows = (eqs = equipment) => eqs.flatMap(e => e.nozzles.map(n => [e.tag, e.type, e.description, n.id, n.service, n.NPS, n.cls, n.line ?? '', n.lineClass ?? '', ...pt(n.face as P), n.facing.E, n.facing.N, n.facing.EL]));
+// the equipment the lines connect to (SW-XCH-6): its type, every stated and rule-set dimension, its origin and axis in plant coordinates
+const EQI_HEAD = ['equipment', 'type', 'description', 'area', 'material', 'weightLb', ...XYZ('origin'), 'axisE', 'axisN', 'axisEL', 'nozzles', 'dimensions (label=value unit (rule))'];
+const eqItemRows = (eqs = equipment) => eqs.map(e => [e.tag, e.type, e.description, e.areaName, e.material, r4(e.weight), ...pt(e.origin as P), e.axis?.E ?? '', e.axis?.N ?? '', e.axis?.EL ?? '', e.nozzles.map(n => n.id).join(' '), e.dims.map(d => `${d.label}=${Number(d.value.toFixed(4))} ${d.unit} (${d.basis})`).join('; ')]);
 
 /** every distinct part per line class with its rule-set dimensions (SW-XCH-3) */
 function specRows(ls: GTLine[], withNozzles: boolean) {
@@ -79,20 +83,24 @@ const SPEC_HEAD = ['lineClass', 'type', 'partCode', 'description', 'sizeIn', 'br
 
 function writeSet(dir: string, ls: GTLine[], withNozzles: boolean) {
   mkdirSync(dir, { recursive: true });
+  // the equipment these lines touch (every item in the full set)
+  const touched = new Set(ls.flatMap(L => [L.header.from, L.header.to]).map(e => e.replace(/^PSV on /, '')).map(id => equipment.find(e => e.nozzles.some(n => n.id === id))?.tag).filter(Boolean) as string[]);
+  const eqs = withNozzles ? equipment : equipment.filter(e => touched.has(e.tag));
   writeFileSync(join(dir, 'lines.csv'), csv(LINE_HEAD, ls.map(lineRow)));
   const comps = ls.flatMap(L => L.items.map((it, i) => compRow(L.header.line, it, i + 1)));
   if (withNozzles) comps.push(...nozzles.map((it, i) => compRow(it.line, it, i + 1)));
   writeFileSync(join(dir, 'components.csv'), csv(COMP_HEAD, comps));
   writeFileSync(join(dir, 'welds.csv'), csv(WELD_HEAD, ls.flatMap(L => L.welds.map(w => weldRow(L, w)))));
   writeFileSync(join(dir, 'supports.csv'), csv(SUP_HEAD, ls.flatMap(L => L.supports.map(s => supRow(L, s)))));
-  writeFileSync(join(dir, 'equipment-nozzles.csv'), csv(EQ_HEAD, eqRows()));
+  writeFileSync(join(dir, 'equipment-nozzles.csv'), csv(EQ_HEAD, eqRows(eqs)));
+  writeFileSync(join(dir, 'equipment.csv'), csv(EQI_HEAD, eqItemRows(eqs)));
   const spec = specRows(ls, withNozzles);
   writeFileSync(join(dir, 'spec-request.csv'), csv(SPEC_HEAD, spec));
   const obj = (head: string[], rows: unknown[][]) => rows.map(r => Object.fromEntries(head.map((h, i) => [h, r[i]])));
   writeFileSync(join(dir, 'model.json'), JSON.stringify({ units: { coordinates: 'inches and millimetres', weights: 'pounds' }, coordinates: 'E = east, N = north, EL = elevation; floor at EL 1200 in (100\'-0")',
     lines: obj(LINE_HEAD, ls.map(lineRow)), components: obj(COMP_HEAD, comps), welds: obj(WELD_HEAD, ls.flatMap(L => L.welds.map(w => weldRow(L, w)))),
-    supports: obj(SUP_HEAD, ls.flatMap(L => L.supports.map(s => supRow(L, s)))), equipmentNozzles: obj(EQ_HEAD, eqRows()), specRequest: obj(SPEC_HEAD, spec) }, null, 1));
-  return { lines: ls.length, components: comps.length, welds: ls.reduce((n, L) => n + L.welds.length, 0), supports: ls.reduce((n, L) => n + L.supports.length, 0), specParts: spec.length };
+    supports: obj(SUP_HEAD, ls.flatMap(L => L.supports.map(s => supRow(L, s)))), equipment: obj(EQI_HEAD, eqItemRows(eqs)), equipmentNozzles: obj(EQ_HEAD, eqRows(eqs)), specRequest: obj(SPEC_HEAD, spec) }, null, 1));
+  return { lines: ls.length, components: comps.length, welds: ls.reduce((n, L) => n + L.welds.length, 0), supports: ls.reduce((n, L) => n + L.supports.length, 0), specParts: spec.length, equipment: eqs.length };
 }
 
 rmSync(OUT, { recursive: true, force: true });
@@ -104,7 +112,8 @@ for (let grew = true; grew;) { grew = false; for (const L of lines) if (!inPilot
 const pilotLines = lines.filter(L => inPilot.has(L.header.line));
 const pilot = writeSet(join(OUT, 'pilot'), pilotLines, false);
 writeFileSync(join(OUT, 'README.md'), readFileSync('tools/designer-README.md', 'utf8')
-  .replace('{{FULL}}', `${full.lines} lines, ${full.components} components (including ${nozzles.length} equipment nozzle parts), ${full.welds} welds, ${full.supports} supports, ${full.specParts} distinct parts in the spec request`)
+  .replace('{{PLANT}}', plant.name)
+  .replace('{{FULL}}', `${full.lines} lines, ${full.components} components (including ${nozzles.length} equipment nozzle parts), ${full.welds} welds, ${full.supports} supports, ${full.equipment} equipment items, ${full.specParts} distinct parts in the spec request`)
   .replace('{{PILOT}}', `${pilot.lines} lines (${pilotLines.map(L => L.header.line).join(', ')}), ${pilot.components} components, ${pilot.welds} welds, ${pilot.supports} supports, ${pilot.specParts} distinct parts`
     + pilotLines.flatMap(L => tapOf(L).filter(x => !inPilot.has(x)).map(x => `. ${L.header.line} ${L.header.from === `tap ${x}` ? 'starts' : 'ends'} at a tee on ${x}, which is not in the pilot: treat that end as a continuation to that line`)).join('')));
 
@@ -117,7 +126,7 @@ const CRC = (() => { const t = new Uint32Array(256); for (let n = 0; n < 256; n+
 const crc32 = (b: Buffer) => { let c = 0xffffffff; for (const x of b) c = CRC[(c ^ x) & 0xff] ^ (c >>> 8); return (c ^ 0xffffffff) >>> 0; };
 const parts: Buffer[] = [], central: Buffer[] = []; let off = 0;
 for (const p of files) {
-  const data = readFileSync(p), z = deflateRawSync(data, { level: 9 }), name = Buffer.from(`smartweld-designer-package/${relative(OUT, p)}`), crc = crc32(data);
+  const data = readFileSync(p), z = deflateRawSync(data, { level: 9 }), name = Buffer.from(`smartweld-designer-package${plant.id === 'P1' ? '' : '-' + plant.id}/${relative(OUT, p)}`), crc = crc32(data);
   const lh = Buffer.alloc(30); lh.writeUInt32LE(0x04034b50, 0); lh.writeUInt16LE(20, 4); lh.writeUInt16LE(0x0800, 6); lh.writeUInt16LE(8, 8); lh.writeUInt32LE(0, 10);
   lh.writeUInt32LE(crc, 14); lh.writeUInt32LE(z.length, 18); lh.writeUInt32LE(data.length, 22); lh.writeUInt16LE(name.length, 26); lh.writeUInt16LE(0, 28);
   const ch = Buffer.alloc(46); ch.writeUInt32LE(0x02014b50, 0); ch.writeUInt16LE(20, 4); ch.writeUInt16LE(20, 6); ch.writeUInt16LE(0x0800, 8); ch.writeUInt16LE(8, 10); ch.writeUInt32LE(0, 12);
@@ -126,5 +135,5 @@ for (const p of files) {
 }
 const cd = Buffer.concat(central), end = Buffer.alloc(22);
 end.writeUInt32LE(0x06054b50, 0); end.writeUInt16LE(files.length, 8); end.writeUInt16LE(files.length, 10); end.writeUInt32LE(cd.length, 12); end.writeUInt32LE(off, 16);
-writeFileSync('downloads/designer-package.zip', Buffer.concat([...parts, cd, end]));
+writeFileSync(`${OUT}.zip`, Buffer.concat([...parts, cd, end]));
 console.log(JSON.stringify({ full, pilot, files: files.length, zipBytes: off + cd.length + 22 }, null, 1));

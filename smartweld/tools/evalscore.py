@@ -1,7 +1,7 @@
 """
 Scoring harness for external test drawings (DESIGN_BASIS.md §57, SW-EVAL-1..6). Standard library only.
 
-    python3 -I tools/evalscore.py key [--check]                 the answer key from the model (eval/answer-key.json)
+    python3 -I tools/evalscore.py [--plant P2] key [--check]    the answer key from the model (eval/answer-key.json; eval/P2/… for plant 2)
     python3 -I tools/evalscore.py receive <set> --software S --version V --drawn-by D \\
             [--contract REF] [--licence-review REF] [--branches-on-parent yes|no] <files...>
                                                                record a received set; files kept in eval/external/<set>/
@@ -23,8 +23,12 @@ import shutil
 import sys
 import tempfile
 
-GT = 'public/groundtruth'
-EVAL = os.environ.get('EVAL_DIR', 'eval')
+# the plant (SW-PLANT-2): `--plant P2` before the command selects plant 2's ground truth and evaluation folder
+PLANT = 'P1'
+if len(sys.argv) > 2 and sys.argv[1] == '--plant':
+    PLANT = sys.argv[2]; del sys.argv[1:3]
+GT = 'public/groundtruth' if PLANT == 'P1' else f'public/plants/{PLANT}/groundtruth'
+EVAL = os.environ.get('EVAL_DIR', 'eval' if PLANT == 'P1' else f'eval/{PLANT}')
 VALVES = {'GATE': 'gate', 'BALL': 'ball', 'CHECK': 'check', 'CONTROL': 'control', 'PSV': 'relief'}
 FITTINGS = ['elbow', 'tee', 'reducer', 'cap', 'flange', 'blind']
 # supports by symbol (SW-EVAL-3): one pipe-support symbol for six types, its own symbol for the dummy leg
@@ -32,6 +36,51 @@ SUPPORTS = {'hanger': 'pipe', 'shoe': 'pipe', 'guide': 'pipe', 'anchor': 'pipe',
             'trunnion': 'dummy_leg'}
 CLASSES = FITTINGS + [f'valve/{v}' for v in VALVES.values()] + ['weld'] + [f'support/{s}' for s in dict.fromkeys(SUPPORTS.values())]
 IOU = 0.5
+
+# ---- plant 2: the owner's symbol classes (SW-COV-1/3), each with its coarse group ---------------------------------
+COV_CLASSES = {
+    'gate_valve': 'valve', 'forged_gate_valve': 'valve', 'forged_gate_valve_th': 'valve', 'globe_valve': 'valve', 'forged_globe_valve_th': 'valve',
+    'check_valve': 'valve', 'forged_check_valve_th': 'valve', 'ball_valve': 'valve', 'ball_valve_3pc': 'valve', 'butterfly_valve': 'valve', 'plug_valve': 'valve',
+    'control_valve': 'valve', 'needle_valve': 'valve', 'three_way_valve': 'valve', 'four_way_valve': 'valve', 'relief_valve': 'valve', 'rotary_valve': 'valve',
+    'gate_valve_th_plugged': 'valve', 'flange': 'flange', 'slip_on_flange': 'flange', 'sw_flange': 'flange', 'nozzle_flange': 'flange', 'blind_flange': 'flange',
+    'spade': 'flange', 'spectacle': 'flange', 'elbow_90': 'fitting', 'elbow_45': 'fitting', 'tee': 'fitting', 'reducer': 'fitting', 'eccentric_reducer': 'fitting',
+    'cap': 'fitting', 'sw_elbow_90': 'fitting', 'sw_elbow_45': 'fitting', 'sw_tee': 'fitting', 'socket_weld': 'weld', 'coupling_sw': 'fitting', 'coupling_th': 'fitting',
+    'branch_outlet': 'fitting', 'branch_outlet_sw': 'fitting', 'branch_outlet_th': 'fitting', 'swage': 'fitting', 'swage_sw': 'fitting', 'swage_th': 'fitting',
+    'nipple': 'fitting', 'plug': 'fitting', 'weld': 'weld', 'weld_field': 'weld', 'pipe_support': 'support', 'dummy_leg': 'support',
+    'floor_penetration': 'penetration', 'wall_penetration': 'penetration',
+}
+if PLANT != 'P1':
+    CLASSES = list(COV_CLASSES)
+
+
+def cov_classes(it, items, i):
+    """SW-COV-1: the symbol classes of a ground-truth item of plant 2 (a plugged threaded gate valve also counts as the plugged form)"""
+    k = it['key'].split('|'); kind = it['kind']
+    if kind == 'valve':
+        t, ends = k[1], (k[4] if len(k) > 4 else 'RF')
+        if t == 'GATE':
+            if ends == 'SW': return ['forged_gate_valve']
+            if ends == 'TH': return ['forged_gate_valve_th'] + (['gate_valve_th_plugged'] if any(x['kind'] == 'plug' for x in items[i + 1:i + 3]) else [])
+            return ['gate_valve']
+        if t in ('GLOBE', 'YGLOBE', 'AGLOBE'): return ['forged_globe_valve_th' if ends == 'TH' else 'globe_valve']
+        if t in ('CHECK', 'LCHECK'): return ['forged_check_valve_th' if ends == 'TH' else 'check_valve']
+        if t == 'BALL': return ['ball_valve_3pc' if ends == 'SW' else 'ball_valve']
+        return {'BFLY': ['butterfly_valve'], 'LBFLY': ['butterfly_valve'], 'DBFLY': ['butterfly_valve'], 'PLUG': ['plug_valve'], 'CONTROL': ['control_valve'], 'NEEDLE': ['needle_valve'],
+                'TWAY': ['three_way_valve'], 'FWAY': ['four_way_valve'], 'PSV': ['relief_valve'], 'ROTARY': ['rotary_valve']}.get(t, [])
+    if kind == 'flange': return ['slip_on_flange' if k[0] == 'SOF' else 'sw_flange' if k[0] == 'SWF' else 'flange']
+    if kind == 'blind': return ['blind_flange']
+    if kind in ('spade', 'spectacle'): return [kind]
+    if kind == 'elbow': return [('sw_elbow_45' if k[3] == '45' else 'sw_elbow_90') if k[0] == 'SWEL' else ('elbow_45' if k[3] == '45' else 'elbow_90')]
+    if kind == 'tee': return ['sw_tee' if k[0] == 'SWTEE' else 'tee']
+    if kind == 'reducer': return ['eccentric_reducer' if k[0] == 'REDE' else 'reducer']
+    if kind == 'cap': return ['cap']
+    if kind == 'coupling': return ['coupling_sw' if k[3] == 'SW' else 'coupling_th']
+    if kind == 'olet': return ['branch_outlet_sw' if k[4] == 'SW' else 'branch_outlet_th' if k[4] == 'TH' else 'branch_outlet']
+    if kind == 'swage': return ['swage_sw' if k[4] == 'SW' else 'swage_th' if k[4] == 'TH' else 'swage']
+    if kind == 'nipple': return ['nipple']
+    if kind == 'plug': return ['plug']
+    if kind == 'penetration': return ['floor_penetration' if k[0] == 'FSLV' else 'wall_penetration']
+    return []
 
 
 def sha(p):
@@ -47,7 +96,7 @@ def norm(t):
 
 
 def coarse(c):
-    return c.split('/')[0]
+    return COV_CLASSES[c] if PLANT != 'P1' else c.split('/')[0]
 
 
 def weld_label(tag, line):
@@ -63,15 +112,24 @@ def build_key():
     for e in idx['lines']:
         L = json.load(open(f"{GT}/{e['file']}")); H = L['header']; line = H['line']
         objs = []
-        for it in L['items']:
-            k = it['kind']
-            c = f"valve/{VALVES[it['key'].split('|')[1]]}" if k == 'valve' else k if k in FITTINGS else None
-            if c:
-                objs.append(dict(tag=it['tag'], cls=c))
-        for w in L['welds']:
-            objs.append(dict(tag=w['tag'], cls='weld', label=w['tag'].rsplit('/', 1)[1]))
-        for s in L['supports']:
-            objs.append(dict(tag=s['tag'], cls=f"support/{SUPPORTS[s['type']]}", type=s['type']))
+        if PLANT != 'P1':   # SW-COV-3: plant 2's key uses the owner's symbol classes
+            for i, it in enumerate(L['items']):
+                for c in cov_classes(it, L['items'], i):
+                    objs.append(dict(tag=it['tag'], cls=c))
+            for w in L['welds']:
+                objs.append(dict(tag=w['tag'], cls='socket_weld' if w['type'] == 'SW' else 'weld_field' if w['shopField'] == 'field' else 'weld', label=w['tag'].rsplit('/', 1)[1]))
+            for s in L['supports']:
+                objs.append(dict(tag=s['tag'], cls='dummy_leg' if s['type'] == 'trunnion' else 'pipe_support', type=s['type']))
+        else:
+            for it in L['items']:
+                k = it['kind']
+                c = f"valve/{VALVES[it['key'].split('|')[1]]}" if k == 'valve' else k if k in FITTINGS else None
+                if c:
+                    objs.append(dict(tag=it['tag'], cls=c))
+            for w in L['welds']:
+                objs.append(dict(tag=w['tag'], cls='weld', label=w['tag'].rsplit('/', 1)[1]))
+            for s in L['supports']:
+                objs.append(dict(tag=s['tag'], cls=f"support/{SUPPORTS[s['type']]}", type=s['type']))
         parent = H['from'][4:] if H['from'].startswith('tap ') else None
         out[line] = dict(lineClass=H['lineClass'], NPS=H['NPS'], parent=parent, objects=objs)
     unknown = {o['cls'] for v in out.values() for o in v['objects']} - set(CLASSES)

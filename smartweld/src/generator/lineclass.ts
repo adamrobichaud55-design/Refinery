@@ -15,7 +15,7 @@ export const FLUID_GROUPS: Record<FluidGroup, { name: string; insulated: boolean
   F: { name: 'Flare and relief outlets', insulated: false, colour: 0xd4b21f },
 };
 /** SW-LC-2: services that carry their own fluid */
-const BY_SERVICE: Partial<Record<string, FluidGroup>> = { P: 'H', RV: 'H', CWS: 'W', CWR: 'W', W: 'W', LS: 'S', SC: 'C', IA: 'G', PA: 'G', N: 'G', FL: 'F' };
+const BY_SERVICE: Partial<Record<string, FluidGroup>> = { P: 'H', RV: 'H', CWS: 'W', CWR: 'W', W: 'W', LS: 'S', SC: 'C', IA: 'G', PA: 'G', N: 'G', FL: 'F', CA: 'G' };
 
 export interface LineClass {
   code: string; group: FluidGroup; fluid: string; cls: PipeClass; designPressure: number; insulated: boolean;

@@ -2094,6 +2094,49 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
   the wind posts and girts (SW-BLD-4, SW-CF-*): the routing grid treats posts and girts as
   obstacles and the panels as passable, so a line crosses the wall where the search finds it free.
 - `SW-PEN-3` A penetration carries no weld to the pipe (the pipe slides in the sleeve).
+- `SW-PEN-4` Plant 2 only: a vertical run may pass through a platform's grating, where it gets a
+  sleeve (SW-PEN-1); horizontal runs keep out of the grating and the headroom above it (SW-RT-3), and
+  the run keeps 3 in from the platform's beams. Reason: a riser through a floor is normal practice
+  and is why sleeves exist; a horizontal pipe at walking level is not. Plant 1 keeps SW-RT-3 as it
+  was, so its routing is unchanged.
+- `SW-RT-8` Plant 2 only: where a routed line jogs sideways by at most 4 ft between two parallel runs
+  (two 90° elbows back to back with a short pipe between), the jog is made with two 45° elbows
+  (SW-FIT-1, or SW-SWT-3 in small bore) on a diagonal centred on the jog, when the diagonal keeps the
+  SW-RT-3 clearance and no branch sits on the replaced length. Reason: two 45° elbows make a
+  smoother offset with less pressure drop and no short pipe piece; it is how a designer draws an
+  offset.
+- `SW-LL-6` Plant 2 small-bore stacks (the item sequences of SW-LL-3 applied to SW-SPEC-1):
+  - a socket-weld line meets a flanged nozzle or item through a socket-weld flange (SW-FLG-11); a
+    threaded line through a weld-neck flange butt-welded to a nipple threaded at its other end
+    (SW-SWT-8, `TOE`);
+  - instrument connections (service I) on socket-weld lines: branch outlet or nozzle, nipple, forged
+    gate valve, nipple, four-way valve with its spare port plugged (the gauge and purge manifold,
+    4W-1), nipple, socket-weld flange, gasket and blind; on threaded lines: nipple, threaded gate
+    valve, nipple, needle valve, plug;
+  - sample points (SP): branch outlet, nipple, forged gate valve, nipple, three-way valve (purge
+    port plugged), nipple, swage to the threaded needle valve, nipple, needle valve, plug;
+  - vents and drains (V, D) on hydrocarbon, steam and flare lines: three-piece socket-weld ball
+    valve, nipple, socket-weld flange, gasket and blind; on air, water and condensate lines:
+    threaded gate valve with a plug (the drain is opened by removing the plug);
+  - thermal relief on a pump discharge: branch outlet, nipple, socket-weld flange, gasket and a
+    1 in safety valve, its outlet by a socket-weld flange and swage into a 1-1/2 in socket-weld line
+    to the flare header;
+  - utility branches to equipment (nitrogen, seal flush): at the header a threaded branch outlet,
+    nipple and threaded gate valve; at the equipment a threaded check valve and a threaded globe
+    valve (throttling) on nipples behind the flange;
+  - hose stations (threaded): threaded gate valve at the header take-off; at the station a swage to
+    3/4 in, a threaded gate valve and a plug;
+  - small-bore lines are joined every 20 ft with a coupling (SW-SWT-5);
+  - isolation valves by class and size (SW-LL-3 extended): butterfly (wafer) on water lines 3 in and
+    above, plug valves on air and gas lines 2 in and above, gate elsewhere 2 in and above;
+  - spectacle blinds in the first flanged joint at every process nozzle of a vessel, column, drum,
+    tank or silo and at battery limits; spades in the first joint at every exchanger nozzle and
+    every pump suction (SW-FLG-13);
+  - solids: a rotary airlock feeder (ROT-1) on every bin and silo outlet nozzle, a receiving airlock
+    on every bin, silo and adsorber solids-inlet nozzle, and the catalyst dump feeders on the
+    adsorbers' solids outlets.
+  Reason: these are the item sequences the owner's symbol set draws, each in the place it is used
+  in practice.
 
 ## 62. Valve types added, the rotary feeder and the hopper (§32 continued; `SW-EQ-8`)
 

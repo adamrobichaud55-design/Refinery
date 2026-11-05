@@ -3,7 +3,7 @@
  * Each check returns a list of human-readable violations; an empty list is a pass. The checks read only
  * the plain-data model plus the catalogue rules, never the router's internals, so they audit its output.
  */
-import { pipeDims, designFlange, elbowRadius, teeC, isOffered, type PipeClass, type ValveType } from '../catalogue';
+import { pipeDims, designFlange, elbowRadius, teeC, isOffered, smallBore, smallElbowA, smallTeeC, type PipeClass, type ValveType, type JointEnd } from '../catalogue';
 import { DEMO_LAYOUT } from './interior';
 import type { PipingModel, Comp, LineRun, WeldRec, Obstacle } from './piping';
 import type { V3 } from './router';
@@ -27,7 +27,7 @@ const joint = (x: Comp, y: Comp): { d: number; at: V3 } => {
   return best;
 };
 /** tee branch outlet point (SW-FIT-2): C from the run axis along the tee's local y */
-export const teeOutlet = (t: Comp): V3 => add(origin(t), yAxis(t), teeC(pipeDims(t.NPS, t.cls).OD));
+export const teeOutlet = (t: Comp): V3 => { const k = t.key.split('|'); return add(origin(t), yAxis(t), k[0] === 'SWTEE' ? smallBore(Number(k[3]), t.cls).OD / 2 + smallBore(t.NPS, t.cls).tf + (k[4] === 'SW' ? smallBore(Number(k[3]), t.cls).s : smallBore(Number(k[3]), t.cls).Lt) : teeC(pipeDims(t.NPS, t.cls).OD)); };
 
 export function checkContinuity(m: PipingModel): string[] {
   const v: string[] = [];
@@ -37,7 +37,7 @@ export function checkContinuity(m: PipingModel): string[] {
       const j = joint(c[i - 1], c[i]);
       if (j.d > TOL) v.push(`${r.no}: gap ${j.d.toFixed(3)} in between ${c[i - 1].tag} (${c[i - 1].kind}) and ${c[i].tag} (${c[i].kind})`);
       if (c[i - 1].cls !== c[i].cls) v.push(`${r.no}: class change ${c[i - 1].cls}→${c[i].cls} at ${c[i].tag}`);
-      const sizeOk = c[i - 1].NPS === c[i].NPS || c[i - 1].kind === 'reducer' || c[i].kind === 'reducer' || (c[i - 1].kind === 'valve' && c[i - 1].key.startsWith('VLV|PSV'));
+      const sizeOk = c[i - 1].NPS === c[i].NPS || c[i - 1].kind === 'reducer' || c[i].kind === 'reducer' || c[i - 1].kind === 'swage' || c[i].kind === 'swage' || (c[i - 1].kind === 'valve' && c[i - 1].key.startsWith('VLV|PSV'));
       if (!sizeOk) v.push(`${r.no}: size change ${c[i - 1].NPS}→${c[i].NPS} at ${c[i].tag} without a reducer`);
     }
   }
@@ -54,6 +54,16 @@ export function checkJoints(m: PipingModel): string[] {
     const c = chain(r), studs = r.comps.filter(x => x.kind === 'studs');
     for (let i = 1; i < c.length; i++) {
       const x = c[i - 1], y = c[i], j = joint(x, y);
+      if (x.e1 !== undefined && y.e1 !== undefined) {   // stage-9 records: the facing end types say what the joint is
+        const fx = len(sub(x.b, j.at)) < 1e-6 ? x.e2 : x.e1, fy = len(sub(y.a, j.at)) < 1e-6 ? y.e1 : y.e2;
+        const expect = (fx === 'BW' && fy === 'BW') ? 1 : ((fx === 'SW' && fy === 'SP') || (fx === 'SP' && fy === 'SW')) ? 1 : ((fx === 'SO' && fy === 'SP') || (fx === 'SP' && fy === 'SO')) ? 2 : 0;
+        if (expect) { butt++; const n = weldsAt(j.at).length + (expect === 2 ? 1 : 0); if (n !== expect) v.push(`${r.no}: joint ${x.tag}/${y.tag} (${fx}/${fy}) has ${n - (expect === 2 ? 1 : 0)} weld records`); continue; }
+        if (fx === 'TH' && fy === 'TH') continue;
+        if (fx === 'RF' && fy === 'RF') { v.push(`${r.no}: faces ${x.tag}/${y.tag} without a gasket`); continue; }
+        if (x.kind === 'gasket' || y.kind === 'gasket') { const g = x.kind === 'gasket' ? x : y; if (g === y) { const mid = add(g.a, sub(g.b, g.a), 0.5); if (!studs.some(st => len(sub(origin(st), mid)) < Number(st.key.split('|')[3]) / 2 + TOL)) v.push(`${r.no}: gasket ${g.tag} has no stud set`); } continue; }
+        if (!(x.key.startsWith('VLV|PSV') || y.key.startsWith('VLV|PSV')) && !(fx === 'X' || fy === 'X')) v.push(`${r.no}: ${x.kind}/${y.kind} joint ${x.tag}/${y.tag} (${fx}/${fy}) is not a joint`);
+        continue;
+      }
       const isButt = (WELDED.has(x.kind) && (WELDED.has(y.kind) || y.kind === 'flange')) || (WELDED.has(y.kind) && x.kind === 'flange');
       if (isButt) { butt++; const n = weldsAt(j.at).length; if (n !== 1) v.push(`${r.no}: butt joint ${x.tag}/${y.tag} has ${n} weld records`); continue; }
       if (WELDED.has(x.kind) || WELDED.has(y.kind)) { v.push(`${r.no}: ${x.kind} joined to ${y.kind} at ${y.tag}`); continue; }
@@ -83,18 +93,20 @@ export function checkElbowsAndStraights(m: PipingModel): string[] {
   for (const r of m.lines) {
     const c = chain(r);
     for (const e of c.filter(x => x.kind === 'elbow')) {
-      const Rr = elbowRadius(pipeDims(e.NPS, e.cls).OD), chord = len(sub(e.b, e.a));
-      if (Math.abs(chord - Rr * Math.SQRT2) > TOL) v.push(`${r.no}: elbow ${e.tag} chord ${chord.toFixed(3)} ≠ R√2 ${(Rr * Math.SQRT2).toFixed(3)}`);
+      const k = e.key.split('|'), ang = Number(k[3]) || 90, chord = len(sub(e.b, e.a));
+      const Lc = k[0] === 'SWEL' ? smallElbowA(smallBore(e.NPS, e.cls), k[4] as JointEnd) : elbowRadius(pipeDims(e.NPS, e.cls).OD) * Math.tan((ang * Math.PI) / 360);   // centre to end (SW-FIT-1, SW-SWT-3)
+      const want = 2 * Lc * Math.sin((ang * Math.PI) / 360);
+      if (Math.abs(chord - want) > TOL) v.push(`${r.no}: elbow ${e.tag} chord ${chord.toFixed(3)} ≠ ${want.toFixed(3)}`);
     }
     for (const p of c.filter(x => x.kind === 'pipe')) { const L = len(sub(p.b, p.a)); if (L < 2 - 1e-6) v.push(`${r.no}: pipe ${p.tag} only ${L.toFixed(2)} in long`); if (L > 480 + 1e-6) v.push(`${r.no}: pipe ${p.tag} ${L.toFixed(0)} in exceeds 40 ft (SW-RT-5)`); }
-    for (let i = 1; i < c.length; i++) if (c[i - 1].kind === 'elbow' && c[i].kind === 'elbow') v.push(`${r.no}: elbows ${c[i - 1].tag} and ${c[i].tag} welded back to back`);
+    for (let i = 1; i < c.length; i++) if (c[i - 1].kind === 'elbow' && c[i].kind === 'elbow' && !(c[i - 1].key.split('|')[3] === '45' && c[i].key.split('|')[3] === '45')) v.push(`${r.no}: elbows ${c[i - 1].tag} and ${c[i].tag} welded back to back`);   // a 45° offset pair is two elbows joined (SW-RT-8)
   }
   return v;
 }
 
 /** SW-LL-1 numbering, SW-VLV-11 offering */
 export function checkNumberingAndValves(m: PipingModel): string[] {
-  const v: string[] = [], re = /^(\d+(\.\d+)?|1\/2|3\/4)"-P(150|300|600|1200|2400|4800)-(P|CWS|CWR|LS|SC|IA|PA|N|W|FL|V|D|I|SP|HS|RV)-\d{4}$/;
+  const v: string[] = [], re = /^(\d+(\.\d+)?|1\/2|3\/4)"-P(150|300|600|1200|2400|4800)-(P|CWS|CWR|LS|SC|IA|PA|N|W|FL|V|D|I|SP|HS|RV|CA)-\d{4}$/;
   const nos = new Set<string>();
   for (const r of m.lines) {
     if (!re.test(r.no)) v.push(`bad line number ${r.no}`);
@@ -173,9 +185,13 @@ export function checkLineClearance(m: PipingModel, valveBox: (c: Comp) => [V3, V
   const items: It[] = [];
   for (const r of m.lines) for (const c of r.comps) for (const s of compShapes(c, valveBox)) items.push({ line: r.no, tag: c.tag, s, box: boxOf(s) });
   const parentOf = new Map<string, string>(), tees: { parent: string; at: V3; C: number }[] = [];
-  for (const r of m.lines) { if (r.from.startsWith('tap ')) parentOf.set(r.no, r.from.slice(4)); if (r.to.startsWith('tap ')) parentOf.set(r.no, r.to.slice(4)); if (r.from.startsWith('PSV on ')) parentOf.set(r.no, 'PSV:' + r.from.slice(7)); }
+  for (const r of m.lines) { if (r.from.startsWith('tap ')) parentOf.set(r.no, r.from.slice(4)); if (r.to.startsWith('tap ')) parentOf.set(r.no, r.to.slice(4)); if (r.from.startsWith('PSV on ')) parentOf.set(r.no, 'PSV:' + r.from.slice(7));
+    if (r.kind === 'stub' && r.from.startsWith('tap ') && r.to === 'PSV') parentOf.set(r.no, r.from.slice(4)); }
   for (const r of m.lines) for (const t of r.comps.filter(c => c.kind === 'tee')) tees.push({ parent: r.no, at: teeOutlet(t), C: teeC(pipeDims(t.NPS, t.cls).OD) });
   const rvOf = new Map(m.lines.filter(r => r.service === 'RV').map(r => ['PSV:' + r.from, r.no] as const));
+  for (const r of m.lines) for (const o of r.comps.filter(c => c.kind === 'olet')) if (o.onRun) tees.push({ parent: o.onRun, at: o.a, C: (pipeDims(Number(o.key.split('|')[1]), o.cls).OD / 2 + 6) / 2 });   // SW-SWT-6: the branch outlet on its run
+  for (const r of m.lines) for (const c of r.comps.filter(x => x.kind === 'valve' && /VLV\|(TWAY|FWAY)/.test(x.key))) tees.push({ parent: r.no, at: origin(c), C: len(sub(c.b, c.a)) / 2 });   // valve stations (3W-1, 4W-1)
+  for (const r of m.lines) if (r.from.startsWith('tap ')) { const p = m.lines.find(x => x.no === r.from.slice(4)); if (p && r.service === 'RV') for (const f of m.lines) if (f.from === 'PSV on ' + r.no) parentOf.set(f.no, r.no); }
   const related = (a: It, b: It) => {
     const pa = parentOf.get(a.line), pb = parentOf.get(b.line);
     if (pa && (pa === b.line || rvOf.get(pa) === b.line)) return true;
@@ -232,8 +248,8 @@ export function segBox(a: V3, b: V3, mn: V3, mx: V3): number {
 }
 
 /** SW-PS-7 spans on horizontal runs; SW-PS-8 a shoe, guide or anchor at every rack beam crossed */
-export function checkSupports(m: PipingModel): string[] {
-  const v: string[] = [], rk = DEMO_LAYOUT.rack;
+export function checkSupports(m: PipingModel, rk: { x0: number; x1: number; bentSpacing: number; halfWidth: number; tiers: readonly number[] } = DEMO_LAYOUT.rack): string[] {
+  const v: string[] = [];
   for (const r of m.lines) {
     if (r.kind === 'stub' || !r.ok) continue;
     const OD = pipeDims(r.NPS, r.cls).OD, span = OD >= 3.5 ? 240 : OD >= 2.375 ? 180 : 120;

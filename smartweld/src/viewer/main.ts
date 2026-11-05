@@ -15,6 +15,14 @@ import { generateInterior, type InteriorModel } from '../generator/interior';
 import { loadPiping, buildPipingObject, lineReport, plantSummary, pickedItem, itemRecord, itemReport, itemHighlight, classLegend, equipmentPickGroup, loadEquipment, equipmentReport, loadWOIndex, loadWO, loadCompletion, saveCompletion, woReport, loadImported, importedBlock } from './pipingView';
 import type { WorkOrder } from '../generator/workorders';
 import { classColour } from '../generator/lineclass';
+import { PLANTS, plantById } from '../generator/plants';
+import { setPlantBase } from './pipingView';
+
+// --- the plant shown (SW-PLANT-1/2): plant 1 or plant 2, remembered on this device ---
+let plantId = 'P1'; try { plantId = localStorage.getItem('sw-plant') ?? 'P1'; } catch { /* storage may be unavailable */ }
+if (!PLANTS.some(p => p.id === plantId)) plantId = 'P1';
+setPlantBase(plantId);
+const plantDef = () => plantById(plantId);
 
 const viewEl = document.getElementById('view')!, infoEl = document.getElementById('info')!, errEl = document.getElementById('err')!, entriesEl = document.getElementById('entries')!;
 
@@ -160,15 +168,20 @@ function drawProfile(outer: { x: number; y: number }[], inner?: { x: number; y: 
 // --- building ------------------------------------------------------------------
 let building: BuildingModel | null = null, interior: InteriorModel | null = null;
 function showBuilding(view: string, withInterior = false, piping?: { line?: string; item?: string; wo?: string }) {
-  if (!building) building = generateBuilding();
-  if (withInterior && !interior) interior = generateInterior();
+  const P = plantDef(), P2 = plantId !== 'P1';
+  if (!building) building = P.building();
+  if (withInterior && !interior) {
+    if (!P2) interior = generateInterior();
+    else { loadPiping().then(m => { if (!interior) interior = P.interior(m.cuts); showBuilding(view, withInterior, piping); }).catch(showError); return; }   // plant 2's gratings are cut where its lines pass (SW-PEN-1)
+  }
   const t0 = performance.now();
   const all = withInterior ? [...building.instances, ...interior!.instances] : building.instances;
   const shown = view === 'overview' || view === 'line-classes' || view === 'wo' || (piping && view !== 'walk') ? all.filter(i => !i.tags.includes('cladding') && !i.tags.includes('trim') && !i.tags.includes('roof-sheet')) : all; // cutaway: sheets and trim hidden
   const box = renderInstances(shown);
   const dr = building.drawing, L = dr.bays * dr.bayFt * 12, W = dr.widthFt * 12;
   grid.position.y = -dr.slabIn - 0.5;
-  if (view === 'interior') lookFrom([L * 0.75, 66, W * 0.3], [L * 0.1, 200, -W * 0.2]);
+  if (P2 && camP2(view, L, W)) { /* plant 2's own view points */ }
+  else if (view === 'interior') lookFrom([L * 0.75, 66, W * 0.3], [L * 0.1, 200, -W * 0.2]);
   else if (view === 'knee') lookFrom([L * 0.5 + 420, 250, W / 2 - 420], [L * 0.5, 340, W / 2 - 30]);
   else if (view === 'door') lookFrom([L * 0.1875 + 200, 70, W / 2 + 260], [L * 0.1875, 60, W / 2]);
   else if (view === 'corner') lookFrom([-240, 200, -W / 2 - 240], [L * 0.3, 150, 0]);
@@ -193,7 +206,7 @@ function showBuilding(view: string, withInterior = false, piping?: { line?: stri
   const equip = interior && withInterior ? interior.equipment.map(e => `${e.tag}: ${e.part.designation} (${e.part.weight.value.toFixed(0)} lb empty)`).join('; ') : '';
   const derivedAll = withInterior ? { ...building.derived, ...interior!.derived } : building.derived;
   const notesAll = withInterior ? [...building.notes, ...interior!.notes] : building.notes;
-  infoEl.innerHTML = `<h2>Demonstration plant — ${withInterior ? 'building and interior' : 'building shell'}</h2>
+  infoEl.innerHTML = `<h2>${P.name} — ${withInterior ? 'building and interior' : 'building shell'}</h2>
     <div class="cat">${dr.widthFt} ft × ${dr.bays * dr.bayFt} ft, eave ${dr.eaveFt} ft, slope ${dr.slopeRisePer12}:12 (drawing, SW-BLD-1). ${steelCount.toLocaleString()} steel parts, ${(total / 2000).toFixed(1)} tons. Built in ${((performance.now() - t0) / 1000).toFixed(1)} s.</div>
     <p class="notes">${notesAll.join(' ')}</p>
     ${equip ? `<p class="notes"><b>Equipment:</b> ${equip}</p>` : ''}
@@ -208,6 +221,19 @@ function showBuilding(view: string, withInterior = false, piping?: { line?: stri
 function lookFrom(eye: number[], target: number[]) {
   camera.position.set(eye[0], eye[1], eye[2]); controls.target.set(target[0], target[1], target[2]);
   camera.near = 1; camera.far = 20000; camera.updateProjectionMatrix(); controls.update(); needsRender = true;
+}
+
+/** plant 2's view points (its building is 250 × 100 ft with an outdoor area to the east) */
+function camP2(view: string, L: number, W: number): boolean {
+  const v: Record<string, [[number, number, number], [number, number, number]]> = {
+    interior: [[L * 0.75, 66, W * 0.3], [L * 0.1, 200, -W * 0.2]], knee: [[L * 0.5 + 420, 250, W / 2 - 420], [L * 0.5, 380, W / 2 - 30]], door: [[L * 0.1875 + 200, 70, W / 2 + 260], [L * 0.1875, 60, W / 2]],
+    corner: [[-240, 200, -W / 2 - 240], [L * 0.3, 150, 0]], rack: [[120, 90, 330], [900, 260, 0]], vessels: [[1100, 150, 220], [540, 200, 330]], stair: [[1200, 90, 500], [840, 150, 350]],
+    column: [[1200, 130, -150], [840, 180, -330]], tanks: [[3950, 220, 760], [3380, 120, 0]], pumps: [[1720, 72, 150], [2250, 30, 246]], bins: [[1500, 220, -260], [2300, 150, -510]], walk: [[L * 0.55, 66, 180], [L * 0.2, 120, 330]],
+    'piping-rack': [[300, 150, 260], [1100, 260, 0]], 'piping-pumps': [[1750, 120, 40], [2250, 60, 230]], 'piping-column': [[1010, 330, -90], [840, 220, -330]], 'piping-exchangers': [[1250, 140, 90], [1550, 80, 330]],
+    'piping-tanks': [[3950, 220, 760], [3380, 120, 0]], 'piping-bins': [[1500, 260, -240], [2300, 200, -510]], 'piping-above': [[L * 0.55, 2600, 40], [L * 0.55, 0, 0]], 'line-classes': [[L * 0.7, 900, 900], [L * 0.5, 120, 0]],
+    overview: [[L * 1.2, 900, W * 1.5], [L * 0.5, 60, 0]], wo: [[L * 1.2, 900, W * 1.5], [L * 0.5, 60, 0]],
+  };
+  const c = v[view]; if (!c) return false; lookFrom(c[0], c[1]); return true;
 }
 
 // --- plant piping (stage 5) ---------------------------------------------------------
@@ -368,11 +394,18 @@ const h = document.createElement('h2'); h.textContent = 'Building'; entriesEl.ap
 const buildingBtns: Record<string, HTMLButtonElement> = {};
 for (const [label, view] of [['Shell — exterior', 'exterior'], ['Shell — corner', 'corner'], ['Shell — interior', 'interior'], ['Shell — knee close-up', 'knee'], ['Shell — personnel door', 'door']])
   buildingBtns[view] = addButton(entriesEl, label, () => { location.hash = 'building:' + view; showBuilding(view); });
+// plant selector (SW-PLANT-1): switching plants reloads the data files from the plant's folder and rebuilds its steel
+const plantSel = document.getElementById('plant') as HTMLSelectElement | null;
+if (plantSel) {
+  for (const p of PLANTS) { const o = document.createElement('option'); o.value = p.id; o.textContent = p.name; plantSel.appendChild(o); }
+  plantSel.value = plantId;
+  plantSel.addEventListener('change', () => { plantId = plantSel.value; try { localStorage.setItem('sw-plant', plantId); } catch { /* ignore */ } setPlantBase(plantId); building = null; interior = null; pipingModel = null; errEl.style.display = 'none'; try { openFromHash(); } catch (e) { showError(e); } });
+}
 const hp = document.createElement('h2'); hp.textContent = 'Plant (building + interior)'; entriesEl.appendChild(hp);
-for (const [label, view] of [['Plant — walk (start)', 'walk'], ['Plant — pipe rack', 'rack'], ['Plant — vessel platforms', 'vessels'], ['Plant — stair tower', 'stair'], ['Plant — column & ladders', 'column'], ['Plant — tanks', 'tanks'], ['Plant — pumps', 'pumps'], ['Plant — cutaway overview', 'overview']])
+for (const [label, view] of [['Plant — walk (start)', 'walk'], ['Plant — pipe rack', 'rack'], ['Plant — vessel platforms', 'vessels'], ['Plant — stair tower', 'stair'], ['Plant — column & ladders', 'column'], ['Plant — bins & walkway (plant 2)', 'bins'], ['Plant — tanks', 'tanks'], ['Plant — pumps', 'pumps'], ['Plant — cutaway overview', 'overview']])
   buildingBtns['plant:' + view] = addButton(entriesEl, label, () => { location.hash = 'plant:' + view; showBuilding(view, true); });
 const hpp = document.createElement('h2'); hpp.textContent = 'Plant piping (stage 5)'; entriesEl.appendChild(hpp);
-for (const [label, view] of [['Piping — by line class', 'line-classes'], ['Piping — overview', 'overview'], ['Piping — pipe rack', 'piping-rack'], ['Piping — pumps', 'piping-pumps'], ['Piping — column', 'piping-column'], ['Piping — exchangers', 'piping-exchangers'], ['Piping — tanks', 'piping-tanks'], ['Piping — plan from above', 'piping-above'], ['Piping — walk (start)', 'walk']])
+for (const [label, view] of [['Piping — by line class', 'line-classes'], ['Piping — overview', 'overview'], ['Piping — pipe rack', 'piping-rack'], ['Piping — pumps', 'piping-pumps'], ['Piping — column', 'piping-column'], ['Piping — bins (plant 2)', 'piping-bins'], ['Piping — exchangers', 'piping-exchangers'], ['Piping — tanks', 'piping-tanks'], ['Piping — plan from above', 'piping-above'], ['Piping — walk (start)', 'walk']])
   buildingBtns['piping:' + view] = addButton(entriesEl, label, () => { location.hash = 'piping:' + view; showBuilding(view, true, {}); });
 const hwo = document.createElement('h2'); hwo.textContent = 'Shutdown work orders (stage 7)'; entriesEl.appendChild(hwo);
 const woList = document.createElement('div'); entriesEl.appendChild(woList);

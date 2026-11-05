@@ -67,8 +67,8 @@ export function pipingDrawables(m: PipingModel, o: PipingOpts = {}): Drawable[] 
   for (const l of m.lines) {
     if (o.only && !o.only(l)) continue;
     const lc = o.lineColour?.(l);
-    for (const c of l.comps) {
-      if (c.kind === 'pipe') { const [, n, k] = c.key.split('|'); place(`PIPE|${n}|${k}|1.000`, c.T, c.tag, lc, Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2])); }
+    for (const c of [...l.comps, ...(l.side ?? []), ...(l.pens ?? [])]) {   // the chain, a valve station's spare-port closure, the sleeves (stage 9)
+      if (c.kind === 'pipe' || c.kind === 'nipple') { const k = c.key.split('|'); const ins = c.ins ? c.ins[0] + c.ins[1] : 0; place(c.kind === 'pipe' ? `PIPE|${k[1]}|${k[2]}|1.000${k[4] ? '|' + k[4] : ''}` : `NIP|${k[1]}|${k[2]}|1.000|${k[4]}`, c.T, c.tag, lc, Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]) + ins); }
       else place(c.key, c.T, c.tag, lc);
     }
     for (const w of l.welds) place(w.key, w.T, w.id, lc);

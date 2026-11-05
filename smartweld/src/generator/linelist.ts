@@ -5,11 +5,11 @@
 import type { PipeClass } from '../catalogue';
 import { DEMO_LAYOUT } from './interior';
 
-export type Service = 'P' | 'CWS' | 'CWR' | 'LS' | 'SC' | 'IA' | 'PA' | 'N' | 'W' | 'FL' | 'V' | 'D' | 'I' | 'SP' | 'HS' | 'RV';
+export type Service = 'P' | 'CWS' | 'CWR' | 'LS' | 'SC' | 'IA' | 'PA' | 'N' | 'W' | 'FL' | 'V' | 'D' | 'I' | 'SP' | 'HS' | 'RV' | 'CA';   // CA: conveying air with solids (plant 2)
 export type V3 = [number, number, number];
 export type EndRef =
   | { k: 'nozzle'; id: string }
-  | { k: 'tap'; line: string; valve: boolean; near?: 'from' | 'to' }   // tee on another line; take-off valve on the branch if `valve`
+  | { k: 'tap'; line: string; valve: boolean; near?: 'from' | 'to'; via?: 'tee' | 'olet' | 'tway' | 'fway' }   // branch from another line: tee or olet by size (SW-SWT-6) unless stated; a three-way or four-way valve station (3W-1, 4W-1); take-off valve on the branch if `valve`
   | { k: 'station'; at: V3 }                                           // hose station: free end, last leg downward to `at`, valve + blind
   | { k: 'blind' }                                                     // stub end: ball valve + blind flange
   | { k: 'psv'; nozzle: string };                                      // the outlet flange of the relief valve on `nozzle`
