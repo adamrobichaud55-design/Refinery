@@ -576,10 +576,11 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     const pOD = pipeDims(parent.NPS, parent.cls).OD, { out: C, half } = tapGeom(parent, child, via), Rp = R(parent.NPS, parent.cls, jointOf(parent)), used = taps.get(parentNo) ?? [];
     const cr = pipeDims(child.NPS, child.cls).OD / 2, flr = designFlange(child.NPS, child.cls).OD / 2, reach = C + stackLength(items) + R(child.NPS, child.cls, jointOf(child)) + H;
     const pid = lineId.get(parentNo)!, cid = lineId.get(child.no)!, rr = Math.max(cr, items.length ? flr : cr);
+    const station = via === 'tway' || via === 'fway';
     const columnFree = (at: V3, out: V3) => {
       for (let s = snapUp(pOD / 2 + 3); s <= reach + 1e-6; s += H) {
         const cc = g.cellOf(add(at, out, s)); if (!g.inside(cc[0], cc[1], cc[2])) return false;
-        if (!g.clear(cc[0], cc[1], cc[2], rr, [pid, cid])) return false;
+        if (!g.clear(cc[0], cc[1], cc[2], rr, station ? [cid] : [pid, cid])) return false;   // a station's branch may not run into the parent's own end stack
       }
       return true;
     };
@@ -856,6 +857,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   // ---- supports (SW-PS-7..12) ----
   const HANG_FROM = (tag: string) => !/equipment|pad|grout|ladder|guardrail|cage|rail|tread|stair|grating|cladding|door|slab|base-plate|anchor|weld|bolt|clip|column/.test(tag);
   /** lowest steel directly above p that a hanger rod can reach, with the rod path clear of other lines */
+  let dbgHang = false;
   const steelAboveExact = (p: V3, r: number, id: number): number | null => {
     let best = Infinity;
     for (let y = Math.floor((p[1] + r) / SB); y <= Math.floor(plant.grid.y1 / SB); y++) for (const dz of (P2 ? [-1, 0, 1] : [0])) for (const i of sidx.get(`${Math.floor(p[0] / SB)},${y},${Math.floor(p[2] / SB) + dz}`) ?? []) {   // plant 2: the purlin bridge reaches a cell either side
@@ -870,8 +872,9 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
       }
       if (bottom > p[1] + r + 6 && bottom < best) best = bottom;
     }
+    if (dbgHang) console.log('   steel above', p.map(v => v.toFixed(0)).join(','), 'best', isFinite(best) ? best.toFixed(0) : 'none');
     if (!isFinite(best) || best - p[1] > 240) return null;                                   // rods up to 20 ft (SW-PS-9)
-    for (let y = p[1] + r + 3; y < best - 6; y += H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return null; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id && o !== STATIC) return null; }
+    for (let y = p[1] + r + 3; y < best - 6; y += H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return null; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id && o !== STATIC) { if (dbgHang) console.log('   rod blocked at y', y.toFixed(0), 'by', o); return null; } }
     return best;
   };
   /** clear path straight down to the floor for a stanchion */
@@ -923,7 +926,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
         for (let d = 0; d <= span; d += 6) { if (target - d > prev + 12) cands.push(target - d); if (d && target + d <= prev + span && target + d < L - 6) cands.push(target + d); }
         cands.sort((u, v) => Math.abs(u - target) - Math.abs(v - target));
         let placed = -1;
-        const dbg = envVar("PIPE_DEBUG_LINE") === run.no;
+        const dbg = envVar("PIPE_DEBUG_LINE") === run.no; dbgHang = dbg;
         if (dbg) console.log(run.no, 'run', sr.a, sr.b, 'prev', prev, 'target', target, 'crossings', crossings);
         for (const sPos of cands) {
           const p = add(sr.a, w, sPos); if (!clearOf(p, 3)) { if (dbg) console.log('  ', sPos, 'not clear of fittings'); continue; }
