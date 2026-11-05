@@ -133,6 +133,33 @@ editing one rule in `DESIGN_BASIS.md` and its code, without touching anything el
       the reverse, and which version applies by date?
    The answer is recorded as the `licenceReview` reference in the set's receipt; scoring stays locked
    until it and the designer's contract reference are both recorded.
+7. **Piping component files (PCF)** (DESIGN_BASIS.md SW-PCF-1..4, PROVENANCE P-68). SmartWeld writes
+   one plain-text line file per line in the common format that isometric tools read, so the designer
+   imports lines instead of modelling them and SmartWeld's own generator reads the same files. What
+   counsel should know, and the questions left:
+   1. **Nothing was copied.** The writer (`src/exchange/pcf.ts`) was written from working knowledge
+      of what a line file contains. No specification document, sample file, software or key list was
+      consulted or reproduced; the record vocabulary (PIPELINE-REFERENCE, END-POINT, CENTRE-POINT,
+      BRANCH1-POINT, SKEY, ITEM-CODE, MATERIALS) is the functional structure every writer of the
+      format uses, and the four-letter symbol keys are SmartWeld's own convention
+      (`tools/pcf-mapping.md`). The writer contains no third-party code.
+   2. **A format is functional structure.** SmartWeld's position is that writing or reading a data
+      format for interoperability does not reproduce any protected expression; the many commercial
+      products that write and read this format do so on the same basis. Counsel is asked to confirm
+      that reading, and to say whether any jurisdiction of interest treats a format specification
+      differently.
+   3. **A product name inside the file.** The conventional first line of such a file names the
+      isometric product the format grew up with (`ISOGEN-FILES`). SmartWeld writes it only so that
+      importers recognise the file; it does not use that name, or any vendor's name, in its own
+      product, documentation or marketing. Counsel is asked whether that keyword should be dropped
+      from the files (the writer can omit it in one line) and whether any claim of compatibility may
+      be made in marketing.
+   4. **The designer's import.** Importing SmartWeld's files into his licensed products and exporting
+      drawings is ordinary licensed use; item 6 above covers whether those exports may be used to test
+      SmartWeld's software, and the services agreement covers ownership of the exports.
+   5. **SmartWeld's own reader.** The owner's generator will read the same files through SmartWeld's
+      own code built from the mapping table, with no third-party reader library (DESIGN_BASIS §0.1,
+      SW-LIC-*), so no licence attaches to the reading side either.
 
 ## 5. Record of SmartWeld's direction (human contribution)
 
