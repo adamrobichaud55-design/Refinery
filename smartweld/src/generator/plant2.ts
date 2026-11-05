@@ -254,7 +254,7 @@ export function buildLineList2(): LineDef[] {
   const o201 = proc(nz('E-201-N2'), nz('V-201-N1'), 4, 'P300', true); proc(nz('E-202-N2'), tap(o201, false, 'tway'), 4, 'P300');   // the second cooler's outlet combines by a three-way
   proc(tap(o201, false, 'fway'), nz('V-202-N1'), 4, 'P300', true);                            // the four-way switches the adsorbers (SW-LL-7: control valve)
   const f201 = proc(nz('V-201-N2'), nz('C-201-N1'), 4, 'P300', true); proc(nz('V-202-N2'), tap(f201), 4, 'P300', true);
-  proc(nz('C-201-N2'), nz('D-201-N1'), 6, 'P300', true);                                      // overhead pressure control (SW-LL-7)
+  const ovh = proc(nz('C-201-N2'), nz('D-201-N1'), 6, 'P300', true);                          // overhead pressure control (SW-LL-7)
   const s201 = proc(nz('D-201-N2'), nz('P-201A-S'), 4, 'P300'); proc(tap(s201), nz('P-201B-S'), 4, 'P300');
   const r201 = proc(nz('P-201A-D'), nz('C-201-N4'), 3, 'P300', true); proc(nz('P-201B-D'), tap(r201), 3, 'P300');
   const s202 = proc(tap(s201), nz('P-202A-S'), 4, 'P300'); proc(tap(s202), nz('P-202B-S'), 4, 'P300');
@@ -326,7 +326,8 @@ export function buildLineList2(): LineDef[] {
   for (const no of processLines) add(q++, 'I', 0.75, 'P300', tap(no, true), { k: 'blind' }, 'stub');
   const fromId = (no: string) => { const l = L.find(x => x.no === no)!; return l.from.k === 'nozzle' ? l.from.id : ''; };
   const toId = (no: string) => { const l = L.find(x => x.no === no)!; return l.to.k === 'nozzle' ? l.to.id : ''; };
-  for (const no of processLines.filter(n => /-D$/.test(fromId(n)))) add(q++, 'SP', 0.75, 'P300', tap(no, true), { k: 'blind' }, 'stub');
+  for (const no of processLines.filter(n => /A-D$/.test(fromId(n)))) { add(q++, 'SP', 0.75, 'P300', tap(no, true), { k: 'blind' }, 'stub'); add(q++, 'SP', 0.75, 'P300', tap(no, true), { k: 'blind' }, 'stub'); }   // SW-LL-7: a pump pair's two sample points on its common discharge
+  add(q++, 'SP', 0.75, 'P300', tap(ovh, true), { k: 'blind' }, 'stub');   // and one on the column overhead
   for (const no of processLines.filter(n => /-S$/.test(toId(n)))) add(q++, 'I', 0.75, 'P300', tap(no, true), { k: 'blind' }, 'stub');
   // ---- header drains (one at each end) and a high-point vent on every header ----
   q = 8201;

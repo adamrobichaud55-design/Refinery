@@ -2247,6 +2247,9 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
   - the pumps' thermal-relief outlets are 1 in lines (the exchangers' 1-1/2 in), so the socket-weld
     flare lines come in two sizes; the tanks' and silos' vent nozzles are 3 in (swaged to the
     1 in vent), the receivers' and exchangers' 2 in;
+  - the two sample points of a pump pair stand on the pair's common discharge line (the second
+    pump's own line is a short jumper into it, with no room for instrument, relief and sample
+    taps together), and one sample point stands on the column overhead;
   - control stations at a header take-off would reach the rafters above the top tier, so the lines
     into headers (the air receiver's two, the condensate returns) carry a check valve only, and
     the control valves of SW-LL-3 stand instead on the second cooler's and heater's feeds, the
