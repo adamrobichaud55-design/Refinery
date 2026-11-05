@@ -350,7 +350,7 @@ export const PLANT2: PlantDef = {
     A240: { name: 'Solids', equipment: BINS2 },
     A250: { name: 'Pipe rack', equipment: [] },
   },
-  pilot: ['6"-P150-P-1201', '3/4"-P150-W-3217', '1.5"-P150-FL-4230'],
+  pilot: ['6"-P150-P-1201', '3/4"-P150-W-3221', '1"-P150-FL-4230', '1"-P150-HS-5202'],   // a butt-weld process line, a threaded seal flush, a socket-weld relief outlet, a hose station
   paths: { piping: 'public/plants/P2/plant-piping.json', groundtruth: 'public/plants/P2/groundtruth', answerKey: 'eval/P2/answer-key.json', designer: 'downloads/designer-package-P2' },
 };
 export type { BuildingModel };
