@@ -58,7 +58,7 @@ describe('exchange package for a piping designer (SW-XCH-1..5)', () => {
     const readme = readFileSync(new URL('README.md', dir), 'utf8');
     expect(readme).not.toContain('{{'); expect(readme).toContain('Confidential'); expect(readme).toContain('Keep our tag');
     const files: string[] = []; const walk = (d: string) => { for (const n of readdirSync(d)) { const p = join(d, n); if (statSync(p).isDirectory()) walk(p); else files.push(p); } }; walk(dir.pathname);
-    for (const f of files) expect(/\.(csv|json|md|txt)$/.test(f), f).toBe(true);
+    for (const f of files) expect(/\.(csv|json|md|txt|pcf)$/.test(f), f).toBe(true);   // SW-PCF-1: the line files are plain text too
     for (const line of readFileSync(new URL('MANIFEST.txt', dir), 'utf8').split('\n').filter(l => /^[0-9a-f]{64}  /.test(l))) {
       const [h, p] = [line.slice(0, 64), line.slice(66)];
       expect(createHash('sha256').update(readFileSync(new URL(p, dir))).digest('hex'), p).toBe(h);
