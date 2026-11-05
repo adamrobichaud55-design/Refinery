@@ -7,7 +7,7 @@ export type PartKind =
   | 'Z' | 'CS' | 'ROD' | 'PANEL' | 'TRIM' | 'CONCRETE' | 'DOOR_LEAF' | 'DOOR_CURTAIN' | 'DOOR_DRUM' | 'FILLET_WELD_AROUND'
   | 'GRATING' | 'GRATING_TREAD' | 'CAGE_HOOP' | 'VESSEL_V' | 'VESSEL_H' | 'EXCHANGER' | 'PUMP' | 'TANK'
   | 'PIPE' | 'FLANGE' | 'BLIND' | 'GASKET' | 'STUD' | 'VALVE'
-  | 'ELBOW' | 'TEE' | 'REDUCER' | 'CAP' | 'BUTT_WELD' | 'SUPPORT';
+  | 'ELBOW' | 'TEE' | 'REDUCER' | 'CAP' | 'BUTT_WELD' | 'SUPPORT' | 'FITTING' | 'HOPPER';
 
 export type Category = 'section' | 'plate' | 'hardware' | 'weld' | 'sheet' | 'non-steel' | 'equipment' | 'piping' | 'valve';
 
@@ -41,6 +41,9 @@ export const DEFAULT_MATERIAL: Material = {
   grade: 'Grade 36',
   Fy: { value: 36, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum yield strength (grade stated on drawing)' },
 };
+
+/** forged small-bore fittings and valve bodies (SW-SWT-1): the forging grade of SW-FLG */
+export const FORGING_GRADE_SB: Material = { grade: 'Grade 36 forging', Fy: { value: 36, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum yield strength (grade stated on drawing)' } };
 
 export const clamp = (x: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, x));
 

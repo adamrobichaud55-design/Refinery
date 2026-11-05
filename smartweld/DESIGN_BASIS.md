@@ -1928,3 +1928,288 @@ consults no outside format description (PROVENANCE P-62).
   - asks him to return his bill of materials as a CSV report with the drawings;
   - states that the contents are SmartWeld's confidential work.
   A manifest lists every file with its SHA-256. The package holds no drawing and no outside material.
+
+---
+
+# Stage 9 — The coverage plant (plant 2), socket-weld and threaded piping, and structural erection drawings
+
+Written before any stage-9 code, at the owner's instruction (PROVENANCE P-66): a second plant, built
+so that every symbol of the owner's isometric generator appears at least 20 times, with the
+structural steel of a cladded building with platforms, kept in the model but out of the package
+sent to the piping designer, and with erection drawings and weld details for that steel. Plant 1
+(stages 1–8) is unchanged, so revision 1 of the owner's drawings still matches it.
+
+## 59. Plant definitions (`SW-PLANT-*`)
+
+- `SW-PLANT-1` A plant is one data object: an identifier, a building drawing (SW-BLD-1), a layout
+  (SW-LAY-*), a nozzle schedule (SW-NOZ-2), a line list (SW-LL-*), the joint type of each line
+  class by size (SW-SPEC-1) and, where it has one, an outdoor area. Every generator (building,
+  interior, nozzles, routing, ground truth, answer key, designer package, drawings) reads the plant
+  it is given and nothing else. Plant 1, `P1`, is the demonstration plant of stages 1–8 and keeps
+  its code and its files where they are. Plant 2, `P2`, is the coverage plant of this stage.
+- `SW-PLANT-2` Files: plant 1 keeps `public/plant-piping.json`, `public/groundtruth/`,
+  `public/workorders/`, `public/isometrics-imported/`, `eval/answer-key.json` and
+  `downloads/designer-package*`. Every other plant writes the same set under
+  `public/plants/<id>/`, `eval/<id>/` and `downloads/designer-package-<id>*`, and
+  `public/plants/index.json` lists the plants for the viewer. Reason: nothing of plant 1 moves, so
+  its drawings, receipts and hashes stay valid.
+- `SW-PLANT-3` Line numbers (SW-LL-1) of plant 2 use the sequence blocks of plant 1 plus 200
+  (process lines from 1201, headers from 2201, utility branches from 3201, relief from 4201,
+  hose stations from 5201, equipment stubs from 6201, line taps from 7201, header drains from
+  8201). Equipment tags carry the unit number 2 (V-201, P-201A …). Reason: no tag of plant 2
+  can be mistaken for one of plant 1 when both are open at once.
+- `SW-PLANT-4` Plant 2 building drawing (SW-BLD-1): width 100 ft out-to-out, 10 bays of 25 ft
+  (250 ft), eave 32 ft, roof slope 1 in 12, roof load 30 psf, wall load 20 psf, slab 6 in,
+  Grade 90 bolts, the same doors as plant 1. Reason: a wider, taller shell than plant 1 carries a
+  three-tier rack with a 2 ft working space above the top tier under the rafters (SW-RT-7) and
+  two equipment rows with 4 ft walkways.
+- `SW-PLANT-5` Plant 2 layout (SW-LAY-*, drawing): a rack 24 ft wide on the building centreline,
+  tiers at 16, 22 and 28 ft, bents at 20 ft from x = 20 ft to x = 230 ft; equipment either side on
+  pads as SW-LAY-2, with every nozzle on the 6 in routing grid (SW-RT-3). The equipment list is in
+  code (`PLANT2.layout`, basis drawing): two adsorber vessels V-201/V-202 with a shared platform and
+  stair tower as SW-LAY-3, a column C-201 with two platforms and ladders, a knock-out drum D-201
+  and an air receiver D-202, four exchangers E-201…E-204 in two pairs, ten pumps P-201A/B …
+  P-205A/B, a solids hopper H-201 over a rotary feeder RV-201 (SW-EQ-8, §62), and an outdoor
+  area east of the building with two storage tanks T-201/T-202 and a flare knock-out drum
+  D-203 on pads on grade. Reason: the pairs of exchangers carry three-way diverting valves, the
+  adsorbers a four-way switching valve, the hopper the rotary feeder, and the outdoor tanks give
+  lines that pass through the building wall (SW-PEN-2).
+- `SW-PLANT-6` Outdoor area: the routing grid extends 60 ft beyond the east end wall at grade;
+  outdoor lines run on sleepers (SW-PS-9 stanchions) and through the end wall in sleeves
+  (SW-PEN-2); outdoor equipment stands on 6 in pads on grade and its tanks have caged ladders as
+  SW-LAY-3. Reason: a tank farm is outside the process building in practice; a short run keeps the
+  routing search bounded.
+- `SW-PLANT-7` Areas (SW-AREA-1 applied to plant 2): A200 tank farm (outdoor), A210 adsorption
+  (V-201, V-202, C-201, D-201, D-202), A220 exchangers, A230 pumps, A240 solids (H-201,
+  RV-201), A250 pipe rack.
+
+## 60. Piping specifications: socket-weld and threaded joints (`SW-SPEC-*`, `SW-SWT-*`)
+
+Plant 1 is all butt-welded and flanged. Plant 2 adds the two small-bore joint types used in
+practice, each with its own fittings. Every dimension below is proportioned from the pipe of the
+size and class (SW-PIPE-2/3); nothing is taken from a published table.
+
+- `SW-SPEC-1` Joint type by line class and size. Butt welds (SW-PW-1) for NPS ≥ 2 in every class.
+  Small bore (NPS ≤ 1.5): socket welds in the hydrocarbon, steam and flare classes (H, S, F;
+  reason: a welded joint for a hazardous or hot fluid), threaded joints in the air, water and
+  condensate classes (G, W, C; reason: a low-hazard utility, taken apart for maintenance). A branch
+  takes the joint type of its own class and size. Plant 1's classes keep butt welds at every size
+  (stated).
+- `SW-SWT-1` Socket: a counterbore of diameter OD + 1/16 in (so the pipe slips in) and depth
+  s = roundup( max(3/8 in, OD/3), 1/16 in ). The pipe is inserted to the bottom and drawn back
+  1/16 in (a gap, so the weld does not crack when the pipe expands against the socket bottom).
+  The fitting's wall around the socket is t_f = roundup(1.5 t_pipe, 1/16 in), minimum 3/16 in
+  (reason: a forged body is made thicker than the pipe it joins; the socket wall must carry the
+  weld's shrinkage without distortion). The socket weld is a fillet at the mouth, leg
+  w = roundup(1.4 t_pipe, 1/16 in): its throat (0.707 w ≈ t_pipe) then equals the pipe wall, so
+  the joint is as strong as the pipe. Socket welds are weld records of type `SW` (SW-PW-3), shop
+  or field by SW-PW-2.
+- `SW-SWT-2` Threads: SmartWeld's pipe thread has depth h_t = 1/32 in + OD/40 and engagement length
+  L_t = roundup( max(3/8 in, 0.4 OD), 1/16 in ). Pipe in a threaded class is supplied with wall
+  t_th = roundup(t_pipe + h_t, 1/32 in), so the full pressure wall remains under the thread root
+  (reason: the thread is cut into the wall). A threaded end on a fitting is a bore of diameter
+  OD − 2 h_t over L_t; the pipe enters by L_t. Threads are not modeled as helices (as SW-B-1); a
+  threaded joint has no weld record.
+- `SW-SWT-3` Socket-weld and threaded elbows (90° and 45°): a forged block whose passage of bore D
+  turns on a centreline radius r_c = OD (reason: the smallest radius that leaves the inner wall of
+  the passage smooth is OD/2; one OD gives a gentle turn without a large block). From the tangent
+  point each leg runs straight t_f (a heat sink for the weld) and then the socket s or thread L_t,
+  so the centre-to-mouth A = r_c + t_f + e with e = s (SW) or L_t (TH). The body is a cylinder of
+  diameter OD + 2 t_f along each leg with a sphere of the same diameter at the corner.
+- `SW-SWT-4` Socket-weld and threaded tees (equal and reducing): a forged block with run and branch
+  passages; centre-to-mouth C_s = OD/2 + t_f + e on the run and the branch (reason: the body must
+  pass the branch bore and leave t_f before the socket). Body cylinders of diameter OD + 2 t_f.
+- `SW-SWT-5` Couplings: a full coupling is a cylinder of diameter OD + 2 t_f holding two sockets
+  (or threads) back to back with a stop ring t_f wide between them, length 2 e + t_f. A half
+  coupling is one socket (or thread) of length e + t_f with its other end welded. Couplings join
+  two pipe lengths of a small-bore line (SW-RT-5 applied to small bore: every 20 ft), and a half
+  coupling is the connection a threaded or socket-weld instrument tap (SW-LL-3 instruments)
+  makes on a vessel or line where no olet is used.
+- `SW-SWT-6` Branch outlets (olets): a forged outlet fitting welded to the run for a branch of at
+  most half the run's size (reason: the hole removes little of the run's wall, so a tee is not
+  needed; the fitting's base puts metal back around the hole). Body: a cylinder of diameter
+  OD_b + 2 t_f from a base that flares to OD_b + 4 t_f over a height 2 t_f, its bottom cut to the
+  run's outside surface (a saddle). Height from the run centreline to the outlet mouth:
+  OD_run/2 + 4 t_f + e, with e = s (socket), L_t (threaded) or 1 in (butt-weld bevel). The branch
+  weld to the run is a fillet all around the base, leg t_f, in the weld list as type `FW`.
+  Branches larger than half the run keep a tee (SW-FIT-2, SW-SWT-4).
+- `SW-SWT-7` Swages: a turned concentric reducing piece for small-bore size changes: ends of
+  length e_1, e_2 (socket s, thread L_t or a 1 in butt-weld straight, per end) on each side of a
+  cone of 12° half-angle (as SW-FIT-3), wall t_f of the larger size. Length = e_1 + e_2 +
+  (OD_1 − OD_2) / (2 tan 12°).
+- `SW-SWT-8` Nipples: a pipe piece of 12 in or shorter between two fittings of a small-bore line;
+  its description states the end preparation: `TBE` threaded both ends, `TOE` threaded one end
+  (the other plain, for a socket), `PBE` plain both ends (socket-weld). The shortest, `CLOSE`, is
+  2 L_t + 1/4 in long, threaded over its whole length. Longer pieces are pipe.
+- `SW-SWT-9` Plugs: a threaded plug closing a threaded end: a shank of length L_t and a head
+  across flats F = OD + 2 t_f (a wrench of the fitting's size fits it), height 0.6 F; hex head, or
+  square head for NPS ≤ 1/2 (reason: a square head is easier to turn with a small wrench). A
+  socket plug, closing an unused socket-weld port, is a round bar of diameter OD inserted to the
+  socket depth with a head of the same diameter 0.6 OD high, welded at the socket mouth (SW).
+- `SW-SWT-10` Forged valves with socket-weld or threaded ends (gate, globe, check, ball, needle;
+  §32): the type's internals and cavity are unchanged; the end flanges are replaced by forged
+  ends: the body's hubs (length h_hub, SW-FLG-6) continue as a cylinder of diameter OD + 2 t_f
+  holding the socket or thread, so the end-to-end length is w_body + 2 h_hub + 2 (t_f + e). Three-piece ball valves (SW-SWT-11) are the socket-weld ball
+  valve. The part key carries the end type: `RF` (flanged, the default), `SW` or `TH`.
+- `SW-SWT-11` Three-piece ball valve: the socket-weld ball valve's body is three pieces, a centre
+  body holding the ball and seats and two end pieces holding the sockets, drawn with their four
+  through bolts (SW-B-*, diameter max(1/4 in, D/6)), so the centre can be removed from the line
+  for seat replacement. Reason: a socket-welded valve cannot otherwise be taken out.
+- `SW-SWT-12` Slip-on and socket-weld flanges, spades and spectacle blinds: §61.
+
+## 61. Flanges added, blinds between flanges, and penetrations (`SW-FLG-10..13`, `SW-PEN-*`)
+
+- `SW-FLG-10` Slip-on flange: the SW-FLG ring of the size and class, bored to OD + 1/16 in so it
+  slips over the pipe, with a hub 0.75 t_f long of wall t_f at its back. The pipe end stops
+  t_pipe + 1/8 in short of the face (so the inside weld cannot foul the gasket). Two fillet welds:
+  at the hub back, leg t_pipe (SW-WD-1), and inside at the pipe end, leg t_pipe. Used for NPS ≥ 2
+  in the W and G classes at P150 (reason: easy to align on a low-pressure utility; two fillets
+  instead of one groove). Weld records: two `FW`.
+- `SW-FLG-11` Socket-weld flange: the ring with a hub of length s + t_f holding a socket
+  (SW-SWT-1); one fillet at the hub mouth. Used where a socket-weld line meets a flanged valve or
+  item. Weld record: one `SW`.
+- `SW-FLG-12` A flanged joint is the flange, the gasket, the mating flange and the stud set
+  (SW-FLG-4/7); its symbol follows its flange type (weld-neck, slip-on or socket-weld). Blind
+  flanges, spades and spectacle blinds close or sit in a joint.
+- `SW-FLG-13` Spade and spectacle blind: a plate inserted between two flanges with a gasket each
+  side. Thickness t_sp = roundup( (G/2) √(1.24 P / (0.6 F_y)), 1/8 in ), minimum 1/4 in (the blind
+  plate of SW-FLG-8 without the ring's minimum: it is held by the flanges, not bolted). The spade
+  is a disc of diameter BC − d (inside the bolt circle) with a handle 2 in wide reaching 2 in
+  past the flange OD, with a 3/4 in hole for hanging. The spectacle blind is a spade and a ring
+  (bore D, same outside diameter) joined by a web 2 in wide, turned about one stud; the ring sits
+  in the line when open. The joint's studs lengthen by t_sp + gasket (SW-FLG-7). Where: spectacle
+  blinds at the battery-limit flanges of lines leaving the building and at the equipment
+  isolation flanges of the adsorbers and exchangers; spades at spare nozzles and the far ends of
+  headers in place of a blind flange where the header will be extended (plant 2 line list).
+- `SW-PEN-1` Floor penetration: where a vertical line passes through a platform's grating, a
+  sleeve of pipe of the first size in the series whose OD ≥ OD_line + 1.5 in, wall of P150, from
+  1 in below the grating to 2 in above the walking surface (a curb that stops dropped objects
+  and keeps insulation off the grating), welded to a `PL1/4` collar 2 in wide that rests on the
+  bars (fillet SW-WD-1). The grating is cut round at the sleeve OD + 1/4 in (SW-GR-*). The sleeve
+  is an item of the line (kind `penetration`, loose) in the ground truth.
+- `SW-PEN-2` Wall penetration: where a line passes the building's steel line through the
+  cladding, a sleeve as SW-PEN-1 from 2 in inside the panel to 2 in outside it, with a `PL1/8`
+  escutcheon plate 4 in larger than the sleeve on the outer face (fasteners not modeled,
+  SW-CL-4). The panel is cut round at the sleeve OD + 1/4 in. Lines pass the end walls between
+  the wind posts and girts (SW-BLD-4, SW-CF-*): the routing grid treats posts and girts as
+  obstacles and the panels as passable, so a line crosses the wall where the search finds it free.
+- `SW-PEN-3` A penetration carries no weld to the pipe (the pipe slides in the sleeve).
+
+## 62. Valve types added, the rotary feeder and the hopper (§32 continued; `SW-EQ-8`)
+
+`SW-VLV-1` is amended: TYPE is also one of `TWAY` (three-way ball), `FWAY` (four-way plug) and
+`ROTARY` (rotary airlock feeder). Dimensions follow §31 and the form rules of §32A.
+
+- `3W-1` Three-way ball valve, L-port: the ball valve (BA-*) with a third port at 90° to the run
+  in the plane across the stem (local +x), the same bore, so the ball's L-shaped passage joins the
+  inlet to either outlet by a quarter turn. Body: the ball valve's cavity with a third hub and end
+  of the same form (flanged, or socket-weld as SW-SWT-10). Offered 1/2–4 in to P600. Reason: one
+  valve diverts flow between two parallel items (the exchanger pairs) without two block valves.
+- `4W-1` Four-way plug valve: the plug valve (PL-*) with four ports at 90° in the plane across the
+  stem, and a plug with two separate L-passages, so a quarter turn swaps the two pairs of
+  connections. Offered 1/2–4 in to P300. Where one port is not piped it is plugged (SW-SWT-9) and
+  the drawing says so. Reason: a single valve switches the two adsorber vessels between service
+  and regeneration.
+- `ROT-1` Rotary airlock feeder of nominal size N (in): a cast housing of inside diameter
+  D_r = 1.5 N and length N + 2 t_b holding a rotor of 8 vanes on a shaft of diameter max(1 in, N/6),
+  with square inlet and outlet openings N × N that change to round within transitions 0.5 N
+  high, ending in weld-neck-pattern flanges of size N (SW-FLG-*, as every other valve, SW-VLV-1)
+  so the feeder bolts to the hopper's outlet nozzle above and to the conveying line's tee below;
+  end plates with a bearing boss each side; a gear motor on one end with a cylinder of diameter
+  0.6 N and length N on a box foot. Face to face = D_r + 2 t_b + 2 × 0.5 N + 2 (t_f + h_hub).
+  Body wall t_b by SW-VLV-2 with D_c = D_r. Offered 4–12 in at P150.
+  Reason: the feeder meters solids from a hopper into a conveying line while keeping the pressure
+  boundary; the rotor pockets carry the solids round, so the housing is wider than the openings.
+- `SW-EQ-8` Solids hopper: a cylindrical bin of stated diameter and height with a conical bottom at
+  60° to the horizontal (reason: dry solids slide on a slope that steep) down to a round outlet
+  nozzle of the feeder's size (SW-NOZ-1), on four `W6` legs from a `PL1/2`
+  outlet flange ring to base plates on a pad, with a flat top plate carrying a 20 in manway and a
+  vent nozzle. Reason: 60° lets dry solids flow to the outlet; four legs clear the feeder and its
+  motor.
+
+## 63. Coverage of the owner's symbol set (`SW-COV-*`)
+
+- `SW-COV-1` The owner's isometric generator draws a fixed set of symbols (sent as an image in chat,
+  viewed only). SmartWeld's symbol classes, named in SmartWeld's own words, each map to model items
+  as follows (the item type, its ends and, for supports, its kind):
+
+  | Class | Model items |
+  |---|---|
+  | `gate_valve`, `globe_valve`, `check_valve`, `ball_valve`, `butterfly_valve`, `plug_valve`, `needle_valve`, `control_valve`, `relief_valve`, `three_way_valve`, `four_way_valve`, `rotary_valve` | valves by type (any end type, except where a class below separates the end type) |
+  | `forged_gate_valve` (SW), `forged_gate_valve_th`, `ball_valve_3pc` (SW), `forged_check_valve_th`, `forged_globe_valve_th`, `gate_valve_th_plugged` | forged valves with the stated ends (SW-SWT-10/11); the plugged one carries a plug on its free end |
+  | `flange` (weld neck), `slip_on_flange`, `sw_flange`, `nozzle_flange` | flanged joints by flange type (SW-FLG-12) |
+  | `blind_flange`, `spade`, `spectacle` | blind flange; spade; spectacle blind |
+  | `elbow_90`, `elbow_45`, `tee`, `reducer`, `eccentric_reducer`, `cap` | butt-weld fittings |
+  | `sw_elbow_90`, `sw_elbow_45`, `sw_tee`, `socket_weld` | socket-weld fittings; every socket weld |
+  | `coupling_sw`, `coupling_th` | couplings by end type |
+  | `branch_outlet`, `branch_outlet_sw`, `branch_outlet_th` | olets by outlet end |
+  | `swage`, `swage_sw`, `swage_th` | swages by end type (mixed ends count with their larger end) |
+  | `nipple`, `plug` | nipples (TBE/TOE/CLOSE), plugs |
+  | `weld`, `weld_field` | butt welds, shop and field |
+  | `pipe_support`, `dummy_leg`, `anchor` | hangers, shoes, guides, stanchions, trapezes; trunnions; anchors |
+  | `floor_penetration`, `wall_penetration` | sleeves (SW-PEN-1/2) |
+  | `flow_arrow` | not a part (one per line) |
+
+- `SW-COV-2` Plant 2 holds at least 20 instances of every class of SW-COV-1 except `flow_arrow`,
+  spread over at least 4 lines and, where the class has sizes, at least 2 sizes. A tool counts them
+  from the ground truth and a test fails below the floor. Reason: the owner's instruction
+  ("captures every item at least 20 times"); 20 examples of each symbol let a detector's recall on
+  it be measured to about ±10 %.
+- `SW-COV-3` Plant 2's answer key (SW-EVAL-3) uses the classes of SW-COV-1 as its fine classes and
+  the groups valve, flange, fitting, weld, support, penetration as its coarse classes. (`anchor` is a
+  fine class only where the owner's generator gives it its own symbol; the owner's sheet draws it
+  as a pipe support with the type in the bill, so for scoring it counts under `pipe_support` as
+  P-65 decided.)
+
+## 64. Structural steel erection drawings and weld details (`SW-ERD-*`)
+
+Drawn from the plant's structural model (the building and interior generators) with SmartWeld's
+own PDF writer (§55) and previewed with its own renderer (§56). Nothing of any outside drawing is
+used; the conventions below are SmartWeld's.
+
+- `SW-ERD-1` The set, one PDF per plant: (1) cover and sheet index; (2) general notes and the
+  symbol legend of SW-ERD-6; (3) anchor-bolt plan; (4) column schedule and base details;
+  (5) roof framing plan; (6) sidewall and endwall framing elevations; (7) typical frame
+  elevation with knee and ridge details; (8) rack framing plans per tier and a rack bent
+  elevation with strut, tab and bracing details; (9) platform framing plans with stair and ladder
+  elevations; (10) member schedule; (11) weld details, one per joint type, and the weld
+  schedule; (12) bolt schedule.
+- `SW-ERD-2` Marks: every distinct part (designation and length, to 1/16 in) of the structural
+  model gets one mark: C columns, R rafters, P wind posts, B beams, S struts, G girts, Z purlins,
+  X bracing rods, K stair stringers, L ladder rails, H guardrail, E end plates, BP base plates,
+  CL clips and tabs, AR anchor rods, numbered in the order met. Instances are counted. The
+  member schedule lists mark, designation, length, count, unit and total weight (from the parts,
+  K-1) and the rule that sized the part.
+- `SW-ERD-3` Projections: plans look down with east to the right and north up (SW-GT-2);
+  elevations look at the named face. Members are drawn as two parallel lines at their depth (or
+  flange width in plan), ends cut as modeled; plates as outlines; bolts as circles at their
+  positions; rods as single lines. Grid lines: letters across the width, numbers along the length,
+  dimensioned between. The scale is chosen so the view fits the sheet and is stated on it
+  (1/8 in = 1 ft, 1/4 in = 1 ft, or 1 in = 1 ft for details).
+- `SW-ERD-4` Marks are written at each member's mid-length; a mark that repeats in a row (purlins,
+  girts, rack struts) is written once with "typ." and its count. Elevations and plan dimensions
+  are in feet and inches (SW-U-2) to the member centreline or the steel line as the structural
+  model places them.
+- `SW-ERD-5` Details: each connection type of the model is drawn once at a larger scale as a
+  section through the joint showing the parts' true outlines from their profiles (§4–8), the
+  bolts, and the welds with the symbols of SW-ERD-6 and their sizes from SW-WD-*. Joint types:
+  column base (fillet all around, SW-PF-7), knee and ridge end plates (fillet all around, bolts
+  SW-PF-5), rack beam end plates, rack strut tabs (fillet, bolts), bracing rod ends, grating
+  clips, guardrail post plates, stair stringer bearings, vessel platform clips (SW-EQ-6), and
+  the pipe-support welds to steel (SW-PS-12) as a note.
+- `SW-ERD-6` Weld symbols (SmartWeld's own): a reference line with an arrow to the joint; a
+  filled right triangle on the line for a fillet weld, the leg size written before it and the
+  length after it (no length = the full joint); an open V for a complete-penetration groove
+  weld with the plate thickness; a small circle where the arrow leaves the line for "all
+  around"; a flag for a field weld; "typ." with a count where one symbol stands for many joints.
+  The legend (sheet 2) explains each.
+- `SW-ERD-7` The weld schedule lists every weld part of the structural model (fillet, fillet all
+  around, groove): mark, the joint it belongs to, type, size (leg or thickness), length, count,
+  unit and total weight (SW-WD-3/5), shop or field (field: every weld made at a bolted connection
+  on site is a shop weld on the shipped piece, so all welds of the model are shop welds except
+  the pipe-support welds to steel, which are field). The bolt schedule lists mark, diameter,
+  length, grip, grade and count (SW-B-*).
+- `SW-ERD-8` Output is deterministic; the drawings and their previews are regenerated by a tool and
+  checked by tests: every member instance of the model appears exactly once on a framing plan or
+  elevation, every weld part is in the weld schedule, and every number on the sheets comes from the
+  model.

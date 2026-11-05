@@ -109,10 +109,10 @@ export function buildGeometry(part: PartSpec): PartGeometry {
       solids.push({ name: 'hoop', role: 'steel', mesh: extrude({ outer: annularSector(R, R + t, a0, a1, 48) }, part.length!.value) });
       break;
     }
-    case 'VESSEL_V': case 'VESSEL_H': case 'EXCHANGER': case 'PUMP': case 'TANK':
+    case 'VESSEL_V': case 'VESSEL_H': case 'EXCHANGER': case 'PUMP': case 'TANK': case 'HOPPER':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData }[]) solids.push({ name: s.name, role: 'equipment', mesh: s.mesh });
       break;
-    case 'ELBOW': case 'TEE': case 'REDUCER': case 'CAP': case 'BUTT_WELD': case 'SUPPORT':
+    case 'ELBOW': case 'TEE': case 'REDUCER': case 'CAP': case 'BUTT_WELD': case 'SUPPORT': case 'FITTING':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData; role: Role }[]) solids.push({ name: s.name, role: s.role, mesh: s.mesh });
       break;
     case 'VALVE':
@@ -122,6 +122,7 @@ export function buildGeometry(part: PartSpec): PartGeometry {
       solids.push({ name: part.designation, role: 'pipe', mesh: extrude({ outer: circle(0, 0, v(d, 'OD') / 2, 48), inner: circle(0, 0, v(d, 'D') / 2, 48) }, part.length!.value) });
       break;
     case 'FLANGE': case 'BLIND': {
+      if (part.extra?.solids) { for (const s of part.extra.solids as { name: string; mesh: MeshData; role: Role }[]) solids.push({ name: s.name, role: s.role, mesh: s.mesh }); break; }   // slip-on and socket-weld flanges (SW-FLG-10/11)
       const f = part.extra!.design as FlangeDesign, blind = part.kind === 'BLIND';
       const bore = blind ? 0 : f.bore;
       const cells: MeshData[] = [];

@@ -9,7 +9,7 @@ setMaxCells(36);   // tessellation only: keeps the 300-build matrix fast; geomet
 const basisDoc = readFileSync(new URL('../DESIGN_BASIS.md', import.meta.url), 'utf8');
 const definedRules = new Set([...basisDoc.matchAll(/`(SW-[A-Z]+-\d+[a-z]?)`/g)].map(m => m[1]));
 // valve type rules are written as `G-1`, `GL-1` … under the SW-VLV family
-for (const m of basisDoc.matchAll(/`(G|K|GL|GY|GA|C|CL|CD|B|BT|BF|BL|BD|PL|DI|NE|PSV|CV|F)-(\d+)`/g)) definedRules.add(`SW-VLV-${m[1]}-${m[2]}`);
+for (const m of basisDoc.matchAll(/`(G|K|GL|GY|GA|C|CL|CD|B|BT|BF|BL|BD|PL|DI|NE|PSV|CV|F|3W|4W|ROT)-(\d+)`/g)) definedRules.add(`SW-VLV-${m[1]}-${m[2]}`);
 const SIZES = [0.5, 1, 2, 3, 4, 6, 8, 10, 12, 16, 24, 36, 48], CLASSES: PipeClass[] = CLASS_SERIES;
 
 describe('pipe (SW-PIPE-*)', () => {

@@ -4,6 +4,7 @@ import { drawing, rule, constant, type Dim } from '../../core/basis';
 import { roundUpTo } from '../../core/units';
 import { type PartSpec, type Material } from '../part';
 import { pipeDims, designFlange, CLASS_PRESSURE, SIZE_SERIES, CLASS_SERIES, type PipeClass, type FlangeDesign } from './pipe';
+import { smallBore, endLength } from './smallbore';
 import { hexHardware } from './hardware';
 import { revolve, extrude, transformMesh, signedVolume, mergeMeshes, helixTube, type MeshData, type Mat4 } from '../../geometry/mesh';
 import { circle, rect, regularHexagon, annularSector, arc, dedupe, roundedRect, type Polygon } from '../../geometry/polygon';
@@ -15,17 +16,21 @@ import { polygonize, type SDF } from '../../geometry/sdf';
 
 const RHO = K.STEEL_DENSITY_LB_IN3;
 const rhoDim = () => constant(K.STEEL_DENSITY_LB_FT3, 'K-1', 'Steel density', 'lb/ft3');
-export type ValveType = 'GATE' | 'KNIFE' | 'GLOBE' | 'YGLOBE' | 'AGLOBE' | 'CHECK' | 'LCHECK' | 'BALL' | 'BFLY' | 'LBFLY' | 'DBFLY' | 'PLUG' | 'DIAPH' | 'NEEDLE' | 'PSV' | 'CONTROL';
+export type ValveType = 'GATE' | 'KNIFE' | 'GLOBE' | 'YGLOBE' | 'AGLOBE' | 'CHECK' | 'LCHECK' | 'BALL' | 'BFLY' | 'LBFLY' | 'DBFLY' | 'PLUG' | 'DIAPH' | 'NEEDLE' | 'PSV' | 'CONTROL' | 'TWAY' | 'FWAY' | 'ROTARY';
+/** end connections (SW-VLV-1, SW-SWT-10): integral flanges, or forged socket-weld or threaded ends */
+export type ValveEnds = 'RF' | 'SW' | 'TH';
 export const VALVE_TYPES: { id: ValveType; name: string }[] = [
   { id: 'GATE', name: 'Gate, wedge, OS&Y' }, { id: 'KNIFE', name: 'Knife gate, lugged wafer' }, { id: 'GLOBE', name: 'Globe, T-pattern' }, { id: 'YGLOBE', name: 'Globe, Y-pattern' },
   { id: 'AGLOBE', name: 'Angle globe' }, { id: 'CHECK', name: 'Swing check' }, { id: 'LCHECK', name: 'Lift (piston) check' },
   { id: 'BALL', name: 'Ball, floating' }, { id: 'BFLY', name: 'Butterfly, wafer' }, { id: 'LBFLY', name: 'Butterfly, lugged' },
   { id: 'DBFLY', name: 'Butterfly, double-flanged, double-offset' }, { id: 'PLUG', name: 'Plug, lubricated taper' }, { id: 'DIAPH', name: 'Diaphragm, weir' }, { id: 'NEEDLE', name: 'Needle' },
   { id: 'PSV', name: 'Pressure safety valve' }, { id: 'CONTROL', name: 'Control, globe with diaphragm actuator' },
+  { id: 'TWAY', name: 'Three-way ball, L-port' }, { id: 'FWAY', name: 'Four-way plug' }, { id: 'ROTARY', name: 'Rotary airlock feeder' },
 ];
 export type ValveRole = 'casting' | 'closure' | 'stem' | 'polymer' | 'hardware' | 'operator';
 export interface ValveSolid { name: string; mesh: MeshData; role: ValveRole; material: string; count?: number }
 export const CASTING: Material = { grade: 'Grade 36 casting', Fy: { value: 36, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum yield strength (grade stated on drawing)' } };
+export const FORGING: Material = { grade: 'Grade 36 forging', Fy: { value: 36, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum yield strength (grade stated on drawing)' } };
 export const BAR60: Material = { grade: 'Grade 60 bar', Fy: { value: 60, unit: 'ksi', basis: { kind: 'drawing' }, label: 'Minimum yield strength (grade stated on drawing)' } };
 const N = 48;
 
@@ -35,6 +40,7 @@ const OFFER: Record<ValveType, [number, number, PipeClass]> = {
   CHECK: [2, 48, 'P4800'], LCHECK: [0.5, 6, 'P4800'], BALL: [0.5, 6, 'P600'],
   BFLY: [2, 24, 'P300'], LBFLY: [2, 24, 'P300'], DBFLY: [3, 48, 'P1200'], PLUG: [0.5, 12, 'P600'], DIAPH: [0.5, 12, 'P300'],
   NEEDLE: [0.25, 1, 'P4800'], PSV: [1, 8, 'P4800'], CONTROL: [0.5, 12, 'P4800'],
+  TWAY: [0.5, 4, 'P600'], FWAY: [0.5, 4, 'P300'], ROTARY: [4, 12, 'P150'],
 };
 export function isOffered(type: ValveType, NPS: number, cls: PipeClass): boolean {
   const [lo, hi, maxCls] = OFFER[type];
@@ -330,7 +336,7 @@ function globeBodySDF(c: Common, zi: number, tilt = 0): { body: SDF; info: Globe
 // =====================================================================================================
 // Type builders
 // =====================================================================================================
-type Build = (b: ValveSolid[], NPS: number, cls: PipeClass, dims: Record<string, Dim>, notes: string[]) => { c: Common; op: Operator; extra?: Record<string, unknown> };
+type Build = (b: ValveSolid[], NPS: number, cls: PipeClass, dims: Record<string, Dim>, notes: string[], ends: ValveEnds) => { c: Common; op: Operator; extra?: Record<string, unknown> };
 const yokeTa = (c: Common) => Math.max(0.5, 0.15 * c.D, c.tb);
 
 // ---- fabricated or machined designs (knife gate, needle) ----
@@ -819,18 +825,122 @@ const buildControl: Build = (b, NPS, cls, dims, notes) => {
   return { c, op: { kind: 'none', rimForce: 0, T: 0 }, extra: { actuator: { Da, Fa }, stem: st, spring: spr } };
 };
 
-const BUILDERS: Record<ValveType, Build> = { GATE: buildGate, KNIFE: buildKnife, GLOBE: buildGlobe, YGLOBE: buildYGlobe, AGLOBE: buildAGlobe, CHECK: buildCheck, LCHECK: buildLCheck, BALL: buildBall, BFLY: buildBfly, LBFLY: buildLBfly, DBFLY: buildDBfly, PLUG: buildPlug, DIAPH: buildDiaph, NEEDLE: buildNeedle, PSV: buildPSV, CONTROL: buildControl };
 
-export function makeValve(id: string, type: ValveType, NPS: number, cls: PipeClass): PartSpec {
+// ---- side ports (3W-1, 4W-1): a hub and end along ±x from the body, the same end form as the run ----
+function sidePort(b: ValveSolid[], c: Common, zi: number, sx: 1 | -1, ends: ValveEnds, name: string) {
+  const { D, tb, f } = c;
+  const hub = revolve([{ r: D / 2, z: 0 }, { r: D / 2 + tb, z: 0 }, { r: D / 2 + tb, z: zi - f.hubLen }, { r: D / 2 + 2 * tb, z: zi }, { r: D / 2, z: zi }], N);
+  const toSide: Mat4 = multiply(rotateY((sx * Math.PI) / 2), translate(0, 0, 0));
+  push(b, `${name} hub`, transformMesh(hub, toSide));
+  if (ends === 'RF') { push(b, `${name} end flange`, transformMesh(flangeRing(f, zi, D), toSide)); push(b, `${name} raised face`, transformMesh(ringZ(f.rfOD / 2, D / 2, zi + f.tf, zi + f.tf + f.rfH), toSide)); }
+  else { const sb = smallBore(c.NPS, c.cls), e = endLength(sb, ends), ro = sb.OD / 2 + sb.tf, ri = ends === 'SW' ? sb.socketBore / 2 : sb.threadBore / 2;
+    push(b, `${name} forged end`, transformMesh(mergeMeshes([ringZ(ro, D / 2, zi - 0.01, zi + sb.tf), ringZ(ro, ri, zi + sb.tf, zi + sb.tf + e)]), toSide)); }
+}
+/** L-port ball (3W-1): two half bores meeting at the centre, along +z and +x */
+function lBall(Rb: number, D: number): MeshData {
+  const f = S.subtract(S.sphere(0, 0, 0, Rb), S.cylZ(D / 2, 0, Rb + 1), S.cylX(D / 2, 0, Rb + 1));
+  const m = polygonize(f, [-Rb - 0.1, -Rb - 0.1, -Rb - 0.1], [Rb + 0.1, Rb + 0.1, Rb + 0.1], Math.max(0.05, D / 10));
+  if (signedVolume(m) < 0) for (let q = 0; q < m.indices.length; q += 3) { const t = m.indices[q + 1]; m.indices[q + 1] = m.indices[q + 2]; m.indices[q + 2] = t; }
+  return m;
+}
+const buildTway: Build = (b, NPS, cls, dims, notes, ends) => {
+  const r = buildBall(b, NPS, cls, dims, notes, ends), zi = r.c.F2F / 2 - r.c.f.tf;
+  const ball = b.findIndex(s => s.name.startsWith('ball ')); if (ball >= 0) b[ball] = { ...b[ball], mesh: lBall(dims.ballD.value / 2, r.c.D) };
+  sidePort(b, r.c, zi, 1, ends, 'side port');
+  notes.push('Third port at 90° across the stem with an L-port ball: a quarter turn joins the inlet to either outlet (SW-VLV-3W-1).');
+  dims.sideC = rule(zi + r.c.f.tf, 'SW-VLV-3W-1', 'Centre to side port face');
+  return r;
+};
+const buildFway: Build = (b, NPS, cls, dims, notes, ends) => {
+  const r = buildPlug(b, NPS, cls, dims, notes, ends), zi = r.c.F2F / 2 - r.c.f.tf;
+  sidePort(b, r.c, zi, 1, ends, 'side port A'); sidePort(b, r.c, zi, -1, ends, 'side port B');
+  notes.push('Four ports at 90° across the stem; the plug carries two L-passages so a quarter turn swaps the two pairs (SW-VLV-4W-1). Passages not cut (shown closed).');
+  dims.sideC = rule(zi + r.c.f.tf, 'SW-VLV-4W-1', 'Centre to side port faces');
+  return r;
+};
+/** a ring of n points on a rounded square of half-side h (corner radius rc) in the plane at z */
+const squareRing = (h: number, rc: number, n: number, z: number): [number, number, number][] => Array.from({ length: n }, (_, i) => {
+  const a = (2 * Math.PI * (i + 0.5)) / n, cx = Math.cos(a), sy = Math.sin(a), k = Math.max(Math.abs(cx), Math.abs(sy));
+  const px = (cx / k) * h, py = (sy / k) * h;                                        // on the square
+  const qx = Math.sign(px) * Math.max(0, Math.abs(px) - rc), qy = Math.sign(py) * Math.max(0, Math.abs(py) - rc);   // rounded corners
+  const dx = px - qx, dy = py - qy, dl = Math.hypot(dx, dy) || 1;
+  return [qx + (dx / dl) * Math.min(rc, dl), qy + (dy / dl) * Math.min(rc, dl), z];
+});
+const circleRing = (r: number, n: number, z: number): [number, number, number][] => Array.from({ length: n }, (_, i) => { const a = (2 * Math.PI * (i + 0.5)) / n; return [r * Math.cos(a), r * Math.sin(a), z]; });
+/** a shell between two loops of rings: outer surface, inner surface and the two end annuli (closed) */
+function loftShell(oA: [number, number, number][], oB: [number, number, number][], iA: [number, number, number][], iB: [number, number, number][]): MeshData {
+  const n = oA.length, positions: number[] = [], indices: number[] = [];
+  for (const ring of [oA, oB, iA, iB]) for (const p of ring) positions.push(p[0], p[1], p[2]);
+  const O0 = 0, O1 = n, I0 = 2 * n, I1 = 3 * n;
+  for (let k = 0; k < n; k++) {
+    const k2 = (k + 1) % n;
+    indices.push(O0 + k, O0 + k2, O1 + k2, O0 + k, O1 + k2, O1 + k);          // outer
+    indices.push(I0 + k, I1 + k2, I0 + k2, I0 + k, I1 + k, I1 + k2);          // inner (reversed)
+    indices.push(O0 + k, I0 + k, I0 + k2, O0 + k, I0 + k2, O0 + k2);          // end A annulus
+    indices.push(O1 + k, O1 + k2, I1 + k2, O1 + k, I1 + k2, I1 + k);          // end B annulus
+  }
+  const m = { positions, indices };
+  if (signedVolume(m) < 0) for (let q = 0; q < indices.length; q += 3) { const t = indices[q + 1]; indices[q + 1] = indices[q + 2]; indices[q + 2] = t; }
+  return m;
+}
+/** Rotary airlock feeder (ROT-1): rotor axis along local x, flow along +z (inlet at −z, outlet at +z). */
+const buildRotary: Build = (b, NPS, cls, dims, notes) => {
+  const Nn = NPS, Dr = 1.5 * Nn, c = common(NPS, cls, 0, Dr), { tb, f } = c, Rh = Dr / 2 + tb, Lh = Nn + 2 * tb, rs = Math.max(1, Nn / 6), tr = 0.5 * Nn;
+  const zT = Rh, zF = zT + tr + c.hHub, zFace = zF + f.tf; c.wBody = 2 * Rh + 2 * tr; c.F2F = 2 * zFace;
+  const toX: Mat4 = rotateY(Math.PI / 2);
+  const housing = transformMesh(ringZ(Rh, Dr / 2, -Lh / 2, Lh / 2), toX);
+  // the square openings through the housing wall: drawn as the transitions' inner square, the housing kept whole (envelope)
+  push(b, 'housing', housing);
+  for (const sx of [-1, 1]) {
+    push(b, 'end plate', transformMesh(ringZ(Rh + 1, rs + 0.02, sx > 0 ? Lh / 2 : -Lh / 2 - tb, sx > 0 ? Lh / 2 + tb : -Lh / 2), toX));
+    push(b, 'bearing boss', transformMesh(ringZ(rs + 0.75, rs + 0.02, sx > 0 ? Lh / 2 + tb : -Lh / 2 - tb - 1.5, sx > 0 ? Lh / 2 + tb + 1.5 : -Lh / 2 - tb), toX));
+  }
+  push(b, `shaft ${rs * 2} in`, transformMesh(cylZ(rs, -Lh / 2 - tb - 1.5, Lh / 2 + tb + Nn + 2), toX), 'stem', BAR);
+  const vanes: MeshData[] = [];
+  for (let i = 0; i < 8; i++) { const a = (i * Math.PI) / 4; vanes.push(transformMesh(box(rs - 0.05, -3 / 32, -Nn / 2, Dr / 2 - 1 / 16, 3 / 32, Nn / 2), multiply(multiply(rotateY(Math.PI / 2), rotateX(0)), [Math.cos(a), Math.sin(a), 0, 0, -Math.sin(a), Math.cos(a), 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]))); }
+  push(b, 'rotor, 8 vanes', mergeMeshes(vanes), 'closure');
+  const nR = 32, rcS = Math.max(0.25, 0.1 * Nn);
+  for (const sz of [-1, 1]) {
+    const z0 = sz * zT, z1 = sz * (zT + tr);
+    push(b, 'square-to-round transition', loftShell(squareRing(Nn / 2 + tb, rcS, nR, z0), circleRing(c.D / 2 + tb, nR, z1), squareRing(Nn / 2, rcS, nR, z0), circleRing(c.D / 2, nR, z1)));
+    const hub = revolve([{ r: c.D / 2, z: 0 }, { r: c.D / 2 + tb, z: 0 }, { r: c.D / 2 + tb, z: c.hHub - f.hubLen }, { r: c.D / 2 + 2 * tb, z: c.hHub }, { r: c.D / 2, z: c.hHub }], N);
+    const hubM = sz > 0 ? hub : revolve([{ r: c.D / 2, z: 0 }, { r: c.D / 2, z: -c.hHub }, { r: c.D / 2 + 2 * tb, z: -c.hHub }, { r: c.D / 2 + tb, z: -(c.hHub - f.hubLen) }, { r: c.D / 2 + tb, z: 0 }], N);
+    push(b, 'hub', transformMesh(hubM, translate(0, 0, sz * (zT + tr))));
+  }
+  endFlanges(b, c, zFace);
+  // gear motor on the +x end: a cylinder on a box foot that stands on a bracket from the end plate
+  const xm = Lh / 2 + tb + 1.5, rm = 0.3 * Nn;
+  push(b, 'gear motor', transformMesh(cylZ(rm, xm, xm + Nn), toX), 'operator');
+  push(b, 'motor foot', box(xm + 0.5, -Rh, -rm, xm + Nn - 0.5, -rm, rm), 'operator');
+  Object.assign(dims, { rotorD: rule(Dr, 'SW-VLV-ROT-1', 'Rotor pocket diameter'), housingL: rule(Lh, 'SW-VLV-ROT-1', 'Housing length along the shaft'), opening: rule(Nn, 'SW-VLV-ROT-1', 'Square opening side'), shaftD: rule(2 * rs, 'SW-VLV-ROT-1', 'Shaft diameter'), vanes: rule(8, 'SW-VLV-ROT-1', 'Rotor vanes', 'count'), transition: rule(tr, 'SW-VLV-ROT-1', 'Square-to-round transition height'), motorD: rule(2 * rm, 'SW-VLV-ROT-1', 'Gear motor diameter') });
+  notes.push('Rotary airlock feeder: the rotor pockets carry solids from the square inlet to the square outlet while the housing keeps the pressure boundary; motor driven (SW-VLV-ROT-1).');
+  return { c, op: { kind: 'none', rimForce: 0, T: 0 } };
+};
+const BUILDERS: Record<ValveType, Build> = { GATE: buildGate, KNIFE: buildKnife, GLOBE: buildGlobe, YGLOBE: buildYGlobe, AGLOBE: buildAGlobe, CHECK: buildCheck, LCHECK: buildLCheck, BALL: buildBall, BFLY: buildBfly, LBFLY: buildLBfly, DBFLY: buildDBfly, PLUG: buildPlug, DIAPH: buildDiaph, NEEDLE: buildNeedle, PSV: buildPSV, CONTROL: buildControl, TWAY: buildTway, FWAY: buildFway, ROTARY: buildRotary };
+
+const FORGED_END_TYPES = new Set<ValveType>(['GATE', 'GLOBE', 'YGLOBE', 'CHECK', 'LCHECK', 'BALL', 'NEEDLE', 'PLUG', 'TWAY', 'FWAY']);
+export function makeValve(id: string, type: ValveType, NPS: number, cls: PipeClass, ends: ValveEnds = 'RF'): PartSpec {
   if (!isOffered(type, NPS, cls)) throw new Error(`${type} is not offered in ${NPS} in ${cls} (SW-VLV-11)`);
-  const b: ValveSolid[] = [], notes: string[] = [];
+  if (ends !== 'RF' && (!FORGED_END_TYPES.has(type) || NPS > 1.5)) throw new Error(`${type} ${NPS} in is not made with ${ends} ends (SW-SWT-10: small-bore gate, globe, check, ball, needle, plug, three-way and four-way only)`);
+  if (type === 'NEEDLE' && ends === 'SW') throw new Error('NEEDLE has threaded ports by NE-1; socket-weld ends are not made');
+  const b0: ValveSolid[] = [], notes: string[] = [];
   const dims: Record<string, Dim> = { NPS: drawing(NPS, 'Nominal size'), P: drawing(CLASS_PRESSURE[cls], 'Class design pressure', 'psi') };
-  const { c, op, extra } = BUILDERS[type](b, NPS, cls, dims, notes);
+  const { c, op, extra } = BUILDERS[type](b0, NPS, cls, dims, notes, ends);
+  let b = b0;
+  if (ends !== 'RF' && type !== 'NEEDLE') {   // NE-1: the needle valve's bar body already has threaded female ports
+    // SW-SWT-10: the end flanges are replaced by forged ends continuing the hubs: a cylinder of OD + 2 t_f with the socket or thread
+    const sb = smallBore(NPS, cls), e = endLength(sb, ends), zi = c.F2F / 2 - c.f.tf, ro = sb.OD / 2 + sb.tf, ri = ends === 'SW' ? sb.socketBore / 2 : sb.threadBore / 2, zE = zi + sb.tf + e;
+    b = b0.filter(s => s.name !== 'end flange' && s.name !== 'raised face');
+    for (const sz of [-1, 1]) { const m = sz > 0 ? mergeMeshes([ringZ(ro, c.D / 2, zi - 0.01, zi + sb.tf), ringZ(ro, ri, zi + sb.tf, zE)]) : mergeMeshes([ringZ(ro, c.D / 2, -zi - sb.tf, -zi + 0.01), ringZ(ro, ri, -zE, -zi - sb.tf)]); push(b, `forged ${ends === 'SW' ? 'socket-weld' : 'threaded'} end`, m); }
+    c.F2F = 2 * zE;
+    Object.assign(dims, { tf: rule(sb.tf, 'SW-SWT-1', 'Forged end wall'), ...(ends === 'SW' ? { socketDepth: rule(sb.s, 'SW-SWT-1', 'Socket depth'), weldLeg: rule(sb.leg, 'SW-SWT-1', 'Socket weld leg') } : { threadLength: rule(sb.Lt, 'SW-SWT-2', 'Thread engagement') }) });
+    notes.push(type === 'BALL' ? 'Three-piece body: the centre piece with the ball and seats between two bolted end pieces holding the sockets, so the centre can be taken out of a welded line (SW-SWT-11).' : `Forged body with ${ends === 'SW' ? 'socket-weld' : 'threaded'} ends in place of flanges (SW-SWT-10).`);
+  }
   const { D, tb, f, F2F, hHub, wBody } = c;
   Object.assign(dims, {
-    D: rule(D, 'SW-VLV-1', 'Bore (full port)'), tb: rule(tb, 'SW-VLV-2', 'Body wall'), F2F: rule(F2F, 'SW-VLV-9', 'Face to face'),
-    tf: rule(f.tf, 'SW-FLG-5', 'End flange thickness'), hHub: rule(hHub, 'SW-FLG-6', 'Hub + neck length'), wBody: rule(wBody, 'SW-VLV-9', 'Body cavity width'),
-    flangeOD: rule(f.OD, 'SW-FLG-4', 'End flange OD'), studs: rule(f.n, 'SW-FLG-4', 'End studs per flange', 'count'), studD: rule(f.d, 'SW-FLG-4', 'End stud diameter'),
+    D: rule(D, 'SW-VLV-1', 'Bore (full port)'), tb: rule(tb, 'SW-VLV-2', 'Body wall'), F2F: rule(F2F, ends === 'RF' ? 'SW-VLV-9' : 'SW-SWT-10', ends === 'RF' ? 'Face to face' : 'End to end'),
+    hHub: rule(hHub, 'SW-FLG-6', 'Hub + neck length'), wBody: rule(wBody, 'SW-VLV-9', 'Body cavity width'),
+    ...(ends === 'RF' ? { tf: rule(f.tf, 'SW-FLG-5', 'End flange thickness'), flangeOD: rule(f.OD, 'SW-FLG-4', 'End flange OD'), studs: rule(f.n, 'SW-FLG-4', 'End studs per flange', 'count'), studD: rule(f.d, 'SW-FLG-4', 'End stud diameter') } : {}),
     rho: rhoDim(),
   });
   if (op.kind !== 'none') {
@@ -841,10 +951,10 @@ export function makeValve(id: string, type: ValveType, NPS: number, cls: PipeCla
   const steelVol = b.filter(s => s.role !== 'polymer').reduce((a, s) => a + signedVolume(s.mesh), 0);
   const name = VALVE_TYPES.find(t => t.id === type)!.name;
   return {
-    id, kind: 'VALVE', category: 'valve', designation: `${type}${NPS}-${cls}`, dims,
-    length: rule(F2F, 'SW-VLV-9', 'Face to face'), material: CASTING,
+    id, kind: 'VALVE', category: 'valve', designation: `${type}${NPS}-${cls}${ends === 'RF' ? '' : '-' + ends}`, dims,
+    length: rule(F2F, ends === 'RF' ? 'SW-VLV-9' : 'SW-SWT-10', ends === 'RF' ? 'Face to face' : 'End to end'), material: ends === 'RF' ? CASTING : FORGING,
     weight: rule(steelVol * RHO, 'SW-VLV-10', 'Steel weight from the drawn solids', 'lb'),
     notes: [`${name}, designed by SW-VLV rules from bore, pressure and the operating effort; every internal is a drawn part.`, ...notes],
-    extra: { solids: b, operator: op, flange: f, type, typeName: name, ...(extra ?? {}) },
+    extra: { solids: b, operator: op, flange: f, type, typeName: name, ends, ...(extra ?? {}) },
   };
 }

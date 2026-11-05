@@ -4,7 +4,10 @@ import { drawing, rule, constant, type Dim } from '../../core/basis';
 import { DEFAULT_MATERIAL, type PartSpec, type Material } from '../part';
 import { revolve, extrude, transformMesh, signedVolume, type MeshData } from '../../geometry/mesh';
 import { circle, rect, annularSector } from '../../geometry/polygon';
-import { frameFromAxes, translate, multiply, rotateX } from '../../geometry/transform';
+import { frameFromAxes, translate, multiply, rotateX, rotateZ } from '../../geometry/transform';
+import { proportionW } from './wideFlange';
+import { wProfile } from '../../geometry/profiles';
+import { weightPerFootFromArea } from '../../core/constants';
 
 const RHO = K.STEEL_DENSITY_LB_IN3;
 const rhoDim = () => constant(K.STEEL_DENSITY_LB_FT3, 'K-1', 'Steel density', 'lb/ft3');
@@ -124,5 +127,29 @@ export function makeTank(inp: TankInput, material: Material = DEFAULT_MATERIAL):
     D: drawing(inp.D, 'Diameter'), H: drawing(inp.H, 'Shell height'), t: drawing(inp.t, 'Shell thickness'),
     roofRise: rule(rise, 'SW-EQ-5', 'Cone roof rise'), roofT: rule(roofT, 'SW-EQ-5', 'Roof plate thickness'), bottomT: rule(roofT, 'SW-EQ-5', 'Bottom plate thickness'),
   }, inp.H + rise + roofT, solids, material, inp.nozzles ?? [], [], { R });
+}
+
+export interface HopperInput { tag: string; D: number; H: number; outletNPS: number; legH: number; t?: number; nozzles?: NozzleSpec[] }
+/** Solids hopper (SW-EQ-8): a bin with a 60° cone bottom to a round outlet, on four W6 legs. Local z up from the leg bases;
+ *  the outlet nozzle's shell point is at z = legH on the axis, facing down. */
+export function makeHopper(inp: HopperInput, material: Material = DEFAULT_MATERIAL): PartSpec {
+  const R = inp.D / 2, t = inp.t ?? 0.25, ro = inp.outletNPS / 2, hc = (R - ro) * Math.tan(Math.PI / 3), zc = inp.legH, zb = zc + hc, zt = zb + inp.H;
+  const solids: { name: string; mesh: MeshData }[] = [];
+  solids.push({ name: 'cone', mesh: revolve([{ r: ro, z: zc }, { r: R, z: zb }, { r: R - t, z: zb }, { r: ro - Math.min(t, ro * 0.5), z: zc }], N_REV) });
+  solids.push({ name: 'shell', mesh: transformMesh(shellRing(R, t, inp.H), translate(0, 0, zb)) });
+  solids.push({ name: 'top plate', mesh: transformMesh(extrude({ outer: circle(0, 0, R, N_REV) }, t), translate(0, 0, zt)) });
+  solids.push({ name: 'manway 20 in', mesh: transformMesh(extrude({ outer: circle(R * 0.45, 0, 10, 32), inner: circle(R * 0.45, 0, 10 - t, 32) }, 6), translate(0, 0, zt + t)) });
+  solids.push({ name: 'manway cover', mesh: transformMesh(extrude({ outer: circle(R * 0.45, 0, 12, 32) }, 0.5), translate(0, 0, zt + t + 6)) });
+  solids.push({ name: 'support ring PL3/8', mesh: transformMesh(extrude({ outer: circle(0, 0, R + 6, N_REV), inner: circle(0, 0, R - 0.01, N_REV) }, 0.375), translate(0, 0, zb)) });
+  const w6 = proportionW(6, Math.ceil(weightPerFootFromArea(0.045 * 36) / 5) * 5), prof = wProfile(w6), legL = zb - 0.5;
+  for (let i = 0; i < 4; i++) {
+    const a = Math.PI / 4 + (i * Math.PI) / 2, x = (R + 3) * Math.cos(a), y = (R + 3) * Math.sin(a);
+    solids.push({ name: 'leg W6', mesh: transformMesh(extrude({ outer: prof }, legL), multiply(translate(x, y, 0.5), rotateZ(a))) });
+    solids.push({ name: 'leg base plate 8x8x1/2', mesh: transformMesh(extrude({ outer: rect(-4, -4, 4, 4) }, 0.5), translate(x, y, 0)) });
+  }
+  return finish(inp.tag, 'HOPPER', `${inp.tag} hopper ${inp.D}" dia × ${inp.H}" bin`, {
+    D: drawing(inp.D, 'Bin diameter'), H: drawing(inp.H, 'Bin height'), outlet: drawing(inp.outletNPS, 'Outlet size'), legH: drawing(inp.legH, 'Outlet height above the leg bases'),
+    t: rule(t, 'SW-EQ-8', 'Plate thickness'), coneH: rule(hc, 'SW-EQ-8', 'Cone height (60° to the horizontal)'), legs: rule(4, 'SW-EQ-8', 'Legs W6', 'count'), total: rule(zt + t + 6.5, 'SW-EQ-8', 'Overall height'),
+  }, zt + t + 6.5, solids, material, inp.nozzles ?? [], [], { R, zc, zb, zt });
 }
 void frameFromAxes; void multiply; void rotateX;
