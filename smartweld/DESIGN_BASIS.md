@@ -1947,6 +1947,44 @@ consults no outside format description (PROVENANCE P-62).
   but not the structural steel). Reason: a line's end at a nozzle is only meaningful against the
   equipment it stands on.
 
+### Piping component files for exchange (`SW-PCF-*`, stage 9)
+
+The owner's designer imports lines rather than modelling them, and the owner's own isometric
+generator reads the same files, so one file per line serves both (owner's instruction).
+
+- `SW-PCF-1` One PCF (piping component file, the plain-text line format isometric tools read) per
+  line, written by SmartWeld's own writer (`src/exchange/pcf.ts`) from the ground truth of
+  SW-GT-6: units inches (bore and coordinates) and pounds; coordinates are the plant frame of
+  SW-U-4 and SW-GT-2 (E, N, EL with the floor at EL 1200 in); the pipeline reference is the line
+  number and the piping spec its pressure class; the line class, fluid, service, design pressure,
+  insulation, joint type, from, to and flow direction go to the pipeline attributes. Reason: a
+  designer imports a PCF in one step where a spreadsheet costs a modelling pass per line.
+- `SW-PCF-2` Every ground-truth item becomes one component record with its end points taken from
+  the item's own ends (`a`, `b`), so adjacent records share a point to the model's precision; a
+  bend adds its centre point (the elbow's corner, SW-FIT-1 / SW-SWT-3); a tee, a branch outlet and
+  a valve station add a branch point, which is the first point of the branch line that leaves
+  there (SW-SWT-6, 3W-1, 4W-1), and a four-way station's spare port the point of its blind or
+  plug; a safety valve is an angle valve whose second end point is its outlet face and whose
+  centre is the body's corner (SW-XCH-2). The record type and symbol key follow the mapping table
+  of SW-PCF-3. Reason: a file whose points do not meet is rejected by every importer; the ground
+  truth's points meet by SW-GT-3, so the writer copies them and adds nothing.
+- `SW-PCF-3` Mapping (one table, in code and in `tools/pcf-mapping.md`, and the same table the
+  owner's generator reads with): each ground-truth kind and end type maps to a PCF record type
+  and a four-letter symbol key written as SmartWeld's own convention, two letters for the item
+  and two for its ends (BW butt-weld, SW socket-weld, SC screwed, FL flanged, PE plain), for
+  example `ELBW` a butt-weld elbow, `VGFL` a flanged gate valve, `TESC` a threaded tee; items
+  with no fitting type of their own (spades, spectacle blinds, sleeves) are miscellaneous
+  components with their description; gaskets and stud sets are their own records at the joint;
+  welds are weld records with the shop or field key; supports are support records at their
+  point with the support type as the key. Reason: a symbol key names the drawing symbol, so a
+  reader on either side resolves it from one table; an importer that wants its own keys remaps
+  the table once.
+- `SW-PCF-4` A materials block at the end of each file lists every item code of that line with
+  its description, size, end type, material and weight, so the importer's bill of materials and
+  the owner's generator's bill agree with the ground-truth bill of SW-GT-5. The writer is
+  deterministic (tests) and writes no number it does not read from the ground truth. Reason: the
+  bill is part of the answer key.
+
 ---
 
 # Stage 9 — The coverage plant (plant 2), socket-weld and threaded piping, and structural erection drawings

@@ -38,6 +38,7 @@ npx vite-node tools/designer-package.ts [P2]     # the model for a piping design
 npx vite-node tools/gen-plant.ts P2 public/plants/P2/plant-piping.json   # regenerate plant 2 (about 7 min; plant 1 stays byte-identical)
 npx vite-node tools/export-gt.ts P2              # plant 2 ground truth (public/plants/P2/groundtruth/)
 npx vite-node tools/coverage.ts public/plants/P2/plant-piping.json       # symbol coverage against the SW-COV-2 floor
+npx vite-node tools/export-pcf.ts P1|P2           # one PCF per line from the ground truth (public/.../pcf/, SW-PCF-1..4; tools/pcf-mapping.md)
 npx vite-node tools/erection.ts P1|P2            # structural steel erection drawings (downloads/erection-P*.pdf, sheet previews)
 npx vite-node tools/render-plant.ts P2           # review images of plant 2 (screenshots/stage9/)
 ```

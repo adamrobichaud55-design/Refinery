@@ -10,7 +10,7 @@ import { setMaxCells } from '../src/geometry/sdf';
 import { PLANT2 } from '../src/generator/plant2';
 import { PLANT1 } from '../src/generator/plant';
 import type { PipingModel } from '../src/generator/piping';
-import { coverage, SYMBOL_CLASSES } from '../tools/coverage';
+import { coverage, SYMBOL_CLASSES } from '../src/generator/coverage';
 import { erectionDrawings, MEMBER } from '../src/drawings/erection';
 import { parseFont } from '../src/pdf/ttf';
 setMaxCells(36);

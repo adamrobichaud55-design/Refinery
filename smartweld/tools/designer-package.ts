@@ -2,7 +2,8 @@
 // export (CSV + JSON), a spec request list, a three-line pilot, a README and a manifest, zipped.
 //   vite-node tools/designer-package.ts            writes downloads/designer-package/ and downloads/designer-package.zip
 // Built from the committed ground truth only; no outside format description is consulted (P-62).
-import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, readdirSync, statSync, existsSync } from 'node:fs';
+import { pcfDir, pcfName } from '../src/exchange/pcf';
 import { join, relative } from 'node:path';
 import { createHash } from 'node:crypto';
 import { deflateRawSync } from 'node:zlib';
@@ -96,6 +97,11 @@ function writeSet(dir: string, ls: GTLine[], withNozzles: boolean) {
   writeFileSync(join(dir, 'equipment.csv'), csv(EQI_HEAD, eqItemRows(eqs)));
   const spec = specRows(ls, withNozzles);
   writeFileSync(join(dir, 'spec-request.csv'), csv(SPEC_HEAD, spec));
+  // SW-PCF-1: one PCF per line, from the committed pcf folder of the plant (tools/export-pcf.ts)
+  mkdirSync(join(dir, 'pcf'), { recursive: true });
+  for (const L of ls) { const src = join(pcfDir(GT), pcfName(L.header.line)); if (existsSync(src)) writeFileSync(join(dir, 'pcf', pcfName(L.header.line)), readFileSync(src)); }
+  writeFileSync(join(dir, 'pcf', 'INDEX.csv'), ['line,file', ...ls.map(L => `"${L.header.line}",${pcfName(L.header.line)}`)].join('\n') + '\n');
+  writeFileSync(join(dir, 'pcf', 'MAPPING.md'), readFileSync('tools/pcf-mapping.md', 'utf8'));
   const obj = (head: string[], rows: unknown[][]) => rows.map(r => Object.fromEntries(head.map((h, i) => [h, r[i]])));
   writeFileSync(join(dir, 'model.json'), JSON.stringify({ units: { coordinates: 'inches and millimetres', weights: 'pounds' }, coordinates: 'E = east, N = north, EL = elevation; floor at EL 1200 in (100\'-0")',
     lines: obj(LINE_HEAD, ls.map(lineRow)), components: obj(COMP_HEAD, comps), welds: obj(WELD_HEAD, ls.flatMap(L => L.welds.map(w => weldRow(L, w)))),
