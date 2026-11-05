@@ -1,0 +1,1549 @@
+{
+ "header": {
+  "line": "3/4\"-P150-W-3223",
+  "lineClass": "W150",
+  "fluid": "Water (cooling and process)",
+  "service": "W",
+  "NPS": 0.75,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "routed",
+  "from": "tap 3\"-P150-W-2208",
+  "to": "P-202A-F",
+  "flow": "tap 3\"-P150-W-2208 → P-202A-F",
+  "joint": "TH"
+ },
+ "items": [
+  {
+   "tag": "3/4\"-P150-W-3223/O1",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "olet",
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 3\" × 3/4\" P150 THREADED OUTLET",
+   "designation": "THOLET3x0.75-P150",
+   "key": "OLET|3|0.75|P150|TH",
+   "NPS": 0.75,
+   "NPS2": 3,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "FW×TH",
+   "weight": 0.2512,
+   "spool": "3/4\"-P150-W-3223-SP01",
+   "a": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1542
+   },
+   "b": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1544.625
+   },
+   "centre": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1543.3125
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-6"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/A1",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "designation": "NIP0.75-P150-TBE",
+   "key": "NIP|0.75|P150|4.750|TBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 4.75,
+   "weight": 0.3926,
+   "spool": "3/4\"-P150-W-3223-SP01",
+   "a": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1544.625
+   },
+   "b": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1548.625
+   },
+   "centre": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1546.625
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/A2",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "valve",
+   "itemNo": 3,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P150",
+   "designation": "GATE0.75-P150-TH",
+   "key": "VLV|GATE|0.75|P150|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 22.5538,
+   "spool": "loose",
+   "a": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1548.625
+   },
+   "b": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1557.0625
+   },
+   "centre": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1552.8438
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/A3",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "designation": "NIP0.75-P150-TBE",
+   "key": "NIP|0.75|P150|4.750|TBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 4.75,
+   "weight": 0.3926,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1557.0625
+   },
+   "b": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1561.0625
+   },
+   "centre": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1559.0625
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/p4",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3/4\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE0.75-P150-TH",
+   "key": "PIPE|0.75|P150|4.375|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 4.375,
+   "weight": 0.3616,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1561.0625
+   },
+   "b": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1564.6875
+   },
+   "centre": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1562.875
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/el5",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "elbow",
+   "itemNo": 5,
+   "description": "ELBOW 90° THREADED 3/4\" P150",
+   "designation": "THEL90-0.75-P150",
+   "key": "SWEL|0.75|P150|90|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 0.5446,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1564.6875
+   },
+   "b": {
+    "E": 2214,
+    "N": -49.3125,
+    "EL": 1566
+   },
+   "centre": {
+    "E": 2214,
+    "N": -48.6562,
+    "EL": 1565.3438
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": 0.7071
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/p6",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3/4\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE0.75-P150-TH",
+   "key": "PIPE|0.75|P150|166.125|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 166.125,
+   "weight": 13.7297,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -49.3125,
+    "EL": 1566
+   },
+   "b": {
+    "E": 2214,
+    "N": -214.6875,
+    "EL": 1566
+   },
+   "centre": {
+    "E": 2214,
+    "N": -132,
+    "EL": 1566
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/el7",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "elbow",
+   "itemNo": 5,
+   "description": "ELBOW 90° THREADED 3/4\" P150",
+   "designation": "THEL90-0.75-P150",
+   "key": "SWEL|0.75|P150|90|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 0.5446,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -214.6875,
+    "EL": 1566
+   },
+   "b": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1564.6875
+   },
+   "centre": {
+    "E": 2214,
+    "N": -215.3437,
+    "EL": 1565.3438
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/p8",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3/4\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE0.75-P150-TH",
+   "key": "PIPE|0.75|P150|169.969|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 169.9687,
+   "weight": 14.0474,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1564.6875
+   },
+   "b": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1395.4688
+   },
+   "centre": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1480.0782
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/c9",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "coupling",
+   "itemNo": 6,
+   "description": "COUPLING THREADED 3/4\" P150",
+   "designation": "THCPLG0.75-P150",
+   "key": "CPLG|0.75|P150|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 0.1797,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1395.4688
+   },
+   "b": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1394.5313
+   },
+   "centre": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1395.0001
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-5"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/p10",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3/4\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE0.75-P150-TH",
+   "key": "PIPE|0.75|P150|169.969|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 169.9688,
+   "weight": 14.0474,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1394.5313
+   },
+   "b": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1225.3125
+   },
+   "centre": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1309.9219
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/el11",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "elbow",
+   "itemNo": 5,
+   "description": "ELBOW 90° THREADED 3/4\" P150",
+   "designation": "THEL90-0.75-P150",
+   "key": "SWEL|0.75|P150|90|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 0.5446,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1225.3125
+   },
+   "b": {
+    "E": 2214,
+    "N": -217.3125,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2214,
+    "N": -216.6562,
+    "EL": 1224.6563
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/p12",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3/4\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE0.75-P150-TH",
+   "key": "PIPE|0.75|P150|4.125|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 4.125,
+   "weight": 0.3409,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -217.3125,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2214,
+    "N": -220.6875,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2214,
+    "N": -219,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/el13",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "elbow",
+   "itemNo": 5,
+   "description": "ELBOW 90° THREADED 3/4\" P150",
+   "designation": "THEL90-0.75-P150",
+   "key": "SWEL|0.75|P150|90|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 0.5446,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2214,
+    "N": -220.6875,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2212.6875,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2213.3438,
+    "N": -221.3437,
+    "EL": 1224
+   },
+   "axis": {
+    "E": -0.7071,
+    "N": -0.7071,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/p14",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3/4\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE0.75-P150-TH",
+   "key": "PIPE|0.75|P150|5.594|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 5.5937,
+   "weight": 0.4623,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2212.6875,
+    "N": -222,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2207.8438,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2210.2657,
+    "N": -222,
+    "EL": 1224
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/B8",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "designation": "NIP0.75-P150-TBE",
+   "key": "NIP|0.75|P150|4.750|TBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 4.75,
+   "weight": 0.3926,
+   "spool": "3/4\"-P150-W-3223-SP02",
+   "a": {
+    "E": 2203.8438,
+    "N": -222,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2207.8438,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2205.8438,
+    "N": -222,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/B7",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "valve",
+   "itemNo": 7,
+   "description": "VALVE, GLOBE, T-PATTERN THREADED ENDS 3/4\" P150",
+   "designation": "GLOBE0.75-P150-TH",
+   "key": "VLV|GLOBE|0.75|P150|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 22.8415,
+   "spool": "loose",
+   "a": {
+    "E": 2195.75,
+    "N": -222,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2203.8438,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2199.7969,
+    "N": -222,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-3",
+    "SW-VLV-GL-1",
+    "SW-VLV-GL-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/B6",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "designation": "NIP0.75-P150-TBE",
+   "key": "NIP|0.75|P150|4.750|TBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 4.75,
+   "weight": 0.3926,
+   "spool": "3/4\"-P150-W-3223-SP03",
+   "a": {
+    "E": 2191.75,
+    "N": -222,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2195.75,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2193.75,
+    "N": -222,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/B5",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "valve",
+   "itemNo": 8,
+   "description": "VALVE, LIFT (PISTON) CHECK THREADED ENDS 3/4\" P150",
+   "designation": "LCHECK0.75-P150-TH",
+   "key": "VLV|LCHECK|0.75|P150|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 14.7646,
+   "spool": "loose",
+   "a": {
+    "E": 2183.6563,
+    "N": -222,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2191.75,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2187.7031,
+    "N": -222,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-9",
+    "SW-VLV-CL-1"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/B4",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 9,
+   "description": "NIPPLE 3/4\" P150 × 4\" THREADED ONE END, PLAIN ONE END",
+   "designation": "NIP0.75-P150-TOE",
+   "key": "NIP|0.75|P150|4.000|TOE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×TH",
+   "cutLength": 4,
+   "weight": 0.3306,
+   "spool": "3/4\"-P150-W-3223-SP04",
+   "a": {
+    "E": 2179.6563,
+    "N": -222,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2183.6563,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2181.6563,
+    "N": -222,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/B3",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "studs",
+   "itemNo": 10,
+   "description": "STUD SET 4 × 0.5\" × 4-1/4\" WITH 2 NUTS, FOR 3/4\" P150",
+   "designation": "STUDS 4×0.5x4.25 (0.75-P150)",
+   "key": "STUDS|0.75|P150|3.000",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 1.2764,
+   "spool": "loose",
+   "a": {
+    "E": 2172.9688,
+    "N": -222,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2177.2188,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2175.0938,
+    "N": -222,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/B2",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "flange",
+   "itemNo": 11,
+   "description": "FLANGE WELD-NECK 3/4\" P150 RAISED FACE",
+   "designation": "FLG0.75-P150",
+   "key": "WNF|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "weight": 4.7577,
+   "spool": "3/4\"-P150-W-3223-SP04",
+   "a": {
+    "E": 2175.1563,
+    "N": -222,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2179.6563,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2177.4063,
+    "N": -222,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/B1",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "gasket",
+   "itemNo": 12,
+   "description": "GASKET 3/4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET0.75-P150",
+   "key": "GSK|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 2175.0313,
+    "N": -222,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2175.1563,
+    "N": -222,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2175.0938,
+    "N": -222,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/PEN1",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "kind": "penetration",
+   "itemNo": 13,
+   "description": "FLOOR SLEEVE 2.5\" FOR 3/4\" LINE, WITH COLLAR",
+   "designation": "FSLV2.5",
+   "key": "FSLV|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36",
+   "ends": "—",
+   "weight": 3.1869,
+   "a": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1317.5
+   },
+   "b": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1322
+   },
+   "centre": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1319.75
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-PEN-1"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "3/4\"-P150-W-3223/W1",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "type": "FW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "3\"-P150-W-2208/run",
+    "3/4\"-P150-W-3223/O1"
+   ],
+   "shopField": "shop",
+   "spool": "parent 3\"-P150-W-2208/run",
+   "spools": [
+    "parent 3\"-P150-W-2208/run",
+    "3/4\"-P150-W-3223-SP01"
+   ],
+   "at": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1543.5
+   },
+   "key": "FWR|0.375|0.1875",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-WD-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-W-3223/W2",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "type": "BW",
+   "size": 0.0938,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "3/4\"-P150-W-3223/B4",
+    "3/4\"-P150-W-3223/B2"
+   ],
+   "shopField": "shop",
+   "spool": "3/4\"-P150-W-3223-SP04",
+   "spools": [
+    "3/4\"-P150-W-3223-SP04",
+    "3/4\"-P150-W-3223-SP04"
+   ],
+   "at": {
+    "E": 2179.6563,
+    "N": -222,
+    "EL": 1224
+   },
+   "key": "BW|0.75|P150",
+   "weight": 0.0101,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "3/4\"-P150-W-3223/S1",
+   "line": "3/4\"-P150-W-3223",
+   "lineClass": "W150",
+   "type": "hanger",
+   "description": "HANGER FOR 3/4\" LINE (HANGER-0.75x55.5)",
+   "designation": "HANGER-0.75x55.5",
+   "key": "HANG|0.75|P150|55.50",
+   "material": "Grade 36",
+   "weight": 4.9493,
+   "spool": "loose",
+   "at": {
+    "E": 2214,
+    "N": -132,
+    "EL": 1566
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "3/4\"-P150-W-3223-SP01",
+   "items": [
+    "3/4\"-P150-W-3223/O1",
+    "3/4\"-P150-W-3223/A1"
+   ],
+   "shopWelds": [],
+   "weight": 0.6438
+  },
+  {
+   "id": "3/4\"-P150-W-3223-SP02",
+   "items": [
+    "3/4\"-P150-W-3223/A3",
+    "3/4\"-P150-W-3223/p4",
+    "3/4\"-P150-W-3223/el5",
+    "3/4\"-P150-W-3223/p6",
+    "3/4\"-P150-W-3223/el7",
+    "3/4\"-P150-W-3223/p8",
+    "3/4\"-P150-W-3223/c9",
+    "3/4\"-P150-W-3223/p10",
+    "3/4\"-P150-W-3223/el11",
+    "3/4\"-P150-W-3223/p12",
+    "3/4\"-P150-W-3223/el13",
+    "3/4\"-P150-W-3223/p14",
+    "3/4\"-P150-W-3223/B8"
+   ],
+   "shopWelds": [],
+   "weight": 46.1324
+  },
+  {
+   "id": "3/4\"-P150-W-3223-SP03",
+   "items": [
+    "3/4\"-P150-W-3223/B6"
+   ],
+   "shopWelds": [],
+   "weight": 0.3926
+  },
+  {
+   "id": "3/4\"-P150-W-3223-SP04",
+   "items": [
+    "3/4\"-P150-W-3223/B4",
+    "3/4\"-P150-W-3223/B2"
+   ],
+   "shopWelds": [
+    "3/4\"-P150-W-3223/W2"
+   ],
+   "weight": 5.0984
+  },
+  {
+   "items": [
+    "3/4\"-P150-W-3223/PEN1"
+   ],
+   "shopWelds": [],
+   "weight": 3.1869
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 3\" × 3/4\" P150 THREADED OUTLET",
+   "qty": 1,
+   "weight": 0.2512
+  },
+  {
+   "itemNo": 2,
+   "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "qty": 4,
+   "weight": 1.5703,
+   "length": null
+  },
+  {
+   "itemNo": 3,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P150",
+   "qty": 1,
+   "weight": 22.5538
+  },
+  {
+   "itemNo": 4,
+   "description": "PIPE 3/4\" P150 THREADED CLASS, PLAIN ENDS",
+   "qty": 6,
+   "length": 520.1562,
+   "weight": 42.9893
+  },
+  {
+   "itemNo": 5,
+   "description": "ELBOW 90° THREADED 3/4\" P150",
+   "qty": 4,
+   "weight": 2.1782
+  },
+  {
+   "itemNo": 6,
+   "description": "COUPLING THREADED 3/4\" P150",
+   "qty": 1,
+   "weight": 0.1797
+  },
+  {
+   "itemNo": 7,
+   "description": "VALVE, GLOBE, T-PATTERN THREADED ENDS 3/4\" P150",
+   "qty": 1,
+   "weight": 22.8415
+  },
+  {
+   "itemNo": 8,
+   "description": "VALVE, LIFT (PISTON) CHECK THREADED ENDS 3/4\" P150",
+   "qty": 1,
+   "weight": 14.7646
+  },
+  {
+   "itemNo": 9,
+   "description": "NIPPLE 3/4\" P150 × 4\" THREADED ONE END, PLAIN ONE END",
+   "qty": 1,
+   "weight": 0.3306,
+   "length": null
+  },
+  {
+   "itemNo": 10,
+   "description": "STUD SET 4 × 0.5\" × 4-1/4\" WITH 2 NUTS, FOR 3/4\" P150",
+   "qty": 1,
+   "weight": 1.2764
+  },
+  {
+   "itemNo": 11,
+   "description": "FLANGE WELD-NECK 3/4\" P150 RAISED FACE",
+   "qty": 1,
+   "weight": 4.7577
+  },
+  {
+   "itemNo": 12,
+   "description": "GASKET 3/4\" P150 COMPRESSED SHEET",
+   "qty": 1,
+   "weight": 0
+  },
+  {
+   "itemNo": 13,
+   "description": "FLOOR SLEEVE 2.5\" FOR 3/4\" LINE, WITH COLLAR",
+   "qty": 1,
+   "weight": 3.1869
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1542
+   },
+   "kind": "olet start",
+   "ref": "3/4\"-P150-W-3223/O1"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1544.625
+   },
+   "kind": "olet end",
+   "ref": "3/4\"-P150-W-3223/O1"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1548.625
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-W-3223/A1"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1557.0625
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P150-W-3223/A2"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1561.0625
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-W-3223/A3"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1564.6875
+   },
+   "kind": "pipe end",
+   "ref": "3/4\"-P150-W-3223/p4"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -48,
+    "EL": 1566
+   },
+   "kind": "elbow work point",
+   "ref": "3/4\"-P150-W-3223/el5"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -49.3125,
+    "EL": 1566
+   },
+   "kind": "elbow end",
+   "ref": "3/4\"-P150-W-3223/el5"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -214.6875,
+    "EL": 1566
+   },
+   "kind": "pipe end",
+   "ref": "3/4\"-P150-W-3223/p6"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1566
+   },
+   "kind": "elbow work point",
+   "ref": "3/4\"-P150-W-3223/el7"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1564.6875
+   },
+   "kind": "elbow end",
+   "ref": "3/4\"-P150-W-3223/el7"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1395.4688
+   },
+   "kind": "pipe end",
+   "ref": "3/4\"-P150-W-3223/p8"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1394.5313
+   },
+   "kind": "coupling end",
+   "ref": "3/4\"-P150-W-3223/c9"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1225.3125
+   },
+   "kind": "pipe end",
+   "ref": "3/4\"-P150-W-3223/p10"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -216,
+    "EL": 1224
+   },
+   "kind": "elbow work point",
+   "ref": "3/4\"-P150-W-3223/el11"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -217.3125,
+    "EL": 1224
+   },
+   "kind": "elbow end",
+   "ref": "3/4\"-P150-W-3223/el11"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -220.6875,
+    "EL": 1224
+   },
+   "kind": "pipe end",
+   "ref": "3/4\"-P150-W-3223/p12"
+  },
+  {
+   "at": {
+    "E": 2214,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "elbow work point",
+   "ref": "3/4\"-P150-W-3223/el13"
+  },
+  {
+   "at": {
+    "E": 2212.6875,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "elbow end",
+   "ref": "3/4\"-P150-W-3223/el13"
+  },
+  {
+   "at": {
+    "E": 2207.8438,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "pipe end",
+   "ref": "3/4\"-P150-W-3223/p14"
+  },
+  {
+   "at": {
+    "E": 2203.8438,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-W-3223/B8"
+  },
+  {
+   "at": {
+    "E": 2195.75,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P150-W-3223/B7"
+  },
+  {
+   "at": {
+    "E": 2191.75,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-W-3223/B6"
+  },
+  {
+   "at": {
+    "E": 2183.6563,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P150-W-3223/B5"
+  },
+  {
+   "at": {
+    "E": 2179.6563,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-W-3223/B4"
+  },
+  {
+   "at": {
+    "E": 2175.1563,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "flange end",
+   "ref": "3/4\"-P150-W-3223/B2"
+  },
+  {
+   "at": {
+    "E": 2175.0313,
+    "N": -222,
+    "EL": 1224
+   },
+   "kind": "gasket end",
+   "ref": "3/4\"-P150-W-3223/B1"
+  }
+ ],
+ "totals": {
+  "items": 24,
+  "welds": 2,
+  "fieldWelds": 0,
+  "supports": 1,
+  "pipeLength": 520.1562,
+  "weight": 116.8802
+ }
+}

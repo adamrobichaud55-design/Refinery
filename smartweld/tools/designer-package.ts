@@ -37,7 +37,7 @@ for (const L of lines) for (const it of L.items) if (it.kind === 'tee') {
 // where the outlet line starts (that line runs 'from PSV on <nozzle>', the nozzle the valve's own line starts at) (SW-XCH-2)
 const outletFace = new Map<string, P>();
 for (const L of lines) for (const it of L.items) if (it.kind === 'valve' && it.key.startsWith('VLV|PSV|')) {
-  const out = lines.find(o => o.header.from === `PSV on ${L.header.from}`);
+  const out = lines.find(o => o.header.from === `PSV on ${L.header.from}` || o.header.from === `PSV on ${L.header.line}`);   // on a nozzle, or on a tap (plant 2: the relief line's own number)
   if (!out) throw new Error(`no outlet line for the relief valve ${it.tag}`);
   outletFace.set(it.tag, out.items[0].a as P);
 }

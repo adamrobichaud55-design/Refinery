@@ -1,0 +1,1457 @@
+{
+ "header": {
+  "line": "1.5\"-P150-HS-5221",
+  "lineClass": "W150",
+  "fluid": "Water (cooling and process)",
+  "service": "HS",
+  "NPS": 1.5,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "routed",
+  "from": "tap 3\"-P150-W-2208",
+  "to": "hose station",
+  "flow": "tap 3\"-P150-W-2208 → hose station",
+  "joint": "TH"
+ },
+ "items": [
+  {
+   "tag": "1.5\"-P150-HS-5221/O1",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "olet",
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 3\" × 1.5\" P150 THREADED OUTLET",
+   "designation": "THOLET3x1.5-P150",
+   "key": "OLET|3|1.5|P150|TH",
+   "NPS": 1.5,
+   "NPS2": 3,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "FW×TH",
+   "weight": 0.6086,
+   "spool": "1.5\"-P150-HS-5221-SP01",
+   "a": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1542
+   },
+   "b": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1544.875
+   },
+   "centre": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1543.4375
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-6"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/A1",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 1.5\" P150 × 5-1/4\" THREADED BOTH ENDS",
+   "designation": "NIP1.5-P150-TBE",
+   "key": "NIP|1.5|P150|5.250|TBE",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 5.25,
+   "weight": 1.3108,
+   "spool": "1.5\"-P150-HS-5221-SP01",
+   "a": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1544.875
+   },
+   "b": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1548.875
+   },
+   "centre": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1546.875
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/A2",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "valve",
+   "itemNo": 3,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 1.5\" P150",
+   "designation": "GATE1.5-P150-TH",
+   "key": "VLV|GATE|1.5|P150|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 33.4296,
+   "spool": "loose",
+   "a": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1548.875
+   },
+   "b": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1558.875
+   },
+   "centre": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1553.875
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/A3",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 1.5\" P150 × 5-1/4\" THREADED BOTH ENDS",
+   "designation": "NIP1.5-P150-TBE",
+   "key": "NIP|1.5|P150|5.250|TBE",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 5.25,
+   "weight": 1.3108,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1558.875
+   },
+   "b": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1562.875
+   },
+   "centre": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1560.875
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/p4",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 1.5\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE1.5-P150-TH",
+   "key": "PIPE|1.5|P150|8.063|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 8.0625,
+   "weight": 2.0132,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1562.875
+   },
+   "b": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1569.6875
+   },
+   "centre": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1566.2813
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/el5",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "elbow",
+   "itemNo": 5,
+   "description": "ELBOW 90° THREADED 1.5\" P150",
+   "designation": "THEL90-1.5-P150",
+   "key": "SWEL|1.5|P150|90|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 2.0804,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1569.6875
+   },
+   "b": {
+    "E": 1470,
+    "N": -45.6875,
+    "EL": 1572
+   },
+   "centre": {
+    "E": 1470,
+    "N": -46.8437,
+    "EL": 1570.8438
+   },
+   "axis": {
+    "E": 0,
+    "N": 0.7071,
+    "EL": 0.7071
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-3"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/p6",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 1.5\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE1.5-P150-TH",
+   "key": "PIPE|1.5|P150|109.219|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 109.2187,
+   "weight": 27.2698,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": -45.6875,
+    "EL": 1572
+   },
+   "b": {
+    "E": 1470,
+    "N": 62.2812,
+    "EL": 1572
+   },
+   "centre": {
+    "E": 1470,
+    "N": 8.2968,
+    "EL": 1572
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/c7",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "coupling",
+   "itemNo": 6,
+   "description": "COUPLING THREADED 1.5\" P150",
+   "designation": "THCPLG1.5-P150",
+   "key": "CPLG|1.5|P150|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 0.5412,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 62.2812,
+    "EL": 1572
+   },
+   "b": {
+    "E": 1470,
+    "N": 63.7187,
+    "EL": 1572
+   },
+   "centre": {
+    "E": 1470,
+    "N": 63,
+    "EL": 1572
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-5"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/p8",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 1.5\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE1.5-P150-TH",
+   "key": "PIPE|1.5|P150|109.219|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 109.2188,
+   "weight": 27.2698,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 63.7187,
+    "EL": 1572
+   },
+   "b": {
+    "E": 1470,
+    "N": 171.6875,
+    "EL": 1572
+   },
+   "centre": {
+    "E": 1470,
+    "N": 117.7031,
+    "EL": 1572
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/el9",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "elbow",
+   "itemNo": 5,
+   "description": "ELBOW 90° THREADED 1.5\" P150",
+   "designation": "THEL90-1.5-P150",
+   "key": "SWEL|1.5|P150|90|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 2.0804,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 171.6875,
+    "EL": 1572
+   },
+   "b": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1569.6875
+   },
+   "centre": {
+    "E": 1470,
+    "N": 172.8438,
+    "EL": 1570.8438
+   },
+   "axis": {
+    "E": 0,
+    "N": 0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-3"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/p10",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 1.5\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE1.5-P150-TH",
+   "key": "PIPE|1.5|P150|100.219|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 100.2187,
+   "weight": 25.0227,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1569.6875
+   },
+   "b": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1470.7188
+   },
+   "centre": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1520.2032
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/c11",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "coupling",
+   "itemNo": 6,
+   "description": "COUPLING THREADED 1.5\" P150",
+   "designation": "THCPLG1.5-P150",
+   "key": "CPLG|1.5|P150|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 0.5412,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1470.7188
+   },
+   "b": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1469.2813
+   },
+   "centre": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1470.0001
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-5"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/p12",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 1.5\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE1.5-P150-TH",
+   "key": "PIPE|1.5|P150|100.219|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 100.2188,
+   "weight": 25.0227,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1469.2813
+   },
+   "b": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1370.3125
+   },
+   "centre": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1419.7969
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B10",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "elbow",
+   "itemNo": 7,
+   "description": "ELBOW 45° THREADED 1.5\" P150",
+   "designation": "THEL45-1.5-P150",
+   "key": "SWEL|1.5|P150|45|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 2.2124,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 172.3648,
+    "EL": 1366.3648
+   },
+   "b": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1370.3125
+   },
+   "centre": {
+    "E": 1470,
+    "N": 173.1824,
+    "EL": 1368.3387
+   },
+   "axis": {
+    "E": 0,
+    "N": 0.3827,
+    "EL": 0.9239
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-3"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B9",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 1.5\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE1.5-P150-TH",
+   "key": "PIPE|1.5|P150|22.081|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 22.0808,
+   "weight": 5.5132,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 157.6352,
+    "EL": 1351.6352
+   },
+   "b": {
+    "E": 1470,
+    "N": 172.3648,
+    "EL": 1366.3648
+   },
+   "centre": {
+    "E": 1470,
+    "N": 165,
+    "EL": 1359
+   },
+   "axis": {
+    "E": 0,
+    "N": 0.7071,
+    "EL": 0.7071
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B8",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "elbow",
+   "itemNo": 7,
+   "description": "ELBOW 45° THREADED 1.5\" P150",
+   "designation": "THEL45-1.5-P150",
+   "key": "SWEL|1.5|P150|45|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 2.2124,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1347.6875
+   },
+   "b": {
+    "E": 1470,
+    "N": 157.6352,
+    "EL": 1351.6352
+   },
+   "centre": {
+    "E": 1470,
+    "N": 156.8176,
+    "EL": 1349.6614
+   },
+   "axis": {
+    "E": 0,
+    "N": 0.3827,
+    "EL": 0.9239
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-3"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B7",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 1.5\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE1.5-P150-TH",
+   "key": "PIPE|1.5|P150|86.589|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 86.5892,
+   "weight": 21.6196,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1262.3483
+   },
+   "b": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1347.6875
+   },
+   "centre": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1305.0179
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B6",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 1.5\" P150 × 5-1/4\" THREADED BOTH ENDS",
+   "designation": "NIP1.5-P150-TBE",
+   "key": "NIP|1.5|P150|5.250|TBE",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 5.25,
+   "weight": 1.3108,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1258.3483
+   },
+   "b": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1262.3483
+   },
+   "centre": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1260.3483
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B5",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "swage",
+   "itemNo": 8,
+   "description": "SWAGE CONCENTRIC 1.5\" × 3/4\" P150 TH×TH",
+   "designation": "SWG1.5x0.75-P150-THxTH",
+   "key": "SWG|1.5|0.75|P150|TH|TH",
+   "NPS": 1.5,
+   "NPS2": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 0.8621,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1259.1125
+   },
+   "b": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1258.3483
+   },
+   "centre": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1258.7304
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-7"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B4",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 9,
+   "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "designation": "NIP0.75-P150-TBE",
+   "key": "NIP|0.75|P150|4.750|TBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 4.75,
+   "weight": 0.3926,
+   "spool": "1.5\"-P150-HS-5221-SP02",
+   "a": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1255.1125
+   },
+   "b": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1259.1125
+   },
+   "centre": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1257.1125
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B3",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "valve",
+   "itemNo": 10,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P150",
+   "designation": "GATE0.75-P150-TH",
+   "key": "VLV|GATE|0.75|P150|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 22.5538,
+   "spool": "loose",
+   "a": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1246.675
+   },
+   "b": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1255.1125
+   },
+   "centre": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1250.8938
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B2",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "nipple",
+   "itemNo": 9,
+   "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "designation": "NIP0.75-P150-TBE",
+   "key": "NIP|0.75|P150|4.750|TBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 4.75,
+   "weight": 0.3926,
+   "spool": "1.5\"-P150-HS-5221-SP03",
+   "a": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1242.675
+   },
+   "b": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1246.675
+   },
+   "centre": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1244.675
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-HS-5221/B1",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "kind": "plug",
+   "itemNo": 11,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P150",
+   "designation": "PLUG0.75-P150-HEX",
+   "key": "PLUG|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH",
+   "weight": 0.2566,
+   "spool": "loose",
+   "a": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1242
+   },
+   "b": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1242.675
+   },
+   "centre": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1242.3375
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-2",
+    "SW-SWT-9"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "1.5\"-P150-HS-5221/W1",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "type": "FW",
+   "size": 0.1875,
+   "NPS": 1.5,
+   "cls": "P150",
+   "joins": [
+    "3\"-P150-W-2208/run",
+    "1.5\"-P150-HS-5221/O1"
+   ],
+   "shopField": "shop",
+   "spool": "parent 3\"-P150-W-2208/run",
+   "spools": [
+    "parent 3\"-P150-W-2208/run",
+    "1.5\"-P150-HS-5221-SP01"
+   ],
+   "at": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1543.5
+   },
+   "key": "FWR|0.75|0.1875",
+   "weight": 0.0264,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-WD-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "1.5\"-P150-HS-5221/S1",
+   "line": "1.5\"-P150-HS-5221",
+   "lineClass": "W150",
+   "type": "hanger",
+   "description": "HANGER FOR 1.5\" LINE (HANGER-1.5x54.5)",
+   "designation": "HANGER-1.5x54.5",
+   "key": "HANG|1.5|P150|54.48",
+   "material": "Grade 36",
+   "weight": 5.1351,
+   "spool": "loose",
+   "at": {
+    "E": 1470,
+    "N": 57,
+    "EL": 1572
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "1.5\"-P150-HS-5221-SP01",
+   "items": [
+    "1.5\"-P150-HS-5221/O1",
+    "1.5\"-P150-HS-5221/A1"
+   ],
+   "shopWelds": [],
+   "weight": 1.9195
+  },
+  {
+   "id": "1.5\"-P150-HS-5221-SP02",
+   "items": [
+    "1.5\"-P150-HS-5221/A3",
+    "1.5\"-P150-HS-5221/p4",
+    "1.5\"-P150-HS-5221/el5",
+    "1.5\"-P150-HS-5221/p6",
+    "1.5\"-P150-HS-5221/c7",
+    "1.5\"-P150-HS-5221/p8",
+    "1.5\"-P150-HS-5221/el9",
+    "1.5\"-P150-HS-5221/p10",
+    "1.5\"-P150-HS-5221/c11",
+    "1.5\"-P150-HS-5221/p12",
+    "1.5\"-P150-HS-5221/B10",
+    "1.5\"-P150-HS-5221/B9",
+    "1.5\"-P150-HS-5221/B8",
+    "1.5\"-P150-HS-5221/B7",
+    "1.5\"-P150-HS-5221/B6",
+    "1.5\"-P150-HS-5221/B5",
+    "1.5\"-P150-HS-5221/B4"
+   ],
+   "shopWelds": [],
+   "weight": 147.2753
+  },
+  {
+   "id": "1.5\"-P150-HS-5221-SP03",
+   "items": [
+    "1.5\"-P150-HS-5221/B2"
+   ],
+   "shopWelds": [],
+   "weight": 0.3926
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 3\" × 1.5\" P150 THREADED OUTLET",
+   "qty": 1,
+   "weight": 0.6086
+  },
+  {
+   "itemNo": 2,
+   "description": "NIPPLE 1.5\" P150 × 5-1/4\" THREADED BOTH ENDS",
+   "qty": 3,
+   "weight": 3.9325,
+   "length": null
+  },
+  {
+   "itemNo": 3,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 1.5\" P150",
+   "qty": 1,
+   "weight": 33.4296
+  },
+  {
+   "itemNo": 4,
+   "description": "PIPE 1.5\" P150 THREADED CLASS, PLAIN ENDS",
+   "qty": 7,
+   "length": 535.6075,
+   "weight": 133.731
+  },
+  {
+   "itemNo": 5,
+   "description": "ELBOW 90° THREADED 1.5\" P150",
+   "qty": 2,
+   "weight": 4.1608
+  },
+  {
+   "itemNo": 6,
+   "description": "COUPLING THREADED 1.5\" P150",
+   "qty": 2,
+   "weight": 1.0825
+  },
+  {
+   "itemNo": 7,
+   "description": "ELBOW 45° THREADED 1.5\" P150",
+   "qty": 2,
+   "weight": 4.4247
+  },
+  {
+   "itemNo": 8,
+   "description": "SWAGE CONCENTRIC 1.5\" × 3/4\" P150 TH×TH",
+   "qty": 1,
+   "weight": 0.8621
+  },
+  {
+   "itemNo": 9,
+   "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "qty": 2,
+   "weight": 0.7851,
+   "length": null
+  },
+  {
+   "itemNo": 10,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P150",
+   "qty": 1,
+   "weight": 22.5538
+  },
+  {
+   "itemNo": 11,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P150",
+   "qty": 1,
+   "weight": 0.2566
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1542
+   },
+   "kind": "olet start",
+   "ref": "1.5\"-P150-HS-5221/O1"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1544.875
+   },
+   "kind": "olet end",
+   "ref": "1.5\"-P150-HS-5221/O1"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1548.875
+   },
+   "kind": "nipple end",
+   "ref": "1.5\"-P150-HS-5221/A1"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1558.875
+   },
+   "kind": "valve end",
+   "ref": "1.5\"-P150-HS-5221/A2"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1562.875
+   },
+   "kind": "nipple end",
+   "ref": "1.5\"-P150-HS-5221/A3"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1569.6875
+   },
+   "kind": "pipe end",
+   "ref": "1.5\"-P150-HS-5221/p4"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": -48,
+    "EL": 1572
+   },
+   "kind": "elbow work point",
+   "ref": "1.5\"-P150-HS-5221/el5"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": -45.6875,
+    "EL": 1572
+   },
+   "kind": "elbow end",
+   "ref": "1.5\"-P150-HS-5221/el5"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 62.2812,
+    "EL": 1572
+   },
+   "kind": "pipe end",
+   "ref": "1.5\"-P150-HS-5221/p6"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 63.7187,
+    "EL": 1572
+   },
+   "kind": "coupling end",
+   "ref": "1.5\"-P150-HS-5221/c7"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 171.6875,
+    "EL": 1572
+   },
+   "kind": "pipe end",
+   "ref": "1.5\"-P150-HS-5221/p8"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1572
+   },
+   "kind": "elbow work point",
+   "ref": "1.5\"-P150-HS-5221/el9"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1569.6875
+   },
+   "kind": "elbow end",
+   "ref": "1.5\"-P150-HS-5221/el9"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1470.7188
+   },
+   "kind": "pipe end",
+   "ref": "1.5\"-P150-HS-5221/p10"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1469.2813
+   },
+   "kind": "coupling end",
+   "ref": "1.5\"-P150-HS-5221/c11"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1370.3125
+   },
+   "kind": "pipe end",
+   "ref": "1.5\"-P150-HS-5221/p12"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 174,
+    "EL": 1368
+   },
+   "kind": "elbow work point",
+   "ref": "1.5\"-P150-HS-5221/B10"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 172.3648,
+    "EL": 1366.3648
+   },
+   "kind": "elbow end",
+   "ref": "1.5\"-P150-HS-5221/B10"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 157.6352,
+    "EL": 1351.6352
+   },
+   "kind": "pipe end",
+   "ref": "1.5\"-P150-HS-5221/B9"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1350
+   },
+   "kind": "elbow work point",
+   "ref": "1.5\"-P150-HS-5221/B8"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1347.6875
+   },
+   "kind": "elbow end",
+   "ref": "1.5\"-P150-HS-5221/B8"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1262.3483
+   },
+   "kind": "pipe end",
+   "ref": "1.5\"-P150-HS-5221/B7"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1258.3483
+   },
+   "kind": "nipple end",
+   "ref": "1.5\"-P150-HS-5221/B6"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1259.1125
+   },
+   "kind": "swage end",
+   "ref": "1.5\"-P150-HS-5221/B5"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1255.1125
+   },
+   "kind": "nipple end",
+   "ref": "1.5\"-P150-HS-5221/B4"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1246.675
+   },
+   "kind": "valve end",
+   "ref": "1.5\"-P150-HS-5221/B3"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1242.675
+   },
+   "kind": "nipple end",
+   "ref": "1.5\"-P150-HS-5221/B2"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 156,
+    "EL": 1242
+   },
+   "kind": "plug end",
+   "ref": "1.5\"-P150-HS-5221/B1"
+  }
+ ],
+ "totals": {
+  "items": 23,
+  "welds": 1,
+  "fieldWelds": 0,
+  "supports": 1,
+  "pipeLength": 535.6075,
+  "weight": 205.8273
+ }
+}

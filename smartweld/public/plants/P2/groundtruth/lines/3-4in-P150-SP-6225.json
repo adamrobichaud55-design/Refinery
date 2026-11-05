@@ -1,0 +1,975 @@
+{
+ "header": {
+  "line": "3/4\"-P150-SP-6225",
+  "lineClass": "H150",
+  "fluid": "Hydrocarbon process",
+  "service": "SP",
+  "NPS": 0.75,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "stub",
+  "from": "D-202-N9",
+  "to": "blind",
+  "flow": "D-202-N9 → blind"
+ },
+ "items": [
+  {
+   "tag": "3/4\"-P150-SP-6225/1",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 3/4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET0.75-P150",
+   "key": "GSK|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 3288,
+    "N": 93.4687,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 93.3437,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 93.4062,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/2",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "flange",
+   "itemNo": 2,
+   "description": "FLANGE SOCKET-WELD 3/4\" P150 RAISED FACE",
+   "designation": "SWF0.75-P150",
+   "key": "SWF|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "SW×RF",
+   "weight": 4.5572,
+   "spool": "3/4\"-P150-SP-6225-SP01",
+   "a": {
+    "E": 3288,
+    "N": 93.3437,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 91.3437,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 92.3437,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-11",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-9",
+    "SW-SWT-1"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/3",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.5\" × 4-1/4\" WITH 2 NUTS, FOR 3/4\" P150",
+   "designation": "STUDS 4×0.5x4.25 (0.75-P150)",
+   "key": "STUDS|0.75|P150|3.000",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 1.2764,
+   "spool": "loose",
+   "a": {
+    "E": 3288,
+    "N": 95.5312,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 91.2812,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 93.4062,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/4",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "nipple",
+   "itemNo": 4,
+   "description": "NIPPLE 3/4\" P150 × 4-5/8\" PLAIN BOTH ENDS",
+   "designation": "NIP0.75-P150-PBE",
+   "key": "NIP|0.75|P150|4.625|PBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "SW×SW",
+   "cutLength": 4.625,
+   "weight": 0.2535,
+   "spool": "3/4\"-P150-SP-6225-SP01",
+   "a": {
+    "E": 3288,
+    "N": 91.3437,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 87.3437,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 89.3437,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/5",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 5,
+   "description": "VALVE, GATE, WEDGE, OS&Y SOCKET-WELD ENDS 3/4\" P150",
+   "designation": "GATE0.75-P150-SW",
+   "key": "VLV|GATE|0.75|P150|SW",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "SW×SW",
+   "weight": 22.5142,
+   "spool": "loose",
+   "a": {
+    "E": 3288,
+    "N": 87.3437,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 78.9062,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 83.125,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/6",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "nipple",
+   "itemNo": 4,
+   "description": "NIPPLE 3/4\" P150 × 4-5/8\" PLAIN BOTH ENDS",
+   "designation": "NIP0.75-P150-PBE",
+   "key": "NIP|0.75|P150|4.625|PBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "SW×SW",
+   "cutLength": 4.625,
+   "weight": 0.2535,
+   "spool": "3/4\"-P150-SP-6225-SP02",
+   "a": {
+    "E": 3288,
+    "N": 78.9062,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 74.9062,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 76.9062,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/7",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 6,
+   "description": "VALVE, THREE-WAY BALL, L-PORT SOCKET-WELD ENDS 3/4\" P150",
+   "designation": "TWAY0.75-P150-SW",
+   "key": "VLV|TWAY|0.75|P150|SW",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "SW×SW×SW",
+   "weight": 17.6572,
+   "spool": "loose",
+   "a": {
+    "E": 3288,
+    "N": 74.9062,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 63.5125,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 69.2094,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-3W-1",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-B-1",
+    "SW-VLV-B-2",
+    "SW-VLV-F-6"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/8",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "nipple",
+   "itemNo": 4,
+   "description": "NIPPLE 3/4\" P150 × 4-5/8\" PLAIN BOTH ENDS",
+   "designation": "NIP0.75-P150-PBE",
+   "key": "NIP|0.75|P150|4.625|PBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "SW×SW",
+   "cutLength": 4.625,
+   "weight": 0.2535,
+   "spool": "3/4\"-P150-SP-6225-SP03",
+   "a": {
+    "E": 3288,
+    "N": 63.5125,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 59.5125,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 61.5125,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/9",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "swage",
+   "itemNo": 7,
+   "description": "SWAGE CONCENTRIC 3/4\" × 1/2\" P150 SW×TH",
+   "designation": "SWG0.75x0.5-P150-SWxTH",
+   "key": "SWG|0.75|0.5|P150|SW|TH",
+   "NPS": 0.75,
+   "NPS2": 0.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "SW×TH",
+   "weight": 0.2054,
+   "spool": "3/4\"-P150-SP-6225-SP03",
+   "a": {
+    "E": 3288,
+    "N": 59.5125,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 58.1744,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 58.8435,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-7"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/10",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "nipple",
+   "itemNo": 8,
+   "description": "NIPPLE 1/2\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "designation": "NIP0.5-P150-TBE",
+   "key": "NIP|0.5|P150|4.750|TBE",
+   "NPS": 0.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 4.75,
+   "weight": 0.2273,
+   "spool": "3/4\"-P150-SP-6225-SP03",
+   "a": {
+    "E": 3288,
+    "N": 58.1744,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 54.1744,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 56.1744,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/11",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 9,
+   "description": "VALVE, NEEDLE THREADED ENDS 1/2\" P150",
+   "designation": "NEEDLE0.5-P150-TH",
+   "key": "VLV|NEEDLE|0.5|P150|TH",
+   "NPS": 0.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 1.7859,
+   "spool": "loose",
+   "a": {
+    "E": 3288,
+    "N": 54.1744,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 51.2369,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 52.7057,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-10",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-NE-1"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/12",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "kind": "plug",
+   "itemNo": 10,
+   "description": "PLUG SQUARE HEAD THREADED 1/2\" P150",
+   "designation": "PLUG0.5-P150-SQ",
+   "key": "PLUG|0.5|P150",
+   "NPS": 0.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH",
+   "weight": 0.1348,
+   "spool": "loose",
+   "a": {
+    "E": 3288,
+    "N": 51.2369,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3288,
+    "N": 50.7119,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3288,
+    "N": 50.9744,
+    "EL": 1296
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-2",
+    "SW-SWT-9"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "3/4\"-P150-SP-6225/W1",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "3/4\"-P150-SP-6225/2",
+    "3/4\"-P150-SP-6225/4"
+   ],
+   "shopField": "shop",
+   "spool": "3/4\"-P150-SP-6225-SP01",
+   "spools": [
+    "3/4\"-P150-SP-6225-SP01",
+    "3/4\"-P150-SP-6225-SP01"
+   ],
+   "at": {
+    "E": 3288,
+    "N": 91.3437,
+    "EL": 1296
+   },
+   "key": "SWW|0.75|P150",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/W2",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "3/4\"-P150-SP-6225/4",
+    "3/4\"-P150-SP-6225/5"
+   ],
+   "shopField": "shop",
+   "spool": "3/4\"-P150-SP-6225-SP01",
+   "spools": [
+    "3/4\"-P150-SP-6225-SP01",
+    "loose"
+   ],
+   "at": {
+    "E": 3288,
+    "N": 87.3437,
+    "EL": 1296
+   },
+   "key": "SWW|0.75|P150",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/W3",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "3/4\"-P150-SP-6225/5",
+    "3/4\"-P150-SP-6225/6"
+   ],
+   "shopField": "shop",
+   "spool": "loose",
+   "spools": [
+    "loose",
+    "3/4\"-P150-SP-6225-SP02"
+   ],
+   "at": {
+    "E": 3288,
+    "N": 78.9062,
+    "EL": 1296
+   },
+   "key": "SWW|0.75|P150",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/W4",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "3/4\"-P150-SP-6225/6",
+    "3/4\"-P150-SP-6225/7"
+   ],
+   "shopField": "shop",
+   "spool": "3/4\"-P150-SP-6225-SP02",
+   "spools": [
+    "3/4\"-P150-SP-6225-SP02",
+    "loose"
+   ],
+   "at": {
+    "E": 3288,
+    "N": 74.9062,
+    "EL": 1296
+   },
+   "key": "SWW|0.75|P150",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/W5",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "3/4\"-P150-SP-6225/7",
+    "3/4\"-P150-SP-6225/8"
+   ],
+   "shopField": "shop",
+   "spool": "loose",
+   "spools": [
+    "loose",
+    "3/4\"-P150-SP-6225-SP03"
+   ],
+   "at": {
+    "E": 3288,
+    "N": 63.5125,
+    "EL": 1296
+   },
+   "key": "SWW|0.75|P150",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-SP-6225/W6",
+   "line": "3/4\"-P150-SP-6225",
+   "lineClass": "H150",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "3/4\"-P150-SP-6225/8",
+    "3/4\"-P150-SP-6225/9"
+   ],
+   "shopField": "shop",
+   "spool": "3/4\"-P150-SP-6225-SP03",
+   "spools": [
+    "3/4\"-P150-SP-6225-SP03",
+    "3/4\"-P150-SP-6225-SP03"
+   ],
+   "at": {
+    "E": 3288,
+    "N": 59.5125,
+    "EL": 1296
+   },
+   "key": "SWW|0.75|P150",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  }
+ ],
+ "supports": [],
+ "spools": [
+  {
+   "id": "3/4\"-P150-SP-6225-SP01",
+   "items": [
+    "3/4\"-P150-SP-6225/2",
+    "3/4\"-P150-SP-6225/4"
+   ],
+   "shopWelds": [
+    "3/4\"-P150-SP-6225/W1",
+    "3/4\"-P150-SP-6225/W2"
+   ],
+   "weight": 4.84
+  },
+  {
+   "id": "3/4\"-P150-SP-6225-SP02",
+   "items": [
+    "3/4\"-P150-SP-6225/6"
+   ],
+   "shopWelds": [
+    "3/4\"-P150-SP-6225/W4"
+   ],
+   "weight": 0.2682
+  },
+  {
+   "id": "3/4\"-P150-SP-6225-SP03",
+   "items": [
+    "3/4\"-P150-SP-6225/8",
+    "3/4\"-P150-SP-6225/9",
+    "3/4\"-P150-SP-6225/10"
+   ],
+   "shopWelds": [
+    "3/4\"-P150-SP-6225/W6"
+   ],
+   "weight": 0.7008
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "GASKET 3/4\" P150 COMPRESSED SHEET",
+   "qty": 1,
+   "weight": 0
+  },
+  {
+   "itemNo": 2,
+   "description": "FLANGE SOCKET-WELD 3/4\" P150 RAISED FACE",
+   "qty": 1,
+   "weight": 4.5572
+  },
+  {
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.5\" × 4-1/4\" WITH 2 NUTS, FOR 3/4\" P150",
+   "qty": 1,
+   "weight": 1.2764
+  },
+  {
+   "itemNo": 4,
+   "description": "NIPPLE 3/4\" P150 × 4-5/8\" PLAIN BOTH ENDS",
+   "qty": 3,
+   "weight": 0.7605,
+   "length": null
+  },
+  {
+   "itemNo": 5,
+   "description": "VALVE, GATE, WEDGE, OS&Y SOCKET-WELD ENDS 3/4\" P150",
+   "qty": 1,
+   "weight": 22.5142
+  },
+  {
+   "itemNo": 6,
+   "description": "VALVE, THREE-WAY BALL, L-PORT SOCKET-WELD ENDS 3/4\" P150",
+   "qty": 1,
+   "weight": 17.6572
+  },
+  {
+   "itemNo": 7,
+   "description": "SWAGE CONCENTRIC 3/4\" × 1/2\" P150 SW×TH",
+   "qty": 1,
+   "weight": 0.2054
+  },
+  {
+   "itemNo": 8,
+   "description": "NIPPLE 1/2\" P150 × 4-3/4\" THREADED BOTH ENDS",
+   "qty": 1,
+   "weight": 0.2273,
+   "length": null
+  },
+  {
+   "itemNo": 9,
+   "description": "VALVE, NEEDLE THREADED ENDS 1/2\" P150",
+   "qty": 1,
+   "weight": 1.7859
+  },
+  {
+   "itemNo": 10,
+   "description": "PLUG SQUARE HEAD THREADED 1/2\" P150",
+   "qty": 1,
+   "weight": 0.1348
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 3288,
+    "N": 93.4687,
+    "EL": 1296
+   },
+   "kind": "gasket start",
+   "ref": "3/4\"-P150-SP-6225/1"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 93.3437,
+    "EL": 1296
+   },
+   "kind": "gasket end",
+   "ref": "3/4\"-P150-SP-6225/1"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 91.3437,
+    "EL": 1296
+   },
+   "kind": "flange end",
+   "ref": "3/4\"-P150-SP-6225/2"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 87.3437,
+    "EL": 1296
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-SP-6225/4"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 78.9062,
+    "EL": 1296
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P150-SP-6225/5"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 74.9062,
+    "EL": 1296
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-SP-6225/6"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 63.5125,
+    "EL": 1296
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P150-SP-6225/7"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 59.5125,
+    "EL": 1296
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-SP-6225/8"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 58.1744,
+    "EL": 1296
+   },
+   "kind": "swage end",
+   "ref": "3/4\"-P150-SP-6225/9"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 54.1744,
+    "EL": 1296
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-SP-6225/10"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 51.2369,
+    "EL": 1296
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P150-SP-6225/11"
+  },
+  {
+   "at": {
+    "E": 3288,
+    "N": 50.7119,
+    "EL": 1296
+   },
+   "kind": "plug end",
+   "ref": "3/4\"-P150-SP-6225/12"
+  }
+ ],
+ "totals": {
+  "items": 12,
+  "welds": 6,
+  "fieldWelds": 0,
+  "supports": 0,
+  "pipeLength": 0,
+  "weight": 49.1187
+ }
+}

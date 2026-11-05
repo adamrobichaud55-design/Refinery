@@ -1,0 +1,204 @@
+{
+ "header": {
+  "line": "3\"-P150-RV-4208",
+  "lineClass": "H150",
+  "fluid": "Hydrocarbon process",
+  "service": "RV",
+  "NPS": 3,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "stub",
+  "from": "T-202-N3",
+  "to": "PSV",
+  "flow": "T-202-N3 → PSV"
+ },
+ "items": [
+  {
+   "tag": "3\"-P150-RV-4208/1",
+   "line": "3\"-P150-RV-4208",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 3\" P150 COMPRESSED SHEET",
+   "designation": "GASKET3-P150",
+   "key": "GSK|3|P150",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1480.3313
+   },
+   "b": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1480.4563
+   },
+   "centre": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1480.3938
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "3\"-P150-RV-4208/2",
+   "line": "3\"-P150-RV-4208",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 2,
+   "description": "VALVE, PRESSURE SAFETY VALVE 3\" P150 INLET × 4\" P150 OUTLET",
+   "designation": "PSV3-P150",
+   "key": "VLV|PSV|3|P150",
+   "NPS": 3,
+   "NPS2": 4,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 108.7585,
+   "spool": "loose",
+   "a": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1480.4563
+   },
+   "b": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1488
+   },
+   "centre": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1488
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-9",
+    "SW-VLV-PSV-1"
+   ]
+  },
+  {
+   "tag": "3\"-P150-RV-4208/3",
+   "line": "3\"-P150-RV-4208",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P150",
+   "designation": "STUDS 4×0.875x5.75 (3-P150)",
+   "key": "STUDS|3|P150|3.500",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 5.6895,
+   "spool": "loose",
+   "a": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1477.5188
+   },
+   "b": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1483.2688
+   },
+   "centre": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1480.3938
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  }
+ ],
+ "welds": [],
+ "supports": [],
+ "spools": [],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "GASKET 3\" P150 COMPRESSED SHEET",
+   "qty": 1,
+   "weight": 0
+  },
+  {
+   "itemNo": 2,
+   "description": "VALVE, PRESSURE SAFETY VALVE 3\" P150 INLET × 4\" P150 OUTLET",
+   "qty": 1,
+   "weight": 108.7585
+  },
+  {
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P150",
+   "qty": 1,
+   "weight": 5.6895
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1480.3313
+   },
+   "kind": "gasket start",
+   "ref": "3\"-P150-RV-4208/1"
+  },
+  {
+   "at": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1480.4563
+   },
+   "kind": "gasket end",
+   "ref": "3\"-P150-RV-4208/1"
+  },
+  {
+   "at": {
+    "E": 3264,
+    "N": 420,
+    "EL": 1488
+   },
+   "kind": "valve end",
+   "ref": "3\"-P150-RV-4208/2"
+  }
+ ],
+ "totals": {
+  "items": 3,
+  "welds": 0,
+  "fieldWelds": 0,
+  "supports": 0,
+  "pipeLength": 0,
+  "weight": 114.448
+ }
+}

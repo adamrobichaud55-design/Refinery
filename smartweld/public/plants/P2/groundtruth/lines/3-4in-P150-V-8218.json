@@ -1,0 +1,328 @@
+{
+ "header": {
+  "line": "3/4\"-P150-V-8218",
+  "lineClass": "G150",
+  "fluid": "Air and gases",
+  "service": "V",
+  "NPS": 0.75,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "stub",
+  "from": "tap 3\"-P150-PA-2206",
+  "to": "blind",
+  "flow": "tap 3\"-P150-PA-2206 → blind"
+ },
+ "items": [
+  {
+   "tag": "3/4\"-P150-V-8218/O1",
+   "line": "3/4\"-P150-V-8218",
+   "lineClass": "G150",
+   "kind": "olet",
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 3\" × 3/4\" P150 THREADED OUTLET",
+   "designation": "THOLET3x0.75-P150",
+   "key": "OLET|3|0.75|P150|TH",
+   "NPS": 0.75,
+   "NPS2": 3,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "FW×TH",
+   "weight": 0.2512,
+   "spool": "3/4\"-P150-V-8218-SP01",
+   "a": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1542
+   },
+   "b": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1544.625
+   },
+   "centre": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1543.3125
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-6"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-V-8218/1",
+   "line": "3/4\"-P150-V-8218",
+   "lineClass": "G150",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 3/4\" P150 × 3-3/4\" THREADED BOTH ENDS",
+   "designation": "NIP0.75-P150-TBE",
+   "key": "NIP|0.75|P150|3.750|TBE",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 3.75,
+   "weight": 0.3099,
+   "spool": "3/4\"-P150-V-8218-SP01",
+   "a": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1544.625
+   },
+   "b": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1547.625
+   },
+   "centre": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1546.125
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-V-8218/2",
+   "line": "3/4\"-P150-V-8218",
+   "lineClass": "G150",
+   "kind": "valve",
+   "itemNo": 3,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P150",
+   "designation": "GATE0.75-P150-TH",
+   "key": "VLV|GATE|0.75|P150|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 22.5538,
+   "spool": "loose",
+   "a": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1547.625
+   },
+   "b": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1556.0625
+   },
+   "centre": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1551.8438
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-V-8218/3",
+   "line": "3/4\"-P150-V-8218",
+   "lineClass": "G150",
+   "kind": "plug",
+   "itemNo": 4,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P150",
+   "designation": "PLUG0.75-P150-HEX",
+   "key": "PLUG|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH",
+   "weight": 0.2566,
+   "spool": "loose",
+   "a": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1556.0625
+   },
+   "b": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1556.7375
+   },
+   "centre": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1556.4
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-2",
+    "SW-SWT-9"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "3/4\"-P150-V-8218/W1",
+   "line": "3/4\"-P150-V-8218",
+   "lineClass": "G150",
+   "type": "FW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P150",
+   "joins": [
+    "3\"-P150-PA-2206/run",
+    "3/4\"-P150-V-8218/O1"
+   ],
+   "shopField": "shop",
+   "spool": "parent 3\"-P150-PA-2206/run",
+   "spools": [
+    "parent 3\"-P150-PA-2206/run",
+    "3/4\"-P150-V-8218-SP01"
+   ],
+   "at": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1543.5
+   },
+   "key": "FWR|0.375|0.1875",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-WD-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  }
+ ],
+ "supports": [],
+ "spools": [
+  {
+   "id": "3/4\"-P150-V-8218-SP01",
+   "items": [
+    "3/4\"-P150-V-8218/O1",
+    "3/4\"-P150-V-8218/1"
+   ],
+   "shopWelds": [],
+   "weight": 0.5611
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 3\" × 3/4\" P150 THREADED OUTLET",
+   "qty": 1,
+   "weight": 0.2512
+  },
+  {
+   "itemNo": 2,
+   "description": "NIPPLE 3/4\" P150 × 3-3/4\" THREADED BOTH ENDS",
+   "qty": 1,
+   "weight": 0.3099,
+   "length": null
+  },
+  {
+   "itemNo": 3,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P150",
+   "qty": 1,
+   "weight": 22.5538
+  },
+  {
+   "itemNo": 4,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P150",
+   "qty": 1,
+   "weight": 0.2566
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1542
+   },
+   "kind": "olet start",
+   "ref": "3/4\"-P150-V-8218/O1"
+  },
+  {
+   "at": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1544.625
+   },
+   "kind": "olet end",
+   "ref": "3/4\"-P150-V-8218/O1"
+  },
+  {
+   "at": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1547.625
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P150-V-8218/1"
+  },
+  {
+   "at": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1556.0625
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P150-V-8218/2"
+  },
+  {
+   "at": {
+    "E": 2382,
+    "N": -36,
+    "EL": 1556.7375
+   },
+   "kind": "plug end",
+   "ref": "3/4\"-P150-V-8218/3"
+  }
+ ],
+ "totals": {
+  "items": 4,
+  "welds": 1,
+  "fieldWelds": 0,
+  "supports": 0,
+  "pipeLength": 0,
+  "weight": 23.3714
+ }
+}

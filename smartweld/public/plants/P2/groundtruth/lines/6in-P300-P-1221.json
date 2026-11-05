@@ -1,0 +1,1150 @@
+{
+ "header": {
+  "line": "6\"-P300-P-1221",
+  "lineClass": "H300",
+  "fluid": "Hydrocarbon process",
+  "service": "P",
+  "NPS": 6,
+  "cls": "P300",
+  "designPressure": 300,
+  "insulated": false,
+  "kind": "routed",
+  "from": "tap 6\"-P300-P-1220",
+  "to": "P-204B-S",
+  "flow": "tap 6\"-P300-P-1220 → P-204B-S",
+  "joint": "BW"
+ },
+ "items": [
+  {
+   "tag": "6\"-P300-P-1221/p1",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 1,
+   "description": "PIPE 6\" P300 BEVELLED ENDS",
+   "designation": "PIPE6-P300",
+   "key": "PIPE|6|P300|75.000",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 75,
+   "weight": 84.4954,
+   "spool": "6\"-P300-P-1221-SP01",
+   "a": {
+    "E": 2525,
+    "N": -156,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2600,
+    "N": -156,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2562.5,
+    "N": -156,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/el2",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "elbow",
+   "itemNo": 2,
+   "description": "ELBOW 90° R = 5/3 OD 6\" P300",
+   "designation": "EL90-6-P300",
+   "key": "EL|6|P300|90",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 17.5737,
+   "spool": "6\"-P300-P-1221-SP01",
+   "a": {
+    "E": 2600,
+    "N": -156,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -166,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2605,
+    "N": -161,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0.7071,
+    "N": -0.7071,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/p3",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 1,
+   "description": "PIPE 6\" P300 BEVELLED ENDS",
+   "designation": "PIPE6-P300",
+   "key": "PIPE|6|P300|7.608",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 7.6079,
+   "weight": 8.5712,
+   "spool": "6\"-P300-P-1221-SP01",
+   "a": {
+    "E": 2610,
+    "N": -166,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -173.6079,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -169.8039,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B13",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 8 × 0.625\" × 4\" WITH 2 NUTS, FOR 6\" P300",
+   "designation": "STUDS 8×0.625x4 (6-P300)",
+   "key": "STUDS|6|P300|2.500",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 4.0723,
+   "spool": "loose",
+   "a": {
+    "E": 2610,
+    "N": -179.5454,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -175.5454,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -177.5454,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B12",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 6\" P300 RAISED FACE",
+   "designation": "FLG6-P300",
+   "key": "WNF|6|P300",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "weight": 18.2844,
+   "spool": "6\"-P300-P-1221-SP02",
+   "a": {
+    "E": 2610,
+    "N": -177.4829,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -173.6079,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -175.5454,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B11",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "gasket",
+   "itemNo": 5,
+   "description": "GASKET 6\" P300 COMPRESSED SHEET",
+   "designation": "GASKET6-P300",
+   "key": "GSK|6|P300",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 2610,
+    "N": -177.6079,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -177.4829,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -177.5454,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B10",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 8 × 0.625\" × 4\" WITH 2 NUTS, FOR 6\" P300",
+   "designation": "STUDS 8×0.625x4 (6-P300)",
+   "key": "STUDS|6|P300|2.500",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 4.0723,
+   "spool": "loose",
+   "a": {
+    "E": 2610,
+    "N": -193.7329,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -189.7329,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -191.7329,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B9",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "valve",
+   "itemNo": 6,
+   "description": "VALVE, GATE, WEDGE, OS&Y 6\" P300",
+   "designation": "GATE6-P300",
+   "key": "VLV|GATE|6|P300",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 200.2803,
+   "spool": "loose",
+   "a": {
+    "E": 2610,
+    "N": -191.6704,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -177.6079,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -184.6391,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B8",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "gasket",
+   "itemNo": 5,
+   "description": "GASKET 6\" P300 COMPRESSED SHEET",
+   "designation": "GASKET6-P300",
+   "key": "GSK|6|P300",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 2610,
+    "N": -191.7954,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -191.6704,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -191.7329,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B7",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 6\" P300 RAISED FACE",
+   "designation": "FLG6-P300",
+   "key": "WNF|6|P300",
+   "NPS": 6,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "weight": 18.2844,
+   "spool": "6\"-P300-P-1221-SP03",
+   "a": {
+    "E": 2610,
+    "N": -195.6704,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -191.7954,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -193.7329,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B6",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "reducer",
+   "itemNo": 7,
+   "description": "REDUCER ECCENTRIC 6\" × 4\" P300 FLAT TOP",
+   "designation": "REDE6x4-P300",
+   "key": "REDE|6|4|P300|top",
+   "NPS": 6,
+   "NPS2": 4,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 5.8445,
+   "spool": "6\"-P300-P-1221-SP03",
+   "a": {
+    "E": 2610,
+    "N": -202.375,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -195.6704,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -199.0227,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-3",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B5",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "studs",
+   "itemNo": 8,
+   "description": "STUD SET 4 × 1\" × 6-3/4\" WITH 2 NUTS, FOR 4\" P300",
+   "designation": "STUDS 4×1x6.75 (4-P300)",
+   "key": "STUDS|4|P300|4.250",
+   "NPS": 4,
+   "cls": "P300",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.6519,
+   "spool": "loose",
+   "a": {
+    "E": 2610,
+    "N": -211.25,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -205,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -208.125,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B4",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "flange",
+   "itemNo": 9,
+   "description": "FLANGE WELD-NECK 4\" P300 RAISED FACE",
+   "designation": "FLG4-P300",
+   "key": "WNF|4|P300",
+   "NPS": 4,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "weight": 28.7184,
+   "spool": "6\"-P300-P-1221-SP03",
+   "a": {
+    "E": 2610,
+    "N": -207.8125,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -202.375,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -205.0937,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B3",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "gasket",
+   "itemNo": 10,
+   "description": "GASKET 4\" P300 COMPRESSED SHEET",
+   "designation": "GASKET4-P300",
+   "key": "GSK|4|P300",
+   "NPS": 4,
+   "cls": "P300",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 2610,
+    "N": -207.9375,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -207.8125,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -207.875,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B2",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "spade",
+   "itemNo": 11,
+   "description": "SPADE 4\" P300 0.375\" THICK",
+   "designation": "SPADE4-P300",
+   "key": "SPADE|4|P300",
+   "NPS": 4,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "RF×RF",
+   "weight": 3.0963,
+   "spool": "loose",
+   "a": {
+    "E": 2610,
+    "N": -208.3125,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -207.9375,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -208.125,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-13",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/B1",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "kind": "gasket",
+   "itemNo": 10,
+   "description": "GASKET 4\" P300 COMPRESSED SHEET",
+   "designation": "GASKET4-P300",
+   "key": "GSK|4|P300",
+   "NPS": 4,
+   "cls": "P300",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 2610,
+    "N": -208.4375,
+    "EL": 1224
+   },
+   "b": {
+    "E": 2610,
+    "N": -208.3125,
+    "EL": 1224
+   },
+   "centre": {
+    "E": 2610,
+    "N": -208.375,
+    "EL": 1224
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "6\"-P300-P-1221/W1",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 6,
+   "cls": "P300",
+   "joins": [
+    "6\"-P300-P-1220/T:6\"-P300-P-1221",
+    "6\"-P300-P-1221/p1"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "6\"-P300-P-1220-SP03",
+    "6\"-P300-P-1221-SP01"
+   ],
+   "at": {
+    "E": 2525,
+    "N": -156,
+    "EL": 1224
+   },
+   "key": "BW|6|P300",
+   "weight": 0.2626,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/W2",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 6,
+   "cls": "P300",
+   "joins": [
+    "6\"-P300-P-1221/p1",
+    "6\"-P300-P-1221/el2"
+   ],
+   "shopField": "shop",
+   "spool": "6\"-P300-P-1221-SP01",
+   "spools": [
+    "6\"-P300-P-1221-SP01",
+    "6\"-P300-P-1221-SP01"
+   ],
+   "at": {
+    "E": 2600,
+    "N": -156,
+    "EL": 1224
+   },
+   "key": "BW|6|P300",
+   "weight": 0.2626,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/W3",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 6,
+   "cls": "P300",
+   "joins": [
+    "6\"-P300-P-1221/el2",
+    "6\"-P300-P-1221/p3"
+   ],
+   "shopField": "shop",
+   "spool": "6\"-P300-P-1221-SP01",
+   "spools": [
+    "6\"-P300-P-1221-SP01",
+    "6\"-P300-P-1221-SP01"
+   ],
+   "at": {
+    "E": 2610,
+    "N": -166,
+    "EL": 1224
+   },
+   "key": "BW|6|P300",
+   "weight": 0.2626,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/W4",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 6,
+   "cls": "P300",
+   "joins": [
+    "6\"-P300-P-1221/p3",
+    "6\"-P300-P-1221/B12"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "6\"-P300-P-1221-SP01",
+    "6\"-P300-P-1221-SP02"
+   ],
+   "at": {
+    "E": 2610,
+    "N": -173.6079,
+    "EL": 1224
+   },
+   "key": "BW|6|P300",
+   "weight": 0.2626,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/W5",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 6,
+   "cls": "P300",
+   "joins": [
+    "6\"-P300-P-1221/B7",
+    "6\"-P300-P-1221/B6"
+   ],
+   "shopField": "shop",
+   "spool": "6\"-P300-P-1221-SP03",
+   "spools": [
+    "6\"-P300-P-1221-SP03",
+    "6\"-P300-P-1221-SP03"
+   ],
+   "at": {
+    "E": 2610,
+    "N": -195.6704,
+    "EL": 1224
+   },
+   "key": "BW|6|P300",
+   "weight": 0.2626,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-1221/W6",
+   "line": "6\"-P300-P-1221",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P300",
+   "joins": [
+    "6\"-P300-P-1221/B6",
+    "6\"-P300-P-1221/B4"
+   ],
+   "shopField": "shop",
+   "spool": "6\"-P300-P-1221-SP03",
+   "spools": [
+    "6\"-P300-P-1221-SP03",
+    "6\"-P300-P-1221-SP03"
+   ],
+   "at": {
+    "E": 2610,
+    "N": -202.375,
+    "EL": 1224
+   },
+   "key": "BW|4|P300",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [],
+ "spools": [
+  {
+   "id": "6\"-P300-P-1221-SP01",
+   "items": [
+    "6\"-P300-P-1221/p1",
+    "6\"-P300-P-1221/el2",
+    "6\"-P300-P-1221/p3"
+   ],
+   "shopWelds": [
+    "6\"-P300-P-1221/W2",
+    "6\"-P300-P-1221/W3"
+   ],
+   "weight": 111.1655
+  },
+  {
+   "id": "6\"-P300-P-1221-SP02",
+   "items": [
+    "6\"-P300-P-1221/B12"
+   ],
+   "shopWelds": [],
+   "weight": 18.2844
+  },
+  {
+   "id": "6\"-P300-P-1221-SP03",
+   "items": [
+    "6\"-P300-P-1221/B7",
+    "6\"-P300-P-1221/B6",
+    "6\"-P300-P-1221/B4"
+   ],
+   "shopWelds": [
+    "6\"-P300-P-1221/W5",
+    "6\"-P300-P-1221/W6"
+   ],
+   "weight": 53.2487
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "PIPE 6\" P300 BEVELLED ENDS",
+   "qty": 2,
+   "length": 82.6079,
+   "weight": 93.0667
+  },
+  {
+   "itemNo": 2,
+   "description": "ELBOW 90° R = 5/3 OD 6\" P300",
+   "qty": 1,
+   "weight": 17.5737
+  },
+  {
+   "itemNo": 3,
+   "description": "STUD SET 8 × 0.625\" × 4\" WITH 2 NUTS, FOR 6\" P300",
+   "qty": 2,
+   "weight": 8.1446
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 6\" P300 RAISED FACE",
+   "qty": 2,
+   "weight": 36.5688
+  },
+  {
+   "itemNo": 5,
+   "description": "GASKET 6\" P300 COMPRESSED SHEET",
+   "qty": 2,
+   "weight": 0
+  },
+  {
+   "itemNo": 6,
+   "description": "VALVE, GATE, WEDGE, OS&Y 6\" P300",
+   "qty": 1,
+   "weight": 200.2803
+  },
+  {
+   "itemNo": 7,
+   "description": "REDUCER ECCENTRIC 6\" × 4\" P300 FLAT TOP",
+   "qty": 1,
+   "weight": 5.8445
+  },
+  {
+   "itemNo": 8,
+   "description": "STUD SET 4 × 1\" × 6-3/4\" WITH 2 NUTS, FOR 4\" P300",
+   "qty": 1,
+   "weight": 8.6519
+  },
+  {
+   "itemNo": 9,
+   "description": "FLANGE WELD-NECK 4\" P300 RAISED FACE",
+   "qty": 1,
+   "weight": 28.7184
+  },
+  {
+   "itemNo": 10,
+   "description": "GASKET 4\" P300 COMPRESSED SHEET",
+   "qty": 2,
+   "weight": 0
+  },
+  {
+   "itemNo": 11,
+   "description": "SPADE 4\" P300 0.375\" THICK",
+   "qty": 1,
+   "weight": 3.0963
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 2525,
+    "N": -156,
+    "EL": 1224
+   },
+   "kind": "pipe start",
+   "ref": "6\"-P300-P-1221/p1"
+  },
+  {
+   "at": {
+    "E": 2600,
+    "N": -156,
+    "EL": 1224
+   },
+   "kind": "pipe end",
+   "ref": "6\"-P300-P-1221/p1"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -156,
+    "EL": 1224
+   },
+   "kind": "elbow work point",
+   "ref": "6\"-P300-P-1221/el2"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -166,
+    "EL": 1224
+   },
+   "kind": "elbow end",
+   "ref": "6\"-P300-P-1221/el2"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -173.6079,
+    "EL": 1224
+   },
+   "kind": "pipe end",
+   "ref": "6\"-P300-P-1221/p3"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -177.4829,
+    "EL": 1224
+   },
+   "kind": "flange end",
+   "ref": "6\"-P300-P-1221/B12"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -177.6079,
+    "EL": 1224
+   },
+   "kind": "gasket end",
+   "ref": "6\"-P300-P-1221/B11"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -191.6704,
+    "EL": 1224
+   },
+   "kind": "valve end",
+   "ref": "6\"-P300-P-1221/B9"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -191.7954,
+    "EL": 1224
+   },
+   "kind": "gasket end",
+   "ref": "6\"-P300-P-1221/B8"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -195.6704,
+    "EL": 1224
+   },
+   "kind": "flange end",
+   "ref": "6\"-P300-P-1221/B7"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -202.375,
+    "EL": 1224
+   },
+   "kind": "reducer end",
+   "ref": "6\"-P300-P-1221/B6"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -207.8125,
+    "EL": 1224
+   },
+   "kind": "flange end",
+   "ref": "6\"-P300-P-1221/B4"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -207.9375,
+    "EL": 1224
+   },
+   "kind": "gasket end",
+   "ref": "6\"-P300-P-1221/B3"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -208.3125,
+    "EL": 1224
+   },
+   "kind": "spade end",
+   "ref": "6\"-P300-P-1221/B2"
+  },
+  {
+   "at": {
+    "E": 2610,
+    "N": -208.4375,
+    "EL": 1224
+   },
+   "kind": "gasket end",
+   "ref": "6\"-P300-P-1221/B1"
+  }
+ ],
+ "totals": {
+  "items": 16,
+  "welds": 6,
+  "fieldWelds": 2,
+  "supports": 0,
+  "pipeLength": 82.6079,
+  "weight": 401.9451
+ }
+}

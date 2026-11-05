@@ -1,0 +1,1168 @@
+{
+ "header": {
+  "line": "3/4\"-P300-I-7225",
+  "lineClass": "H300",
+  "fluid": "Hydrocarbon process",
+  "service": "I",
+  "NPS": 0.75,
+  "cls": "P300",
+  "designPressure": 300,
+  "insulated": false,
+  "kind": "stub",
+  "from": "tap 4\"-P300-P-1225",
+  "to": "blind",
+  "flow": "tap 4\"-P300-P-1225 → blind"
+ },
+ "items": [
+  {
+   "tag": "3/4\"-P300-I-7225/O1",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "olet",
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 4\" × 3/4\" P300 SOCKET-WELD OUTLET",
+   "designation": "SWOLET4x0.75-P300",
+   "key": "OLET|4|0.75|P300|SW",
+   "NPS": 0.75,
+   "NPS2": 4,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "FW×SW",
+   "weight": 0.2341,
+   "spool": "3/4\"-P300-I-7225-SP01",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1398
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1401.125
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1399.5625
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-6"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/1",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 3/4\" P300 × 7-5/8\" PLAIN BOTH ENDS",
+   "designation": "NIP0.75-P300-PBE",
+   "key": "NIP|0.75|P300|7.625|PBE",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "SW×SW",
+   "cutLength": 7.625,
+   "weight": 0.4179,
+   "spool": "3/4\"-P300-I-7225-SP01",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1401.125
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1408.125
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1404.625
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/2",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "valve",
+   "itemNo": 3,
+   "description": "VALVE, GATE, WEDGE, OS&Y SOCKET-WELD ENDS 3/4\" P300",
+   "designation": "GATE0.75-P300-SW",
+   "key": "VLV|GATE|0.75|P300|SW",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "SW×SW",
+   "weight": 22.5142,
+   "spool": "loose",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1408.125
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1416.5625
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1412.3438
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/3",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "nipple",
+   "itemNo": 4,
+   "description": "NIPPLE 3/4\" P300 × 4-5/8\" PLAIN BOTH ENDS",
+   "designation": "NIP0.75-P300-PBE",
+   "key": "NIP|0.75|P300|4.625|PBE",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "SW×SW",
+   "cutLength": 4.625,
+   "weight": 0.2535,
+   "spool": "3/4\"-P300-I-7225-SP02",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1416.5625
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1420.5625
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1418.5625
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/4",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "valve",
+   "itemNo": 5,
+   "description": "VALVE, FOUR-WAY PLUG SOCKET-WELD ENDS 3/4\" P300",
+   "designation": "FWAY0.75-P300-SW",
+   "key": "VLV|FWAY|0.75|P300|SW",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "SW×SW×SW×SW",
+   "weight": 15.7335,
+   "spool": "loose",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1420.5625
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1429.3375
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-4W-1",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-PL-1"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/5",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "nipple",
+   "itemNo": 4,
+   "description": "NIPPLE 3/4\" P300 × 4-5/8\" PLAIN BOTH ENDS",
+   "designation": "NIP0.75-P300-PBE",
+   "key": "NIP|0.75|P300|4.625|PBE",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "SW×SW",
+   "cutLength": 4.625,
+   "weight": 0.2535,
+   "spool": "3/4\"-P300-I-7225-SP03",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1429.3375
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1433.3375
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1431.3375
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/6",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "flange",
+   "itemNo": 6,
+   "description": "FLANGE SOCKET-WELD 3/4\" P300 RAISED FACE",
+   "designation": "SWF0.75-P300",
+   "key": "SWF|0.75|P300",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "SW×RF",
+   "weight": 4.5572,
+   "spool": "3/4\"-P300-I-7225-SP03",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1433.3375
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1435.3375
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1434.3375
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-11",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-9",
+    "SW-SWT-1"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/7",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "gasket",
+   "itemNo": 7,
+   "description": "GASKET 3/4\" P300 COMPRESSED SHEET",
+   "designation": "GASKET0.75-P300",
+   "key": "GSK|0.75|P300",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1435.3375
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1435.4625
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1435.4
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/8",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "blind",
+   "itemNo": 8,
+   "description": "FLANGE BLIND 3/4\" P300 RAISED FACE",
+   "designation": "BLIND0.75-P300",
+   "key": "BLIND|0.75|P300",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "RF",
+   "weight": 4.6212,
+   "spool": "loose",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1435.4625
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1436.9
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1436.1813
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-8",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/9",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "studs",
+   "itemNo": 9,
+   "description": "STUD SET 4 × 0.5\" × 4-1/4\" WITH 2 NUTS, FOR 3/4\" P300",
+   "designation": "STUDS 4×0.5x4.25 (0.75-P300)",
+   "key": "STUDS|0.75|P300|3.000",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 1.2764,
+   "spool": "loose",
+   "a": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1433.275
+   },
+   "b": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1437.525
+   },
+   "centre": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1435.4
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/4:A1",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "nipple",
+   "itemNo": 10,
+   "description": "NIPPLE 3/4\" P300 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
+   "designation": "NIP0.75-P300-TOE",
+   "key": "NIP|0.75|P300|4.375|TOE",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×TH",
+   "cutLength": 4.375,
+   "weight": 0.3616,
+   "a": {
+    "E": 2838.2375,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "b": {
+    "E": 2834.2375,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "centre": {
+    "E": 2836.2375,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/4:A2",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "valve",
+   "itemNo": 11,
+   "description": "VALVE, NEEDLE THREADED ENDS 3/4\" P300",
+   "designation": "NEEDLE0.75-P300-TH",
+   "key": "VLV|NEEDLE|0.75|P300|TH",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 3.9269,
+   "a": {
+    "E": 2834.2375,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "b": {
+    "E": 2830.55,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "centre": {
+    "E": 2832.3938,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-10",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-NE-1"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/4:A3",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "plug",
+   "itemNo": 12,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P300",
+   "designation": "PLUG0.75-P300-HEX",
+   "key": "PLUG|0.75|P300",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "TH",
+   "weight": 0.2566,
+   "a": {
+    "E": 2830.55,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "b": {
+    "E": 2829.875,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "centre": {
+    "E": 2830.2125,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-2",
+    "SW-SWT-9"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/4:B1",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "kind": "plug",
+   "itemNo": 13,
+   "description": "PLUG SOCKET-WELD 3/4\" P300",
+   "designation": "SWPLUG0.75-P300",
+   "key": "PLUG|0.75|P300|SW",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "SW",
+   "weight": 0.1005,
+   "a": {
+    "E": 2849.7625,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "b": {
+    "E": 2850.2125,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "centre": {
+    "E": 2849.9875,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-9"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "3/4\"-P300-I-7225/W1",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "type": "FW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "4\"-P300-P-1225/run",
+    "3/4\"-P300-I-7225/O1"
+   ],
+   "shopField": "shop",
+   "spool": "parent 4\"-P300-P-1225/run",
+   "spools": [
+    "parent 4\"-P300-P-1225/run",
+    "3/4\"-P300-I-7225-SP01"
+   ],
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1400
+   },
+   "key": "FWR|0.375|0.1875",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-WD-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/W2",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "3/4\"-P300-I-7225/O1",
+    "3/4\"-P300-I-7225/1"
+   ],
+   "shopField": "shop",
+   "spool": "3/4\"-P300-I-7225-SP01",
+   "spools": [
+    "3/4\"-P300-I-7225-SP01",
+    "3/4\"-P300-I-7225-SP01"
+   ],
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1401.125
+   },
+   "key": "SWW|0.75|P300",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/W3",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "3/4\"-P300-I-7225/1",
+    "3/4\"-P300-I-7225/2"
+   ],
+   "shopField": "shop",
+   "spool": "3/4\"-P300-I-7225-SP01",
+   "spools": [
+    "3/4\"-P300-I-7225-SP01",
+    "loose"
+   ],
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1408.125
+   },
+   "key": "SWW|0.75|P300",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/W4",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "3/4\"-P300-I-7225/2",
+    "3/4\"-P300-I-7225/3"
+   ],
+   "shopField": "shop",
+   "spool": "loose",
+   "spools": [
+    "loose",
+    "3/4\"-P300-I-7225-SP02"
+   ],
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1416.5625
+   },
+   "key": "SWW|0.75|P300",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/W5",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "3/4\"-P300-I-7225/3",
+    "3/4\"-P300-I-7225/4"
+   ],
+   "shopField": "shop",
+   "spool": "3/4\"-P300-I-7225-SP02",
+   "spools": [
+    "3/4\"-P300-I-7225-SP02",
+    "loose"
+   ],
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1420.5625
+   },
+   "key": "SWW|0.75|P300",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/W6",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "3/4\"-P300-I-7225/4",
+    "3/4\"-P300-I-7225/5"
+   ],
+   "shopField": "shop",
+   "spool": "loose",
+   "spools": [
+    "loose",
+    "3/4\"-P300-I-7225-SP03"
+   ],
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1429.3375
+   },
+   "key": "SWW|0.75|P300",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/W7",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "3/4\"-P300-I-7225/5",
+    "3/4\"-P300-I-7225/6"
+   ],
+   "shopField": "shop",
+   "spool": "3/4\"-P300-I-7225-SP03",
+   "spools": [
+    "3/4\"-P300-I-7225-SP03",
+    "3/4\"-P300-I-7225-SP03"
+   ],
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1433.3375
+   },
+   "key": "SWW|0.75|P300",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/W8",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "3/4\"-P300-I-7225/4",
+    "3/4\"-P300-I-7225/4:A1"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "loose",
+    "parent 3/4\"-P300-I-7225/4:A1"
+   ],
+   "at": {
+    "E": 2838.2375,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "key": "SWW|0.75|P300",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7225/W9",
+   "line": "3/4\"-P300-I-7225",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "3/4\"-P300-I-7225/4",
+    "3/4\"-P300-I-7225/4:B1"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "loose",
+    "parent 3/4\"-P300-I-7225/4:B1"
+   ],
+   "at": {
+    "E": 2849.7625,
+    "N": 36,
+    "EL": 1424.95
+   },
+   "key": "SWW|0.75|P300",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  }
+ ],
+ "supports": [],
+ "spools": [
+  {
+   "id": "3/4\"-P300-I-7225-SP01",
+   "items": [
+    "3/4\"-P300-I-7225/O1",
+    "3/4\"-P300-I-7225/1"
+   ],
+   "shopWelds": [
+    "3/4\"-P300-I-7225/W2",
+    "3/4\"-P300-I-7225/W3"
+   ],
+   "weight": 0.6814
+  },
+  {
+   "id": "3/4\"-P300-I-7225-SP02",
+   "items": [
+    "3/4\"-P300-I-7225/3"
+   ],
+   "shopWelds": [
+    "3/4\"-P300-I-7225/W5"
+   ],
+   "weight": 0.2682
+  },
+  {
+   "id": "3/4\"-P300-I-7225-SP03",
+   "items": [
+    "3/4\"-P300-I-7225/5",
+    "3/4\"-P300-I-7225/6"
+   ],
+   "shopWelds": [
+    "3/4\"-P300-I-7225/W7"
+   ],
+   "weight": 4.8254
+  },
+  {
+   "items": [
+    "3/4\"-P300-I-7225/4:A1",
+    "3/4\"-P300-I-7225/4:A2",
+    "3/4\"-P300-I-7225/4:A3",
+    "3/4\"-P300-I-7225/4:B1"
+   ],
+   "shopWelds": [],
+   "weight": 4.6455
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 4\" × 3/4\" P300 SOCKET-WELD OUTLET",
+   "qty": 1,
+   "weight": 0.2341
+  },
+  {
+   "itemNo": 2,
+   "description": "NIPPLE 3/4\" P300 × 7-5/8\" PLAIN BOTH ENDS",
+   "qty": 1,
+   "weight": 0.4179,
+   "length": null
+  },
+  {
+   "itemNo": 3,
+   "description": "VALVE, GATE, WEDGE, OS&Y SOCKET-WELD ENDS 3/4\" P300",
+   "qty": 1,
+   "weight": 22.5142
+  },
+  {
+   "itemNo": 4,
+   "description": "NIPPLE 3/4\" P300 × 4-5/8\" PLAIN BOTH ENDS",
+   "qty": 2,
+   "weight": 0.507,
+   "length": null
+  },
+  {
+   "itemNo": 5,
+   "description": "VALVE, FOUR-WAY PLUG SOCKET-WELD ENDS 3/4\" P300",
+   "qty": 1,
+   "weight": 15.7335
+  },
+  {
+   "itemNo": 6,
+   "description": "FLANGE SOCKET-WELD 3/4\" P300 RAISED FACE",
+   "qty": 1,
+   "weight": 4.5572
+  },
+  {
+   "itemNo": 7,
+   "description": "GASKET 3/4\" P300 COMPRESSED SHEET",
+   "qty": 1,
+   "weight": 0
+  },
+  {
+   "itemNo": 8,
+   "description": "FLANGE BLIND 3/4\" P300 RAISED FACE",
+   "qty": 1,
+   "weight": 4.6212
+  },
+  {
+   "itemNo": 9,
+   "description": "STUD SET 4 × 0.5\" × 4-1/4\" WITH 2 NUTS, FOR 3/4\" P300",
+   "qty": 1,
+   "weight": 1.2764
+  },
+  {
+   "itemNo": 10,
+   "description": "NIPPLE 3/4\" P300 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
+   "qty": 1,
+   "weight": 0.3616,
+   "length": null
+  },
+  {
+   "itemNo": 11,
+   "description": "VALVE, NEEDLE THREADED ENDS 3/4\" P300",
+   "qty": 1,
+   "weight": 3.9269
+  },
+  {
+   "itemNo": 12,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P300",
+   "qty": 1,
+   "weight": 0.2566
+  },
+  {
+   "itemNo": 13,
+   "description": "PLUG SOCKET-WELD 3/4\" P300",
+   "qty": 1,
+   "weight": 0.1005
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1398
+   },
+   "kind": "olet start",
+   "ref": "3/4\"-P300-I-7225/O1"
+  },
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1401.125
+   },
+   "kind": "olet end",
+   "ref": "3/4\"-P300-I-7225/O1"
+  },
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1408.125
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P300-I-7225/1"
+  },
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1416.5625
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P300-I-7225/2"
+  },
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1420.5625
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P300-I-7225/3"
+  },
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1429.3375
+   },
+   "kind": "valve end",
+   "ref": "3/4\"-P300-I-7225/4"
+  },
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1433.3375
+   },
+   "kind": "nipple end",
+   "ref": "3/4\"-P300-I-7225/5"
+  },
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1435.3375
+   },
+   "kind": "flange end",
+   "ref": "3/4\"-P300-I-7225/6"
+  },
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1435.4625
+   },
+   "kind": "gasket end",
+   "ref": "3/4\"-P300-I-7225/7"
+  },
+  {
+   "at": {
+    "E": 2844,
+    "N": 36,
+    "EL": 1436.9
+   },
+   "kind": "blind end",
+   "ref": "3/4\"-P300-I-7225/8"
+  }
+ ],
+ "totals": {
+  "items": 14,
+  "welds": 9,
+  "fieldWelds": 2,
+  "supports": 0,
+  "pipeLength": 0,
+  "weight": 54.507
+ }
+}

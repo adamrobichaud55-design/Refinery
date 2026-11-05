@@ -1,0 +1,497 @@
+{
+ "header": {
+  "line": "1\"-P300-RV-4241",
+  "lineClass": "H300",
+  "fluid": "Hydrocarbon process",
+  "service": "RV",
+  "NPS": 1,
+  "cls": "P300",
+  "designPressure": 300,
+  "insulated": false,
+  "kind": "stub",
+  "from": "tap 4\"-P300-P-1222",
+  "to": "PSV",
+  "flow": "tap 4\"-P300-P-1222 → PSV"
+ },
+ "items": [
+  {
+   "tag": "1\"-P300-RV-4241/O1",
+   "line": "1\"-P300-RV-4241",
+   "lineClass": "H300",
+   "kind": "olet",
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 4\" × 1\" P300 SOCKET-WELD OUTLET",
+   "designation": "SWOLET4x1-P300",
+   "key": "OLET|4|1|P300|SW",
+   "NPS": 1,
+   "NPS2": 4,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "FW×SW",
+   "weight": 0.2993,
+   "spool": "1\"-P300-RV-4241-SP01",
+   "a": {
+    "E": 2520,
+    "N": -36,
+    "EL": 1428
+   },
+   "b": {
+    "E": 2516.875,
+    "N": -36,
+    "EL": 1428
+   },
+   "centre": {
+    "E": 2518.4375,
+    "N": -36,
+    "EL": 1428
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-6"
+   ]
+  },
+  {
+   "tag": "1\"-P300-RV-4241/1",
+   "line": "1\"-P300-RV-4241",
+   "lineClass": "H300",
+   "kind": "nipple",
+   "itemNo": 2,
+   "description": "NIPPLE 1\" P300 × 8-9/16\" PLAIN BOTH ENDS",
+   "designation": "NIP1-P300-PBE",
+   "key": "NIP|1|P300|8.581|PBE",
+   "NPS": 1,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "SW×SW",
+   "cutLength": 8.5812,
+   "weight": 0.6495,
+   "spool": "1\"-P300-RV-4241-SP01",
+   "a": {
+    "E": 2516.875,
+    "N": -36,
+    "EL": 1428
+   },
+   "b": {
+    "E": 2508.9188,
+    "N": -36,
+    "EL": 1428
+   },
+   "centre": {
+    "E": 2512.8969,
+    "N": -36,
+    "EL": 1428
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "1\"-P300-RV-4241/2",
+   "line": "1\"-P300-RV-4241",
+   "lineClass": "H300",
+   "kind": "flange",
+   "itemNo": 3,
+   "description": "FLANGE SOCKET-WELD 1\" P300 RAISED FACE",
+   "designation": "SWF1-P300",
+   "key": "SWF|1|P300",
+   "NPS": 1,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "SW×RF",
+   "weight": 4.6699,
+   "spool": "1\"-P300-RV-4241-SP01",
+   "a": {
+    "E": 2508.9188,
+    "N": -36,
+    "EL": 1428
+   },
+   "b": {
+    "E": 2507.0438,
+    "N": -36,
+    "EL": 1428
+   },
+   "centre": {
+    "E": 2507.9813,
+    "N": -36,
+    "EL": 1428
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-11",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-9",
+    "SW-SWT-1"
+   ]
+  },
+  {
+   "tag": "1\"-P300-RV-4241/3",
+   "line": "1\"-P300-RV-4241",
+   "lineClass": "H300",
+   "kind": "gasket",
+   "itemNo": 4,
+   "description": "GASKET 1\" P300 COMPRESSED SHEET",
+   "designation": "GASKET1-P300",
+   "key": "GSK|1|P300",
+   "NPS": 1,
+   "cls": "P300",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 2507.0438,
+    "N": -36,
+    "EL": 1428
+   },
+   "b": {
+    "E": 2506.9188,
+    "N": -36,
+    "EL": 1428
+   },
+   "centre": {
+    "E": 2506.9813,
+    "N": -36,
+    "EL": 1428
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "1\"-P300-RV-4241/4",
+   "line": "1\"-P300-RV-4241",
+   "lineClass": "H300",
+   "kind": "valve",
+   "itemNo": 5,
+   "description": "VALVE, PRESSURE SAFETY VALVE 1\" P300 INLET × 1.25\" P150 OUTLET",
+   "designation": "PSV1-P300",
+   "key": "VLV|PSV|1|P300",
+   "NPS": 1,
+   "NPS2": 1.25,
+   "cls": "P300",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 39.2092,
+   "spool": "loose",
+   "a": {
+    "E": 2506.9188,
+    "N": -36,
+    "EL": 1428
+   },
+   "b": {
+    "E": 2502,
+    "N": -36,
+    "EL": 1428
+   },
+   "centre": {
+    "E": 2502,
+    "N": -36,
+    "EL": 1428
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-9",
+    "SW-VLV-PSV-1"
+   ]
+  },
+  {
+   "tag": "1\"-P300-RV-4241/5",
+   "line": "1\"-P300-RV-4241",
+   "lineClass": "H300",
+   "kind": "studs",
+   "itemNo": 6,
+   "description": "STUD SET 4 × 0.5\" × 4\" WITH 2 NUTS, FOR 1\" P300",
+   "designation": "STUDS 4×0.5x4 (1-P300)",
+   "key": "STUDS|1|P300|2.750",
+   "NPS": 1,
+   "cls": "P300",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 1.2207,
+   "spool": "loose",
+   "a": {
+    "E": 2508.9813,
+    "N": -36,
+    "EL": 1428
+   },
+   "b": {
+    "E": 2504.9813,
+    "N": -36,
+    "EL": 1428
+   },
+   "centre": {
+    "E": 2506.9813,
+    "N": -36,
+    "EL": 1428
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "1\"-P300-RV-4241/W1",
+   "line": "1\"-P300-RV-4241",
+   "lineClass": "H300",
+   "type": "FW",
+   "size": 0.1875,
+   "NPS": 1,
+   "cls": "P300",
+   "joins": [
+    "4\"-P300-P-1222/run",
+    "1\"-P300-RV-4241/O1"
+   ],
+   "shopField": "shop",
+   "spool": "parent 4\"-P300-P-1222/run",
+   "spools": [
+    "parent 4\"-P300-P-1222/run",
+    "1\"-P300-RV-4241-SP01"
+   ],
+   "at": {
+    "E": 2518,
+    "N": -36,
+    "EL": 1428
+   },
+   "key": "FWR|0.5|0.1875",
+   "weight": 0.0186,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-WD-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "1\"-P300-RV-4241/W2",
+   "line": "1\"-P300-RV-4241",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 1,
+   "cls": "P300",
+   "joins": [
+    "1\"-P300-RV-4241/O1",
+    "1\"-P300-RV-4241/1"
+   ],
+   "shopField": "shop",
+   "spool": "1\"-P300-RV-4241-SP01",
+   "spools": [
+    "1\"-P300-RV-4241-SP01",
+    "1\"-P300-RV-4241-SP01"
+   ],
+   "at": {
+    "E": 2516.875,
+    "N": -36,
+    "EL": 1428
+   },
+   "key": "SWW|1|P300",
+   "weight": 0.0186,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "1\"-P300-RV-4241/W3",
+   "line": "1\"-P300-RV-4241",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 1,
+   "cls": "P300",
+   "joins": [
+    "1\"-P300-RV-4241/1",
+    "1\"-P300-RV-4241/2"
+   ],
+   "shopField": "shop",
+   "spool": "1\"-P300-RV-4241-SP01",
+   "spools": [
+    "1\"-P300-RV-4241-SP01",
+    "1\"-P300-RV-4241-SP01"
+   ],
+   "at": {
+    "E": 2508.9188,
+    "N": -36,
+    "EL": 1428
+   },
+   "key": "SWW|1|P300",
+   "weight": 0.0186,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  }
+ ],
+ "supports": [],
+ "spools": [
+  {
+   "id": "1\"-P300-RV-4241-SP01",
+   "items": [
+    "1\"-P300-RV-4241/O1",
+    "1\"-P300-RV-4241/1",
+    "1\"-P300-RV-4241/2"
+   ],
+   "shopWelds": [
+    "1\"-P300-RV-4241/W2",
+    "1\"-P300-RV-4241/W3"
+   ],
+   "weight": 5.6558
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 4\" × 1\" P300 SOCKET-WELD OUTLET",
+   "qty": 1,
+   "weight": 0.2993
+  },
+  {
+   "itemNo": 2,
+   "description": "NIPPLE 1\" P300 × 8-9/16\" PLAIN BOTH ENDS",
+   "qty": 1,
+   "weight": 0.6495,
+   "length": null
+  },
+  {
+   "itemNo": 3,
+   "description": "FLANGE SOCKET-WELD 1\" P300 RAISED FACE",
+   "qty": 1,
+   "weight": 4.6699
+  },
+  {
+   "itemNo": 4,
+   "description": "GASKET 1\" P300 COMPRESSED SHEET",
+   "qty": 1,
+   "weight": 0
+  },
+  {
+   "itemNo": 5,
+   "description": "VALVE, PRESSURE SAFETY VALVE 1\" P300 INLET × 1.25\" P150 OUTLET",
+   "qty": 1,
+   "weight": 39.2092
+  },
+  {
+   "itemNo": 6,
+   "description": "STUD SET 4 × 0.5\" × 4\" WITH 2 NUTS, FOR 1\" P300",
+   "qty": 1,
+   "weight": 1.2207
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 2520,
+    "N": -36,
+    "EL": 1428
+   },
+   "kind": "olet start",
+   "ref": "1\"-P300-RV-4241/O1"
+  },
+  {
+   "at": {
+    "E": 2516.875,
+    "N": -36,
+    "EL": 1428
+   },
+   "kind": "olet end",
+   "ref": "1\"-P300-RV-4241/O1"
+  },
+  {
+   "at": {
+    "E": 2508.9188,
+    "N": -36,
+    "EL": 1428
+   },
+   "kind": "nipple end",
+   "ref": "1\"-P300-RV-4241/1"
+  },
+  {
+   "at": {
+    "E": 2507.0438,
+    "N": -36,
+    "EL": 1428
+   },
+   "kind": "flange end",
+   "ref": "1\"-P300-RV-4241/2"
+  },
+  {
+   "at": {
+    "E": 2506.9188,
+    "N": -36,
+    "EL": 1428
+   },
+   "kind": "gasket end",
+   "ref": "1\"-P300-RV-4241/3"
+  },
+  {
+   "at": {
+    "E": 2502,
+    "N": -36,
+    "EL": 1428
+   },
+   "kind": "valve end",
+   "ref": "1\"-P300-RV-4241/4"
+  }
+ ],
+ "totals": {
+  "items": 6,
+  "welds": 3,
+  "fieldWelds": 0,
+  "supports": 0,
+  "pipeLength": 0,
+  "weight": 46.0485
+ }
+}

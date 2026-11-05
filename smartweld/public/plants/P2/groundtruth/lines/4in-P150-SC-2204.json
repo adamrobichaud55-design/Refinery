@@ -1,0 +1,930 @@
+{
+ "header": {
+  "line": "4\"-P150-SC-2204",
+  "lineClass": "C150",
+  "fluid": "Steam condensate",
+  "service": "SC",
+  "NPS": 4,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": true,
+  "kind": "header",
+  "from": "cap",
+  "to": "cap",
+  "flow": "cap → cap",
+  "joint": "BW"
+ },
+ "items": [
+  {
+   "tag": "4\"-P150-SC-2204/cap0",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 4\" P150",
+   "designation": "CAP4-P150",
+   "key": "CAP|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 1.4166,
+   "spool": "4\"-P150-SC-2204-SP01",
+   "a": {
+    "E": 250,
+    "N": -24,
+    "EL": 1542
+   },
+   "b": {
+    "E": 252,
+    "N": -24,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 251,
+    "N": -24,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/p2",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|416.000",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 416,
+   "weight": 264.9151,
+   "spool": "4\"-P150-SC-2204-SP01",
+   "a": {
+    "E": 252,
+    "N": -24,
+    "EL": 1542
+   },
+   "b": {
+    "E": 668,
+    "N": -24,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 460,
+    "N": -24,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/p3",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|416.000",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 416,
+   "weight": 264.9151,
+   "spool": "4\"-P150-SC-2204-SP01",
+   "a": {
+    "E": 668,
+    "N": -24,
+    "EL": 1542
+   },
+   "b": {
+    "E": 1084,
+    "N": -24,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 876,
+    "N": -24,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/p4",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|416.000",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 416,
+   "weight": 264.9151,
+   "spool": "4\"-P150-SC-2204-SP01",
+   "a": {
+    "E": 1084,
+    "N": -24,
+    "EL": 1542
+   },
+   "b": {
+    "E": 1500,
+    "N": -24,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 1292,
+    "N": -24,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/p5",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|404.000",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 404,
+   "weight": 257.2733,
+   "spool": "4\"-P150-SC-2204-SP01",
+   "a": {
+    "E": 1500,
+    "N": -24,
+    "EL": 1542
+   },
+   "b": {
+    "E": 1904,
+    "N": -24,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 1702,
+    "N": -24,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/p6",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|428.000",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 428,
+   "weight": 272.5569,
+   "spool": "4\"-P150-SC-2204-SP01",
+   "a": {
+    "E": 1904,
+    "N": -24,
+    "EL": 1542
+   },
+   "b": {
+    "E": 2332,
+    "N": -24,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 2118,
+    "N": -24,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/p7",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|416.000",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 416,
+   "weight": 264.9151,
+   "spool": "4\"-P150-SC-2204-SP01",
+   "a": {
+    "E": 2332,
+    "N": -24,
+    "EL": 1542
+   },
+   "b": {
+    "E": 2748,
+    "N": -24,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 2540,
+    "N": -24,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/cap1",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 4\" P150",
+   "designation": "CAP4-P150",
+   "key": "CAP|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 1.4166,
+   "spool": "4\"-P150-SC-2204-SP01",
+   "a": {
+    "E": 2748,
+    "N": -24,
+    "EL": 1542
+   },
+   "b": {
+    "E": 2750,
+    "N": -24,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 2749,
+    "N": -24,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "4\"-P150-SC-2204/W1",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-SC-2204/cap0",
+    "4\"-P150-SC-2204/p2"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-SC-2204-SP01",
+   "spools": [
+    "4\"-P150-SC-2204-SP01",
+    "4\"-P150-SC-2204-SP01"
+   ],
+   "at": {
+    "E": 252,
+    "N": -24,
+    "EL": 1542
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/W2",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-SC-2204/p2",
+    "4\"-P150-SC-2204/p3"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-SC-2204-SP01",
+   "spools": [
+    "4\"-P150-SC-2204-SP01",
+    "4\"-P150-SC-2204-SP01"
+   ],
+   "at": {
+    "E": 668,
+    "N": -24,
+    "EL": 1542
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/W3",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-SC-2204/p3",
+    "4\"-P150-SC-2204/p4"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-SC-2204-SP01",
+   "spools": [
+    "4\"-P150-SC-2204-SP01",
+    "4\"-P150-SC-2204-SP01"
+   ],
+   "at": {
+    "E": 1084,
+    "N": -24,
+    "EL": 1542
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/W4",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-SC-2204/p4",
+    "4\"-P150-SC-2204/p5"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-SC-2204-SP01",
+   "spools": [
+    "4\"-P150-SC-2204-SP01",
+    "4\"-P150-SC-2204-SP01"
+   ],
+   "at": {
+    "E": 1500,
+    "N": -24,
+    "EL": 1542
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/W5",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-SC-2204/p5",
+    "4\"-P150-SC-2204/p6"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-SC-2204-SP01",
+   "spools": [
+    "4\"-P150-SC-2204-SP01",
+    "4\"-P150-SC-2204-SP01"
+   ],
+   "at": {
+    "E": 1904,
+    "N": -24,
+    "EL": 1542
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/W6",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-SC-2204/p6",
+    "4\"-P150-SC-2204/p7"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-SC-2204-SP01",
+   "spools": [
+    "4\"-P150-SC-2204-SP01",
+    "4\"-P150-SC-2204-SP01"
+   ],
+   "at": {
+    "E": 2332,
+    "N": -24,
+    "EL": 1542
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/W7",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-SC-2204/p7",
+    "4\"-P150-SC-2204/cap1"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-SC-2204-SP01",
+   "spools": [
+    "4\"-P150-SC-2204-SP01",
+    "4\"-P150-SC-2204-SP01"
+   ],
+   "at": {
+    "E": 2748,
+    "N": -24,
+    "EL": 1542
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "4\"-P150-SC-2204/S1",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "guide",
+   "description": "GUIDE FOR 4\" LINE (GUIDE-4)",
+   "designation": "GUIDE-4",
+   "key": "SHOE|4|P150|guide|4.000",
+   "material": "Grade 36",
+   "weight": 15.0254,
+   "spool": "loose",
+   "at": {
+    "E": 480,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/S2",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "shoe",
+   "description": "SHOE FOR 4\" LINE (SHOE-4)",
+   "designation": "SHOE-4",
+   "key": "SHOE|4|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 720,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/S3",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "shoe",
+   "description": "SHOE FOR 4\" LINE (SHOE-4)",
+   "designation": "SHOE-4",
+   "key": "SHOE|4|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 960,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/S4",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "guide",
+   "description": "GUIDE FOR 4\" LINE (GUIDE-4)",
+   "designation": "GUIDE-4",
+   "key": "SHOE|4|P150|guide|4.000",
+   "material": "Grade 36",
+   "weight": 15.0254,
+   "spool": "loose",
+   "at": {
+    "E": 1200,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/S5",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "anchor",
+   "description": "ANCHOR FOR 4\" LINE (ANCHOR-4)",
+   "designation": "ANCHOR-4",
+   "key": "SHOE|4|P150|anchor|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 1440,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/S6",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "guide",
+   "description": "GUIDE FOR 4\" LINE (GUIDE-4)",
+   "designation": "GUIDE-4",
+   "key": "SHOE|4|P150|guide|4.000",
+   "material": "Grade 36",
+   "weight": 15.0254,
+   "spool": "loose",
+   "at": {
+    "E": 1680,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/S7",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "shoe",
+   "description": "SHOE FOR 4\" LINE (SHOE-4)",
+   "designation": "SHOE-4",
+   "key": "SHOE|4|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 1920,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/S8",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "shoe",
+   "description": "SHOE FOR 4\" LINE (SHOE-4)",
+   "designation": "SHOE-4",
+   "key": "SHOE|4|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 2160,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/S9",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "shoe",
+   "description": "SHOE FOR 4\" LINE (SHOE-4)",
+   "designation": "SHOE-4",
+   "key": "SHOE|4|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 2400,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-SC-2204/S10",
+   "line": "4\"-P150-SC-2204",
+   "lineClass": "C150",
+   "type": "guide",
+   "description": "GUIDE FOR 4\" LINE (GUIDE-4)",
+   "designation": "GUIDE-4",
+   "key": "SHOE|4|P150|guide|4.000",
+   "material": "Grade 36",
+   "weight": 15.0254,
+   "spool": "loose",
+   "at": {
+    "E": 2640,
+    "N": -24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "4\"-P150-SC-2204-SP01",
+   "items": [
+    "4\"-P150-SC-2204/cap0",
+    "4\"-P150-SC-2204/p2",
+    "4\"-P150-SC-2204/p3",
+    "4\"-P150-SC-2204/p4",
+    "4\"-P150-SC-2204/p5",
+    "4\"-P150-SC-2204/p6",
+    "4\"-P150-SC-2204/p7",
+    "4\"-P150-SC-2204/cap1"
+   ],
+   "shopWelds": [
+    "4\"-P150-SC-2204/W1",
+    "4\"-P150-SC-2204/W2",
+    "4\"-P150-SC-2204/W3",
+    "4\"-P150-SC-2204/W4",
+    "4\"-P150-SC-2204/W5",
+    "4\"-P150-SC-2204/W6",
+    "4\"-P150-SC-2204/W7"
+   ],
+   "weight": 1593.2953
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "CAP 4\" P150",
+   "qty": 2,
+   "weight": 2.8331
+  },
+  {
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "qty": 6,
+   "length": 2496,
+   "weight": 1589.4904
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 250,
+    "N": -24,
+    "EL": 1542
+   },
+   "kind": "cap start",
+   "ref": "4\"-P150-SC-2204/cap0"
+  },
+  {
+   "at": {
+    "E": 252,
+    "N": -24,
+    "EL": 1542
+   },
+   "kind": "cap end",
+   "ref": "4\"-P150-SC-2204/cap0"
+  },
+  {
+   "at": {
+    "E": 668,
+    "N": -24,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-SC-2204/p2"
+  },
+  {
+   "at": {
+    "E": 1084,
+    "N": -24,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-SC-2204/p3"
+  },
+  {
+   "at": {
+    "E": 1500,
+    "N": -24,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-SC-2204/p4"
+  },
+  {
+   "at": {
+    "E": 1904,
+    "N": -24,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-SC-2204/p5"
+  },
+  {
+   "at": {
+    "E": 2332,
+    "N": -24,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-SC-2204/p6"
+  },
+  {
+   "at": {
+    "E": 2748,
+    "N": -24,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-SC-2204/p7"
+  },
+  {
+   "at": {
+    "E": 2750,
+    "N": -24,
+    "EL": 1542
+   },
+   "kind": "cap end",
+   "ref": "4\"-P150-SC-2204/cap1"
+  }
+ ],
+ "totals": {
+  "items": 8,
+  "welds": 7,
+  "fieldWelds": 0,
+  "supports": 10,
+  "pipeLength": 2496,
+  "weight": 1592.3236
+ }
+}
