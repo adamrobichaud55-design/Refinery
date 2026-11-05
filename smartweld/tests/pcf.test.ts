@@ -20,7 +20,7 @@ for (const [plant, gt] of [['P1', 'public/groundtruth'], ['P2', 'public/plants/P
   it('every line writes a file whose records chain and whose bill lists every item code (SW-PCF-2, SW-PCF-4)', () => {
     for (const L of lines) {
       const text = pcfFor(L, lines);
-      expect(text.startsWith('ISOGEN-FILES')).toBe(true);
+      expect(text.startsWith('UNITS-BORE INCH')).toBe(true); expect(text.includes('ISOGEN')).toBe(false);   // no product name in a file (IP_REVIEW item 7)
       expect(text.includes(`PIPELINE-REFERENCE ${L.header.line}`)).toBe(true);
       expect((text.match(/^END-POINT|^    END-POINT/gm) ?? []).length).toBeGreaterThanOrEqual(2 * L.items.length);
       expect(chained(L), L.header.line).toBe(true);

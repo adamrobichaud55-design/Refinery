@@ -1957,8 +1957,10 @@ generator reads the same files, so one file per line serves both (owner's instru
   SW-GT-6: units inches (bore and coordinates) and pounds; coordinates are the plant frame of
   SW-U-4 and SW-GT-2 (E, N, EL with the floor at EL 1200 in); the pipeline reference is the line
   number and the piping spec its pressure class; the line class, fluid, service, design pressure,
-  insulation, joint type, from, to and flow direction go to the pipeline attributes. Reason: a
-  designer imports a PCF in one step where a spreadsheet costs a modelling pass per line.
+  insulation, joint type, from, to and flow direction go to the pipeline attributes; the file begins
+  with its units lines and names no product (the designer adds a product's own first line on his
+  side if his importer insists). Reason: a designer imports a PCF in one step where a spreadsheet
+  costs a modelling pass per line; no vendor's name belongs in SmartWeld's files.
 - `SW-PCF-2` Every ground-truth item becomes one component record with its end points taken from
   the item's own ends (`a`, `b`), so adjacent records share a point to the model's precision; a
   bend adds its centre point (the elbow's corner, SW-FIT-1 / SW-SWT-3); a tee, a branch outlet and

@@ -148,12 +148,12 @@ editing one rule in `DESIGN_BASIS.md` and its code, without touching anything el
       products that write and read this format do so on the same basis. Counsel is asked to confirm
       that reading, and to say whether any jurisdiction of interest treats a format specification
       differently.
-   3. **A product name inside the file.** The conventional first line of such a file names the
-      isometric product the format grew up with (`ISOGEN-FILES`). SmartWeld writes it only so that
-      importers recognise the file; it does not use that name, or any vendor's name, in its own
-      product, documentation or marketing. Counsel is asked whether that keyword should be dropped
-      from the files (the writer can omit it in one line) and whether any claim of compatibility may
-      be made in marketing.
+   3. **No product name inside the file.** The conventional first line of such a file names the
+      isometric product the format grew up with. SmartWeld's files do not carry it (dropped at the
+      owner's instruction, 2026-11-05): they begin with the units lines, and the mapping table tells
+      the designer to add the product's own first line on his side if his importer insists. No
+      vendor's name appears in SmartWeld's files, product, documentation or marketing. Counsel is
+      asked whether any claim of compatibility may be made in marketing.
    4. **The designer's import.** Importing SmartWeld's files into his licensed products and exporting
       drawings is ordinary licensed use; item 6 above covers whether those exports may be used to test
       SmartWeld's software, and the services agreement covers ownership of the exports.

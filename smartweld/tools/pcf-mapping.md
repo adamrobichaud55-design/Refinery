@@ -9,7 +9,7 @@ that wants its own symbol keys remaps this table once.
 - One file per line: `<line number>.pcf` (the `"` of the size written as `in`, `/` as `-`), listed in `INDEX.csv`.
 - Units: bore and coordinates in inches, weights in pounds. Coordinates are the plant frame: E east, N north, EL
   elevation with the floor at EL 1200 in (100'-0").
-- Header: `PIPELINE-REFERENCE <line>`, `PIPING-SPEC <pressure class>`, then attributes 1–10: line class, fluid,
+- Header: the `UNITS-*` lines, then `PIPELINE-REFERENCE <line>`, `PIPING-SPEC <pressure class>`, then attributes 1–10: line class, fluid,
   service, design pressure, insulation, joint type (BW / SW / TH), from, to, flow, size.
 - Each item is one record (SW-PCF-2): `END-POINT E N EL bore` lines, a `CENTRE-POINT` for bends, tees, outlets and
   angle valves, `BRANCH1-POINT` (and `BRANCH2-POINT`) for tees, outlets and valve stations, then `SKEY`, `ITEM-CODE`,
@@ -83,3 +83,9 @@ Four letters: two for the item, two for its ends.
   `:B1…`; they hang off the station and are not in the main chain.
 - `COMPONENT-ATTRIBUTE1` is the ground-truth tag, so every record can be matched back to `groundtruth/lines/<line>.json`
   and to the answer key.
+
+## Note on the first line
+
+SmartWeld's files begin with the `UNITS-*` lines and carry no product name. Some importers expect a first line naming
+the isometric product's file set (`ISOGEN-FILES …`); if the designer's importer insists on it, he adds that line on his
+side. SmartWeld does not write it (IP_REVIEW.md item 7).

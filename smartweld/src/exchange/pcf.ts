@@ -1,6 +1,6 @@
 /**
  * Piping component files (DESIGN_BASIS.md SW-PCF-1..4): one plain-text file per line, written from the ground truth of
- * SW-GT-6 by SmartWeld's own writer. The record vocabulary (PIPELINE-REFERENCE, END-POINT, CENTRE-POINT, BRANCH1-POINT,
+ * SW-GT-6 by SmartWeld's own writer. The record vocabulary (UNITS-*, PIPELINE-REFERENCE, END-POINT, CENTRE-POINT, BRANCH1-POINT,
  * SKEY, ITEM-CODE, MATERIALS …) is the common line-file vocabulary isometric tools read; the symbol keys are SmartWeld's
  * own convention of SW-PCF-3 (two letters for the item, two for its ends), listed in tools/pcf-mapping.md from the same
  * table (PCF_MAP below). Nothing here is read from any outside file: every number comes from the ground truth.
@@ -112,7 +112,7 @@ const itemCode = (it: GTItem) => it.designation.replace(/\s+/g, '-');
 export function pcfFor(line: GTLine, all: GTLine[]): string {
   const H = line.header, L: string[] = [];
   const A = (k: string, v: string) => L.push(`    ${k} ${v}`);
-  L.push('ISOGEN-FILES ISOGEN.FLS', 'UNITS-BORE INCH', 'UNITS-CO-ORDS INCH', 'UNITS-WEIGHT LBS', 'UNITS-BOLT-DIA INCH', 'UNITS-BOLT-LENGTH INCH', `PIPELINE-REFERENCE ${H.line}`);
+  L.push('UNITS-BORE INCH', 'UNITS-CO-ORDS INCH', 'UNITS-WEIGHT LBS', 'UNITS-BOLT-DIA INCH', 'UNITS-BOLT-LENGTH INCH', `PIPELINE-REFERENCE ${H.line}`);
   A('PROJECT-IDENTIFIER', 'SMARTWELD');
   A('PIPING-SPEC', H.cls);
   A('ATTRIBUTE1', H.lineClass); A('ATTRIBUTE2', H.fluid); A('ATTRIBUTE3', H.service); A('ATTRIBUTE4', `${H.designPressure} PSI`); A('ATTRIBUTE5', H.insulated ? 'INSULATED' : 'BARE');
