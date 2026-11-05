@@ -357,7 +357,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   for (const t of rk.tiers) g.markBox([rk.x0 - 12, t, -rk.halfWidth], [rk.x1 + 12, t + 24, rk.halfWidth], 0, 'head');
   g.markBox([-1e6, -1e6, -1e6], [1e6, 96 - 1e-6, 1e6], 0, 'head');          // SW-RT-3: floor walkway headroom
   if (plant.wallX !== undefined) {   // SW-PLANT-6: from 3 ft beyond the rack's end outward one band at 150 in, except at the lines' own equipment
-    const bx = rk.x1 + 36; g.markBox([bx, -1e6, -1e6], [1e6, 147 - 1e-6, 1e6], 0, 'head'); g.markBox([bx, 153 + 1e-6, -1e6], [1e6, 1e6, 1e6], 0, 'head');
+    const bx = rk.x1 + 108; g.markBox([bx, -1e6, -1e6], [1e6, 147 - 1e-6, 1e6], 0, 'head'); g.markBox([bx, 153 + 1e-6, -1e6], [1e6, 1e6, 1e6], 0, 'head');   // the 9 ft slot past the rack end is where lines fall
     // SW-RT-10: the roof plane, the side walls and the west wall bound the grid
     const dr = building.drawing, He = dr.eaveFt * 12, halfW = dr.widthFt * 6, tanT = dr.slopeRisePer12 / 12;
     for (let z = -halfW; z < halfW; z += H) { const yr = He + (halfW - Math.abs(z + H / 2)) * tanT - 1; g.markBox([-1e6, yr, z], [plant.wallX, 1e6, z + H], STATIC); }
@@ -530,7 +530,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   };
   /** SW-LL-3 control station; plant 2 (SW-LL-7): the control valve one size smaller between two eccentric reducers when the line is 3 in or more */
   const cvStation = (l: LineDef): Item[] => {
-    const NPS = l.NPS, cls = l.cls, sN = P2 && NPS >= 3 ? (NPS === 4 ? 3 : NPS === 3 ? 2 : NPS - 1) : NPS;
+    const NPS = l.NPS, cls = l.cls, sN = P2 && NPS >= 3 ? ({ 3: 2, 4: 3, 6: 4, 8: 6 } as Record<number, number>)[NPS] ?? NPS : NPS;
     const gate: Item[] = [fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
     if (sN === NPS) return [fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: 'CONTROL', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
     return [...gate, { k: 'reducer', from: NPS, to: sN, cls, flat: 'top' }, fl(l, 'wnfR', sN), { k: 'gasket', NPS: sN, cls }, { k: 'valve', type: 'CONTROL', NPS: sN, cls }, { k: 'gasket', NPS: sN, cls }, fl(l, 'wnf', sN), { k: 'reducer', from: sN, to: NPS, cls, flat: 'top' }, ...gate];
@@ -602,6 +602,11 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
           // the take-off stack, valves oriented, must be clear in full (SW-RT-3)
           const outEnd = add(at, out, C), o = orient(items.map(x => (x.k === 'psv' ? { ...x, runDir: w } : x)), it => buildStack(child.no, outEnd, out, it, `${parentNo}/tee`), cid, out, undefined, pid);
           if (!o.ok) continue;
+          if (o.b.extra?.psvOutletFace) {   // the safety valve's outlet lead (its flare line's start) must be clear for 3 ft
+            let lead = true; const f = o.b.extra.psvOutletFace, d = o.b.extra.psvOutDir!;
+            for (let s = 0; s <= 36; s += H / 2) { const cc = g.cellOf(add(f, d, s)); if (!g.inside(cc[0], cc[1], cc[2]) || !g.clear(cc[0], cc[1], cc[2], 1.5, [pid, cid])) { lead = false; break; } }
+            if (!lead) continue;
+          }
           best = { at, out, d, b: o.b };
         }
       }
@@ -845,9 +850,9 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   /** lowest steel directly above p that a hanger rod can reach, with the rod path clear of other lines */
   const steelAboveExact = (p: V3, r: number, id: number): number | null => {
     let best = Infinity;
-    for (let y = Math.floor((p[1] + r) / SB); y <= Math.floor(plant.grid.y1 / SB); y++) for (const i of sidx.get(`${Math.floor(p[0] / SB)},${y},${Math.floor(p[2] / SB)}`) ?? []) {
+    for (let y = Math.floor((p[1] + r) / SB); y <= Math.floor(plant.grid.y1 / SB); y++) for (const dz of (P2 ? [-1, 0, 1] : [0])) for (const i of sidx.get(`${Math.floor(p[0] / SB)},${y},${Math.floor(p[2] / SB) + dz}`) ?? []) {   // plant 2: the purlin bridge reaches a cell either side
       const o = st.obstacles[i]; if (!HANG_FROM(o.tag)) continue;
-      if (P2 && o.kind === 'box' && /purlin/.test(o.tag)) { if (p[0] >= o.mn[0] && p[0] <= o.mx[0] && p[2] >= o.mn[2] - 1 && p[2] <= o.mx[2] + 1 && o.mn[1] > p[1] + r) best = Math.min(best, o.mn[1]); continue; }   // SW-PS-9 amended: a purlin directly above
+      if (P2 && o.kind === 'box' && /purlin/.test(o.tag)) { if (p[0] >= o.mn[0] && p[0] <= o.mx[0] && p[2] >= o.mn[2] - 30 && p[2] <= o.mx[2] + 30 && o.mn[1] > p[1] + r) best = Math.min(best, o.mn[1]); continue; }   // SW-PS-9 amended: a purlin above, or a bridge between the two either side (30 in)
       let bottom: number;
       if (o.kind === 'box') { if (p[0] < o.mn[0] || p[0] > o.mx[0] || p[2] < o.mn[2] || p[2] > o.mx[2]) continue; bottom = o.mn[1]; }
       else {
@@ -968,7 +973,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
         const Q1 = add(pts[i], a, -d / 2), Q2 = add(pts[i + 1], a, d / 2);
         if (myTaps.some(t => dot(sub(t.at, Q1), a) > -1 && dot(sub(t.at, Q2), a) < 1)) continue;
         let clear = true; const id = lineId.get(run.no)!, r = OD / 2;
-        for (let s = 0; s <= len(sub(Q2, Q1)) + 1e-6; s += H / 2) { const q = add(Q1, unit(sub(Q2, Q1)), s), c = g.cellOf(q); if (!g.inside(c[0], c[1], c[2]) || !g.clear(c[0], c[1], c[2], r, [id])) { clear = false; break; } }
+        for (let s = 0; s <= len(sub(Q2, Q1)) + 1e-6; s += H / 2) { const q = add(Q1, unit(sub(Q2, Q1)), s), c = g.cellOf(q); if (!g.inside(c[0], c[1], c[2]) || !g.clear(c[0], c[1], c[2], r + 1.5, [id])) { clear = false; break; } }   // the diagonal is off the grid: half a cell of margin
         if (!clear) continue;
         corner.splice(i, 2, { p: Q1, ang: 45 }, { p: Q2, ang: 45 }); pts = corner.map(c => c.p); i++;
       }

@@ -1382,9 +1382,11 @@ bore is continuous and every end is a butt-weld bevel.
   as well as on the slab; a line running over the rack's top tier within the rack's width stands
   on a short stanchion whose base plate sits on the top-tier beam at a bent where the pipe bottom
   is at most 4 ft above the beam (a post welded to the beam flange, as a shoe would be bolted); and
-  a hanger may hang from a roof purlin directly above (the purlin is a cold-formed Z, SW-CF-*, a
-  member like any other for this purpose). Reason: the end bay and the rack top of plant 2 left
-  runs with no floor path and no hot-rolled steel above.
+  a hanger may hang from a roof purlin directly above, or from a bridge angle spanning the two
+  purlins either side when the nearest purlin is within 30 in in plan (the purlin is a cold-formed
+  Z, SW-CF-*, a member like any other for this purpose; the bridge is not modeled, its rod is).
+  Reason: the end bay and the rack top of plant 2 left runs with no floor path and no hot-rolled
+  steel above.
 - `SW-PS-10` Vertical runs longer than 10 ft get a trunnion (SW-PS-4) under their lowest elbow,
   standing on a stanchion base when that elbow is at most 10 ft up; otherwise they hang from the
   hanger nearest their top. (Plant 2: vertical runs longer than 6 ft, since its small-bore risers
@@ -1980,9 +1982,10 @@ sent to the piping designer, and with erection drawings and weld details for tha
   P-205A/B, ten solids receivers R-201…R-210 (small vertical vessels) in a row along the north wall under a
   walkway, a 3 ft grating access walkway along the rack's south edge at the first tier (posts at
   every bent, guardrail, a ladder at each end: it reaches the branch valves and their drops pass
-  through it in sleeves, SW-PEN-1), a 16 ft access platform over each exchanger and over the
-  drum D-201 at 16 ft (four posts, guardrail, ladder) for the valves on their top nozzles, whose
-  lines come down through the grating in sleeves, and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
+  through it in sleeves, SW-PEN-1), a 16 ft access platform over each exchanger at 20 ft and over
+  the drum D-201 at 23 ft (four posts, guardrail, ladder), each just above the control stations
+  on the top nozzles (SW-LL-7) so the lines come down through the grating in sleeves and the
+  stations are reached from below and from the platform, and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
   receivers R-211/R-212, an air receiver D-202 and a flare knock-out drum D-203 on pads on grade.
   (Amended 2026-11-05: the hopper and silos became vertical vessels, P-67.) Reason: the pairs of exchangers carry three-way diverting valves, the
   adsorbers a four-way switching valve, the hopper the rotary feeder, and the outdoor tanks give
@@ -1992,7 +1995,8 @@ sent to the piping designer, and with erection drawings and weld details for tha
   (SW-PEN-2); outdoor equipment stands on 6 in pads on grade and its tanks have caged ladders as
   SW-LAY-3. Reason: a tank farm is outside the process building in practice; a short run keeps the
   routing search bounded.
-  Amended (stage 9, routing): from 3 ft beyond the rack's east end outward, through the end wall
+  Amended (stage 9, routing): from 9 ft beyond the rack's east end outward (the 9 ft is the
+  slot in which the lines leaving the rack's top fall to the band), through the end wall
   and across the outdoor area, horizontal runs lie at one elevation, a centreline of 12.5 ft
   (150 in) above grade, side by side as on a sleeper way, except within the end zone of their own
   equipment; the band crosses the end wall between its girts. There is no steel above them to

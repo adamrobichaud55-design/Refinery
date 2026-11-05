@@ -149,15 +149,14 @@ export function generateInterior2(cuts: GratingCut[] = []): InteriorModel {
   guardrail([[rx0, rwt, rwz1], [rx1, rwt, rwz1]], [(rx0 + rx1) / 2, (rwz0 + rwz1) / 2], 'rack-walkway'); guardrail([[rx1, rwt, rwz0], [rx0, rwt, rwz0]], [(rx0 + rx1) / 2, (rwz0 + rwz1) / 2], 'rack-walkway');
   ladder([rx1 + CAGE.standoff, 0, (rwz0 + rwz1) / 2], rwt, [1, 0], 'rack-walkway'); ladder([rx0 - CAGE.standoff, 0, (rwz0 + rwz1) / 2], rwt, [-1, 0], 'rack-walkway');
   // ---- access platforms over the exchangers and the drum (SW-PLANT-5 amended): 16 ft up, four posts, guardrail, ladder on the rack side ----
-  const ept = 192;
-  const topPlatform = (x0: number, z0: number, x1: number, z1: number, tag: string, rackSide: 1 | -1) => {
+  const topPlatform = (x0: number, z0: number, x1: number, z1: number, tag: string, rackSide: 1 | -1, ept: number) => {
     platform(x0, z0, x1, z1, ept, { span: 'z', tag, cuts: cuts.filter(c => c.y === ept).map(c => ({ cx: c.x, cy: c.z, r: c.r })) });
     for (const [x, z] of [[x0, z0], [x1, z0], [x1, z1], [x0, z1]]) postColumn(x, z, ept - barDepth - platformBeam.dims.d, tag);
     guardrail([[x0, ept, z0], [x1, ept, z0], [x1, ept, z1], [x0, ept, z1]], [(x0 + x1) / 2, (z0 + z1) / 2], tag, true);
     ladder([(x0 + x1) / 2, 0, rackSide > 0 ? z0 - CAGE.standoff : z1 + CAGE.standoff], ept, [0, rackSide > 0 ? -1 : 1], tag);
   };
-  for (const [tag, pos] of [['E-201', Y.E201], ['E-202', Y.E202], ['E-203', Y.E203], ['E-204', Y.E204]] as const) topPlatform(pos.x - Y.exchanger.TT / 2 - 12, pos.z - 36, pos.x + Y.exchanger.TT / 2 + 12, pos.z + 36, `${tag}-platform`, pos.z > 0 ? 1 : -1);
-  topPlatform(Y.D201.x - Y.D201.TT / 2 - 12, Y.D201.z - 42, Y.D201.x + Y.D201.TT / 2 + 12, Y.D201.z + 42, 'D-201-platform', 1);
+  for (const [tag, pos] of [['E-201', Y.E201], ['E-202', Y.E202], ['E-203', Y.E203], ['E-204', Y.E204]] as const) topPlatform(pos.x - Y.exchanger.TT / 2 - 12, pos.z - 36, pos.x + Y.exchanger.TT / 2 + 12, pos.z + 36, `${tag}-platform`, pos.z > 0 ? 1 : -1, 240);
+  topPlatform(Y.D201.x - Y.D201.TT / 2 - 12, Y.D201.z - 42, Y.D201.x + Y.D201.TT / 2 + 12, Y.D201.z + 42, 'D-201-platform', 1, 276);
   void guardrail;
 
   notes.push(`Pipe rack: bents at ${rk.bentSpacing / 12} ft, tiers at ${rk.tiers.map(t => t / 12).join(', ')} ft, beams W${Db}x${beamSize.w}, columns W${Dc}x${colSize.w}, struts W${Ds}x${wS} (SW-RK-*).`);
