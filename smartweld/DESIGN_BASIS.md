@@ -1384,7 +1384,9 @@ bore is continuous and every end is a butt-weld bevel.
   is at most 4 ft above the beam (a post welded to the beam flange, as a shoe would be bolted); and
   a hanger may hang from a roof purlin directly above, or from a bridge angle spanning the two
   purlins either side when the nearest purlin is within 30 in in plan (the purlin is a cold-formed
-  Z, SW-CF-*, a member like any other for this purpose; the bridge is not modeled, its rod is).
+  Z, SW-CF-*, a member like any other for this purpose; the bridge is not modeled, its rod is);
+  and a rod may be 24 ft long for lines of 2 in and below (a 3/8 in rod carrying a light line
+  sways little; the 20 ft limit stands for heavier lines).
   Reason: the end bay and the rack top of plant 2 left runs with no floor path and no hot-rolled
   steel above.
 - `SW-PS-10` Vertical runs longer than 10 ft get a trunnion (SW-PS-4) under their lowest elbow,
@@ -1985,7 +1987,9 @@ sent to the piping designer, and with erection drawings and weld details for tha
   through it in sleeves, SW-PEN-1), a 16 ft access platform over each exchanger at 22 ft and over
   the drum D-201 at 25 ft (four posts, guardrail, ladder), each just above the control stations
   on the top nozzles (SW-LL-7) so the lines come down through the grating in sleeves and the
-  stations are reached from below and from the platform, and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
+  stations are reached from below and from the platform, an 8 ft operating platform over each
+  pump row at 10 ft (posts in the gaps between the pumps, guardrail, ladder) reaching the tops of
+  the discharge risers, which pass through it in sleeves, and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
   receivers R-211/R-212, an air receiver D-202 and a flare knock-out drum D-203 on pads on grade.
   (Amended 2026-11-05: the hopper and silos became vertical vessels, P-67.) Reason: the pairs of exchangers carry three-way diverting valves, the
   adsorbers a four-way switching valve, the hopper the rotary feeder, and the outdoor tanks give

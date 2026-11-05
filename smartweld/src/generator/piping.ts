@@ -873,7 +873,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
       if (bottom > p[1] + r + 6 && bottom < best) best = bottom;
     }
     if (dbgHang) console.log('   steel above', p.map(v => v.toFixed(0)).join(','), 'best', isFinite(best) ? best.toFixed(0) : 'none');
-    if (!isFinite(best) || best - p[1] > 240) return null;                                   // rods up to 20 ft (SW-PS-9)
+    if (!isFinite(best) || best - p[1] > (P2 && r <= 1.2 ? 288 : 240)) return null;          // rods up to 20 ft (SW-PS-9); 24 ft for 2 in and smaller in plant 2
     for (let y = p[1] + r + 3; y < best - 6; y += H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return null; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id && o !== STATIC) { if (dbgHang) console.log('   rod blocked at y', y.toFixed(0), 'by', o); return null; } }
     return best;
   };

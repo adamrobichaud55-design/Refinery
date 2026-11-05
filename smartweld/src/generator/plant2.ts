@@ -157,6 +157,16 @@ export function generateInterior2(cuts: GratingCut[] = []): InteriorModel {
   };
   for (const [tag, pos] of [['E-201', Y.E201], ['E-202', Y.E202], ['E-203', Y.E203], ['E-204', Y.E204]] as const) topPlatform(pos.x - Y.exchanger.TT / 2 - 12, pos.z - 36, pos.x + Y.exchanger.TT / 2 + 12, pos.z + 36, `${tag}-platform`, pos.z > 0 ? 1 : -1, 264);
   topPlatform(Y.D201.x - Y.D201.TT / 2 - 12, Y.D201.z - 42, Y.D201.x + Y.D201.TT / 2 + 12, Y.D201.z + 42, 'D-201-platform', 1, 300);
+  // ---- operating platforms over the pump rows (SW-PLANT-5 amended): 10 ft up, posts in the gaps between the pumps, guardrail, ladder ----
+  const pumpRow = (xs: number[], zc: number, tag: string) => {
+    const pt = 120, hz = Y.pump.baseL / 2 + 12, x0 = Math.min(...xs) - 48, x1 = Math.max(...xs) + 48, z0 = zc - hz, z1 = zc + hz, side = Math.sign(zc) as 1 | -1;
+    platform(x0, z0, x1, z1, pt, { span: 'z', tag, cuts: cuts.filter(c => c.y === pt).map(c => ({ cx: c.x, cy: c.z, r: c.r })) });
+    const px = [x0, ...xs.slice(0, -1).map((x, i) => (x + xs[i + 1]) / 2), x1];
+    for (const x of px) for (const z of [z0, z1]) postColumn(x, z, pt - barDepth - platformBeam.dims.d, tag);
+    guardrail([[x0, pt, z0], [x1, pt, z0], [x1, pt, z1], [x0, pt, z1]], [(x0 + x1) / 2, zc], tag, true);
+    ladder([(x0 + x1) / 2, 0, side > 0 ? z1 + CAGE.standoff : z0 - CAGE.standoff], pt, [0, side], tag);
+  };
+  pumpRow(Y.pumpsS.map(p => p.x), Y.pumpsS[0].z, 'pump-platform-S'); pumpRow(Y.pumpsN.map(p => p.x), Y.pumpsN[0].z, 'pump-platform-N');
   void guardrail;
 
   notes.push(`Pipe rack: bents at ${rk.bentSpacing / 12} ft, tiers at ${rk.tiers.map(t => t / 12).join(', ')} ft, beams W${Db}x${beamSize.w}, columns W${Dc}x${colSize.w}, struts W${Ds}x${wS} (SW-RK-*).`);
