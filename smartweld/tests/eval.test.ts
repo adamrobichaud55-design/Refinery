@@ -38,6 +38,15 @@ describe('external test drawings (SW-EVAL-1..6)', () => {
     const k = JSON.parse(readFileSync(new URL('eval/answer-key.json', root), 'utf8'));
     expect(Object.keys(k.lines).length).toBe(203);
   });
+  it('supports are classed by symbol, pipe support and dummy leg, and keep their type (SW-EVAL-3)', () => {
+    const k = JSON.parse(readFileSync(new URL('eval/answer-key.json', root), 'utf8'));
+    expect(k.classes.filter((c: string) => c.startsWith('support/'))).toEqual(['support/pipe', 'support/dummy_leg']);
+    const sup = Object.values(k.lines).flatMap((l: any) => l.objects).filter((o: any) => o.cls.startsWith('support/'));
+    const gt = JSON.parse(readFileSync(new URL('public/groundtruth/index.json', root), 'utf8'));
+    expect(sup.length).toBe(gt.lines.reduce((n: number, l: { supports: number }) => n + l.supports, 0));
+    for (const o of sup) expect(o.cls, o.tag).toBe(o.type === 'trunnion' ? 'support/dummy_leg' : 'support/pipe');
+    expect(new Set(sup.map((o: any) => o.type))).toEqual(new Set(['hanger', 'shoe', 'guide', 'anchor', 'stanchion', 'trapeze', 'trunnion']));
+  });
   it('the harness self-test passes: uncleared sets refused, counts, swaps, extras, boxes, labels (SW-EVAL-2/5)', () => {
     if (!hasPy) return;
     const r = py(['selftest']); expect(r.stdout).not.toContain('FAIL'); expect(r.status, r.stdout + r.stderr).toBe(0);

@@ -1849,8 +1849,14 @@ work (§0, SW-LIC-*). PROVENANCE P-61.
   - fittings: elbow, tee, reducer, cap, flange, blind;
   - valves, by type: gate, ball, check, control, relief;
   - butt welds, with the model's weld labels;
-  - supports, by type: hanger, shoe, guide, trunnion, anchor, stanchion, trapeze.
-  Classes are scored coarse (valve) and fine (valve/gate). Pipe runs, gaskets and stud sets are not
+  - supports, by symbol: `support/pipe` for hangers, shoes, guides, anchors, stanchions and trapezes,
+    and `support/dummy_leg` for trunnions. The owner's generator draws all six of the first group
+    with one symbol and names the type in the bill of materials, so a detector can tell them apart
+    only by reading the tag and the bill, not by the symbol. Each support object in the key still
+    carries its type (`type`), so the model keeps every support type and the key can check the bill.
+  Classes are scored coarse (valve, support) and fine (valve/gate, support/pipe).
+  (Amended 2026-11-05 at the owner's instruction, PROVENANCE P-65: supports were seven classes, one
+  per type, which asked a detector to tell apart symbols that are drawn the same.) Pipe runs, gaskets and stud sets are not
   scored, since an isometric does not draw them as separate symbols. A small branch line counts with
   its parent when the set draws it there; the receipt says which.
 - `SW-EVAL-4` Detections arrive in SmartWeld's own format (`eval/README.md`). For each page of a

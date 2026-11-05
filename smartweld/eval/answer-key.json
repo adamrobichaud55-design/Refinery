@@ -13,13 +13,8 @@
   "valve/control",
   "valve/relief",
   "weld",
-  "support/hanger",
-  "support/shoe",
-  "support/guide",
-  "support/trunnion",
-  "support/anchor",
-  "support/stanchion",
-  "support/trapeze"
+  "support/pipe",
+  "support/dummy_leg"
  ],
  "lines": {
   "6\"-P150-P-1001": {
@@ -241,39 +236,48 @@
     },
     {
      "tag": "6\"-P150-P-1001/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "6\"-P150-P-1001/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P150-P-1001/S3",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "6\"-P150-P-1001/S4",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P150-P-1001/S5",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "6\"-P150-P-1001/S6",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P150-P-1001/S7",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P150-P-1001/S8",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     },
     {
      "tag": "6\"-P150-P-1001/S9",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -543,15 +547,18 @@
     },
     {
      "tag": "4\"-P300-P-1003/S1",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1003/S2",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "4\"-P300-P-1003/S3",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -871,23 +878,28 @@
     },
     {
      "tag": "4\"-P300-P-1005/S1",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1005/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1005/S3",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "4\"-P300-P-1005/S4",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1005/S5",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -1115,35 +1127,43 @@
     },
     {
      "tag": "6\"-P300-P-1006/S1",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P300-P-1006/S2",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "6\"-P300-P-1006/S3",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P300-P-1006/S4",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "6\"-P300-P-1006/S5",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P300-P-1006/S6",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "6\"-P300-P-1006/S7",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P300-P-1006/S8",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -1408,15 +1428,18 @@
     },
     {
      "tag": "4\"-P300-P-1008/S1",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "4\"-P300-P-1008/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1008/S3",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -1708,19 +1731,23 @@
     },
     {
      "tag": "4\"-P300-P-1010/S1",
-     "cls": "support/trapeze"
+     "cls": "support/pipe",
+     "type": "trapeze"
     },
     {
      "tag": "4\"-P300-P-1010/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1010/S3",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "4\"-P300-P-1010/S4",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     }
    ]
   },
@@ -1883,11 +1910,13 @@
     },
     {
      "tag": "6\"-P300-P-1011/S1",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "6\"-P300-P-1011/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -2013,15 +2042,18 @@
     },
     {
      "tag": "6\"-P300-P-1012/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "6\"-P300-P-1012/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "6\"-P300-P-1012/S3",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -2249,27 +2281,33 @@
     },
     {
      "tag": "4\"-P300-P-1013/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "4\"-P300-P-1013/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1013/S3",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1013/S4",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "4\"-P300-P-1013/S5",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1013/S6",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -2589,51 +2627,63 @@
     },
     {
      "tag": "3\"-P300-P-1015/S1",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P300-P-1015/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P300-P-1015/S3",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P300-P-1015/S4",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P300-P-1015/S5",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P300-P-1015/S6",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "3\"-P300-P-1015/S7",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P300-P-1015/S8",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P300-P-1015/S9",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P300-P-1015/S10",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P300-P-1015/S11",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P300-P-1015/S12",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -2922,11 +2972,13 @@
     },
     {
      "tag": "6\"-P300-P-1017/S1",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P300-P-1017/S2",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     }
    ]
   },
@@ -3240,15 +3292,18 @@
     },
     {
      "tag": "4\"-P300-P-1019/S1",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "4\"-P300-P-1019/S2",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "4\"-P300-P-1019/S3",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     }
    ]
   },
@@ -3426,15 +3481,18 @@
     },
     {
      "tag": "4\"-P300-P-1021/S1",
-     "cls": "support/stanchion"
+     "cls": "support/pipe",
+     "type": "stanchion"
     },
     {
      "tag": "4\"-P300-P-1021/S2",
-     "cls": "support/stanchion"
+     "cls": "support/pipe",
+     "type": "stanchion"
     },
     {
      "tag": "4\"-P300-P-1021/S3",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -3557,31 +3615,38 @@
     },
     {
      "tag": "8\"-P150-CWS-2001/S1",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "8\"-P150-CWS-2001/S2",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "8\"-P150-CWS-2001/S3",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "8\"-P150-CWS-2001/S4",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "8\"-P150-CWS-2001/S5",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "8\"-P150-CWS-2001/S6",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "8\"-P150-CWS-2001/S7",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     }
    ]
   },
@@ -3704,31 +3769,38 @@
     },
     {
      "tag": "8\"-P150-CWR-2002/S1",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "8\"-P150-CWR-2002/S2",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "8\"-P150-CWR-2002/S3",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "8\"-P150-CWR-2002/S4",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "8\"-P150-CWR-2002/S5",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "8\"-P150-CWR-2002/S6",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "8\"-P150-CWR-2002/S7",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     }
    ]
   },
@@ -3944,31 +4016,38 @@
     },
     {
      "tag": "6\"-P300-LS-2003/S1",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P300-LS-2003/S2",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "6\"-P300-LS-2003/S3",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P300-LS-2003/S4",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "6\"-P300-LS-2003/S5",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "6\"-P300-LS-2003/S6",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "6\"-P300-LS-2003/S7",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     }
    ]
   },
@@ -4082,63 +4161,78 @@
     },
     {
      "tag": "3\"-P150-SC-2004/S1",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-SC-2004/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P150-SC-2004/S3",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-SC-2004/S4",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-SC-2004/S5",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-SC-2004/S6",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P150-SC-2004/S7",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-SC-2004/S8",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "3\"-P150-SC-2004/S9",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-SC-2004/S10",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P150-SC-2004/S11",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-SC-2004/S12",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-SC-2004/S13",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-SC-2004/S14",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P150-SC-2004/S15",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     }
    ]
   },
@@ -4326,63 +4420,78 @@
     },
     {
      "tag": "2\"-P150-IA-2005/S1",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-IA-2005/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-IA-2005/S3",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-IA-2005/S4",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-IA-2005/S5",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-IA-2005/S6",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-IA-2005/S7",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-IA-2005/S8",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "2\"-P150-IA-2005/S9",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-IA-2005/S10",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-IA-2005/S11",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-IA-2005/S12",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-IA-2005/S13",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-IA-2005/S14",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-IA-2005/S15",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     }
    ]
   },
@@ -4570,63 +4679,78 @@
     },
     {
      "tag": "2\"-P150-PA-2006/S1",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-PA-2006/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-PA-2006/S3",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-PA-2006/S4",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-PA-2006/S5",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-PA-2006/S6",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-PA-2006/S7",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-PA-2006/S8",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "2\"-P150-PA-2006/S9",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-PA-2006/S10",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-PA-2006/S11",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-PA-2006/S12",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-PA-2006/S13",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-PA-2006/S14",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-PA-2006/S15",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     }
    ]
   },
@@ -4898,63 +5022,78 @@
     },
     {
      "tag": "2\"-P150-N-2007/S1",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-N-2007/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-N-2007/S3",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-N-2007/S4",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-N-2007/S5",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-N-2007/S6",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-N-2007/S7",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-N-2007/S8",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "2\"-P150-N-2007/S9",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-N-2007/S10",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-N-2007/S11",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-N-2007/S12",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-N-2007/S13",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "2\"-P150-N-2007/S14",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "2\"-P150-N-2007/S15",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     }
    ]
   },
@@ -5249,63 +5388,78 @@
     },
     {
      "tag": "3\"-P150-W-2008/S1",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-W-2008/S2",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P150-W-2008/S3",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-W-2008/S4",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-W-2008/S5",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-W-2008/S6",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P150-W-2008/S7",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-W-2008/S8",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "3\"-P150-W-2008/S9",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-W-2008/S10",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P150-W-2008/S11",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-W-2008/S12",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-W-2008/S13",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "3\"-P150-W-2008/S14",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "3\"-P150-W-2008/S15",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     }
    ]
   },
@@ -5433,31 +5587,38 @@
     },
     {
      "tag": "8\"-P150-FL-2009/S1",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "8\"-P150-FL-2009/S2",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "8\"-P150-FL-2009/S3",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "8\"-P150-FL-2009/S4",
-     "cls": "support/anchor"
+     "cls": "support/pipe",
+     "type": "anchor"
     },
     {
      "tag": "8\"-P150-FL-2009/S5",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     },
     {
      "tag": "8\"-P150-FL-2009/S6",
-     "cls": "support/shoe"
+     "cls": "support/pipe",
+     "type": "shoe"
     },
     {
      "tag": "8\"-P150-FL-2009/S7",
-     "cls": "support/guide"
+     "cls": "support/pipe",
+     "type": "guide"
     }
    ]
   },
@@ -5531,7 +5692,8 @@
     },
     {
      "tag": "4\"-P150-CWS-3001/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -5633,11 +5795,13 @@
     },
     {
      "tag": "4\"-P150-CWR-3002/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "4\"-P150-CWR-3002/S2",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -5711,7 +5875,8 @@
     },
     {
      "tag": "4\"-P150-CWS-3003/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -5813,11 +5978,13 @@
     },
     {
      "tag": "4\"-P150-CWR-3004/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "4\"-P150-CWR-3004/S2",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -5891,7 +6058,8 @@
     },
     {
      "tag": "4\"-P150-CWS-3005/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -6007,11 +6175,13 @@
     },
     {
      "tag": "4\"-P150-CWR-3006/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "4\"-P150-CWR-3006/S2",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -6127,15 +6297,18 @@
     },
     {
      "tag": "2\"-P300-LS-3007/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "2\"-P300-LS-3007/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "2\"-P300-LS-3007/S3",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -6251,15 +6424,18 @@
     },
     {
      "tag": "2\"-P150-SC-3008/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "2\"-P150-SC-3008/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "2\"-P150-SC-3008/S3",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -6361,15 +6537,18 @@
     },
     {
      "tag": "2\"-P300-LS-3009/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "2\"-P300-LS-3009/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "2\"-P300-LS-3009/S3",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -6471,15 +6650,18 @@
     },
     {
      "tag": "2\"-P150-SC-3010/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "2\"-P150-SC-3010/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "2\"-P150-SC-3010/S3",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -6581,11 +6763,13 @@
     },
     {
      "tag": "1\"-P150-N-3011/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "1\"-P150-N-3011/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -6687,11 +6871,13 @@
     },
     {
      "tag": "1\"-P150-N-3012/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "1\"-P150-N-3012/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -6835,11 +7021,13 @@
     },
     {
      "tag": "1\"-P150-N-3013/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "1\"-P150-N-3013/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -6913,11 +7101,13 @@
     },
     {
      "tag": "1\"-P150-N-3014/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "1\"-P150-N-3014/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -6991,11 +7181,13 @@
     },
     {
      "tag": "1\"-P150-N-3015/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "1\"-P150-N-3015/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -7069,11 +7261,13 @@
     },
     {
      "tag": "1\"-P150-N-3016/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "1\"-P150-N-3016/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -7171,7 +7365,8 @@
     },
     {
      "tag": "3/4\"-P150-W-3017/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -7255,7 +7450,8 @@
     },
     {
      "tag": "3/4\"-P150-W-3018/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -7353,7 +7549,8 @@
     },
     {
      "tag": "3/4\"-P150-W-3019/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -7437,7 +7634,8 @@
     },
     {
      "tag": "3/4\"-P150-W-3020/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -7535,7 +7733,8 @@
     },
     {
      "tag": "3/4\"-P150-W-3021/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -7633,7 +7832,8 @@
     },
     {
      "tag": "3/4\"-P150-W-3022/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -7731,7 +7931,8 @@
     },
     {
      "tag": "3/4\"-P150-W-3023/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -7815,11 +8016,13 @@
     },
     {
      "tag": "3/4\"-P150-W-3024/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "3/4\"-P150-W-3024/S2",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -8175,7 +8378,8 @@
     },
     {
      "tag": "1\"-P150-HS-5001/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -8267,7 +8471,8 @@
     },
     {
      "tag": "1\"-P150-HS-5002/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -8345,7 +8550,8 @@
     },
     {
      "tag": "1\"-P300-HS-5003/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -8571,7 +8777,8 @@
     },
     {
      "tag": "1\"-P150-HS-5006/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -8649,7 +8856,8 @@
     },
     {
      "tag": "1\"-P150-HS-5007/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -8727,7 +8935,8 @@
     },
     {
      "tag": "1\"-P300-HS-5008/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -8833,7 +9042,8 @@
     },
     {
      "tag": "1\"-P150-HS-5009/S1",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -8985,7 +9195,8 @@
     },
     {
      "tag": "1\"-P150-HS-5011/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -9063,7 +9274,8 @@
     },
     {
      "tag": "1\"-P150-HS-5012/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -9141,7 +9353,8 @@
     },
     {
      "tag": "1\"-P300-HS-5013/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -9349,7 +9562,8 @@
     },
     {
      "tag": "1/2\"-P150-HS-5015/S1",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -9427,7 +9641,8 @@
     },
     {
      "tag": "1\"-P150-HS-5016/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -9505,7 +9720,8 @@
     },
     {
      "tag": "1\"-P150-HS-5017/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -9611,11 +9827,13 @@
     },
     {
      "tag": "1\"-P300-HS-5018/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "1\"-P300-HS-5018/S2",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -9735,7 +9953,8 @@
     },
     {
      "tag": "1\"-P150-HS-5019/S1",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -9855,7 +10074,8 @@
     },
     {
      "tag": "1/2\"-P150-HS-5020/S1",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -9933,7 +10153,8 @@
     },
     {
      "tag": "1\"-P150-HS-5021/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -10011,7 +10232,8 @@
     },
     {
      "tag": "1\"-P150-HS-5022/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -10089,7 +10311,8 @@
     },
     {
      "tag": "1\"-P300-HS-5023/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -10315,7 +10538,8 @@
     },
     {
      "tag": "1\"-P150-HS-5026/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -10393,7 +10617,8 @@
     },
     {
      "tag": "1\"-P150-HS-5027/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -10471,7 +10696,8 @@
     },
     {
      "tag": "1\"-P300-HS-5028/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -10651,7 +10877,8 @@
     },
     {
      "tag": "1/2\"-P150-HS-5030/S1",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -10729,7 +10956,8 @@
     },
     {
      "tag": "1\"-P150-HS-5031/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -10807,7 +11035,8 @@
     },
     {
      "tag": "1\"-P150-HS-5032/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -10885,7 +11114,8 @@
     },
     {
      "tag": "1\"-P300-HS-5033/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -11139,11 +11369,13 @@
     },
     {
      "tag": "1\"-P150-HS-5036/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     },
     {
      "tag": "1\"-P150-HS-5036/S2",
-     "cls": "support/trunnion"
+     "cls": "support/dummy_leg",
+     "type": "trunnion"
     }
    ]
   },
@@ -11221,7 +11453,8 @@
     },
     {
      "tag": "1\"-P150-HS-5037/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },
@@ -11299,7 +11532,8 @@
     },
     {
      "tag": "1\"-P300-HS-5038/S1",
-     "cls": "support/hanger"
+     "cls": "support/pipe",
+     "type": "hanger"
     }
    ]
   },

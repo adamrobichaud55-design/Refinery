@@ -31,8 +31,11 @@ shipped, and never copied into SmartWeld's generator.
 ## Classes
 
 `elbow`, `tee`, `reducer`, `cap`, `flange`, `blind`, `valve/gate`, `valve/ball`, `valve/check`, `valve/control`,
-`valve/relief`, `weld`, `support/hanger`, `support/shoe`, `support/guide`, `support/trunnion`, `support/anchor`,
-`support/stanchion`, `support/trapeze`. Scored fine (as listed) and coarse (`valve`, `support`).
+`valve/relief`, `weld`, `support/pipe`, `support/dummy_leg`. Scored fine (as listed) and coarse (`valve`, `support`).
+
+`support/pipe` covers hangers, shoes, guides, anchors, stanchions and trapezes, which share one symbol; the
+answer key keeps each one's type in its `type` field, and the type is read from the tag and the bill of
+materials, not the symbol. `support/dummy_leg` is the trunnion.
 
 ## Detections format (SmartWeld's own)
 

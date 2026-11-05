@@ -27,8 +27,10 @@ GT = 'public/groundtruth'
 EVAL = os.environ.get('EVAL_DIR', 'eval')
 VALVES = {'GATE': 'gate', 'BALL': 'ball', 'CHECK': 'check', 'CONTROL': 'control', 'PSV': 'relief'}
 FITTINGS = ['elbow', 'tee', 'reducer', 'cap', 'flange', 'blind']
-SUPPORTS = ['hanger', 'shoe', 'guide', 'trunnion', 'anchor', 'stanchion', 'trapeze']
-CLASSES = FITTINGS + [f'valve/{v}' for v in VALVES.values()] + ['weld'] + [f'support/{s}' for s in SUPPORTS]
+# supports by symbol (SW-EVAL-3): one pipe-support symbol for six types, its own symbol for the dummy leg
+SUPPORTS = {'hanger': 'pipe', 'shoe': 'pipe', 'guide': 'pipe', 'anchor': 'pipe', 'stanchion': 'pipe', 'trapeze': 'pipe',
+            'trunnion': 'dummy_leg'}
+CLASSES = FITTINGS + [f'valve/{v}' for v in VALVES.values()] + ['weld'] + [f'support/{s}' for s in dict.fromkeys(SUPPORTS.values())]
 IOU = 0.5
 
 
@@ -69,7 +71,7 @@ def build_key():
         for w in L['welds']:
             objs.append(dict(tag=w['tag'], cls='weld', label=w['tag'].rsplit('/', 1)[1]))
         for s in L['supports']:
-            objs.append(dict(tag=s['tag'], cls=f"support/{s['type']}"))
+            objs.append(dict(tag=s['tag'], cls=f"support/{SUPPORTS[s['type']]}", type=s['type']))
         parent = H['from'][4:] if H['from'].startswith('tap ') else None
         out[line] = dict(lineClass=H['lineClass'], NPS=H['NPS'], parent=parent, objects=objs)
     unknown = {o['cls'] for v in out.values() for o in v['objects']} - set(CLASSES)
