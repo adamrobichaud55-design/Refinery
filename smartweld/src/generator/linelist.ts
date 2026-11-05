@@ -13,7 +13,7 @@ export type EndRef =
   | { k: 'station'; at: V3 }                                           // hose station: free end, last leg downward to `at`, valve + blind
   | { k: 'blind' }                                                     // stub end: ball valve + blind flange
   | { k: 'psv'; nozzle: string };                                      // the outlet flange of the relief valve on `nozzle`
-export interface LineDef { no: string; service: Service; NPS: number; cls: PipeClass; from: EndRef; to: EndRef; kind: 'header' | 'routed' | 'stub'; cv?: boolean }
+export interface LineDef { no: string; service: Service; NPS: number; cls: PipeClass; from: EndRef; to: EndRef; kind: 'header' | 'routed' | 'stub'; cv?: boolean; check?: boolean }   // check: a check valve ahead of the block valve at the destination end (SW-LL-7)
 
 const fmt = (n: number) => (n === 0.75 ? '3/4' : n === 0.5 ? '1/2' : String(n));
 export const lineNo = (NPS: number, cls: PipeClass, svc: Service, seq: number) => `${fmt(NPS)}"-${cls}-${svc}-${seq}`;   // SW-LL-1

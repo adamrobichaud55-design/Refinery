@@ -40,7 +40,7 @@ const OFFER: Record<ValveType, [number, number, PipeClass]> = {
   CHECK: [2, 48, 'P4800'], LCHECK: [0.5, 6, 'P4800'], BALL: [0.5, 6, 'P600'],
   BFLY: [2, 24, 'P300'], LBFLY: [2, 24, 'P300'], DBFLY: [3, 48, 'P1200'], PLUG: [0.5, 12, 'P600'], DIAPH: [0.5, 12, 'P300'],
   NEEDLE: [0.25, 1, 'P4800'], PSV: [1, 8, 'P4800'], CONTROL: [0.5, 12, 'P4800'],
-  TWAY: [0.5, 4, 'P600'], FWAY: [0.5, 4, 'P300'], ROTARY: [4, 12, 'P150'],
+  TWAY: [0.5, 4, 'P600'], FWAY: [0.5, 4, 'P300'], ROTARY: [3, 12, 'P150'],
 };
 export function isOffered(type: ValveType, NPS: number, cls: PipeClass): boolean {
   const [lo, hi, maxCls] = OFFER[type];

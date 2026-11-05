@@ -1969,9 +1969,10 @@ sent to the piping designer, and with erection drawings and weld details for tha
   code (`PLANT2.layout`, basis drawing): two adsorber vessels V-201/V-202 with a shared platform and
   stair tower as SW-LAY-3, a column C-201 with two platforms and ladders, a knock-out drum D-201
   and an air receiver D-202, four exchangers E-201…E-204 in two pairs, ten pumps P-201A/B …
-  P-205A/B, a solids hopper H-201 over a rotary feeder RV-201 (SW-EQ-8, §62), and an outdoor
-  area east of the building with two storage tanks T-201/T-202 and a flare knock-out drum
-  D-203 on pads on grade. Reason: the pairs of exchangers carry three-way diverting valves, the
+  P-205A/B, ten solids receivers R-201…R-210 (small vertical vessels) in a row along the north wall under a
+  walkway, and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
+  receivers R-211/R-212, an air receiver D-202 and a flare knock-out drum D-203 on pads on grade.
+  (Amended 2026-11-05: the hopper and silos became vertical vessels, P-67.) Reason: the pairs of exchangers carry three-way diverting valves, the
   adsorbers a four-way switching valve, the hopper the rotary feeder, and the outdoor tanks give
   lines that pass through the building wall (SW-PEN-2).
 - `SW-PLANT-6` Outdoor area: the routing grid extends 60 ft beyond the east end wall at grade;
@@ -1979,6 +1980,27 @@ sent to the piping designer, and with erection drawings and weld details for tha
   (SW-PEN-2); outdoor equipment stands on 6 in pads on grade and its tanks have caged ladders as
   SW-LAY-3. Reason: a tank farm is outside the process building in practice; a short run keeps the
   routing search bounded.
+  Amended (stage 9, routing): outside the steel line, horizontal runs are kept between the grade
+  walkway headroom of SW-RT-3 (8 ft) and 14 ft (168 in) above grade except within the end zone of
+  their own equipment, so the outdoor lines form one low band that crosses the end wall between
+  its girts; there is no steel above them to hang from, so the stanchion of SW-PS-9 is allowed up
+  to a pipe bottom of 14 ft from the rack's east end outward (the end bay, where the lines fall
+  to the band under a roof too high for a 20 ft rod near the ridge, and the outdoor area); west
+  of the rack's end its 10 ft limit stands, a hanger taking over above it. Reason: a sleeper way
+  at grade would cross every walkway; one band at head height leaves the ground free and every
+  line in it supportable from grade. A safety valve on a tap stands with its outlet square to the
+  run it taps (so its flare line leaves across the run, clear of the next tap), and the flare
+  line's lead is held in the grid as soon as the valve stands.
+- `SW-RT-9` Plant 2 only, lines through the end wall: a line with one end inside the building and
+  the other outside is searched in two legs that meet at a wall gate 30 in outside the steel
+  line, heading straight through the wall (so its sleeve of SW-PEN-2 is square to the panel). The
+  gate is tried at the band elevations of SW-PLANT-6 from 162 in downward in 12 in steps, and in
+  plan at the outdoor end's z moved outward in 12 in steps (within the wall's width less 5 ft),
+  the first gate from which both legs route being taken; each leg is searched as SW-RT-3 with the
+  gate as an end. Reason: the one-piece search of SW-RT-3 from a rack tier to a tank nozzle 60 ft
+  away exhausts its budget (measured: 3.9 million expansions) because the fall to the band and the
+  wall between make its straight-line estimate poor; through a gate each leg is short and the
+  gate is where the sleeve is set anyway.
 - `SW-PLANT-7` Areas (SW-AREA-1 applied to plant 2): A200 tank farm (outdoor), A210 adsorption
   (V-201, V-202, C-201, D-201, D-202), A220 exchangers, A230 pumps, A240 solids (H-201,
   RV-201), A250 pipe rack.
@@ -2015,7 +2037,10 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
   the passage smooth is OD/2; one OD gives a gentle turn without a large block). From the tangent
   point each leg runs straight t_f (a heat sink for the weld) and then the socket s or thread L_t,
   so the centre-to-mouth A = r_c + t_f + e with e = s (SW) or L_t (TH). The body is a cylinder of
-  diameter OD + 2 t_f along each leg with a sphere of the same diameter at the corner.
+  diameter OD + 2 t_f along each leg with a sphere of the same diameter at the corner. The model
+  records a forged elbow mouth to mouth, so its chord is 2 A cos(θ/2) for a turn of θ (√2 A for
+  90°, 1.848 A for 45°), unlike a butt-weld elbow, recorded tangent to tangent, whose chord is
+  2 R sin(θ/2) (SW-FIT-1); the checker of §40 uses each form for its kind.
 - `SW-SWT-4` Socket-weld and threaded tees (equal and reducing): a forged block with run and branch
   passages; centre-to-mouth C_s = OD/2 + t_f + e on the run and the branch (reason: the body must
   pass the branch bore and leave t_f before the socket). Body cylinders of diameter OD + 2 t_f.
@@ -2099,12 +2124,13 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
   the run keeps 3 in from the platform's beams. Reason: a riser through a floor is normal practice
   and is why sleeves exist; a horizontal pipe at walking level is not. Plant 1 keeps SW-RT-3 as it
   was, so its routing is unchanged.
-- `SW-RT-8` Plant 2 only: where a routed line jogs sideways by at most 4 ft between two parallel runs
+- `SW-RT-8` Plant 2 only: where a routed line jogs sideways by at most 8 ft between two parallel runs
   (two 90° elbows back to back with a short pipe between), the jog is made with two 45° elbows
   (SW-FIT-1, or SW-SWT-3 in small bore) on a diagonal centred on the jog, when the diagonal keeps the
   SW-RT-3 clearance and no branch sits on the replaced length. Reason: two 45° elbows make a
   smoother offset with less pressure drop and no short pipe piece; it is how a designer draws an
-  offset.
+  offset. (Amended in stage 9 from 4 ft: the first count gave seven offsets; at 8 ft the diagonal
+  is 11 ft, still no longer than the two legs and the pipe it replaces.)
 - `SW-LL-6` Plant 2 small-bore stacks (the item sequences of SW-LL-3 applied to SW-SPEC-1):
   - a socket-weld line meets a flanged nozzle or item through a socket-weld flange (SW-FLG-11); a
     threaded line through a weld-neck flange butt-welded to a nipple threaded at its other end
@@ -2127,16 +2153,53 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
   - hose stations (threaded): threaded gate valve at the header take-off; at the station a swage to
     3/4 in, a threaded gate valve and a plug;
   - small-bore lines are joined every 20 ft with a coupling (SW-SWT-5);
-  - isolation valves by class and size (SW-LL-3 extended): butterfly (wafer) on water lines 3 in and
-    above, plug valves on air and gas lines 2 in and above, gate elsewhere 2 in and above;
+  - isolation valves by class and size (SW-LL-3 extended; amended in stage 9 for SW-COV-2):
+    butterfly (wafer) on water and on air and gas lines 2 in and above and at the storage tanks'
+    process nozzles (low pressure, a wafer valve is the light choice); globe valves on steam and
+    condensate lines at both ends (throttled services), at the consumer's nozzle of a cooling-water
+    or water supply and at the header take-off of a cooling-water return (balancing); on solids
+    lines a full-bore ball valve where the line fills a vessel (ahead of the rotary valve at every
+    fill and solids-inlet nozzle, and at the take-off of a fill branch) and a plug valve where it
+    empties one (the receivers' outlets and the dump lines; a plug clears a solids-laden seat);
+    gate elsewhere 2 in and above;
+  - check valves (SW-LL-7): besides the pump discharges, a swing check ahead of the block valve at
+    the destination end of every utility line that returns to a header (cooling-water return,
+    condensate, air from the receiver, the conveying-air line) and of every supply into a tank or
+    vessel (water to the tanks, steam to the adsorbers and exchangers);
+  - control valves (SW-LL-7): as SW-LL-3 at a destination nozzle, and the same station at a
+    destination header take-off where the line controls into the header (the air receiver's two
+    lines, the conveying-air line, the condensate returns), plus water to the tanks and steam to
+    the adsorbers;
   - spectacle blinds in the first flanged joint at every process nozzle of a vessel, column, drum,
     tank or silo and at battery limits; spades in the first joint at every exchanger nozzle and
     every pump suction (SW-FLG-13);
-  - solids: a rotary airlock feeder (ROT-1) on every bin and silo outlet nozzle, a receiving airlock
-    on every bin, silo and adsorber solids-inlet nozzle, and the catalyst dump feeders on the
-    adsorbers' solids outlets.
+  - solids: a rotary valve (ROT-1), an inline flanged valve, in the stack at every solids outlet and
+    solids inlet nozzle of the receivers and adsorbers (the airlock of a pneumatic conveying line).
   Reason: these are the item sequences the owner's symbol set draws, each in the place it is used
   in practice.
+- `SW-LL-7` Plant 2 line-list measures for the coverage floor (SW-COV-2), each a practice choice
+  that the first count (P-67) showed necessary:
+  - regeneration steam to each adsorber (LS 3 in, P300, to a shell nozzle N12 with a control
+    valve) and its condensate (SC 2 in from N13 to the condensate header): an adsorber is
+    regenerated with steam in practice;
+  - the exchangers' instrument stubs are 1 in; the drains of the vessels, column and drums are
+    1-1/2 in (a larger drain empties a vessel in reasonable time); vents and drains on socket-weld
+    stubs carry a socket-weld tee with a plugged branch after the valve (a flushing or steam-out
+    connection); the four-way gauge manifold carries on one side port a purge needle valve on a
+    one-end-threaded nipple with a plug and on the other a socket plug; drains on threaded headers
+    use a threaded globe valve (a blowdown is throttled);
+  - pump nozzles are one size below their lines (suction 3 in for 4 in lines, 4 in for 6 in;
+    discharge 3 in for 4 in lines, 2 in for 3 in), so every suction carries an eccentric reducer
+    flat on top and every discharge a concentric one (SW-LL-3): a pump's nozzles are smaller than
+    its lines in practice;
+  - the conveying header is 8 in and the condensate header 4 in, so their branches of half the
+    size or less leave through branch outlets (SW-SWT-6);
+  - the water hose stations are 1-1/2 in (swaged to 3/4 in at the station, SW-LL-6);
+  - spectacle blinds also in the solids stacks of the adsorbers' solids inlets and the silos'
+    outlets (positive isolation for vessel entry); the adsorbers' solids inlet nozzles are 3 in
+    (the 4 in line reduces at the nozzle).
+  Reason: SW-COV-2 asks for 20 of every class over 4 lines and 2 sizes; each measure is a
+  sequence a designer would draw, not a symbol placed for its own sake.
 
 ## 62. Valve types added, the rotary feeder and the hopper (§32 continued; `SW-EQ-8`)
 
@@ -2157,13 +2220,17 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
   D_r = 1.5 N and length N + 2 t_b holding a rotor of 8 vanes on a shaft of diameter max(1 in, N/6),
   with square inlet and outlet openings N × N that change to round within transitions 0.5 N
   high, ending in weld-neck-pattern flanges of size N (SW-FLG-*, as every other valve, SW-VLV-1)
-  so the feeder bolts to the hopper's outlet nozzle above and to the conveying line's tee below;
+  so the valve bolts into its line like every other flanged valve;
   end plates with a bearing boss each side; a gear motor on one end with a cylinder of diameter
   0.6 N and length N on a box foot. Face to face = D_r + 2 t_b + 2 × 0.5 N + 2 (t_f + h_hub).
-  Body wall t_b by SW-VLV-2 with D_c = D_r. Offered 4–12 in at P150.
+  Body wall t_b by SW-VLV-2 with D_c = D_r. Offered 3–12 in at P150 (amended in stage 9 from
+  4–12 in: the adsorbers' solids inlets are 3 in, SW-LL-7; a 3 in feeder's housing is 4.5 in
+  across with a 1 in shaft, still a working rotor).
   Reason: the feeder meters solids from a hopper into a conveying line while keeping the pressure
   boundary; the rotor pockets carry the solids round, so the housing is wider than the openings.
-- `SW-EQ-8` Solids hopper: a cylindrical bin of stated diameter and height with a conical bottom at
+- `SW-EQ-8` Withdrawn 2026-11-05 at the owner's instruction ("rotary valves should not have the hopper",
+  PROVENANCE P-67): the solids receivers of plant 2 are vertical vessels (SW-EQ-1) and the rotary
+  valves are inline flanged valves on their solids lines. The hopper part stays in the catalogue, unused. The withdrawn rule read: Solids hopper: a cylindrical bin of stated diameter and height with a conical bottom at
   60° to the horizontal (reason: dry solids slide on a slope that steep) down to a round outlet
   nozzle of the feeder's size (SW-NOZ-1), on four `W6` legs from a `PL1/2`
   outlet flange ring to base plates on a pad, with a flat top plate carrying a 20 in manway and a

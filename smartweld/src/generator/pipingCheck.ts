@@ -56,7 +56,8 @@ export function checkJoints(m: PipingModel): string[] {
       const x = c[i - 1], y = c[i], j = joint(x, y);
       if (x.e1 !== undefined && y.e1 !== undefined) {   // stage-9 records: the facing end types say what the joint is
         const fx = len(sub(x.b, j.at)) < 1e-6 ? x.e2 : x.e1, fy = len(sub(y.a, j.at)) < 1e-6 ? y.e1 : y.e2;
-        const expect = (fx === 'BW' && fy === 'BW') ? 1 : ((fx === 'SW' && fy === 'SP') || (fx === 'SP' && fy === 'SW')) ? 1 : ((fx === 'SO' && fy === 'SP') || (fx === 'SP' && fy === 'SO')) ? 2 : 0;
+        const pl = (e: string | undefined) => e === 'SP' || e === 'BW';
+        const expect = (fx === 'BW' && fy === 'BW') ? 1 : ((fx === 'SW' && fy === 'SP') || (fx === 'SP' && fy === 'SW')) ? 1 : ((fx === 'SO' && pl(fy)) || (pl(fx) && fy === 'SO')) ? 2 : 0;
         if (expect) { butt++; const n = weldsAt(j.at).length + (expect === 2 ? 1 : 0); if (n !== expect) v.push(`${r.no}: joint ${x.tag}/${y.tag} (${fx}/${fy}) has ${n - (expect === 2 ? 1 : 0)} weld records`); continue; }
         if (fx === 'TH' && fy === 'TH') continue;
         if (fx === 'RF' && fy === 'RF') { v.push(`${r.no}: faces ${x.tag}/${y.tag} without a gasket`); continue; }
@@ -95,7 +96,7 @@ export function checkElbowsAndStraights(m: PipingModel): string[] {
     for (const e of c.filter(x => x.kind === 'elbow')) {
       const k = e.key.split('|'), ang = Number(k[3]) || 90, chord = len(sub(e.b, e.a));
       const Lc = k[0] === 'SWEL' ? smallElbowA(smallBore(e.NPS, e.cls), k[4] as JointEnd) : elbowRadius(pipeDims(e.NPS, e.cls).OD) * Math.tan((ang * Math.PI) / 360);   // centre to end (SW-FIT-1, SW-SWT-3)
-      const want = 2 * Lc * Math.sin((ang * Math.PI) / 360);
+      const want = k[0] === 'SWEL' ? 2 * Lc * Math.cos((ang * Math.PI) / 360) : 2 * elbowRadius(pipeDims(e.NPS, e.cls).OD) * Math.sin((ang * Math.PI) / 360);   // the chord: mouth to mouth for a forged elbow (2A cos θ/2, SW-SWT-3), tangent to tangent for a butt-weld one
       if (Math.abs(chord - want) > TOL) v.push(`${r.no}: elbow ${e.tag} chord ${chord.toFixed(3)} ≠ ${want.toFixed(3)}`);
     }
     for (const p of c.filter(x => x.kind === 'pipe')) { const L = len(sub(p.b, p.a)); if (L < 2 - 1e-6) v.push(`${r.no}: pipe ${p.tag} only ${L.toFixed(2)} in long`); if (L > 480 + 1e-6) v.push(`${r.no}: pipe ${p.tag} ${L.toFixed(0)} in exceeds 40 ft (SW-RT-5)`); }
@@ -184,18 +185,19 @@ export function checkLineClearance(m: PipingModel, valveBox: (c: Comp) => [V3, V
   type It = { line: string; tag: string; s: Shape; box: [V3, V3] };
   const items: It[] = [];
   for (const r of m.lines) for (const c of r.comps) for (const s of compShapes(c, valveBox)) items.push({ line: r.no, tag: c.tag, s, box: boxOf(s) });
-  const parentOf = new Map<string, string>(), tees: { parent: string; at: V3; C: number }[] = [];
-  for (const r of m.lines) { if (r.from.startsWith('tap ')) parentOf.set(r.no, r.from.slice(4)); if (r.to.startsWith('tap ')) parentOf.set(r.no, r.to.slice(4)); if (r.from.startsWith('PSV on ')) parentOf.set(r.no, 'PSV:' + r.from.slice(7));
-    if (r.kind === 'stub' && r.from.startsWith('tap ') && r.to === 'PSV') parentOf.set(r.no, r.from.slice(4)); }
+  const parentOf = new Map<string, string[]>(), tees: { parent: string; at: V3; C: number }[] = [];   // a line may have a parent at each end (tap to tap, or PSV to a header tap)
+  const addParent = (no: string, p: string) => { const l = parentOf.get(no) ?? []; if (!l.includes(p)) l.push(p); parentOf.set(no, l); };
+  for (const r of m.lines) { if (r.from.startsWith('tap ')) addParent(r.no, r.from.slice(4)); if (r.to.startsWith('tap ')) addParent(r.no, r.to.slice(4)); if (r.from.startsWith('PSV on ')) addParent(r.no, 'PSV:' + r.from.slice(7));
+    if (r.kind === 'stub' && r.from.startsWith('tap ') && r.to === 'PSV') addParent(r.no, r.from.slice(4)); }
   for (const r of m.lines) for (const t of r.comps.filter(c => c.kind === 'tee')) tees.push({ parent: r.no, at: teeOutlet(t), C: teeC(pipeDims(t.NPS, t.cls).OD) });
   const rvOf = new Map(m.lines.filter(r => r.service === 'RV').map(r => ['PSV:' + r.from, r.no] as const));
-  for (const r of m.lines) for (const o of r.comps.filter(c => c.kind === 'olet')) if (o.onRun) tees.push({ parent: o.onRun, at: o.a, C: (pipeDims(Number(o.key.split('|')[1]), o.cls).OD / 2 + 6) / 2 });   // SW-SWT-6: the branch outlet on its run
+  for (const r of m.lines) for (const o of r.comps.filter(c => c.kind === 'olet')) if (o.onRun) tees.push({ parent: o.onRun, at: origin(o), C: (pipeDims(Number(o.key.split('|')[1]), o.cls).OD / 2 + 24) / 2 });   // SW-SWT-6: the branch outlet on its run, with the stub's first two feet
   for (const r of m.lines) for (const c of r.comps.filter(x => x.kind === 'valve' && /VLV\|(TWAY|FWAY)/.test(x.key))) tees.push({ parent: r.no, at: origin(c), C: len(sub(c.b, c.a)) / 2 });   // valve stations (3W-1, 4W-1)
-  for (const r of m.lines) if (r.from.startsWith('tap ')) { const p = m.lines.find(x => x.no === r.from.slice(4)); if (p && r.service === 'RV') for (const f of m.lines) if (f.from === 'PSV on ' + r.no) parentOf.set(f.no, r.no); }
+  for (const r of m.lines) if (r.from.startsWith('tap ')) { const p = m.lines.find(x => x.no === r.from.slice(4)); if (p && r.service === 'RV') for (const f of m.lines) if (f.from === 'PSV on ' + r.no) addParent(f.no, r.no); }
   const related = (a: It, b: It) => {
-    const pa = parentOf.get(a.line), pb = parentOf.get(b.line);
-    if (pa && (pa === b.line || rvOf.get(pa) === b.line)) return true;
-    if (pb && (pb === a.line || rvOf.get(pb) === a.line)) return true;
+    const pa = parentOf.get(a.line) ?? [], pb = parentOf.get(b.line) ?? [];
+    if (pa.some(p => p === b.line || rvOf.get(p) === b.line)) return true;
+    if (pb.some(p => p === a.line || rvOf.get(p) === a.line)) return true;
     return false;
   };
   const nearTee = (a: It, b: It) => tees.some(t => (t.parent === a.line || t.parent === b.line) && boxGap(a.box, [add(t.at, [-2 * t.C, -2 * t.C, -2 * t.C]), add(t.at, [2 * t.C, 2 * t.C, 2 * t.C])]) < 1e-9 && boxGap(b.box, [add(t.at, [-2 * t.C, -2 * t.C, -2 * t.C]), add(t.at, [2 * t.C, 2 * t.C, 2 * t.C])]) < 1e-9);

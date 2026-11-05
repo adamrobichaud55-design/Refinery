@@ -17,6 +17,7 @@ must accompany any distribution of the viewer. No published dimension tables, st
 | 6     | Line classes (8) and ground-truth export: per-item metadata, spools, isometric data, BOM (`public/groundtruth/`) | done |
 | 7     | Equipment metadata; 25 shutdown work orders with scope, isolations, demo welding specs, NDE, tests and ITPs (`public/workorders/`); the generated isometrics of this stage were withdrawn in stage 8 | done |
 | 8     | The owner's isometric drawings (139 drawings, 240 sheets) imported and matched to the model; the project's only isometrics; their sheets are attached to the work-order packs (`public/isometrics-imported/`) | done |
+| 9     | Plant 2 (`public/plants/P2/`): the coverage plant with socket-weld and threaded piping, every symbol class of the owner's generator at least 20 times (SW-COV-2), its ground truth, answer key and designer package (`downloads/designer-package-P2.zip`); structural steel erection drawings with weld details for both plants (`downloads/erection-P1.pdf`, `erection-P2.pdf`) | done |
 
 ## Run
 
@@ -33,7 +34,12 @@ python3 -I tools/isomatch.py import <parts.pdf…>  # receive the owner's isomet
 python3 -I tools/isomatch.py [--check]            # re-match the committed drawings to the model
 python3 -I tools/isomatch.py --selftest           # prove the fix list clears every finding
 python3 -I tools/evalscore.py key|receive|clear|score|selftest   # external test drawings (eval/README.md)
-npx vite-node tools/designer-package.ts          # the model for a piping designer (downloads/designer-package.zip)
+npx vite-node tools/designer-package.ts [P2]     # the model for a piping designer (downloads/designer-package.zip, -P2.zip)
+npx vite-node tools/gen-plant.ts P2 public/plants/P2/plant-piping.json   # regenerate plant 2 (about 7 min; plant 1 stays byte-identical)
+npx vite-node tools/export-gt.ts P2              # plant 2 ground truth (public/plants/P2/groundtruth/)
+npx vite-node tools/coverage.ts public/plants/P2/plant-piping.json       # symbol coverage against the SW-COV-2 floor
+npx vite-node tools/erection.ts P1|P2            # structural steel erection drawings (downloads/erection-P*.pdf, sheet previews)
+npx vite-node tools/render-plant.ts P2           # review images of plant 2 (screenshots/stage9/)
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
@@ -69,6 +75,9 @@ The same `PartSpec` + transform data drives the 3D view and (stage 6) the ground
 The building views render the generated plant; click the 3D view to walk (W A S D, mouse look,
 Shift to run, Esc to release). The right panel lists the values derived by rule and the bill of
 materials computed from the same placed-part list that the 3D view draws.
+
+A plant selector in the toolbar switches every view between plant 1 and plant 2 (stage 9); plant 2 adds the
+socket-weld and threaded small bore, the outdoor area and the solids receivers.
 
 The "Plant piping" views add the stage-5 piping. The line inspector (right panel) lists any line's
 components, its welds (with shop/field status and the two parts each joins) and its supports, and
