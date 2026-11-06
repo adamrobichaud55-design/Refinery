@@ -618,7 +618,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
           if (!o.ok) continue;
           if (o.b.extra?.psvOutletFace) {   // the safety valve's outlet lead (its flare line's start) must be clear for 3 ft
             let lead = true; const f = o.b.extra.psvOutletFace, d = o.b.extra.psvOutDir!;
-            for (let s = 0; s <= 36; s += H / 2) { const cc = g.cellOf(add(f, d, s)); if (!g.inside(cc[0], cc[1], cc[2]) || !g.clear(cc[0], cc[1], cc[2], 1.5, [pid, cid])) { lead = false; break; } }
+            for (let s = 0; s <= 48; s += H / 2) { const cc = g.cellOf(add(f, d, s)); if (!g.inside(cc[0], cc[1], cc[2]) || !g.clear(cc[0], cc[1], cc[2], 3, [pid, cid])) { lead = false; break; } }
             if (!lead) continue;
           }
           if (child.kind === 'routed') {   // the branch's first point beyond the stack must be free too (a stack under a rafter is no take-off)
@@ -831,7 +831,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     const t = chooseTap(e.line, toward, l, items, parent.kind === 'header', via);
     if (!t) { fail(l, 'no tap position on ' + e.line); return null; }
     const { out: C, half } = tapGeom(parent, l, via), outEnd = add(t.at, t.out, C);
-    const lst = taps.get(e.line) ?? []; lst.push({ at: t.at, out: t.out, NPS: l.NPS, child: l.no, flR: designFlange(l.NPS, l.cls).OD / 2, via, half: l.service === 'RV' ? half + 12 : half }); taps.set(e.line, lst);   // a safety valve's outlet lead keeps the next tap a foot off
+    const lst = taps.get(e.line) ?? []; lst.push({ at: t.at, out: t.out, NPS: l.NPS, child: l.no, flR: designFlange(l.NPS, l.cls).OD / 2, via, half: l.service === 'RV' ? half + 24 : half }); taps.set(e.line, lst);   // a safety valve's outlet lead keeps the next tap two feet off
     return { t, outEnd, via, id };
   };
   for (const l of list.filter(l => l.kind === 'stub' && (l.service !== 'RV' || l.from.k === 'tap'))) {
@@ -847,7 +847,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
         const po = { face: b.extra!.psvOutletFace!, dir: b.extra!.psvOutDir!, NPS: b.extra!.psvOutNPS! }; psvOut.set(l.no, po);
         const fl = list.find(x => x.kind === 'routed' && x.from.k === 'psv' && x.from.nozzle === l.no);   // its flare line's lead stands now, before the next stub on the run is placed
         if (fl && ends.get(fl.no) && !ends.get(fl.no)!.A) { const fb = buildStack(fl.no, po.face, po.dir, psvLeadItems(fl, po), 'PSV'), P1 = leadP1(fb.end, po.dir, R(fl.NPS, fl.cls, jointOf(fl)));
-          ends.get(fl.no)!.A = { P1, dirOut: po.dir, built: fb, startFace: po.face, zone: po.face }; occupy(lineId.get(fl.no)!, [...compSegs(fb.comps), [fb.end, P1, pipeDims(fl.NPS, fl.cls).OD / 2 + 3]]); }   // the lead held with its clearance, so the next stub keeps off
+          ends.get(fl.no)!.A = { P1, dirOut: po.dir, built: fb, startFace: po.face, zone: po.face }; occupy(lineId.get(fl.no)!, [...compSegs(fb.comps), [fb.end, P1, pipeDims(fl.NPS, fl.cls).OD / 2 + 6]]); }   // the lead held with twice its clearance, so the next stub's valve keeps off
       }
       const comps = [...b.comps];
       if (via === 'olet') comps.unshift(oletComp(l, byNo.get(l.from.line)!, t.at, t.out, outEnd, via));

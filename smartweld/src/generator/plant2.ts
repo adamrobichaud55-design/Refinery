@@ -204,7 +204,7 @@ export const PLANT2_NOZZLES: NozzleDef[] = (() => {
   n('C-201', 'N4', 'reflux', 3, 'P300', { on: 'shell', e: 300, dir: '+z' }); n('C-201', 'N5', 'vent', 1, 'P150', { on: 'top', dx: 18, dz: 0 }); n('C-201', 'N6', 'drain', 2, 'P150', { on: 'shell', e: 72, dir: '-x' });
   n('C-201', 'N7', 'nitrogen', 1, 'P150', { on: 'shell', e: 186, dir: '+x' });   // above the mid platform's ladder rails
   n('C-201', 'N8', 'instrument', 0.75, 'P300', { on: 'shell', e: 102, dir: '-x' }); n('C-201', 'N9', 'instrument', 0.75, 'P300', { on: 'shell', e: 210, dir: '-z' });
-  n('C-201', 'N10', 'sample', 0.75, 'P300', { on: 'shell', e: 108, dir: '+z' }); n('C-201', 'N11', 'relief', 3, 'P300', { on: 'top', dx: -18, dz: 0 });   // the sample nozzle above the drain's valved tee branch (SW-LL-8)
+  n('C-201', 'N10', 'sample', 0.75, 'P300', { on: 'shell', e: 108, dir: '-z' }); n('C-201', 'N11', 'relief', 3, 'P300', { on: 'top', dx: -18, dz: 0 });   // the sample nozzle above the drain's valved tee branch (SW-LL-8)
   for (const [tag, dd, cls] of [['D-201', Y.D201, 'P300'], ['D-202', Y.D202, 'P150'], ['D-203', Y.D203, 'P150']] as const) {
     const xo = dd.x - dd.TT / 2, big = tag === 'D-201' ? 6 : tag === 'D-203' ? 8 : 4;
     n(tag, 'N1', 'inlet', big, cls, { on: 'hshell', x: xo + 30, side: 'top' }); n(tag, 'N2', 'outlet', tag === 'D-202' ? 3 : 4, cls, { on: 'hshell', x: xo + (tag === 'D-202' ? 90 : 108), side: 'bottom' });   // between the saddles (SW-EQ-2)
