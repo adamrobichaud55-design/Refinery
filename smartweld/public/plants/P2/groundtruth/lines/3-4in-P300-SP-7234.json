@@ -464,6 +464,140 @@
     "SW-SWT-2",
     "SW-SWT-9"
    ]
+  },
+  {
+   "tag": "3/4\"-P300-SP-7234/4:A1",
+   "line": "3/4\"-P300-SP-7234",
+   "lineClass": "H300",
+   "kind": "nipple",
+   "itemNo": 10,
+   "description": "NIPPLE 3/4\" P300 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
+   "designation": "NIP0.75x4.375-P300-TOE",
+   "key": "NIP|0.75|P300|4.375|TOE",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×TH",
+   "cutLength": 4.375,
+   "weight": 0.3616,
+   "a": {
+    "E": 1945.0719,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "b": {
+    "E": 1949.0719,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "centre": {
+    "E": 1947.0719,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-SP-7234/4:A2",
+   "line": "3/4\"-P300-SP-7234",
+   "lineClass": "H300",
+   "kind": "valve",
+   "itemNo": 11,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P300",
+   "designation": "GATE0.75-P300-TH",
+   "key": "VLV|GATE|0.75|P300|TH",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 22.5538,
+   "a": {
+    "E": 1949.0719,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "b": {
+    "E": 1957.5094,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "centre": {
+    "E": 1953.2906,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-SP-7234/4:A3",
+   "line": "3/4\"-P300-SP-7234",
+   "lineClass": "H300",
+   "kind": "plug",
+   "itemNo": 12,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P300",
+   "designation": "PLUG0.75-P300-HEX",
+   "key": "PLUG|0.75|P300",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "TH",
+   "weight": 0.2566,
+   "a": {
+    "E": 1957.5094,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "b": {
+    "E": 1958.1844,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "centre": {
+    "E": 1957.8469,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-2",
+    "SW-SWT-9"
+   ]
   }
  ],
  "welds": [
@@ -704,6 +838,40 @@
     "SW-WD-2",
     "SW-WD-3"
    ]
+  },
+  {
+   "tag": "3/4\"-P300-SP-7234/W8",
+   "line": "3/4\"-P300-SP-7234",
+   "lineClass": "H300",
+   "type": "SW",
+   "size": 0.1875,
+   "NPS": 0.75,
+   "cls": "P300",
+   "joins": [
+    "3/4\"-P300-SP-7234/4",
+    "3/4\"-P300-SP-7234/4:A1"
+   ],
+   "shopField": "shop",
+   "spool": "loose",
+   "spools": [
+    "loose",
+    "parent 3/4\"-P300-SP-7234/4:A1"
+   ],
+   "at": {
+    "E": 1945.0719,
+    "N": -63.7594,
+    "EL": 1398
+   },
+   "key": "SWW|0.75|P300",
+   "weight": 0.0147,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-SWT-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
   }
  ],
  "supports": [],
@@ -741,6 +909,15 @@
     "3/4\"-P300-SP-7234/W7"
    ],
    "weight": 0.7008
+  },
+  {
+   "items": [
+    "3/4\"-P300-SP-7234/4:A1",
+    "3/4\"-P300-SP-7234/4:A2",
+    "3/4\"-P300-SP-7234/4:A3"
+   ],
+   "shopWelds": [],
+   "weight": 23.1719
   }
  ],
  "bom": [
@@ -800,6 +977,25 @@
    "description": "PLUG SQUARE HEAD THREADED 1/2\" P300",
    "qty": 1,
    "weight": 0.1348
+  },
+  {
+   "itemNo": 10,
+   "description": "NIPPLE 3/4\" P300 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
+   "qty": 1,
+   "weight": 0.3616,
+   "length": null
+  },
+  {
+   "itemNo": 11,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P300",
+   "qty": 1,
+   "weight": 22.5538
+  },
+  {
+   "itemNo": 12,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P300",
+   "qty": 1,
+   "weight": 0.2566
   }
  ],
  "nodes": [
@@ -904,11 +1100,11 @@
   }
  ],
  "totals": {
-  "items": 10,
-  "welds": 7,
+  "items": 13,
+  "welds": 8,
   "fieldWelds": 0,
   "supports": 0,
   "pipeLength": 0,
-  "weight": 43.6809
+  "weight": 66.8528
  }
 }

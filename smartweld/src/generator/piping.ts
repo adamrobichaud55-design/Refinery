@@ -967,7 +967,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
           for (const aoff of (P2 ? [r + 6, r + 12] : [r + 6])) {   // SW-PS-13: rods OD/2 + 6 in out, or OD/2 + 12 in (plant 2) where a line lies right beside
             const t1 = steelAboveExact(add(p, side, -aoff), 0.5, id), t2 = steelAboveExact(add(p, side, aoff), 0.5, id);
             if (t1 === null || t2 === null) continue;
-            push('trapeze', p, `TRAP|${l.NPS}|${l.cls}|${(t1 - p[1]).toFixed(2)}|${(t2 - p[1]).toFixed(2)}|${aoff.toFixed(2)}`, frameFromAxes(p, [0, 1, 0], w)); placed = sPos; break;
+            push('trapeze', p, `TRAP|${l.NPS}|${l.cls}|${(t1 - p[1]).toFixed(2)}|${(t2 - p[1]).toFixed(2)}${P2 ? '|' + aoff.toFixed(2) : ''}`, frameFromAxes(p, [0, 1, 0], w)); placed = sPos; break;   // plant 1's keys as stage 5 wrote them
           }
           if (placed >= 0) break;
         }

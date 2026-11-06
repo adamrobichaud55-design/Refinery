@@ -39,6 +39,7 @@ npx vite-node tools/gen-plant.ts P2 public/plants/P2/plant-piping.json   # regen
 npx vite-node tools/export-gt.ts P2              # plant 2 ground truth (public/plants/P2/groundtruth/)
 npx vite-node tools/coverage.ts public/plants/P2/plant-piping.json       # symbol coverage against the SW-COV-2 floor
 npx vite-node tools/export-pcf.ts P1|P2           # one PCF per line from the ground truth (public/.../pcf/, SW-PCF-1..4; tools/pcf-mapping.md)
+npx vite-node tools/pcf-check.ts P1|P2            # the owner's zero-checks on the ground truth and PCF files (SW-LL-8, SW-GT-7, SW-PCF-*)
 npx vite-node tools/erection.ts P1|P2            # structural steel erection drawings (downloads/erection-P*.pdf, sheet previews)
 npx vite-node tools/render-plant.ts P2           # review images of plant 2 (screenshots/stage9/)
 ```
