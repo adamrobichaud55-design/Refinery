@@ -479,6 +479,8 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     return [];
   };
   const NIP = (NPS: number, cls: PipeClass, ends: NippleEnds, L = 4, rev = false): Item => ({ k: 'nipple', NPS, cls, L, ends, rev });
+  /** SW-LL-8 (7): a slip-on flange never sits straight on a reducer; in a slip-on class a 6 in pipe stub stands between */
+  const soStub = (l: LineDef, NPS: number): Item[] => (flangeOf(l) === 'SO' ? [{ k: 'pipe', NPS, cls: l.cls, L: 6 }] : []);
   /** the item stack at a nozzle end (SW-LL-3, SW-LL-6); items listed from the nozzle face outward */
   function nozzleStack(l: LineDef, nz: Nozzle, isDest: boolean): Item[] {
     const NPS = l.NPS, cls = l.cls, joint = jointOf(l), iso = isoValve(NPS, cls, groupOf(l), l, nz, isDest);
@@ -486,7 +488,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     const chk: Item[] = P2 && l.check && isDest ? [{ k: 'valve', type: 'CHECK', NPS, cls }, { k: 'gasket', NPS, cls }] : [];   // SW-LL-7: a check ahead of the block valve at the destination
     if (nz.service === 'suction') {
       const it: Item[] = [...lead, fl(l, 'wnf', nz.NPS)];
-      if (NPS !== nz.NPS) it.push({ k: 'reducer', from: nz.NPS, to: NPS, cls, ...(P2 ? { flat: 'top' } : {}) }, fl(l, 'wnfR'));
+      if (NPS !== nz.NPS) it.push(...soStub(l, nz.NPS), { k: 'reducer', from: nz.NPS, to: NPS, cls, ...(P2 ? { flat: 'top' } : {}) }, ...soStub(l, NPS), fl(l, 'wnfR'));
       else it.push({ k: 'pipe', NPS, cls, L: 6 }, fl(l, 'wnfR'));
       return [...it, { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
     }
@@ -547,7 +549,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     const NPS = l.NPS, cls = l.cls, sN = P2 && NPS >= 3 ? ({ 3: 2, 4: 3, 6: 4, 8: 6 } as Record<number, number>)[NPS] ?? NPS : NPS;
     const gate: Item[] = [fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
     if (sN === NPS) return spaced(l, [fl(l, 'wnfR'), { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: 'CONTROL', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')]);
-    return [...gate, { k: 'reducer', from: NPS, to: sN, cls, flat: 'top' }, fl(l, 'wnfR', sN), { k: 'gasket', NPS: sN, cls }, { k: 'valve', type: 'CONTROL', NPS: sN, cls }, { k: 'gasket', NPS: sN, cls }, fl(l, 'wnf', sN), { k: 'reducer', from: sN, to: NPS, cls, flat: 'top' }, ...gate];
+    return [...gate, ...soStub(l, NPS), { k: 'reducer', from: NPS, to: sN, cls, flat: 'top' }, ...soStub(l, sN), fl(l, 'wnfR', sN), { k: 'gasket', NPS: sN, cls }, { k: 'valve', type: 'CONTROL', NPS: sN, cls }, { k: 'gasket', NPS: sN, cls }, fl(l, 'wnf', sN), ...soStub(l, sN), { k: 'reducer', from: sN, to: NPS, cls, flat: 'top' }, ...soStub(l, NPS), ...gate];
   };
   /** the items at a branch take-off: after a tee outlet a flange, after an olet nothing; the take-off valve by joint type */
   const takeOffItems = (l: LineDef, via: TapVia, valve: boolean, isDest = false): Item[] => {

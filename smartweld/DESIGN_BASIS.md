@@ -1972,9 +1972,13 @@ consults no outside format description (PROVENANCE P-62).
      valve, a block and a check at a take-off). Plant 1's sixteen such joints on ten lines are
      left as drawn, since the owner's Revision 1 drawings match them (P-69); plant 2 applies it.
   6. A blind may bolt straight onto a valve's end flange.
-  7. A slip-on flange needs a pipe end to slip over: never straight on a tee or an outlet. A branch
-     leaving a tee in a slip-on class has a 6 in pipe stub between the tee and its slip-on flange;
-     a branch leaving an outlet takes weld-neck flanges.
+  7. A slip-on flange needs a pipe end to slip over: never straight on a tee, an outlet or a
+     reducer. A branch leaving a tee in a slip-on class has a 6 in pipe stub between the tee and
+     its slip-on flange; a branch leaving an outlet takes weld-neck flanges; where a reducer meets
+     a slip-on flange (the control station of SW-LL-7 in a slip-on class, or a pump suction in
+     one), a 6 in pipe stub stands between the reducer and the flange, so the flange slips over
+     the stub and the stub is butt-welded to the reducer (amended 2026-11-06 after the owner's
+     redraw found slip-on flanges welded straight to the control-station reducers).
   Reason: these are the owner's drawing conventions; the generator draws them and the detector is
   tested on them, so the model carries them.
 - `SW-GT-7` Ground truth amended with the review: a reducer or swage records its large size as the

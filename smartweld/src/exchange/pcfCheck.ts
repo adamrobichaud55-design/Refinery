@@ -13,7 +13,7 @@ export function checkPlant(groundtruth: string, opts: { valveToValve?: boolean }
   const pdir = pcfDir(groundtruth);
   const counts: Record<string, number> = {}, examples: Record<string, string[]> = {};
   const hit = (k: string, ex: string) => { counts[k] = (counts[k] ?? 0) + 1; (examples[k] ??= []).length < 5 && examples[k].push(ex); };
-  const keys = ['socket-weld plugs', 'plugs not straight into a valve', 'field welds at slip-on or socket-weld flanges or at threaded or socket-weld valves', 'slip-on flanges on an outlet or a tee', 'gaskets with a valve on each side',
+  const keys = ['socket-weld plugs', 'plugs not straight into a valve', 'field welds at slip-on or socket-weld flanges or at threaded or socket-weld valves', 'slip-on flanges on an outlet or a tee', 'slip-on flanges on a reducer', 'gaskets with a valve on each side',
     'valves whose two flanges differ', 'elbows whose CENTRE-POINT is not the work point', 'tees, three-way and four-way valves without BRANCH1-POINT', 'four-way valves without BRANCH2-POINT', 'SPOOL undefined', 'reducers with the same size at both ends', 'INDEX.csv rows not readable'];
   for (const k of keys) counts[k] = 0;
   for (const L of lines) {
@@ -38,7 +38,11 @@ export function checkPlant(groundtruth: string, opts: { valveToValve?: boolean }
         const fb = before ? flangeKind(before) : null, fa = after ? flangeKind(after) : null;
         if (fb && fa && fb !== fa) hit('valves whose two flanges differ', `${it.tag} (${fb} / ${fa})`);
       }
-      if (it.kind === 'flange' && flangeKind(it) === 'SO') { for (const n of [main[i - 1], main[i + 1]]) if (n && (n.kind === 'tee' || n.kind === 'outlet') && (near(n.a, it.a) || near(n.a, it.b) || near(n.b, it.a) || near(n.b, it.b))) hit('slip-on flanges on an outlet or a tee', it.tag); }
+      if (it.kind === 'flange' && flangeKind(it) === 'SO') for (const n of [main[i - 1], main[i + 1]]) {
+        if (!n || !(near(n.a, it.a) || near(n.a, it.b) || near(n.b, it.a) || near(n.b, it.b))) continue;
+        if (n.kind === 'tee' || n.kind === 'outlet') hit('slip-on flanges on an outlet or a tee', it.tag);
+        if (n.kind === 'reducer' || n.kind === 'swage') hit('slip-on flanges on a reducer', it.tag);   // SW-LL-8 (7) amended: a slip-on slips over a pipe, never a reducer
+      }
       if ((it.kind === 'reducer' || it.kind === 'swage') && (it.NPS2 === undefined || it.NPS2 === it.NPS)) hit('reducers with the same size at both ends', it.tag);
     }
     for (const w of L.welds) if (w.shopField === 'field') {
