@@ -210,7 +210,7 @@ export const PLANT2_NOZZLES: NozzleDef[] = (() => {
     n(tag, 'N1', 'inlet', big, cls, { on: 'hshell', x: xo + 30, side: 'top' }); n(tag, 'N2', 'outlet', tag === 'D-202' ? 3 : 4, cls, { on: 'hshell', x: xo + (tag === 'D-202' ? 90 : 108), side: 'bottom' });   // between the saddles (SW-EQ-2)
     n(tag, 'N3', 'relief', 3, cls, { on: 'hshell', x: xo + 108, side: 'top' }); n(tag, 'N4', 'vent', 1, 'P150', { on: 'hshell', x: xo + 60, side: 'top' });
     n(tag, 'N5', 'drain', 2, 'P150', { on: 'hshell', x: xo + 18, side: 'bottom' }); n(tag, 'N6', 'nitrogen', 1, 'P150', { on: 'hshell', x: xo + 84, side: 'top' });
-    n(tag, 'N7', 'instrument', 0.75, cls, { on: 'hshell', x: xo + 84, side: '+z' }); n(tag, 'N8', 'instrument', 0.75, cls, { on: 'hshell', x: xo + 126, side: '+z' }); n(tag, 'N9', 'sample', 0.75, cls, { on: 'hshell', x: xo + 60, side: '+z' });
+    n(tag, 'N7', 'instrument', 0.75, cls, { on: 'hshell', x: xo + 84, side: '+z' }); n(tag, 'N8', 'instrument', 0.75, cls, { on: 'hshell', x: xo + 126, side: '+z' }); n(tag, 'N9', 'sample', 0.75, cls, { on: 'hshell', x: xo + 42, side: '+z' });   // clear of the instrument stub's manifold ports (SW-LL-8 side stacks)
     if (tag !== 'D-201') n(tag, 'N10', 'outlet 2', 2, cls, { on: 'hshell', x: xo + (tag === 'D-202' ? 120 : 156), side: tag === 'D-202' ? '-z' : '+z' });
     if (tag === 'D-201') n(tag, 'N11', 'inlet 2', 3, cls, { on: 'hshell', x: xo + 132, side: 'top' });
   }
