@@ -2079,11 +2079,11 @@ sent to the piping designer, and with erection drawings and weld details for tha
   P-205A/B, ten solids receivers R-201…R-210 (small vertical vessels) in a row along the north wall under a
   walkway, a 3 ft grating access walkway along the rack's south edge at the first tier (posts at
   every bent, guardrail, a ladder at each end: it reaches the branch valves and their drops pass
-  through it in sleeves, SW-PEN-1), a 16 ft access platform over each exchanger at 22 ft and over
-  the drum D-201 at 25 ft (four posts, guardrail, ladder), each just above the control stations
+  through it in sleeves, SW-PEN-1), a 7 ft access platform over each exchanger's inlet nozzles at
+  24 ft and a 16 ft one over the drum D-201 at 27 ft (four posts, guardrail, ladder), each just above the control stations
   on the top nozzles (SW-LL-7) so the lines come down through the grating in sleeves and the
   stations are reached from below and from the platform, an 8 ft operating platform over each
-  pump row at 10 ft (posts in the gaps between the pumps, guardrail, ladder) reaching the tops of
+  pump row at 12.5 ft (posts in the gaps between the pumps, guardrail, ladder) reaching the tops of
   the discharge risers, which pass through it in sleeves, and an outdoor area east of the building with two storage tanks T-201/T-202, two larger
   receivers R-211/R-212, an air receiver D-202 and a flare knock-out drum D-203 on pads on grade.
   (Amended 2026-11-05: the hopper and silos became vertical vessels, P-67.) Reason: the pairs of exchangers carry three-way diverting valves, the
@@ -2094,6 +2094,8 @@ sent to the piping designer, and with erection drawings and weld details for tha
   (SW-PEN-2); outdoor equipment stands on 6 in pads on grade and its tanks have caged ladders as
   SW-LAY-3. Reason: a tank farm is outside the process building in practice; a short run keeps the
   routing search bounded.
+  (The adsorbers' skirts are 4 ft so their solids-inlet stacks, lengthened by the SW-LL-8 stubs,
+  stay under the roof; the column's sample nozzle stands above its drain's valved tee branch.)
   Amended (stage 9, routing): from 9 ft beyond the rack's east end outward (the 9 ft is the
   slot in which the lines leaving the rack's top fall to the band), through the end wall
   and across the outdoor area, horizontal runs lie at one elevation, a centreline of 12.5 ft
@@ -2331,7 +2333,9 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
   - the receivers' fluidizing-air nozzles carry the nitrogen stack of SW-LL-6 (threaded check
     and globe), since they too are a gas supply into a vessel;
   - a water or cooling-water supply has at its consumer a block (butterfly) and a throttling globe
-    valve; a cooling-water return has the same pair at the header take-off;
+    valve; a cooling-water return has the same pair at the exchanger's outlet nozzle and a block
+    and check at the header take-off (with the SW-LL-8 stubs a third valve there would reach the
+    rafters);
   - solids branches carry their valve at the take-off too: a ball valve where the branch fills
     (the receivers' fill branches off the fill lines, the adsorbers' feeds) and a plug valve where
     it empties (the receivers' outlet lines into the conveying header);

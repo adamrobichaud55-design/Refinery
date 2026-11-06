@@ -29,7 +29,7 @@ export const L2 = PLANT2_BUILDING.bays * PLANT2_BUILDING.bayFt * 12;        // 3
 export const PLANT2_LAYOUT = {
   rack: { x0: 240, x1: 2760, bentSpacing: 240, halfWidth: 144, tiers: [192, 264, 336], loadPsf: 40 } as RackLayout,
   pedestal: 6, padHeight: 6,
-  vessel: { ID: 72, t: 0.5, TT: 216, skirtH: 72, rods: 8 }, platformTop: 285, stairLane: 330,
+  vessel: { ID: 72, t: 0.5, TT: 216, skirtH: 48, rods: 8 }, platformTop: 285, stairLane: 330,   // skirt 4 ft: the solids-inlet stack (SW-LL-8 stub) clears the roof
   V201: { x: 420, z: 330 }, V202: { x: 660, z: 330 },
   C201: { x: 840, z: -330, ID: 48, t: 0.5, TT: 240, skirtH: 48, rods: 8, platforms: [132, 240] as const },
   D201: { x: 1098, z: 330, ID: 60, t: 0.5, TT: 180, centreline: 84 },
@@ -155,11 +155,11 @@ export function generateInterior2(cuts: GratingCut[] = []): InteriorModel {
     guardrail([[x0, ept, z0], [x1, ept, z0], [x1, ept, z1], [x0, ept, z1]], [(x0 + x1) / 2, (z0 + z1) / 2], tag, true);
     ladder([(x0 + x1) / 2, 0, rackSide > 0 ? z0 - CAGE.standoff : z1 + CAGE.standoff], ept, [0, rackSide > 0 ? -1 : 1], tag);
   };
-  for (const [tag, pos] of [['E-201', Y.E201], ['E-202', Y.E202], ['E-203', Y.E203], ['E-204', Y.E204]] as const) topPlatform(pos.x - Y.exchanger.TT / 2 - 12, pos.z - 36, pos.x + Y.exchanger.TT / 2 + 12, pos.z + 36, `${tag}-platform`, pos.z > 0 ? 1 : -1, 264);
-  topPlatform(Y.D201.x - Y.D201.TT / 2 - 12, Y.D201.z - 42, Y.D201.x + Y.D201.TT / 2 + 12, Y.D201.z + 42, 'D-201-platform', 1, 300);
+  for (const [tag, pos] of [['E-201', Y.E201], ['E-202', Y.E202], ['E-203', Y.E203], ['E-204', Y.E204]] as const) topPlatform(pos.x - 120, pos.z - 36, pos.x - 36, pos.z + 36, `${tag}-platform`, pos.z > 0 ? 1 : -1, 288);   // over the tube-side and shell-side inlet nozzles, above their stations (SW-LL-8 stubs)
+  topPlatform(Y.D201.x - Y.D201.TT / 2 - 12, Y.D201.z - 42, Y.D201.x + Y.D201.TT / 2 + 12, Y.D201.z + 42, 'D-201-platform', 1, 324);
   // ---- operating platforms over the pump rows (SW-PLANT-5 amended): 10 ft up, posts in the gaps between the pumps, guardrail, ladder ----
   const pumpRow = (xs: number[], zc: number, tag: string) => {
-    const pt = 120, hz = Y.pump.baseL / 2 + 12, x0 = Math.min(...xs) - 48, x1 = Math.max(...xs) + 48, z0 = zc - hz, z1 = zc + hz, side = Math.sign(zc) as 1 | -1;
+    const pt = 150, hz = Y.pump.baseL / 2 + 12, x0 = Math.min(...xs) - 48, x1 = Math.max(...xs) + 48, z0 = zc - hz, z1 = zc + hz, side = Math.sign(zc) as 1 | -1;
     platform(x0, z0, x1, z1, pt, { span: 'z', tag, cuts: cuts.filter(c => c.y === pt).map(c => ({ cx: c.x, cy: c.z, r: c.r })) });
     const px = [x0, ...xs.slice(0, -1).map((x, i) => (x + xs[i + 1]) / 2), x1];
     for (const x of px) for (const z of [z0, z1]) postColumn(x, z, pt - barDepth - platformBeam.dims.d, tag);
@@ -204,7 +204,7 @@ export const PLANT2_NOZZLES: NozzleDef[] = (() => {
   n('C-201', 'N4', 'reflux', 3, 'P300', { on: 'shell', e: 300, dir: '+z' }); n('C-201', 'N5', 'vent', 1, 'P150', { on: 'top', dx: 18, dz: 0 }); n('C-201', 'N6', 'drain', 2, 'P150', { on: 'shell', e: 72, dir: '-x' });
   n('C-201', 'N7', 'nitrogen', 1, 'P150', { on: 'shell', e: 186, dir: '+x' });   // above the mid platform's ladder rails
   n('C-201', 'N8', 'instrument', 0.75, 'P300', { on: 'shell', e: 102, dir: '-x' }); n('C-201', 'N9', 'instrument', 0.75, 'P300', { on: 'shell', e: 210, dir: '-z' });
-  n('C-201', 'N10', 'sample', 0.75, 'P300', { on: 'shell', e: 90, dir: '-x' }); n('C-201', 'N11', 'relief', 3, 'P300', { on: 'top', dx: -18, dz: 0 });
+  n('C-201', 'N10', 'sample', 0.75, 'P300', { on: 'shell', e: 126, dir: '-x' });   // above the drain's valved tee branch (SW-LL-8) n('C-201', 'N11', 'relief', 3, 'P300', { on: 'top', dx: -18, dz: 0 });
   for (const [tag, dd, cls] of [['D-201', Y.D201, 'P300'], ['D-202', Y.D202, 'P150'], ['D-203', Y.D203, 'P150']] as const) {
     const xo = dd.x - dd.TT / 2, big = tag === 'D-201' ? 6 : tag === 'D-203' ? 8 : 4;
     n(tag, 'N1', 'inlet', big, cls, { on: 'hshell', x: xo + 30, side: 'top' }); n(tag, 'N2', 'outlet', tag === 'D-202' ? 3 : 4, cls, { on: 'hshell', x: xo + (tag === 'D-202' ? 90 : 108), side: 'bottom' });   // between the saddles (SW-EQ-2)

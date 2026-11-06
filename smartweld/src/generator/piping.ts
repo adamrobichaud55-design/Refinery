@@ -502,7 +502,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     if (P2 && joint === 'TH' && (nz.service === 'nitrogen' || nz.service === 'fluidizing air')) return [gasket, fl(l, 'wnf', nz.NPS), NIP(NPS, cls, 'TOE'), { k: 'valve', type: 'LCHECK', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE'), { k: 'valve', type: 'GLOBE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE')];
     if (P2 && joint === 'TH') return [gasket, fl(l, 'wnf', nz.NPS), NIP(NPS, cls, 'TOE'), { k: 'valve', type: 'GATE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE')];
     if (P2 && joint === 'SW') return [gasket, { k: 'swf', NPS, cls }, NIP(NPS, cls, 'PBE'), { k: 'valve', type: 'GATE', NPS, cls, ends: 'SW' }, NIP(NPS, cls, 'PBE')];
-    const thr: Item[] = P2 && isDest && groupOf(l)[0] === 'W' ? [{ k: 'valve', type: 'GLOBE', NPS: nz.NPS, cls }, { k: 'gasket', NPS: nz.NPS, cls }] : [];   // SW-LL-7: throttling globe at a water consumer
+    const thr: Item[] = P2 && groupOf(l)[0] === 'W' && (isDest || l.service === 'CWR') ? [{ k: 'valve', type: 'GLOBE', NPS: nz.NPS, cls }, { k: 'gasket', NPS: nz.NPS, cls }] : [];   // SW-LL-7: throttling globe at a water consumer; a return's balancing globe at the exchanger's outlet nozzle
     const nN = P2 ? nz.NPS : NPS;   // plant 2: the stack at the nozzle's size up to its first flange, then a reducer to the line
     const base: Item[] = [...spaced(l, [...lead, { k: 'valve', type: iso, NPS: nN, cls }, { k: 'gasket', NPS: nN, cls }, ...thr, ...chk.map(x => (x.k === 'valve' || x.k === 'gasket' ? { ...x, NPS: nN } : x)), fl(l, 'wnf', nN, cls, false)], false), ...(nN !== NPS ? [{ k: 'reducer', from: nN, to: NPS, cls } as Item] : [])];   // SW-LL-8 (3): weld-neck at a nozzle
     if (l.cv && isDest) return [...base, { k: 'pipe', NPS, cls, L: 18 }, ...cvStation(l)];
@@ -554,7 +554,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     if (joint === 'TH') return [NIP(NPS, cls, 'TBE'), { k: 'valve', type: 'GATE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE')];
     if (joint === 'SW') return [NIP(NPS, cls, 'PBE'), { k: 'valve', type: 'GATE', NPS, cls, ends: 'SW' }, NIP(NPS, cls, 'PBE')];
     const chk: Item[] = P2 && l.check && isDest ? [{ k: 'valve', type: 'CHECK', NPS, cls }, { k: 'gasket', NPS, cls }] : [];   // SW-LL-7: check ahead of the block valve, seen from the header
-    const thr: Item[] = P2 && isDest && l.service === 'CWR' ? [{ k: 'valve', type: 'GLOBE', NPS, cls }, { k: 'gasket', NPS, cls }] : [];   // SW-LL-7: balancing globe where a return meets its header
+    const thr: Item[] = [];   // SW-LL-7 (amended): a return's balancing globe stands at the exchanger nozzle, the take-off keeps block and check (a third valve would reach the rafters)
     const so = via !== 'olet';   // SW-LL-8 (4): a weldolet takes weld-neck flanges
     const stub: Item[] = P2 && so && via === 'tee' && flangeOf(l) === 'SO' ? [{ k: 'pipe', NPS, cls, L: 6 }] : [];   // SW-LL-8 (7): a slip-on flange slips over a pipe, not a tee
     const base: Item[] = spaced(l, [...lead, ...stub, fl(l, 'wnfR', NPS, cls, so), { k: 'gasket', NPS, cls }, { k: 'valve', type: isoValve(NPS, cls, groupOf(l), l, undefined, isDest), NPS, cls }, { k: 'gasket', NPS, cls }, ...thr, ...chk, fl(l, 'wnf', NPS, cls, so)], so);
@@ -776,7 +776,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
       const gateFree = (p: V3) => { const c = g.cellOf(p); return g.inside(c[0], c[1], c[2]) && !g.head[g.idx(c[0], c[1], c[2])] && g.clear(c[0], c[1], c[2], r, [id]); };
       let ra: ReturnType<typeof doRoute> = null, rb: ReturnType<typeof doRoute> = null, done = false;
       const restore = () => { unoccupy(id); occupy(id, compSegs([...(A.built?.comps ?? []), ...(B.built?.comps ?? [])])); for (const P of [A, B]) if (P.built) occupy(id, [[P.built.end, P.P1, r]]); };
-      const legOpts = { margins: [420], budget: 400_000 }, inOpts = { margins: [420], budget: 1_500_000 }, outIsA = outdoor === A;   // the outdoor leg is short; the indoor leg falls from the rack
+      const legOpts = { margins: [420], budget: 800_000 }, inOpts = { margins: [420], budget: 1_500_000 }, outIsA = outdoor === A;   // the outdoor leg is short; the indoor leg falls from the rack
       for (const y of [150]) for (const z of zs) { if (done) break;
         const gate: V3 = [gateX, y, z]; if (!gateFree(gate)) continue;
         // the outdoor leg first (short, and the one a blocked approach to the equipment fails), then the indoor leg
