@@ -621,6 +621,10 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
             for (let s = 0; s <= 36; s += H / 2) { const cc = g.cellOf(add(f, d, s)); if (!g.inside(cc[0], cc[1], cc[2]) || !g.clear(cc[0], cc[1], cc[2], 1.5, [pid, cid])) { lead = false; break; } }
             if (!lead) continue;
           }
+          if (child.kind === 'routed') {   // the branch's first point beyond the stack must be free too (a stack under a rafter is no take-off)
+            const P1 = leadP1(o.b.end, out, R(child.NPS, child.cls, jointOf(child))), c1 = g.cellOf(P1);
+            if (!g.inside(c1[0], c1[1], c1[2]) || !g.clear(c1[0], c1[1], c1[2], cr, [pid, cid])) continue;
+          }
           best = { at, out, d, b: o.b };
         }
       }
@@ -727,7 +731,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     const r = pipeDims(l.NPS, l.cls).OD / 2, k = kOf(l.NPS, l.cls, jointOf(l));
     let why = '';
     for (const margin of opts?.margins ?? [180, 420, 900]) {
-      const res = route(g, { id, r, start: from.P1, startDir: dirIndex(from.dirOut), goal, goalDirs, runDir, k, zones, margin, vertThrough: plant.verticalThroughPlatforms, zoneR: P2 ? 72 : 48, maxExpand: opts?.budget ?? (P2 ? 1_500_000 : undefined) });
+      const res = route(g, { id, r, start: from.P1, startDir: dirIndex(from.dirOut), goal, goalDirs, runDir, k, zones, margin, vertThrough: plant.verticalThroughPlatforms, zoneR: P2 ? 72 : 48, maxExpand: opts?.budget ?? (P2 ? 2_500_000 : undefined) });
       exp += res.expanded;
       if (res.ok) return res;
       why = res.why ?? ''; if (!why.startsWith('exhausted')) break;
@@ -843,7 +847,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
         const po = { face: b.extra!.psvOutletFace!, dir: b.extra!.psvOutDir!, NPS: b.extra!.psvOutNPS! }; psvOut.set(l.no, po);
         const fl = list.find(x => x.kind === 'routed' && x.from.k === 'psv' && x.from.nozzle === l.no);   // its flare line's lead stands now, before the next stub on the run is placed
         if (fl && ends.get(fl.no) && !ends.get(fl.no)!.A) { const fb = buildStack(fl.no, po.face, po.dir, psvLeadItems(fl, po), 'PSV'), P1 = leadP1(fb.end, po.dir, R(fl.NPS, fl.cls, jointOf(fl)));
-          ends.get(fl.no)!.A = { P1, dirOut: po.dir, built: fb, startFace: po.face, zone: po.face }; occupy(lineId.get(fl.no)!, [...compSegs(fb.comps), [fb.end, P1, pipeDims(fl.NPS, fl.cls).OD / 2]]); }
+          ends.get(fl.no)!.A = { P1, dirOut: po.dir, built: fb, startFace: po.face, zone: po.face }; occupy(lineId.get(fl.no)!, [...compSegs(fb.comps), [fb.end, P1, pipeDims(fl.NPS, fl.cls).OD / 2 + 3]]); }   // the lead held with its clearance, so the next stub keeps off
       }
       const comps = [...b.comps];
       if (via === 'olet') comps.unshift(oletComp(l, byNo.get(l.from.line)!, t.at, t.out, outEnd, via));
