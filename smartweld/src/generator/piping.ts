@@ -154,12 +154,15 @@ function buildStack(line: string, s: V3, w: V3, items: Item[], prevTag: string):
       const ends = it.ends ?? 'RF', L = valveF2F(it.type, it.NPS, it.cls, ends), c = add(p, w, L / 2);
       const T = frameFromAxes(c, it.stem ?? stemDir, w);
       push({ kind: 'valve', key: `VLV|${it.type}|${it.NPS}|${it.cls}${ends === 'RF' ? '' : '|' + ends}`, T, a: p, b: add(p, w, L), NPS: it.NPS, cls: it.cls, e1: ends, e2: ends });
-      if (it.sides && it.type === 'FWAY' && ends === 'SW') {   // SW-LL-7: one side port a purge needle valve on a one-end-threaded nipple with a plug, the other a socket plug
-        const v = partFromKey(`VLV|FWAY|${it.NPS}|${it.cls}|SW`), sb = smallBore(it.NPS, it.cls), reach = v.dims.sideC.value + sb.tf + endLength(sb, 'SW'), vt = comps[comps.length - 1].tag, side: Comp[] = extra?.side ?? [];
+      if (it.sides && (it.type === 'FWAY' || it.type === 'TWAY') && ends === 'SW') {   // SW-LL-7/8: a four-way's side ports (purge needle valve; spare port valved and plugged), a three-way's purge port valved and plugged
+        const v = partFromKey(`VLV|${it.type}|${it.NPS}|${it.cls}|SW`), sb = smallBore(it.NPS, it.cls), reach = v.dims.sideC.value + sb.tf + endLength(sb, 'SW'), vt = comps[comps.length - 1].tag, side: Comp[] = extra?.side ?? [];
         const xd: V3 = unit([T[0], T[1], T[2]]);
-        const pa = buildStack(line, add(c, xd, reach), xd, [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE' }, { k: 'valve', type: 'NEEDLE', NPS: Math.min(it.NPS, 1), cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: Math.min(it.NPS, 1), cls: it.cls }], vt);
-        const pb = buildStack(line, add(c, xd, -reach), neg(xd), [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE' }, { k: 'valve', type: 'GATE', NPS: it.NPS, cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: it.NPS, cls: it.cls }], vt);   // SW-LL-8 (1): a plug only in a valve's end
-        side.push(...pa.comps.map((x, i) => ({ ...x, tag: `${vt}:A${i + 1}` })), ...pb.comps.map((x, i) => ({ ...x, tag: `${vt}:B${i + 1}` })));
+        const pa = buildStack(line, add(c, xd, reach), xd, it.type === 'FWAY'
+          ? [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE' }, { k: 'valve', type: 'NEEDLE', NPS: Math.min(it.NPS, 1), cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: Math.min(it.NPS, 1), cls: it.cls }]
+          : [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE' }, { k: 'valve', type: 'GATE', NPS: it.NPS, cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: it.NPS, cls: it.cls }], vt);
+        side.push(...pa.comps.map((x, i) => ({ ...x, tag: `${vt}:A${i + 1}` })));
+        if (it.type === 'FWAY') { const pb = buildStack(line, add(c, xd, -reach), neg(xd), [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE' }, { k: 'valve', type: 'GATE', NPS: it.NPS, cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: it.NPS, cls: it.cls }], vt);   // SW-LL-8 (1): a plug only in a valve's end
+          side.push(...pb.comps.map((x, i) => ({ ...x, tag: `${vt}:B${i + 1}` }))); }
         extra = { ...(extra ?? {}), side };
       }
       p = add(p, w, L); lastWeld = false;
@@ -310,7 +313,7 @@ export function deriveWelds(line: string, comps: Comp[], ext: ExtJoint[], fieldA
   const c = comps.filter(x => x.kind !== 'studs'), out: WeldRec[] = [];
   const isField = (p: V3) => fieldAt.some(q => len(sub(p, q)) < 1e-3);
   for (const e of ext) { const first = c.reduce((best, x) => Math.min(len(sub(x.a, e.at)), len(sub(x.b, e.at))) < Math.min(len(sub(best.a, e.at)), len(sub(best.b, e.at))) ? x : best, c[0]);
-    out.push(weldRec(line, out.length + 1, e.type ?? 'BW', e.at, e.w, e.NPS, e.cls, [e.tag, e.join ?? first.tag], e.type !== 'FW')); }
+    out.push(weldRec(line, out.length + 1, e.type ?? 'BW', e.at, e.w, e.NPS, e.cls, [e.tag, e.join ?? first.tag], (e.type ?? 'BW') === 'BW')); }   // SW-LL-8 (2): only a butt weld at a branch is a field weld
   for (let i = 1; i < c.length; i++) {
     const x = c[i - 1], y = c[i];
     if (x.e1 === undefined || y.e1 === undefined) {                                   // plant 1 records (no end types): the stage-5 rule
@@ -525,7 +528,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
       : [...open, { k: 'valve', type: 'GATE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TBE'), { k: 'valve', type: 'NEEDLE', NPS: Math.min(NPS, 1), cls, ends: 'TH' }, ...close];
     if (l.service === 'SP') {
       const sNPS = 0.5;
-      return [...open, nip1(), { k: 'valve', type: 'GATE', NPS, cls, ends: 'SW' }, NIP(NPS, cls, 'PBE'), { k: 'valve', type: 'TWAY', NPS, cls, ends: 'SW' }, NIP(NPS, cls, 'PBE'),
+      return [...open, nip1(), { k: 'valve', type: 'GATE', NPS, cls, ends: 'SW' }, NIP(NPS, cls, 'PBE'), { k: 'valve', type: 'TWAY', NPS, cls, ends: 'SW', sides: true }, NIP(NPS, cls, 'PBE'),
         { k: 'swage', from: NPS, to: sNPS, cls, e1: 'SW', e2: 'TH' }, NIP(sNPS, cls, 'TBE'), { k: 'valve', type: 'NEEDLE', NPS: sNPS, cls, ends: 'TH' }, { k: 'plug', NPS: sNPS, cls }];
     }
     if (l.service === 'RV') return [...open, nip1(), { k: 'swfR', NPS, cls }, { k: 'gasket', NPS, cls }];   // the safety valve follows (planned apart)

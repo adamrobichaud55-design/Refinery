@@ -115,7 +115,8 @@ function branchPoints(line: GTLine, all: GTLine[]): Map<string, Pt[]> {
   }
   // a station's side-port items (the spare port's nipple, valve and plug) and a tee's spare branch: the first side item's point nearest the fitting
   for (const it of fittings) {
-    const sides = line.items.filter(x => isSide(x) && x.tag.startsWith(it.tag + ':'));
+    const member = it.tag.replace(/:\d+$/, '');   // a station valve `X/V30:3` has its side items as `X/V30:P1…`; a stub valve `X/7` as `X/7:A1…`
+    const sides = line.items.filter(x => isSide(x) && (x.tag.startsWith(it.tag + ':') || x.tag.startsWith(member + ':')));
     for (const grp of ['P', 'A', 'B']) { const first = sides.find(x => new RegExp(`:${grp}1$`).test(x.tag)); if (first) push(it.tag, dist(first.a, it.centre) <= dist(first.b, it.centre) ? first.a : first.b); }
   }
   // a tee with no branch line found: its mouth from the tee geometry (half the run length out of the centre, square to the run)

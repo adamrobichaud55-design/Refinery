@@ -2272,8 +2272,9 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
     gate valve, nipple, four-way valve with its spare port plugged (the gauge and purge manifold,
     4W-1), nipple, socket-weld flange, gasket and blind; on threaded lines: nipple, threaded gate
     valve, nipple, needle valve, plug;
-  - sample points (SP): branch outlet, nipple, forged gate valve, nipple, three-way valve (purge
-    port plugged), nipple, swage to the threaded needle valve, nipple, needle valve, plug;
+  - sample points (SP): branch outlet, nipple, forged gate valve, nipple, three-way valve (its purge
+    port carrying a one-end-threaded nipple, a threaded gate valve and a plug, SW-LL-8), nipple,
+    swage to the threaded needle valve, nipple, needle valve, plug;
   - vents and drains (V, D) on hydrocarbon, steam and flare lines: three-piece socket-weld ball
     valve, nipple, socket-weld flange, gasket and blind; on air, water and condensate lines:
     threaded gate valve with a plug (the drain is opened by removing the plug);
