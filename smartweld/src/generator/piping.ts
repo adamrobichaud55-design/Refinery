@@ -643,7 +643,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   const lanes: { tier: number; z: number; OD: number; x0: number; x1: number }[] = [];
   const zMax = rk.halfWidth - 18;
   /** SW-RT-2: the width a line needs in its lane — its OD, or the OD of the largest flange on a valved take-off from it */
-  const laneD = (l: LineDef) => Math.max(pipeDims(l.NPS, l.cls).OD, ...list.filter(c => [c.from, c.to].some(e => e.k === 'tap' && e.line === l.no && e.valve)).map(c => designFlange(c.NPS, c.cls).OD));
+  const laneD = (l: LineDef) => Math.max(pipeDims(l.NPS, l.cls).OD, ...list.filter(c => [c.from, c.to].some(e => e.k === 'tap' && e.line === l.no && e.valve)).map(c => designFlange(c.NPS, c.cls).OD + (P2 && l.kind === 'header' ? 6 : 0)));   // plant 2: 3 in each side for the branch valves' bodies (SW-RK-7)
   const laneCands = () => { const c: number[] = []; for (let z = -snapUp(zMax) + H; z <= snapUp(zMax) - H; z += H) c.push(z); return c.sort((a, b) => Math.abs(a) - Math.abs(b) || a - b); };
   const laneFree = (tier: number, z: number, OD: number, x0: number, x1: number) => lanes.every(L => L.tier !== tier || L.x1 < x0 - 24 || L.x0 > x1 + 24 || Math.abs(L.z - z) >= (L.OD + OD) / 2 + 3);
   const assignLane = (tier: number, OD: number, x0: number, x1: number) => {

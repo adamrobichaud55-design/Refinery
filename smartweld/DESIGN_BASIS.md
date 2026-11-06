@@ -2095,7 +2095,12 @@ sent to the piping designer, and with erection drawings and weld details for tha
   SW-LAY-3. Reason: a tank farm is outside the process building in practice; a short run keeps the
   routing search bounded.
   (The adsorbers' skirts are 4 ft so their solids-inlet stacks, lengthened by the SW-LL-8 stubs,
-  stay under the roof; the column's sample nozzle stands above its drain's valved tee branch.)
+  stay under the roof; the column's sample nozzle stands on the side away from its drain's valved
+  tee branch; the coolers' water outlets are side nozzles, since a block, stub and globe below a
+  bottom nozzle would reach the floor.)
+- `SW-RK-7` Plant 2: a header's lane on the rack is 3 in wider each side than its largest branch
+  flange, for the bodies of the branch valves that stand above the lane. Reason: the SW-LL-8 stubs
+  put a second valve above every take-off, and a check valve's body is wider than its flanges.
   Amended (stage 9, routing): from 9 ft beyond the rack's east end outward (the 9 ft is the
   slot in which the lines leaving the rack's top fall to the band), through the end wall
   and across the outdoor area, horizontal runs lie at one elevation, a centreline of 12.5 ft

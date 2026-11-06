@@ -204,7 +204,7 @@ export const PLANT2_NOZZLES: NozzleDef[] = (() => {
   n('C-201', 'N4', 'reflux', 3, 'P300', { on: 'shell', e: 300, dir: '+z' }); n('C-201', 'N5', 'vent', 1, 'P150', { on: 'top', dx: 18, dz: 0 }); n('C-201', 'N6', 'drain', 2, 'P150', { on: 'shell', e: 72, dir: '-x' });
   n('C-201', 'N7', 'nitrogen', 1, 'P150', { on: 'shell', e: 186, dir: '+x' });   // above the mid platform's ladder rails
   n('C-201', 'N8', 'instrument', 0.75, 'P300', { on: 'shell', e: 102, dir: '-x' }); n('C-201', 'N9', 'instrument', 0.75, 'P300', { on: 'shell', e: 210, dir: '-z' });
-  n('C-201', 'N10', 'sample', 0.75, 'P300', { on: 'shell', e: 126, dir: '-x' }); n('C-201', 'N11', 'relief', 3, 'P300', { on: 'top', dx: -18, dz: 0 });   // the sample nozzle above the drain's valved tee branch (SW-LL-8)
+  n('C-201', 'N10', 'sample', 0.75, 'P300', { on: 'shell', e: 114, dir: '+z' }); n('C-201', 'N11', 'relief', 3, 'P300', { on: 'top', dx: -18, dz: 0 });   // the sample nozzle above the drain's valved tee branch (SW-LL-8)
   for (const [tag, dd, cls] of [['D-201', Y.D201, 'P300'], ['D-202', Y.D202, 'P150'], ['D-203', Y.D203, 'P150']] as const) {
     const xo = dd.x - dd.TT / 2, big = tag === 'D-201' ? 6 : tag === 'D-203' ? 8 : 4;
     n(tag, 'N1', 'inlet', big, cls, { on: 'hshell', x: xo + 30, side: 'top' }); n(tag, 'N2', 'outlet', tag === 'D-202' ? 3 : 4, cls, { on: 'hshell', x: xo + (tag === 'D-202' ? 90 : 108), side: 'bottom' });   // between the saddles (SW-EQ-2)
@@ -217,7 +217,7 @@ export const PLANT2_NOZZLES: NozzleDef[] = (() => {
   for (const [tag, pos] of [['E-201', Y.E201], ['E-202', Y.E202], ['E-203', Y.E203], ['E-204', Y.E204]] as const) {
     const x0 = pos.x - Y.exchanger.TT / 2 + Y.exchanger.ID / 4, away = pos.z > 0 ? '+z' : '-z', steam = tag === 'E-203' || tag === 'E-204';
     n(tag, 'N1', 'tube in', 3, 'P300', { on: 'hshell', x: x0 - 12, side: 'top' }); n(tag, 'N2', 'tube out', 3, 'P300', { on: 'hshell', x: x0 - 12, side: 'bottom' });   // SW-LL-7: 3 in on 4 in lines
-    n(tag, 'N3', 'shell in', steam ? 3 : 4, steam ? 'P300' : 'P150', { on: 'hshell', x: x0 + 24, side: 'top' }); n(tag, 'N4', 'shell out', steam ? 2 : 4, steam ? 'P150' : 'P150', { on: 'hshell', x: x0 + 168, side: 'bottom' });
+    n(tag, 'N3', 'shell in', steam ? 3 : 4, steam ? 'P300' : 'P150', { on: 'hshell', x: x0 + 24, side: 'top' }); n(tag, 'N4', 'shell out', steam ? 2 : 4, steam ? 'P150' : 'P150', { on: 'hshell', x: x0 + 168, side: steam ? 'bottom' : away });   // a cooling-water outlet on the side: its block, stub and globe (SW-LL-8) would reach the floor from the bottom
     n(tag, 'N5', 'vent', 2, 'P150', { on: 'hshell', x: x0 + 156, side: 'top' }); n(tag, 'N6', 'drain', 1, 'P150', { on: 'hshell', x: x0 + 24, side: 'bottom' });   // SW-LL-7: 2 in vent nozzle
     n(tag, 'N7', 'instrument', 1, 'P300', { on: 'hshell', x: x0 + 96, side: away }); n(tag, 'N8', 'relief', 1, 'P150', { on: 'hshell', x: x0 + 120, side: 'top' });
   }
