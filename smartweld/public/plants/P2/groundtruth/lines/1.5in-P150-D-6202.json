@@ -66,6 +66,7 @@
    "cls": "P150",
    "material": "Grade 36 forging",
    "ends": "BW×RF",
+   "flangeType": "WN",
    "weight": 8.6257,
    "spool": "1.5\"-P150-D-6202-SP01",
    "a": {
@@ -189,7 +190,7 @@
    "kind": "nipple",
    "itemNo": 5,
    "description": "NIPPLE 1.5\" P150 × 7-7/8\" PLAIN BOTH ENDS",
-   "designation": "NIP1.5-P150-PBE",
+   "designation": "NIP1.5x7.875-P150-PBE",
    "key": "NIP|1.5|P150|7.875|PBE",
    "NPS": 1.5,
    "cls": "P150",
@@ -283,7 +284,7 @@
    "kind": "nipple",
    "itemNo": 7,
    "description": "NIPPLE 1.5\" P150 × 4-7/8\" PLAIN BOTH ENDS",
-   "designation": "NIP1.5-P150-PBE",
+   "designation": "NIP1.5x4.875-P150-PBE",
    "key": "NIP|1.5|P150|4.875|PBE",
    "NPS": 1.5,
    "cls": "P150",
@@ -368,7 +369,7 @@
    "kind": "nipple",
    "itemNo": 7,
    "description": "NIPPLE 1.5\" P150 × 4-7/8\" PLAIN BOTH ENDS",
-   "designation": "NIP1.5-P150-PBE",
+   "designation": "NIP1.5x4.875-P150-PBE",
    "key": "NIP|1.5|P150|4.875|PBE",
    "NPS": 1.5,
    "cls": "P150",
@@ -418,6 +419,7 @@
    "cls": "P150",
    "material": "Grade 36 forging",
    "ends": "SW×RF",
+   "flangeType": "SW",
    "weight": 8.1066,
    "spool": "1.5\"-P150-D-6202-SP02",
    "a": {
@@ -579,16 +581,17 @@
    "tag": "1.5\"-P150-D-6202/8:P1",
    "line": "1.5\"-P150-D-6202",
    "lineClass": "H150",
-   "kind": "plug",
+   "kind": "nipple",
    "itemNo": 13,
-   "description": "PLUG SOCKET-WELD 1.5\" P150",
-   "designation": "SWPLUG1.5-P150",
-   "key": "PLUG|1.5|P150|SW",
+   "description": "NIPPLE 1.5\" P150 × 4-5/8\" THREADED ONE END, PLAIN ONE END",
+   "designation": "NIP1.5x4.625-P150-TOE",
+   "key": "NIP|1.5|P150|4.625|TOE",
    "NPS": 1.5,
    "cls": "P150",
-   "material": "Grade 36 forging",
-   "ends": "SW",
-   "weight": 0.692,
+   "material": "Grade 35 pipe",
+   "ends": "BW×TH",
+   "cutLength": 4.625,
+   "weight": 1.1548,
    "a": {
     "E": 495.3012,
     "N": -330,
@@ -597,12 +600,105 @@
    "b": {
     "E": 495.3012,
     "N": -330,
-    "EL": 1304.3375
+    "EL": 1307.4375
    },
    "centre": {
     "E": 495.3012,
     "N": -330,
-    "EL": 1303.8875
+    "EL": 1305.4375
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-D-6202/8:P2",
+   "line": "1.5\"-P150-D-6202",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 14,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 1.5\" P150",
+   "designation": "GATE1.5-P150-TH",
+   "key": "VLV|GATE|1.5|P150|TH",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 33.4296,
+   "a": {
+    "E": 495.3012,
+    "N": -330,
+    "EL": 1307.4375
+   },
+   "b": {
+    "E": 495.3012,
+    "N": -330,
+    "EL": 1317.4375
+   },
+   "centre": {
+    "E": 495.3012,
+    "N": -330,
+    "EL": 1312.4375
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-D-6202/8:P3",
+   "line": "1.5\"-P150-D-6202",
+   "lineClass": "H150",
+   "kind": "plug",
+   "itemNo": 15,
+   "description": "PLUG HEX HEAD THREADED 1.5\" P150",
+   "designation": "PLUG1.5-P150-HEX",
+   "key": "PLUG|1.5|P150",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH",
+   "weight": 1.2832,
+   "a": {
+    "E": 495.3012,
+    "N": -330,
+    "EL": 1317.4375
+   },
+   "b": {
+    "E": 495.3012,
+    "N": -330,
+    "EL": 1318.5625
+   },
+   "centre": {
+    "E": 495.3012,
+    "N": -330,
+    "EL": 1318
    },
    "axis": {
     "E": 0,
@@ -611,7 +707,7 @@
    },
    "rules": [
     "SW-FIT-5",
-    "SW-SWT-1",
+    "SW-SWT-2",
     "SW-SWT-9"
    ]
   }
@@ -923,10 +1019,12 @@
   },
   {
    "items": [
-    "1.5\"-P150-D-6202/8:P1"
+    "1.5\"-P150-D-6202/8:P1",
+    "1.5\"-P150-D-6202/8:P2",
+    "1.5\"-P150-D-6202/8:P3"
    ],
    "shopWelds": [],
-   "weight": 0.692
+   "weight": 35.8676
   }
  ],
  "bom": [
@@ -1006,9 +1104,22 @@
   },
   {
    "itemNo": 13,
-   "description": "PLUG SOCKET-WELD 1.5\" P150",
+   "description": "NIPPLE 1.5\" P150 × 4-5/8\" THREADED ONE END, PLAIN ONE END",
    "qty": 1,
-   "weight": 0.692
+   "weight": 1.1548,
+   "length": null
+  },
+  {
+   "itemNo": 14,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 1.5\" P150",
+   "qty": 1,
+   "weight": 33.4296
+  },
+  {
+   "itemNo": 15,
+   "description": "PLUG HEX HEAD THREADED 1.5\" P150",
+   "qty": 1,
+   "weight": 1.2832
   }
  ],
  "nodes": [
@@ -1131,11 +1242,11 @@
   }
  ],
  "totals": {
-  "items": 14,
+  "items": 16,
   "welds": 8,
   "fieldWelds": 1,
   "supports": 0,
   "pipeLength": 0,
-  "weight": 70.5564
+  "weight": 105.7319
  }
 }

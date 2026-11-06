@@ -66,6 +66,7 @@
    "cls": "P150",
    "material": "Grade 36 forging",
    "ends": "SW×RF",
+   "flangeType": "SW",
    "weight": 4.5572,
    "spool": "3/4\"-P150-I-6223-SP01",
    "a": {
@@ -144,7 +145,7 @@
    "kind": "nipple",
    "itemNo": 4,
    "description": "NIPPLE 3/4\" P150 × 4-5/8\" PLAIN BOTH ENDS",
-   "designation": "NIP0.75-P150-PBE",
+   "designation": "NIP0.75x4.625-P150-PBE",
    "key": "NIP|0.75|P150|4.625|PBE",
    "NPS": 0.75,
    "cls": "P150",
@@ -239,7 +240,7 @@
    "kind": "nipple",
    "itemNo": 4,
    "description": "NIPPLE 3/4\" P150 × 4-5/8\" PLAIN BOTH ENDS",
-   "designation": "NIP0.75-P150-PBE",
+   "designation": "NIP0.75x4.625-P150-PBE",
    "key": "NIP|0.75|P150|4.625|PBE",
    "NPS": 0.75,
    "cls": "P150",
@@ -332,7 +333,7 @@
    "kind": "nipple",
    "itemNo": 4,
    "description": "NIPPLE 3/4\" P150 × 4-5/8\" PLAIN BOTH ENDS",
-   "designation": "NIP0.75-P150-PBE",
+   "designation": "NIP0.75x4.625-P150-PBE",
    "key": "NIP|0.75|P150|4.625|PBE",
    "NPS": 0.75,
    "cls": "P150",
@@ -382,6 +383,7 @@
    "cls": "P150",
    "material": "Grade 36 forging",
    "ends": "SW×RF",
+   "flangeType": "SW",
    "weight": 4.5572,
    "spool": "3/4\"-P150-I-6223-SP03",
    "a": {
@@ -546,7 +548,7 @@
    "kind": "nipple",
    "itemNo": 8,
    "description": "NIPPLE 3/4\" P150 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
-   "designation": "NIP0.75-P150-TOE",
+   "designation": "NIP0.75x4.375-P150-TOE",
    "key": "NIP|0.75|P150|4.375|TOE",
    "NPS": 0.75,
    "cls": "P150",
@@ -672,28 +674,122 @@
    "tag": "3/4\"-P150-I-6223/7:B1",
    "line": "3/4\"-P150-I-6223",
    "lineClass": "H150",
-   "kind": "plug",
-   "itemNo": 11,
-   "description": "PLUG SOCKET-WELD 3/4\" P150",
-   "designation": "SWPLUG0.75-P150",
-   "key": "PLUG|0.75|P150|SW",
+   "kind": "nipple",
+   "itemNo": 8,
+   "description": "NIPPLE 3/4\" P150 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
+   "designation": "NIP0.75x4.375-P150-TOE",
+   "key": "NIP|0.75|P150|4.375|TOE",
    "NPS": 0.75,
    "cls": "P150",
-   "material": "Grade 36 forging",
-   "ends": "SW",
-   "weight": 0.1005,
+   "material": "Grade 35 pipe",
+   "ends": "BW×TH",
+   "cutLength": 4.375,
+   "weight": 0.3616,
    "a": {
     "E": 3306.2375,
     "N": 70.5187,
     "EL": 1296
    },
    "b": {
-    "E": 3305.7875,
+    "E": 3302.2375,
     "N": 70.5187,
     "EL": 1296
    },
    "centre": {
-    "E": 3306.0125,
+    "E": 3304.2375,
+    "N": 70.5187,
+    "EL": 1296
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-I-6223/7:B2",
+   "line": "3/4\"-P150-I-6223",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 11,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P150",
+   "designation": "GATE0.75-P150-TH",
+   "key": "VLV|GATE|0.75|P150|TH",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 22.5538,
+   "a": {
+    "E": 3302.2375,
+    "N": 70.5187,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3293.8,
+    "N": 70.5187,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3298.0188,
+    "N": 70.5187,
+    "EL": 1296
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P150-I-6223/7:B3",
+   "line": "3/4\"-P150-I-6223",
+   "lineClass": "H150",
+   "kind": "plug",
+   "itemNo": 10,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P150",
+   "designation": "PLUG0.75-P150-HEX",
+   "key": "PLUG|0.75|P150",
+   "NPS": 0.75,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH",
+   "weight": 0.2566,
+   "a": {
+    "E": 3293.8,
+    "N": 70.5187,
+    "EL": 1296
+   },
+   "b": {
+    "E": 3293.125,
+    "N": 70.5187,
+    "EL": 1296
+   },
+   "centre": {
+    "E": 3293.4625,
     "N": 70.5187,
     "EL": 1296
    },
@@ -704,7 +800,7 @@
    },
    "rules": [
     "SW-FIT-5",
-    "SW-SWT-1",
+    "SW-SWT-2",
     "SW-SWT-9"
    ]
   }
@@ -1023,10 +1119,12 @@
     "3/4\"-P150-I-6223/7:A1",
     "3/4\"-P150-I-6223/7:A2",
     "3/4\"-P150-I-6223/7:A3",
-    "3/4\"-P150-I-6223/7:B1"
+    "3/4\"-P150-I-6223/7:B1",
+    "3/4\"-P150-I-6223/7:B2",
+    "3/4\"-P150-I-6223/7:B3"
    ],
    "shopWelds": [],
-   "weight": 4.6455
+   "weight": 27.7169
   }
  ],
  "bom": [
@@ -1076,8 +1174,8 @@
   {
    "itemNo": 8,
    "description": "NIPPLE 3/4\" P150 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
-   "qty": 1,
-   "weight": 0.3616,
+   "qty": 2,
+   "weight": 0.7232,
    "length": null
   },
   {
@@ -1089,14 +1187,14 @@
   {
    "itemNo": 10,
    "description": "PLUG HEX HEAD THREADED 3/4\" P150",
-   "qty": 1,
-   "weight": 0.2566
+   "qty": 2,
+   "weight": 0.5132
   },
   {
    "itemNo": 11,
-   "description": "PLUG SOCKET-WELD 3/4\" P150",
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P150",
    "qty": 1,
-   "weight": 0.1005
+   "weight": 22.5538
   }
  ],
  "nodes": [
@@ -1201,11 +1299,11 @@
   }
  ],
  "totals": {
-  "items": 16,
+  "items": 18,
   "welds": 8,
   "fieldWelds": 2,
   "supports": 0,
   "pipeLength": 0,
-  "weight": 59.942
+  "weight": 83.0134
  }
 }

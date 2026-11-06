@@ -12,14 +12,14 @@
   "from": "tap 3\"-P150-PA-2206",
   "to": "R-210-N4",
   "flow": "tap 3\"-P150-PA-2206 → R-210-N4",
-  "joint": "TH"
+  "joint": "BW"
  },
  "items": [
   {
    "tag": "1\"-P150-PA-3242/O1",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
-   "kind": "olet",
+   "kind": "outlet",
    "itemNo": 1,
    "description": "BRANCH OUTLET 3\" × 1\" P150 THREADED OUTLET",
    "designation": "THOLET3x1-P150",
@@ -32,18 +32,18 @@
    "weight": 0.3395,
    "spool": "1\"-P150-PA-3242-SP01",
    "a": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1542
    },
    "b": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1544.6875
    },
    "centre": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1543.3438
    },
    "axis": {
@@ -65,7 +65,7 @@
    "kind": "nipple",
    "itemNo": 2,
    "description": "NIPPLE 1\" P150 × 4-7/8\" THREADED BOTH ENDS",
-   "designation": "NIP1-P150-TBE",
+   "designation": "NIP1x4.875-P150-TBE",
    "key": "NIP|1|P150|4.875|TBE",
    "NPS": 1,
    "cls": "P150",
@@ -75,18 +75,18 @@
    "weight": 0.5725,
    "spool": "1\"-P150-PA-3242-SP01",
    "a": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1544.6875
    },
    "b": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1548.6875
    },
    "centre": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1546.6875
    },
    "axis": {
@@ -118,18 +118,18 @@
    "weight": 23.4632,
    "spool": "loose",
    "a": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1548.6875
    },
    "b": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1557.125
    },
    "centre": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1552.9063
    },
    "axis": {
@@ -161,7 +161,7 @@
    "kind": "nipple",
    "itemNo": 2,
    "description": "NIPPLE 1\" P150 × 4-7/8\" THREADED BOTH ENDS",
-   "designation": "NIP1-P150-TBE",
+   "designation": "NIP1x4.875-P150-TBE",
    "key": "NIP|1|P150|4.875|TBE",
    "NPS": 1,
    "cls": "P150",
@@ -171,18 +171,18 @@
    "weight": 0.5725,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1557.125
    },
    "b": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1561.125
    },
    "centre": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1559.125
    },
    "axis": {
@@ -215,18 +215,18 @@
    "weight": 0.4845,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1561.125
    },
    "b": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1564.375
    },
    "centre": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1562.75
    },
    "axis": {
@@ -257,18 +257,18 @@
    "weight": 0.9001,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1564.375
    },
    "b": {
-    "E": 2658,
-    "N": -34.375,
+    "E": 2700,
+    "N": -52.375,
     "EL": 1566
    },
    "centre": {
-    "E": 2658,
-    "N": -35.1875,
+    "E": 2700,
+    "N": -53.1875,
     "EL": 1565.1875
    },
    "axis": {
@@ -291,27 +291,27 @@
    "itemNo": 4,
    "description": "PIPE 1\" P150 THREADED CLASS, PLAIN ENDS",
    "designation": "PIPE1-P150-TH",
-   "key": "PIPE|1|P150|151.260|TH",
+   "key": "PIPE|1|P150|196.719|TH",
    "NPS": 1,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "TH×TH",
-   "cutLength": 151.2604,
-   "weight": 17.7648,
+   "cutLength": 196.7187,
+   "weight": 23.1037,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": -34.375,
+    "E": 2700,
+    "N": -52.375,
     "EL": 1566
    },
    "b": {
-    "E": 2658,
-    "N": 116.0104,
+    "E": 2700,
+    "N": 143.4687,
     "EL": 1566
    },
    "centre": {
-    "E": 2658,
-    "N": 40.8177,
+    "E": 2700,
+    "N": 45.5469,
     "EL": 1566
    },
    "axis": {
@@ -342,18 +342,18 @@
    "weight": 0.2652,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": 116.0104,
+    "E": 2700,
+    "N": 143.4687,
     "EL": 1566
    },
    "b": {
-    "E": 2658,
-    "N": 117.0729,
+    "E": 2700,
+    "N": 144.5312,
     "EL": 1566
    },
    "centre": {
-    "E": 2658,
-    "N": 116.5417,
+    "E": 2700,
+    "N": 144,
     "EL": 1566
    },
    "axis": {
@@ -376,27 +376,27 @@
    "itemNo": 4,
    "description": "PIPE 1\" P150 THREADED CLASS, PLAIN ENDS",
    "designation": "PIPE1-P150-TH",
-   "key": "PIPE|1|P150|150.729|TH",
+   "key": "PIPE|1|P150|196.719|TH",
    "NPS": 1,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "TH×TH",
-   "cutLength": 150.7292,
-   "weight": 17.7024,
+   "cutLength": 196.7188,
+   "weight": 23.1037,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": 117.0729,
+    "E": 2700,
+    "N": 144.5312,
     "EL": 1566
    },
    "b": {
-    "E": 2658,
-    "N": 266.9271,
+    "E": 2700,
+    "N": 340.375,
     "EL": 1566
    },
    "centre": {
-    "E": 2658,
-    "N": 192,
+    "E": 2700,
+    "N": 242.4531,
     "EL": 1566
    },
    "axis": {
@@ -412,92 +412,7 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/c9",
-   "line": "1\"-P150-PA-3242",
-   "lineClass": "G150",
-   "kind": "coupling",
-   "itemNo": 6,
-   "description": "COUPLING THREADED 1\" P150",
-   "designation": "THCPLG1-P150",
-   "key": "CPLG|1|P150|TH",
-   "NPS": 1,
-   "cls": "P150",
-   "material": "Grade 36 forging",
-   "ends": "TH×TH",
-   "weight": 0.2652,
-   "spool": "1\"-P150-PA-3242-SP02",
-   "a": {
-    "E": 2658,
-    "N": 266.9271,
-    "EL": 1566
-   },
-   "b": {
-    "E": 2658,
-    "N": 267.9896,
-    "EL": 1566
-   },
-   "centre": {
-    "E": 2658,
-    "N": 267.4584,
-    "EL": 1566
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FIT-5",
-    "SW-SWT-1",
-    "SW-SWT-2",
-    "SW-SWT-5"
-   ]
-  },
-  {
-   "tag": "1\"-P150-PA-3242/p10",
-   "line": "1\"-P150-PA-3242",
-   "lineClass": "G150",
-   "kind": "pipe",
-   "itemNo": 4,
-   "description": "PIPE 1\" P150 THREADED CLASS, PLAIN ENDS",
-   "designation": "PIPE1-P150-TH",
-   "key": "PIPE|1|P150|151.260|TH",
-   "NPS": 1,
-   "cls": "P150",
-   "material": "Grade 35 pipe",
-   "ends": "TH×TH",
-   "cutLength": 151.2604,
-   "weight": 17.7648,
-   "spool": "1\"-P150-PA-3242-SP02",
-   "a": {
-    "E": 2658,
-    "N": 267.9896,
-    "EL": 1566
-   },
-   "b": {
-    "E": 2658,
-    "N": 418.375,
-    "EL": 1566
-   },
-   "centre": {
-    "E": 2658,
-    "N": 343.1823,
-    "EL": 1566
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-PIPE-2",
-    "SW-PIPE-4",
-    "SW-PIPE-5",
-    "SW-SWT-2"
-   ]
-  },
-  {
-   "tag": "1\"-P150-PA-3242/el11",
+   "tag": "1\"-P150-PA-3242/el9",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "elbow",
@@ -512,18 +427,18 @@
    "weight": 0.9001,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": 418.375,
+    "E": 2700,
+    "N": 340.375,
     "EL": 1566
    },
    "b": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1564.375
    },
    "centre": {
-    "E": 2658,
-    "N": 419.1875,
+    "E": 2700,
+    "N": 341.1875,
     "EL": 1565.1875
    },
    "axis": {
@@ -539,7 +454,7 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/p12",
+   "tag": "1\"-P150-PA-3242/p10",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "pipe",
@@ -555,18 +470,18 @@
    "weight": 14.2953,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1564.375
    },
    "b": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1443.5313
    },
    "centre": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1503.9532
    },
    "axis": {
@@ -582,7 +497,7 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/c13",
+   "tag": "1\"-P150-PA-3242/c11",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "coupling",
@@ -597,18 +512,18 @@
    "weight": 0.2652,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1443.5313
    },
    "b": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1442.4688
    },
    "centre": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1443.0001
    },
    "axis": {
@@ -624,7 +539,7 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/p14",
+   "tag": "1\"-P150-PA-3242/p12",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "pipe",
@@ -640,24 +555,109 @@
    "weight": 14.2953,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1442.4688
    },
    "b": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1321.625
    },
    "centre": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 342,
     "EL": 1382.0469
    },
    "axis": {
     "E": 0,
     "N": 0,
     "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2"
+   ]
+  },
+  {
+   "tag": "1\"-P150-PA-3242/el13",
+   "line": "1\"-P150-PA-3242",
+   "lineClass": "G150",
+   "kind": "elbow",
+   "itemNo": 5,
+   "description": "ELBOW 90° THREADED 1\" P150",
+   "designation": "THEL90-1-P150",
+   "key": "SWEL|1|P150|90|TH",
+   "NPS": 1,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 0.9001,
+   "spool": "1\"-P150-PA-3242-SP02",
+   "a": {
+    "E": 2700,
+    "N": 342,
+    "EL": 1321.625
+   },
+   "b": {
+    "E": 2700,
+    "N": 343.625,
+    "EL": 1320
+   },
+   "centre": {
+    "E": 2700,
+    "N": 342.8125,
+    "EL": 1320.8125
+   },
+   "axis": {
+    "E": 0,
+    "N": 0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-2",
+    "SW-SWT-3"
+   ]
+  },
+  {
+   "tag": "1\"-P150-PA-3242/p14",
+   "line": "1\"-P150-PA-3242",
+   "lineClass": "G150",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 1\" P150 THREADED CLASS, PLAIN ENDS",
+   "designation": "PIPE1-P150-TH",
+   "key": "PIPE|1|P150|129.625|TH",
+   "NPS": 1,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "TH×TH",
+   "cutLength": 129.625,
+   "weight": 15.2239,
+   "spool": "1\"-P150-PA-3242-SP02",
+   "a": {
+    "E": 2700,
+    "N": 343.625,
+    "EL": 1320
+   },
+   "b": {
+    "E": 2700,
+    "N": 472.375,
+    "EL": 1320
+   },
+   "centre": {
+    "E": 2700,
+    "N": 408,
+    "EL": 1320
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
    },
    "rules": [
     "SW-PIPE-2",
@@ -682,24 +682,24 @@
    "weight": 0.9001,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": 420,
-    "EL": 1321.625
+    "E": 2700,
+    "N": 472.375,
+    "EL": 1320
    },
    "b": {
-    "E": 2658,
-    "N": 421.625,
+    "E": 2701.625,
+    "N": 474,
     "EL": 1320
    },
    "centre": {
-    "E": 2658,
-    "N": 420.8125,
-    "EL": 1320.8125
+    "E": 2700.8125,
+    "N": 473.1875,
+    "EL": 1320
    },
    "axis": {
-    "E": 0,
+    "E": 0.7071,
     "N": 0.7071,
-    "EL": -0.7071
+    "EL": 0
    },
    "rules": [
     "SW-FIT-5",
@@ -716,112 +716,27 @@
    "itemNo": 4,
    "description": "PIPE 1\" P150 THREADED CLASS, PLAIN ENDS",
    "designation": "PIPE1-P150-TH",
-   "key": "PIPE|1|P150|33.625|TH",
+   "key": "PIPE|1|P150|106.719|TH",
    "NPS": 1,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "TH×TH",
-   "cutLength": 33.625,
-   "weight": 3.9491,
+   "cutLength": 106.7188,
+   "weight": 12.5337,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2658,
-    "N": 421.625,
+    "E": 2701.625,
+    "N": 474,
     "EL": 1320
    },
    "b": {
-    "E": 2658,
-    "N": 454.375,
+    "E": 2807.4688,
+    "N": 474,
     "EL": 1320
    },
    "centre": {
-    "E": 2658,
-    "N": 438,
-    "EL": 1320
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-PIPE-2",
-    "SW-PIPE-4",
-    "SW-PIPE-5",
-    "SW-SWT-2"
-   ]
-  },
-  {
-   "tag": "1\"-P150-PA-3242/el17",
-   "line": "1\"-P150-PA-3242",
-   "lineClass": "G150",
-   "kind": "elbow",
-   "itemNo": 5,
-   "description": "ELBOW 90° THREADED 1\" P150",
-   "designation": "THEL90-1-P150",
-   "key": "SWEL|1|P150|90|TH",
-   "NPS": 1,
-   "cls": "P150",
-   "material": "Grade 36 forging",
-   "ends": "TH×TH",
-   "weight": 0.9001,
-   "spool": "1\"-P150-PA-3242-SP02",
-   "a": {
-    "E": 2658,
-    "N": 454.375,
-    "EL": 1320
-   },
-   "b": {
-    "E": 2659.625,
-    "N": 456,
-    "EL": 1320
-   },
-   "centre": {
-    "E": 2658.8125,
-    "N": 455.1875,
-    "EL": 1320
-   },
-   "axis": {
-    "E": 0.7071,
-    "N": 0.7071,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FIT-5",
-    "SW-SWT-1",
-    "SW-SWT-2",
-    "SW-SWT-3"
-   ]
-  },
-  {
-   "tag": "1\"-P150-PA-3242/p18",
-   "line": "1\"-P150-PA-3242",
-   "lineClass": "G150",
-   "kind": "pipe",
-   "itemNo": 4,
-   "description": "PIPE 1\" P150 THREADED CLASS, PLAIN ENDS",
-   "designation": "PIPE1-P150-TH",
-   "key": "PIPE|1|P150|127.719|TH",
-   "NPS": 1,
-   "cls": "P150",
-   "material": "Grade 35 pipe",
-   "ends": "TH×TH",
-   "cutLength": 127.7188,
-   "weight": 15,
-   "spool": "1\"-P150-PA-3242-SP02",
-   "a": {
-    "E": 2659.625,
-    "N": 456,
-    "EL": 1320
-   },
-   "b": {
-    "E": 2786.4688,
-    "N": 456,
-    "EL": 1320
-   },
-   "centre": {
-    "E": 2723.0469,
-    "N": 456,
+    "E": 2754.5469,
+    "N": 474,
     "EL": 1320
    },
    "axis": {
@@ -837,7 +752,7 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/c19",
+   "tag": "1\"-P150-PA-3242/c17",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "coupling",
@@ -852,18 +767,18 @@
    "weight": 0.2652,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2786.4688,
-    "N": 456,
+    "E": 2807.4688,
+    "N": 474,
     "EL": 1320
    },
    "b": {
-    "E": 2787.5313,
-    "N": 456,
+    "E": 2808.5313,
+    "N": 474,
     "EL": 1320
    },
    "centre": {
-    "E": 2787.0001,
-    "N": 456,
+    "E": 2808.0001,
+    "N": 474,
     "EL": 1320
    },
    "axis": {
@@ -879,34 +794,34 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/p20",
+   "tag": "1\"-P150-PA-3242/p18",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "pipe",
    "itemNo": 4,
    "description": "PIPE 1\" P150 THREADED CLASS, PLAIN ENDS",
    "designation": "PIPE1-P150-TH",
-   "key": "PIPE|1|P150|127.719|TH",
+   "key": "PIPE|1|P150|106.719|TH",
    "NPS": 1,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "TH×TH",
-   "cutLength": 127.7187,
-   "weight": 15,
+   "cutLength": 106.7187,
+   "weight": 12.5337,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
-    "E": 2787.5313,
-    "N": 456,
+    "E": 2808.5313,
+    "N": 474,
     "EL": 1320
    },
    "b": {
     "E": 2914.375,
-    "N": 456,
+    "N": 474,
     "EL": 1320
    },
    "centre": {
-    "E": 2850.9532,
-    "N": 456,
+    "E": 2861.4532,
+    "N": 474,
     "EL": 1320
    },
    "axis": {
@@ -922,7 +837,7 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/el21",
+   "tag": "1\"-P150-PA-3242/el19",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "elbow",
@@ -938,17 +853,17 @@
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
     "E": 2914.375,
-    "N": 456,
+    "N": 474,
     "EL": 1320
    },
    "b": {
     "E": 2916,
-    "N": 457.625,
+    "N": 475.625,
     "EL": 1320
    },
    "centre": {
     "E": 2915.1875,
-    "N": 456.8125,
+    "N": 474.8125,
     "EL": 1320
    },
    "axis": {
@@ -964,24 +879,24 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/p22",
+   "tag": "1\"-P150-PA-3242/p20",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "pipe",
    "itemNo": 4,
    "description": "PIPE 1\" P150 THREADED CLASS, PLAIN ENDS",
    "designation": "PIPE1-P150-TH",
-   "key": "PIPE|1|P150|51.625|TH",
+   "key": "PIPE|1|P150|33.625|TH",
    "NPS": 1,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "TH×TH",
-   "cutLength": 51.625,
-   "weight": 6.0631,
+   "cutLength": 33.625,
+   "weight": 3.9491,
    "spool": "1\"-P150-PA-3242-SP02",
    "a": {
     "E": 2916,
-    "N": 457.625,
+    "N": 475.625,
     "EL": 1320
    },
    "b": {
@@ -991,7 +906,7 @@
    },
    "centre": {
     "E": 2916,
-    "N": 483,
+    "N": 492,
     "EL": 1320
    },
    "axis": {
@@ -1007,7 +922,7 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/el23",
+   "tag": "1\"-P150-PA-3242/el21",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "elbow",
@@ -1049,7 +964,7 @@
    ]
   },
   {
-   "tag": "1\"-P150-PA-3242/p24",
+   "tag": "1\"-P150-PA-3242/p22",
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "kind": "pipe",
@@ -1098,7 +1013,7 @@
    "kind": "nipple",
    "itemNo": 2,
    "description": "NIPPLE 1\" P150 × 4-7/8\" THREADED BOTH ENDS",
-   "designation": "NIP1-P150-TBE",
+   "designation": "NIP1x4.875-P150-TBE",
    "key": "NIP|1|P150|4.875|TBE",
    "NPS": 1,
    "cls": "P150",
@@ -1193,7 +1108,7 @@
    "kind": "nipple",
    "itemNo": 2,
    "description": "NIPPLE 1\" P150 × 4-7/8\" THREADED BOTH ENDS",
-   "designation": "NIP1-P150-TBE",
+   "designation": "NIP1x4.875-P150-TBE",
    "key": "NIP|1|P150|4.875|TBE",
    "NPS": 1,
    "cls": "P150",
@@ -1284,7 +1199,7 @@
    "kind": "nipple",
    "itemNo": 9,
    "description": "NIPPLE 1\" P150 × 4\" THREADED ONE END, PLAIN ONE END",
-   "designation": "NIP1-P150-TOE",
+   "designation": "NIP1x4-P150-TOE",
    "key": "NIP|1|P150|4.000|TOE",
    "NPS": 1,
    "cls": "P150",
@@ -1374,6 +1289,7 @@
    "cls": "P150",
    "material": "Grade 36 forging",
    "ends": "BW×RF",
+   "flangeType": "WN",
    "weight": 4.9094,
    "spool": "1\"-P150-PA-3242-SP04",
    "a": {
@@ -1467,8 +1383,8 @@
     "1\"-P150-PA-3242-SP01"
    ],
    "at": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1543.5
    },
    "key": "FWR|0.5|0.1875",
@@ -1523,15 +1439,15 @@
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "type": "hanger",
-   "description": "HANGER FOR 1\" LINE (HANGER-1x60.5)",
-   "designation": "HANGER-1x60.5",
-   "key": "HANG|1|P150|60.48",
+   "description": "HANGER FOR 1\" LINE (HANGER-1x35.2)",
+   "designation": "HANGER-1x35.2",
+   "key": "HANG|1|P150|35.19",
    "material": "Grade 36",
-   "weight": 5.1759,
+   "weight": 4.3929,
    "spool": "loose",
    "at": {
-    "E": 2658,
-    "N": 78.8125,
+    "E": 2700,
+    "N": 45.8125,
     "EL": 1566
    },
    "rules": [
@@ -1543,15 +1459,15 @@
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "type": "hanger",
-   "description": "HANGER FOR 1\" LINE (HANGER-1x50.5)",
-   "designation": "HANGER-1x50.5",
-   "key": "HANG|1|P150|50.52",
+   "description": "HANGER FOR 1\" LINE (HANGER-1x27.5)",
+   "designation": "HANGER-1x27.5",
+   "key": "HANG|1|P150|27.51",
    "material": "Grade 36",
-   "weight": 4.8675,
+   "weight": 4.1551,
    "spool": "loose",
    "at": {
-    "E": 2658,
-    "N": 192,
+    "E": 2700,
+    "N": 138,
     "EL": 1566
    },
    "rules": [
@@ -1563,15 +1479,15 @@
    "line": "1\"-P150-PA-3242",
    "lineClass": "G150",
    "type": "hanger",
-   "description": "HANGER FOR 1\" LINE (HANGER-1x40.5)",
-   "designation": "HANGER-1x40.5",
-   "key": "HANG|1|P150|40.55",
+   "description": "HANGER FOR 1\" LINE (HANGER-1x19.1)",
+   "designation": "HANGER-1x19.1",
+   "key": "HANG|1|P150|19.08",
    "material": "Grade 36",
-   "weight": 4.5588,
+   "weight": 3.8941,
    "spool": "loose",
    "at": {
-    "E": 2658,
-    "N": 305.1875,
+    "E": 2700,
+    "N": 239.1875,
     "EL": 1566
    },
    "rules": [
@@ -1590,8 +1506,8 @@
    "weight": 112.0619,
    "spool": "loose",
    "at": {
-    "E": 2744.5417,
-    "N": 456,
+    "E": 2700,
+    "N": 408,
     "EL": 1320
    },
    "rules": [
@@ -1610,8 +1526,8 @@
    "weight": 112.0619,
    "spool": "loose",
    "at": {
-    "E": 2829.4583,
-    "N": 456,
+    "E": 2802,
+    "N": 474,
     "EL": 1320
    },
    "rules": [
@@ -1638,26 +1554,24 @@
     "1\"-P150-PA-3242/p6",
     "1\"-P150-PA-3242/c7",
     "1\"-P150-PA-3242/p8",
-    "1\"-P150-PA-3242/c9",
+    "1\"-P150-PA-3242/el9",
     "1\"-P150-PA-3242/p10",
-    "1\"-P150-PA-3242/el11",
+    "1\"-P150-PA-3242/c11",
     "1\"-P150-PA-3242/p12",
-    "1\"-P150-PA-3242/c13",
+    "1\"-P150-PA-3242/el13",
     "1\"-P150-PA-3242/p14",
     "1\"-P150-PA-3242/el15",
     "1\"-P150-PA-3242/p16",
-    "1\"-P150-PA-3242/el17",
+    "1\"-P150-PA-3242/c17",
     "1\"-P150-PA-3242/p18",
-    "1\"-P150-PA-3242/c19",
+    "1\"-P150-PA-3242/el19",
     "1\"-P150-PA-3242/p20",
     "1\"-P150-PA-3242/el21",
     "1\"-P150-PA-3242/p22",
-    "1\"-P150-PA-3242/el23",
-    "1\"-P150-PA-3242/p24",
     "1\"-P150-PA-3242/B8"
    ],
    "shopWelds": [],
-   "weight": 130.2893
+   "weight": 127.2276
   },
   {
    "id": "1\"-P150-PA-3242-SP03",
@@ -1702,9 +1616,9 @@
   {
    "itemNo": 4,
    "description": "PIPE 1\" P150 THREADED CLASS, PLAIN ENDS",
-   "qty": 11,
-   "length": 1044.5937,
-   "weight": 122.6828
+   "qty": 10,
+   "length": 1020.7812,
+   "weight": 119.8863
   },
   {
    "itemNo": 5,
@@ -1715,8 +1629,8 @@
   {
    "itemNo": 6,
    "description": "COUPLING THREADED 1\" P150",
-   "qty": 4,
-   "weight": 1.0609
+   "qty": 3,
+   "weight": 0.7957
   },
   {
    "itemNo": 7,
@@ -1759,8 +1673,8 @@
  "nodes": [
   {
    "at": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1542
    },
    "kind": "olet start",
@@ -1768,8 +1682,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1544.6875
    },
    "kind": "olet end",
@@ -1777,8 +1691,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1548.6875
    },
    "kind": "nipple end",
@@ -1786,8 +1700,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1557.125
    },
    "kind": "valve end",
@@ -1795,8 +1709,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1561.125
    },
    "kind": "nipple end",
@@ -1804,8 +1718,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1564.375
    },
    "kind": "pipe end",
@@ -1813,8 +1727,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": -36,
+    "E": 2700,
+    "N": -54,
     "EL": 1566
    },
    "kind": "elbow work point",
@@ -1822,8 +1736,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": -34.375,
+    "E": 2700,
+    "N": -52.375,
     "EL": 1566
    },
    "kind": "elbow end",
@@ -1831,8 +1745,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": 116.0104,
+    "E": 2700,
+    "N": 143.4687,
     "EL": 1566
    },
    "kind": "pipe end",
@@ -1840,8 +1754,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": 117.0729,
+    "E": 2700,
+    "N": 144.5312,
     "EL": 1566
    },
    "kind": "coupling end",
@@ -1849,8 +1763,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": 266.9271,
+    "E": 2700,
+    "N": 340.375,
     "EL": 1566
    },
    "kind": "pipe end",
@@ -1858,71 +1772,80 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": 267.9896,
+    "E": 2700,
+    "N": 342,
     "EL": 1566
    },
-   "kind": "coupling end",
-   "ref": "1\"-P150-PA-3242/c9"
+   "kind": "elbow work point",
+   "ref": "1\"-P150-PA-3242/el9"
   },
   {
    "at": {
-    "E": 2658,
-    "N": 418.375,
-    "EL": 1566
+    "E": 2700,
+    "N": 342,
+    "EL": 1564.375
+   },
+   "kind": "elbow end",
+   "ref": "1\"-P150-PA-3242/el9"
+  },
+  {
+   "at": {
+    "E": 2700,
+    "N": 342,
+    "EL": 1443.5313
    },
    "kind": "pipe end",
    "ref": "1\"-P150-PA-3242/p10"
   },
   {
    "at": {
-    "E": 2658,
-    "N": 420,
-    "EL": 1566
+    "E": 2700,
+    "N": 342,
+    "EL": 1442.4688
    },
-   "kind": "elbow work point",
-   "ref": "1\"-P150-PA-3242/el11"
+   "kind": "coupling end",
+   "ref": "1\"-P150-PA-3242/c11"
   },
   {
    "at": {
-    "E": 2658,
-    "N": 420,
-    "EL": 1564.375
-   },
-   "kind": "elbow end",
-   "ref": "1\"-P150-PA-3242/el11"
-  },
-  {
-   "at": {
-    "E": 2658,
-    "N": 420,
-    "EL": 1443.5313
+    "E": 2700,
+    "N": 342,
+    "EL": 1321.625
    },
    "kind": "pipe end",
    "ref": "1\"-P150-PA-3242/p12"
   },
   {
    "at": {
-    "E": 2658,
-    "N": 420,
-    "EL": 1442.4688
+    "E": 2700,
+    "N": 342,
+    "EL": 1320
    },
-   "kind": "coupling end",
-   "ref": "1\"-P150-PA-3242/c13"
+   "kind": "elbow work point",
+   "ref": "1\"-P150-PA-3242/el13"
   },
   {
    "at": {
-    "E": 2658,
-    "N": 420,
-    "EL": 1321.625
+    "E": 2700,
+    "N": 343.625,
+    "EL": 1320
+   },
+   "kind": "elbow end",
+   "ref": "1\"-P150-PA-3242/el13"
+  },
+  {
+   "at": {
+    "E": 2700,
+    "N": 472.375,
+    "EL": 1320
    },
    "kind": "pipe end",
    "ref": "1\"-P150-PA-3242/p14"
   },
   {
    "at": {
-    "E": 2658,
-    "N": 420,
+    "E": 2700,
+    "N": 474,
     "EL": 1320
    },
    "kind": "elbow work point",
@@ -1930,8 +1853,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": 421.625,
+    "E": 2701.625,
+    "N": 474,
     "EL": 1320
    },
    "kind": "elbow end",
@@ -1939,8 +1862,8 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": 454.375,
+    "E": 2807.4688,
+    "N": 474,
     "EL": 1320
    },
    "kind": "pipe end",
@@ -1948,26 +1871,17 @@
   },
   {
    "at": {
-    "E": 2658,
-    "N": 456,
+    "E": 2808.5313,
+    "N": 474,
     "EL": 1320
    },
-   "kind": "elbow work point",
-   "ref": "1\"-P150-PA-3242/el17"
+   "kind": "coupling end",
+   "ref": "1\"-P150-PA-3242/c17"
   },
   {
    "at": {
-    "E": 2659.625,
-    "N": 456,
-    "EL": 1320
-   },
-   "kind": "elbow end",
-   "ref": "1\"-P150-PA-3242/el17"
-  },
-  {
-   "at": {
-    "E": 2786.4688,
-    "N": 456,
+    "E": 2914.375,
+    "N": 474,
     "EL": 1320
    },
    "kind": "pipe end",
@@ -1975,39 +1889,21 @@
   },
   {
    "at": {
-    "E": 2787.5313,
-    "N": 456,
-    "EL": 1320
-   },
-   "kind": "coupling end",
-   "ref": "1\"-P150-PA-3242/c19"
-  },
-  {
-   "at": {
-    "E": 2914.375,
-    "N": 456,
-    "EL": 1320
-   },
-   "kind": "pipe end",
-   "ref": "1\"-P150-PA-3242/p20"
-  },
-  {
-   "at": {
     "E": 2916,
-    "N": 456,
+    "N": 474,
     "EL": 1320
    },
    "kind": "elbow work point",
-   "ref": "1\"-P150-PA-3242/el21"
+   "ref": "1\"-P150-PA-3242/el19"
   },
   {
    "at": {
     "E": 2916,
-    "N": 457.625,
+    "N": 475.625,
     "EL": 1320
    },
    "kind": "elbow end",
-   "ref": "1\"-P150-PA-3242/el21"
+   "ref": "1\"-P150-PA-3242/el19"
   },
   {
    "at": {
@@ -2016,7 +1912,7 @@
     "EL": 1320
    },
    "kind": "pipe end",
-   "ref": "1\"-P150-PA-3242/p22"
+   "ref": "1\"-P150-PA-3242/p20"
   },
   {
    "at": {
@@ -2025,7 +1921,7 @@
     "EL": 1320
    },
    "kind": "elbow work point",
-   "ref": "1\"-P150-PA-3242/el23"
+   "ref": "1\"-P150-PA-3242/el21"
   },
   {
    "at": {
@@ -2034,7 +1930,7 @@
     "EL": 1320
    },
    "kind": "elbow end",
-   "ref": "1\"-P150-PA-3242/el23"
+   "ref": "1\"-P150-PA-3242/el21"
   },
   {
    "at": {
@@ -2043,7 +1939,7 @@
     "EL": 1320
    },
    "kind": "pipe end",
-   "ref": "1\"-P150-PA-3242/p24"
+   "ref": "1\"-P150-PA-3242/p22"
   },
   {
    "at": {
@@ -2110,11 +2006,11 @@
   }
  ],
  "totals": {
-  "items": 33,
+  "items": 31,
   "welds": 2,
   "fieldWelds": 0,
   "supports": 5,
-  "pipeLength": 1044.5937,
-  "weight": 202.1494
+  "pipeLength": 1020.7812,
+  "weight": 199.0877
  }
 }

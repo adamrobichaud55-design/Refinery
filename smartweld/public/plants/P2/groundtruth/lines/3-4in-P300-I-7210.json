@@ -18,7 +18,7 @@
    "tag": "3/4\"-P300-I-7210/O1",
    "line": "3/4\"-P300-I-7210",
    "lineClass": "H300",
-   "kind": "olet",
+   "kind": "outlet",
    "itemNo": 1,
    "description": "BRANCH OUTLET 4\" × 3/4\" P300 SOCKET-WELD OUTLET",
    "designation": "SWOLET4x0.75-P300",
@@ -63,7 +63,7 @@
    "kind": "nipple",
    "itemNo": 2,
    "description": "NIPPLE 3/4\" P300 × 7-5/8\" PLAIN BOTH ENDS",
-   "designation": "NIP0.75-P300-PBE",
+   "designation": "NIP0.75x7.625-P300-PBE",
    "key": "NIP|0.75|P300|7.625|PBE",
    "NPS": 0.75,
    "cls": "P300",
@@ -158,7 +158,7 @@
    "kind": "nipple",
    "itemNo": 4,
    "description": "NIPPLE 3/4\" P300 × 4-5/8\" PLAIN BOTH ENDS",
-   "designation": "NIP0.75-P300-PBE",
+   "designation": "NIP0.75x4.625-P300-PBE",
    "key": "NIP|0.75|P300|4.625|PBE",
    "NPS": 0.75,
    "cls": "P300",
@@ -251,7 +251,7 @@
    "kind": "nipple",
    "itemNo": 4,
    "description": "NIPPLE 3/4\" P300 × 4-5/8\" PLAIN BOTH ENDS",
-   "designation": "NIP0.75-P300-PBE",
+   "designation": "NIP0.75x4.625-P300-PBE",
    "key": "NIP|0.75|P300|4.625|PBE",
    "NPS": 0.75,
    "cls": "P300",
@@ -301,6 +301,7 @@
    "cls": "P300",
    "material": "Grade 36 forging",
    "ends": "SW×RF",
+   "flangeType": "SW",
    "weight": 4.5572,
    "spool": "3/4\"-P300-I-7210-SP03",
    "a": {
@@ -465,7 +466,7 @@
    "kind": "nipple",
    "itemNo": 10,
    "description": "NIPPLE 3/4\" P300 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
-   "designation": "NIP0.75-P300-TOE",
+   "designation": "NIP0.75x4.375-P300-TOE",
    "key": "NIP|0.75|P300|4.375|TOE",
    "NPS": 0.75,
    "cls": "P300",
@@ -591,28 +592,122 @@
    "tag": "3/4\"-P300-I-7210/4:B1",
    "line": "3/4\"-P300-I-7210",
    "lineClass": "H300",
-   "kind": "plug",
-   "itemNo": 13,
-   "description": "PLUG SOCKET-WELD 3/4\" P300",
-   "designation": "SWPLUG0.75-P300",
-   "key": "PLUG|0.75|P300|SW",
+   "kind": "nipple",
+   "itemNo": 10,
+   "description": "NIPPLE 3/4\" P300 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
+   "designation": "NIP0.75x4.375-P300-TOE",
+   "key": "NIP|0.75|P300|4.375|TOE",
    "NPS": 0.75,
    "cls": "P300",
-   "material": "Grade 36 forging",
-   "ends": "SW",
-   "weight": 0.1005,
+   "material": "Grade 35 pipe",
+   "ends": "BW×TH",
+   "cutLength": 4.375,
+   "weight": 0.3616,
    "a": {
     "E": 437.7625,
     "N": -252,
     "EL": 1334.95
    },
    "b": {
-    "E": 438.2125,
+    "E": 441.7625,
     "N": -252,
     "EL": 1334.95
    },
    "centre": {
-    "E": 437.9875,
+    "E": 439.7625,
+    "N": -252,
+    "EL": 1334.95
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-4",
+    "SW-PIPE-5",
+    "SW-SWT-2",
+    "SW-SWT-8"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7210/4:B2",
+   "line": "3/4\"-P300-I-7210",
+   "lineClass": "H300",
+   "kind": "valve",
+   "itemNo": 13,
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P300",
+   "designation": "GATE0.75-P300-TH",
+   "key": "VLV|GATE|0.75|P300|TH",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "TH×TH",
+   "weight": 22.5538,
+   "a": {
+    "E": 441.7625,
+    "N": -252,
+    "EL": 1334.95
+   },
+   "b": {
+    "E": 450.2,
+    "N": -252,
+    "EL": 1334.95
+   },
+   "centre": {
+    "E": 445.9813,
+    "N": -252,
+    "EL": 1334.95
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-6",
+    "SW-SWT-1",
+    "SW-SWT-10",
+    "SW-SWT-2",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "3/4\"-P300-I-7210/4:B3",
+   "line": "3/4\"-P300-I-7210",
+   "lineClass": "H300",
+   "kind": "plug",
+   "itemNo": 12,
+   "description": "PLUG HEX HEAD THREADED 3/4\" P300",
+   "designation": "PLUG0.75-P300-HEX",
+   "key": "PLUG|0.75|P300",
+   "NPS": 0.75,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "TH",
+   "weight": 0.2566,
+   "a": {
+    "E": 450.2,
+    "N": -252,
+    "EL": 1334.95
+   },
+   "b": {
+    "E": 450.875,
+    "N": -252,
+    "EL": 1334.95
+   },
+   "centre": {
+    "E": 450.5375,
     "N": -252,
     "EL": 1334.95
    },
@@ -623,7 +718,7 @@
    },
    "rules": [
     "SW-FIT-5",
-    "SW-SWT-1",
+    "SW-SWT-2",
     "SW-SWT-9"
    ]
   }
@@ -976,10 +1071,12 @@
     "3/4\"-P300-I-7210/4:A1",
     "3/4\"-P300-I-7210/4:A2",
     "3/4\"-P300-I-7210/4:A3",
-    "3/4\"-P300-I-7210/4:B1"
+    "3/4\"-P300-I-7210/4:B1",
+    "3/4\"-P300-I-7210/4:B2",
+    "3/4\"-P300-I-7210/4:B3"
    ],
    "shopWelds": [],
-   "weight": 4.6455
+   "weight": 27.7169
   }
  ],
  "bom": [
@@ -1042,8 +1139,8 @@
   {
    "itemNo": 10,
    "description": "NIPPLE 3/4\" P300 × 4-3/8\" THREADED ONE END, PLAIN ONE END",
-   "qty": 1,
-   "weight": 0.3616,
+   "qty": 2,
+   "weight": 0.7232,
    "length": null
   },
   {
@@ -1055,14 +1152,14 @@
   {
    "itemNo": 12,
    "description": "PLUG HEX HEAD THREADED 3/4\" P300",
-   "qty": 1,
-   "weight": 0.2566
+   "qty": 2,
+   "weight": 0.5132
   },
   {
    "itemNo": 13,
-   "description": "PLUG SOCKET-WELD 3/4\" P300",
+   "description": "VALVE, GATE, WEDGE, OS&Y THREADED ENDS 3/4\" P300",
    "qty": 1,
-   "weight": 0.1005
+   "weight": 22.5538
   }
  ],
  "nodes": [
@@ -1158,11 +1255,11 @@
   }
  ],
  "totals": {
-  "items": 14,
+  "items": 16,
   "welds": 9,
   "fieldWelds": 2,
   "supports": 0,
   "pipeLength": 0,
-  "weight": 54.507
+  "weight": 77.5784
  }
 }

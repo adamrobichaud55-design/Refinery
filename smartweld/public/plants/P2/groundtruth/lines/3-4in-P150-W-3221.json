@@ -12,14 +12,14 @@
   "from": "tap 3\"-P150-W-2208",
   "to": "P-201A-F",
   "flow": "tap 3\"-P150-W-2208 → P-201A-F",
-  "joint": "TH"
+  "joint": "BW"
  },
  "items": [
   {
    "tag": "3/4\"-P150-W-3221/O1",
    "line": "3/4\"-P150-W-3221",
    "lineClass": "W150",
-   "kind": "olet",
+   "kind": "outlet",
    "itemNo": 1,
    "description": "BRANCH OUTLET 3\" × 3/4\" P150 THREADED OUTLET",
    "designation": "THOLET3x0.75-P150",
@@ -33,17 +33,17 @@
    "spool": "3/4\"-P150-W-3221-SP01",
    "a": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1542
    },
    "b": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1544.625
    },
    "centre": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1543.3125
    },
    "axis": {
@@ -65,7 +65,7 @@
    "kind": "nipple",
    "itemNo": 2,
    "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
-   "designation": "NIP0.75-P150-TBE",
+   "designation": "NIP0.75x4.75-P150-TBE",
    "key": "NIP|0.75|P150|4.750|TBE",
    "NPS": 0.75,
    "cls": "P150",
@@ -76,17 +76,17 @@
    "spool": "3/4\"-P150-W-3221-SP01",
    "a": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1544.625
    },
    "b": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1548.625
    },
    "centre": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1546.625
    },
    "axis": {
@@ -119,17 +119,17 @@
    "spool": "loose",
    "a": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1548.625
    },
    "b": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1557.0625
    },
    "centre": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1552.8438
    },
    "axis": {
@@ -161,7 +161,7 @@
    "kind": "nipple",
    "itemNo": 2,
    "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
-   "designation": "NIP0.75-P150-TBE",
+   "designation": "NIP0.75x4.75-P150-TBE",
    "key": "NIP|0.75|P150|4.750|TBE",
    "NPS": 0.75,
    "cls": "P150",
@@ -172,17 +172,17 @@
    "spool": "3/4\"-P150-W-3221-SP02",
    "a": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1557.0625
    },
    "b": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1561.0625
    },
    "centre": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1559.0625
    },
    "axis": {
@@ -216,17 +216,17 @@
    "spool": "3/4\"-P150-W-3221-SP02",
    "a": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1561.0625
    },
    "b": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1564.6875
    },
    "centre": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1562.875
    },
    "axis": {
@@ -258,17 +258,17 @@
    "spool": "3/4\"-P150-W-3221-SP02",
    "a": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1564.6875
    },
    "b": {
     "E": 2028,
-    "N": -49.3125,
+    "N": -73.3125,
     "EL": 1566
    },
    "centre": {
     "E": 2028,
-    "N": -48.6562,
+    "N": -72.6562,
     "EL": 1565.3438
    },
    "axis": {
@@ -291,17 +291,17 @@
    "itemNo": 4,
    "description": "PIPE 3/4\" P150 THREADED CLASS, PLAIN ENDS",
    "designation": "PIPE0.75-P150-TH",
-   "key": "PIPE|0.75|P150|166.125|TH",
+   "key": "PIPE|0.75|P150|142.125|TH",
    "NPS": 0.75,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "TH×TH",
-   "cutLength": 166.125,
-   "weight": 13.7297,
+   "cutLength": 142.125,
+   "weight": 11.7462,
    "spool": "3/4\"-P150-W-3221-SP02",
    "a": {
     "E": 2028,
-    "N": -49.3125,
+    "N": -73.3125,
     "EL": 1566
    },
    "b": {
@@ -311,7 +311,7 @@
    },
    "centre": {
     "E": 2028,
-    "N": -132,
+    "N": -144,
     "EL": 1566
    },
    "axis": {
@@ -758,7 +758,7 @@
    "kind": "nipple",
    "itemNo": 2,
    "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
-   "designation": "NIP0.75-P150-TBE",
+   "designation": "NIP0.75x4.75-P150-TBE",
    "key": "NIP|0.75|P150|4.750|TBE",
    "NPS": 0.75,
    "cls": "P150",
@@ -853,7 +853,7 @@
    "kind": "nipple",
    "itemNo": 2,
    "description": "NIPPLE 3/4\" P150 × 4-3/4\" THREADED BOTH ENDS",
-   "designation": "NIP0.75-P150-TBE",
+   "designation": "NIP0.75x4.75-P150-TBE",
    "key": "NIP|0.75|P150|4.750|TBE",
    "NPS": 0.75,
    "cls": "P150",
@@ -944,7 +944,7 @@
    "kind": "nipple",
    "itemNo": 9,
    "description": "NIPPLE 3/4\" P150 × 4\" THREADED ONE END, PLAIN ONE END",
-   "designation": "NIP0.75-P150-TOE",
+   "designation": "NIP0.75x4-P150-TOE",
    "key": "NIP|0.75|P150|4.000|TOE",
    "NPS": 0.75,
    "cls": "P150",
@@ -1034,6 +1034,7 @@
    "cls": "P150",
    "material": "Grade 36 forging",
    "ends": "BW×RF",
+   "flangeType": "WN",
    "weight": 4.7577,
    "spool": "3/4\"-P150-W-3221-SP04",
    "a": {
@@ -1123,17 +1124,17 @@
    "a": {
     "E": 2034,
     "N": -216,
-    "EL": 1317.5
+    "EL": 1347.5
    },
    "b": {
     "E": 2034,
     "N": -216,
-    "EL": 1322
+    "EL": 1352
    },
    "centre": {
     "E": 2034,
     "N": -216,
-    "EL": 1319.75
+    "EL": 1349.75
    },
    "axis": {
     "E": 0,
@@ -1167,7 +1168,7 @@
    ],
    "at": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1543.5
    },
    "key": "FWR|0.375|0.1875",
@@ -1230,7 +1231,7 @@
    "spool": "loose",
    "at": {
     "E": 2028,
-    "N": -132,
+    "N": -144,
     "EL": 1566
    },
    "rules": [
@@ -1268,7 +1269,7 @@
     "3/4\"-P150-W-3221/B8"
    ],
    "shopWelds": [],
-   "weight": 47.0179
+   "weight": 45.0344
   },
   {
    "id": "3/4\"-P150-W-3221-SP03",
@@ -1321,8 +1322,8 @@
    "itemNo": 4,
    "description": "PIPE 3/4\" P150 THREADED CLASS, PLAIN ENDS",
    "qty": 7,
-   "length": 524.2812,
-   "weight": 43.3302
+   "length": 500.2812,
+   "weight": 41.3467
   },
   {
    "itemNo": 5,
@@ -1384,7 +1385,7 @@
   {
    "at": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1542
    },
    "kind": "olet start",
@@ -1393,7 +1394,7 @@
   {
    "at": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1544.625
    },
    "kind": "olet end",
@@ -1402,7 +1403,7 @@
   {
    "at": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1548.625
    },
    "kind": "nipple end",
@@ -1411,7 +1412,7 @@
   {
    "at": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1557.0625
    },
    "kind": "valve end",
@@ -1420,7 +1421,7 @@
   {
    "at": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1561.0625
    },
    "kind": "nipple end",
@@ -1429,7 +1430,7 @@
   {
    "at": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1564.6875
    },
    "kind": "pipe end",
@@ -1438,7 +1439,7 @@
   {
    "at": {
     "E": 2028,
-    "N": -48,
+    "N": -72,
     "EL": 1566
    },
    "kind": "elbow work point",
@@ -1447,7 +1448,7 @@
   {
    "at": {
     "E": 2028,
-    "N": -49.3125,
+    "N": -73.3125,
     "EL": 1566
    },
    "kind": "elbow end",
@@ -1657,7 +1658,7 @@
   "welds": 2,
   "fieldWelds": 0,
   "supports": 1,
-  "pipeLength": 524.2812,
-  "weight": 117.7657
+  "pipeLength": 500.2812,
+  "weight": 115.7822
  }
 }

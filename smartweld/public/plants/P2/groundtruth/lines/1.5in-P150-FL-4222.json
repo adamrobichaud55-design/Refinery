@@ -67,6 +67,7 @@
    "cls": "P150",
    "material": "Grade 36 forging",
    "ends": "SW×RF",
+   "flangeType": "SW",
    "weight": 5.1975,
    "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
@@ -145,7 +146,7 @@
    "kind": "nipple",
    "itemNo": 4,
    "description": "NIPPLE 1.25\" P150 × 4-3/4\" PLAIN BOTH ENDS",
-   "designation": "NIP1.25-P150-PBE",
+   "designation": "NIP1.25x4.75-P150-PBE",
    "key": "NIP|1.25|P150|4.750|PBE",
    "NPS": 1.25,
    "cls": "P150",
@@ -232,14 +233,14 @@
    "itemNo": 6,
    "description": "PIPE 1.5\" P150 PLAIN ENDS",
    "designation": "PIPE1.5-P150",
-   "key": "PIPE|1.5|P150|5.357",
+   "key": "PIPE|1.5|P150|56.522",
    "NPS": 1.5,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "SW×SW",
-   "cutLength": 5.3568,
-   "weight": 0.8202,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "cutLength": 56.5221,
+   "weight": 8.6543,
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
     "N": -318.6693,
@@ -247,12 +248,12 @@
    },
    "b": {
     "E": 1458,
-    "N": -314.1875,
+    "N": -263.0222,
     "EL": 1308
    },
    "centre": {
     "E": 1458,
-    "N": -316.4284,
+    "N": -290.8457,
     "EL": 1308
    },
    "axis": {
@@ -268,11 +269,95 @@
    ]
   },
   {
-   "tag": "1.5\"-P150-FL-4222/el7",
+   "tag": "1.5\"-P150-FL-4222/c7",
+   "line": "1.5\"-P150-FL-4222",
+   "lineClass": "F150",
+   "kind": "coupling",
+   "itemNo": 7,
+   "description": "COUPLING SOCKET-WELD 1.5\" P150",
+   "designation": "SWCPLG1.5-P150",
+   "key": "CPLG|1.5|P150|SW",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "SW×SW",
+   "weight": 0.3195,
+   "spool": "1.5\"-P150-FL-4222-SP01",
+   "a": {
+    "E": 1458,
+    "N": -263.0222,
+    "EL": 1308
+   },
+   "b": {
+    "E": 1458,
+    "N": -261.8347,
+    "EL": 1308
+   },
+   "centre": {
+    "E": 1458,
+    "N": -262.4284,
+    "EL": 1308
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-5"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-FL-4222/p8",
+   "line": "1.5\"-P150-FL-4222",
+   "lineClass": "F150",
+   "kind": "pipe",
+   "itemNo": 6,
+   "description": "PIPE 1.5\" P150 PLAIN ENDS",
+   "designation": "PIPE1.5-P150",
+   "key": "PIPE|1.5|P150|56.522",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "SW×SW",
+   "cutLength": 56.5222,
+   "weight": 8.6543,
+   "spool": "1.5\"-P150-FL-4222-SP01",
+   "a": {
+    "E": 1458,
+    "N": -261.8347,
+    "EL": 1308
+   },
+   "b": {
+    "E": 1458,
+    "N": -206.1875,
+    "EL": 1308
+   },
+   "centre": {
+    "E": 1458,
+    "N": -234.0111,
+    "EL": 1308
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-FL-4222/el9",
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
    "kind": "elbow",
-   "itemNo": 7,
+   "itemNo": 8,
    "description": "ELBOW 90° SOCKET-WELD 1.5\" P150",
    "designation": "SWEL90-1.5-P150",
    "key": "SWEL|1.5|P150|90|SW",
@@ -281,20 +366,20 @@
    "material": "Grade 36 forging",
    "ends": "SW×SW",
    "weight": 1.8582,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -314.1875,
+    "N": -206.1875,
     "EL": 1308
    },
    "b": {
     "E": 1458,
-    "N": -312,
+    "N": -204,
     "EL": 1310.1875
    },
    "centre": {
     "E": 1458,
-    "N": -313.0937,
+    "N": -205.0937,
     "EL": 1309.0938
    },
    "axis": {
@@ -309,7 +394,7 @@
    ]
   },
   {
-   "tag": "1.5\"-P150-FL-4222/p8",
+   "tag": "1.5\"-P150-FL-4222/p10",
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
    "kind": "pipe",
@@ -323,105 +408,21 @@
    "ends": "SW×SW",
    "cutLength": 84.8229,
    "weight": 12.9876,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -312,
+    "N": -204,
     "EL": 1310.1875
    },
    "b": {
     "E": 1458,
-    "N": -312,
+    "N": -204,
     "EL": 1394.1354
    },
    "centre": {
     "E": 1458,
-    "N": -312,
+    "N": -204,
     "EL": 1352.1615
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-PIPE-2",
-    "SW-PIPE-3",
-    "SW-PIPE-4",
-    "SW-PIPE-5"
-   ]
-  },
-  {
-   "tag": "1.5\"-P150-FL-4222/c9",
-   "line": "1.5\"-P150-FL-4222",
-   "lineClass": "F150",
-   "kind": "coupling",
-   "itemNo": 8,
-   "description": "COUPLING SOCKET-WELD 1.5\" P150",
-   "designation": "SWCPLG1.5-P150",
-   "key": "CPLG|1.5|P150|SW",
-   "NPS": 1.5,
-   "cls": "P150",
-   "material": "Grade 36 forging",
-   "ends": "SW×SW",
-   "weight": 0.3195,
-   "spool": "1.5\"-P150-FL-4222-SP02",
-   "a": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1394.1354
-   },
-   "b": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1395.3229
-   },
-   "centre": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1394.7292
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FIT-5",
-    "SW-SWT-1",
-    "SW-SWT-5"
-   ]
-  },
-  {
-   "tag": "1.5\"-P150-FL-4222/p10",
-   "line": "1.5\"-P150-FL-4222",
-   "lineClass": "F150",
-   "kind": "pipe",
-   "itemNo": 6,
-   "description": "PIPE 1.5\" P150 PLAIN ENDS",
-   "designation": "PIPE1.5-P150",
-   "key": "PIPE|1.5|P150|84.229",
-   "NPS": 1.5,
-   "cls": "P150",
-   "material": "Grade 35 pipe",
-   "ends": "SW×SW",
-   "cutLength": 84.2292,
-   "weight": 12.8966,
-   "spool": "1.5\"-P150-FL-4222-SP02",
-   "a": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1395.3229
-   },
-   "b": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1478.6771
-   },
-   "centre": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1437
    },
    "axis": {
     "E": 0,
@@ -440,7 +441,7 @@
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
    "kind": "coupling",
-   "itemNo": 8,
+   "itemNo": 7,
    "description": "COUPLING SOCKET-WELD 1.5\" P150",
    "designation": "SWCPLG1.5-P150",
    "key": "CPLG|1.5|P150|SW",
@@ -449,21 +450,21 @@
    "material": "Grade 36 forging",
    "ends": "SW×SW",
    "weight": 0.3195,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -312,
-    "EL": 1478.6771
+    "N": -204,
+    "EL": 1394.1354
    },
    "b": {
     "E": 1458,
-    "N": -312,
-    "EL": 1479.8646
+    "N": -204,
+    "EL": 1395.3229
    },
    "centre": {
     "E": 1458,
-    "N": -312,
-    "EL": 1479.2708
+    "N": -204,
+    "EL": 1394.7292
    },
    "axis": {
     "E": 0,
@@ -484,6 +485,90 @@
    "itemNo": 6,
    "description": "PIPE 1.5\" P150 PLAIN ENDS",
    "designation": "PIPE1.5-P150",
+   "key": "PIPE|1.5|P150|84.229",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "SW×SW",
+   "cutLength": 84.2292,
+   "weight": 12.8966,
+   "spool": "1.5\"-P150-FL-4222-SP01",
+   "a": {
+    "E": 1458,
+    "N": -204,
+    "EL": 1395.3229
+   },
+   "b": {
+    "E": 1458,
+    "N": -204,
+    "EL": 1478.6771
+   },
+   "centre": {
+    "E": 1458,
+    "N": -204,
+    "EL": 1437
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-FL-4222/c13",
+   "line": "1.5\"-P150-FL-4222",
+   "lineClass": "F150",
+   "kind": "coupling",
+   "itemNo": 7,
+   "description": "COUPLING SOCKET-WELD 1.5\" P150",
+   "designation": "SWCPLG1.5-P150",
+   "key": "CPLG|1.5|P150|SW",
+   "NPS": 1.5,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "SW×SW",
+   "weight": 0.3195,
+   "spool": "1.5\"-P150-FL-4222-SP01",
+   "a": {
+    "E": 1458,
+    "N": -204,
+    "EL": 1478.6771
+   },
+   "b": {
+    "E": 1458,
+    "N": -204,
+    "EL": 1479.8646
+   },
+   "centre": {
+    "E": 1458,
+    "N": -204,
+    "EL": 1479.2708
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-5"
+   ]
+  },
+  {
+   "tag": "1.5\"-P150-FL-4222/p14",
+   "line": "1.5\"-P150-FL-4222",
+   "lineClass": "F150",
+   "kind": "pipe",
+   "itemNo": 6,
+   "description": "PIPE 1.5\" P150 PLAIN ENDS",
+   "designation": "PIPE1.5-P150",
    "key": "PIPE|1.5|P150|84.823",
    "NPS": 1.5,
    "cls": "P150",
@@ -491,20 +576,20 @@
    "ends": "SW×SW",
    "cutLength": 84.8229,
    "weight": 12.9876,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -312,
+    "N": -204,
     "EL": 1479.8646
    },
    "b": {
     "E": 1458,
-    "N": -312,
+    "N": -204,
     "EL": 1563.8125
    },
    "centre": {
     "E": 1458,
-    "N": -312,
+    "N": -204,
     "EL": 1521.8386
    },
    "axis": {
@@ -520,11 +605,11 @@
    ]
   },
   {
-   "tag": "1.5\"-P150-FL-4222/el13",
+   "tag": "1.5\"-P150-FL-4222/el15",
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
    "kind": "elbow",
-   "itemNo": 7,
+   "itemNo": 8,
    "description": "ELBOW 90° SOCKET-WELD 1.5\" P150",
    "designation": "SWEL90-1.5-P150",
    "key": "SWEL|1.5|P150|90|SW",
@@ -533,20 +618,20 @@
    "material": "Grade 36 forging",
    "ends": "SW×SW",
    "weight": 1.8582,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -312,
+    "N": -204,
     "EL": 1563.8125
    },
    "b": {
     "E": 1458,
-    "N": -309.8125,
+    "N": -201.8125,
     "EL": 1566
    },
    "centre": {
     "E": 1458,
-    "N": -310.9062,
+    "N": -202.9062,
     "EL": 1564.9063
    },
    "axis": {
@@ -561,90 +646,6 @@
    ]
   },
   {
-   "tag": "1.5\"-P150-FL-4222/p14",
-   "line": "1.5\"-P150-FL-4222",
-   "lineClass": "F150",
-   "kind": "pipe",
-   "itemNo": 6,
-   "description": "PIPE 1.5\" P150 PLAIN ENDS",
-   "designation": "PIPE1.5-P150",
-   "key": "PIPE|1.5|P150|90.688",
-   "NPS": 1.5,
-   "cls": "P150",
-   "material": "Grade 35 pipe",
-   "ends": "SW×SW",
-   "cutLength": 90.6875,
-   "weight": 13.8856,
-   "spool": "1.5\"-P150-FL-4222-SP02",
-   "a": {
-    "E": 1458,
-    "N": -309.8125,
-    "EL": 1566
-   },
-   "b": {
-    "E": 1458,
-    "N": -220,
-    "EL": 1566
-   },
-   "centre": {
-    "E": 1458,
-    "N": -264.9062,
-    "EL": 1566
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-PIPE-2",
-    "SW-PIPE-3",
-    "SW-PIPE-4",
-    "SW-PIPE-5"
-   ]
-  },
-  {
-   "tag": "1.5\"-P150-FL-4222/c15",
-   "line": "1.5\"-P150-FL-4222",
-   "lineClass": "F150",
-   "kind": "coupling",
-   "itemNo": 8,
-   "description": "COUPLING SOCKET-WELD 1.5\" P150",
-   "designation": "SWCPLG1.5-P150",
-   "key": "CPLG|1.5|P150|SW",
-   "NPS": 1.5,
-   "cls": "P150",
-   "material": "Grade 36 forging",
-   "ends": "SW×SW",
-   "weight": 0.3195,
-   "spool": "1.5\"-P150-FL-4222-SP02",
-   "a": {
-    "E": 1458,
-    "N": -220,
-    "EL": 1566
-   },
-   "b": {
-    "E": 1458,
-    "N": -218.8125,
-    "EL": 1566
-   },
-   "centre": {
-    "E": 1458,
-    "N": -219.4062,
-    "EL": 1566
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FIT-5",
-    "SW-SWT-1",
-    "SW-SWT-5"
-   ]
-  },
-  {
    "tag": "1.5\"-P150-FL-4222/p16",
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
@@ -652,27 +653,27 @@
    "itemNo": 6,
    "description": "PIPE 1.5\" P150 PLAIN ENDS",
    "designation": "PIPE1.5-P150",
-   "key": "PIPE|1.5|P150|90.094",
+   "key": "PIPE|1.5|P150|92.823",
    "NPS": 1.5,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "SW×SW",
-   "cutLength": 90.0937,
-   "weight": 13.7947,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "cutLength": 92.8229,
+   "weight": 14.2125,
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -218.8125,
+    "N": -201.8125,
     "EL": 1566
    },
    "b": {
     "E": 1458,
-    "N": -129.5938,
+    "N": -109.8646,
     "EL": 1566
    },
    "centre": {
     "E": 1458,
-    "N": -174.2031,
+    "N": -155.8385,
     "EL": 1566
    },
    "axis": {
@@ -692,7 +693,7 @@
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
    "kind": "coupling",
-   "itemNo": 8,
+   "itemNo": 7,
    "description": "COUPLING SOCKET-WELD 1.5\" P150",
    "designation": "SWCPLG1.5-P150",
    "key": "CPLG|1.5|P150|SW",
@@ -701,20 +702,20 @@
    "material": "Grade 36 forging",
    "ends": "SW×SW",
    "weight": 0.3195,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -129.5938,
+    "N": -109.8646,
     "EL": 1566
    },
    "b": {
     "E": 1458,
-    "N": -128.4063,
+    "N": -108.6771,
     "EL": 1566
    },
    "centre": {
     "E": 1458,
-    "N": -129,
+    "N": -109.2708,
     "EL": 1566
    },
    "axis": {
@@ -736,27 +737,27 @@
    "itemNo": 6,
    "description": "PIPE 1.5\" P150 PLAIN ENDS",
    "designation": "PIPE1.5-P150",
-   "key": "PIPE|1.5|P150|90.094",
+   "key": "PIPE|1.5|P150|92.229",
    "NPS": 1.5,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "SW×SW",
-   "cutLength": 90.0938,
-   "weight": 13.7947,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "cutLength": 92.2292,
+   "weight": 14.1216,
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -128.4063,
+    "N": -108.6771,
     "EL": 1566
    },
    "b": {
     "E": 1458,
-    "N": -39.1875,
+    "N": -17.3229,
     "EL": 1566
    },
    "centre": {
     "E": 1458,
-    "N": -83.7969,
+    "N": -63,
     "EL": 1566
    },
    "axis": {
@@ -776,7 +777,7 @@
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
    "kind": "coupling",
-   "itemNo": 8,
+   "itemNo": 7,
    "description": "COUPLING SOCKET-WELD 1.5\" P150",
    "designation": "SWCPLG1.5-P150",
    "key": "CPLG|1.5|P150|SW",
@@ -785,20 +786,20 @@
    "material": "Grade 36 forging",
    "ends": "SW×SW",
    "weight": 0.3195,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -39.1875,
+    "N": -17.3229,
     "EL": 1566
    },
    "b": {
     "E": 1458,
-    "N": -38,
+    "N": -16.1354,
     "EL": 1566
    },
    "centre": {
     "E": 1458,
-    "N": -38.5937,
+    "N": -16.7291,
     "EL": 1566
    },
    "axis": {
@@ -820,27 +821,27 @@
    "itemNo": 6,
    "description": "PIPE 1.5\" P150 PLAIN ENDS",
    "designation": "PIPE1.5-P150",
-   "key": "PIPE|1.5|P150|90.688",
+   "key": "PIPE|1.5|P150|92.823",
    "NPS": 1.5,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "SW×SW",
-   "cutLength": 90.6875,
-   "weight": 13.8856,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "cutLength": 92.8229,
+   "weight": 14.2125,
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": -38,
+    "N": -16.1354,
     "EL": 1566
    },
    "b": {
     "E": 1458,
-    "N": 51.8125,
+    "N": 75.8125,
     "EL": 1566
    },
    "centre": {
     "E": 1458,
-    "N": 6.9063,
+    "N": 29.8386,
     "EL": 1566
    },
    "axis": {
@@ -860,7 +861,7 @@
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
    "kind": "elbow",
-   "itemNo": 7,
+   "itemNo": 8,
    "description": "ELBOW 90° SOCKET-WELD 1.5\" P150",
    "designation": "SWEL90-1.5-P150",
    "key": "SWEL|1.5|P150|90|SW",
@@ -869,20 +870,20 @@
    "material": "Grade 36 forging",
    "ends": "SW×SW",
    "weight": 1.8582,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": 51.8125,
+    "N": 75.8125,
     "EL": 1566
    },
    "b": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1563.8125
    },
    "centre": {
     "E": 1458,
-    "N": 52.9063,
+    "N": 76.9063,
     "EL": 1564.9063
    },
    "axis": {
@@ -911,20 +912,20 @@
    "ends": "SW×SW",
    "cutLength": 11.4375,
    "weight": 1.7513,
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1563.8125
    },
    "b": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1553.25
    },
    "centre": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1558.5313
    },
    "axis": {
@@ -943,7 +944,7 @@
    "tag": "1.5\"-P150-FL-4222/O2",
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
-   "kind": "olet",
+   "kind": "outlet",
    "itemNo": 9,
    "description": "BRANCH OUTLET 8\" × 1.5\" P150 SOCKET-WELD OUTLET",
    "designation": "SWOLET8x1.5-P150",
@@ -954,20 +955,20 @@
    "material": "Grade 36 forging",
    "ends": "FW×SW",
    "weight": 0.4939,
-   "spool": "1.5\"-P150-FL-4222-SP03",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "a": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1553.25
    },
    "b": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1548
    },
    "centre": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1550.625
    },
    "axis": {
@@ -979,45 +980,6 @@
     "SW-FIT-5",
     "SW-SWT-1",
     "SW-SWT-6"
-   ]
-  },
-  {
-   "tag": "1.5\"-P150-FL-4222/PEN1",
-   "line": "1.5\"-P150-FL-4222",
-   "lineClass": "F150",
-   "kind": "penetration",
-   "itemNo": 10,
-   "description": "FLOOR SLEEVE 3\" FOR 1.5\" LINE, WITH COLLAR",
-   "designation": "FSLV3",
-   "key": "FSLV|1.5|P150",
-   "NPS": 1.5,
-   "cls": "P150",
-   "material": "Grade 36",
-   "ends": "—",
-   "weight": 3.9985,
-   "a": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1461.5
-   },
-   "b": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1466
-   },
-   "centre": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1463.75
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FIT-5",
-    "SW-PEN-1"
    ]
   }
  ],
@@ -1032,17 +994,17 @@
    "cls": "P150",
    "joins": [
     "8\"-P150-FL-2209/run",
-    "1.5\"-P150-FL-4222/p22"
+    "1.5\"-P150-FL-4222/O2"
    ],
    "shopField": "shop",
    "spool": "parent 8\"-P150-FL-2209/run",
    "spools": [
     "parent 8\"-P150-FL-2209/run",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1552
    },
    "key": "FWR|0.75|0.1875",
@@ -1136,11 +1098,11 @@
     "1.5\"-P150-FL-4222/A5",
     "1.5\"-P150-FL-4222/p6"
    ],
-   "shopField": "field",
-   "spool": "field",
+   "shopField": "shop",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
     "1.5\"-P150-FL-4222-SP01",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
@@ -1168,17 +1130,17 @@
    "cls": "P150",
    "joins": [
     "1.5\"-P150-FL-4222/p6",
-    "1.5\"-P150-FL-4222/el7"
+    "1.5\"-P150-FL-4222/c7"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -314.1875,
+    "N": -263.0222,
     "EL": 1308
    },
    "key": "SWW|1.5|P150",
@@ -1201,19 +1163,19 @@
    "NPS": 1.5,
    "cls": "P150",
    "joins": [
-    "1.5\"-P150-FL-4222/el7",
+    "1.5\"-P150-FL-4222/c7",
     "1.5\"-P150-FL-4222/p8"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1310.1875
+    "N": -261.8347,
+    "EL": 1308
    },
    "key": "SWW|1.5|P150",
    "weight": 0.0264,
@@ -1236,18 +1198,18 @@
    "cls": "P150",
    "joins": [
     "1.5\"-P150-FL-4222/p8",
-    "1.5\"-P150-FL-4222/c9"
+    "1.5\"-P150-FL-4222/el9"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1394.1354
+    "N": -206.1875,
+    "EL": 1308
    },
    "key": "SWW|1.5|P150",
    "weight": 0.0264,
@@ -1269,19 +1231,19 @@
    "NPS": 1.5,
    "cls": "P150",
    "joins": [
-    "1.5\"-P150-FL-4222/c9",
+    "1.5\"-P150-FL-4222/el9",
     "1.5\"-P150-FL-4222/p10"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1395.3229
+    "N": -204,
+    "EL": 1310.1875
    },
    "key": "SWW|1.5|P150",
    "weight": 0.0264,
@@ -1307,15 +1269,15 @@
     "1.5\"-P150-FL-4222/c11"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1478.6771
+    "N": -204,
+    "EL": 1394.1354
    },
    "key": "SWW|1.5|P150",
    "weight": 0.0264,
@@ -1341,15 +1303,15 @@
     "1.5\"-P150-FL-4222/p12"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1479.8646
+    "N": -204,
+    "EL": 1395.3229
    },
    "key": "SWW|1.5|P150",
    "weight": 0.0264,
@@ -1372,18 +1334,18 @@
    "cls": "P150",
    "joins": [
     "1.5\"-P150-FL-4222/p12",
-    "1.5\"-P150-FL-4222/el13"
+    "1.5\"-P150-FL-4222/c13"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1563.8125
+    "N": -204,
+    "EL": 1478.6771
    },
    "key": "SWW|1.5|P150",
    "weight": 0.0264,
@@ -1405,19 +1367,19 @@
    "NPS": 1.5,
    "cls": "P150",
    "joins": [
-    "1.5\"-P150-FL-4222/el13",
+    "1.5\"-P150-FL-4222/c13",
     "1.5\"-P150-FL-4222/p14"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -309.8125,
-    "EL": 1566
+    "N": -204,
+    "EL": 1479.8646
    },
    "key": "SWW|1.5|P150",
    "weight": 0.0264,
@@ -1440,18 +1402,18 @@
    "cls": "P150",
    "joins": [
     "1.5\"-P150-FL-4222/p14",
-    "1.5\"-P150-FL-4222/c15"
+    "1.5\"-P150-FL-4222/el15"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -220,
-    "EL": 1566
+    "N": -204,
+    "EL": 1563.8125
    },
    "key": "SWW|1.5|P150",
    "weight": 0.0264,
@@ -1473,18 +1435,18 @@
    "NPS": 1.5,
    "cls": "P150",
    "joins": [
-    "1.5\"-P150-FL-4222/c15",
+    "1.5\"-P150-FL-4222/el15",
     "1.5\"-P150-FL-4222/p16"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -218.8125,
+    "N": -201.8125,
     "EL": 1566
    },
    "key": "SWW|1.5|P150",
@@ -1511,14 +1473,14 @@
     "1.5\"-P150-FL-4222/c17"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -129.5938,
+    "N": -109.8646,
     "EL": 1566
    },
    "key": "SWW|1.5|P150",
@@ -1545,14 +1507,14 @@
     "1.5\"-P150-FL-4222/p18"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -128.4063,
+    "N": -108.6771,
     "EL": 1566
    },
    "key": "SWW|1.5|P150",
@@ -1579,14 +1541,14 @@
     "1.5\"-P150-FL-4222/c19"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -39.1875,
+    "N": -17.3229,
     "EL": 1566
    },
    "key": "SWW|1.5|P150",
@@ -1613,14 +1575,14 @@
     "1.5\"-P150-FL-4222/p20"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": -38,
+    "N": -16.1354,
     "EL": 1566
    },
    "key": "SWW|1.5|P150",
@@ -1647,14 +1609,14 @@
     "1.5\"-P150-FL-4222/el21"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": 51.8125,
+    "N": 75.8125,
     "EL": 1566
    },
    "key": "SWW|1.5|P150",
@@ -1681,14 +1643,14 @@
     "1.5\"-P150-FL-4222/p22"
    ],
    "shopField": "shop",
-   "spool": "1.5\"-P150-FL-4222-SP02",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP02"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1563.8125
    },
    "key": "SWW|1.5|P150",
@@ -1714,15 +1676,15 @@
     "1.5\"-P150-FL-4222/p22",
     "1.5\"-P150-FL-4222/O2"
    ],
-   "shopField": "field",
-   "spool": "field",
+   "shopField": "shop",
+   "spool": "1.5\"-P150-FL-4222-SP01",
    "spools": [
-    "1.5\"-P150-FL-4222-SP02",
-    "1.5\"-P150-FL-4222-SP03"
+    "1.5\"-P150-FL-4222-SP01",
+    "1.5\"-P150-FL-4222-SP01"
    ],
    "at": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1553.25
    },
    "key": "SWW|1.5|P150",
@@ -1743,15 +1705,15 @@
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
    "type": "hanger",
-   "description": "HANGER FOR 1.5\" LINE (HANGER-1.5x45.5)",
-   "designation": "HANGER-1.5x45.5",
-   "key": "HANG|1.5|P150|45.54",
+   "description": "HANGER FOR 1.5\" LINE (HANGER-1.5x55.5)",
+   "designation": "HANGER-1.5x55.5",
+   "key": "HANG|1.5|P150|55.50",
    "material": "Grade 36",
-   "weight": 4.8583,
+   "weight": 5.1667,
    "spool": "loose",
    "at": {
     "E": 1458,
-    "N": -225.4063,
+    "N": -115.2708,
     "EL": 1566
    },
    "rules": [
@@ -1763,35 +1725,15 @@
    "line": "1.5\"-P150-FL-4222",
    "lineClass": "F150",
    "type": "hanger",
-   "description": "HANGER FOR 1.5\" LINE (HANGER-1.5x55.5)",
-   "designation": "HANGER-1.5x55.5",
-   "key": "HANG|1.5|P150|55.50",
+   "description": "HANGER FOR 1.5\" LINE (HANGER-1.5x65.5)",
+   "designation": "HANGER-1.5x65.5",
+   "key": "HANG|1.5|P150|65.47",
    "material": "Grade 36",
-   "weight": 5.1667,
+   "weight": 5.4754,
    "spool": "loose",
    "at": {
     "E": 1458,
-    "N": -136.935,
-    "EL": 1566
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
-   "tag": "1.5\"-P150-FL-4222/S3",
-   "line": "1.5\"-P150-FL-4222",
-   "lineClass": "F150",
-   "type": "hanger",
-   "description": "HANGER FOR 1.5\" LINE (HANGER-1.5x60.5)",
-   "designation": "HANGER-1.5x60.5",
-   "key": "HANG|1.5|P150|60.48",
-   "material": "Grade 36",
-   "weight": 5.3209,
-   "spool": "loose",
-   "at": {
-    "E": 1458,
-    "N": -48.5612,
+    "N": -25.7292,
     "EL": 1566
    },
    "rules": [
@@ -1805,36 +1747,30 @@
    "items": [
     "1.5\"-P150-FL-4222/A2",
     "1.5\"-P150-FL-4222/A4",
-    "1.5\"-P150-FL-4222/A5"
-   ],
-   "shopWelds": [
-    "1.5\"-P150-FL-4222/W2",
-    "1.5\"-P150-FL-4222/W3"
-   ],
-   "weight": 6.1348
-  },
-  {
-   "id": "1.5\"-P150-FL-4222-SP02",
-   "items": [
+    "1.5\"-P150-FL-4222/A5",
     "1.5\"-P150-FL-4222/p6",
-    "1.5\"-P150-FL-4222/el7",
+    "1.5\"-P150-FL-4222/c7",
     "1.5\"-P150-FL-4222/p8",
-    "1.5\"-P150-FL-4222/c9",
+    "1.5\"-P150-FL-4222/el9",
     "1.5\"-P150-FL-4222/p10",
     "1.5\"-P150-FL-4222/c11",
     "1.5\"-P150-FL-4222/p12",
-    "1.5\"-P150-FL-4222/el13",
+    "1.5\"-P150-FL-4222/c13",
     "1.5\"-P150-FL-4222/p14",
-    "1.5\"-P150-FL-4222/c15",
+    "1.5\"-P150-FL-4222/el15",
     "1.5\"-P150-FL-4222/p16",
     "1.5\"-P150-FL-4222/c17",
     "1.5\"-P150-FL-4222/p18",
     "1.5\"-P150-FL-4222/c19",
     "1.5\"-P150-FL-4222/p20",
     "1.5\"-P150-FL-4222/el21",
-    "1.5\"-P150-FL-4222/p22"
+    "1.5\"-P150-FL-4222/p22",
+    "1.5\"-P150-FL-4222/O2"
    ],
    "shopWelds": [
+    "1.5\"-P150-FL-4222/W2",
+    "1.5\"-P150-FL-4222/W3",
+    "1.5\"-P150-FL-4222/W4",
     "1.5\"-P150-FL-4222/W5",
     "1.5\"-P150-FL-4222/W6",
     "1.5\"-P150-FL-4222/W7",
@@ -1850,24 +1786,10 @@
     "1.5\"-P150-FL-4222/W17",
     "1.5\"-P150-FL-4222/W18",
     "1.5\"-P150-FL-4222/W19",
-    "1.5\"-P150-FL-4222/W20"
+    "1.5\"-P150-FL-4222/W20",
+    "1.5\"-P150-FL-4222/W21"
    ],
-   "weight": 104.3987
-  },
-  {
-   "id": "1.5\"-P150-FL-4222-SP03",
-   "items": [
-    "1.5\"-P150-FL-4222/O2"
-   ],
-   "shopWelds": [],
-   "weight": 0.4939
-  },
-  {
-   "items": [
-    "1.5\"-P150-FL-4222/PEN1"
-   ],
-   "shopWelds": [],
-   "weight": 3.9985
+   "weight": 114.7547
   }
  ],
  "bom": [
@@ -1906,32 +1828,26 @@
    "itemNo": 6,
    "description": "PIPE 1.5\" P150 PLAIN ENDS",
    "qty": 9,
-   "length": 632.2318,
-   "weight": 96.8039
+   "length": 656.2318,
+   "weight": 100.4783
   },
   {
    "itemNo": 7,
-   "description": "ELBOW 90° SOCKET-WELD 1.5\" P150",
-   "qty": 3,
-   "weight": 5.5746
-  },
-  {
-   "itemNo": 8,
    "description": "COUPLING SOCKET-WELD 1.5\" P150",
    "qty": 5,
    "weight": 1.5974
+  },
+  {
+   "itemNo": 8,
+   "description": "ELBOW 90° SOCKET-WELD 1.5\" P150",
+   "qty": 3,
+   "weight": 5.5746
   },
   {
    "itemNo": 9,
    "description": "BRANCH OUTLET 8\" × 1.5\" P150 SOCKET-WELD OUTLET",
    "qty": 1,
    "weight": 0.4939
-  },
-  {
-   "itemNo": 10,
-   "description": "FLOOR SLEEVE 3\" FOR 1.5\" LINE, WITH COLLAR",
-   "qty": 1,
-   "weight": 3.9985
   }
  ],
  "nodes": [
@@ -1983,7 +1899,7 @@
   {
    "at": {
     "E": 1458,
-    "N": -314.1875,
+    "N": -263.0222,
     "EL": 1308
    },
    "kind": "pipe end",
@@ -1992,26 +1908,17 @@
   {
    "at": {
     "E": 1458,
-    "N": -312,
+    "N": -261.8347,
     "EL": 1308
    },
-   "kind": "elbow work point",
-   "ref": "1.5\"-P150-FL-4222/el7"
+   "kind": "coupling end",
+   "ref": "1.5\"-P150-FL-4222/c7"
   },
   {
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1310.1875
-   },
-   "kind": "elbow end",
-   "ref": "1.5\"-P150-FL-4222/el7"
-  },
-  {
-   "at": {
-    "E": 1458,
-    "N": -312,
-    "EL": 1394.1354
+    "N": -206.1875,
+    "EL": 1308
    },
    "kind": "pipe end",
    "ref": "1.5\"-P150-FL-4222/p8"
@@ -2019,17 +1926,26 @@
   {
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1395.3229
+    "N": -204,
+    "EL": 1308
    },
-   "kind": "coupling end",
-   "ref": "1.5\"-P150-FL-4222/c9"
+   "kind": "elbow work point",
+   "ref": "1.5\"-P150-FL-4222/el9"
   },
   {
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1478.6771
+    "N": -204,
+    "EL": 1310.1875
+   },
+   "kind": "elbow end",
+   "ref": "1.5\"-P150-FL-4222/el9"
+  },
+  {
+   "at": {
+    "E": 1458,
+    "N": -204,
+    "EL": 1394.1354
    },
    "kind": "pipe end",
    "ref": "1.5\"-P150-FL-4222/p10"
@@ -2037,8 +1953,8 @@
   {
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1479.8646
+    "N": -204,
+    "EL": 1395.3229
    },
    "kind": "coupling end",
    "ref": "1.5\"-P150-FL-4222/c11"
@@ -2046,8 +1962,8 @@
   {
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1563.8125
+    "N": -204,
+    "EL": 1478.6771
    },
    "kind": "pipe end",
    "ref": "1.5\"-P150-FL-4222/p12"
@@ -2055,26 +1971,17 @@
   {
    "at": {
     "E": 1458,
-    "N": -312,
-    "EL": 1566
+    "N": -204,
+    "EL": 1479.8646
    },
-   "kind": "elbow work point",
-   "ref": "1.5\"-P150-FL-4222/el13"
+   "kind": "coupling end",
+   "ref": "1.5\"-P150-FL-4222/c13"
   },
   {
    "at": {
     "E": 1458,
-    "N": -309.8125,
-    "EL": 1566
-   },
-   "kind": "elbow end",
-   "ref": "1.5\"-P150-FL-4222/el13"
-  },
-  {
-   "at": {
-    "E": 1458,
-    "N": -220,
-    "EL": 1566
+    "N": -204,
+    "EL": 1563.8125
    },
    "kind": "pipe end",
    "ref": "1.5\"-P150-FL-4222/p14"
@@ -2082,16 +1989,25 @@
   {
    "at": {
     "E": 1458,
-    "N": -218.8125,
+    "N": -204,
     "EL": 1566
    },
-   "kind": "coupling end",
-   "ref": "1.5\"-P150-FL-4222/c15"
+   "kind": "elbow work point",
+   "ref": "1.5\"-P150-FL-4222/el15"
   },
   {
    "at": {
     "E": 1458,
-    "N": -129.5938,
+    "N": -201.8125,
+    "EL": 1566
+   },
+   "kind": "elbow end",
+   "ref": "1.5\"-P150-FL-4222/el15"
+  },
+  {
+   "at": {
+    "E": 1458,
+    "N": -109.8646,
     "EL": 1566
    },
    "kind": "pipe end",
@@ -2100,7 +2016,7 @@
   {
    "at": {
     "E": 1458,
-    "N": -128.4063,
+    "N": -108.6771,
     "EL": 1566
    },
    "kind": "coupling end",
@@ -2109,7 +2025,7 @@
   {
    "at": {
     "E": 1458,
-    "N": -39.1875,
+    "N": -17.3229,
     "EL": 1566
    },
    "kind": "pipe end",
@@ -2118,7 +2034,7 @@
   {
    "at": {
     "E": 1458,
-    "N": -38,
+    "N": -16.1354,
     "EL": 1566
    },
    "kind": "coupling end",
@@ -2127,7 +2043,7 @@
   {
    "at": {
     "E": 1458,
-    "N": 51.8125,
+    "N": 75.8125,
     "EL": 1566
    },
    "kind": "pipe end",
@@ -2136,7 +2052,7 @@
   {
    "at": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1566
    },
    "kind": "elbow work point",
@@ -2145,7 +2061,7 @@
   {
    "at": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1563.8125
    },
    "kind": "elbow end",
@@ -2154,7 +2070,7 @@
   {
    "at": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1553.25
    },
    "kind": "pipe end",
@@ -2163,7 +2079,7 @@
   {
    "at": {
     "E": 1458,
-    "N": 54,
+    "N": 78,
     "EL": 1548
    },
    "kind": "olet end",
@@ -2171,11 +2087,11 @@
   }
  ],
  "totals": {
-  "items": 24,
+  "items": 23,
   "welds": 21,
-  "fieldWelds": 2,
-  "supports": 3,
-  "pipeLength": 632.2318,
-  "weight": 115.7788
+  "fieldWelds": 0,
+  "supports": 2,
+  "pipeLength": 656.2318,
+  "weight": 115.4547
  }
 }
