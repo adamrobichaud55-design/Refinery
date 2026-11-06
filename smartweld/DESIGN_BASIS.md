@@ -1398,7 +1398,8 @@ bore is continuous and every end is a butt-weld bevel.
 - `SW-PS-12` Shoes, guides and anchors are fillet-welded (SW-WD-1); stanchion bases are anchored
   with two 1/2 in rods into the slab (SW-AR-*).
 - `SW-PS-13` Trapeze: where a line runs directly under another line so a single rod cannot pass, two
-  rods (SW-PS-9 diameter) at a = OD/2 + 6 in either side of the pipe carry an `L2x2x1/4` under it.
+  rods (SW-PS-9 diameter) at a = OD/2 + 6 in either side of the pipe carry an `L2x2x1/4` under it
+  (plant 2: a = OD/2 + 12 in where a line lies right beside the one above, so the rods clear both).
   Reason: the rods pass either side of the line above with room to spare.
 
 ## 39. Pipe welds (`SW-PW-*`)

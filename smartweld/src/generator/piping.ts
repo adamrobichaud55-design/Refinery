@@ -86,7 +86,7 @@ export function partFromKey(key: string): PartSpec {
     case 'STAN': p = makeStanchion(key, n(1), c(2), n(3)); break;
     case 'HANG': p = makeHanger(key, n(1), c(2), n(3)); break;
     case 'TRUN': p = makeTrunnion(key, n(1), c(2), n(3)); break;
-    case 'TRAP': p = makeTrapeze(key, n(1), c(2), n(3), n(4)); break;
+    case 'TRAP': p = makeTrapeze(key, n(1), c(2), n(3), n(4), a[5] !== undefined ? n(5) : undefined); break;
     default: throw new Error(`unknown part key ${key}`);
   }
   memo.set(key, p); return p;
@@ -960,9 +960,13 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
         }
         if (placed < 0) for (const sPos of cands) {                                         // SW-PS-13 trapeze when a line above blocks a single rod
           const p = add(sr.a, w, sPos); if (!clearOf(p, 3)) continue;
-          const side = cross(w, [0, 1, 0]), aoff = r + 6, t1 = steelAboveExact(add(p, side, -aoff), 0.5, id), t2 = steelAboveExact(add(p, side, aoff), 0.5, id);
-          if (t1 === null || t2 === null) continue;
-          push('trapeze', p, `TRAP|${l.NPS}|${l.cls}|${(t1 - p[1]).toFixed(2)}|${(t2 - p[1]).toFixed(2)}`, frameFromAxes(p, [0, 1, 0], w)); placed = sPos; break;
+          const side = cross(w, [0, 1, 0]);
+          for (const aoff of (P2 ? [r + 6, r + 12] : [r + 6])) {   // SW-PS-13: rods OD/2 + 6 in out, or OD/2 + 12 in (plant 2) where a line lies right beside
+            const t1 = steelAboveExact(add(p, side, -aoff), 0.5, id), t2 = steelAboveExact(add(p, side, aoff), 0.5, id);
+            if (t1 === null || t2 === null) continue;
+            push('trapeze', p, `TRAP|${l.NPS}|${l.cls}|${(t1 - p[1]).toFixed(2)}|${(t2 - p[1]).toFixed(2)}|${aoff.toFixed(2)}`, frameFromAxes(p, [0, 1, 0], w)); placed = sPos; break;
+          }
+          if (placed >= 0) break;
         }
         if (placed < 0) break;                                                              // reported by the span check
         prev = placed;

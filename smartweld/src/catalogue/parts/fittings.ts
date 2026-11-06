@@ -176,8 +176,8 @@ export function makeHanger(id: string, NPS: number, cls: PipeClass, h: number): 
 /** Trapeze (SW-PS-13): an L2x2x1/4 under the pipe carried by two rods at a = OD/2 + 6 in either side, for a line that
  *  runs directly under another so a single rod cannot pass. Local frame: pipe centre at the origin, y up, z along the
  *  pipe; rods rise h1 (at x = −a) and h2 (at x = +a) to the steel. */
-export function makeTrapeze(id: string, NPS: number, cls: PipeClass, h1: number, h2: number): PartSpec {
-  const p = pipeDims(NPS, cls), d = hangerRod(p.OD), r = p.OD / 2, a = r + 6, t = 0.25;
+export function makeTrapeze(id: string, NPS: number, cls: PipeClass, h1: number, h2: number, aOff?: number): PartSpec {
+  const p = pipeDims(NPS, cls), d = hangerRod(p.OD), r = p.OD / 2, a = aOff ?? r + 6, t = 0.25;   // SW-PS-13: rods at OD/2 + 6 in, or further out where stated
   const solids: FitSolid[] = [
     { name: 'angle L2x2x1/4', mesh: mergeMeshes([boxM(-a - 1, -r - t, -1, a + 1, -r, 1), boxM(-a - 1, -r - 2, -1, a + 1, -r - t, -1 + t)]), role: 'steel' },
     { name: `rods ${d}`, mesh: mergeMeshes([cylYM(d / 2, -r - 1, h1, -a, 0), cylYM(d / 2, -r - 1, h2, a, 0)]), role: 'hardware' },
