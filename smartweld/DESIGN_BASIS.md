@@ -1947,6 +1947,44 @@ consults no outside format description (PROVENANCE P-62).
   but not the structural steel). Reason: a line's end at a nozzle is only meaningful against the
   equipment it stands on.
 
+### The owner's joint rules from the drawing review (`SW-LL-8`, 2026-11-05/06)
+
+- `SW-LL-8` The owner read both plants' lines from their PCF files with the owner's own generator,
+  drew every line, checked the drawings against the ground truth and set these rules, which apply
+  everywhere (plant 1's geometry excepted where noted, because its lines are the ones the owner's
+  Revision 1 drawings of stage 8 are matched to):
+  1. A plug is always threaded and only ever screws straight into a valve's end: never socket
+     welded, never on a pipe run, a tee or a nipple. So a socket-weld tee's spare branch and a
+     four-way valve's spare port carry a one-end-threaded nipple, a threaded gate valve and the
+     plug in its end (the vent of SW-LL-7 and the purge of 4W-1 are then both valved), and a hose
+     station's plug screws straight into its gate valve (SW-LL-6 amended: no nipple between).
+  2. No field weld at a slip-on or socket-weld flange, or at a threaded or socket-weld valve:
+     those are shop welds. Field welds are butt welds only, at the points SW-PW-* names.
+  3. Every valve has the same kind of flange at both ends. An equipment nozzle is itself a
+     weld-neck flange (recorded as such in the ground truth), so the flange on the other side of a
+     valve at a nozzle is a weld-neck flange whatever the line's class; a slip-on class (SW-FLG-10)
+     keeps its slip-on flanges where both sides of the valve are pipe.
+  4. A weldolet only ever takes a weld-neck flange, butt-welded straight on.
+  5. Two valves never bolt straight together: a pipe stub of 6 in, flanged at both ends with the
+     valves' kind of flange, stands between them (the check and block valve of a pump discharge,
+     the valves of a control station, a block and its throttling globe, a block and a rotary
+     valve, a block and a check at a take-off). Plant 1's sixteen such joints on ten lines are
+     left as drawn, since the owner's Revision 1 drawings match them (P-69); plant 2 applies it.
+  6. A blind may bolt straight onto a valve's end flange.
+  7. A slip-on flange needs a pipe end to slip over: never straight on a tee or an outlet. A branch
+     leaving a tee in a slip-on class has a 6 in pipe stub between the tee and its slip-on flange;
+     a branch leaving an outlet takes weld-neck flanges.
+  Reason: these are the owner's drawing conventions; the generator draws them and the detector is
+  tested on them, so the model carries them.
+- `SW-GT-7` Ground truth amended with the review: a reducer or swage records its large size as the
+  item size and its small size as the branch size, and the PCF gives each end its own bore from the
+  item that meets it; a branch outlet's base weld joins the run and the outlet itself; a line's joint
+  type in its header is read from its own pipe pieces (butt-weld if any pipe is butt-welded, else
+  socket-weld if any is plain-ended into a socket, else threaded), not from the class alone; a
+  nipple's item code carries its length; an equipment nozzle record carries its flange type; the
+  ground-truth kind of a branch outlet is `outlet`. Reason: the owner's reader found each of these
+  ambiguous or wrong in the first files.
+
 ### Piping component files for exchange (`SW-PCF-*`, stage 9)
 
 The owner's designer imports lines rather than modelling them, and the owner's own isometric
@@ -1969,7 +2007,14 @@ generator reads the same files, so one file per line serves both (owner's instru
   plug; a safety valve is an angle valve whose second end point is its outlet face and whose
   centre is the body's corner (SW-XCH-2). The record type and symbol key follow the mapping table
   of SW-PCF-3. Reason: a file whose points do not meet is rejected by every importer; the ground
-  truth's points meet by SW-GT-3, so the writer copies them and adds nothing.
+  truth's points meet by SW-GT-3, so the writer copies them and adds nothing. Amended with the
+  owner's review: a bend's centre point is its work point, where the two centre lines meet (found
+  from the legs either side of the bend); a tee, a three-way and a four-way valve always carry a
+  branch point, from the branch line where one leaves and else from the fitting's own branch
+  mouth; a four-way valve carries a second branch point at its spare port; a reducer, a swage and
+  an outlet give each end its own bore, the outlet's first end point staying on the run whichever
+  way the line is written; a relief valve's second end point carries its outlet bore; a support has
+  a materials entry; an item without a spool carries no spool attribute.
 - `SW-PCF-3` Mapping (one table, in code and in `tools/pcf-mapping.md`, and the same table the
   owner's generator reads with): each ground-truth kind and end type maps to a PCF record type
   and a four-letter symbol key written as SmartWeld's own convention, two letters for the item
@@ -1980,7 +2025,11 @@ generator reads the same files, so one file per line serves both (owner's instru
   welds are weld records with the shop or field key; supports are support records at their
   point with the support type as the key. Reason: a symbol key names the drawing symbol, so a
   reader on either side resolves it from one table; an importer that wants its own keys remaps
-  the table once.
+  the table once. Amended with the owner's review (names the owner's reader uses): the outlet
+  record is `BRANCH-OUTLET`; a nipple plain into a socket and threaded at its other end is `NISS`;
+  a floor sleeve is `PFPE` and a wall sleeve `PWPE`; `FW` are the letters of a fillet weld; a
+  one-ended part (plug, cap) names its one connecting end; a station's side items hang off its
+  valve member.
 - `SW-PCF-4` A materials block at the end of each file lists every item code of that line with
   its description, size, end type, material and weight, so the importer's bill of materials and
   the owner's generator's bill agree with the ground-truth bill of SW-GT-5. The writer is

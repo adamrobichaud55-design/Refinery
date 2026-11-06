@@ -75,7 +75,7 @@ def cov_classes(it, items, i):
     if kind == 'reducer': return ['eccentric_reducer' if k[0] == 'REDE' else 'reducer']
     if kind == 'cap': return ['cap']
     if kind == 'coupling': return ['coupling_sw' if k[3] == 'SW' else 'coupling_th']
-    if kind == 'olet': return ['branch_outlet_sw' if k[4] == 'SW' else 'branch_outlet_th' if k[4] == 'TH' else 'branch_outlet']
+    if kind in ('olet', 'outlet'): return ['branch_outlet_sw' if k[4] == 'SW' else 'branch_outlet_th' if k[4] == 'TH' else 'branch_outlet']
     if kind == 'swage': return ['swage_sw' if k[4] == 'SW' else 'swage_th' if k[4] == 'TH' else 'swage']
     if kind == 'nipple': return ['nipple']
     if kind == 'plug': return ['plug']

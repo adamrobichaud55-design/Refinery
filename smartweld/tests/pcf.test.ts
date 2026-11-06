@@ -6,6 +6,7 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { pcfFor, chained, PCF_MAP, mapOf, skeyOf, pcfDir, pcfName } from '../src/exchange/pcf';
+import { checkPlant } from '../src/exchange/pcfCheck';
 import type { GTLine } from '../src/generator/groundtruth';
 
 const root = new URL('../', import.meta.url);
@@ -20,7 +21,7 @@ for (const [plant, gt] of [['P1', 'public/groundtruth'], ['P2', 'public/plants/P
   it('every line writes a file whose records chain and whose bill lists every item code (SW-PCF-2, SW-PCF-4)', () => {
     for (const L of lines) {
       const text = pcfFor(L, lines);
-      expect(text.startsWith('UNITS-BORE INCH')).toBe(true); expect(text.includes('ISOGEN')).toBe(false);   // no product name in a file (IP_REVIEW item 7)
+      expect(text.startsWith('UNITS-BORE INCH')).toBe(true); expect(text.includes('ISOGEN')).toBe(false); expect(text.includes(' undefined')).toBe(false);   // no product name, no undefined attribute
       expect(text.includes(`PIPELINE-REFERENCE ${L.header.line}`)).toBe(true);
       expect((text.match(/^END-POINT|^    END-POINT/gm) ?? []).length).toBeGreaterThanOrEqual(2 * L.items.length);
       expect(chained(L), L.header.line).toBe(true);
@@ -33,6 +34,11 @@ for (const [plant, gt] of [['P1', 'public/groundtruth'], ['P2', 'public/plants/P
     let branches = 0;
     for (const L of lines) { const t = pcfFor(L, lines); branches += (t.match(/BRANCH1-POINT/g) ?? []).length; }
     expect(branches).toBeGreaterThan(plant === 'P1' ? 100 : 25);   // plant 2 branches mostly through outlets, whose outlet end is their own record
+  });
+  it('the owner\'s zero-checks of the review (SW-LL-8, SW-GT-7, SW-PCF-2..4) all read zero on the committed files', () => {
+    const dir = pcfDir(gt); if (!existsSync(join(dir, 'INDEX.csv'))) return;
+    const r = checkPlant(gt, { valveToValve: plant !== 'P1' });
+    expect(Object.entries(r.counts).filter(([, v]) => v > 0).map(([k, v]) => `${k}: ${v} e.g. ${r.examples[k].join(', ')}`)).toEqual([]);
   });
   it('the committed files equal a fresh write (deterministic)', () => {
     const dir = pcfDir(gt); if (!existsSync(join(dir, 'INDEX.csv'))) return;

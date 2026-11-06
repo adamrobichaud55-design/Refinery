@@ -15,7 +15,7 @@ function exportPcf(groundtruth: string): { files: number; bytes: number; unchain
     const text = pcfFor(L, lines), name = pcfName(L.header.line);
     writeFileSync(join(out, name), text); bytes += text.length;
     if (!chained(L)) unchained.push(L.header.line);
-    index.push(`"${L.header.line}",${name},${L.items.length + L.welds.length + L.supports.length}`);
+    index.push(`"${L.header.line.replace(/"/g, '""')}",${name},${L.items.length + L.welds.length + L.supports.length}`);   // the inch mark doubled inside the quotes (valid CSV)
   }
   writeFileSync(join(out, 'INDEX.csv'), index.join('\n') + '\n');
   return { files: lines.length, bytes, unchained };

@@ -100,7 +100,7 @@ function writeSet(dir: string, ls: GTLine[], withNozzles: boolean) {
   // SW-PCF-1: one PCF per line, from the committed pcf folder of the plant (tools/export-pcf.ts)
   mkdirSync(join(dir, 'pcf'), { recursive: true });
   for (const L of ls) { const src = join(pcfDir(GT), pcfName(L.header.line)); if (existsSync(src)) writeFileSync(join(dir, 'pcf', pcfName(L.header.line)), readFileSync(src)); }
-  writeFileSync(join(dir, 'pcf', 'INDEX.csv'), ['line,file', ...ls.map(L => `"${L.header.line}",${pcfName(L.header.line)}`)].join('\n') + '\n');
+  writeFileSync(join(dir, 'pcf', 'INDEX.csv'), ['line,file', ...ls.map(L => `"${L.header.line.replace(/"/g, '""')}",${pcfName(L.header.line)}`)].join('\n') + '\n');
   writeFileSync(join(dir, 'pcf', 'MAPPING.md'), readFileSync('tools/pcf-mapping.md', 'utf8'));
   const obj = (head: string[], rows: unknown[][]) => rows.map(r => Object.fromEntries(head.map((h, i) => [h, r[i]])));
   writeFileSync(join(dir, 'model.json'), JSON.stringify({ units: { coordinates: 'inches and millimetres', weights: 'pounds' }, coordinates: 'E = east, N = north, EL = elevation; floor at EL 1200 in (100\'-0")',

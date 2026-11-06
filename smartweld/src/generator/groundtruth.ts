@@ -25,7 +25,7 @@ const dirPlant = (d: V3) => ({ E: d[0], N: -d[2], EL: d[1] });
 // ---- item records -------------------------------------------------------------------------------------------
 export interface GTItem {
   tag: string; line: string; lineClass: string; kind: string; itemNo: number; description: string; designation: string; key: string;
-  NPS: number; NPS2?: number; cls: PipeClass; material: string; ends: string; cutLength?: number; weight: number; spool: string;
+  NPS: number; NPS2?: number; cls: PipeClass; material: string; ends: string; cutLength?: number; weight: number; spool: string; flangeType?: 'WN' | 'SO' | 'SW';   // flangeType on flanges and nozzle necks (SW-GT-7)
   a: PlantPt; b: PlantPt; centre: PlantPt; axis: { E: number; N: number; EL: number }; rules: string[];
 }
 export interface GTWeld { tag: string; line: string; lineClass: string; type: 'BW' | 'SW' | 'FW'; size: number; NPS: number; cls: PipeClass; joins: [string, string]; shopField: 'shop' | 'field'; spool: string; spools: [string, string]; at: PlantPt; key: string; weight: number; rules: string[] }
@@ -90,6 +90,14 @@ function spoolsOf(r: LineRun): Map<string, string> {
 }
 
 export interface GroundTruth { lines: GTLine[]; classes: (LineClass & { lines: string[] })[]; nozzles: GTItem[] }
+/** SW-GT-7: a line's joint type from its own pipe pieces: butt-weld if any pipe is butt-welded, else socket-weld if any pipe or nipple is plain-ended into a socket, else threaded */
+function jointFromParts(r: LineRun): string {
+  const pieces = r.comps.filter(c => c.kind === 'pipe' || c.kind === 'nipple');
+  if (pieces.some(c => c.e1 === 'BW' || c.e2 === 'BW')) return 'BW';
+  if (pieces.some(c => c.e1 === 'SP' || c.e2 === 'SP')) return 'SW';
+  if (pieces.some(c => c.e1 === 'TH' || c.e2 === 'TH')) return 'TH';
+  return r.joint ?? 'BW';
+}
 export function buildGroundTruth(m: PipingModel): GroundTruth {
   const byNo = new Map(m.lines.map(l => [l.no, l] as const)), spoolOfTag = new Map<string, string>();
   for (const r of m.lines) for (const [t, s] of spoolsOf(r)) spoolOfTag.set(t, s);
@@ -103,8 +111,11 @@ export function buildGroundTruth(m: PipingModel): GroundTruth {
       const p = partFromKey(c.key), d = describe(c, p);
       if (!itemNos.has(d.description)) itemNos.set(d.description, itemNos.size + 1);
       const axis = unit(sub(c.b, c.a)), mid: V3 = [(c.a[0] + c.b[0]) / 2, (c.a[1] + c.b[1]) / 2, (c.a[2] + c.b[2]) / 2];
-      items.push({ tag: c.tag, line: r.no, lineClass: lc.code, kind: c.kind, itemNo: itemNos.get(d.description)!, description: d.description, designation: p.designation, key: c.key,
-        NPS: c.NPS, ...(d.NPS2 !== undefined ? { NPS2: d.NPS2 } : {}), cls: c.cls, material: p.material.grade, ends: d.ends, ...(c.kind === 'pipe' || c.kind === 'nipple' ? { cutLength: len(sub(c.b, c.a)) + (c.ins ? c.ins[0] + c.ins[1] : 0) } : {}),
+      const k = c.key.split('|'), sizes = c.kind === 'reducer' || c.kind === 'swage' ? { NPS: Math.max(Number(k[1]), Number(k[2])), NPS2: Math.min(Number(k[1]), Number(k[2])) } : { NPS: c.NPS, ...(d.NPS2 !== undefined ? { NPS2: d.NPS2 } : {}) };   // SW-GT-7: large size, then small
+      const designation = c.kind === 'nipple' ? p.designation.replace(/^NIP([\d.\/]+)/, (_, n) => `NIP${n}x${Number(k[3])}`) : p.designation;   // SW-GT-7: a nipple's code carries its length
+      const flangeType = c.kind === 'flange' ? (k[0] === 'SOF' ? 'SO' : k[0] === 'SWF' ? 'SW' : 'WN') as 'WN' | 'SO' | 'SW' : undefined;
+      items.push({ tag: c.tag, line: r.no, lineClass: lc.code, kind: c.kind === 'olet' ? 'outlet' : c.kind, itemNo: itemNos.get(d.description)!, description: d.description, designation, key: c.key,
+        ...sizes, cls: c.cls, material: p.material.grade, ends: d.ends, ...(flangeType ? { flangeType } : {}), ...(c.kind === 'pipe' || c.kind === 'nipple' ? { cutLength: len(sub(c.b, c.a)) + (c.ins ? c.ins[0] + c.ins[1] : 0) } : {}),
         weight: p.weight.value, spool: spoolOfTag.get(c.tag)!, a: toPlant(c.a), b: toPlant(c.b), centre: toPlant(c.kind === 'valve' ? [c.T[12], c.T[13], c.T[14]] : mid), axis: dirPlant(axis), rules: rulesOf(p) });
     }
     const welds: GTWeld[] = r.welds.map(w => {
@@ -131,7 +142,7 @@ export function buildGroundTruth(m: PipingModel): GroundTruth {
     }
     const pipeLength = items.filter(i => i.kind === 'pipe').reduce((a, i) => a + i.cutLength!, 0), weight = items.reduce((a, i) => a + i.weight, 0);
     lines.push({
-      header: { line: r.no, lineClass: lc.code, fluid: lc.fluid, service: r.service, NPS: r.NPS, cls: r.cls, designPressure: CLASS_PRESSURE[r.cls], insulated: lc.insulated, kind: r.kind, from: r.from, to: r.to, flow: `${r.from} → ${r.to}`, ...(r.joint ? { joint: r.joint } : {}) },
+      header: { line: r.no, lineClass: lc.code, fluid: lc.fluid, service: r.service, NPS: r.NPS, cls: r.cls, designPressure: CLASS_PRESSURE[r.cls], insulated: lc.insulated, kind: r.kind, from: r.from, to: r.to, flow: `${r.from} → ${r.to}`, ...(r.joint ? { joint: jointFromParts(r) } : {}) },
       items, welds, supports, spools: [...spMap.values()], bom: [...bomMap.values()].sort((a, b) => a.itemNo - b.itemNo), nodes,
       totals: { items: items.length, welds: welds.length, fieldWelds: welds.filter(w => w.shopField === 'field').length, supports: supports.length, pipeLength, weight },
     });
@@ -139,8 +150,9 @@ export function buildGroundTruth(m: PipingModel): GroundTruth {
   // equipment nozzle necks: equipment items, recorded with the line class of the line at their face
   const lineAt = new Map<string, LineRun>(); for (const r of m.lines) for (const e of [r.from, r.to]) if (!lineAt.has(e)) lineAt.set(e, r);
   const nozzles: GTItem[] = m.nozzles.flatMap((n: NozzleRun) => n.comps.map(c => {
+    const fk = c.key.split('|')[0], flangeType = c.kind === 'flange' ? ((fk === 'SOF' ? 'SO' : fk === 'SWF' ? 'SW' : 'WN') as 'WN' | 'SO' | 'SW') : undefined;   // SW-GT-7
     const p = partFromKey(c.key), d = describe(c, p), mid: V3 = [(c.a[0] + c.b[0]) / 2, (c.a[1] + c.b[1]) / 2, (c.a[2] + c.b[2]) / 2], att = lineAt.get(n.id) ?? lineAt.get(`PSV on ${n.id}`);
-    return { tag: c.tag, line: `${n.equip} nozzle ${n.id}`, lineClass: `equipment (${att ? att.lineClass ?? '' : ''})`, kind: c.kind, itemNo: 1, description: `NOZZLE ${d.description}`, designation: p.designation, key: c.key, NPS: c.NPS, cls: c.cls, material: p.material.grade, ends: d.ends, ...(c.kind === 'pipe' ? { cutLength: len(sub(c.b, c.a)) } : {}), weight: p.weight.value, spool: `${n.equip} (equipment)`, a: toPlant(c.a), b: toPlant(c.b), centre: toPlant(mid), axis: dirPlant(unit(sub(c.b, c.a))), rules: ['SW-NOZ-1', ...rulesOf(p)] };
+    return { tag: c.tag, line: `${n.equip} nozzle ${n.id}`, lineClass: `equipment (${att ? att.lineClass ?? '' : ''})`, kind: c.kind, itemNo: 1, description: `NOZZLE ${d.description}`, designation: p.designation, key: c.key, NPS: c.NPS, cls: c.cls, material: p.material.grade, ends: d.ends, ...(flangeType ? { flangeType } : {}), ...(c.kind === 'pipe' ? { cutLength: len(sub(c.b, c.a)) } : {}), weight: p.weight.value, spool: `${n.equip} (equipment)`, a: toPlant(c.a), b: toPlant(c.b), centre: toPlant(mid), axis: dirPlant(unit(sub(c.b, c.a))), rules: ['SW-NOZ-1', ...rulesOf(p)] };
   }));
   return { lines, classes: [...classMap.values()].sort((a, b) => a.code.localeCompare(b.code)), nozzles };
 }
