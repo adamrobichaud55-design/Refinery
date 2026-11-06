@@ -891,7 +891,8 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     }
     if (dbgHang) console.log('   steel above', p.map(v => v.toFixed(0)).join(','), 'best', isFinite(best) ? best.toFixed(0) : 'none');
     if (!isFinite(best) || best - p[1] > (P2 && r <= 1.2 ? 288 : 240)) return null;          // rods up to 20 ft (SW-PS-9); 24 ft for 2 in and smaller in plant 2
-    for (let y = p[1] + r + 3; y < best - 6; y += H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return null; const o = g.occ[g.idx(c[0], c[1], c[2])]; if (o !== 0 && o !== id && o !== STATIC) { if (dbgHang) console.log('   rod blocked at y', y.toFixed(0), 'by', o); return null; } }
+    for (let y = p[1] + r + 3; y < best - 6; y += H / 2) { const c = g.cellOf([p[0], y, p[2]]); if (!g.inside(c[0], c[1], c[2])) return null; const o = g.occ[g.idx(c[0], c[1], c[2])];
+      if (o !== 0 && o !== id && o !== STATIC && (!P2 || !g.clear(c[0], c[1], c[2], 0.25, [id], 1))) { if (dbgHang) console.log('   rod blocked at y', y.toFixed(0), 'by', o); return null; } }   // plant 2: the rod (1/4 in) clears a neighbouring line by its true surface, not the grid halo
     return best;
   };
   /** clear path straight down to the floor for a stanchion */
