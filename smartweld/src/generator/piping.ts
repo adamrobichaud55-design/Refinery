@@ -481,7 +481,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   /** SW-LL-8 (7): a slip-on flange never sits straight on a reducer; in a slip-on class a 6 in pipe stub stands between */
   const soStub = (l: LineDef, NPS: number): Item[] => (flangeOf(l) === 'SO' ? [{ k: 'pipe', NPS, cls: l.cls, L: 6 }] : []);
   /** the item stack at a nozzle end (SW-LL-3, SW-LL-6); items listed from the nozzle face outward */
-  function nozzleStack(l: LineDef, nz: Nozzle, isDest: boolean): Item[] {
+  function nozzleStack(l: LineDef, nz: Nozzle, isDest: boolean, spacer = 18): Item[] {
     const NPS = l.NPS, cls = l.cls, joint = jointOf(l), iso = isoValve(NPS, cls, groupOf(l), l, nz, isDest);
     const gasket: Item = { k: 'gasket', NPS: nz.NPS, cls }, lead: Item[] = [gasket, ...blindStart(l, nz)];
     const chk: Item[] = P2 && l.check && isDest ? [{ k: 'valve', type: 'CHECK', NPS, cls }, { k: 'gasket', NPS, cls }] : [];   // SW-LL-7: a check ahead of the block valve at the destination
@@ -509,7 +509,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     const thr: Item[] = P2 && groupOf(l)[0] === 'W' && (isDest || l.service === 'CWR') ? [{ k: 'valve', type: 'GLOBE', NPS: nz.NPS, cls }, { k: 'gasket', NPS: nz.NPS, cls }] : [];   // SW-LL-7: throttling globe at a water consumer; a return's balancing globe at the exchanger's outlet nozzle
     const nN = P2 ? nz.NPS : NPS;   // plant 2: the stack at the nozzle's size up to its first flange, then a reducer to the line
     const base: Item[] = [...spaced(l, [...lead, { k: 'valve', type: iso, NPS: nN, cls }, { k: 'gasket', NPS: nN, cls }, ...thr, ...chk.map(x => (x.k === 'valve' || x.k === 'gasket' ? { ...x, NPS: nN } : x)), fl(l, 'wnf', nN, cls, false)], false), ...(nN !== NPS ? [{ k: 'reducer', from: nN, to: NPS, cls } as Item] : [])];   // SW-LL-8 (3): weld-neck at a nozzle
-    if (l.cv && isDest) return [...base, { k: 'pipe', NPS, cls, L: 18 }, ...cvStation(l)];
+    if (l.cv && isDest) return [...base, { k: 'pipe', NPS, cls, L: spacer }, ...cvStation(l)];   // SW-LL-3: 18 in ahead of the station, 6 in where the stack would otherwise reach steel
     return base;
   }
   /** SW-LL-6: the items of a small-bore stub by service, after its first fitting (the nozzle flange or the branch outlet) */
@@ -581,9 +581,12 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   };
   /** plan a nozzle end: build its stack from the face, P1 one elbow length beyond on the grid */
   const planNozzle = (l: LineDef, nz: Nozzle, isDest: boolean): EndPlan => {
-    const { b, ok } = orient(nozzleStack(l, nz, isDest), it => buildStack(l.no, nz.face, nz.u, it, `${nz.id}`), lineId.get(l.no)!, nz.u, nz.equip);
+    const id = lineId.get(l.no)!, plan = (spacer: number) => orient(nozzleStack(l, nz, isDest, spacer), it => buildStack(l.no, nz.face, nz.u, it, `${nz.id}`), id, nz.u, nz.equip);
+    let { b, ok } = plan(18);
+    let P1 = leadP1(b.end, nz.u, R(l.NPS, l.cls, jointOf(l)));
+    const leadInSteel = (P: V3) => { const c = g.cellOf(P); if (!g.inside(c[0], c[1], c[2])) return true; const o = g.occ[g.idx(c[0], c[1], c[2])]; return o !== 0 && o !== id; };
+    if (l.cv && isDest && (!ok || leadInSteel(P1))) { ({ b, ok } = plan(6)); P1 = leadP1(b.end, nz.u, R(l.NPS, l.cls, jointOf(l))); }   // SW-LL-3 (amended): the shorter spacer where the longer stack would reach steel
     if (!ok) failures.push(`${l.no}: a valve at ${nz.id} strikes ${blockedBy} in every stem direction`);
-    const P1 = leadP1(b.end, nz.u, R(l.NPS, l.cls, jointOf(l)));
     return { P1, dirOut: nz.u, built: b, startFace: nz.face, zone: nz.face };
   };
   /** choose a tap on a parent's routed path nearest a point, with the outlet pointing toward it; the whole take-off

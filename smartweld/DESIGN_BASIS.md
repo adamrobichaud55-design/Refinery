@@ -1286,7 +1286,10 @@ bore is continuous and every end is a butt-weld bevel.
   - pump suction: gate valve; pump discharge: swing check valve then gate valve (check nearest the
     pump, so it can be isolated for service);
   - control valves (lines marked `cv` in the list): a control valve with a gate valve on each side,
-    in a horizontal run at the destination end (no bypass, stated);
+    in a horizontal run at the destination end (no bypass, stated), 18 in of pipe between the
+    nozzle's block valve and the station, shortened to 6 in only where the straight stack would
+    otherwise reach steel before its first elbow (amended 2026-11-06: with the stubs of SW-LL-8 (5)
+    the inlet stacks of V-101 and V-102 in plant 1 grew 34 in and met the rack's edge strut);
   - utility branches: a gate or ball valve at the header take-off;
   - vents, drains, instrument and sample connections: a ball valve on the nozzle, closed by a blind
     flange;
