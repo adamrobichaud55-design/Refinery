@@ -35,11 +35,11 @@ python3 -I tools/isomatch.py [--check]            # re-match the committed drawi
 python3 -I tools/isomatch.py --selftest           # prove the fix list clears every finding
 python3 -I tools/evalscore.py key|receive|clear|score|selftest   # external test drawings (eval/README.md)
 npx vite-node tools/designer-package.ts [P2]     # the model for a piping designer (downloads/designer-package.zip, -P2.zip)
-npx vite-node tools/gen-plant.ts P2 public/plants/P2/plant-piping.json   # regenerate plant 2 (about 7 min; plant 1 stays byte-identical)
+npx vite-node tools/gen-plant.ts P2 public/plants/P2/plant-piping.json   # regenerate plant 2 (about 13 min)
 npx vite-node tools/export-gt.ts P2              # plant 2 ground truth (public/plants/P2/groundtruth/)
 npx vite-node tools/coverage.ts public/plants/P2/plant-piping.json       # symbol coverage against the SW-COV-2 floor
 npx vite-node tools/export-pcf.ts P1|P2           # one PCF per line from the ground truth (public/.../pcf/, SW-PCF-1..4; tools/pcf-mapping.md)
-npx vite-node tools/pcf-check.ts P1|P2            # the owner's zero-checks on the ground truth and PCF files (SW-LL-8, SW-GT-7, SW-PCF-*)
+npx vite-node tools/pcf-check.ts P1|P2            # the owner's eighteen zero-checks on the ground truth and PCF files (SW-LL-8, SW-GT-7, SW-PCF-*, SW-PEN-1)
 npx vite-node tools/erection.ts P1|P2            # structural steel erection drawings (downloads/erection-P*.pdf, sheet previews)
 npx vite-node tools/render-plant.ts P2           # review images of plant 2 (screenshots/stage9/)
 ```

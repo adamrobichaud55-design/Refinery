@@ -142,7 +142,7 @@ export function buildGroundTruth(m: PipingModel): GroundTruth {
     }
     const pipeLength = items.filter(i => i.kind === 'pipe').reduce((a, i) => a + i.cutLength!, 0), weight = items.reduce((a, i) => a + i.weight, 0);
     lines.push({
-      header: { line: r.no, lineClass: lc.code, fluid: lc.fluid, service: r.service, NPS: r.NPS, cls: r.cls, designPressure: CLASS_PRESSURE[r.cls], insulated: lc.insulated, kind: r.kind, from: r.from, to: r.to, flow: `${r.from} → ${r.to}`, ...(r.joint ? { joint: jointFromParts(r) } : {}) },
+      header: { line: r.no, lineClass: lc.code, fluid: lc.fluid, service: r.service, NPS: r.NPS, cls: r.cls, designPressure: CLASS_PRESSURE[r.cls], insulated: lc.insulated, kind: r.kind, from: r.from, to: r.to, flow: `${r.from} → ${r.to}`, joint: jointFromParts(r) },   // SW-GT-7: every line, from its own pieces
       items, welds, supports, spools: [...spMap.values()], bom: [...bomMap.values()].sort((a, b) => a.itemNo - b.itemNo), nodes,
       totals: { items: items.length, welds: welds.length, fieldWelds: welds.filter(w => w.shopField === 'field').length, supports: supports.length, pipeLength, weight },
     });

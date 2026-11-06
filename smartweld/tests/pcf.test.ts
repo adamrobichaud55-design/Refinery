@@ -37,7 +37,7 @@ for (const [plant, gt] of [['P1', 'public/groundtruth'], ['P2', 'public/plants/P
   });
   it('the owner\'s zero-checks of the review (SW-LL-8, SW-GT-7, SW-PCF-2..4) all read zero on the committed files', () => {
     const dir = pcfDir(gt); if (!existsSync(join(dir, 'INDEX.csv'))) return;
-    const r = checkPlant(gt, { valveToValve: plant !== 'P1' });
+    const r = checkPlant(gt);
     expect(Object.entries(r.counts).filter(([, v]) => v > 0).map(([k, v]) => `${k}: ${v} e.g. ${r.examples[k].join(', ')}`)).toEqual([]);
   });
   it('the committed files equal a fresh write (deterministic)', () => {

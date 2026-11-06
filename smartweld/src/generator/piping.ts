@@ -124,7 +124,7 @@ type Item =
   | { k: 'spade' | 'spec'; NPS: number; cls: PipeClass }
   | { k: 'reducer'; from: number; to: number; cls: PipeClass; flat?: 'top' | 'bottom' }
   | { k: 'pipe'; NPS: number; cls: PipeClass; L: number; joint?: JointEnd }
-  | { k: 'nipple'; NPS: number; cls: PipeClass; L: number; ends: NippleEnds; rev?: boolean }
+  | { k: 'nipple'; NPS: number; cls: PipeClass; L: number; ends: NippleEnds; rev?: boolean; sock?: boolean }   // sock: the plain end goes into a socket (SW-GT-7)
   | { k: 'coupling'; NPS: number; cls: PipeClass; end: 'SW' | 'TH' }
   | { k: 'swage'; from: number; to: number; cls: PipeClass; e1: JointEnd; e2: JointEnd }
   | { k: 'plug'; NPS: number; cls: PipeClass; socket?: boolean }
@@ -158,10 +158,10 @@ function buildStack(line: string, s: V3, w: V3, items: Item[], prevTag: string):
         const v = partFromKey(`VLV|${it.type}|${it.NPS}|${it.cls}|SW`), sb = smallBore(it.NPS, it.cls), reach = v.dims.sideC.value + sb.tf + endLength(sb, 'SW'), vt = comps[comps.length - 1].tag, side: Comp[] = extra?.side ?? [];
         const xd: V3 = unit([T[0], T[1], T[2]]);
         const pa = buildStack(line, add(c, xd, reach), xd, it.type === 'FWAY'
-          ? [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE' }, { k: 'valve', type: 'NEEDLE', NPS: Math.min(it.NPS, 1), cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: Math.min(it.NPS, 1), cls: it.cls }]
-          : [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE' }, { k: 'valve', type: 'GATE', NPS: it.NPS, cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: it.NPS, cls: it.cls }], vt);
+          ? [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE', sock: it.ends === 'SW' }, { k: 'valve', type: 'NEEDLE', NPS: Math.min(it.NPS, 1), cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: Math.min(it.NPS, 1), cls: it.cls }]
+          : [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE', sock: it.ends === 'SW' }, { k: 'valve', type: 'GATE', NPS: it.NPS, cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: it.NPS, cls: it.cls }], vt);
         side.push(...pa.comps.map((x, i) => ({ ...x, tag: `${vt}:A${i + 1}` })));
-        if (it.type === 'FWAY') { const pb = buildStack(line, add(c, xd, -reach), neg(xd), [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE' }, { k: 'valve', type: 'GATE', NPS: it.NPS, cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: it.NPS, cls: it.cls }], vt);   // SW-LL-8 (1): a plug only in a valve's end
+        if (it.type === 'FWAY') { const pb = buildStack(line, add(c, xd, -reach), neg(xd), [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE', sock: it.ends === 'SW' }, { k: 'valve', type: 'GATE', NPS: it.NPS, cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: it.NPS, cls: it.cls }], vt);   // SW-LL-8 (1): a plug only in a valve's end
           side.push(...pb.comps.map((x, i) => ({ ...x, tag: `${vt}:B${i + 1}` }))); }
         extra = { ...(extra ?? {}), side };
       }
@@ -169,7 +169,7 @@ function buildStack(line: string, s: V3, w: V3, items: Item[], prevTag: string):
     } else if (it.k === 'swtee') {
       const sb = smallBore(it.NPS, it.cls), C = smallTeeC(sb, 'SW'), c = add(p, w, C), bd = stemDir;
       push({ kind: 'tee', key: `SWTEE|${it.NPS}|${it.cls}|${it.NPS}|SW`, T: frameFromAxes(c, bd, w), a: p, b: add(p, w, 2 * C), NPS: it.NPS, cls: it.cls, e1: 'SW', e2: 'SW' });
-      const tt = comps[comps.length - 1].tag, pb = buildStack(line, add(c, bd, C), bd, [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE' }, { k: 'valve', type: 'GATE', NPS: it.NPS, cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: it.NPS, cls: it.cls }], tt), side: Comp[] = extra?.side ?? [];   // SW-LL-8 (1)
+      const tt = comps[comps.length - 1].tag, pb = buildStack(line, add(c, bd, C), bd, [{ k: 'nipple', NPS: it.NPS, cls: it.cls, L: 4, ends: 'TOE', sock: true }, { k: 'valve', type: 'GATE', NPS: it.NPS, cls: it.cls, ends: 'TH' }, { k: 'plug', NPS: it.NPS, cls: it.cls }], tt), side: Comp[] = extra?.side ?? [];   // SW-LL-8 (1)
       side.push(...pb.comps.map((x, i) => ({ ...x, tag: `${tt}:P${i + 1}` }))); extra = { ...(extra ?? {}), side };
       p = add(p, w, 2 * C); lastWeld = false;
     } else if (it.k === 'psv') {
@@ -201,7 +201,7 @@ function buildStack(line: string, s: V3, w: V3, items: Item[], prevTag: string):
       push({ kind: 'pipe', key: `PIPE|${it.NPS}|${it.cls}|${it.L.toFixed(3)}${joint === 'TH' ? '|TH' : ''}`, T: frameFromAxes(p, yUp, w), a: p, b: add(p, w, it.L), NPS: it.NPS, cls: it.cls, e1: e, e2: e });
       p = add(p, w, it.L); lastWeld = joint === 'BW';
     } else if (it.k === 'nipple') {
-      const ends = it.ends, eA: EndT = ends === 'TBE' ? 'TH' : ends === 'PBE' ? 'SP' : it.rev ? 'TH' : 'BW', eB: EndT = ends === 'TBE' ? 'TH' : ends === 'PBE' ? 'SP' : it.rev ? 'BW' : 'TH';
+      const ends = it.ends, plain: EndT = it.sock ? 'SP' : 'BW', eA: EndT = ends === 'TBE' ? 'TH' : ends === 'PBE' ? 'SP' : it.rev ? 'TH' : plain, eB: EndT = ends === 'TBE' ? 'TH' : ends === 'PBE' ? 'SP' : it.rev ? plain : 'TH';
       push({ kind: 'nipple', key: `NIP|${it.NPS}|${it.cls}|${it.L.toFixed(3)}|${ends}`, T: frameFromAxes(p, yUp, w), a: p, b: add(p, w, it.L), NPS: it.NPS, cls: it.cls, e1: eA, e2: eB });
       p = add(p, w, it.L); lastWeld = false;
     } else if (it.k === 'coupling') {
@@ -462,8 +462,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
   const groupOf = (l: LineDef) => (P2 ? lineClassCode({ no: l.no, service: l.service, cls: l.cls, from: l.from.k === 'tap' ? `tap ${l.from.line}` : l.from.k, to: l.to.k === 'tap' ? `tap ${l.to.line}` : l.to.k }, new Map([...byNoAll].map(([k, v]) => [k, { no: v.no, service: v.service, cls: v.cls, from: v.from.k === 'tap' ? `tap ${v.from.line}` : v.from.k, to: v.to.k === 'tap' ? `tap ${v.to.line}` : v.to.k }])))[0] : 'H');
   const fl = (l: LineDef, k: 'wnf' | 'wnfR', NPS = l.NPS, cls = l.cls, so = true): Item => ({ k: so && flangeOf(l) === 'SO' ? (k === 'wnf' ? 'sof' : 'sofR') : k, NPS, cls });
   /** SW-LL-8 (5): no two valves bolt straight together; a 6 in pipe stub flanged with the stack's kind of flange stands between (plant 2) */
-  const spaced = (l: LineDef, items: Item[], so = true): Item[] => {
-    if (!P2) return items;
+  const spaced = (l: LineDef, items: Item[], so = true): Item[] => {   // SW-LL-8 (5), both plants (amended 2026-11-06)
     const out: Item[] = [];
     for (let i = 0; i < items.length; i++) {
       const it = items[i]; out.push(it);
@@ -478,7 +477,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     if (SPEC_SERVICES.has(nz.service) && /^(V|C|D|T|R)-/.test(nz.equip)) return [{ k: 'spec', NPS: nz.NPS, cls: l.cls }, { k: 'gasket', NPS: nz.NPS, cls: l.cls }];
     return [];
   };
-  const NIP = (NPS: number, cls: PipeClass, ends: NippleEnds, L = 4, rev = false): Item => ({ k: 'nipple', NPS, cls, L, ends, rev });
+  const NIP = (NPS: number, cls: PipeClass, ends: NippleEnds, L = 4, rev = false, sock = false): Item => ({ k: 'nipple', NPS, cls, L, ends, rev, ...(sock ? { sock } : {}) });
   /** SW-LL-8 (7): a slip-on flange never sits straight on a reducer; in a slip-on class a 6 in pipe stub stands between */
   const soStub = (l: LineDef, NPS: number): Item[] => (flangeOf(l) === 'SO' ? [{ k: 'pipe', NPS, cls: l.cls, L: 6 }] : []);
   /** the item stack at a nozzle end (SW-LL-3, SW-LL-6); items listed from the nozzle face outward */
@@ -681,7 +680,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
       const at = l.to.at, joint = jointOf(l), NPS = l.NPS, cls = l.cls;
       const items: Item[] = joint === 'TH'
         ? (sN => [{ k: 'plug', NPS: sN, cls } as Item, { k: 'valve', type: 'GATE', NPS: sN, cls, ends: 'TH' }, NIP(sN, cls, 'TBE'), ...(NPS > sN ? [{ k: 'swage', from: sN, to: NPS, cls, e1: 'TH', e2: 'TH' } as Item, NIP(NPS, cls, 'TBE')] : [])])(Math.min(NPS, 0.75))
-        : joint === 'SW' ? [{ k: 'plug', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TOE', 4, true)]   // SW-LL-8 (1): a threaded plug in a threaded valve, a one-end-threaded nipple up into the socket-weld line
+        : joint === 'SW' ? [{ k: 'plug', NPS, cls }, { k: 'valve', type: 'GATE', NPS, cls, ends: 'TH' }, NIP(NPS, cls, 'TOE', 4, true, true)]   // SW-LL-8 (1): a threaded plug in a threaded valve, a one-end-threaded nipple up into the socket-weld line
         : [{ k: 'blindR', NPS, cls }, { k: 'gasket', NPS, cls }, { k: 'valve', type: isoValve(NPS, cls, groupOf(l)), NPS, cls }, { k: 'gasket', NPS, cls }, fl(l, 'wnf')];
       const b = orient(items, it => buildStack(l.no, at, [0, 1, 0], it, 'station'), lineId.get(l.no)!, [0, 1, 0]).b;
       if (P2 && l.service === 'HS') {   // SW-LL-6 (amended): the riser offsets 18 in outward at 12.5 ft through two 45° elbows
@@ -1013,6 +1012,10 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
         let clear = true; const id = lineId.get(run.no)!, r = OD / 2;
         for (let s = 0; s <= len(sub(Q2, Q1)) + 1e-6; s += H / 2) { const q = add(Q1, unit(sub(Q2, Q1)), s), c = g.cellOf(q); if (!g.inside(c[0], c[1], c[2]) || !g.clear(c[0], c[1], c[2], r + 1.5, [id])) { clear = false; break; } }   // the diagonal is off the grid: half a cell of margin
         if (!clear) continue;
+        // SW-RT-8 (amended): neither 45° elbow within 6 in of a grating its leg passes, or of the wall line (SW-PEN-1/2 want a straight piece through a sleeve)
+        const reach = R45 + 6, nearSleeve = [Q1, Q2].some(q => st.gratings.some(gr => Math.abs(gr.top - q[1]) < reach && q[0] >= gr.box[0][0] - reach && q[0] <= gr.box[1][0] + reach && q[2] >= gr.box[0][2] - reach && q[2] <= gr.box[1][2] + reach)
+          || (plant.wallX !== undefined && Math.abs(q[0] - plant.wallX) < reach));
+        if (nearSleeve) continue;
         corner.splice(i, 2, { p: Q1, ang: 45 }, { p: Q2, ang: 45 }); pts = corner.map(c => c.p); i++;
       }
     }

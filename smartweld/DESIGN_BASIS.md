@@ -1969,8 +1969,11 @@ consults no outside format description (PROVENANCE P-62).
   5. Two valves never bolt straight together: a pipe stub of 6 in, flanged at both ends with the
      valves' kind of flange, stands between them (the check and block valve of a pump discharge,
      the valves of a control station, a block and its throttling globe, a block and a rotary
-     valve, a block and a check at a take-off). Plant 1's sixteen such joints on ten lines are
-     left as drawn, since the owner's Revision 1 drawings match them (P-69); plant 2 applies it.
+     valve, a block and a check at a take-off). Both plants apply it (amended 2026-11-06 at the
+     owner's follow-up: plant 1's sixteen such joints on ten lines, first left as drawn because
+     the owner's Revision 1 drawings of stage 8 matched them, now take the stub too, with
+     weld-neck flanges as plant 1's are; those ten lines then differ from the Revision 1 drawings
+     by the stub, P-71).
   6. A blind may bolt straight onto a valve's end flange.
   7. A slip-on flange needs a pipe end to slip over: never straight on a tee, an outlet or a
      reducer. A branch leaving a tee in a slip-on class has a 6 in pipe stub between the tee and
@@ -1984,9 +1987,15 @@ consults no outside format description (PROVENANCE P-62).
 - `SW-GT-7` Ground truth amended with the review: a reducer or swage records its large size as the
   item size and its small size as the branch size, and the PCF gives each end its own bore from the
   item that meets it; a branch outlet's base weld joins the run and the outlet itself; a line's joint
-  type in its header is read from its own pipe pieces (butt-weld if any pipe is butt-welded, else
-  socket-weld if any is plain-ended into a socket, else threaded), not from the class alone; a
-  nipple's item code carries its length; an equipment nozzle record carries its flange type; the
+  type in its header is read from its own pipe pieces and nipples (butt-weld if any is
+  butt-welded, else socket-weld if any is plain-ended into a socket, else threaded), not from the
+  class alone, and every line carries it, a stub of nipples and fittings included; a line of
+  flanged items only, with no weld, is headed by its class joint (amended 2026-11-06: the stubs
+  had no header joint and were written butt-weld); a nipple whose plain end goes into a socket
+  (a station's side port, a socket-weld tee's spare branch, the hose station's nipple up into its
+  socket-weld line) records that end as socket-weld, so its symbol key is `NISS`, and a nipple
+  whose plain end is butt-welded to a flange records it butt-weld, `NIBC`; a nipple's item code
+  carries its length; an equipment nozzle record carries its flange type; the
   ground-truth kind of a branch outlet is `outlet`. Reason: the owner's reader found each of these
   ambiguous or wrong in the first files.
 
@@ -2014,7 +2023,10 @@ generator reads the same files, so one file per line serves both (owner's instru
   of SW-PCF-3. Reason: a file whose points do not meet is rejected by every importer; the ground
   truth's points meet by SW-GT-3, so the writer copies them and adds nothing. Amended with the
   owner's review: a bend's centre point is its work point, where the two centre lines meet (found
-  from the legs either side of the bend); a tee, a three-way and a four-way valve always carry a
+  as the meeting point of the two legs either side of the bend, each leg the line through the
+  bend's end along the part that touches it, whichever end that part touches; 45° bends and the
+  threaded and socket-weld elbows included; amended 2026-11-06 when the hose-station risers' 45°
+  elbows were found written at their chord midpoint); a tee, a three-way and a four-way valve always carry a
   branch point, from the branch line where one leaves and else from the fitting's own branch
   mouth; a four-way valve carries a second branch point at its spare port; a reducer, a swage and
   an outlet give each end its own bore, the outlet's first end point staying on the run whichever
@@ -2248,7 +2260,8 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
   1 in below the grating to 2 in above the walking surface (a curb that stops dropped objects
   and keeps insulation off the grating), welded to a `PL1/4` collar 2 in wide that rests on the
   bars (fillet SW-WD-1). The grating is cut round at the sleeve OD + 1/4 in (SW-GR-*). The sleeve
-  is an item of the line (kind `penetration`, loose) in the ground truth.
+  is an item of the line (kind `penetration`, loose) in the ground truth, and it sits round a
+  straight piece of the line (a pipe or nipple) that runs through its whole length.
 - `SW-PEN-2` Wall penetration: where a line passes the building's steel line through the
   cladding, a sleeve as SW-PEN-1 from 2 in inside the panel to 2 in outside it, with a `PL1/8`
   escutcheon plate 4 in larger than the sleeve on the outer face (fasteners not modeled,
@@ -2264,7 +2277,10 @@ size and class (SW-PIPE-2/3); nothing is taken from a published table.
 - `SW-RT-8` Plant 2 only: where a routed line jogs sideways by at most 8 ft between two parallel runs
   (two 90° elbows back to back with a short pipe between), the jog is made with two 45° elbows
   (SW-FIT-1, or SW-SWT-3 in small bore) on a diagonal centred on the jog, when the diagonal keeps the
-  SW-RT-3 clearance and no branch sits on the replaced length. Reason: two 45° elbows make a
+  SW-RT-3 clearance, no branch sits on the replaced length, and neither elbow would fall within
+  6 in of a platform grating or of the building's wall line (SW-PEN-1/2: a sleeve needs a straight
+  piece through it; amended 2026-11-06 when a floor sleeve was found round the end of a 45°
+  elbow). Reason: two 45° elbows make a
   smoother offset with less pressure drop and no short pipe piece; it is how a designer draws an
   offset. (Amended in stage 9 from 4 ft: the first count gave seven offsets; at 8 ft the diagonal
   is 11 ft, still no longer than the two legs and the pipe it replaces.)

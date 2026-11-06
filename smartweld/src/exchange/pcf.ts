@@ -153,11 +153,17 @@ function outletEnds(it: GTItem, main: GTItem[], i: number): { run: Pt; mouth: Pt
 }
 /** the work point of a bend: where its two leg centre lines meet, from the legs either side (SW-PCF-2) */
 function workPoint(it: GTItem, main: GTItem[], i: number): Pt {
+  // SW-PCF-2 (amended): the meeting point of the two legs, each the line through the bend's end along the part that touches it
   const ang = it.key.split('|')[3] === '45' ? Math.PI / 4 : Math.PI / 2, chord = dist(it.a, it.b), L = chord / (2 * Math.cos(ang / 2));
-  const legDir = (n: GTItem | undefined, at: Pt): Pt | null => { if (!n) return null; const far = near(n.a, at) ? n.b : near(n.b, at) ? n.a : null; if (!far) return null; const d = dist(far, at); return d < 1e-6 ? null : { E: (at.E - far.E) / d, N: (at.N - far.N) / d, EL: (at.EL - far.EL) / d }; };
-  const d1 = legDir(main[i - 1], it.a), d2 = legDir(main[i + 1], it.b);
-  if (d1) return { E: it.a.E + d1.E * L, N: it.a.N + d1.N * L, EL: it.a.EL + d1.EL * L };
-  if (d2) return { E: it.b.E - d2.E * L, N: it.b.N - d2.N * L, EL: it.b.EL - d2.EL * L };
+  const legAt = (n: GTItem | undefined, at: Pt): Pt | null => { if (!n) return null; const far = near(n.a, at) ? n.b : near(n.b, at) ? n.a : null; if (!far) return null; const d = dist(far, at); return d < 1e-6 ? null : { E: (at.E - far.E) / d, N: (at.N - far.N) / d, EL: (at.EL - far.EL) / d }; };
+  const legs: { at: Pt; d: Pt }[] = [];
+  for (const n of [main[i - 1], main[i + 1]]) for (const at of [it.a, it.b]) { const d = n && !legs.some(l => l.at === at) ? legAt(n, at) : null; if (d) legs.push({ at, d }); }
+  if (legs.length === 2) {   // closest point of the two leg lines (they meet at the work point)
+    const [p, q] = legs, w = { E: p.at.E - q.at.E, N: p.at.N - q.at.N, EL: p.at.EL - q.at.EL }, dot = (u: Pt, v: Pt) => u.E * v.E + u.N * v.N + u.EL * v.EL;
+    const a = dot(p.d, p.d), b = dot(p.d, q.d), c = dot(q.d, q.d), d0 = dot(p.d, w), e = dot(q.d, w), den = a * c - b * b;
+    if (Math.abs(den) > 1e-9) { const t = (b * e - c * d0) / den; return { E: p.at.E + p.d.E * t, N: p.at.N + p.d.N * t, EL: p.at.EL + p.d.EL * t }; }
+  }
+  if (legs.length) { const { at, d } = legs[0]; return { E: at.E + d.E * L, N: at.N + d.N * L, EL: at.EL + d.EL * L }; }
   return it.centre;
 }
 
