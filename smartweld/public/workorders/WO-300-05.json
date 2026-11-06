@@ -1,6 +1,6 @@
 {
  "number": "WO-300-05",
- "title": "Replace VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300 (4\"-P300-P-1005/B13)",
+ "title": "Replace VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300 (4\"-P300-P-1005/B18)",
  "primaryAsset": {
   "tag": "E-101",
   "kind": "equipment",
@@ -23,46 +23,57 @@
    }
   },
   {
-   "tag": "4\"-P300-P-1005/B13",
+   "tag": "4\"-P300-P-1005/B18",
    "kind": "item",
    "description": "VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300",
    "line": "4\"-P300-P-1005",
    "at": {
     "E": 402,
-    "N": -187.9063,
+    "N": -182.9063,
     "EL": 1452
    }
   },
   {
-   "tag": "4\"-P300-P-1005/B15",
+   "tag": "4\"-P300-P-1005/B20",
    "kind": "item",
    "description": "GASKET 4\" P300 COMPRESSED SHEET",
    "line": "4\"-P300-P-1005",
    "at": {
     "E": 402,
-    "N": -179.6875,
+    "N": -174.6875,
     "EL": 1452
    }
   },
   {
-   "tag": "4\"-P300-P-1005/B12",
+   "tag": "4\"-P300-P-1005/B17",
    "kind": "item",
    "description": "GASKET 4\" P300 COMPRESSED SHEET",
    "line": "4\"-P300-P-1005",
    "at": {
     "E": 402,
-    "N": -196.125,
+    "N": -191.125,
     "EL": 1452
    }
   },
   {
-   "tag": "4\"-P300-P-1005/B16",
+   "tag": "4\"-P300-P-1005/B26",
    "kind": "item",
    "description": "VALVE, GATE, WEDGE, OS&Y 4\" P300",
    "line": "4\"-P300-P-1005",
    "at": {
     "E": 402,
-    "N": -172,
+    "N": -150,
+    "EL": 1452
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1005/B24",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 4\" P300 RAISED FACE",
+   "line": "4\"-P300-P-1005",
+   "at": {
+    "E": 402,
+    "N": -160.4687,
     "EL": 1452
    }
   },
@@ -73,7 +84,18 @@
    "line": "4\"-P300-P-1005",
    "at": {
     "E": 402,
-    "N": -203.8125,
+    "N": -215.8125,
+    "EL": 1452
+   }
+  },
+  {
+   "tag": "4\"-P300-P-1005/B13",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 4\" P300 RAISED FACE",
+   "line": "4\"-P300-P-1005",
+   "at": {
+    "E": 402,
+    "N": -205.3437,
     "EL": 1452
    }
   }
@@ -88,7 +110,7 @@
  "reason": "Control valve trim worn; replace the valve in kind.",
  "scope": [
   "Isolate per the isolation list, drain and vent 4\"-P300-P-1005 between the isolations.",
-  "Unbolt and remove VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300 (4\"-P300-P-1005/B13) at E 33'-6\"  N -15'-7-15/16\"  EL 121'-0\".",
+  "Unbolt and remove VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300 (4\"-P300-P-1005/B18) at E 33'-6\"  N -15'-2-15/16\"  EL 121'-0\".",
   "Inspect both flange faces (SW-NDE-5); dress or report damage.",
   "Install a new VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300 of the same size, class and face-to-face (CONTROL4-P300), with new gaskets and studs, stem orientation as removed.",
   "Tighten the studs to the stated preload in three passes, cross pattern (SW-WO-5).",
@@ -101,32 +123,32 @@
   "ISO-P-1005"
  ],
  "items": [
-  "4\"-P300-P-1005/B13",
-  "4\"-P300-P-1005/B15",
-  "4\"-P300-P-1005/B12"
+  "4\"-P300-P-1005/B18",
+  "4\"-P300-P-1005/B20",
+  "4\"-P300-P-1005/B17"
  ],
  "isolations": [
   {
    "seq": 1,
    "kind": "valve",
-   "tag": "4\"-P300-P-1005/B16",
+   "tag": "4\"-P300-P-1005/B26",
    "line": "4\"-P300-P-1005",
-   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 4\" P300 (4\"-P300-P-1005/B16)",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 4\" P300 (4\"-P300-P-1005/B26)",
    "at": {
     "E": 402,
-    "N": -172,
+    "N": -150,
     "EL": 1452
    }
   },
   {
    "seq": 2,
    "kind": "blind",
-   "tag": "4\"-P300-P-1005/B13",
+   "tag": "4\"-P300-P-1005/B24",
    "line": "4\"-P300-P-1005",
-   "description": "Fit a line blind between 4\"-P300-P-1005/B16 and VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300 (4\"-P300-P-1005/B13), work side",
+   "description": "Fit a line blind between 4\"-P300-P-1005/B26 and FLANGE WELD-NECK 4\" P300 RAISED FACE (4\"-P300-P-1005/B24), work side",
    "at": {
     "E": 402,
-    "N": -196.0625,
+    "N": -163.1875,
     "EL": 1452
    }
   },
@@ -138,7 +160,7 @@
    "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 4\" P300 (4\"-P300-P-1005/B10)",
    "at": {
     "E": 402,
-    "N": -203.8125,
+    "N": -215.8125,
     "EL": 1452
    }
   },
@@ -147,10 +169,10 @@
    "kind": "blind",
    "tag": "4\"-P300-P-1005/B13",
    "line": "4\"-P300-P-1005",
-   "description": "Fit a line blind between 4\"-P300-P-1005/B10 and VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300 (4\"-P300-P-1005/B13), work side",
+   "description": "Fit a line blind between 4\"-P300-P-1005/B10 and FLANGE WELD-NECK 4\" P300 RAISED FACE (4\"-P300-P-1005/B13), work side",
    "at": {
     "E": 402,
-    "N": -196.0625,
+    "N": -208.0625,
     "EL": 1452
    }
   }
@@ -177,15 +199,15 @@
  },
  "bolting": [
   {
-   "joint": "4\"-P300-P-1005/B15",
-   "studs": "4 × 1\" studs (4\"-P300-P-1005/B17)",
+   "joint": "4\"-P300-P-1005/B20",
+   "studs": "4 × 1\" studs (4\"-P300-P-1005/B22)",
    "preloadPerStud": 35342.9174,
    "passes": 3,
    "basis": "SW-WO-5"
   },
   {
-   "joint": "4\"-P300-P-1005/B12",
-   "studs": "4 × 1\" studs (4\"-P300-P-1005/B14)",
+   "joint": "4\"-P300-P-1005/B17",
+   "studs": "4 × 1\" studs (4\"-P300-P-1005/B19)",
    "preloadPerStud": 35342.9174,
    "passes": 3,
    "basis": "SW-WO-5"
@@ -195,27 +217,27 @@
   {
    "description": "VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 4\" P300",
    "qty": 1,
-   "replaces": "4\"-P300-P-1005/B13"
+   "replaces": "4\"-P300-P-1005/B18"
   },
   {
    "description": "GASKET 4\" P300 COMPRESSED SHEET",
    "qty": 1,
-   "replaces": "4\"-P300-P-1005/B15"
+   "replaces": "4\"-P300-P-1005/B20"
   },
   {
    "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P300",
+   "qty": 1,
+   "replaces": "4\"-P300-P-1005/B22"
+  },
+  {
+   "description": "GASKET 4\" P300 COMPRESSED SHEET",
    "qty": 1,
    "replaces": "4\"-P300-P-1005/B17"
   },
   {
-   "description": "GASKET 4\" P300 COMPRESSED SHEET",
-   "qty": 1,
-   "replaces": "4\"-P300-P-1005/B12"
-  },
-  {
    "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P300",
    "qty": 1,
-   "replaces": "4\"-P300-P-1005/B14"
+   "replaces": "4\"-P300-P-1005/B19"
   }
  ],
  "itp": [
@@ -239,7 +261,7 @@
   },
   {
    "step": 2,
-   "activity": "Valve 4\"-P300-P-1005/B13 removed; flange faces inspected",
+   "activity": "Valve 4\"-P300-P-1005/B18 removed; flange faces inspected",
    "reference": "SW-NDE-5",
    "acceptance": "No radial scratch across the sealing face",
    "record": "Flange face inspection record",

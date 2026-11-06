@@ -1741,6 +1741,12 @@ reported for the drawing's author to resolve.
   - `match.json` also maps every model line to its drawing and every weld to its label and sheet.
   - The viewer's line inspector, the work-order data and packs, and the demo package link each
     line to its imported drawing beside the generated isometric (SW-ISO-1).
+  - When the model changes after a revision was received (a rule amendment, not a drawing
+    error), the lines whose items, welds or supports changed are listed in `model-changed.json`
+    with the provenance entry and the rule; a drawing of such a line, or carrying such a branch,
+    gets one `info` finding `model-changed` in place of its content findings and no fix
+    instruction, since the next revision is drawn from the new files. The next receipt clears the
+    list (amended 2026-11-06, P-71: thirty-one plant 1 lines under SW-LL-8 (5) and SW-LL-3).
 
 - `SW-IMP-7` Fix list: every finding becomes an instruction to the drawings' author, written by
   the matcher as `FIXLIST.md` (to read) and `fixlist.json` (for the generator).

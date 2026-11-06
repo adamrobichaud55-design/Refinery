@@ -11,7 +11,7 @@ import type { WorkOrder } from '../src/generator/workorders';
 
 const pub = new URL('../public/', import.meta.url), dir = new URL('isometrics-imported/', pub);
 const idx = JSON.parse(readFileSync(new URL('index.json', dir), 'utf8')) as ImportedIndex;
-const match = JSON.parse(readFileSync(new URL('match.json', dir), 'utf8')) as { drawings: { drawing: string; line: string; branches: string[]; sheets: { sheet: number; welds: string[]; bom: { description: string; count: number | null; length: number | null }[] }[]; welds: { label: string; tag: string }[] }[]; findings: { level: string; code: string }[] };
+const match = JSON.parse(readFileSync(new URL('match.json', dir), 'utf8')) as { drawings: { drawing: string; line: string; branches: string[]; sheets: { sheet: number; welds: string[]; bom: { description: string; count: number | null; length: number | null }[] }[]; welds: { label: string; tag: string }[] }[]; findings: { level: string; code: string; drawing: string }[] };
 const receipt = JSON.parse(readFileSync(new URL('RECEIPT.json', dir), 'utf8')) as { received: { file: string; sha256: string }[]; drawings: Record<string, { file: string; sha256: string; line: string }> };
 const lines = new Map(readdirSync(new URL('groundtruth/lines/', pub)).map(f => { const L = JSON.parse(readFileSync(new URL(`groundtruth/lines/${f}`, pub), 'utf8')) as GTLine; return [L.header.line, L] as const; }));
 
@@ -36,12 +36,14 @@ describe('stage 8 — imported isometrics cover the plant (SW-IMP-1/2)', () => {
 });
 
 describe('stage 8 — the drawings agree with the model (SW-IMP-3/4)', () => {
-  const allowed = new Set(['coordinate-sign', 'weld-sheet', 'weld-unlabelled', 'weld-repeated', 'end-label']);
+  const allowed = new Set(['coordinate-sign', 'weld-sheet', 'weld-unlabelled', 'weld-repeated', 'end-label', 'model-changed']);
+  const behind = new Set(match.findings.filter(f => f.code === 'model-changed').map(f => f.drawing));   // SW-IMP-6 (amended): drawings behind the model since P-71
   it('no finding contradicts the model beyond the drafting points listed in the report', () => {
     for (const f of match.findings) expect(allowed.has(f.code), `${f.code}`).toBe(true);
   });
   it('every drawing\'s bill totals equal the model\'s items and supports of the line and its branches (re-checked here)', () => {
     for (const d of match.drawings) {
+      if (behind.has(d.drawing)) continue;
       const want = new Map<string, number>(); let pipe = 0;
       for (const ln of [d.line, ...d.branches]) {
         const L = lines.get(ln)!;
@@ -56,6 +58,7 @@ describe('stage 8 — the drawings agree with the model (SW-IMP-3/4)', () => {
   });
   it('every weld label on a drawing is a weld of its line or of a branch drawn on it', () => {
     for (const d of match.drawings) {
+      if (behind.has(d.drawing)) continue;
       const known = new Map(d.welds.map(w => [w.label, w.tag] as const));
       for (const s of d.sheets) for (const w of s.welds) expect(known.has(w), `${d.drawing} sheet ${s.sheet} ${w}`).toBe(true);
       const tags = new Set([d.line, ...d.branches].flatMap(ln => lines.get(ln)!.welds.map(w => w.tag)));

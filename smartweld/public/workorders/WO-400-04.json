@@ -1,6 +1,6 @@
 {
  "number": "WO-400-04",
- "title": "Remake flanged joint 3\"-P300-P-1015/B12 on 3\"-P300-P-1015",
+ "title": "Remake flanged joint 3\"-P300-P-1015/B25 on 3\"-P300-P-1015",
  "primaryAsset": {
   "tag": "P-103A",
   "kind": "equipment",
@@ -23,25 +23,58 @@
    }
   },
   {
-   "tag": "3\"-P300-P-1015/B12",
+   "tag": "3\"-P300-P-1015/B25",
    "kind": "item",
    "description": "GASKET 3\" P300 COMPRESSED SHEET",
    "line": "3\"-P300-P-1015",
    "at": {
     "E": 822,
-    "N": 212.8437,
+    "N": 165.6875,
     "EL": 1500
    }
   },
   {
-   "tag": "3\"-P300-P-1015/B13",
+   "tag": "3\"-P300-P-1015/B26",
    "kind": "item",
-   "description": "VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 3\" P300",
+   "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
    "line": "3\"-P300-P-1015",
    "at": {
     "E": 822,
-    "N": 205.6406,
+    "N": 158.8437,
     "EL": 1500
+   }
+  },
+  {
+   "tag": "3\"-P300-P-1015/B24",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 3\" P300 RAISED FACE",
+   "line": "3\"-P300-P-1015",
+   "at": {
+    "E": 822,
+    "N": 168.3125,
+    "EL": 1500
+   }
+  },
+  {
+   "tag": "3\"-P300-P-1015/A10",
+   "kind": "item",
+   "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
+   "line": "3\"-P300-P-1015",
+   "at": {
+    "E": 2088,
+    "N": -198,
+    "EL": 1278.5313
+   }
+  },
+  {
+   "tag": "3\"-P300-P-1015/A13",
+   "kind": "item",
+   "description": "FLANGE WELD-NECK 3\" P300 RAISED FACE",
+   "line": "3\"-P300-P-1015",
+   "at": {
+    "E": 2088,
+    "N": -198,
+    "EL": 1288
    }
   },
   {
@@ -56,35 +89,13 @@
    }
   },
   {
-   "tag": "3\"-P300-P-1015/B16",
-   "kind": "item",
-   "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
-   "line": "3\"-P300-P-1015",
-   "at": {
-    "E": 822,
-    "N": 191.5937,
-    "EL": 1500
-   }
-  },
-  {
-   "tag": "3\"-P300-P-1015/B2",
-   "kind": "item",
-   "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
-   "line": "3\"-P300-P-1015",
-   "at": {
-    "E": 822,
-    "N": 261.75,
-    "EL": 1500
-   }
-  },
-  {
-   "tag": "3\"-P300-P-1015/B5",
+   "tag": "3\"-P300-P-1015/B13",
    "kind": "item",
    "description": "FLANGE WELD-NECK 3\" P300 RAISED FACE",
    "line": "3\"-P300-P-1015",
    "at": {
     "E": 822,
-    "N": 252.2812,
+    "N": 210.2187,
     "EL": 1500
    }
   }
@@ -99,7 +110,7 @@
  "reason": "Weeping joint at the control valve station.",
  "scope": [
   "Isolate per the isolation list, drain and vent 3\"-P300-P-1015.",
-  "Break the joint at E 68'-6\"  N 17'-8-13/16\"  EL 125'-0\" between VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 3\" P300 and VALVE, GATE, WEDGE, OS&Y 3\" P300.",
+  "Break the joint at E 68'-6\"  N 13'-9-11/16\"  EL 125'-0\" between VALVE, GATE, WEDGE, OS&Y 3\" P300 and FLANGE WELD-NECK 3\" P300 RAISED FACE.",
   "Inspect both flange faces (SW-NDE-5).",
   "Fit a new gasket and new studs; tighten to the stated preload in three passes, cross pattern (SW-WO-5).",
   "Remove blinds; leak test on start-up (SW-TEST-2)."
@@ -111,56 +122,56 @@
   "ISO-P-1015"
  ],
  "items": [
-  "3\"-P300-P-1015/B12",
-  "3\"-P300-P-1015/B13",
-  "3\"-P300-P-1015/B10"
+  "3\"-P300-P-1015/B25",
+  "3\"-P300-P-1015/B26",
+  "3\"-P300-P-1015/B24"
  ],
  "isolations": [
   {
    "seq": 1,
    "kind": "valve",
-   "tag": "3\"-P300-P-1015/B16",
+   "tag": "3\"-P300-P-1015/A10",
    "line": "3\"-P300-P-1015",
-   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 3\" P300 (3\"-P300-P-1015/B16)",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 3\" P300 (3\"-P300-P-1015/A10)",
    "at": {
-    "E": 822,
-    "N": 191.5937,
-    "EL": 1500
+    "E": 2088,
+    "N": -198,
+    "EL": 1278.5313
    }
   },
   {
    "seq": 2,
    "kind": "blind",
-   "tag": "3\"-P300-P-1015/B13",
+   "tag": "3\"-P300-P-1015/A13",
    "line": "3\"-P300-P-1015",
-   "description": "Fit a line blind between 3\"-P300-P-1015/B16 and VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 3\" P300 (3\"-P300-P-1015/B13), work side",
+   "description": "Fit a line blind between 3\"-P300-P-1015/A10 and FLANGE WELD-NECK 3\" P300 RAISED FACE (3\"-P300-P-1015/A13), work side",
    "at": {
-    "E": 822,
-    "N": 212.7812,
-    "EL": 1500
+    "E": 2088,
+    "N": -198,
+    "EL": 1285.4375
    }
   },
   {
    "seq": 3,
    "kind": "valve",
-   "tag": "3\"-P300-P-1015/B2",
+   "tag": "3\"-P300-P-1015/B10",
    "line": "3\"-P300-P-1015",
-   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 3\" P300 (3\"-P300-P-1015/B2)",
+   "description": "Close and lock VALVE, GATE, WEDGE, OS&Y 3\" P300 (3\"-P300-P-1015/B10)",
    "at": {
     "E": 822,
-    "N": 261.75,
+    "N": 219.6875,
     "EL": 1500
    }
   },
   {
    "seq": 4,
    "kind": "blind",
-   "tag": "3\"-P300-P-1015/B5",
+   "tag": "3\"-P300-P-1015/B13",
    "line": "3\"-P300-P-1015",
-   "description": "Fit a line blind between 3\"-P300-P-1015/B2 and FLANGE WELD-NECK 3\" P300 RAISED FACE (3\"-P300-P-1015/B5), work side",
+   "description": "Fit a line blind between 3\"-P300-P-1015/B10 and FLANGE WELD-NECK 3\" P300 RAISED FACE (3\"-P300-P-1015/B13), work side",
    "at": {
     "E": 822,
-    "N": 254.8437,
+    "N": 212.7812,
     "EL": 1500
    }
   }
@@ -187,8 +198,8 @@
  },
  "bolting": [
   {
-   "joint": "3\"-P300-P-1015/B12",
-   "studs": "4 × 0.875\" studs (3\"-P300-P-1015/B14)",
+   "joint": "3\"-P300-P-1015/B25",
+   "studs": "4 × 0.875\" studs (3\"-P300-P-1015/B27)",
    "preloadPerStud": 27059.4211,
    "passes": 3,
    "basis": "SW-WO-5"
@@ -198,12 +209,12 @@
   {
    "description": "GASKET 3\" P300 COMPRESSED SHEET",
    "qty": 1,
-   "replaces": "3\"-P300-P-1015/B12"
+   "replaces": "3\"-P300-P-1015/B25"
   },
   {
    "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P300",
    "qty": 1,
-   "replaces": "3\"-P300-P-1015/B14"
+   "replaces": "3\"-P300-P-1015/B27"
   }
  ],
  "itp": [

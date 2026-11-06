@@ -432,13 +432,27 @@ def main(parsed):
                                      for s in sh],
                              welds=weld_index, items=item_index, file=f'{dn}.pdf', breaks=[dict(after=k, station=round(v[0], 4), at=dict(E=v[1][0], N=v[1][1], EL=v[1][2])) for k, v in sorted(breaks.items())]))
 
+    # SW-IMP-6 (amended 2026-11-06): drawings behind the model after a rule amendment (model-changed.json) carry one info
+    # finding in place of their content findings and no fix instruction; the next receipt clears the list
+    mcf = f'{OUT}/model-changed.json'
+    mc = json.load(open(mcf)) if os.path.exists(mcf) else None
+    behind = {}
+    if mc:
+        ch = set(mc['lines'])
+        behind = {d['drawing']: [l for l in [d['line'], *d['branches']] if l in ch] for d in out_dwgs}
+        behind = {dn: ls for dn, ls in behind.items() if ls}
+        findings[:] = [f for f in findings if f['drawing'] not in behind]
+        for dn, ls in behind.items():
+            fixes.pop(dn, None)
+            find('info', 'model-changed', dn, f"the model of {', '.join(ls)} changed after this revision was received ({mc['since']['provenance']}: "
+                 f"{mc['since']['rule']}); the drawing is behind the model until the next revision is received", lines=ls)
     for f in findings:
         f['line'] = f.get('line') or next((d['line'] for d in out_dwgs if d['drawing'] == f['drawing']), None)
     covered = {l for l in lines if l in hosts}
     summary = dict(drawings=len(out_dwgs), sheets=sum(len(d['sheets']) for d in out_dwgs), linesInModel=len(lines),
                    linesCovered=len(covered), ownDrawing=len([d for d in out_dwgs]),
                    branchesOnParent=sum(len(d['branches']) for d in out_dwgs),
-                   coordinateSign=convention,
+                   coordinateSign=convention, behindModel=len(behind),
                    findings=dict(collections.Counter(f['level'] for f in findings)),
                    byCode=dict(collections.Counter(f['code'] for f in findings)))
     return out_dwgs, hosts, findings, summary, fixes
@@ -691,6 +705,7 @@ if __name__ == '__main__':
     if '--selftest' in args:   # SW-IMP-7: a set corrected by the fix list re-matches with no finding and no change left
         fl = json.load(open(f'{OUT}/fixlist.json'))
         _, _, findings, summary, fixes = main(apply_fixes(read_drawings(rec), fl))
+        findings = [f for f in findings if f['level'] != 'info']   # a drawing behind the model (SW-IMP-6 amended) is not a finding against the set
         left = sum(len(v) for v in fixes.values())
         print(f"corrected set: {len(findings)} findings, {left} changes left, coordinate sign {summary['coordinateSign']}")
         for f in findings[:10]:
