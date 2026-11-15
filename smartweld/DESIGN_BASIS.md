@@ -2514,3 +2514,78 @@ used; the conventions below are SmartWeld's.
   checked by tests: every member instance of the model appears exactly once on a framing plan or
   elevation, every weld part is in the weld schedule, and every number on the sheets comes from the
   model.
+
+## 65. Plant 3: the crude topping unit (`SW-PLANT-8..11`) — stage 10
+
+- `SW-PLANT-8` Plant 3, `P3`, is a refinery crude topping unit assembled only from what plants 1
+  and 2 already hold: the equipment kit (§19–27: vertical vessel, horizontal drum, shell-and-tube
+  exchanger, centrifugal pump, cone-roof tank, rack, platforms, stairs, ladders), the catalogue
+  (§28–34, §60–62) and the line-list, joint, routing, support and penetration rules exactly as
+  they stand for plant 2. Every rule written for "plant 2" applies to plant 3 unchanged (in code:
+  every plant other than plant 1). Its building drawing is plant 2's (SW-PLANT-4) and so are its
+  rack and outdoor area (SW-PLANT-5, SW-PLANT-6, SW-RK-7, SW-RT-9, SW-RT-10). Plant 3 adds no
+  part type, no dimension and no joint, routing or support rule; it is a new layout, nozzle
+  schedule and line list (drawing data) and nothing else. Reason: the owner asked for a refinery
+  unit made of the familiar parts; a plant that adds nothing to the catalogue stays inside the
+  clean-room record of stages 1–9, and plants 1 and 2 regenerate unchanged.
+- `SW-PLANT-9` Plant 3 layout (SW-LAY-*, drawing; the values are in code, `PLANT3_LAYOUT`).
+  Equipment kept where plant 2 has it, with its unit number 3: two desalter vessels V-301/V-302
+  with the shared platform and stair tower, the crude column C-301 with its two platforms and
+  ladders, the overhead drum D-301, the exchanger pairs E-301/E-302 (south row) and E-303/E-304
+  (north row), the ten pumps P-301A/B … P-305A/B, the crude tank T-301 and the naphtha tank
+  T-302, the air receiver D-302 and the flare knock-out drum D-303 outdoors. The pairs change
+  duty, not place: E-301/E-302 are the steam preheaters on the crude feed and E-303/E-304 the
+  water-cooled residue coolers, so each pair carries the nozzle schedule plant 2 gives the other.
+  Added, all from the same kit and sizes: an overhead condenser E-305 and a distillate cooler
+  E-306 in the north row (each with the 7 ft access platform over its inlet nozzles), a residue
+  tank T-303 east of the crude tank and a distillate tank T-304 east of the air receiver (the
+  same tank, pad and caged ladder as T-301; they are vented only, with no blanketing, relief
+  valve or water connection), a distillate side-draw nozzle on the column between its platforms
+  and above the feed, a wash-water nozzle on each desalter and a third inlet on the overhead
+  drum for the condensate. Removed: everything of the solids system (the ten indoor and two
+  outdoor receivers, their walkway and stair, the conveying-air header, the fill and feeder
+  lines and their rotary feeders) and the adsorbers' regeneration steam. There is no fired
+  heater: the kit has none, and none is invented; the two steam preheaters carry the feed
+  heating, which makes this a low-temperature topping unit for demonstration and not a process
+  design. Reason: the items kept in place keep routes that are known to stand; the additions
+  are the least that gives a crude unit its three product circuits (overhead, side draw,
+  bottoms) and its tankage. (A first layout with the two added tanks side by side behind the
+  drums, nitrogen and relief lines on them and the condenser in the overhead's main run left
+  two to four flare lines without a route at the end wall and moved plant 2's reflux line to a
+  far rack lane with a span over its limit; see PROVENANCE P-72.)
+- `SW-PLANT-10` Plant 3 numbering and line list: equipment tags carry the unit number 3; line
+  numbers (SW-LL-1) use the sequence blocks of plant 1 plus 300 (process from 1301, headers from
+  2301, utility branches from 3301, relief from 4301, hose stations from 5301, equipment stubs
+  from 6301, line taps from 7301, header drains from 8301), so no tag or line number of plant 3
+  repeats one of plant 1 or 2. Process lines (SW-LL-3, SW-LL-7), plant 2's first and in plant
+  2's order, so that the router (which takes lines in list order within a size) gives them the
+  rack lanes and routes they have in plant 2: crude tank → charge pumps → preheaters (a
+  three-way pair) → desalters (switched by a four-way) → column feed; column overhead → drum
+  through a control valve (the hot-vapour bypass that holds the column pressure) → reflux pumps
+  to the column and naphtha pumps to the naphtha tank; bottoms → pumps → residue coolers (a
+  three-way pair) → residue tank; knock-out drum liquid → pumps → overhead drum. Then plant 3's
+  own: a branch from the overhead line → condenser E-305 → the drum's third inlet; side draw →
+  distillate cooler E-306 → distillate tank. Utility headers on the rack's top tier: cooling
+  water supply and return, steam, condensate, instrument air, plant air, nitrogen, water and
+  flare (no conveying air). Branches, relief valves, hose stations, stubs, taps and header
+  drains follow SW-LL-3..8 as in plant 2: cooling water to the four coolers and the condenser's
+  shell, steam and condensate at the preheaters, wash water to the desalters and the two near
+  tanks, nitrogen to the vessels, drums and the two near tanks, seal flush to every pump.
+- `SW-PLANT-11` Plant 3 areas (SW-AREA-1): A300 tank farm and outdoor drums, A310 desalting and
+  distillation (V-301, V-302, C-301, D-301), A320 exchangers, A330 pumps, A350 pipe rack. Files
+  (SW-PLANT-2): `public/plants/P3/` (piping, ground truth, PCF files), `eval/P3/` and
+  `downloads/designer-package-P3*`; review images in `screenshots/stage10/`. Tests: the
+  definition builds; no tag or line number is shared with plants 1 and 2; no component kind
+  appears that plant 2 does not have; every line is routed with no failure; the §40 checks and
+  the owner's zero-checks stand at zero.
+- `SW-PLANT-12` From plant 3 on, a stub on a tap (an instrument, sample, drain or vent connection or
+  a thermal relief valve standing on a line) may not point into an end stack of the line it
+  taps: beyond the branch outlet itself its column is tested against the parent line as against
+  any other line, the test SW-LL-7 already applies to the branch of a three-way or four-way
+  station. The plant definition switches the test on (`stubsClearOfParentStacks`); plants 1 and
+  2 leave it unset, so their generator path, their files and their hashes are unchanged (both
+  regenerated byte-identical, P-72). Reason: in plant 3 the instrument connection on the feed to
+  the second preheater stood on the riser beside that line's own control station and pointed
+  through the station's top flange; the clearance audit of §40 exempts a branch from its parent
+  near the outlet and reported only the 0.29 in between the stub's blind and the gate valve.
+  With the test the connection stands on the horizontal run just ahead of the riser, pointing up.

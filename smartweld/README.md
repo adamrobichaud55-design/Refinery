@@ -18,6 +18,7 @@ must accompany any distribution of the viewer. No published dimension tables, st
 | 7     | Equipment metadata; 25 shutdown work orders with scope, isolations, demo welding specs, NDE, tests and ITPs (`public/workorders/`); the generated isometrics of this stage were withdrawn in stage 8 | done |
 | 8     | The owner's isometric drawings (139 drawings, 240 sheets) imported and matched to the model; the project's only isometrics; their sheets are attached to the work-order packs (`public/isometrics-imported/`) | done |
 | 9     | Plant 2 (`public/plants/P2/`): the coverage plant with socket-weld and threaded piping, every symbol class of the owner's generator at least 20 times (SW-COV-2), its ground truth, answer key and designer package (`downloads/designer-package-P2.zip`); structural steel erection drawings with weld details for both plants (`downloads/erection-P1.pdf`, `erection-P2.pdf`) | done |
+| 10    | Plant 3 (`public/plants/P3/`): a crude topping unit built only from plant 2's kit, catalogue and rules (§65, SW-PLANT-8..12): two desalters, a column with overhead, side-draw and bottoms circuits, six exchangers, ten pumps, four tanks, 315 lines; its ground truth, PCF files, answer key, designer package (`downloads/designer-package-P3.zip`) and erection drawings (`downloads/erection-P3.pdf`); no fired heater (the kit has none) | done |
 
 ## Run
 
@@ -42,6 +43,8 @@ npx vite-node tools/export-pcf.ts P1|P2           # one PCF per line from the gr
 npx vite-node tools/pcf-check.ts P1|P2            # the owner's eighteen zero-checks on the ground truth and PCF files (SW-LL-8, SW-GT-7, SW-PCF-*, SW-PEN-1)
 npx vite-node tools/erection.ts P1|P2            # structural steel erection drawings (downloads/erection-P*.pdf, sheet previews)
 npx vite-node tools/render-plant.ts P2           # review images of plant 2 (screenshots/stage9/)
+npx vite-node tools/gen-plant.ts P3 public/plants/P3/plant-piping.json   # regenerate plant 3 (about 8 min); then export-gt, export-pcf, pcf-check, evalscore key,
+                                                 # designer-package, erection and render-plant with P3 as for plant 2 (images in screenshots/stage10/)
 ```
 
 Type any designation into the viewer (e.g. `W18x50`, `C12x20.7`, `L5x3x3/8`, `HSS8x6x3/8`,
@@ -78,7 +81,8 @@ The building views render the generated plant; click the 3D view to walk (W A S 
 Shift to run, Esc to release). The right panel lists the values derived by rule and the bill of
 materials computed from the same placed-part list that the 3D view draws.
 
-A plant selector in the toolbar switches every view between plant 1 and plant 2 (stage 9); plant 2 adds the
+A plant selector in the toolbar switches every view between plants 1, 2 and 3; plant 3 (stage 10) is the crude topping unit
+on plant 2's building and rack (its "bins" views look at the north exchanger row, where plant 2 has its bins). Plant 2 (stage 9) adds the
 socket-weld and threaded small bore, the outdoor area and the solids receivers.
 
 The "Plant piping" views add the stage-5 piping. The line inspector (right panel) lists any line's

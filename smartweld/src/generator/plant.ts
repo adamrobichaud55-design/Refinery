@@ -29,6 +29,8 @@ export interface PlantDef {
   flangeType: (l: LineDef, byNo: Map<string, LineDef>) => 'WN' | 'SO';
   /** SW-PEN-4: vertical runs may pass through platform gratings (with a sleeve) */
   verticalThroughPlatforms: boolean;
+  /** SW-PLANT-12: a stub on a tap may not point into the end stack of the line it taps (plant 3 onward; unset in plants 1 and 2) */
+  stubsClearOfParentStacks?: boolean;
   /** the east steel line, where outdoor lines pass the end wall (SW-PEN-2); undefined = no outdoor area */
   wallX?: number;
   areas: Record<string, { name: string; equipment: string[] }>;

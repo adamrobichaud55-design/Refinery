@@ -1,0 +1,5076 @@
+[
+ {
+  "tag": "V-301",
+  "type": "Vertical vessel",
+  "description": "V-301 vertical vessel 72\" ID × 216\" T/T",
+  "area": "A310",
+  "areaName": "Desalting and distillation",
+  "designation": "V-301 vertical vessel 72\" ID × 216\" T/T",
+  "material": "Grade 36",
+  "weight": 9917.6797,
+  "origin": {
+   "E": 420,
+   "N": -330,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 216,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 18.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 282.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "V-301-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 420,
+     "N": -285.9375,
+     "EL": 1452
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-1306",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-301-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 420,
+     "N": -285.9375,
+     "EL": 1308
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-1309",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-301-N3",
+    "service": "vent",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 420,
+     "N": -330,
+     "EL": 1513.9063
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6301",
+    "lineClass": "H150"
+   },
+   {
+    "id": "V-301-N4",
+    "service": "drain",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 462.375,
+     "N": -330,
+     "EL": 1302
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1.5\"-P150-D-6302",
+    "lineClass": "H150"
+   },
+   {
+    "id": "V-301-N5",
+    "service": "nitrogen",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 461.6563,
+     "N": -330,
+     "EL": 1446
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1\"-P150-N-3313",
+    "lineClass": "G150"
+   },
+   {
+    "id": "V-301-N6",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 461.5313,
+     "N": -330,
+     "EL": 1350
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-I-6303",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-301-N7",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 461.5313,
+     "N": -330,
+     "EL": 1416
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-I-6304",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-301-N8",
+    "service": "sample",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 461.5313,
+     "N": -330,
+     "EL": 1326
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-SP-6305",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-301-N10",
+    "service": "relief",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 396,
+     "N": -330,
+     "EL": 1516.3313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-RV-4301",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-301-N9",
+    "service": "water",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 420,
+     "N": -372.375,
+     "EL": 1368
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-W-3333",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "V-302",
+  "type": "Vertical vessel",
+  "description": "V-302 vertical vessel 72\" ID × 216\" T/T",
+  "area": "A310",
+  "areaName": "Desalting and distillation",
+  "designation": "V-302 vertical vessel 72\" ID × 216\" T/T",
+  "material": "Grade 36",
+  "weight": 9917.6797,
+  "origin": {
+   "E": 660,
+   "N": -330,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 216,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 18.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 282.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "V-302-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 660,
+     "N": -285.9375,
+     "EL": 1452
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-1308",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-302-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 660,
+     "N": -285.9375,
+     "EL": 1308
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-1310",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-302-N3",
+    "service": "vent",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 660,
+     "N": -330,
+     "EL": 1513.9063
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6306",
+    "lineClass": "H150"
+   },
+   {
+    "id": "V-302-N4",
+    "service": "drain",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 617.625,
+     "N": -330,
+     "EL": 1302
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1.5\"-P150-D-6307",
+    "lineClass": "H150"
+   },
+   {
+    "id": "V-302-N5",
+    "service": "nitrogen",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 618.3438,
+     "N": -330,
+     "EL": 1446
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1\"-P150-N-3314",
+    "lineClass": "G150"
+   },
+   {
+    "id": "V-302-N6",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 618.4688,
+     "N": -330,
+     "EL": 1350
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-I-6308",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-302-N7",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 618.4688,
+     "N": -330,
+     "EL": 1416
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-I-6309",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-302-N8",
+    "service": "sample",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 618.4688,
+     "N": -330,
+     "EL": 1326
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-SP-6310",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-302-N10",
+    "service": "relief",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 636,
+     "N": -330,
+     "EL": 1516.3313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-RV-4302",
+    "lineClass": "H300"
+   },
+   {
+    "id": "V-302-N9",
+    "service": "water",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 660,
+     "N": -372.375,
+     "EL": 1368
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-W-3334",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "C-301",
+  "type": "Vertical vessel",
+  "description": "C-301 vertical vessel 48\" ID × 240\" T/T",
+  "area": "A310",
+  "areaName": "Desalting and distillation",
+  "designation": "C-301 vertical vessel 48\" ID × 240\" T/T",
+  "material": "Grade 36",
+  "weight": 6784.4052,
+  "origin": {
+   "E": 840,
+   "N": 330,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 12.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 300.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "C-301-N1",
+    "service": "feed",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 840,
+     "N": 297.9375,
+     "EL": 1392
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-1309",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-301-N2",
+    "service": "overhead",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 840,
+     "N": 330,
+     "EL": 1528.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-1311",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-301-N3",
+    "service": "bottoms",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 840,
+     "N": 297.7188,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P300-P-1320",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-301-N4",
+    "service": "reflux",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 840,
+     "N": 298.6563,
+     "EL": 1500
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P300-P-1314",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-301-N5",
+    "service": "vent",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 858,
+     "N": 330,
+     "EL": 1521.9666
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6311",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-301-N6",
+    "service": "drain",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 809.625,
+     "N": 330,
+     "EL": 1272
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1.5\"-P150-D-6312",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-301-N7",
+    "service": "nitrogen",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 869.6563,
+     "N": 330,
+     "EL": 1386
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1\"-P150-N-3315",
+    "lineClass": "G150"
+   },
+   {
+    "id": "C-301-N8",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 810.4688,
+     "N": 330,
+     "EL": 1302
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-I-6313",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-301-N9",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 840,
+     "N": 359.5313,
+     "EL": 1410
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-I-6314",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-301-N10",
+    "service": "sample",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 840,
+     "N": 359.5313,
+     "EL": 1308
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-SP-6315",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-301-N11",
+    "service": "relief",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 822,
+     "N": 330,
+     "EL": 1528.3313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-RV-4303",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-301-N12",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 872.0625,
+     "N": 330,
+     "EL": 1416
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3\"-P300-P-1333",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "D-301",
+  "type": "Horizontal drum",
+  "description": "D-301 horizontal vessel 60\" ID × 180\"",
+  "area": "A310",
+  "areaName": "Desalting and distillation",
+  "designation": "D-301 horizontal vessel 60\" ID × 180\"",
+  "material": "Grade 36",
+  "weight": 7597.4106,
+  "origin": {
+   "E": 1008,
+   "N": -330,
+   "EL": 1290
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 84,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 15.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 20,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-301-N1",
+    "service": "inlet",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1038,
+     "N": -330,
+     "EL": 1328.2813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-1311",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-301-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1116,
+     "N": -330,
+     "EL": 1251.9375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-1312",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-301-N3",
+    "service": "relief",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1116,
+     "N": -330,
+     "EL": 1330.3313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-RV-4304",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-301-N4",
+    "service": "vent",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1068,
+     "N": -330,
+     "EL": 1325.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6316",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-301-N5",
+    "service": "drain",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1026,
+     "N": -330,
+     "EL": 1253.625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "1.5\"-P150-D-6317",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-301-N6",
+    "service": "nitrogen",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1092,
+     "N": -330,
+     "EL": 1325.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-N-3316",
+    "lineClass": "G150"
+   },
+   {
+    "id": "D-301-N7",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 1092,
+     "N": -365.5312,
+     "EL": 1290
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-I-6318",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-301-N8",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 1134,
+     "N": -365.5312,
+     "EL": 1290
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-I-6319",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-301-N9",
+    "service": "sample",
+    "NPS": 0.75,
+    "cls": "P300",
+    "face": {
+     "E": 1050,
+     "N": -365.5312,
+     "EL": 1290
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3/4\"-P300-SP-6320",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-301-N11",
+    "service": "inlet 2",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1140,
+     "N": -330,
+     "EL": 1327.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-1329",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-301-N12",
+    "service": "inlet 3",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1164,
+     "N": -330,
+     "EL": 1327.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-1332",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "D-302",
+  "type": "Horizontal drum",
+  "description": "D-302 horizontal vessel 42\" ID × 144\"",
+  "area": "A300",
+  "areaName": "Tank farm and outdoor drums",
+  "designation": "D-302 horizontal vessel 42\" ID × 144\"",
+  "material": "Grade 36",
+  "weight": 4462.2522,
+  "origin": {
+   "E": 3228,
+   "N": 120,
+   "EL": 1296
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 144,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 90,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 10.75,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 14,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 28.8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-302-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 3258,
+     "N": 120,
+     "EL": 1325.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": null,
+    "lineClass": null
+   },
+   {
+    "id": "D-302-N2",
+    "service": "outlet",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 3318,
+     "N": 120,
+     "EL": 1267.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P150-PA-3336",
+    "lineClass": "G150"
+   },
+   {
+    "id": "D-302-N3",
+    "service": "relief",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 3336,
+     "N": 120,
+     "EL": 1330.3313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-RV-4305",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-302-N4",
+    "service": "vent",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3288,
+     "N": 120,
+     "EL": 1322.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6321",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-302-N5",
+    "service": "drain",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3246,
+     "N": 120,
+     "EL": 1268.625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "1.5\"-P150-D-6322",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-302-N6",
+    "service": "nitrogen",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3312,
+     "N": 120,
+     "EL": 1322.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-N-3319",
+    "lineClass": "G150"
+   },
+   {
+    "id": "D-302-N7",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3312,
+     "N": 93.4688,
+     "EL": 1296
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6323",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-302-N8",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3354,
+     "N": 93.4688,
+     "EL": 1296
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6324",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-302-N9",
+    "service": "sample",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3270,
+     "N": 93.4688,
+     "EL": 1296
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-SP-6325",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-302-N10",
+    "service": "outlet 2",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3348,
+     "N": 147.375,
+     "EL": 1296
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "2\"-P150-IA-3335",
+    "lineClass": "G150"
+   }
+  ]
+ },
+ {
+  "tag": "D-303",
+  "type": "Horizontal drum",
+  "description": "D-303 horizontal vessel 60\" ID × 180\"",
+  "area": "A300",
+  "areaName": "Tank farm and outdoor drums",
+  "designation": "D-303 horizontal vessel 60\" ID × 180\"",
+  "material": "Grade 36",
+  "weight": 7597.4106,
+  "origin": {
+   "E": 3210,
+   "N": -120,
+   "EL": 1290
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 84,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 15.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 20,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-303-N1",
+    "service": "inlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 3240,
+     "N": -120,
+     "EL": 1329.9688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-FL-3337",
+    "lineClass": "F150"
+   },
+   {
+    "id": "D-303-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 3318,
+     "N": -120,
+     "EL": 1251.9375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P150-P-1327",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-303-N3",
+    "service": "relief",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 3318,
+     "N": -120,
+     "EL": 1330.3313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-RV-4306",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-303-N4",
+    "service": "vent",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3270,
+     "N": -120,
+     "EL": 1325.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6326",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-303-N5",
+    "service": "drain",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3228,
+     "N": -120,
+     "EL": 1253.625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "1.5\"-P150-D-6327",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-303-N6",
+    "service": "nitrogen",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3294,
+     "N": -120,
+     "EL": 1325.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-N-3320",
+    "lineClass": "G150"
+   },
+   {
+    "id": "D-303-N7",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3294,
+     "N": -155.5312,
+     "EL": 1290
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6328",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-303-N8",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3336,
+     "N": -155.5312,
+     "EL": 1290
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6329",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-303-N9",
+    "service": "sample",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3252,
+     "N": -155.5312,
+     "EL": 1290
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-SP-6330",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-303-N10",
+    "service": "outlet 2",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3366,
+     "N": -156.375,
+     "EL": 1290
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-P-6331",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-301",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-301 shell-and-tube exchanger 36\" ID × 192\"",
+  "area": "A320",
+  "areaName": "Exchangers",
+  "designation": "E-301 shell-and-tube exchanger 36\" ID × 192\"",
+  "material": "Grade 36",
+  "weight": 5575.0887,
+  "origin": {
+   "E": 1338,
+   "N": -330,
+   "EL": 1278
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 192,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 38.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 18,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-301-N1",
+    "service": "tube in",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1326,
+     "N": -330,
+     "EL": 1303.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1303",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-301-N2",
+    "service": "tube out",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1326,
+     "N": -330,
+     "EL": 1252.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-1306",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-301-N3",
+    "service": "shell in",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1362,
+     "N": -330,
+     "EL": 1303.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-LS-3309",
+    "lineClass": "S300"
+   },
+   {
+    "id": "E-301-N4",
+    "service": "shell out",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1506,
+     "N": -354.375,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-SC-3310",
+    "lineClass": "C150"
+   },
+   {
+    "id": "E-301-N5",
+    "service": "vent",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1494,
+     "N": -330,
+     "EL": 1302.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6332",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-301-N6",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1362,
+     "N": -330,
+     "EL": 1254.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "1\"-P150-D-6333",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-301-N7",
+    "service": "instrument",
+    "NPS": 1,
+    "cls": "P300",
+    "face": {
+     "E": 1434,
+     "N": -353.6562,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "1\"-P300-I-6334",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-301-N8",
+    "service": "relief",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1458,
+     "N": -330,
+     "EL": 1302.9563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-RV-4317",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-302",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-302 shell-and-tube exchanger 36\" ID × 192\"",
+  "area": "A320",
+  "areaName": "Exchangers",
+  "designation": "E-302 shell-and-tube exchanger 36\" ID × 192\"",
+  "material": "Grade 36",
+  "weight": 5575.0887,
+  "origin": {
+   "E": 1614,
+   "N": -330,
+   "EL": 1278
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 192,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 38.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 18,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-302-N1",
+    "service": "tube in",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1602,
+     "N": -330,
+     "EL": 1303.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1305",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-302-N2",
+    "service": "tube out",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1602,
+     "N": -330,
+     "EL": 1252.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-1307",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-302-N3",
+    "service": "shell in",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1638,
+     "N": -330,
+     "EL": 1303.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-LS-3311",
+    "lineClass": "S300"
+   },
+   {
+    "id": "E-302-N4",
+    "service": "shell out",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1782,
+     "N": -354.375,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-SC-3312",
+    "lineClass": "C150"
+   },
+   {
+    "id": "E-302-N5",
+    "service": "vent",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1770,
+     "N": -330,
+     "EL": 1302.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6335",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-302-N6",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1638,
+     "N": -330,
+     "EL": 1254.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "1\"-P150-D-6336",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-302-N7",
+    "service": "instrument",
+    "NPS": 1,
+    "cls": "P300",
+    "face": {
+     "E": 1710,
+     "N": -353.6562,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "1\"-P300-I-6337",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-302-N8",
+    "service": "relief",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1734,
+     "N": -330,
+     "EL": 1302.9563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-RV-4319",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-303",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-303 shell-and-tube exchanger 36\" ID × 192\"",
+  "area": "A320",
+  "areaName": "Exchangers",
+  "designation": "E-303 shell-and-tube exchanger 36\" ID × 192\"",
+  "material": "Grade 36",
+  "weight": 5575.0887,
+  "origin": {
+   "E": 1044,
+   "N": 330,
+   "EL": 1278
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 192,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 38.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 18,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-303-N1",
+    "service": "tube in",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1032,
+     "N": 330,
+     "EL": 1303.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1322",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-303-N2",
+    "service": "tube out",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1032,
+     "N": 330,
+     "EL": 1252.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-1325",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-303-N3",
+    "service": "shell in",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1068,
+     "N": 330,
+     "EL": 1304.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-CWS-3301",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-303-N4",
+    "service": "shell out",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1212,
+     "N": 356.0625,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P150-CWR-3302",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-303-N5",
+    "service": "vent",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1200,
+     "N": 330,
+     "EL": 1302.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6338",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-303-N6",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1068,
+     "N": 330,
+     "EL": 1254.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "1\"-P150-D-6339",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-303-N7",
+    "service": "instrument",
+    "NPS": 1,
+    "cls": "P300",
+    "face": {
+     "E": 1140,
+     "N": 353.6563,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "1\"-P300-I-6340",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-303-N8",
+    "service": "relief",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1164,
+     "N": 330,
+     "EL": 1302.9563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-RV-4321",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-304",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-304 shell-and-tube exchanger 36\" ID × 192\"",
+  "area": "A320",
+  "areaName": "Exchangers",
+  "designation": "E-304 shell-and-tube exchanger 36\" ID × 192\"",
+  "material": "Grade 36",
+  "weight": 5575.0887,
+  "origin": {
+   "E": 1320,
+   "N": 330,
+   "EL": 1278
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 192,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 38.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 18,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-304-N1",
+    "service": "tube in",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1308,
+     "N": 330,
+     "EL": 1303.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1324",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-304-N2",
+    "service": "tube out",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1308,
+     "N": 330,
+     "EL": 1252.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-1326",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-304-N3",
+    "service": "shell in",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1344,
+     "N": 330,
+     "EL": 1304.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-CWS-3303",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-304-N4",
+    "service": "shell out",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1488,
+     "N": 356.0625,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P150-CWR-3304",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-304-N5",
+    "service": "vent",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1476,
+     "N": 330,
+     "EL": 1302.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6341",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-304-N6",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1344,
+     "N": 330,
+     "EL": 1254.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "1\"-P150-D-6342",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-304-N7",
+    "service": "instrument",
+    "NPS": 1,
+    "cls": "P300",
+    "face": {
+     "E": 1416,
+     "N": 353.6563,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "1\"-P300-I-6343",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-304-N8",
+    "service": "relief",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1440,
+     "N": 330,
+     "EL": 1302.9563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-RV-4323",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-305",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-305 shell-and-tube exchanger 36\" ID × 192\"",
+  "area": "A320",
+  "areaName": "Exchangers",
+  "designation": "E-305 shell-and-tube exchanger 36\" ID × 192\"",
+  "material": "Grade 36",
+  "weight": 5575.0887,
+  "origin": {
+   "E": 1596,
+   "N": 330,
+   "EL": 1278
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 192,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 38.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 18,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-305-N1",
+    "service": "tube in",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1584,
+     "N": 330,
+     "EL": 1303.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1331",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-305-N2",
+    "service": "tube out",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1584,
+     "N": 330,
+     "EL": 1252.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P300-P-1332",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-305-N3",
+    "service": "shell in",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1620,
+     "N": 330,
+     "EL": 1304.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-CWS-3305",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-305-N4",
+    "service": "shell out",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1764,
+     "N": 356.0625,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P150-CWR-3306",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-305-N5",
+    "service": "vent",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1752,
+     "N": 330,
+     "EL": 1302.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6344",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-305-N6",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1620,
+     "N": 330,
+     "EL": 1254.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "1\"-P150-D-6345",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-305-N7",
+    "service": "instrument",
+    "NPS": 1,
+    "cls": "P300",
+    "face": {
+     "E": 1692,
+     "N": 353.6563,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "1\"-P300-I-6346",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-305-N8",
+    "service": "relief",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 1716,
+     "N": 330,
+     "EL": 1302.9563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-RV-4325",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-306",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-306 shell-and-tube exchanger 36\" ID × 192\"",
+  "area": "A320",
+  "areaName": "Exchangers",
+  "designation": "E-306 shell-and-tube exchanger 36\" ID × 192\"",
+  "material": "Grade 36",
+  "weight": 5575.0887,
+  "origin": {
+   "E": 2316,
+   "N": 330,
+   "EL": 1278
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 192,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 38.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 18,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-306-N1",
+    "service": "tube in",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2304,
+     "N": 330,
+     "EL": 1303.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-1333",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-306-N2",
+    "service": "tube out",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2304,
+     "N": 330,
+     "EL": 1252.6563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P300-P-1334",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-306-N3",
+    "service": "shell in",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2340,
+     "N": 330,
+     "EL": 1304.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-CWS-3307",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-306-N4",
+    "service": "shell out",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2484,
+     "N": 356.0625,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P150-CWR-3308",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-306-N5",
+    "service": "vent",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 2472,
+     "N": 330,
+     "EL": 1302.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6347",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-306-N6",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 2340,
+     "N": 330,
+     "EL": 1254.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "1\"-P150-D-6348",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-306-N7",
+    "service": "instrument",
+    "NPS": 1,
+    "cls": "P300",
+    "face": {
+     "E": 2412,
+     "N": 353.6563,
+     "EL": 1278
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "1\"-P300-I-6349",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-306-N8",
+    "service": "relief",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 2436,
+     "N": 330,
+     "EL": 1302.9563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-RV-4327",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-301A",
+  "type": "Centrifugal pump",
+  "description": "P-301A centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-301A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 1980,
+   "N": -246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-301A-S",
+    "service": "suction",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1980,
+     "N": -209.1562,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-1312",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-301A-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 1980,
+     "N": -222,
+     "EL": 1239.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-1314",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-301A-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 1995.0313,
+     "N": -222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3321",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "P-301B",
+  "type": "Centrifugal pump",
+  "description": "P-301B centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-301B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 2070,
+   "N": -246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-301B-S",
+    "service": "suction",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2070,
+     "N": -209.1562,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-1313",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-301B-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 2070,
+     "N": -222,
+     "EL": 1239.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-1315",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-301B-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 2085.0313,
+     "N": -222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3322",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "P-302A",
+  "type": "Centrifugal pump",
+  "description": "P-302A centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-302A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 2160,
+   "N": -246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-302A-S",
+    "service": "suction",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2160,
+     "N": -209.1562,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-1316",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-302A-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2160,
+     "N": -222,
+     "EL": 1240.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1318",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-302A-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 2175.0313,
+     "N": -222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3323",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "P-302B",
+  "type": "Centrifugal pump",
+  "description": "P-302B centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-302B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 2250,
+   "N": -246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-302B-S",
+    "service": "suction",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2250,
+     "N": -209.1562,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-1317",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-302B-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2250,
+     "N": -222,
+     "EL": 1240.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1319",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-302B-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 2265.0313,
+     "N": -222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3324",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "P-303A",
+  "type": "Centrifugal pump",
+  "description": "P-303A centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-303A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 2340,
+   "N": -246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-303A-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2340,
+     "N": -208.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-1301",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-303A-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2340,
+     "N": -222,
+     "EL": 1240.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1303",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-303A-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 2355.0313,
+     "N": -222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3325",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "P-303B",
+  "type": "Centrifugal pump",
+  "description": "P-303B centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-303B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 2430,
+   "N": -246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-303B-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2430,
+     "N": -208.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-1302",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-303B-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2430,
+     "N": -222,
+     "EL": 1240.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1304",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-303B-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 2445.0313,
+     "N": -222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3326",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "P-304A",
+  "type": "Centrifugal pump",
+  "description": "P-304A centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-304A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 2520,
+   "N": -246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-304A-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2520,
+     "N": -208.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "6\"-P300-P-1320",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-304A-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2520,
+     "N": -222,
+     "EL": 1240.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1322",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-304A-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 2535.0313,
+     "N": -222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3327",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "P-304B",
+  "type": "Centrifugal pump",
+  "description": "P-304B centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-304B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 2610,
+   "N": -246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-304B-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2610,
+     "N": -208.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "6\"-P300-P-1321",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-304B-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2610,
+     "N": -222,
+     "EL": 1240.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1323",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-304B-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 2625.0313,
+     "N": -222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3328",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "P-305A",
+  "type": "Centrifugal pump",
+  "description": "P-305A centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-305A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 2070,
+   "N": 246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-305A-S",
+    "service": "suction",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2070,
+     "N": 209.1563,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-1327",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-305A-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 2070,
+     "N": 222,
+     "EL": 1239.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-1329",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-305A-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 2085.0313,
+     "N": 222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3329",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "P-305B",
+  "type": "Centrifugal pump",
+  "description": "P-305B centrifugal pump",
+  "area": "A330",
+  "areaName": "Pumps",
+  "designation": "P-305B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 5429.3718,
+  "origin": {
+   "E": 2160,
+   "N": 246,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-305B-S",
+    "service": "suction",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2160,
+     "N": 209.1563,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-1328",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-305B-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 2160,
+     "N": 222,
+     "EL": 1239.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-1330",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-305B-F",
+    "service": "seal flush",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 2175.0313,
+     "N": 222,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-W-3330",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "T-301",
+  "type": "Cone-roof storage tank",
+  "description": "T-301 tank 12' dia × 22' high",
+  "area": "A300",
+  "areaName": "Tank farm and outdoor drums",
+  "designation": "T-301 tank 12' dia × 22' high",
+  "material": "Grade 36",
+  "weight": 10302.6613,
+  "origin": {
+   "E": 3300,
+   "N": -420,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Diameter",
+    "value": 144,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Shell height",
+    "value": 264,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "roofRise",
+    "label": "Cone roof rise",
+    "value": 4.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "roofT",
+    "label": "Roof plate thickness",
+    "value": 0.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "bottomT",
+    "label": "Bottom plate thickness",
+    "value": 0.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "T-301-N1",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 3220.2188,
+     "N": -420,
+     "EL": 1218
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-1301",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-301-N2",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 3300,
+     "N": -468,
+     "EL": 1479.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": null,
+    "lineClass": null
+   },
+   {
+    "id": "T-301-N3",
+    "service": "relief",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 3264,
+     "N": -420,
+     "EL": 1480.3313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-RV-4307",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-301-N4",
+    "service": "vent",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 3300,
+     "N": -420,
+     "EL": 1481.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6350",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-301-N5",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3377.1563,
+     "N": -420,
+     "EL": 1212
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1\"-P150-D-6351",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-301-N6",
+    "service": "nitrogen",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3336,
+     "N": -420,
+     "EL": 1477.4063
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-N-3317",
+    "lineClass": "G150"
+   },
+   {
+    "id": "T-301-N7",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3222.9688,
+     "N": -420,
+     "EL": 1284
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6352",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-301-N8",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3222.9688,
+     "N": -420,
+     "EL": 1404
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6353",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-301-N9",
+    "service": "water",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3377.875,
+     "N": -420,
+     "EL": 1260
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "2\"-P150-W-3331",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "T-302",
+  "type": "Cone-roof storage tank",
+  "description": "T-302 tank 12' dia × 22' high",
+  "area": "A300",
+  "areaName": "Tank farm and outdoor drums",
+  "designation": "T-302 tank 12' dia × 22' high",
+  "material": "Grade 36",
+  "weight": 10302.6613,
+  "origin": {
+   "E": 3300,
+   "N": 420,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Diameter",
+    "value": 144,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Shell height",
+    "value": 264,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "roofRise",
+    "label": "Cone roof rise",
+    "value": 4.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "roofT",
+    "label": "Roof plate thickness",
+    "value": 0.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "bottomT",
+    "label": "Bottom plate thickness",
+    "value": 0.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "T-302-N1",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 3220.2188,
+     "N": 420,
+     "EL": 1218
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": null,
+    "lineClass": null
+   },
+   {
+    "id": "T-302-N2",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 3300,
+     "N": 372,
+     "EL": 1479.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1318",
+    "lineClass": "H300"
+   },
+   {
+    "id": "T-302-N3",
+    "service": "relief",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 3264,
+     "N": 420,
+     "EL": 1480.3313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-RV-4308",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-302-N4",
+    "service": "vent",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 3300,
+     "N": 420,
+     "EL": 1481.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6354",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-302-N5",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3377.1563,
+     "N": 420,
+     "EL": 1212
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1\"-P150-D-6355",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-302-N6",
+    "service": "nitrogen",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3336,
+     "N": 420,
+     "EL": 1477.4063
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-N-3318",
+    "lineClass": "G150"
+   },
+   {
+    "id": "T-302-N7",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3222.9688,
+     "N": 420,
+     "EL": 1284
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6356",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-302-N8",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3222.9688,
+     "N": 420,
+     "EL": 1404
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6357",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-302-N9",
+    "service": "water",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3377.875,
+     "N": 420,
+     "EL": 1260
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "2\"-P150-W-3332",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "T-303",
+  "type": "Cone-roof storage tank",
+  "description": "T-303 tank 12' dia × 22' high",
+  "area": "A300",
+  "areaName": "Tank farm and outdoor drums",
+  "designation": "T-303 tank 12' dia × 22' high",
+  "material": "Grade 36",
+  "weight": 10302.6613,
+  "origin": {
+   "E": 3612,
+   "N": -420,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Diameter",
+    "value": 144,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Shell height",
+    "value": 264,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "roofRise",
+    "label": "Cone roof rise",
+    "value": 4.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "roofT",
+    "label": "Roof plate thickness",
+    "value": 0.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "bottomT",
+    "label": "Bottom plate thickness",
+    "value": 0.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "T-303-N1",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 3532.2188,
+     "N": -420,
+     "EL": 1218
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": null,
+    "lineClass": null
+   },
+   {
+    "id": "T-303-N2",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 3612,
+     "N": -468,
+     "EL": 1479.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-1325",
+    "lineClass": "H300"
+   },
+   {
+    "id": "T-303-N4",
+    "service": "vent",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 3612,
+     "N": -420,
+     "EL": 1481.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6358",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-303-N5",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3689.1563,
+     "N": -420,
+     "EL": 1212
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1\"-P150-D-6359",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-303-N7",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3534.9688,
+     "N": -420,
+     "EL": 1284
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6360",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-303-N8",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3534.9688,
+     "N": -420,
+     "EL": 1404
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6361",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "T-304",
+  "type": "Cone-roof storage tank",
+  "description": "T-304 tank 12' dia × 22' high",
+  "area": "A300",
+  "areaName": "Tank farm and outdoor drums",
+  "designation": "T-304 tank 12' dia × 22' high",
+  "material": "Grade 36",
+  "weight": 10302.6613,
+  "origin": {
+   "E": 3600,
+   "N": 180,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Diameter",
+    "value": 144,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Shell height",
+    "value": 264,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "roofRise",
+    "label": "Cone roof rise",
+    "value": 4.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "roofT",
+    "label": "Roof plate thickness",
+    "value": 0.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "bottomT",
+    "label": "Bottom plate thickness",
+    "value": 0.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "T-304-N1",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 3520.2188,
+     "N": 180,
+     "EL": 1218
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": null,
+    "lineClass": null
+   },
+   {
+    "id": "T-304-N2",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 3600,
+     "N": 228,
+     "EL": 1479.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-1334",
+    "lineClass": "H300"
+   },
+   {
+    "id": "T-304-N4",
+    "service": "vent",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 3600,
+     "N": 180,
+     "EL": 1481.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "1\"-P150-V-6362",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-304-N5",
+    "service": "drain",
+    "NPS": 1,
+    "cls": "P150",
+    "face": {
+     "E": 3677.1563,
+     "N": 180,
+     "EL": 1212
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "1\"-P150-D-6363",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-304-N7",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3522.9688,
+     "N": 180,
+     "EL": 1284
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6364",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-304-N8",
+    "service": "instrument",
+    "NPS": 0.75,
+    "cls": "P150",
+    "face": {
+     "E": 3522.9688,
+     "N": 180,
+     "EL": 1404
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "3/4\"-P150-I-6365",
+    "lineClass": "H150"
+   }
+  ]
+ }
+]

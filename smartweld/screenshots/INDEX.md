@@ -107,3 +107,14 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage9/P2-bins.png` | Bins, rotary feeders, walkway and fill lines |
 | `stage9/P2-outdoor.png` | Outdoor tanks, drums and silos with the lines through the end wall |
 | `stage9/P2-above.png` | Plan view from above |
+| `stage10/P3-exterior.png` | Building shell and outdoor area, from the south-east |
+| `stage10/P3-overview.png` | Steel, equipment and piping, cut-away overview |
+| `stage10/P3-line-classes.png` | Piping coloured by line class (SW-LC-1) |
+| `stage10/P3-rack.png` | Pipe rack and headers |
+| `stage10/P3-vessels.png` | Desalters V-301/V-302, platforms and stair tower |
+| `stage10/P3-column.png` | Crude column C-301, platforms and ladders, overhead and side draw |
+| `stage10/P3-exchangers.png` | Steam preheaters E-301/E-302 with their three-way valves |
+| `stage10/P3-pumps.png` | Pumps with seal-flush, sample and thermal-relief small bore |
+| `stage10/P3-coolers.png` | North row: residue coolers E-303/E-304, overhead condenser E-305, north pumps and distillate cooler E-306 |
+| `stage10/P3-outdoor.png` | Outdoor tank farm (crude, naphtha, residue, distillate), air receiver and flare knock-out drum, with the lines through the end wall |
+| `stage10/P3-above.png` | Plan view from above |

@@ -596,7 +596,7 @@ export function generatePiping(opts: { only?: (l: LineDef) => boolean; plant?: P
     const pOD = pipeDims(parent.NPS, parent.cls).OD, { out: C, half } = tapGeom(parent, child, via), Rp = R(parent.NPS, parent.cls, jointOf(parent)), used = taps.get(parentNo) ?? [];
     const cr = pipeDims(child.NPS, child.cls).OD / 2, flr = designFlange(child.NPS, child.cls).OD / 2, reach = C + stackLength(items) + R(child.NPS, child.cls, jointOf(child)) + H;
     const pid = lineId.get(parentNo)!, cid = lineId.get(child.no)!, rr = Math.max(cr, items.length ? flr : cr);
-    const station = via === 'tway' || via === 'fway';
+    const station = via === 'tway' || via === 'fway' || (!!plant.stubsClearOfParentStacks && child.kind === 'stub');   // SW-PLANT-12: from plant 3 on a tapped stub is held clear of its parent's end stacks as a station's branch is
     const columnFree = (at: V3, out: V3) => {
       for (let s = snapUp(pOD / 2 + 3); s <= reach + 1e-6; s += H) {
         const cc = g.cellOf(add(at, out, s)); if (!g.inside(cc[0], cc[1], cc[2])) return false;

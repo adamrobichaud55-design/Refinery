@@ -1,12 +1,12 @@
 // Review images of a plant (SW-REN-1..3): the steel and equipment with its piping, from several view points, with
-// SmartWeld's own renderer.   vite-node tools/render-plant.ts P2 [out-dir=screenshots/stage9]
+// SmartWeld's own renderer.   vite-node tools/render-plant.ts P2|P3 [out-dir=screenshots/stage9, stage10 for plant 3]
 import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'node:fs';
 import { partDrawables, pipingDrawables, byLineClass, type Drawable } from '../src/render/scene';
 import { render3d, type Camera } from '../src/render/view3d';
 import { plantById } from '../src/generator/plants';
 import type { PipingModel } from '../src/generator/piping';
 
-const plant = plantById(process.argv[2] ?? 'P2'), out = process.argv[3] ?? `screenshots/stage9`;
+const plant = plantById(process.argv[2] ?? 'P2'), P3 = plant.id === 'P3', out = process.argv[3] ?? (P3 ? `screenshots/stage10` : `screenshots/stage9`);
 const m = existsSync(plant.paths.piping) ? (JSON.parse(readFileSync(plant.paths.piping, 'utf8')) as PipingModel) : null;
 const B = plant.building(), I = plant.interior(m?.cuts);
 const L = B.drawing.bays * B.drawing.bayFt * 12, W = B.drawing.widthFt * 12;
@@ -18,12 +18,13 @@ const views: { name: string; caption: string; ds: () => Drawable[]; cam: Camera 
   { name: 'overview', caption: 'Steel, equipment and piping, cut-away overview', ds: () => [...cut, ...pipes()], cam: { eye: [L * 1.25, 900, W * 1.5], target: [L * 0.5, 60, 0] } },
   { name: 'line-classes', caption: 'Piping coloured by line class (SW-LC-1)', ds: () => [...cut, ...pipes({ lineColour: byLineClass })], cam: { eye: [L * 0.7, 900, 900], target: [L * 0.5, 120, 0] } },
   { name: 'rack', caption: 'Pipe rack and headers', ds: () => [...cut, ...pipes()], cam: { eye: [120, 100, 330], target: [900, 260, 0] } },
-  { name: 'vessels', caption: 'Adsorber vessels, platforms and stair tower', ds: () => [...cut, ...pipes()], cam: { eye: [1100, 150, 220], target: [540, 200, 330] } },
-  { name: 'column', caption: 'Column C-201, platforms and ladders', ds: () => [...cut, ...pipes()], cam: { eye: [1200, 130, -150], target: [840, 180, -330] } },
-  { name: 'exchangers', caption: 'Exchanger pairs with their three-way valves', ds: () => [...cut, ...pipes()], cam: { eye: [1250, 140, 90], target: [1550, 80, 330] } },
+  { name: 'vessels', caption: P3 ? 'Desalters V-301/V-302, platforms and stair tower' : 'Adsorber vessels, platforms and stair tower', ds: () => [...cut, ...pipes()], cam: { eye: [1100, 150, 220], target: [540, 200, 330] } },
+  { name: 'column', caption: P3 ? 'Crude column C-301, platforms and ladders, overhead and side draw' : 'Column C-201, platforms and ladders', ds: () => [...cut, ...pipes()], cam: { eye: [1200, 130, -150], target: [840, 180, -330] } },
+  { name: 'exchangers', caption: P3 ? 'Steam preheaters E-301/E-302 with their three-way valves' : 'Exchanger pairs with their three-way valves', ds: () => [...cut, ...pipes()], cam: { eye: [1250, 140, 90], target: [1550, 80, 330] } },
   { name: 'pumps', caption: 'Pumps with seal-flush, sample and thermal-relief small bore', ds: () => [...cut, ...pipes()], cam: { eye: [1750, 110, 60], target: [2250, 40, 240] } },
-  { name: 'bins', caption: 'Bins, rotary feeders, walkway and fill lines', ds: () => [...cut, ...pipes()], cam: { eye: [1500, 240, -240], target: [2300, 150, -510] } },
-  { name: 'outdoor', caption: 'Outdoor tanks, drums and silos with the lines through the end wall', ds: () => [...full, ...pipes()], cam: { eye: [3950, 260, 760], target: [3380, 120, 0] } },
+  P3 ? { name: 'coolers', caption: 'North row: residue coolers E-303/E-304, overhead condenser E-305, north pumps and distillate cooler E-306', ds: () => [...cut, ...pipes()], cam: { eye: [2760, 230, -540], target: [1500, 70, -320] } }
+    : { name: 'bins', caption: 'Bins, rotary feeders, walkway and fill lines', ds: () => [...cut, ...pipes()], cam: { eye: [1500, 240, -240], target: [2300, 150, -510] } },
+  { name: 'outdoor', caption: P3 ? 'Outdoor tank farm (crude, naphtha, residue, distillate), air receiver and flare knock-out drum, with the lines through the end wall' : 'Outdoor tanks, drums and silos with the lines through the end wall', ds: () => [...full, ...pipes()], cam: { eye: [3950, 260, 760], target: [3380, 120, 0] } },
   { name: 'above', caption: 'Plan view from above', ds: () => [...cut, ...pipes()], cam: { eye: [L * 0.55, 2800, 40], target: [L * 0.55, 0, 0] } },
 ];
 mkdirSync(out, { recursive: true });
