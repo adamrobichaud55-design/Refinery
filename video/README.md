@@ -10,7 +10,7 @@ It uses a headless browser and ffmpeg, which the SmartWeld project itself does n
 node ../smartweld/node_modules/vite/bin/vite.js --config vite.config.mjs &   # the film page, http://127.0.0.1:5199/
 node capture.mjs stills --pr=1                # three test frames per shot, out/stills/
 node capture.mjs frames --pr=1.5              # every frame at 1920x1080, out/frames/ (about 8 s a frame per worker)
-ffmpeg -framerate 24 -i out/frames/f%04d.png -c:v libx264 -preset slow -crf 17 -pix_fmt yuv420p -movflags +faststart smartweld-plant3-film.mp4
+ffmpeg -framerate 24 -i out/frames/f%04d.png -c:v libx264 -preset slow -crf 23 -pix_fmt yuv420p -movflags +faststart smartweld-plant3-film.mp4
 ```
 
 `node capture.mjs frames 0 327` and `frames 327 653` run as two workers side by side.
