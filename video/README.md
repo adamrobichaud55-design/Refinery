@@ -1,7 +1,7 @@
 # SmartWeld plant film
 
-An assembly film of a generated SmartWeld plant, rendered frame by frame from the real model: an editor view where
-the equipment is placed, then a black void where the pipe rack builds ahead of the camera, the equipment drops in, a
+An assembly film of a generated SmartWeld plant, rendered frame by frame from the real model:
+a black void where the pipe rack builds ahead of the camera, the equipment drops in, a
 control station assembles part by part and the finished unit stands on a reflecting floor. Silver on black, sub-frame
 motion blur, a thin tracking overlay.
 This folder is separate from `smartweld/`: it reads that project's sources and published plant data and writes nothing there.
