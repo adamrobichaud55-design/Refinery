@@ -1,9 +1,9 @@
 // Renders the film frame by frame in a headless browser and writes PNG frames.
 //   node capture.mjs stills            24 frames spread over the film (out/stills/)
-//   node capture.mjs frames [a] [b]    frames a..b-1 (default: all) to out/frames/; --mod=3 --rem=0|1|2 splits them over three workers
+//   node capture.mjs frames [a] [b]    frames a..b-1 (default: all) to out/frames/, skipping those already there; --mod=3 --rem=0|1|2 splits them over three workers
 // Options: --plant=P3  --pr=1.5 (pixel ratio of the 1280x720 stage)
 import { createRequire } from 'node:module';
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, existsSync } from 'node:fs';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
 const args = process.argv.slice(2), opt = Object.fromEntries(args.filter(a => a.startsWith('--')).map(a => a.slice(2).split('='))), pos = args.filter(a => !a.startsWith('--'));
@@ -31,6 +31,6 @@ if (mode === 'profile') {   // the camera's speed (in/s) and turn rate (deg/s), 
   mkdirSync('out/frames', { recursive: true });
   const a = Number(pos[1] ?? 0), b = Number(pos[2] ?? info.frames), t = Date.now();
   const mod = Number(opt.mod ?? 1), rem = Number(opt.rem ?? 0);
-  for (let i = a; i < b; i++) { if (i % mod !== rem) continue; await shoot(i, `out/frames/f${String(i).padStart(4, '0')}.png`); if ((i - a) % 30 === 29) console.log('frame', i + 1, '/', b, ((Date.now() - t) / (i - a + 1) / 1000).toFixed(2), 's per frame'); }
+  for (let i = a; i < b; i++) { if (i % mod !== rem) continue; const f = `out/frames/f${String(i).padStart(4, '0')}.png`; if (existsSync(f)) continue; await shoot(i, f); if ((i - a) % 30 === 29) console.log('frame', i + 1, '/', b, ((Date.now() - t) / (i - a + 1) / 1000).toFixed(2), 's per frame'); }
 }
 await browser.close();
