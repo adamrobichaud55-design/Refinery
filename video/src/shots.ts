@@ -1,18 +1,29 @@
-// The camera script. Coordinates are the plant's own, in inches: x along the building (east is +x), y up, z across.
+// The camera script. Coordinates are the plant's own, in inches: x along the plant (east is +x), y up, z across.
+// The film is an assembly: an editor view where the equipment is placed, then a black void where the pipe rack builds
+// ahead of the camera, the equipment drops in, a control station assembles part by part, and the finished unit stands
+// on a reflecting floor.
 export type V3 = [number, number, number];
-export interface Shot { dur: number; eye: V3[]; tgt: V3[]; cap: string; sub: string; fov?: number; ease?: number; reach?: number; maxTags?: number }
-export const FPS = 24, TITLE_SECONDS = 3.0;
+export type Mode = 'editor' | 'void';
+export interface Shot {
+  id: string; dur: number; mode: Mode; eye: V3[]; tgt: V3[]; fov: number;
+  ease?: number;        // 0 = linear travel, 1 = full ease in and out
+  cut?: boolean;        // false: the camera carries on from the previous shot without a cut
+  mirror?: boolean;     // the reflecting floor
+  tags?: number;        // how many equipment items the overlay may frame
+  reach?: number;
+}
+export const FPS = 24;
 export const SHOTS: Shot[] = [
-  { dur: 4.6, cap: 'Crude topping unit', sub: 'Plant 3 · built from the SmartWeld catalogue', reach: 2600, maxTags: 6, fov: 38,
-    eye: [[4900, 1250, 1900], [4450, 820, 1500], [4050, 470, 1150]], tgt: [[2100, 60, 0], [2700, 110, 30], [3150, 140, 80]] },
-  { dur: 3.4, cap: 'Tank farm', sub: 'Crude · naphtha · residue · distillate', reach: 1300, maxTags: 5,
-    eye: [[4020, 95, 900], [3960, 130, 420], [3900, 190, -120], [3830, 250, -520]], tgt: [[3420, 150, 420], [3380, 140, 150], [3330, 130, -140], [3300, 120, -420]] },
-  { dur: 4.6, cap: 'Pipe rack', sub: 'Nine utility headers over three tiers', reach: 900, maxTags: 4, fov: 50, ease: 0.2,
-    eye: [[2820, 302, 30], [2300, 298, 22], [1750, 296, 26], [1250, 300, 30]], tgt: [[2250, 262, 0], [1730, 258, 0], [1180, 258, 0], [680, 262, 0]] },
-  { dur: 4.2, cap: 'Crude column C-301', sub: 'Feed · overhead · side draw · bottoms', reach: 800, maxTags: 3,
-    eye: [[1130, 60, -205], [1120, 170, -185], [1075, 280, -180], [1010, 350, -190]], tgt: [[840, 110, -330], [840, 180, -330], [840, 250, -330], [840, 300, -330]] },
-  { dur: 3.6, cap: 'Pump row', sub: 'Check · gate · control stations', reach: 520, maxTags: 4, fov: 46, ease: 0.2,
-    eye: [[1860, 58, 168], [2060, 56, 166], [2260, 58, 168], [2450, 62, 170]], tgt: [[2110, 44, 246], [2310, 44, 246], [2510, 46, 246], [2690, 50, 248]] },
-  { dur: 3.8, cap: 'Preheat and desalting', sub: 'E-301 / E-302 · V-301 / V-302', reach: 900, maxTags: 4,
-    eye: [[1820, 110, 175], [1380, 135, 180], [960, 190, 185], [760, 250, 150]], tgt: [[1560, 80, 330], [1100, 110, 330], [600, 190, 330], [480, 230, 330]] },
+  { id: 'editor', dur: 3.4, mode: 'editor', fov: 40, ease: 0.6, eye: [[3750, 1350, 1900], [3550, 1150, 1750], [3350, 980, 1600]], tgt: [[2050, 60, 0], [2050, 90, 0], [2050, 110, 0]] },
+  { id: 'rack', dur: 5.0, mode: 'void', fov: 62, ease: 0.0, tags: 0,
+    eye: [[-560, 350, 330], [-300, 322, 150], [60, 302, 40], [700, 298, 26], [1500, 298, 24], [2300, 298, 26], [2900, 304, 30]],
+    tgt: [[260, 285, 0], [420, 288, 0], [760, 290, 0], [1500, 292, 0], [2300, 292, 0], [3100, 290, 10], [3700, 270, 60]] },
+  { id: 'rise', dur: 3.8, mode: 'void', fov: 46, ease: 0.25, cut: false, tags: 6, reach: 2600,
+    eye: [[2900, 304, 30], [3500, 520, 520], [3500, 900, 1350], [2500, 860, 1750]], tgt: [[3700, 270, 60], [2900, 170, 60], [2300, 130, 0], [1700, 120, 0]] },
+  { id: 'column', dur: 3.2, mode: 'void', fov: 58, ease: 0.3, tags: 2, reach: 700,
+    eye: [[1105, 30, -150], [1150, 120, -235], [1085, 260, -200], [985, 345, -170]], tgt: [[840, 70, -330], [840, 150, -330], [840, 250, -330], [840, 305, -300]] },
+  { id: 'station', dur: 3.4, mode: 'void', fov: 40, ease: 0.5, cut: false, tags: 0,
+    eye: [[985, 345, -170], [950, 322, -205], [925, 310, -245], [915, 306, -275]], tgt: [[840, 305, -300], [840, 301, -255], [840, 300, -240], [840, 300, -246]] },
+  { id: 'hero', dur: 3.8, mode: 'void', fov: 34, ease: 0.4, mirror: true, tags: 0,
+    eye: [[4350, 105, 1250], [4180, 115, 1400], [3980, 125, 1540]], tgt: [[2450, 175, 0], [2400, 175, 0], [2350, 175, 0]] },
 ];

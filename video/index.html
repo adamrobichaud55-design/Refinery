@@ -1,27 +1,20 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8" /><title>SmartWeld plant film</title>
 <style>
-  html, body { margin: 0; background: #05070a; overflow: hidden; }
-  #stage { position: relative; width: 1280px; height: 720px; overflow: hidden; background: #05070a; font-family: 'DejaVu Sans', 'Helvetica Neue', Arial, sans-serif; }
-  #stage canvas { position: absolute; inset: 0; display: block; }
-  #hud { position: absolute; inset: 0; }
-  #fade { position: absolute; inset: 0; background: #05070a; opacity: 1; }
-  #vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 45%, rgba(0,0,0,.55) 100%); }
-  #bars { position: absolute; inset: 0; border-top: 34px solid #05070a; border-bottom: 34px solid #05070a; box-sizing: border-box; }
-  #badge { position: absolute; right: 26px; top: 48px; text-align: right; font-weight: 800; font-style: italic; letter-spacing: .02em; line-height: 1.05; }
-  #badge b { display: inline-block; background: #d6f23a; color: #0a0c0f; padding: 1px 8px 2px; font-size: 21px; }
-  #badge span { display: block; color: #fff; font-size: 21px; margin-top: 3px; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
-  #cap { position: absolute; left: 30px; bottom: 50px; color: #e9edf2; font-size: 15px; letter-spacing: .14em; text-transform: uppercase; text-shadow: 0 1px 8px rgba(0,0,0,.9); }
-  #cap small { display: block; color: #d6f23a; font-size: 11px; letter-spacing: .22em; margin-bottom: 4px; }
-  #stats { position: absolute; right: 30px; bottom: 50px; color: #aeb7c2; font: 11px/1.5 'DejaVu Sans Mono', monospace; text-align: right; letter-spacing: .08em; text-shadow: 0 1px 6px rgba(0,0,0,.9); }
-  #stats b { color: #fff; font-weight: 400; }
-  #title { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; color: #fff; text-align: center; opacity: 0; }
-  #title h1 { font-size: 46px; margin: 0; letter-spacing: .06em; font-weight: 800; }
-  #title h1 i { color: #d6f23a; font-style: normal; }
-  #title p { font-size: 17px; color: #c5ccd6; margin: 14px 0 0; letter-spacing: .12em; text-transform: uppercase; }
-  #title p.s { font-size: 12px; color: #8792a0; margin-top: 22px; letter-spacing: .1em; text-transform: none; }
+  html, body { margin: 0; background: #000; overflow: hidden; }
+  #stage { position: relative; width: 1280px; height: 720px; overflow: hidden; background: #000; font-family: 'DejaVu Sans', 'Helvetica Neue', Arial, sans-serif; }
+  #stage canvas { position: absolute; inset: 0; display: block; width: 1280px; height: 720px; }
+  #gl { visibility: hidden; }
+  #vig { position: absolute; inset: 0; background: radial-gradient(ellipse at 50% 48%, rgba(0,0,0,0) 48%, rgba(0,0,0,.6) 100%); }
+  #badge { position: absolute; right: 22px; top: 18px; text-align: right; font-weight: 800; font-style: italic; letter-spacing: .02em; line-height: 1.05; }
+  #badge b { display: inline-block; background: #d6f23a; color: #0a0c0f; padding: 1px 8px 2px; font-size: 20px; }
+  #badge span { display: block; color: #fff; font-size: 20px; margin-top: 3px; text-shadow: 0 1px 6px rgba(0,0,0,.7); }
+  #fade { position: absolute; inset: 0; background: #000; opacity: 1; }
+  #end { position: absolute; left: 34px; bottom: 30px; color: #fff; opacity: 0; text-shadow: 0 1px 10px #000; }
+  #end h1 { margin: 0; font-size: 30px; letter-spacing: .08em; font-weight: 800; }
+  #end h1 i { color: #d6f23a; font-style: normal; }
+  #end p { margin: 6px 0 0; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: #c2c8d0; }
 </style></head>
-<body><div id="stage"><canvas id="gl"></canvas><canvas id="hud" width="1280" height="720"></canvas><div id="vig"></div><div id="bars"></div>
-<div id="badge"><b>SMARTWELD 3D</b><span>PLANT 3</span></div><div id="cap"></div><div id="stats"></div><div id="fade"></div>
-<div id="title"><h1>SMART<i>WELD</i> 3D</h1><p id="t2"></p><p class="s" id="t3"></p></div></div>
+<body><div id="stage"><canvas id="gl"></canvas><canvas id="acc" width="1920" height="1080"></canvas><div id="vig"></div><canvas id="hud" width="1280" height="720"></canvas>
+<div id="badge"><b>SMARTWELD 3D</b><span>PLANT 3</span></div><div id="end"><h1>SMART<i>WELD</i> 3D</h1><p id="t2"></p></div><div id="fade"></div></div>
 <script type="module" src="./src/film.ts"></script></body></html>
