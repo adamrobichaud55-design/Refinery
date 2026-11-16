@@ -1,5 +1,5 @@
 // Renders the film frame by frame in a headless browser and writes PNG frames.
-//   node capture.mjs stills            one frame from the middle of every shot (out/stills/)
+//   node capture.mjs stills            24 frames spread over the film (out/stills/)
 //   node capture.mjs frames [a] [b]    frames a..b-1 (default: all) to out/frames/; --mod=3 --rem=0|1|2 splits them over three workers
 // Options: --plant=P3  --pr=1.5 (pixel ratio of the 1280x720 stage)
 import { createRequire } from 'node:module';
@@ -15,14 +15,17 @@ await page.goto(`http://127.0.0.1:5199/?plant=${plant}&pr=${pr}&aa=${aa}${opt.su
 const t0 = Date.now();
 await page.waitForFunction(() => window.film, null, { timeout: 120000 });
 await page.evaluate(() => window.film.ready);
-const info = await page.evaluate(() => ({ frames: window.film.frames, fps: window.film.fps, starts: window.film.shotStarts }));
+const info = await page.evaluate(() => ({ frames: window.film.frames, fps: window.film.fps, profile: window.film.profile() }));
 console.log('scene ready in', ((Date.now() - t0) / 1000).toFixed(1), 's;', info.frames, 'frames at', info.fps, 'fps');
 const stage = page.locator('#stage');
 const shoot = async (i, path) => { const n = await page.evaluate(n => window.film.setFrame(n), i); await page.screenshot({ path, type: 'png', timeout: 120000 }); return n; };
-if (mode === 'stills') {
+if (mode === 'profile') {   // the camera's speed (in/s) and turn rate (deg/s), twice a second
+  for (let i = 0; i < info.frames; i += 12) console.log((i / info.fps).toFixed(1).padStart(5), 's', String(info.profile[i][0]).padStart(6), 'in/s', String(info.profile[i][1]).padStart(5), 'deg/s');
+  const d = info.profile.slice(1).map((p, i) => [Math.abs(p[0] - info.profile[i][0]), Math.abs(p[1] - info.profile[i][1])]);
+  console.log('peak speed', Math.max(...info.profile.map(p => p[0])), 'in/s; peak turn', Math.max(...info.profile.map(p => p[1])), 'deg/s; largest change between frames', Math.max(...d.map(x => x[0])), 'in/s,', Math.max(...d.map(x => x[1])), 'deg/s');
+} else if (mode === 'stills') {
   mkdirSync('out/stills', { recursive: true });
-  const ends = [...info.starts.slice(1), info.frames];
-  const picks = pos.length > 1 ? pos.slice(1).map(Number) : info.starts.flatMap((s, k) => [s + 5, Math.round(s + (ends[k] - s) * 0.33), Math.round(s + (ends[k] - s) * 0.66), ends[k] - 4]);
+  const picks = pos.length > 1 ? pos.slice(1).map(Number) : Array.from({ length: 24 }, (_, k) => Math.round(((k + 0.5) * info.frames) / 24));
   for (const i of picks) { const t = Date.now(); const n = await shoot(i, `out/stills/f${String(i).padStart(4, '0')}.png`); console.log('frame', i, ((Date.now() - t) / 1000).toFixed(2), 's', n, 'sub-frames'); }
 } else {
   mkdirSync('out/frames', { recursive: true });

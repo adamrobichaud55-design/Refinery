@@ -12,7 +12,7 @@ import { setMaxCells } from '@sw/geometry/sdf';
 import { plantById } from '@sw/generator/plants';
 import { buildPipingObject } from '@sw/viewer/pipingView';
 import { partFromKey, type PipingModel, type Comp } from '@sw/generator/piping';
-import { SHOTS, FPS, type Shot } from './shots';
+import { KEYS, FPS, TOTAL, AT } from './shots';
 
 const q = new URLSearchParams(location.search), plantId = q.get('plant') ?? 'P3', QUALITY = Number(q.get('pr') ?? 1.5), MAXSUB = Number(q.get('sub') ?? 7);
 const W = 1280, H = 720;
@@ -21,7 +21,7 @@ const renderer = new THREE.WebGLRenderer({ canvas: glCanvas, antialias: false, p
 renderer.setPixelRatio(1); renderer.setSize(W, H, false);
 renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.15; renderer.localClippingEnabled = true;
 const scene = new THREE.Scene();
-const VOID_BG = new THREE.Color(0x000000), EDITOR_BG = new THREE.Color(0x414346), voidFog = new THREE.FogExp2(0x000000, 0.00015);
+const VOID_BG = new THREE.Color(0x000000), voidFog = new THREE.FogExp2(0x000000, 0.00015);
 scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), 0.04).texture; scene.environmentIntensity = 0.5;
 const camera = new THREE.PerspectiveCamera(42, W / H, 3, 16000);
 scene.add(new THREE.HemisphereLight(0xffffff, 0x0c0d0f, 0.25));
@@ -41,7 +41,6 @@ const palette = (planes: THREE.Plane[]): Record<Role, THREE.Material> => ({   //
 // the building shell, raised at the end: its frame is kept west of framePlane and its cladding west of skinPlane
 const framePlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), -1e6), skinPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), -1e6);
 const MAT_STEEL = palette([steelPlane]), MAT_PIPE = palette([pipePlane]), MAT_FREE = palette([]), MAT_FRAME = palette([framePlane]), MAT_SKIN = palette([skinPlane]);
-const CLAY = new THREE.MeshStandardMaterial({ color: 0xc9cbce, metalness: 0.0, roughness: 0.85, side: THREE.DoubleSide });
 function toGeo(m: MeshData): THREE.BufferGeometry {
   const g = new THREE.BufferGeometry();
   g.setAttribute('position', new THREE.Float32BufferAttribute(m.positions, 3)); g.setIndex(m.indices);
@@ -81,8 +80,9 @@ interface Piece { key: string; label: string; group: THREE.Group; centre: THREE.
 const equip: Equip[] = [], pieces: Piece[] = [];
 let stats = { lines: 0, comps: 0 };
 const grid = new THREE.GridHelper(12000, 60, 0x55585c, 0x47494d); grid.position.set(1900, 0, 0); scene.add(grid);
-const floor = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000), new THREE.MeshStandardMaterial({ color: 0x020203, roughness: 0.62, metalness: 0.25 })); floor.rotation.x = -Math.PI / 2; floor.position.y = -1; scene.add(floor);
-const mirror = new Reflector(new THREE.PlaneGeometry(60000, 60000), { textureWidth: 1280, textureHeight: 720, color: 0x4a4d52, clipBias: 0.5 }); mirror.rotation.x = -Math.PI / 2; mirror.position.y = -1; scene.add(mirror);
+const floorMat = new THREE.MeshStandardMaterial({ color: 0x020203, roughness: 0.62, metalness: 0.25, depthWrite: false });
+const floor = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000), floorMat); floor.rotation.x = -Math.PI / 2; floor.position.y = -0.5; scene.add(floor);
+const mirror = new Reflector(new THREE.PlaneGeometry(60000, 60000), { textureWidth: 1280, textureHeight: 720, color: 0x4a4d52, clipBias: 0.5 }); mirror.rotation.x = -Math.PI / 2; mirror.position.y = -2.5; scene.add(mirror);
 
 async function build() {
   const plant = plantById(plantId);
@@ -156,50 +156,62 @@ async function build() {
 }
 
 // ---- timeline ------------------------------------------------------------------------------------------------
-const curves = SHOTS.map(s => ({ eye: new THREE.CatmullRomCurve3(s.eye.map(p => new THREE.Vector3(...p)), false, 'centripetal'), tgt: new THREE.CatmullRomCurve3(s.tgt.map(p => new THREE.Vector3(...p)), false, 'centripetal') }));
-const T0: number[] = []; { let a = 0; for (const s of SHOTS) { T0.push(a); a += s.dur; } }
-const total = SHOTS.reduce((a, s) => a + s.dur, 0), frames = Math.round(total * FPS);
-const start = (id: string) => T0[SHOTS.findIndex(s => s.id === id)];
+// One camera move. The keys are joined by a cubic through every key (speed continuous), and that path is then averaged
+// over a short window of time, so neither the camera's speed nor the direction it looks in changes abruptly anywhere.
+const total = TOTAL, frames = Math.round(total * FPS);
 const ease = (u: number) => u * u * (3 - 2 * u), outCubic = (u: number) => 1 - (1 - u) ** 3, clamp01 = (u: number) => Math.min(1, Math.max(0, u));
-const SHUTTER = 0.5;
+const KP = KEYS.map(k => [...k.eye, ...k.tgt, k.fov]), KT = KEYS.map(k => k.t);
+const KM = KP.map((p, i) => p.map((_, c) => {
+  if (i === 0 || i === KP.length - 1) return 0;
+  const h0 = KT[i] - KT[i - 1], h1 = KT[i + 1] - KT[i];
+  return (((p[c] - KP[i - 1][c]) / h0) * h1 + ((KP[i + 1][c] - p[c]) / h1) * h0) / (h0 + h1);
+}));
+function rawCam(t: number, out: number[]) {
+  t = Math.min(total, Math.max(0, t));
+  let i = 0; while (i < KT.length - 2 && t > KT[i + 1]) i++;
+  const h = KT[i + 1] - KT[i], x = (t - KT[i]) / h, x2 = x * x, x3 = x2 * x;
+  const a = 2 * x3 - 3 * x2 + 1, b = (x3 - 2 * x2 + x) * h, c = -2 * x3 + 3 * x2, d = (x3 - x2) * h;
+  for (let k = 0; k < 7; k++) out[k] = a * KP[i][k] + b * KM[i][k] + c * KP[i + 1][k] + d * KM[i + 1][k];
+}
+const SIGMA = 0.24, TAPS = 9, tmp: number[] = new Array(7).fill(0);
 const camAt = (t: number) => {
-  let si = SHOTS.length - 1; for (let k = 0; k < SHOTS.length; k++) if (t < T0[k] + SHOTS[k].dur) { si = k; break; }
-  const s = SHOTS[si], u = clamp01((t - T0[si]) / s.dur), k = s.ease ?? 0.35, w = k * ease(u) + (1 - k) * u;
-  return { si, s, u, eye: curves[si].eye.getPoint(w), tgt: curves[si].tgt.getPoint(w) };
+  const acc7 = [0, 0, 0, 0, 0, 0, 0]; let wsum = 0;
+  for (let k = -TAPS; k <= TAPS; k++) { const dt = (k * 3 * SIGMA) / TAPS, w = Math.exp(-(dt * dt) / (2 * SIGMA * SIGMA)); rawCam(t + dt, tmp); for (let c = 0; c < 7; c++) acc7[c] += w * tmp[c]; wsum += w; }
+  return { eye: new THREE.Vector3(acc7[0] / wsum, acc7[1] / wsum, acc7[2] / wsum), tgt: new THREE.Vector3(acc7[3] / wsum, acc7[4] / wsum, acc7[5] / wsum), fov: acc7[6] / wsum };
 };
+const SHUTTER = 0.5;
 /** everything that depends on time: the camera, what has been built so far, where each moving part is */
 function apply(t: number) {
-  const { s, u, eye, tgt } = camAt(t), editor = s.mode === 'editor';
-  camera.position.copy(eye); camera.lookAt(tgt); camera.fov = s.fov; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
-  scene.background = editor ? EDITOR_BG : VOID_BG; scene.fog = editor ? null : voidFog; scene.overrideMaterial = editor ? CLAY : null;
-  grid.visible = editor; floor.visible = !editor && !s.mirror; mirror.visible = !editor && !!s.mirror;
+  const { eye, tgt, fov } = camAt(t);
+  camera.position.copy(eye); camera.lookAt(tgt); camera.fov = fov; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+  scene.background = VOID_BG; scene.fog = voidFog; grid.visible = false;
+  // the floor turns from matt to reflecting as the camera settles on the finished unit
+  const fl = 1 - ease(clamp01((t - AT.mirror[0]) / (AT.mirror[1] - AT.mirror[0])));
+  floor.visible = fl > 0.001; floorMat.transparent = fl < 0.999; floorMat.opacity = fl; mirror.visible = fl < 0.999;
   // the rack builds ahead of the camera while it flies through; afterwards everything stands
-  const inRack = s.id === 'rack';
-  steelPlane.constant = inRack ? eye.x + 900 + 500 * u : 1e6; pipePlane.constant = inRack ? eye.x + 330 + 250 * u : 1e6;
-  const inB = s.id === 'building';   // the frame runs the length of the plant first, the cladding follows it
-  framePlane.constant = inB ? -150 + 3400 * clamp01(u / 0.4) : -1e6; skinPlane.constant = inB ? -150 + 3400 * clamp01((u - 0.26) / 0.44) : -1e6;
+  const u = clamp01(t / AT.rackEnd);
+  steelPlane.constant = t < AT.rackEnd ? eye.x + 900 + 500 * u : 1e6; pipePlane.constant = eye.x + 330 + 250 * u + Math.max(0, t - AT.rackEnd) * 2500;
+  const bu = clamp01((t - AT.building[0]) / (AT.building[1] - AT.building[0])), inB = t > AT.building[0];   // the frame runs the length of the plant first, the cladding follows it
+  framePlane.constant = inB ? -150 + 3400 * clamp01(bu / 0.4) : -1e6; skinPlane.constant = inB ? -150 + 3400 * clamp01((bu - 0.26) / 0.44) : -1e6;
   for (const k of chunks) {
-    if (editor || k.c.x - k.r > k.plane.constant) { k.o.visible = false; continue; }
+    if (k.c.x - k.r > k.plane.constant) { k.o.visible = false; continue; }
     const d = k.c.distanceTo(eye) - k.r, [a, b] = RANGE[k.kind]; k.o.visible = d >= a && d < b;
   }
-  // equipment: apart and drifting together in the editor, absent while the rack builds, then dropping in from the east end
-  const tRise = start('rise');
+  // equipment: absent while the rack builds, then dropping in from the east end
   for (const e of equip) {
-    if (editor) { const p = ease(clamp01((t - 0.5) / 2.3)); e.group.visible = true; e.group.position.copy(e.out).multiplyScalar(620 * (1 - p)).setY(170 * (1 - p)); continue; }
-    const t0 = tRise + 0.25 + 2.3 * (e.order / Math.max(1, equip.length - 1)), p = (t - t0) / 0.55;
+    const t0 = AT.drop + 0.25 + 2.6 * (e.order / Math.max(1, equip.length - 1)), p = (t - t0) / 0.6;
     e.group.visible = p > 0; e.group.position.set(0, p >= 1 ? 0 : 340 * (1 - outCubic(clamp01(p))), 0);
   }
   // the control station: each part comes down into the line in turn
-  const tSt = start('station');
-  for (const pc of pieces) { const p = (t - (tSt + 0.3 + pc.order * 0.072)) / 0.42; pc.group.visible = !editor && p > 0; pc.group.position.set(0, p >= 1 ? 0 : 64 * (1 - outCubic(clamp01(p))), 0); }
-  return { s, u, eye, tgt };
+  for (const pc of pieces) { const p = (t - (AT.station + 0.3 + pc.order * 0.072)) / 0.42; pc.group.visible = p > 0; pc.group.position.set(0, p >= 1 ? 0 : 64 * (1 - outCubic(clamp01(p))), 0); }
+  return { eye, tgt, mirrorOn: fl < 0.999 };
 }
 
 const hctx = hud.getContext('2d')!, actx = acc.getContext('2d')!;
 const rnd = (n: number) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
 const v = new THREE.Vector3();
 const project = (p: THREE.Vector3): [number, number, number] => { v.copy(p).project(camera); return [(v.x * 0.5 + 0.5) * W, (-v.y * 0.5 + 0.5) * H, v.z]; };
-const ACCENT = '214,242,58', AGENTS = ['#ff5aa8', '#ffb020', '#3ad6f2', '#9b6bff', '#7be04a', '#ff6a3d'];
+const ACCENT = '214,242,58';
 function marks(seed: number, t: number, bx: number, by: number, a: number, cols = 11, rows = 5) {
   for (let i = 0; i < 24; i++) {
     if (rnd(seed + i * 3.7 + Math.floor(t * 9 + i * 0.37)) < 0.45) continue;
@@ -212,38 +224,28 @@ function boxOnScreen(b: THREE.Box3, off: THREE.Vector3) {
   for (let i = 0; i < 8; i++) { const [x, y, z] = project(new THREE.Vector3(i & 1 ? b.max.x : b.min.x, i & 2 ? b.max.y : b.min.y, i & 4 ? b.max.z : b.min.z).add(off)); if (z > 1) behind = true; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); }
   return behind ? null : { x0, y0, x1, y1 };
 }
-function drawHud(t: number, s: Shot, u: number) {
+const ramp = (t: number, a: number, b: number, r = 0.4) => clamp01(Math.min((t - a) / r, (b - t) / r));   // an overlay comes and goes gradually
+function drawHud(t: number) {
   hctx.clearRect(0, 0, W, H);
-  if (s.mode === 'editor') {   // a plain editor frame and the agents at work: each one carries a piece of equipment to its place
-    hctx.fillStyle = '#262729'; hctx.fillRect(0, 0, W, 24); hctx.fillRect(0, H - 30, W, 30); hctx.fillStyle = '#2d2e31'; hctx.fillRect(0, 24, 30, H - 54); hctx.fillRect(W - 236, 24, 236, H - 54);
-    hctx.fillStyle = '#3d3f43'; for (let i = 0; i < 9; i++) hctx.fillRect(10 + i * 54, 7, 40, 10); for (let i = 0; i < 12; i++) hctx.fillRect(7, 36 + i * 26, 16, 16);
-    for (let i = 0; i < 16; i++) { hctx.fillStyle = i === Math.floor(t * 3) % 16 ? '#4d6fa8' : '#3a3c40'; hctx.fillRect(W - 226, 36 + i * 22, 216, 16); hctx.fillStyle = '#6d7076'; hctx.fillRect(W - 220, 41 + i * 22, 60 + rnd(i) * 90, 5); }
-    hctx.fillStyle = '#3d3f43'; hctx.fillRect(40, H - 20, W - 290, 8); hctx.fillStyle = `rgb(${ACCENT})`; hctx.fillRect(40, H - 20, (W - 290) * u, 8);
-    AGENTS.forEach((col, k) => {
-      const step = t * 1.35 + k * 0.61, i0 = Math.floor(step), f = ease(step - i0), pick = (n: number) => equip[Math.floor(rnd(n * 7.3 + k * 17.1) * equip.length)];
-      const a = pick(i0), b = pick(i0 + 1), pa = project(a.centre.clone().add(a.group.position)), pb = project(b.centre.clone().add(b.group.position)), x = pa[0] + (pb[0] - pa[0]) * f, y = pa[1] + (pb[1] - pa[1]) * f - 14;
-      hctx.fillStyle = col; hctx.beginPath(); hctx.roundRect(x - 13, y - 5, 26, 10, 5); hctx.fill();
-      if (k < 2) { const bb = boxOnScreen(b.box, b.group.position); if (bb) { hctx.strokeStyle = col; hctx.lineWidth = 1; hctx.strokeRect(bb.x0 - 6, bb.y0 - 6, bb.x1 - bb.x0 + 12, bb.y1 - bb.y0 + 12); } }
-    });
-    return;
-  }
   // tracked equipment: thin frames, a tag and a cluster of scan marks
-  if (s.tags) {
-    const fwd = camera.getWorldDirection(new THREE.Vector3()), reach = s.reach ?? 1500;
+  for (const win of AT.tags) {
+    const wa = ramp(t, win.a, win.b); if (wa <= 0) continue;
+    const fwd = camera.getWorldDirection(new THREE.Vector3()), reach = win.reach;
     const seen = equip.filter(e => e.group.visible && e.group.position.y < 1).map(e => { const d = e.centre.clone().sub(camera.position); return { e, dist: d.length(), ahead: d.dot(fwd) }; }).filter(o => o.ahead > 40 && o.dist < reach)
-      .map(o => ({ ...o, b: boxOnScreen(o.e.box, o.e.group.position) })).filter(o => o.b && o.b.x1 > 40 && o.b.x0 < W - 40 && o.b.y1 > 30 && o.b.y0 < H - 30 && o.b.x1 - o.b.x0 < W * 0.7).sort((a, b) => a.dist - b.dist).slice(0, s.tags);
+      .map(o => ({ ...o, b: boxOnScreen(o.e.box, o.e.group.position) })).filter(o => o.b && o.b.x1 > 40 && o.b.x0 < W - 40 && o.b.y1 > 30 && o.b.y0 < H - 30 && o.b.x1 - o.b.x0 < W * 0.7).sort((a, b) => a.dist - b.dist).slice(0, win.n);
     for (const o of seen) {
-      const b = o.b!, x0 = Math.max(14, b.x0), y0 = Math.max(30, b.y0), x1 = Math.min(W - 14, b.x1), y1 = Math.min(H - 20, b.y1), a = Math.min(1, Math.max(0.3, 1.25 - o.dist / reach));
+      const b = o.b!, x0 = Math.max(14, b.x0), y0 = Math.max(30, b.y0), x1 = Math.min(W - 14, b.x1), y1 = Math.min(H - 20, b.y1), a = wa * Math.min(1, Math.max(0.3, 1.25 - o.dist / reach));
       hctx.strokeStyle = `rgba(235,238,242,${0.55 * a})`; hctx.lineWidth = 1; hctx.strokeRect(Math.round(x0) + 0.5, Math.round(y0) + 0.5, Math.round(x1 - x0), Math.round(y1 - y0));
       hctx.font = '700 11px "DejaVu Sans", Arial, sans-serif'; hctx.fillStyle = `rgba(255,255,255,${a})`; hctx.fillText(o.e.tag, x0 + 3, y0 - 5);
       marks(o.e.tag.split('').reduce((n, c) => n + c.charCodeAt(0), 0), t, Math.min(W - 120, x1 + 8), Math.max(34, y0), a);
     }
   }
   // the station's parts as they land
-  if (s.id === 'station') for (const pc of pieces) {
+  const la = ramp(t, AT.labels[0], AT.labels[1]);
+  if (la > 0) for (const pc of pieces) {
     if (!pc.group.visible || pc.order % 2 || !/^(VLV|WNF|REDE|SPEC)/.test(pc.key)) continue;
     const [x, y, z] = project(pc.centre.clone().add(pc.group.position)); if (z > 1 || x < 20 || x > W - 150) continue;
-    const landed = pc.group.position.y < 1, a = landed ? 0.9 : 0.5;
+    const landed = pc.group.position.y < 1, a = la * (landed ? 0.9 : 0.5);
     hctx.strokeStyle = `rgba(${landed ? ACCENT : '235,238,242'},${a})`; hctx.lineWidth = 1; hctx.strokeRect(Math.round(x) - 9.5, Math.round(y) - 9.5, 19, 19);
     hctx.beginPath(); hctx.moveTo(x + 10, y - 10); hctx.lineTo(x + 26, y - 34 - (pc.order % 3) * 13); hctx.lineTo(x + 34, y - 34 - (pc.order % 3) * 13); hctx.stroke();
     hctx.font = '9px "DejaVu Sans Mono", monospace'; hctx.fillStyle = `rgba(235,238,242,${a})`; hctx.fillText(pc.label, x + 38, y - 31 - (pc.order % 3) * 13);
@@ -255,25 +257,28 @@ function drawHud(t: number, s: Shot, u: number) {
   hctx.fillStyle = `rgba(${ACCENT},0.95)`; hctx.fillRect(rx0, ry + 2, (rx1 - rx0) * p, 1.5);
 }
 
-const fadeEl = document.getElementById('fade')!, endEl = document.getElementById('end')!;
+const fadeEl = document.getElementById('fade')!;
+/** the camera's travel (in) and turn (degrees) over one shutter interval at time t */
+function motion(t: number) {
+  const dt = 1 / FPS, c0 = camAt(t), c1 = camAt(Math.min(total, t + dt * SHUTTER));
+  return { travel: c0.eye.distanceTo(c1.eye), turn: (c0.tgt.clone().sub(c0.eye).angleTo(c1.tgt.clone().sub(c1.eye)) * 180) / Math.PI };
+}
 function setFrame(i: number) {
   const t = i / FPS, dt = 1 / FPS;
   // how many sub-frames the motion needs: the camera's travel and turn over one frame
-  const c0 = camAt(t), c1 = camAt(Math.min(total - 1e-4, t + dt * SHUTTER)), same = c0.si === c1.si;
-  const travel = same ? c0.eye.distanceTo(c1.eye) : 0, turn = same ? (c0.tgt.clone().sub(c0.eye).angleTo(c1.tgt.clone().sub(c1.eye)) * 180) / Math.PI : 0;
-  const N = c0.s.mirror ? 1 : Math.max(1, Math.min(c0.s.id === 'rise' ? Math.min(MAXSUB, 5) : MAXSUB, Math.ceil(Math.max(travel / 2.6, turn / 0.22))));
-  const pr = N > 1 ? Math.min(QUALITY, 1.2) : c0.s.mirror ? Math.min(QUALITY, 1.25) : QUALITY; renderer.setPixelRatio(pr); renderer.setSize(W, H, false);
+  const { travel, turn } = motion(t), mir = t > AT.mirror[0];
+  const N = mir ? Math.max(1, Math.min(4, Math.ceil(Math.max(travel / 6, turn / 0.45)))) : Math.max(1, Math.min(t > AT.drop ? Math.min(MAXSUB, 5) : MAXSUB, Math.ceil(Math.max(travel / 2.6, turn / 0.22))));
+  const pr = N > 1 ? Math.min(QUALITY, 1.2) : mir ? Math.min(QUALITY, 1.25) : QUALITY; renderer.setPixelRatio(pr); renderer.setSize(W, H, false);
   actx.globalAlpha = 1; actx.fillStyle = '#000'; actx.fillRect(0, 0, acc.width, acc.height);
-  for (let k = 0; k < N; k++) { apply(same ? t + (dt * SHUTTER * k) / N : t); renderer.render(scene, camera); actx.globalAlpha = 1 / (k + 1); actx.drawImage(glCanvas, 0, 0, acc.width, acc.height); }
+  for (let k = 0; k < N; k++) { apply(Math.min(total, t + (dt * SHUTTER * k) / N)); renderer.render(scene, camera); actx.globalAlpha = 1 / (k + 1); actx.drawImage(glCanvas, 0, 0, acc.width, acc.height); }
   actx.globalAlpha = 1;
-  const { s, u } = apply(t); drawHud(t, s, u);
-  const into = u * s.dur, left = (1 - u) * s.dur, si = SHOTS.indexOf(s), cutIn = s.cut !== false, cutOut = si === SHOTS.length - 1 || SHOTS[si + 1].cut !== false;
-  const fIn = si === 0 ? 0.4 : 0.09, fOut = si === SHOTS.length - 1 ? 0.6 : 0.09;
-  fadeEl.style.opacity = String(Math.max(cutIn && into < fIn ? 1 - into / fIn : 0, cutOut && left < fOut ? 1 - left / fOut : 0));
-  endEl.style.opacity = String(s.id === 'hero' ? clamp01((into - 1.0) / 0.7) : 0);
+  apply(t); drawHud(t);
+  fadeEl.style.opacity = String(Math.max(t < 0.4 ? 1 - t / 0.4 : 0, total - t < 0.6 ? 1 - (total - t) / 0.6 : 0));
   return N;
 }
+/** speed (in/s) and turn rate (deg/s) of the camera at every frame, for checking the move */
+const profile = () => Array.from({ length: frames }, (_, i) => { const m = motion(i / FPS); return [Math.round((m.travel * FPS) / SHUTTER), Math.round((m.turn * FPS) / SHUTTER)]; });
 
-declare global { interface Window { film: { ready: Promise<void>; frames: number; fps: number; setFrame: (i: number) => number; shotStarts: number[] } } }
-window.film = { ready: build(), frames, fps: FPS, setFrame, shotStarts: T0.map(a => Math.round(a * FPS)) };
+declare global { interface Window { film: { ready: Promise<void>; frames: number; fps: number; setFrame: (i: number) => number; profile: () => number[][] } } }
+window.film = { ready: build(), frames, fps: FPS, setFrame, profile };
 window.film.ready.then(() => setFrame(0)).catch(e => { document.body.insertAdjacentHTML('beforeend', `<pre style="color:#f66;position:absolute;top:0">${String(e?.stack ?? e)}</pre>`); });
