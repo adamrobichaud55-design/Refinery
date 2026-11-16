@@ -38,7 +38,9 @@ const palette = (planes: THREE.Plane[]): Record<Role, THREE.Material> => ({   //
   closure: M(0xd2d6db, 0.9, 0.22, planes), stem: M(0xe2e5e9, 0.95, 0.2, planes), polymer: M(0x1d1f22, 0.1, 0.8, planes), pipe: M(0xd6dade, 0.86, 0.2, planes),
   operator: M(0xf1f3f5, 0.35, 0.35, planes),
 });
-const MAT_STEEL = palette([steelPlane]), MAT_PIPE = palette([pipePlane]), MAT_FREE = palette([]);
+// the building shell, raised at the end: its frame is kept west of framePlane and its cladding west of skinPlane
+const framePlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), -1e6), skinPlane = new THREE.Plane(new THREE.Vector3(-1, 0, 0), -1e6);
+const MAT_STEEL = palette([steelPlane]), MAT_PIPE = palette([pipePlane]), MAT_FREE = palette([]), MAT_FRAME = palette([framePlane]), MAT_SKIN = palette([skinPlane]);
 const CLAY = new THREE.MeshStandardMaterial({ color: 0xc9cbce, metalness: 0.0, roughness: 0.85, side: THREE.DoubleSide });
 function toGeo(m: MeshData): THREE.BufferGeometry {
   const g = new THREE.BufferGeometry();
@@ -61,7 +63,7 @@ const RANGE: Record<Kind, [number, number]> = { std: [-1e9, 1e9], small: [-1e9, 
 const LODS = [[34, 'near'], [15, 'mid'], [7, 'far']] as const;
 const chunks: { o: THREE.Object3D; c: THREE.Vector3; r: number; kind: Kind; plane: THREE.Plane }[] = [];
 const cellOf = (x: number, z: number, c = CELL) => `${Math.floor(x / c)},${Math.floor(z / c)}`;
-const isSmall = (mat: THREE.Material) => mat === MAT_STEEL.hardware || mat === MAT_STEEL.weld || mat === MAT_PIPE.hardware || mat === MAT_PIPE.weld;
+const isSmall = (mat: THREE.Material) => mat === MAT_STEEL.hardware || mat === MAT_STEEL.weld || mat === MAT_PIPE.hardware || mat === MAT_PIPE.weld || mat === MAT_FRAME.hardware || mat === MAT_FRAME.weld || mat === MAT_SKIN.hardware || mat === MAT_SKIN.weld;
 function addChunk(o: THREE.Mesh, kind: Kind, plane: THREE.Plane) {
   const im = o as unknown as THREE.InstancedMesh;
   if (im.isInstancedMesh) im.computeBoundingSphere(); else o.geometry.computeBoundingSphere();
@@ -93,6 +95,10 @@ async function build() {
   const byRole = new Map<string, MeshData[]>();
   for (const inst of I.instances) { if (eqParts.has(inst.part)) continue; for (const sd of geomOf(inst.part).solids) { const T = inst.transform as number[], k = `${sd.role}|${sd.mesh.normals ? 'n' : 'f'}|${cellOf(T[12], T[14])}`; const a = byRole.get(k) ?? []; a.push(transformMesh(sd.mesh, inst.transform as Mat4)); byRole.set(k, a); } }
   for (const [k, meshes] of byRole) { const mat = MAT_STEEL[k.split('|')[0] as Role]; addChunk(new THREE.Mesh(flatGeo(mergeMeshes(meshes)), mat), isSmall(mat) ? 'small' : 'std', steelPlane); }
+  // the building shell: frame and cladding, each behind its own plane so the last shot can raise them over the plant
+  const shell = new Map<string, MeshData[]>();
+  for (const inst of plant.building().instances) { const skin = inst.tags.some(g => g === 'cladding' || g === 'trim' || g === 'roof-sheet'); for (const sd of geomOf(inst.part).solids) { const T = inst.transform as number[], k = `${sd.role}|${skin ? 's' : 'f'}|${cellOf(T[12], T[14])}`; const a = shell.get(k) ?? []; a.push(transformMesh(sd.mesh, inst.transform as Mat4)); shell.set(k, a); } }
+  for (const [k, meshes] of shell) { const [role, w] = k.split('|'), mat = (w === 's' ? MAT_SKIN : MAT_FRAME)[role as Role]; addChunk(new THREE.Mesh(flatGeo(mergeMeshes(meshes)), mat), isSmall(mat) ? 'small' : 'std', w === 's' ? skinPlane : framePlane); }
   // equipment: one group each, so it can be placed in the editor view and dropped in later
   const plantCentre = new THREE.Vector3(1900, 0, 0);
   for (const e of I.equipment) {
@@ -170,6 +176,8 @@ function apply(t: number) {
   // the rack builds ahead of the camera while it flies through; afterwards everything stands
   const inRack = s.id === 'rack';
   steelPlane.constant = inRack ? eye.x + 900 + 500 * u : 1e6; pipePlane.constant = inRack ? eye.x + 330 + 250 * u : 1e6;
+  const inB = s.id === 'building';   // the frame runs the length of the plant first, the cladding follows it
+  framePlane.constant = inB ? -150 + 3400 * clamp01(u / 0.4) : -1e6; skinPlane.constant = inB ? -150 + 3400 * clamp01((u - 0.26) / 0.44) : -1e6;
   for (const k of chunks) {
     if (editor || k.c.x - k.r > k.plane.constant) { k.o.visible = false; continue; }
     const d = k.c.distanceTo(eye) - k.r, [a, b] = RANGE[k.kind]; k.o.visible = d >= a && d < b;

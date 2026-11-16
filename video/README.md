@@ -2,7 +2,7 @@
 
 An assembly film of a generated SmartWeld plant, rendered frame by frame from the real model:
 a black void where the pipe rack builds ahead of the camera, the equipment drops in, a
-control station assembles part by part and the finished unit stands on a reflecting floor. Silver on black, sub-frame
+control station assembles part by part, the finished unit stands on a reflecting floor and the building frame and cladding close over it. Silver on black, sub-frame
 motion blur, a thin tracking overlay.
 This folder is separate from `smartweld/`: it reads that project's sources and published plant data and writes nothing there.
 It uses a headless browser and ffmpeg, which the SmartWeld project itself does not use (its PROVENANCE P-58), so keep it outside that project.

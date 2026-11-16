@@ -1,7 +1,7 @@
 // The camera script. Coordinates are the plant's own, in inches: x along the plant (east is +x), y up, z across.
 // The film is an assembly: a black void where the pipe rack builds
-// ahead of the camera, the equipment drops in, a control station assembles part by part, and the finished unit stands
-// on a reflecting floor.
+// ahead of the camera, the equipment drops in, a control station assembles part by part, the finished unit stands
+// on a reflecting floor, and the building's frame and cladding close over it.
 export type V3 = [number, number, number];
 export type Mode = 'editor' | 'void';
 export interface Shot {
@@ -25,4 +25,6 @@ export const SHOTS: Shot[] = [
     eye: [[985, 345, -170], [950, 322, -205], [925, 310, -245], [915, 306, -275]], tgt: [[840, 305, -300], [840, 301, -255], [840, 300, -240], [840, 300, -246]] },
   { id: 'hero', dur: 3.8, mode: 'void', fov: 34, ease: 0.4, mirror: true, tags: 0,
     eye: [[4350, 105, 1250], [4180, 115, 1400], [3980, 125, 1540]], tgt: [[2450, 175, 0], [2400, 175, 0], [2350, 175, 0]] },
+  { id: 'building', dur: 5.6, mode: 'void', fov: 34, ease: 0.6, cut: false, mirror: true, tags: 0,
+    eye: [[3980, 125, 1540], [4350, 380, 1850], [4450, 580, 2000]], tgt: [[2350, 175, 0], [2200, 170, 60], [2100, 150, 120]] },
 ];
