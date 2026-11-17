@@ -56,10 +56,11 @@ function flatGeo(m: MeshData): THREE.BufferGeometry {
 
 // The scene is cut into cells so the renderer skips what the camera cannot see; small parts (bolts, studs, welds) are
 // dropped beyond a distance at which they are under a pixel, and valves and small fittings carry three detail levels.
-type Kind = 'std' | 'small' | 'near' | 'mid' | 'far';
+type Kind = 'std' | 'small' | 'near' | 'mid' | 'far' | 'xfar' | 'close';
 const CELL = 480, LOD_CELL = 240, SMALL_DIST = 650;
-const RANGE: Record<Kind, [number, number]> = { std: [-1e9, 1e9], small: [-1e9, SMALL_DIST], near: [-1e9, 230], mid: [230, 900], far: [900, 1e9] };
-const LODS = [[34, 'near'], [15, 'mid'], [7, 'far']] as const;
+const RANGE: Record<Kind, [number, number]> = { std: [-1e9, 1e9], small: [-1e9, SMALL_DIST], near: [-1e9, 230], mid: [230, 900], far: [900, 1900], xfar: [1900, 1e9], close: [-1e9, 1900] };
+const LODS = [[34, 'near'], [15, 'mid'], [7, 'far'], [5, 'xfar']] as const;
+const XFAR_ROLES = new Set<Role>(['casting', 'operator', 'closure', 'pipe', 'equipment', 'steel']);   // at a pixel or two across, only the bodies are drawn
 const chunks: { o: THREE.Object3D; c: THREE.Vector3; r: number; kind: Kind; plane: THREE.Plane }[] = [];
 const cellOf = (x: number, z: number, c = CELL) => `${Math.floor(x / c)},${Math.floor(z / c)}`;
 const isSmall = (mat: THREE.Material) => mat === MAT_STEEL.hardware || mat === MAT_STEEL.weld || mat === MAT_PIPE.hardware || mat === MAT_PIPE.weld || mat === MAT_FRAME.hardware || mat === MAT_FRAME.weld || mat === MAT_SKIN.hardware || mat === MAT_SKIN.weld;
@@ -69,10 +70,10 @@ function addChunk(o: THREE.Mesh, kind: Kind, plane: THREE.Plane) {
   const bs = (im.isInstancedMesh ? im.boundingSphere : o.geometry.boundingSphere)!;
   scene.add(o); chunks.push({ o, c: bs.center.clone(), r: bs.radius, kind, plane });
 }
-function addInstanced(geo: THREE.BufferGeometry, mat: THREE.Material, mats: THREE.Matrix4[], kind: Kind) {
+function addInstanced(geo: THREE.BufferGeometry, mat: THREE.Material, mats: THREE.Matrix4[], kind: Kind, name = '') {
   const by = new Map<string, THREE.Matrix4[]>();
   for (const M4 of mats) { const k = cellOf(M4.elements[12], M4.elements[14], kind === 'std' || kind === 'small' ? CELL : LOD_CELL); const a = by.get(k) ?? []; a.push(M4); by.set(k, a); }
-  for (const list of by.values()) { const im = new THREE.InstancedMesh(geo, mat, list.length); list.forEach((M4, i) => im.setMatrixAt(i, M4)); im.instanceMatrix.needsUpdate = true; addChunk(im, kind, pipePlane); }
+  for (const list of by.values()) { const im = new THREE.InstancedMesh(geo, mat, list.length); im.name = name; list.forEach((M4, i) => im.setMatrixAt(i, M4)); im.instanceMatrix.needsUpdate = true; addChunk(im, kind, pipePlane); }
 }
 
 interface Equip { tag: string; kind: string; group: THREE.Group; box: THREE.Box3; centre: THREE.Vector3; order: number; out: THREE.Vector3; t0: number }
@@ -84,6 +85,8 @@ const grid = new THREE.GridHelper(12000, 60, 0x55585c, 0x47494d); grid.position.
 const floorMat = new THREE.MeshStandardMaterial({ color: 0x020203, roughness: 0.62, metalness: 0.25, depthWrite: false });
 const floor = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000), floorMat); floor.rotation.x = -Math.PI / 2; floor.position.y = -0.5; scene.add(floor);
 const mirror = new Reflector(new THREE.PlaneGeometry(60000, 60000), { textureWidth: 1024, textureHeight: 576, color: 0x4a4d52, clipBias: 0.5 }); mirror.rotation.x = -Math.PI / 2; mirror.position.y = -2.5; scene.add(mirror);
+// the reflection is dim and soft, so it is drawn without the valve and fitting detail (over a third of the triangles)
+{ const draw = mirror.onBeforeRender; mirror.onBeforeRender = function (...a) { const off: THREE.Object3D[] = []; for (const k of chunks) if (k.o.visible && k.kind !== 'std') { k.o.visible = false; off.push(k.o); } draw.apply(this, a); for (const o of off) o.visible = true; }; }
 
 async function build() {
   const plant = plantById(plantId);
@@ -133,14 +136,25 @@ async function build() {
       const im = ch as THREE.InstancedMesh; if (!im.isInstancedMesh || im.name.includes('@')) continue;
       const mats: THREE.Matrix4[] = []; for (let i = 0; i < im.count; i++) { const M4 = new THREE.Matrix4(); im.getMatrixAt(i, M4); mats.push(M4); }
       if (HEAVY.test(im.name)) { if (!heavy.has(im.name)) heavy.set(im.name, mats); continue; }
-      addInstanced(im.geometry, im.material as THREE.Material, mats, isSmall(im.material as THREE.Material) ? 'small' : 'std');
+      if (/^GSK\|/.test(im.name)) { addInstanced(im.geometry, im.material as THREE.Material, mats, 'small', im.name); continue; }   // a gasket is hidden between its flanges
+      if (/^(WNF|SWF|SOF|BLIND)\|/.test(im.name)) {   // a flange far away is drawn as a plain disc of its own size
+        addInstanced(im.geometry, im.material as THREE.Material, mats, 'close', im.name);
+        if (im.material === MAT_PIPE.steel) {
+          im.geometry.computeBoundingBox(); const bb = im.geometry.boundingBox!, sz = bb.getSize(new THREE.Vector3()), c = bb.getCenter(new THREE.Vector3()), e = [sz.x, sz.y, sz.z];
+          const ax = [0, 1, 2].sort((a, b) => Math.abs(e[(a + 1) % 3] - e[(a + 2) % 3]) - Math.abs(e[(b + 1) % 3] - e[(b + 2) % 3]))[0], disc = new THREE.CylinderGeometry(e[(ax + 1) % 3] / 2, e[(ax + 1) % 3] / 2, e[ax], 14);
+          if (ax === 0) disc.rotateZ(Math.PI / 2); else if (ax === 2) disc.rotateX(Math.PI / 2);
+          disc.translate(c.x, c.y, c.z); addInstanced(disc, im.material as THREE.Material, mats, 'xfar', im.name);
+        }
+        continue;
+      }
+      addInstanced(im.geometry, im.material as THREE.Material, mats, isSmall(im.material as THREE.Material) ? 'small' : 'std', im.name);
     }
   }
   for (const [key0, mats] of heavy) for (const [cells, kind] of LODS) {
     setMaxCells(cells);
     // these parts are meshed once when first made and kept by key; a trailing zero on the size gives the same part a fresh key
-    const a = key0.split('|'); a[1] = a[1] + (a[1].includes('.') ? '' : '.') + (kind === 'near' ? '0' : kind === 'mid' ? '00' : '000');
-    try { for (const sd of buildGeometry(partFromKey(a.join('|'))).solids) addInstanced(toGeo(sd.mesh), MAT_PIPE[sd.role], mats, kind); }
+    const a = key0.split('|'); a[1] = a[1] + (a[1].includes('.') ? '' : '.') + (kind === 'near' ? '0' : kind === 'mid' ? '00' : kind === 'far' ? '000' : '0000');
+    try { for (const sd of buildGeometry(partFromKey(a.join('|'))).solids) if (kind !== 'xfar' || XFAR_ROLES.has(sd.role)) addInstanced(toGeo(sd.mesh), MAT_PIPE[sd.role], mats, kind); }
     finally { setMaxCells(110); }
   }
   const valves = new Map<string, THREE.Matrix4[]>();
@@ -149,7 +163,7 @@ async function build() {
   for (const n of m.nozzles) n.comps.forEach(take);
   for (const [vk, mats] of valves) for (const [cells, kind] of LODS) {
     setMaxCells(cells);
-    try { const a = vk.split('|').slice(1) as [ValveType, string, PipeClass]; for (const sd of buildGeometry(makeValve(`${vk}@${cells}`, ...(a.map((x, i) => (i === 1 ? Number(x) : x)) as [ValveType, number, PipeClass]))).solids) addInstanced(toGeo(sd.mesh), MAT_PIPE[sd.role], mats, kind); }
+    try { const a = vk.split('|').slice(1) as [ValveType, string, PipeClass]; for (const sd of buildGeometry(makeValve(`${vk}@${cells}`, ...(a.map((x, i) => (i === 1 ? Number(x) : x)) as [ValveType, number, PipeClass]))).solids) if (kind !== 'xfar' || XFAR_ROLES.has(sd.role)) addInstanced(toGeo(sd.mesh), MAT_PIPE[sd.role], mats, kind); }
     finally { setMaxCells(110); }
   }
   const seg = (c: Comp) => { segs.push(c.a[0], c.a[1], c.a[2], c.b[0], c.b[1], c.b[2]); };
