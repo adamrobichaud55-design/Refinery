@@ -81,7 +81,7 @@ const equip: Equip[] = [], pieces: Piece[] = [];
 let stats = { lines: 0, comps: 0 };
 const segs: number[] = [];   // every piping component's centreline (ax, ay, az, bx, by, bz), for checking how close the camera passes
 const grid = new THREE.GridHelper(12000, 60, 0x55585c, 0x47494d); grid.position.set(1900, 0, 0); scene.add(grid);
-const floorMat = new THREE.MeshStandardMaterial({ color: 0x020203, roughness: 0.62, metalness: 0.25, });
+const floorMat = new THREE.MeshStandardMaterial({ color: 0x020203, roughness: 0.62, metalness: 0.25, transparent: true });   // transparent from the start, so that it can fade
 const floor = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000), floorMat); floor.rotation.x = -Math.PI / 2; floor.position.y = -0.5; scene.add(floor);
 
 async function build() {
@@ -215,7 +215,7 @@ function apply(t: number, lx = 0, ly = 0) {
   scene.background = VOID_BG; scene.fog = voidFog; grid.visible = false;
   // the floor's sheen fades to plain black as the camera settles on the finished unit, which then stands in the void
   const fl = 1 - ease(clamp01((t - AT.wide) / 0.9));
-  floor.visible = fl > 0.001; floorMat.transparent = fl < 0.999; floorMat.depthWrite = fl >= 0.999; floorMat.opacity = fl;
+  floor.visible = fl > 0.001; floorMat.depthWrite = fl >= 0.999; floorMat.opacity = fl;
   // the rack builds ahead of the camera while it flies through; afterwards everything stands
   const u = clamp01(t / AT.rackEnd);
   steelPlane.constant = t < AT.rackEnd ? eye.x + 1450 + 150 * u : 1e6; pipePlane.constant = eye.x + 760 - 180 * u + Math.max(0, t - AT.rackEnd) * 2500;
