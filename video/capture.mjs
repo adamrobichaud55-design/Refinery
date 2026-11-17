@@ -15,7 +15,8 @@ await page.goto(`http://127.0.0.1:5199/?plant=${plant}&pr=${pr}&aa=${aa}${opt.su
 const t0 = Date.now();
 await page.waitForFunction(() => window.film, null, { timeout: 120000 });
 await page.evaluate(() => window.film.ready);
-const info = await page.evaluate(() => ({ frames: window.film.frames, fps: window.film.fps, profile: window.film.profile() }));
+const info = await page.evaluate(() => ({ frames: window.film.frames, fps: window.film.fps, profile: window.film.profile(), moved: window.film.moved }));
+for (const m of info.moved) console.log(m);
 console.log('scene ready in', ((Date.now() - t0) / 1000).toFixed(1), 's;', info.frames, 'frames at', info.fps, 'fps');
 const stage = page.locator('#stage');
 const shoot = async (i, path) => { const n = await page.evaluate(n => window.film.setFrame(n), i); await page.screenshot({ path, type: 'png', timeout: 400000 }); return n; };

@@ -75,7 +75,7 @@ function addInstanced(geo: THREE.BufferGeometry, mat: THREE.Material, mats: THRE
   for (const list of by.values()) { const im = new THREE.InstancedMesh(geo, mat, list.length); list.forEach((M4, i) => im.setMatrixAt(i, M4)); im.instanceMatrix.needsUpdate = true; addChunk(im, kind, pipePlane); }
 }
 
-interface Equip { tag: string; kind: string; group: THREE.Group; box: THREE.Box3; centre: THREE.Vector3; order: number; out: THREE.Vector3 }
+interface Equip { tag: string; kind: string; group: THREE.Group; box: THREE.Box3; centre: THREE.Vector3; order: number; out: THREE.Vector3; t0: number }
 interface Piece { key: string; label: string; group: THREE.Group; centre: THREE.Vector3; order: number }
 const equip: Equip[] = [], pieces: Piece[] = [];
 let stats = { lines: 0, comps: 0 };
@@ -108,9 +108,10 @@ async function build() {
     scene.add(group);
     const centre = box.getCenter(new THREE.Vector3()), out = centre.clone().sub(plantCentre).setY(0); if (out.length() < 1) out.set(1, 0, 0); out.normalize();
     const kind = e.tag.startsWith('P-') ? 'PUMP' : e.tag.startsWith('E-') ? 'EXCHANGER' : e.tag.startsWith('T-') ? 'TANK' : e.tag.startsWith('C-') ? 'COLUMN' : e.tag.startsWith('D-') ? 'DRUM' : 'VESSEL';
-    equip.push({ tag: e.tag, kind, group, box, centre, order: 0, out });
+    equip.push({ tag: e.tag, kind, group, box, centre, order: 0, out, t0: 0 });
   }
   [...equip].sort((a, b) => b.centre.x - a.centre.x).forEach((e, i) => { e.order = i; });   // the east end lands first, as the camera leaves the rack there
+  planDrops();
   // the control station that assembles on camera: the reflux line's stack at the column, taken out of the piping and built as single parts
   const refl = m.lines.find(l => /^C-\d+-N4$/.test(l.to));
   if (refl) {
@@ -180,6 +181,17 @@ const camAt = (t: number) => {
   return { eye: new THREE.Vector3(acc7[0] / wsum, acc7[1] / wsum, acc7[2] / wsum), tgt: new THREE.Vector3(acc7[3] / wsum, acc7[4] / wsum, acc7[5] / wsum), fov: acc7[6] / wsum };
 };
 const SHUTTER = 0.5;
+const DROP_T = 0.6, DROP_H = 340, moved: string[] = [];
+/** when each item of equipment lands: in turn from the east end, but never falling through the camera (it lands before the camera gets there) */
+function planDrops() {
+  for (const e of equip) {
+    const base = AT.drop + 0.25 + 2.6 * (e.order / Math.max(1, equip.length - 1));
+    const hits = (t0: number) => { for (let t = t0; t <= t0 + DROP_T; t += 1 / 96) { const c = camAt(t).eye, off = DROP_H * (1 - outCubic(clamp01((t - t0) / DROP_T))); if (c.x > e.box.min.x - 70 && c.x < e.box.max.x + 70 && c.z > e.box.min.z - 70 && c.z < e.box.max.z + 70 && c.y > e.box.min.y + off - 70 && c.y < e.box.max.y + off + 70) return true; } return false; };
+    let t0 = base; for (let k = 0; k < 20 && hits(t0); k++) t0 -= 0.1;
+    if (t0 !== base) moved.push(`${e.tag} lands from ${t0.toFixed(2)} s, not ${base.toFixed(2)} s, to stay clear of the camera`);
+    e.t0 = t0;
+  }
+}
 /** everything that depends on time: the camera, what has been built so far, where each moving part is */
 function apply(t: number) {
   const { eye, tgt, fov } = camAt(t);
@@ -199,8 +211,8 @@ function apply(t: number) {
   }
   // equipment: absent while the rack builds, then dropping in from the east end
   for (const e of equip) {
-    const t0 = AT.drop + 0.25 + 2.6 * (e.order / Math.max(1, equip.length - 1)), p = (t - t0) / 0.6;
-    e.group.visible = p > 0; e.group.position.set(0, p >= 1 ? 0 : 340 * (1 - outCubic(clamp01(p))), 0);
+    const p = (t - e.t0) / DROP_T;
+    e.group.visible = p > 0; e.group.position.set(0, p >= 1 ? 0 : DROP_H * (1 - outCubic(clamp01(p))), 0);
   }
   // the control station: each part comes down into the line in turn
   for (const pc of pieces) { const p = (t - (AT.station + 0.3 + pc.order * 0.072)) / 0.42; pc.group.visible = p > 0; pc.group.position.set(0, p >= 1 ? 0 : 64 * (1 - outCubic(clamp01(p))), 0); }
@@ -279,6 +291,6 @@ function setFrame(i: number) {
 /** speed (in/s) and turn rate (deg/s) of the camera at every frame, for checking the move */
 const profile = () => Array.from({ length: frames }, (_, i) => { const m = motion(i / FPS); return [Math.round((m.travel * FPS) / SHUTTER), Math.round((m.turn * FPS) / SHUTTER)]; });
 
-declare global { interface Window { film: { ready: Promise<void>; frames: number; fps: number; setFrame: (i: number) => number; profile: () => number[][] } } }
-window.film = { ready: build(), frames, fps: FPS, setFrame, profile };
+declare global { interface Window { film: { ready: Promise<void>; frames: number; fps: number; setFrame: (i: number) => number; profile: () => number[][]; moved: string[] } } }
+window.film = { ready: build(), frames, fps: FPS, setFrame, profile, moved };
 window.film.ready.then(() => setFrame(0)).catch(e => { document.body.insertAdjacentHTML('beforeend', `<pre style="color:#f66;position:absolute;top:0">${String(e?.stack ?? e)}</pre>`); });
