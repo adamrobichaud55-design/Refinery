@@ -1,7 +1,7 @@
 // The camera script. Coordinates are the plant's own, in inches: x along the plant (east is +x), y up, z across.
 // The film is one unbroken camera move with no cuts: the pipe rack builds ahead of the camera, the camera leaves by the
 // east end and turns back while the equipment drops in, comes down to the column and tracks along a control station as it assembles
-// part by part, pulls back along the plant's south face to the finished unit on a reflecting floor, and rises while the building's frame and cladding
+// part by part, pulls back along the plant's south face to the finished unit, and rises while the building's frame and cladding
 // close over it. The keys are joined by a spline and then smoothed in time (film.ts), so speed and direction never jump.
 export type V3 = [number, number, number];
 export interface Key { t: number; eye: V3; tgt: V3; fov: number }
@@ -48,7 +48,7 @@ export const AT = {
   rackEnd: 5.0,                  // the rack has built itself to the east end
   drop: 5.5,                     // the equipment starts to land
   station: 13.9,                 // the control station starts to assemble
-  mirror: [22.1, 23.0] as const, // the floor turns from matt to reflecting
+  wide: 22.1,                    // from here the camera is far off and slow
   building: [25.0, 30.6] as const,
   tags: [{ a: 5.2, b: 10.6, n: 6, reach: 2600 }, { a: 11.9, b: 14.2, n: 2, reach: 700 }],
   labels: [13.9, 17.8] as const, // the station's part labels

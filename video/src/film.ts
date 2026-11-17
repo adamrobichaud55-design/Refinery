@@ -1,10 +1,9 @@
 // Film page: the generated SmartWeld plant assembling itself in a black void. A scripted camera, sub-frame motion blur,
-// a reflecting floor for the last shot and a thin tracking overlay. It only reads the SmartWeld sources and the
+// and a thin tracking overlay. It only reads the SmartWeld sources and the
 // published plant piping; nothing here is part of that project.
 import * as THREE from 'three';
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js';
 import { toCreasedNormals } from 'three/examples/jsm/utils/BufferGeometryUtils.js';
-import { Reflector } from 'three/examples/jsm/objects/Reflector.js';
 import { buildGeometry, type Role } from '@sw/geometry/partGeometry';
 import { transformMesh, mergeMeshes, type MeshData, type Mat4 } from '@sw/geometry/mesh';
 import { makeValve, type PartSpec, type ValveType, type PipeClass } from '@sw/catalogue';
@@ -82,11 +81,8 @@ const equip: Equip[] = [], pieces: Piece[] = [];
 let stats = { lines: 0, comps: 0 };
 const segs: number[] = [];   // every piping component's centreline (ax, ay, az, bx, by, bz), for checking how close the camera passes
 const grid = new THREE.GridHelper(12000, 60, 0x55585c, 0x47494d); grid.position.set(1900, 0, 0); scene.add(grid);
-const floorMat = new THREE.MeshStandardMaterial({ color: 0x020203, roughness: 0.62, metalness: 0.25, depthWrite: false });
+const floorMat = new THREE.MeshStandardMaterial({ color: 0x020203, roughness: 0.62, metalness: 0.25, });
 const floor = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000), floorMat); floor.rotation.x = -Math.PI / 2; floor.position.y = -0.5; scene.add(floor);
-const mirror = new Reflector(new THREE.PlaneGeometry(60000, 60000), { textureWidth: 1024, textureHeight: 576, color: 0x4a4d52, clipBias: 0.5 }); mirror.rotation.x = -Math.PI / 2; mirror.position.y = -2.5; scene.add(mirror);
-// the reflection is dim and soft, so it is drawn without the valve and fitting detail (over a third of the triangles)
-{ const draw = mirror.onBeforeRender; mirror.onBeforeRender = function (...a) { const off: THREE.Object3D[] = []; for (const k of chunks) if (k.o.visible && k.kind !== 'std') { k.o.visible = false; off.push(k.o); } draw.apply(this, a); for (const o of off) o.visible = true; }; }
 
 async function build() {
   const plant = plantById(plantId);
@@ -217,9 +213,9 @@ function apply(t: number, lx = 0, ly = 0) {
   if (lx || ly) { camera.updateMatrixWorld(); camera.position.addScaledVector(V1.setFromMatrixColumn(camera.matrixWorld, 0), lx).addScaledVector(V1.setFromMatrixColumn(camera.matrixWorld, 1), ly); camera.lookAt(tgt); }   // a point on the lens, still aimed at the point in focus
   camera.fov = fov; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
   scene.background = VOID_BG; scene.fog = voidFog; grid.visible = false;
-  // the floor turns from matt to reflecting as the camera settles on the finished unit
-  const fl = 1 - ease(clamp01((t - AT.mirror[0]) / (AT.mirror[1] - AT.mirror[0])));
-  floor.visible = fl > 0.001; floorMat.transparent = fl < 0.999; floorMat.opacity = fl; mirror.visible = fl < 0.999;
+  // the floor's sheen fades to plain black as the camera settles on the finished unit, which then stands in the void
+  const fl = 1 - ease(clamp01((t - AT.wide) / 0.9));
+  floor.visible = fl > 0.001; floorMat.transparent = fl < 0.999; floorMat.depthWrite = fl >= 0.999; floorMat.opacity = fl;
   // the rack builds ahead of the camera while it flies through; afterwards everything stands
   const u = clamp01(t / AT.rackEnd);
   steelPlane.constant = t < AT.rackEnd ? eye.x + 1450 + 150 * u : 1e6; pipePlane.constant = eye.x + 760 - 180 * u + Math.max(0, t - AT.rackEnd) * 2500;
@@ -236,7 +232,7 @@ function apply(t: number, lx = 0, ly = 0) {
   }
   // the control station: each part comes down into the line in turn
   for (const pc of pieces) { const p = (t - (AT.station + 0.3 + pc.order * 0.072)) / 0.42; pc.group.visible = p > 0; pc.group.position.set(0, p >= 1 ? 0 : 64 * (1 - outCubic(clamp01(p))), 0); }
-  return { eye, tgt, mirrorOn: fl < 0.999 };
+  return { eye, tgt };
 }
 
 const hctx = hud.getContext('2d')!, actx = acc.getContext('2d')!;
@@ -303,10 +299,10 @@ const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);
 function setFrame(i: number) {
   const t = i / FPS, dt = 1 / FPS;
   // how many sub-frames: enough for the camera's travel and turn over the shutter, and enough to fill the lens
-  const { travel, turn } = motion(t), mir = t > AT.mirror[0], coc = cocAt(t), dof = coc > 0.8 && !mir;
-  const nMove = mir ? Math.min(4, Math.ceil(Math.max(travel / 6, turn / 0.45))) : Math.min(t > AT.drop ? 8 : 11, Math.ceil(Math.max(travel / 1.5, turn / 0.13)));
+  const { travel, turn } = motion(t), wide = t > AT.wide, coc = cocAt(t), dof = coc > 0.8 && !wide;   // the last, distant part of the move is slow: it needs little blur
+  const nMove = wide ? Math.min(4, Math.ceil(Math.max(travel / 6, turn / 0.45))) : Math.min(t > AT.drop ? 8 : 11, Math.ceil(Math.max(travel / 1.5, turn / 0.13)));
   const N = Math.max(1, nMove, dof ? Math.min(12, Math.ceil(0.55 * coc * coc)) : 1);
-  const pr = mir ? Math.min(QUALITY, 1.1) : N >= 8 && !dof ? Math.min(QUALITY, 0.95) : N > 1 ? Math.min(QUALITY, 1.15) : QUALITY; renderer.setPixelRatio(pr); renderer.setSize(W, H, false);
+  const pr = N >= 8 && !dof ? Math.min(QUALITY, 0.95) : N > 1 ? Math.min(QUALITY, 1.15) : QUALITY; renderer.setPixelRatio(pr); renderer.setSize(W, H, false);
   let step = Math.max(1, Math.round(N * 0.618)); while (gcd(step, N) !== 1) step++;   // the moments in time are taken in a different order from the points on the lens
   actx.globalAlpha = 1; actx.fillStyle = '#000'; actx.fillRect(0, 0, acc.width, acc.height);
   for (let k = 0; k < N; k++) {

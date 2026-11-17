@@ -2,7 +2,7 @@
 
 An assembly film of a generated SmartWeld plant, rendered frame by frame from the real model:
 a black void where the pipe rack builds ahead of the camera, the equipment drops in, a
-control station assembles part by part, the finished unit stands on a reflecting floor and the building frame and cladding close over it.
+control station assembles part by part, the finished unit stands in the void and the building frame and cladding close over it.
 The camera is one unbroken move with no cuts: keys in `src/shots.ts`, joined by a spline and smoothed in time so that its speed and
 direction never jump. `node capture.mjs profile` prints its speed and turn rate through the film, and every stretch where it passes
 within 40 in of a pipe centreline. 30 frames a second. Each frame is the average of up to 12 sub-frames, spread over the shutter time
