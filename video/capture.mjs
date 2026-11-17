@@ -15,15 +15,18 @@ await page.goto(`http://127.0.0.1:5199/?plant=${plant}&pr=${pr}&aa=${aa}${opt.su
 const t0 = Date.now();
 await page.waitForFunction(() => window.film, null, { timeout: 120000 });
 await page.evaluate(() => window.film.ready);
-const info = await page.evaluate(() => ({ frames: window.film.frames, fps: window.film.fps, profile: window.film.profile(), moved: window.film.moved }));
+const info = await page.evaluate(() => ({ frames: window.film.frames, fps: window.film.fps, profile: window.film.profile(), moved: window.film.moved, clear: window.film.clearance() }));
 for (const m of info.moved) console.log(m);
 console.log('scene ready in', ((Date.now() - t0) / 1000).toFixed(1), 's;', info.frames, 'frames at', info.fps, 'fps');
 const stage = page.locator('#stage');
 const shoot = async (i, path) => { const n = await page.evaluate(n => window.film.setFrame(n), i); await page.screenshot({ path, type: 'png', timeout: 400000 }); return n; };
 if (mode === 'profile') {   // the camera's speed (in/s) and turn rate (deg/s), twice a second
-  for (let i = 0; i < info.frames; i += 12) console.log((i / info.fps).toFixed(1).padStart(5), 's', String(info.profile[i][0]).padStart(6), 'in/s', String(info.profile[i][1]).padStart(5), 'deg/s');
+  for (let i = 0; i < info.frames; i += 15) console.log((i / info.fps).toFixed(1).padStart(5), 's', String(info.profile[i][0]).padStart(6), 'in/s', String(info.profile[i][1]).padStart(5), 'deg/s');
   const d = info.profile.slice(1).map((p, i) => [Math.abs(p[0] - info.profile[i][0]), Math.abs(p[1] - info.profile[i][1])]);
   console.log('peak speed', Math.max(...info.profile.map(p => p[0])), 'in/s; peak turn', Math.max(...info.profile.map(p => p[1])), 'deg/s; largest change between frames', Math.max(...d.map(x => x[0])), 'in/s,', Math.max(...d.map(x => x[1])), 'deg/s');
+  let run = null; const close = [];   // where the camera passes within 40 in of a pipe centreline
+  info.clear.forEach((d, i) => { if (d < 40) { if (run && i === run.b + 1) { run.b = i; run.min = Math.min(run.min, d); } else { run = { a: i, b: i, min: d }; close.push(run); } } });
+  for (const r of close) console.log('within', r.min, 'in of a pipe from', (r.a / info.fps).toFixed(2), 's to', (r.b / info.fps).toFixed(2), 's');
 } else if (mode === 'stills') {
   mkdirSync('out/stills', { recursive: true });
   const picks = pos.length > 1 ? pos.slice(1).map(Number) : Array.from({ length: 24 }, (_, k) => Math.round(((k + 0.5) * info.frames) / 24));

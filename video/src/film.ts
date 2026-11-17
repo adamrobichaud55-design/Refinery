@@ -79,10 +79,11 @@ interface Equip { tag: string; kind: string; group: THREE.Group; box: THREE.Box3
 interface Piece { key: string; label: string; group: THREE.Group; centre: THREE.Vector3; order: number }
 const equip: Equip[] = [], pieces: Piece[] = [];
 let stats = { lines: 0, comps: 0 };
+const segs: number[] = [];   // every piping component's centreline (ax, ay, az, bx, by, bz), for checking how close the camera passes
 const grid = new THREE.GridHelper(12000, 60, 0x55585c, 0x47494d); grid.position.set(1900, 0, 0); scene.add(grid);
 const floorMat = new THREE.MeshStandardMaterial({ color: 0x020203, roughness: 0.62, metalness: 0.25, depthWrite: false });
 const floor = new THREE.Mesh(new THREE.PlaneGeometry(60000, 60000), floorMat); floor.rotation.x = -Math.PI / 2; floor.position.y = -0.5; scene.add(floor);
-const mirror = new Reflector(new THREE.PlaneGeometry(60000, 60000), { textureWidth: 1280, textureHeight: 720, color: 0x4a4d52, clipBias: 0.5 }); mirror.rotation.x = -Math.PI / 2; mirror.position.y = -2.5; scene.add(mirror);
+const mirror = new Reflector(new THREE.PlaneGeometry(60000, 60000), { textureWidth: 1024, textureHeight: 576, color: 0x4a4d52, clipBias: 0.5 }); mirror.rotation.x = -Math.PI / 2; mirror.position.y = -2.5; scene.add(mirror);
 
 async function build() {
   const plant = plantById(plantId);
@@ -151,6 +152,9 @@ async function build() {
     try { const a = vk.split('|').slice(1) as [ValveType, string, PipeClass]; for (const sd of buildGeometry(makeValve(`${vk}@${cells}`, ...(a.map((x, i) => (i === 1 ? Number(x) : x)) as [ValveType, number, PipeClass]))).solids) addInstanced(toGeo(sd.mesh), MAT_PIPE[sd.role], mats, kind); }
     finally { setMaxCells(110); }
   }
+  const seg = (c: Comp) => { segs.push(c.a[0], c.a[1], c.a[2], c.b[0], c.b[1], c.b[2]); };
+  for (const l of m.lines) [...l.comps, ...(l.side ?? []), ...(l.pens ?? [])].forEach(seg);
+  for (const n of m.nozzles) n.comps.forEach(seg);
   const s = m.stats as unknown as Record<string, number>; stats = { lines: s.lines, comps: s.comps };
   (document.querySelector('#badge span') as HTMLElement).textContent = `PLANT ${plantId.slice(1)}`;
   document.getElementById('t2')!.textContent = `${equip.length} equipment items · ${stats.lines} lines · ${stats.comps.toLocaleString('en-US')} components`;
@@ -180,7 +184,7 @@ const camAt = (t: number) => {
   for (let k = -TAPS; k <= TAPS; k++) { const dt = (k * 3 * SIGMA) / TAPS, w = Math.exp(-(dt * dt) / (2 * SIGMA * SIGMA)); rawCam(t + dt, tmp); for (let c = 0; c < 7; c++) acc7[c] += w * tmp[c]; wsum += w; }
   return { eye: new THREE.Vector3(acc7[0] / wsum, acc7[1] / wsum, acc7[2] / wsum), tgt: new THREE.Vector3(acc7[3] / wsum, acc7[4] / wsum, acc7[5] / wsum), fov: acc7[6] / wsum };
 };
-const SHUTTER = 0.5;
+const SHUTTER = 0.5, V1 = new THREE.Vector3();
 const DROP_T = 0.6, DROP_H = 340, moved: string[] = [];
 /** when each item of equipment lands: in turn from the east end, but never falling through the camera (it lands before the camera gets there) */
 function planDrops() {
@@ -193,16 +197,18 @@ function planDrops() {
   }
 }
 /** everything that depends on time: the camera, what has been built so far, where each moving part is */
-function apply(t: number) {
+function apply(t: number, lx = 0, ly = 0) {
   const { eye, tgt, fov } = camAt(t);
-  camera.position.copy(eye); camera.lookAt(tgt); camera.fov = fov; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
+  camera.position.copy(eye); camera.lookAt(tgt);
+  if (lx || ly) { camera.updateMatrixWorld(); camera.position.addScaledVector(V1.setFromMatrixColumn(camera.matrixWorld, 0), lx).addScaledVector(V1.setFromMatrixColumn(camera.matrixWorld, 1), ly); camera.lookAt(tgt); }   // a point on the lens, still aimed at the point in focus
+  camera.fov = fov; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
   scene.background = VOID_BG; scene.fog = voidFog; grid.visible = false;
   // the floor turns from matt to reflecting as the camera settles on the finished unit
   const fl = 1 - ease(clamp01((t - AT.mirror[0]) / (AT.mirror[1] - AT.mirror[0])));
   floor.visible = fl > 0.001; floorMat.transparent = fl < 0.999; floorMat.opacity = fl; mirror.visible = fl < 0.999;
   // the rack builds ahead of the camera while it flies through; afterwards everything stands
   const u = clamp01(t / AT.rackEnd);
-  steelPlane.constant = t < AT.rackEnd ? eye.x + 900 + 500 * u : 1e6; pipePlane.constant = eye.x + 330 + 250 * u + Math.max(0, t - AT.rackEnd) * 2500;
+  steelPlane.constant = t < AT.rackEnd ? eye.x + 1450 + 150 * u : 1e6; pipePlane.constant = eye.x + 760 - 180 * u + Math.max(0, t - AT.rackEnd) * 2500;
   const bu = clamp01((t - AT.building[0]) / (AT.building[1] - AT.building[0])), inB = t > AT.building[0];   // the frame runs the length of the plant first, the cladding follows it
   framePlane.constant = inB ? -150 + 3400 * clamp01(bu / 0.4) : -1e6; skinPlane.constant = inB ? -150 + 3400 * clamp01((bu - 0.26) / 0.44) : -1e6;
   for (const k of chunks) {
@@ -275,22 +281,45 @@ function motion(t: number) {
   const dt = 1 / FPS, c0 = camAt(t), c1 = camAt(Math.min(total, t + dt * SHUTTER));
   return { travel: c0.eye.distanceTo(c1.eye), turn: (c0.tgt.clone().sub(c0.eye).angleTo(c1.tgt.clone().sub(c1.eye)) * 180) / Math.PI };
 }
+// Depth of field: the lens has a real width, so each sub-frame is taken from another point on it, all aimed at the point
+// in focus (the camera's target). What is near the target stays sharp; the rest softens, most in the close-ups.
+const LENS = Number(q.get('lens') ?? 0.62);   // lens radius, in
+const cocAt = (t: number) => { const c = camAt(t); return (LENS * (H / 2 / Math.tan((c.fov * Math.PI) / 360))) / c.eye.distanceTo(c.tgt); };   // blur radius of the far background, px
+const gcd = (a: number, b: number): number => (b ? gcd(b, a % b) : a);
 function setFrame(i: number) {
   const t = i / FPS, dt = 1 / FPS;
-  // how many sub-frames the motion needs: the camera's travel and turn over one frame
-  const { travel, turn } = motion(t), mir = t > AT.mirror[0];
-  const N = mir ? Math.max(1, Math.min(4, Math.ceil(Math.max(travel / 6, turn / 0.45)))) : Math.max(1, Math.min(t > AT.drop ? Math.min(MAXSUB, 5) : MAXSUB, Math.ceil(Math.max(travel / 2.6, turn / 0.22))));
-  const pr = N > 1 ? Math.min(QUALITY, 1.2) : mir ? Math.min(QUALITY, 1.25) : QUALITY; renderer.setPixelRatio(pr); renderer.setSize(W, H, false);
+  // how many sub-frames: enough for the camera's travel and turn over the shutter, and enough to fill the lens
+  const { travel, turn } = motion(t), mir = t > AT.mirror[0], coc = cocAt(t), dof = coc > 0.8 && !mir;
+  const nMove = mir ? Math.min(4, Math.ceil(Math.max(travel / 6, turn / 0.45))) : Math.min(t > AT.drop ? 8 : 11, Math.ceil(Math.max(travel / 1.5, turn / 0.13)));
+  const N = Math.max(1, nMove, dof ? Math.min(12, Math.ceil(0.55 * coc * coc)) : 1);
+  const pr = mir ? Math.min(QUALITY, 1.1) : N >= 8 && !dof ? Math.min(QUALITY, 0.95) : N > 1 ? Math.min(QUALITY, 1.15) : QUALITY; renderer.setPixelRatio(pr); renderer.setSize(W, H, false);
+  let step = Math.max(1, Math.round(N * 0.618)); while (gcd(step, N) !== 1) step++;   // the moments in time are taken in a different order from the points on the lens
   actx.globalAlpha = 1; actx.fillStyle = '#000'; actx.fillRect(0, 0, acc.width, acc.height);
-  for (let k = 0; k < N; k++) { apply(Math.min(total, t + (dt * SHUTTER * k) / N)); renderer.render(scene, camera); actx.globalAlpha = 1 / (k + 1); actx.drawImage(glCanvas, 0, 0, acc.width, acc.height); }
+  for (let k = 0; k < N; k++) {
+    const r = dof ? LENS * Math.sqrt((k + 0.5) / N) : 0, a = k * 2.399963 + 0.7;
+    apply(Math.min(total, t + (dt * SHUTTER * ((k * step) % N)) / N), r * Math.cos(a), r * Math.sin(a)); renderer.render(scene, camera);
+    actx.globalAlpha = 1 / (k + 1); actx.drawImage(glCanvas, 0, 0, acc.width, acc.height);
+  }
   actx.globalAlpha = 1;
   apply(t); drawHud(t);
-  fadeEl.style.opacity = String(Math.max(t < 0.4 ? 1 - t / 0.4 : 0, total - t < 0.6 ? 1 - (total - t) / 0.6 : 0));
+  fadeEl.style.opacity = String(Math.max(t < 0.3 ? 1 - t / 0.3 : 0, total - t < 0.7 ? 1 - (total - t) / 0.7 : 0));
   return N;
+}
+/** how close the camera passes to any pipe, valve or fitting centreline (in), at every frame */
+function clearance() {
+  return Array.from({ length: frames }, (_, i) => {
+    const e = camAt(i / FPS).eye; let best = 1e9;
+    for (let k = 0; k < segs.length; k += 6) {
+      const ax = segs[k], ay = segs[k + 1], az = segs[k + 2], dx = segs[k + 3] - ax, dy = segs[k + 4] - ay, dz = segs[k + 5] - az, L2 = dx * dx + dy * dy + dz * dz;
+      const u = L2 > 0 ? clamp01(((e.x - ax) * dx + (e.y - ay) * dy + (e.z - az) * dz) / L2) : 0, d = Math.hypot(e.x - ax - u * dx, e.y - ay - u * dy, e.z - az - u * dz);
+      if (d < best) best = d;
+    }
+    return Math.round(best);
+  });
 }
 /** speed (in/s) and turn rate (deg/s) of the camera at every frame, for checking the move */
 const profile = () => Array.from({ length: frames }, (_, i) => { const m = motion(i / FPS); return [Math.round((m.travel * FPS) / SHUTTER), Math.round((m.turn * FPS) / SHUTTER)]; });
 
-declare global { interface Window { film: { ready: Promise<void>; frames: number; fps: number; setFrame: (i: number) => number; profile: () => number[][]; moved: string[] } } }
-window.film = { ready: build(), frames, fps: FPS, setFrame, profile, moved };
+declare global { interface Window { film: { ready: Promise<void>; frames: number; fps: number; setFrame: (i: number) => number; profile: () => number[][]; clearance: () => number[]; moved: string[]; debug: unknown } } }
+window.film = { ready: build(), frames, fps: FPS, setFrame, profile, clearance, moved, debug: { segs, pieces, camAt } };
 window.film.ready.then(() => setFrame(0)).catch(e => { document.body.insertAdjacentHTML('beforeend', `<pre style="color:#f66;position:absolute;top:0">${String(e?.stack ?? e)}</pre>`); });
