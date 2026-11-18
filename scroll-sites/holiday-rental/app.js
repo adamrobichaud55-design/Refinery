@@ -1,4 +1,4 @@
-// Builds the stay's page from site.config.js: the film's captions, what is there, photographs, and a calendar
+// Builds the stay's page from site.config.js: the 3D walkthrough's captions and controls, what is there, pictures, and a calendar
 // that prices any free dates the visitor picks.
 (function () {
   'use strict';
@@ -11,34 +11,42 @@
   $('foot').innerHTML = `<span>${esc(T.name)}, ${esc(T.place)}</span><span>Hosted by ${esc(H.name)}</span><span>${esc(H.email)}</span>`;
 
   // ---- the film ----
-  const hero = { id: 'hero', frames: [0, 36], hero: true }, chapters = [hero, ...S.chapters];
+  const hero = { id: 'hero', frames: [0, 14], hero: true }, chapters = [hero, ...S.chapters];
   $('panels').innerHTML = chapters.map(c => c.hero
     ? `<div class="panel hero"><span class="label">${esc(T.kind)} · ${esc(T.place)}</span><h1>${esc(T.name)}</h1><p>${esc(T.summary)}</p><div class="from"><b>${money(B.nightly)}</b>a night · ${esc(T.facts.slice(0, 2).map(f => f[0] + ' ' + f[1].toLowerCase()).join(' · '))}</div><a class="btn" href="#book">${esc(S.hero.cta)}</a><span class="hint">${esc(S.hero.hint)}</span></div>`
     : `<div class="panel" style="--dot:${esc(c.color || S.accent)}"><span class="label">${esc(c.label)}</span><h2>${esc(c.title)}</h2><p>${esc(c.body)}</p>${c.cta ? `<a class="btn" href="#book">${esc(c.cta)}</a>` : ''}</div>`).join('');
-  const callouts = [];
-  $('callouts').innerHTML = S.chapters.map(c => (c.callouts || []).map((k, n) => { callouts.push({ ch: c, k }); return `<div class="callout${n % 2 ? ' low' : ''}" style="--dot:${esc(c.color || S.accent)}"><i></i><b></b><span>${esc(k.text)}</span></div>`; }).join('')).join('');
   $('rail').innerHTML = S.chapters.map(c => `<li style="--dot:${esc(c.color || S.accent)}">${esc(c.label)}</li>`).join('');
-  const panelEls = [...$('panels').children], calloutEls = [...$('callouts').children], railEls = [...$('rail').children];
+  const panelEls = [...$('panels').children], railEls = [...$('rail').children];
   const vis = (c, f) => { const [a, b] = c.frames, e = 5; return c.hero ? Math.min(1, Math.max(0, (b - f) / e)) : Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e))); };
-  const stage = $('stage'), bg = getComputedStyle(root).getPropertyValue('--bg').trim() || '#010205';
-  stage.style.backgroundImage = `url(frames/poster-${innerHeight > innerWidth * 1.05 ? 'port' : 'land'}.jpg)`;
-  window.ScrollFilm({
-    canvas: $('filmCanvas'), section: $('film'), base: 'frames/', bg,
-    scale: o => (o.portrait ? Math.min(o.cover, (o.width / o.w) * 1.12) : Math.min(o.cover, (o.width / o.w) * 0.88, (o.height / o.h) * 1.05)),
-    shift: (portrait, w) => (portrait ? [0, 0.045] : [w > 820 ? 0.13 : 0, 0.02]),
+  const stage = $('stage');
+  stage.style.backgroundImage = `url(${T.photos[0]})`;                       // shown for the moment before the 3D starts
+  const tour = window.Tour3D({
+    canvas: $('filmCanvas'), section: $('film'), time: S.tour && S.tour.time,
     onUpdate(u) {
       chapters.forEach((c, i) => { const o = vis(c, u.frame), el = panelEls[i]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); });
       S.chapters.forEach((c, i) => railEls[i].classList.toggle('on', u.frame >= c.frames[0] - 4 && u.frame <= c.frames[1] + 2));
-      callouts.forEach((c, i) => { const a = u.anchors[c.k.anchor], el = calloutEls[i], o = a && a[2] ? vis(c.ch, u.frame) : 0; el.style.setProperty('--o', o.toFixed(3)); if (!a || o <= 0) return; const [x, y] = u.place(a[0], a[1]); el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`; el.classList.toggle('flip', x > u.width * 0.62); });
     },
-    onLoad: f => { const i = $('loadline').firstElementChild; i.style.width = f * 100 + '%'; if (f >= 1) { i.style.opacity = 0; stage.style.backgroundImage = 'none'; } },
+    onLoad: () => { $('loadline').firstElementChild.style.opacity = 0; stage.style.backgroundImage = 'none'; },
   });
+  // the time of day, and a button that walks the tour for you
+  const times = (S.tour && S.tour.times) || [];
+  $('tod').innerHTML = `<div class="seg" role="group" aria-label="Time of day">${times.map(([n, v]) => `<button type="button" data-t="${v}" aria-pressed="false">${esc(n)}</button>`).join('')}</div><button type="button" class="play" id="play">▶ Play tour</button>`;
+  $('tod').addEventListener('click', e => { const b = e.target.closest('button[data-t]'); if (!b) return; tour.setTime(Number(b.dataset.t)); [...$('tod').querySelectorAll('button[data-t]')].forEach(x => x.setAttribute('aria-pressed', String(x === b))); });
+  let playing = 0;
+  const stop = () => { if (playing) { cancelAnimationFrame(playing); playing = 0; $('play').textContent = '▶ Play tour'; } };
+  $('play').addEventListener('click', () => {
+    if (playing) return stop();
+    const film = $('film'), top0 = film.getBoundingClientRect().top + scrollY, end = top0 + film.offsetHeight - innerHeight, from = scrollY >= end - 4 ? top0 : Math.max(top0, scrollY), ms = 42000 * ((end - from) / (end - top0)), t0 = performance.now();
+    $('play').textContent = '❚❚ Pause';
+    (function step(now) { const u = Math.min(1, (now - t0) / ms); window.scrollTo({ top: from + (end - from) * u, behavior: 'instant' }); playing = u < 1 ? requestAnimationFrame(step) : (stop(), 0); })(t0);
+  });
+  for (const ev of ['wheel', 'touchstart', 'keydown']) addEventListener(ev, e => { if (playing && !(e.target.closest && e.target.closest('#tod'))) stop(); }, { passive: true });
 
   // ---- what is there ----
   $('about').innerHTML = `<div class="in"><div class="head"><span class="label">${esc(T.kind)}</span><h2>${esc(T.name)}, <i>${esc(T.place)}</i></h2></div>
     <div class="facts">${T.facts.map(f => `<div><b>${esc(f[0])}</b><span>${esc(f[1])}</span></div>`).join('')}</div>
     <div class="about"><div class="text">${T.description.map(p => `<p>${esc(p)}</p>`).join('')}<dl class="rules">${T.rules.map(r => `<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl></div><ul class="ticks">${T.amenities.map(f => `<li>${esc(f)}</li>`).join('')}</ul></div></div>`;
-  $('gallery').innerHTML = `<div class="in"><div class="head"><span class="label">Photographs</span><h2>Have a look round</h2></div><div class="shots">${T.photos.map((p, i) => `<figure><img src="${esc(p)}" alt="${esc(T.name)}, photograph ${i + 1}" loading="lazy" width="960" height="600"></figure>`).join('')}</div><p class="sample">Sample pictures of a model house. Replace them with photographs of the stay.</p></div>`;
+  $('gallery').innerHTML = `<div class="in"><div class="head"><span class="label">Photographs</span><h2>Have a look round</h2></div><div class="shots">${T.photos.map((p, i) => `<figure><img src="${esc(p)}" alt="${esc(T.name)}, photograph ${i + 1}" loading="lazy" width="960" height="600"></figure>`).join('')}</div>${T.photoNote ? `<p class="sample">${esc(T.photoNote)}</p>` : ''}</div>`;
 
   // ---- calendar and price ----
   const D = s => new Date(s + 'T00:00:00Z'), iso = d => d.toISOString().slice(0, 10), add = (d, n) => new Date(d.getTime() + n * 864e5);

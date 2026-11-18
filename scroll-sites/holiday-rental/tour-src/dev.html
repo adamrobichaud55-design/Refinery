@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><title>tour dev</title>
+<style>html,body{margin:0;height:100%;background:#000}canvas{display:block;width:100vw;height:100vh}</style>
+<!-- Developer view of the walkthrough: ?f=120 shows tour frame 120 (0 to 240), &t=0.6 sets the time of day (0 day, 0.55 sunset, 1 night).
+     From a script, tour.render(frame, time) draws any frame at once: tools/tour-video.mjs uses it to make stills and a video. -->
+<div id="s" style="height:100vh"><canvas id="c"></canvas></div>
+<script src="../tour3d.bundle.js"></script>
+<script>const q = new URLSearchParams(location.search); window.tour = Tour3D({ canvas: document.getElementById('c'), section: document.getElementById('s'), fixed: Number(q.get('f') || 0), once: true, time: q.get('t') != null ? Number(q.get('t')) : undefined, onLoad: () => { window.ready = true; } });</script>

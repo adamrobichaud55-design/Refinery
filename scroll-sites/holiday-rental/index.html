@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>The Lane House</title>
+<title>The Sea Room</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<meta name="description" content="A whole house to yourselves. Check dates and book direct with the host.">
+<meta name="description" content="Walk through a sea-view apartment in 3D, check dates and book direct with the host.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,100&family=Manrope:wght@400;500;700&family=Spline+Sans+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a pinned film of the house with the stay's name beside it (below it on a phone); after the film, the stay
-   as ruled sheets on the same night ground: what is there, photographs, a calendar with the price, guests' words. */
+/* Layout: a live 3D walk through the apartment fills the first screens, with the words over it; after it, the stay
+   as ruled sheets on a night ground: what is there, pictures, a calendar with the price, guests' words. */
 :root {
   color-scheme: dark;
   --bg: #010205;            /* the film's own night sky, so footage and page are one surface */
@@ -34,13 +34,14 @@ body { background: var(--bg); color: var(--ink); }
 <body>
 <header class="bar" id="bar"><a class="mark" href="#top" id="mark"></a><a class="call" id="barCall"></a></header>
 <main id="top">
-  <section class="film" id="film" aria-label="A look inside the stay">
+  <section class="film" id="film" aria-label="A walk through the apartment in 3D">
     <div class="stage" id="stage">
       <canvas id="filmCanvas"></canvas>
       <div class="shade"></div>
       <div id="callouts" aria-hidden="true"></div>
       <div id="panels"></div>
       <ol class="rail" id="rail" aria-hidden="true"></ol>
+      <div class="tod" id="tod"></div>
       <div class="loadline" id="loadline"><i></i></div>
     </div>
   </section>
@@ -52,7 +53,7 @@ body { background: var(--bg); color: var(--ink); }
 <footer class="foot" id="foot"></footer>
 <noscript><p style="padding:24px">This page needs JavaScript to show the film. Call us on the number above.</p></noscript>
 <script src="site.config.js"></script>
-<script src="film.js"></script>
+<script src="tour3d.bundle.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

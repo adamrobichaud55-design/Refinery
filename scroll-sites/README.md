@@ -8,7 +8,7 @@ complete site: copy it to any web host and it works. Nothing needs installing or
 | `home-services/` | A heating, plumbing, electrical, roofing or building firm. The film opens up a model house and lights each system in turn. |
 | `car-dealer/` | A used-car lot. The film flies over the forecourt at dusk to three featured cars, then a car finder, a two-car comparison, a monthly-payment sum and the stock. |
 | `property-listing/` | One house for sale, for an estate agent. Its film is made from twelve real photographs of one house (free-licence stock, credited in `originals/CREDITS.md`), then facts, the gallery, rooms, a mortgage estimate and a viewing form. |
-| `holiday-rental/` | A holiday home, for a host who wants direct bookings beside (or instead of) a platform listing. The film, then facts, photographs and a calendar that blocks booked nights and prices any free dates. |
+| `holiday-rental/` | A holiday apartment, for a host who wants direct bookings. The opening is a **live 3D walkthrough**: scrolling walks the camera through a furnished sea-view apartment in one unbroken move, with a day / sunset / night switch and a Play tour button, ending on a view down into the whole plan. Then facts, pictures and a calendar that prices any free dates. |
 
 `demos/` holds mock-ups made for a named business to show them what their site could be. Each says "Concept design" on
 every screen and lists in its `site.config.js` what is real and what still has to be confirmed. They are for showing to
@@ -58,6 +58,24 @@ the new film (it has 240 frames; a chapter's text shows between its two numbers)
 - `app.js`: builds the page from the config and runs the tools on it.
 - `film.js`: the scroll film player. No libraries; frames are decoded on demand so phones do not run out of memory.
 - `frames/`: the film, packed into a few files (each `.webp` there is a run of frames, not one picture), plus the first frame as a poster.
+
+## The 3D walkthrough (holiday-rental)
+
+The apartment is not a video or a set of pictures: it is a 3D scene drawn live in the visitor's browser with three.js,
+so the camera moves continuously and the light can change. It is all in `holiday-rental/tour-src/tour3d.js`: the walls,
+furniture, textures, sea and sky are built in code, with no model or image files. The camera's stops are the `KEYS`
+list near the end of that file, and the page's captions point at them by number (see `site.config.js`).
+
+After changing the scene, build it into the one file the site loads, and (optionally) make a video of it:
+
+```
+node ../smartweld/node_modules/vite/bin/vite.js build --config tools/tour.vite.config.mjs
+python3 -m http.server 5197 &                                    # in scroll-sites/
+node tools/tour-video.mjs video out-frames                        # then the ffmpeg line printed at the top of that file
+```
+
+For a client, the scene has to be rebuilt from their floor plan and photographs: the room sizes, where the doors and
+windows are, the furniture and the colours. That is the work being sold.
 
 ## Where the footage comes from
 
