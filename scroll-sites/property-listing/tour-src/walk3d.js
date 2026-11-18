@@ -20,18 +20,26 @@ window.Walk3D = function (opt) {
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance' });
   renderer.outputColorSpace = THREE.LinearSRGBColorSpace; renderer.autoClear = false;
   const camera = new THREE.PerspectiveCamera(50, 1, 0.05, 400);
-  const rt = (samples = 4) => new THREE.WebGLRenderTarget(4, 4, { samples }), rtA = rt(), rtB = rt(), rtC = rt(), rtX = rt(0), rtY = rt(0), targets = [rtA, rtB, rtC, rtX, rtY];
+  const rt = (samples = 4) => new THREE.WebGLRenderTarget(4, 4, { samples }), rtA = rt(), rtB = rt(), rtC = rt(), rtX = rt(0), rtY = rt(0), rtJ = new THREE.WebGLRenderTarget(4, 4, { samples: 0, generateMipmaps: true, minFilter: THREE.LinearMipmapLinearFilter }), targets = [rtA, rtB, rtC, rtX, rtY, rtJ];
   // A and B are the two photographs nearest the camera; C is what the others can add. Where A and B both see a point
   // they are blended by how near each is; where only one does it is used alone; where neither does, C fills in.
   const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2)), quadScene = new THREE.Scene(), quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1); quadScene.add(quad);
   const vs = 'varying vec2 v; void main(){ v = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }';
-  const join = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { a: { value: rtA.texture }, b: { value: rtB.texture }, c: { value: rtC.texture }, w: { value: 0 }, bg: { value: new THREE.Color(opt.bg || '#2a2622') } },
-    fragmentShader: `uniform sampler2D a, b, c; uniform float w; uniform vec3 bg; varying vec2 v;
+  const join = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { a: { value: rtA.texture }, b: { value: rtB.texture }, c: { value: rtC.texture }, w: { value: 0 }, audit: { value: 0 }, bg: { value: new THREE.Color(opt.bg || '#2a2622') } },
+    fragmentShader: `uniform sampler2D a, b, c; uniform float w, audit; uniform vec3 bg; varying vec2 v;
       void main(){ vec4 A = texture2D(a, v), B = texture2D(b, v), C = texture2D(c, v);
         float k = smoothstep(0.2, 0.8, w), wa = A.a * (1.0 - k) + 0.0005 * A.a, wb = B.a * k + 0.0005 * B.a, s = wa + wb;
         vec3 ab = s > 0.0 ? (A.rgb / max(A.a, 0.001) * wa + B.rgb / max(B.a, 0.001) * wb) / s : vec3(0.0); float cover = clamp(max(A.a, B.a), 0.0, 1.0);
-        vec3 fill = mix(bg, C.rgb / max(C.a, 0.001), clamp(C.a, 0.0, 1.0));
-        gl_FragColor = vec4(mix(fill, ab, cover), 1.0); }` });
+        float ca = clamp(C.a, 0.0, 1.0), all = cover + (1.0 - cover) * ca;
+        if (audit > 0.5) { gl_FragColor = vec4(cover, all, 0.0, 1.0); return; }  // for checking: red where the two nearest photographs show the scene, green where any does
+        gl_FragColor = vec4(ab * cover + (1.0 - cover) * ca * C.rgb / max(C.a, 0.001), all); }` });
+  // What no photograph shows (a sliver behind a door frame, say) is not left dark: it takes the colours around it,
+  // from softer and softer copies of the picture, so a gap reads as a patch of wall and not as a hole.
+  const heal = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { j: { value: rtJ.texture }, audit: join.uniforms.audit, bg: join.uniforms.bg },
+    fragmentShader: `uniform sampler2D j; uniform float audit; uniform vec3 bg; varying vec2 v;
+      void main(){ vec4 s = texture2D(j, v); if (audit > 0.5) { gl_FragColor = s; return; }
+        for (int l = 1; l < 9; l++) { if (s.a > 0.995) break; s += (1.0 - s.a) * textureLod(j, v, float(l)); }
+        gl_FragColor = vec4(s.rgb + (1.0 - clamp(s.a, 0.0, 1.0)) * bg, 1.0); }` });
   // one room giving way to the next: the next room opens out of the middle of the view
   const cross = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { x: { value: rtX.texture }, y: { value: rtY.texture }, t: { value: 0 }, aspect: { value: 1 } },
     fragmentShader: `uniform sampler2D x, y; uniform float t, aspect; varying vec2 v;
@@ -133,7 +141,8 @@ window.Walk3D = function (opt) {
     const others = list.slice(2, 5).map(e => e[1]);
     renderer.setRenderTarget(rtC); renderer.clear(); show([...new Set([A, B, ...others])].map(V => V.whole)); renderer.render(scene, camera);
     if (others.length) { renderer.clearDepth(); show(others.map(V => V.cut)); renderer.render(scene, camera); }
-    scene.clear(); join.uniforms.w.value = wA + wB > 0 ? wB / (wA + wB) : 0; quad.material = join; renderer.setRenderTarget(target); renderer.render(quadScene, quadCam); return true;
+    scene.clear(); join.uniforms.w.value = wA + wB > 0 ? wB / (wA + wB) : 0; quad.material = join; renderer.setRenderTarget(rtJ); renderer.render(quadScene, quadCam);
+    quad.material = heal; renderer.setRenderTarget(target); renderer.render(quadScene, quadCam); return true;
   }
   /** the picture at point x of the whole tour */
   function draw(x, strict) {
@@ -161,5 +170,18 @@ window.Walk3D = function (opt) {
   size(); if (!opt.still) requestAnimationFrame(tick);
   return { destroy() { dead = true; }, spans, chapters, total,
     /** draw one point of the tour (frame 0 to 239), for stills and videos; resolves when the photographs it needs are in */
+    /** how many camera positions each room's path has, for audit() */
+    plan: rooms.map(r => r.keys.length),
+    /** for checking a tour: at camera position j of room k, the share of the picture the two nearest photographs do not show (it is patched from others), and the share no photograph shows at all */
+    async audit(k, j) {
+      dead = true; const r = rooms[k]; for (const [i, q] of rooms.entries()) if (i !== k) for (const V of q.views) drop(V);
+      join.uniforms.audit.value = 1; let res = null;
+      for (let n = 0; n < 800 && !res; n++) {
+        if (!compose(r, r.cum[j], null, true)) { await new Promise(done => setTimeout(done, 40)); continue; }
+        const gl = renderer.getContext(), w = gl.drawingBufferWidth, h = gl.drawingBufferHeight, px = new Uint8Array(w * h * 4); gl.readPixels(0, 0, w, h, gl.RGBA, gl.UNSIGNED_BYTE, px);
+        let patched = 0, hole = 0; for (let i = 0; i < px.length; i += 4) { if (px[i] < 128) patched++; if (px[i + 1] < 128) hole++; } res = { patched: patched / (w * h), hole: hole / (w * h) };
+      }
+      join.uniforms.audit.value = 0; return res;
+    },
     async render(f) { dead = true; const x = (f / 239) * total; for (let k = 0; k < 800; k++) { if (draw(x, true)) return true; await new Promise(r => setTimeout(r, 40)); } return false; } };
 };

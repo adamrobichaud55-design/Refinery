@@ -106,6 +106,20 @@ order, with pictures of each matched group in `work/sheets/`. Edit `plan.json` t
 change which photographs a room uses, then run the same command again (the slow steps are remembered). Add
 `"push": 0.6` to a room to make the camera travel less far into it.
 
+### Check the walk before anyone sees it
+
+```
+python3 -m http.server 5197 &                                  # from the scroll-sites folder
+node tools/tour-check.mjs property-listing --report work/check.json
+node tools/tour-check.mjs property-listing --from work/check.json --fix
+```
+
+The first line measures every camera position of the tour: how much of the picture the two nearest photographs do not
+really show (this is where torn edges come from, typically a door frame passing close to the camera) and how much no
+photograph shows at all. The second trims the walk to its clean runs. A stretch cut in the middle becomes two, joined
+like any two rooms. Slivers that no photograph shows are filled by the viewer from the colours around them, so they
+read as wall and not as holes. Then record the video (below) and watch it once from start to finish.
+
 ### Add the words and publish
 
 In `property-listing/site.config.js`: for a video tour, give each room name its words under `rooms` (a name with no

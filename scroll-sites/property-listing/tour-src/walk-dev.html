@@ -5,4 +5,4 @@
 <div id="s" style="height:100vh"><canvas id="c"></canvas></div>
 <script src="../photo3d.bundle.js"></script>
 <script>const q = new URLSearchParams(location.search), only = q.get('walk') ? q.get('walk').split(',') : null;
-fetch('../walk/tour.json').then(r => r.json()).then(list => Promise.all(list.filter(t => !only || only.includes(t.name)).map(t => fetch('../walk/' + t.dir + '/walk.json').then(r => r.json()).then(walk => ({ base: '../walk/' + t.dir + '/', walk, push: t.push, name: t.name }))))).then(rooms => { window.tour = Walk3D({ canvas: document.getElementById('c'), section: document.getElementById('s'), still: true, rooms }); window.ready = true; });</script>
+fetch('../walk/tour.json').then(r => r.json()).then(list => Promise.all(list.filter(t => !only || only.includes(t.name)).map(t => fetch('../walk/' + t.dir + '/' + (t.file || 'walk.json')).then(r => r.json()).then(walk => ({ base: '../walk/' + t.dir + '/', walk, push: t.push, name: t.name }))))).then(rooms => { window.tour = Walk3D({ canvas: document.getElementById('c'), section: document.getElementById('s'), still: true, rooms }); window.ready = true; });</script>

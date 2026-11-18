@@ -14,7 +14,7 @@
   const heroHTML = `<div class="panel hero"><span class="label">${esc(L.status)} · ${esc(L.town)}</span><h1>${esc(L.address)}</h1><p>${esc(L.summary)}</p><div class="ask">${money(L.price)}<small>${esc(L.facts.slice(0, 2).map(f => f[0] + ' ' + f[1].toLowerCase().slice(0, 3)).join(' · '))}</small></div><a class="btn" href="#contact">${esc(S.hero.cta)}</a><span class="hint">${esc(S.hero.hint)}</span></div>`;
   const fade = (f, a, b, e = 4) => Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e)));
   $('panels').innerHTML = heroHTML; const hero = $('panels').firstElementChild; hero.style.setProperty('--o', 1); hero.classList.add('on');
-  fetch('walk/tour.json').then(r => r.json()).then(list => Promise.all(list.map(t => fetch(`walk/${t.dir}/walk.json`).then(r => r.json()).then(walk => ({ base: `walk/${t.dir}/`, walk, push: t.push, name: t.name.replace(/-/g, ' ') }))))
+  fetch('walk/tour.json').then(r => r.json()).then(list => Promise.all(list.map(t => fetch(`walk/${t.dir}/${t.file || "walk.json"}`).then(r => r.json()).then(walk => ({ base: `walk/${t.dir}/`, walk, push: t.push, name: t.name.replace(/-/g, ' ') }))))
     .then(rooms => {
       const HERO = 5;                                                        // the address plate shows for the first few frames
       const tour = window.Walk3D({
