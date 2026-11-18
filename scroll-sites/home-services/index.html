@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Acme Home Services</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Heating, cooling, plumbing and electrical work from one local team.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a pinned film of the house fills the first screens, with the words set to one side of it (below it on a
+   phone); after the film, plain ruled sections on the same night-blue ground, like sheets of a drawing set. */
+:root {
+  color-scheme: dark;
+  --bg: #010205;            /* the film's own night sky, so footage and page are one surface */
+  --sheet: #070a11;         /* the sections after the film: the same night, a shade lifted */
+  --panel: #10151f;         /* raised surfaces */
+  --ink: #f3eee4;           /* warm paper white */
+  --muted: #9ba6b8;
+  --line: rgba(188, 208, 255, .16);   /* the blue of the model's drawn edges */
+  --accent: #ffbe73;        /* window light; set from site.config.js */
+  --accent-ink: #1a1206;
+  --display: "Bricolage Grotesque", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  --body: "Figtree", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+}
+body { background: var(--bg); color: var(--ink); }
+</style>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="bar" id="bar"><a class="mark" href="#top" id="mark"></a><a class="call" id="barCall"></a></header>
+<main id="top">
+  <section class="film" id="film" aria-label="A look inside the house">
+    <div class="stage" id="stage">
+      <canvas id="filmCanvas"></canvas>
+      <div class="shade"></div>
+      <div id="callouts" aria-hidden="true"></div>
+      <div id="panels"></div>
+      <ol class="rail" id="rail" aria-hidden="true"></ol>
+      <div class="loadline" id="loadline"><i></i></div>
+    </div>
+  </section>
+  <section class="sheet" id="services"></section>
+  <section class="sheet" id="estimate"></section>
+  <section class="sheet" id="steps"></section>
+  <section class="sheet" id="reviews"></section>
+  <section class="sheet" id="contact"></section>
+</main>
+<footer class="foot" id="foot"></footer>
+<noscript><p style="padding:24px">This page needs JavaScript to show the film. Call us on the number above.</p></noscript>
+<script src="site.config.js"></script>
+<script src="film.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

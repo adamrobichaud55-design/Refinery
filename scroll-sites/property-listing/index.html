@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>12 Example Lane</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Four bedrooms on a quiet lane. See inside and book a viewing.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a pinned film of the house with the address set large beside it (below it on a phone); after the film,
+   the listing as ruled sheets on the same night ground: facts, photographs, rooms, the monthly cost, the agent. */
+:root {
+  color-scheme: dark;
+  --bg: #010205;            /* the film's own night sky, so footage and page are one surface */
+  --sheet: #070a11;         /* the sections after the film: the same night, a shade lifted */
+  --panel: #10151f;         /* raised surfaces */
+  --ink: #f3eee4;           /* warm paper white */
+  --muted: #9ba6b8;
+  --line: rgba(188, 208, 255, .16);   /* the blue of the model's drawn edges */
+  --accent: #9fd8c0;        /* cool against the lit windows; set from site.config.js */
+  --accent-ink: #06150f;
+  --display: "Newsreader", "Iowan Old Style", Georgia, "Times New Roman", serif;
+  --body: "Hanken Grotesk", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+}
+body { background: var(--bg); color: var(--ink); }
+</style>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="bar" id="bar"><a class="mark" href="#top" id="mark"></a><a class="call" id="barCall"></a></header>
+<main id="top">
+  <section class="film" id="film" aria-label="A look inside the property">
+    <div class="stage" id="stage">
+      <canvas id="filmCanvas"></canvas>
+      <div class="shade"></div>
+      <div id="callouts" aria-hidden="true"></div>
+      <div id="panels"></div>
+      <ol class="rail" id="rail" aria-hidden="true"></ol>
+      <div class="loadline" id="loadline"><i></i></div>
+    </div>
+  </section>
+  <section class="sheet" id="facts"></section>
+  <section class="sheet" id="gallery"></section>
+  <section class="sheet" id="rooms"></section>
+  <section class="sheet" id="mortgage"></section>
+  <section class="sheet" id="contact"></section>
+</main>
+<footer class="foot" id="foot"></footer>
+<noscript><p style="padding:24px">This page needs JavaScript to show the film. Call us on the number above.</p></noscript>
+<script src="site.config.js"></script>
+<script src="film.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
