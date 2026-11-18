@@ -10,6 +10,10 @@ complete site: copy it to any web host and it works. Nothing needs installing or
 | `property-listing/` | One house for sale, for an estate agent. The address and price over the film, then facts, photographs, rooms, a mortgage estimate and a viewing form. |
 | `holiday-rental/` | A holiday home, for a host who wants direct bookings beside (or instead of) a platform listing. The film, then facts, photographs and a calendar that blocks booked nights and prices any free dates. |
 
+`demos/` holds mock-ups made for a named business to show them what their site could be. Each says "Concept design" on
+every screen and lists in its `site.config.js` what is real and what still has to be confirmed. They are for showing to
+that business, not for putting online.
+
 ## Rebrand one for a client (about ten minutes)
 
 1. Copy the folder and rename it for the client.

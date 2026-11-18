@@ -111,3 +111,6 @@ form textarea { min-height: 6rem; resize: vertical; }
 }
 @media (max-width: 480px) { form .two, .duel .picks { grid-template-columns: 1fr; } .mark { font-size: .86rem; } .panel p { font-size: 1rem; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
+/* a mock-up made to show a business what its site could be: says so on every screen */
+.concept { position: fixed; right: var(--gutter-r); bottom: calc(.8rem + env(safe-area-inset-bottom, 0px)); z-index: 30; font-family: var(--mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; padding: .45em .8em; background: color-mix(in srgb, var(--bg) 80%, transparent); color: var(--muted); border: 1px solid var(--line); border-radius: 2px; pointer-events: none; }

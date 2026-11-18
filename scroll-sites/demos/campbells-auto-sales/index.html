@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Campbell's Auto Sales (concept)</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A concept design: used vehicles, financing and trade-ins in Moncton. Walk the lot online.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: a pinned film of the forecourt at night, words low on the left like a caption on a windscreen; after it,
+   three working tools (finder, compare, payments) and the stock, set on the same night ground. */
+:root {
+  color-scheme: dark;
+  --bg: #020104;            /* the film's night sky */
+  --sheet: #0a0811;         /* the sections after the film: the same night, a shade lifted */
+  --panel: #15121e;         /* raised surfaces */
+  --ink: #f5f2ec;
+  --muted: #a7a2b8;
+  --line: rgba(255, 255, 255, .13);
+  --accent: #ff5a36;        /* tail-light red; set from site.config.js */
+  --accent-ink: #160501;
+  --good: #7be0a4;          /* the stronger figure in a comparison */
+  --display: "Archivo", "Arial Black", "Helvetica Neue", Arial, sans-serif;
+  --body: "Archivo", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+}
+body { background: var(--bg); color: var(--ink); }
+</style>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="bar"><a class="mark" href="#top" id="mark"></a><a class="call" id="barCall"></a></header>
+<main id="top">
+  <section class="film" id="film" aria-label="A walk round the lot">
+    <div class="stage" id="stage">
+      <canvas id="filmCanvas"></canvas>
+      <div class="shade"></div>
+      <div id="tags" aria-hidden="true"></div>
+      <div id="panels"></div>
+      <div class="loadline" id="loadline"><i></i></div>
+    </div>
+  </section>
+  <section class="sheet" id="finder"></section>
+  <section class="sheet" id="stock"></section>
+  <section class="sheet" id="compare"></section>
+  <section class="sheet" id="finance"></section>
+  <section class="sheet" id="contact"></section>
+</main>
+<footer class="foot" id="foot"></footer>
+<noscript><p style="padding:24px">This page needs JavaScript to show the film and the stock. Call us on the number above.</p></noscript>
+<script src="site.config.js"></script>
+<script src="film.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

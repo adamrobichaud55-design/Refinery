@@ -10,7 +10,9 @@
   document.title = S.business.name;
   $('mark').textContent = S.business.short || S.business.name;
   $('barCall').textContent = S.business.phone; $('barCall').href = 'tel:' + tel;
-  $('foot').innerHTML = `<span>${esc(S.business.name)}</span><span>${esc(S.business.address)}</span><span>${esc(S.business.licence)}</span>`;
+  $('foot').innerHTML = `<span>${esc(S.business.name)}</span><span>${esc(S.business.address)}</span><span>${esc(S.business.licence)}</span>${S.concept ? `<span>${esc(S.concept)}</span>` : ''}`;
+  if (S.concept) document.body.insertAdjacentHTML('beforeend', '<div class="concept">Concept design</div>');
+  const ECO = S.economy || { unit: 'mpg', better: 'higher' }, eco = c => (c.economy != null ? c.economy : c.mpg);
   const specLine = c => [c.year, num(c.miles) + ' ' + S.distance, c.fuel, c.gearbox].map(esc).join(' · ');
 
   // ---- the film ----
@@ -66,7 +68,7 @@
     <div id="duel"></div><p class="verdict" id="verdict"></p></div></div>`;
   function drawDuel() {
     const a = S.stock[picked[0]], b = S.stock[picked[1]];
-    const rows = [['Price', a.price, b.price, money, -1], ['Year', a.year, b.year, String, 1], [S.distance[0].toUpperCase() + S.distance.slice(1), a.miles, b.miles, num, -1], ['Economy', a.mpg, b.mpg, v => v + ' mpg', 1], ['Fuel', a.fuel, b.fuel, String, 0], ['Gearbox', a.gearbox, b.gearbox, String, 0]];
+    const rows = [['Price', a.price, b.price, money, -1], ['Year', a.year, b.year, String, 1], [S.distance[0].toUpperCase() + S.distance.slice(1), a.miles, b.miles, num, -1], ['Economy', eco(a), eco(b), v => v + ' ' + ECO.unit, ECO.better === 'lower' ? -1 : 1], ['Fuel', a.fuel, b.fuel, String, 0], ['Gearbox', a.gearbox, b.gearbox, String, 0]];
     let wa = 0, wb = 0;
     const body = rows.map(([n, x, y, fmt, dir]) => { const w = dir && x !== y ? ((x - y) * dir > 0 ? 'a' : 'b') : ''; if (w === 'a') wa++; if (w === 'b') wb++; return `<tr><th scope="row">${esc(n)}</th><td class="${w === 'a' ? 'win' : ''}">${esc(fmt(x))}</td><td class="${w === 'b' ? 'win' : ''}">${esc(fmt(y))}</td></tr>`; }).join('');
     $('duel').innerHTML = `<table><thead><tr><th></th><td>${esc(a.name)}</td><td>${esc(b.name)}</td></tr></thead><tbody>${body}</tbody></table>`;
@@ -77,24 +79,29 @@
   $('cB').addEventListener('change', e => { picked[1] = Number(e.target.value); drawDuel(); drawStock(); });
 
   // ---- monthly payments ----
-  const P = S.finance; let term = P.startTerm, payCar = 0;
+  const P = S.finance, FREQ = P.frequency && P.frequency.length ? P.frequency : ['Monthly']; let term = P.startTerm, payCar = 0, freq = FREQ[0];
   $('finance').innerHTML = `<div class="in"><div class="head"><span class="label">Finance</span><h2 class="big">${esc(P.title)}</h2></div>
     <div class="box pay"><div class="ctl">
       <div class="field"><label for="pCar">Car</label><select id="pCar">${opts(0)}</select></div>
       <div class="field"><label for="pDep">Deposit <b id="pDepOut"></b></label><input type="range" id="pDep" min="0" max="10000" step="250" value="${P.startDeposit}"></div>
       <div class="field"><span>Months</span><div class="chips" id="pTerm">${P.terms.map(t => `<button type="button" aria-pressed="${t === term}">${t}</button>`).join('')}</div></div>
-    </div><div class="out"><span class="label">Each month</span><output id="pOut" for="pCar pDep"></output>
+      ${FREQ.length > 1 ? `<div class="field"><span>Paid</span><div class="chips" id="pFreq">${FREQ.map(f => `<button type="button" aria-pressed="${f === freq}">${esc(f)}</button>`).join('')}</div></div>` : ''}
+    </div><div class="out"><span class="label" id="pEach">Each month</span><output id="pOut" for="pCar pDep"></output>
       <dl><dt>Borrowed</dt><dd id="pLoan"></dd><dt>Interest</dt><dd id="pInt"></dd><dt>Total you pay</dt><dd id="pTot"></dd><dt>Rate</dt><dd>${P.apr}% APR, fixed</dd></dl><p class="small">${esc(P.note)}</p></div></div></div>`;
   function drawPay() {
-    const car = S.stock[payCar], dep = Math.min(Number($('pDep').value), car.price), loan = car.price - dep, r = P.apr / 100 / 12;
-    const m = loan <= 0 ? 0 : r === 0 ? loan / term : (loan * r) / (1 - Math.pow(1 + r, -term));   // the standard repayment sum
+    const two = /week/i.test(freq), per = two ? 26 : 12, n = Math.round((term / 12) * per);   // payments a year, and how many in all
+    const car = S.stock[payCar], dep = Math.min(Number($('pDep').value), car.price), loan = car.price - dep, r = P.apr / 100 / per;
+    const m = loan <= 0 ? 0 : r === 0 ? loan / n : (loan * r) / (1 - Math.pow(1 + r, -n));   // the standard repayment sum
     $('pDep').max = Math.floor(car.price / 250) * 250; $('pDepOut').textContent = money(dep);
-    $('pOut').innerHTML = `${money(m)}<small> / month</small>`; $('pLoan').textContent = money(loan); $('pInt').textContent = money(m * term - loan); $('pTot').textContent = money(m * term + dep);
+    $('pEach').textContent = two ? 'Every two weeks' : 'Each month';
+    $('pOut').innerHTML = `${money(m)}<small> / ${two ? '2 weeks' : 'month'}</small>`; $('pLoan').textContent = money(loan); $('pInt').textContent = money(m * n - loan); $('pTot').textContent = money(m * n + dep);
     $('pCar').value = payCar;
   }
   $('pCar').addEventListener('change', e => { payCar = Number(e.target.value); drawPay(); });
   $('pDep').addEventListener('input', drawPay);
   $('pTerm').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; term = Number(b.textContent); [...$('pTerm').children].forEach(x => x.setAttribute('aria-pressed', String(x === b))); drawPay(); });
+
+  if (FREQ.length > 1) $('pFreq').addEventListener('click', e => { const b = e.target.closest('button'); if (!b) return; freq = b.textContent; [...$('pFreq').children].forEach(x => x.setAttribute('aria-pressed', String(x === b))); drawPay(); });
 
   // buttons on the cards and the film: compare this car, or work out its payments
   document.addEventListener('click', e => {

@@ -44,6 +44,7 @@ window.SITE = {
     { name: 'Crew-cab Pickup 3.0', year: 2022, body: 'Pickup', price: 33800, miles: 14500, fuel: 'Diesel', gearbox: 'Automatic', mpg: 29, img: 'stock/7.webp', line: 'Five seats and a full-size load bed.' },
   ],
   currency: '$', distance: 'miles',
+  economy: { unit: 'mpg', better: 'higher' },   // or { unit: 'L/100 km', better: 'lower' } with an "economy" figure on each car
 
   finder: { title: 'Find my car', sub: 'Tell us the shape and the budget. We show what is on the lot today.' },
   compare: { title: 'Pick two. Settle it.', sub: 'Side by side, with the stronger figure marked on each line.' },
@@ -51,6 +52,7 @@ window.SITE = {
   // EXAMPLE finance figures: replace with the dealer's real lender terms and wording.
   finance: {
     title: 'What it costs a month', apr: 8.9, terms: [24, 36, 48, 60], startTerm: 48, startDeposit: 2000,
+    frequency: ['Monthly'],                     // add 'Bi-weekly' to let visitors switch (the first one is shown first)
     note: 'An illustration at a fixed rate, not an offer of credit. Finance is subject to status.',
   },
 
