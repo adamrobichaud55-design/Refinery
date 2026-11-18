@@ -21,8 +21,8 @@
         canvas: $('filmCanvas'), section: $('film'), rooms,
         onUpdate(u) {
           const o0 = Math.min(1, Math.max(0, (HERO - u.frame) / 2.5)); hero.style.setProperty('--o', o0.toFixed(3)); hero.classList.toggle('on', o0 > 0.02);
-          let now = -1;
-          u.chapters.forEach((c, k) => { const o = fade(u.frame, k === 0 ? Math.max(c.from, HERO) + 1.5 : c.from + 1.5, k === u.chapters.length - 1 ? 245 : c.to - 1.5, 2.5), el = panelEls[k]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); if (u.frame >= c.from) now = k; });
+          let now = -1;                                                      // (no words while crossing from one room to the next)
+          u.chapters.forEach((c, k) => { const o = fade(u.frame, k === 0 ? Math.max(c.from, HERO) + 1.5 : c.from + 1.5, k === u.chapters.length - 1 ? 245 : c.to - 1.5, 2.5) * (1 - Math.min(1, (u.rush || 0) * 2)), el = panelEls[k]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); if (u.frame >= c.from) now = k; });
           railEls.forEach((el, k) => el.classList.toggle('on', now >= 0 && u.chapters[now].label === names[k]));
         },
         onLoad: () => { $('loadline').firstElementChild.style.opacity = 0; stage.style.backgroundImage = 'none'; },

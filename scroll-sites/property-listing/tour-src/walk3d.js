@@ -100,7 +100,7 @@ window.Walk3D = function (opt) {
     p.set(cr(a.x, b.x, c.x, d.x, u), cr(a.y, b.y, c.y, d.y, u), cr(a.z, b.z, c.z, d.z, u)); q.slerpQuaternions(K[k].q, K[k + 1].q, u); lastU = u; return k;
   }
   /** the pose the camera actually takes: the raw one averaged over a short stretch, so that speed and turning never change abruptly */
-  const tp = new THREE.Vector3(), tq = new THREE.Quaternion(), ref = new THREE.Quaternion(); let lastU = 0;
+  const tp = new THREE.Vector3(), tq = new THREE.Quaternion(), ref = new THREE.Quaternion(); let lastU = 0, rushNow = 0;
   function pose(room, s) {
     const acc = new THREE.Vector3(), qa = [0, 0, 0, 0]; let ws = 0, seg = 0, u0 = 0;
     const span = 0.12 * (room.pace ? Math.max(0.12, room.pace[Math.min(room.pace.length - 1, rawPose(room, s, tp, tq))]) : 1);      // the same distance on the ground, at any pace
@@ -150,7 +150,7 @@ window.Walk3D = function (opt) {
   function compose(room, s, target, strict) {
     const c = pose(room, s), near = keep(room, room.centre(c.seg)), ready = near.filter(V => V.state === 'ready');
     if (!ready.length || (strict && ready.length < near.length)) return false;
-    camera.position.copy(c.p); camera.quaternion.copy(c.q);
+    camera.position.copy(c.p); camera.quaternion.copy(c.q); if (target !== rtX) rushNow = c.rush;
     const a = W / H, dh = Math.min(room.th, room.tw / a); camera.aspect = a; camera.fov = (2 * Math.atan(dh) * 180) / Math.PI; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
     // the photographs, nearest first: by how far the camera is from where each was taken, and how differently it is turned
     const cd = dirOf(c.q), score = V => V.pos.distanceTo(c.p) + TURN * Math.acos(Math.min(1, Math.max(-1, V.dir.dot(cd)))), list = ready.map(V => [score(V), V]).sort((p, q) => p[0] - q[0]);
@@ -189,7 +189,7 @@ window.Walk3D = function (opt) {
     const p = progress(), goal = p * total; cur = first ? goal : Math.abs(goal - cur) < 0.0004 ? goal : cur + (goal - cur) * Math.min(1, dt * 5);
     if (draw(cur) && first) { first = false; opt.onLoad && opt.onLoad(1); }
     let room = rooms.length - 1; while (room > 0 && cur < rooms[room].start + HANDOVER / 2) room--;
-    opt.onUpdate && opt.onUpdate({ frame: (cur / total) * 239, room, spans, chapters, progress: p, portrait: W < H, width: W, height: H, anchors: {}, place: (x, y) => [x * W, y * H] });
+    opt.onUpdate && opt.onUpdate({ frame: (cur / total) * 239, room, rush: rushNow, spans, chapters, progress: p, portrait: W < H, width: W, height: H, anchors: {}, place: (x, y) => [x * W, y * H] });
   }
   if (window.IntersectionObserver) new IntersectionObserver(e => { shown = e[0].isIntersecting; }).observe(canvas);
   let rz = 0; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(size, 120); });
