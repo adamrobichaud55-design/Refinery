@@ -8,6 +8,7 @@ complete site: copy it to any web host and it works. Nothing needs installing or
 | `home-services/` | A heating, plumbing, electrical, roofing or building firm. The film opens up a model house and lights each system in turn. |
 | `car-dealer/` | A used-car lot. The film flies over the forecourt at dusk to three featured cars, then a car finder, a two-car comparison, a monthly-payment sum and the stock. |
 | `property-listing/` | One house for sale, for an estate agent. The address and price over the film, then facts, photographs, rooms, a mortgage estimate and a viewing form. |
+| `holiday-rental/` | A holiday home, for a host who wants direct bookings beside (or instead of) a platform listing. The film, then facts, photographs and a calendar that blocks booked nights and prices any free dates. |
 
 ## Rebrand one for a client (about ten minutes)
 

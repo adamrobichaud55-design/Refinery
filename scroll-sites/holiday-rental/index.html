@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Lane House</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="A whole house to yourselves. Check dates and book direct with the host.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,500..700,100&family=Manrope:wght@400;500;700&family=Spline+Sans+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: a pinned film of the house with the stay's name beside it (below it on a phone); after the film, the stay
+   as ruled sheets on the same night ground: what is there, photographs, a calendar with the price, guests' words. */
+:root {
+  color-scheme: dark;
+  --bg: #010205;            /* the film's own night sky, so footage and page are one surface */
+  --sheet: #070a11;         /* the sections after the film: the same night, a shade lifted */
+  --panel: #10151f;         /* raised surfaces */
+  --ink: #f3eee4;           /* warm paper white */
+  --muted: #9ba6b8;
+  --line: rgba(188, 208, 255, .16);   /* the blue of the model's drawn edges */
+  --accent: #b9a7ff;        /* evening sky against the lit windows; set from site.config.js */
+  --accent-ink: #120a2e;
+  --display: "Fraunces", "Iowan Old Style", Georgia, serif;
+  --body: "Manrope", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "Spline Sans Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --gutter-l: max(20px, env(safe-area-inset-left, 0px));
+  --gutter-r: max(20px, env(safe-area-inset-right, 0px));
+}
+body { background: var(--bg); color: var(--ink); }
+</style>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="bar" id="bar"><a class="mark" href="#top" id="mark"></a><a class="call" id="barCall"></a></header>
+<main id="top">
+  <section class="film" id="film" aria-label="A look inside the stay">
+    <div class="stage" id="stage">
+      <canvas id="filmCanvas"></canvas>
+      <div class="shade"></div>
+      <div id="callouts" aria-hidden="true"></div>
+      <div id="panels"></div>
+      <ol class="rail" id="rail" aria-hidden="true"></ol>
+      <div class="loadline" id="loadline"><i></i></div>
+    </div>
+  </section>
+  <section class="sheet" id="about"></section>
+  <section class="sheet" id="gallery"></section>
+  <section class="sheet" id="book"></section>
+  <section class="sheet" id="reviews"></section>
+</main>
+<footer class="foot" id="foot"></footer>
+<noscript><p style="padding:24px">This page needs JavaScript to show the film. Call us on the number above.</p></noscript>
+<script src="site.config.js"></script>
+<script src="film.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
