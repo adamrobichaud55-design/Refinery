@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: a pinned film of the house with the address set large beside it (below it on a phone); after the film,
-   the listing as ruled sheets on the same night ground: facts, photographs, rooms, the monthly cost, the agent. */
+/* Layout: a walk through the property's own photographs, in 3D, with the address set large over it; after it, the
+   listing as ruled sheets on a night ground: facts, photographs, rooms, the monthly cost, the agent. */
 :root {
   color-scheme: dark;
   --bg: #010205;            /* the film's own night sky, so footage and page are one surface */
@@ -34,7 +34,7 @@ body { background: var(--bg); color: var(--ink); }
 <body>
 <header class="bar" id="bar"><a class="mark" href="#top" id="mark"></a><a class="call" id="barCall"></a></header>
 <main id="top">
-  <section class="film" id="film" aria-label="A look inside the property">
+  <section class="film" id="film" aria-label="A walk through the property">
     <div class="stage" id="stage">
       <canvas id="filmCanvas"></canvas>
       <div class="shade"></div>
@@ -53,7 +53,7 @@ body { background: var(--bg); color: var(--ink); }
 <footer class="foot" id="foot"></footer>
 <noscript><p style="padding:24px">This page needs JavaScript to show the film. Call us on the number above.</p></noscript>
 <script src="site.config.js"></script>
-<script src="film.js"></script>
+<script src="photo3d.bundle.js"></script>
 <script src="app.js"></script>
 </body>
 </html>

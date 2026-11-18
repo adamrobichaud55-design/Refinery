@@ -158,3 +158,7 @@ form textarea { min-height: 6.5rem; resize: vertical; }
   .stage.photo .shade { background: linear-gradient(180deg, color-mix(in srgb, var(--bg) 88%, transparent) 0%, color-mix(in srgb, var(--bg) 62%, transparent) 30%, transparent 48%, transparent 58%, color-mix(in srgb, var(--bg) 92%, transparent) 82%); }
   .shots { grid-template-columns: 1fr 1fr; }
 }
+
+/* the walk through the photographs runs longer than the old film, and its captions sit on the pictures */
+.film { height: 1000vh; height: 1000svh; }
+.panel h1, .panel h2, .panel p, .panel .ask, .panel .label, .hint { text-shadow: 0 1px 14px rgba(0, 0, 0, .6); }

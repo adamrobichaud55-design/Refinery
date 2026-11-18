@@ -1,4 +1,4 @@
-// Builds the listing page from site.config.js and ties the words to the film.
+// Builds the listing page from site.config.js and ties the words to the walk through the photographs.
 (function () {
   'use strict';
   const S = window.SITE, L = S.listing, A = S.agent, $ = id => document.getElementById(id);
@@ -10,29 +10,22 @@
   $('foot').innerHTML = `<span>${esc(L.address)}, ${esc(L.town)}</span><span>${esc(L.id)}</span><span>${esc(A.name)} · ${esc(A.brokerage)}</span>${L.photoCredit ? `<span>${esc(L.photoCredit)}</span>` : ''}`;
 
   // ---- the film ----
-  const hero = { id: 'hero', frames: [0, 36], hero: true }, chapters = [hero, ...S.chapters];
+  const hero = { id: 'hero', frames: [0, 11], hero: true }, chapters = [hero, ...S.chapters];
   $('panels').innerHTML = chapters.map(c => c.hero
     ? `<div class="panel hero"><span class="label">${esc(L.status)} · ${esc(L.town)}</span><h1>${esc(L.address)}</h1><p>${esc(L.summary)}</p><div class="ask">${money(L.price)}<small>${esc(L.facts.slice(0, 2).map(f => f[0] + ' ' + f[1].toLowerCase().slice(0, 3)).join(' · '))}</small></div><a class="btn" href="#contact">${esc(S.hero.cta)}</a><span class="hint">${esc(S.hero.hint)}</span></div>`
     : `<div class="panel" style="--dot:${esc(c.color || S.accent)}"><span class="label">${esc(c.label)}</span><h2>${esc(c.title)}</h2><p>${esc(c.body)}</p>${c.cta ? `<a class="btn" href="#contact">${esc(c.cta)}</a>` : ''}</div>`).join('');
-  const callouts = [];
-  $('callouts').innerHTML = S.chapters.map(c => (c.callouts || []).map((k, n) => { callouts.push({ ch: c, k }); return `<div class="callout${n % 2 ? ' low' : ''}" style="--dot:${esc(c.color || S.accent)}"><i></i><b></b><span>${esc(k.text)}</span></div>`; }).join('')).join('');
   $('rail').innerHTML = S.chapters.map(c => `<li style="--dot:${esc(c.color || S.accent)}">${esc(c.label)}</li>`).join('');
-  const panelEls = [...$('panels').children], calloutEls = [...$('callouts').children], railEls = [...$('rail').children];
+  const panelEls = [...$('panels').children], railEls = [...$('rail').children];
   const vis = (c, f) => { const [a, b] = c.frames, e = 5; return c.hero ? Math.min(1, Math.max(0, (b - f) / e)) : Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e))); };
-  const COVER = !!(S.film && S.film.fit === 'cover'); if (COVER) $('stage').classList.add('photo');
-  const stage = $('stage'), bg = getComputedStyle(root).getPropertyValue('--bg').trim() || '#010205';
-  stage.style.backgroundImage = `url(frames/poster-${innerHeight > innerWidth * 1.05 ? 'port' : 'land'}.jpg)`;
-  window.ScrollFilm({
-    canvas: $('filmCanvas'), section: $('film'), base: 'frames/', bg, count: 240, blend: COVER,
-    // a film made from photographs fills the screen; the model-house film floats beside the words
-    scale: o => (COVER ? o.cover : o.portrait ? Math.min(o.cover, (o.width / o.w) * 1.12) : Math.min(o.cover, (o.width / o.w) * 0.88, (o.height / o.h) * 1.05)),
-    shift: (portrait, w) => (COVER ? [0, 0] : portrait ? [0, 0.045] : [w > 820 ? 0.13 : 0, 0.02]),
+  const stage = $('stage'); stage.classList.add('photo');
+  stage.style.backgroundImage = `url(${(innerHeight > innerWidth * 1.05 ? S.film.port : S.film.land)[0].src})`;      // the first photograph, until the 3D is ready
+  window.Photo3D({
+    canvas: $('filmCanvas'), section: $('film'), sets: S.film,
     onUpdate(u) {
       chapters.forEach((c, i) => { const o = vis(c, u.frame), el = panelEls[i]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); });
       S.chapters.forEach((c, i) => railEls[i].classList.toggle('on', u.frame >= c.frames[0] - 4 && u.frame <= c.frames[1] + 2));
-      callouts.forEach((c, i) => { const a = u.anchors[c.k.anchor], el = calloutEls[i], o = a && a[2] ? vis(c.ch, u.frame) : 0; el.style.setProperty('--o', o.toFixed(3)); if (!a || o <= 0) return; const [x, y] = u.place(a[0], a[1]); el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px)`; el.classList.toggle('flip', x > u.width * 0.62); });
     },
-    onLoad: f => { const i = $('loadline').firstElementChild; i.style.width = f * 100 + '%'; if (f >= 1) { i.style.opacity = 0; stage.style.backgroundImage = 'none'; } },
+    onLoad: () => { $('loadline').firstElementChild.style.opacity = 0; stage.style.backgroundImage = 'none'; },
   });
 
   // ---- facts and description ----

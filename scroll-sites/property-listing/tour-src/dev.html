@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><title>photo walk dev</title>
+<style>html,body{margin:0;height:100%;background:#000}canvas{display:block;width:100vw;height:100vh}</style>
+<!-- Developer view of the photo walk-through. From a script, tour.render(frame) draws any point of it (0 to 239):
+     tools/tour-video.mjs --site property-listing uses it to make stills and a video. -->
+<div id="s" style="height:100vh"><canvas id="c"></canvas></div>
+<script src="../site.config.js"></script><script src="../photo3d.bundle.js"></script>
+<script>const fix = a => a.map(s => ({ ...s, src: '../' + s.src, depth: '../' + s.depth })); window.tour = Photo3D({ canvas: document.getElementById('c'), section: document.getElementById('s'), still: true, sets: { land: fix(SITE.film.land), port: fix(SITE.film.port) } }); window.ready = true;</script>

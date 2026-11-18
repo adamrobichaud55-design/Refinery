@@ -7,7 +7,7 @@ complete site: copy it to any web host and it works. Nothing needs installing or
 | --- | --- |
 | `home-services/` | A heating, plumbing, electrical, roofing or building firm. The film opens up a model house and lights each system in turn. |
 | `car-dealer/` | A used-car lot. The film flies over the forecourt at dusk to three featured cars, then a car finder, a two-car comparison, a monthly-payment sum and the stock. |
-| `property-listing/` | One house for sale, for an estate agent. Its film is made from twelve real photographs of one house (free-licence stock, credited in `originals/CREDITS.md`), then facts, the gallery, rooms, a mortgage estimate and a viewing form. |
+| `property-listing/` | One house for sale, for an estate agent. The opening is a **walk through the property's real photographs in 3D**: each photograph has a depth map, so the camera moves into it and the next room opens out of the far part of the one before. Then facts, the gallery, rooms, a mortgage estimate and a viewing form. The sample photographs are free-licence ones of a real house, credited in `originals/CREDITS.md`. |
 | `holiday-rental/` | A holiday apartment, for a host who wants direct bookings. The opening is a **live 3D walkthrough**: scrolling walks the camera through a furnished sea-view apartment in one unbroken move, with a day / sunset / night switch and a Play tour button, ending on a view down into the whole plan. Then facts, pictures and a calendar that prices any free dates. |
 
 `demos/` holds mock-ups made for a named business to show them what their site could be. Each says "Concept design" on
@@ -58,6 +58,23 @@ the new film (it has 240 frames; a chapter's text shows between its two numbers)
 - `app.js`: builds the page from the config and runs the tools on it.
 - `film.js`: the scroll film player. No libraries; frames are decoded on demand so phones do not run out of memory.
 - `frames/`: the film, packed into a few files (each `.webp` there is a run of frames, not one picture), plus the first frame as a poster.
+
+## The walk through real photographs (property-listing)
+
+This is the one to use when a client hands over photographs. Nothing is modelled: the pictures on screen are the
+photographs themselves, each laid over a surface shaped by its depth map so the camera can move into it.
+
+1. Put the wide photographs in `property-listing/photos/` and upright ones (for phones) in `photos-upright/`, named in
+   walk-through order (`01-front.webp`, `02-hall.webp` ...). About 1600 pixels on the long side is plenty.
+2. Make the depth maps. This needs Python with `onnxruntime`, `numpy` and `pillow`, and the Depth Anything V2 (small)
+   model file, `onnx/model.onnx` from `onnx-community/depth-anything-v2-small` on Hugging Face (Apache-2.0, about
+   100 MB, not kept in this repo). `tools/depth.py` writes one `.npy` per photo and `tools/depth-to-png.py`
+   turns those into the PNGs in `depth/`.
+3. List the shots under `film` in `site.config.js`: the photo, its depth map, and `to`, the spot the camera heads for.
+4. If the scene code changes, rebuild it: `node ../smartweld/node_modules/vite/bin/vite.js build --config tools/photo3d.vite.config.mjs`
+
+What to expect: gentle, real camera movement and rooms that open into one another. It is not a free walk round a full
+3D model: the camera can only travel a short way into each photograph before things close to it start to stretch.
 
 ## The 3D walkthrough (holiday-rental)
 
