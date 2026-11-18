@@ -95,11 +95,14 @@ Two model files are needed, downloaded once from Hugging Face and not kept in th
 - `clip/`, only for `build_walk.py`'s room names: `onnx/vision_model_quantized.onnx`, `onnx/text_model_quantized.onnx` and
   `tokenizer.json` from `Xenova/clip-vit-base-patch32` (MIT, about 155 MB).
 
-**`build_walk.py`** cuts the video into frames, works out where each was taken, plans a smooth path along the route
-(ironing out wobbles and pauses, keeping a steady height, looking where the footage looks), keeps only the stretches
-where the footage really covers the view, estimates depth for the frames it uses, and names the rooms along the way
-(living room, kitchen, bedroom ...). With `--sparse <folder>` it uses an existing COLMAP reconstruction of the frames
-instead of making its own.
+**`build_walk.py`** cuts the video into frames, works out where each was taken, and plans one continuous path along
+the route (ironing out wobbles and pauses, keeping a steady height, looking where the footage looks). Where the footage
+jumps, it joins the pieces along a way the camera really went at some other moment. Parts the footage covers well are
+walked; parts it covers thinly become **bridges**, which the site crosses several times faster with the picture
+streaked by the motion, so one room flows into the next without a cut. Nothing in a bridge is invented: it is the real
+route, seen quickly. The script also estimates depth for the frames it uses and names the rooms along the way (living
+room, kitchen, bedroom ...). With `--sparse <folder>` it uses an existing COLMAP reconstruction of the frames instead
+of making its own.
 
 **`build_tour.py`** matches the photographs, groups them into rooms and writes `work/plan.json`, the list of rooms in
 order, with pictures of each matched group in `work/sheets/`. Edit `plan.json` to rename, reorder or drop rooms, or to
@@ -116,9 +119,9 @@ node tools/tour-check.mjs property-listing --from work/check.json --fix
 
 The first line measures every camera position of the tour: how much of the picture the two nearest photographs do not
 really show (this is where torn edges come from, typically a door frame passing close to the camera) and how much no
-photograph shows at all. The second trims the walk to its clean runs. A stretch cut in the middle becomes two, joined
-like any two rooms. Slivers that no photograph shows are filled by the viewer from the colours around them, so they
-read as wall and not as holes. Then record the video (below) and watch it once from start to finish.
+photograph shows at all. The second turns broken parts in the middle of the walk into bridges and cuts broken parts
+off its ends. Slivers that no photograph shows are filled by the viewer from the colours around them, so they read as
+wall and not as holes. Then record the video (below) and watch it once from start to finish.
 
 ### Add the words and publish
 

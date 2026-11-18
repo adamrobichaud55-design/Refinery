@@ -14,7 +14,8 @@ import * as THREE from 'three';
 const clamp01 = v => Math.min(1, Math.max(0, v)), smooth = v => v * v * (3 - 2 * v);
 const HANDOVER = 0.7;                      // how much of each room's walk is shared with the next one (in path units)
 const STREAK = 0.9;                        // how long the motion streak on a bridge is, as a share of the picture's movement over the next step
-const RUSH = 0.72;                         // how much shorter a bridge between rooms is made: it passes about 3.5 times faster than the walk
+const RUSH = 0.72;                         // how much shorter a bridge between rooms is made: it passes about 3.5 times faster than the walk ...
+const BRIDGE = [1.0, 3.0];                 // ... but never takes less scrolling than this, or more (in path units)
 const TURN = 1.2;                          // how much walking one radian of turning counts for, when pacing the walk
 
 window.Walk3D = function (opt) {
@@ -68,10 +69,13 @@ window.Walk3D = function (opt) {
       const keys = r.walk.cams.map(c => { const m = new THREE.Matrix4().fromArray(c.m); return { p: new THREE.Vector3().setFromMatrixPosition(m), q: new THREE.Quaternion().setFromRotationMatrix(m) }; });
       for (let k = 1; k < keys.length; k++) if (keys[k].q.dot(keys[k - 1].q) < 0) keys[k].q.set(-keys[k].q.x, -keys[k].q.y, -keys[k].q.z, -keys[k].q.w);
       // parts of the path marked "r" are bridges between rooms: the camera crosses them at several times walking pace
-      const rush = r.walk.cams.map(c => c.r || 0), cum = [0]; for (let k = 1; k < keys.length; k++) cum.push(cum[k - 1] + Math.max(0.02, keys[k].p.distanceTo(keys[k - 1].p) + TURN * keys[k].q.angleTo(keys[k - 1].q)) * (1 - RUSH * (rush[k] + rush[k - 1]) / 2));
+      // and each is given about the same short stretch of scrolling however far it goes, so a long way round passes faster still
+      const rush = r.walk.cams.map(c => c.r || 0), n = keys.length, step = k => Math.max(0.02, keys[k].p.distanceTo(keys[k - 1].p) + TURN * keys[k].q.angleTo(keys[k - 1].q)), fac = new Array(n).fill(1 - RUSH);
+      for (let i = 0; i < n; i++) if (rush[i] >= 0.5) { let e = i, L = 0; while (e + 1 < n && rush[e + 1] >= 0.5) { e++; L += step(e); } const f = Math.min(1, Math.min(BRIDGE[1], Math.max(BRIDGE[0], (1 - RUSH) * L)) / Math.max(L, 1e-6)); for (let j = Math.max(0, i - 6); j <= Math.min(n - 1, e + 6); j++) if (j >= i && j <= e || rush[j] < 0.5) fac[j] = f; i = e; }
+      const cum = [0], pace = []; for (let k = 1; k < n; k++) { const w = 1 - ((rush[k] + rush[k - 1]) / 2) * (1 - (fac[k] + fac[k - 1]) / 2); pace.push(w); cum.push(cum[k - 1] + step(k) * w); }
       // the view is kept well inside what one frame covers, so that a frame turned a little differently still fills it
       const at = r.walk.cams.map(c => c.v);
-      return { views, keys, cum, len: cum[cum.length - 1], tw: Math.min(...views.map(V => V.tw)) * (opt.marginX || 0.62), th: Math.min(...views.map(V => V.th)) * (opt.marginY || 0.8), centre: seg => at[Math.min(at.length - 1, seg)], reach: 6, rush, chapters: r.walk.chapters || [], name: r.name };
+      return { views, keys, cum, len: cum[cum.length - 1], tw: Math.min(...views.map(V => V.tw)) * (opt.marginX || 0.62), th: Math.min(...views.map(V => V.th)) * (opt.marginY || 0.8), centre: seg => at[Math.min(at.length - 1, seg)], reach: 6, rush, pace, chapters: r.walk.chapters || [], name: r.name };
     }
     const keys = views.map(V => ({ p: V.pos.clone(), q: V.quat.clone() })), L = views[views.length - 1], d = L.d, far = d.far || [0.5, 0.5];
     const toFar = new THREE.Vector3((far[0] * d.w - d.cx) / d.f, -(far[1] * d.h - d.cy) / d.f, -1).normalize(), zmed = d.zmed || 3;
@@ -99,7 +103,8 @@ window.Walk3D = function (opt) {
   const tp = new THREE.Vector3(), tq = new THREE.Quaternion(), ref = new THREE.Quaternion(); let lastU = 0;
   function pose(room, s) {
     const acc = new THREE.Vector3(), qa = [0, 0, 0, 0]; let ws = 0, seg = 0, u0 = 0;
-    for (let i = -4; i <= 4; i++) { const w = Math.exp(-(i * i) / 6), k = rawPose(room, s + i * 0.12, tp, tq); if (i === 0) { seg = k; u0 = lastU; ref.copy(tq); } acc.addScaledVector(tp, w); const sg = i < 0 || i > 0 ? Math.sign(tq.dot(ref) || 1) : 1; qa[0] += w * sg * tq.x; qa[1] += w * sg * tq.y; qa[2] += w * sg * tq.z; qa[3] += w * sg * tq.w; ws += w; }
+    const span = 0.12 * (room.pace ? Math.max(0.12, room.pace[Math.min(room.pace.length - 1, rawPose(room, s, tp, tq))]) : 1);      // the same distance on the ground, at any pace
+    for (let i = -4; i <= 4; i++) { const w = Math.exp(-(i * i) / 6), k = rawPose(room, s + i * span, tp, tq); if (i === 0) { seg = k; u0 = lastU; ref.copy(tq); } acc.addScaledVector(tp, w); const sg = i < 0 || i > 0 ? Math.sign(tq.dot(ref) || 1) : 1; qa[0] += w * sg * tq.x; qa[1] += w * sg * tq.y; qa[2] += w * sg * tq.z; qa[3] += w * sg * tq.w; ws += w; }
     const R = room.rush, rush = R ? R[seg] + (R[Math.min(R.length - 1, seg + 1)] - R[seg]) * clamp01(u0) : 0;
     return { p: acc.multiplyScalar(1 / ws), q: new THREE.Quaternion(qa[0], qa[1], qa[2], qa[3]).normalize(), seg, rush };
   }
@@ -160,7 +165,7 @@ window.Walk3D = function (opt) {
     scene.clear(); join.uniforms.w.value = wA + wB > 0 ? wB / (wA + wB) : 0; quad.material = join; renderer.setRenderTarget(rtJ); renderer.render(quadScene, quadCam);
     // how the picture moves over the next short step of the path, for the streak on a bridge
     if (c.rush > 0.01 && !join.uniforms.audit.value) {
-      const n = pose(room, s + 0.1), inv = c.q.clone().invert(), fw = new THREE.Vector3(0, 0, -1).applyQuaternion(inv.clone().multiply(n.q)), dp = n.p.clone().sub(c.p).applyQuaternion(inv), k = (opt.streak ?? STREAK) * c.rush;
+      const n = pose(room, s + 0.1 * (room.pace ? Math.max(0.12, room.pace[Math.min(room.pace.length - 1, c.seg)]) / (1 - RUSH) : 1)), inv = c.q.clone().invert(), fw = new THREE.Vector3(0, 0, -1).applyQuaternion(inv.clone().multiply(n.q)), dp = n.p.clone().sub(c.p).applyQuaternion(inv), k = (opt.streak ?? STREAK) * c.rush;
       heal.uniforms.streak.value.set((fw.x / -fw.z / (dh * a)) * 0.5 * k, (fw.y / -fw.z / dh) * 0.5 * k, (-dp.z / 3) * k);
     } else heal.uniforms.streak.value.set(0, 0, 0);
     quad.material = heal; renderer.setRenderTarget(target); renderer.render(quadScene, quadCam); return true;
