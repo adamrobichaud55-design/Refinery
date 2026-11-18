@@ -24,7 +24,7 @@
   $('tags').innerHTML = tagged.map(c => `<div class="tag"><span>${money(S.stock[c.stock].price)}</span></div>`).join('');
   const panelEls = [...$('panels').children], tagEls = [...$('tags').children];
   const vis = (c, f) => { const [a, b] = c.frames, e = 5; return c.hero ? Math.min(1, Math.max(0, (b - f) / e)) : Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e))); };
-  const stage = $('stage'), bg = getComputedStyle(root).getPropertyValue('--bg').trim() || '#0d0b14';
+  const stage = $('stage'), bg = getComputedStyle(root).getPropertyValue('--bg').trim() || '#020104';
   stage.style.backgroundImage = `url(frames/poster-${innerHeight > innerWidth * 1.05 ? 'port' : 'land'}.jpg)`;
   window.ScrollFilm({
     canvas: $('filmCanvas'), section: $('film'), base: 'frames/', bg,

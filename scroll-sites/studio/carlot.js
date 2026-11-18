@@ -30,7 +30,7 @@ export function build({ THREE, renderer, portrait, aspect }) {
   box(wallM, 7, 3.8, 6, 12.5, 1.9, -10.5); box(trimM, 7.4, 0.25, 6.4, 12.5, 3.9, -10.5); for (const x of [10.9, 14.1]) { box(M(0x3a3d46), 2.6, 2.9, 0.14, x, 1.45, -7.44); for (let k = 0; k < 4; k++) box(trimM, 2.6, 0.03, 0.18, x, 0.6 + k * 0.6, -7.42); }
   const inside = []; for (const x of [-5, 0, 5]) { const l = new THREE.PointLight(0xffe0b0, 9, 16, 1.7); l.position.set(x, 3.2, -5.2); scene.add(l); inside.push(l); }
   // lamp posts
-  const posts = [[-18, 10.5], [18, 10.5], [-18, -2], [18, -2], [-6, 12.6], [6, 12.6]], lamps = [];
+  const posts = [[-18, 10.5], [18, 10.5], [-18, -2], [18, -2], [-12.5, -5.6], [12.5, -5.2]], lamps = [];
   for (const [x, z] of posts) { cyl(trimM, 0.1, 7, x, 3.5, z, 8); const dir = Math.sign(-x) || 1; box(trimM, 1.4, 0.1, 0.12, x + dir * 0.6, 6.95, z); box(lampGlow, 0.7, 0.08, 0.34, x + dir * 1.1, 6.88, z); const l = new THREE.PointLight(0xffd6a0, 34, 34, 1.5); l.position.set(x + dir * 1.1, 6.6, z); scene.add(l); lamps.push(l); }
   // hedges and trees behind
   for (let i = 0; i < 11; i++) box(leafM, 3.6, 1.1, 1.0, -20 + i * 4, 0.55, -15.0);
@@ -47,15 +47,15 @@ export function build({ THREE, renderer, portrait, aspect }) {
     const c = park(STOCK[i].type, STOCK[i].color, x, z, turn, 1); c.position.y = 0.14; return c;
   });
   // the camera: [frame, eye, target]
-  const CAM = [[0, [27, 21, 31], [0, 1, 0]], [36, [19, 11, 27], [0, 1.2, 3]], [70, [-1.5, 3.0, 17.5], [-7.5, 0.9, 8.6]], [92, [-11.6, 1.7, 14.4], [-7.5, 0.9, 8.6]], [112, [-12.8, 1.9, 11.4], [-7.5, 0.9, 8.6]],
-    [134, [-4.8, 2.2, 15.4], [0, 1.0, 8.9]], [150, [1.4, 1.5, 15.0], [0, 1.0, 8.9]], [166, [4.4, 1.9, 14.6], [3, 1.0, 8.8]], [186, [4.4, 2.0, 15.2], [7.5, 1.0, 8.6]], [204, [12.0, 1.7, 14.0], [7.5, 1.0, 8.6]], [239, [-25, 17, 30], [0, 1.2, -1]]];
+  const CAM = [[0, [27, 21, 31], [0, 1, 0]], [36, [19, 11, 27], [0, 1.2, 3]], [70, [-1.5, 3.2, 18.5], [-7.5, 0.9, 8.6]], [92, [-13.2, 2.0, 16.7], [-7.5, 0.9, 8.6]], [112, [-14.9, 2.3, 12.5], [-7.5, 0.9, 8.6]],
+    [134, [-6.5, 2.6, 17.7], [0, 1.0, 8.9]], [150, [2.0, 1.7, 17.4], [0, 1.0, 8.9]], [166, [5.0, 2.2, 17.2], [3, 1.0, 8.8]], [186, [3.3, 2.35, 17.5], [7.5, 1.0, 8.6]], [204, [14.0, 2.0, 16.4], [7.5, 1.0, 8.6]], [239, [-25, 17, 30], [0, 1.2, -1]]];
   const KP = CAM.map(k => [...k[1], ...k[2]]), KT = CAM.map(k => k[0]);
   const KM = KP.map((p, i) => p.map((_, c) => { if (i === 0 || i === KP.length - 1) return 0; const h0 = KT[i] - KT[i - 1], h1 = KT[i + 1] - KT[i]; return (((p[c] - KP[i - 1][c]) / h0) * h1 + ((KP[i + 1][c] - p[c]) / h1) * h0) / (h0 + h1); }));
   function raw(f) { f = Math.min(FRAMES - 1, Math.max(0, f)); let i = 0; while (i < KT.length - 2 && f > KT[i + 1]) i++; const h = KT[i + 1] - KT[i], x = (f - KT[i]) / h, x2 = x * x, x3 = x2 * x, a = 2 * x3 - 3 * x2 + 1, b = (x3 - 2 * x2 + x) * h, c = -2 * x3 + 3 * x2, d = (x3 - x2) * h; return KP[i].map((_, k) => a * KP[i][k] + b * KM[i][k] + c * KP[i + 1][k] + d * KM[i + 1][k]); }
   function camAt(f) { const acc = [0, 0, 0, 0, 0, 0]; let ws = 0; for (let k = -6; k <= 6; k++) { const w = Math.exp(-(k * k) / 18), r = raw(f + k * 1.2); for (let c = 0; c < 6; c++) acc[c] += w * r[c]; ws += w; } return acc.map(v => v / ws); }
   const wp = new THREE.Vector3(), tag = c => () => { c.getWorldPosition(wp); wp.y += 2.25; return wp; };
   function apply(f) {
-    const [ex, ey, ez, tx, ty, tz] = camAt(f), k = portrait ? 1.3 : 1;
+    const [ex, ey, ez, tx, ty, tz] = camAt(f), k = portrait ? 1.22 : 1;
     camera.position.set(tx + (ex - tx) * k, ty + (ey - ty) * k, tz + (ez - tz) * k); camera.lookAt(tx, ty, tz); camera.updateMatrixWorld();
     featured.forEach((c, i) => { c.rotation.y = spots[i][2] + Math.sin((f / FRAMES) * Math.PI * 2 + i) * 0.06; });
   }

@@ -24,10 +24,11 @@ for (const set of ['land', 'port']) {
     ff(['-i', src, '-vf', `fps=${want / dur},scale=${W}:${H}:force_original_aspect_ratio=increase,crop=${W}:${H}`, '-frames:v', String(want), '-start_number', '0', '-c:v', 'libwebp', '-quality', quality, '-compression_level', '5', join(work, 'f%04d.webp')]);
   }
   const files = readdirSync(work).filter(f => f.endsWith('.webp')).sort(), per = Math.ceil(files.length / nChunks), index = [], chunks = []; let bytes = 0;
+  // each bundle is WebP images one after another; it is named .webp because every web host serves that type
   for (let c = 0; c * per < files.length; c++) {
     const parts = []; let off = 0;
     for (const f of files.slice(c * per, (c + 1) * per)) { const b = readFileSync(join(work, f)); index.push([c, off, b.length]); parts.push(b); off += b.length; }
-    const name = `${set}-${c}.webp`;   // WebP images one after another; named .webp because every web host serves that type writeFileSync(join(out, name), Buffer.concat(parts)); chunks.push(name); bytes += off;
+    const name = `${set}-${c}.webp`; writeFileSync(join(out, name), Buffer.concat(parts)); chunks.push(name); bytes += off;
   }
   ff(['-i', join(work, files[0]), '-q:v', '4', join(out, `poster-${set}.jpg`)]);
   manifest.frames = manifest.frames ? Math.min(manifest.frames, files.length) : files.length; manifest.sets[set] = { w: W, h: H, chunks, index };

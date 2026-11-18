@@ -11,7 +11,7 @@ const [W, H] = set === 'port' ? [810, 1440] : set === 'card' ? [720, 450] : [144
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl'] });
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
 page.on('pageerror', e => console.error('PAGE ERROR', e.message)); page.on('console', m => { if (m.type() === 'error') console.error('console:', m.text()); });
-await page.goto(`http://127.0.0.1:5198/?scene=${scene}&w=${W}&h=${H}`);
+await page.goto(`http://127.0.0.1:5198/?scene=${scene}&w=${W}&h=${H}${process.env.SAMPLES ? '&s=' + process.env.SAMPLES : ''}`);   // SAMPLES=5 node capture.mjs ... renders faster, a little less smooth
 await page.waitForFunction(() => window.studio, null, { timeout: 120000 });
 const n = await page.evaluate(() => window.studio.frames);
 const shoot = async (i, path) => { const a = await page.evaluate(k => window.studio.setFrame(k), i); await page.screenshot({ path, type: 'png', timeout: 300000 }); return a; };
