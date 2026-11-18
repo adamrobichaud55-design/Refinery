@@ -23,15 +23,17 @@
           const o0 = Math.min(1, Math.max(0, (HERO - u.frame) / 2.5)); hero.style.setProperty('--o', o0.toFixed(3)); hero.classList.toggle('on', o0 > 0.02);
           let now = -1;
           u.chapters.forEach((c, k) => { const o = fade(u.frame, k === 0 ? Math.max(c.from, HERO) + 1.5 : c.from + 1.5, k === u.chapters.length - 1 ? 245 : c.to - 1.5, 2.5), el = panelEls[k]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); if (u.frame >= c.from) now = k; });
-          railEls.forEach((el, k) => el.classList.toggle('on', k === now));
+          railEls.forEach((el, k) => el.classList.toggle('on', now >= 0 && u.chapters[now].label === names[k]));
         },
         onLoad: () => { $('loadline').firstElementChild.style.opacity = 0; stage.style.backgroundImage = 'none'; },
       });
       // the words for each stretch: by its place in the tour (config "tour"), or by the room's name (config "rooms")
       const cap = t => t.replace(/^./, m => m.toUpperCase());
-      const words = tour.chapters.map((c, k) => ({ label: cap(c.label), ...((S.rooms || {})[c.label] || {}), ...((S.tour || [])[k] || {}) }));
+      // a walk can pass through a room more than once: its words are shown the first time, only its name after that, and the rail lists each room once
+      const names = [...new Set(tour.chapters.map(c => c.label))], met = new Set();
+      const words = tour.chapters.map((c, k) => { const first = !met.has(c.label); met.add(c.label); return { label: cap(c.label), ...(first ? (S.rooms || {})[c.label] || {} : {}), ...((S.tour || [])[k] || {}) }; });
       $('panels').insertAdjacentHTML('beforeend', words.map(c => `<div class="panel"><span class="label">${esc(c.label)}</span>${c.title ? `<h2>${esc(c.title)}</h2>` : ''}${c.body ? `<p>${esc(c.body)}</p>` : ''}${c.cta ? `<a class="btn" href="#contact">${esc(c.cta)}</a>` : ''}</div>`).join(''));
-      $('rail').innerHTML = words.map(c => `<li>${esc(c.label)}</li>`).join('');
+      $('rail').innerHTML = names.map(n => `<li>${esc(cap(n))}</li>`).join('');
       const panelEls = [...$('panels').children].slice(1), railEls = [...$('rail').children];
       $('film').style.height = `calc(${Math.round(Math.min(2600, 100 + tour.total * (tour.total > 60 ? 15 : 26)))} * 1svh)`;      // the longer the walk, the longer the scroll: a steady pace throughout
     })).catch(e => console.error('walk-through: could not load', e));

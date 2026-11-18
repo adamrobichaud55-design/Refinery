@@ -18,7 +18,7 @@
 # Needs: pip install pycolmap onnxruntime numpy pillow tokenizers; ffmpeg for video; the Depth Anything V2 (small) model
 # (onnx/model.onnx from onnx-community/depth-anything-v2-small on Hugging Face) and, for room names, a folder holding
 # vision_model_quantized.onnx, text_model_quantized.onnx and tokenizer.json from Xenova/clip-vit-base-patch32.
-import sys, os, json, shutil, subprocess, re, pickle
+import sys, os, io, json, shutil, subprocess, re, pickle
 import numpy as np
 from PIL import Image
 
@@ -40,7 +40,7 @@ else:
         os.makedirs(photos); print('cutting the video into frames', flush=True)
         subprocess.run(['ffmpeg', '-v', 'error', '-i', src, '-vf', f"fps={opt.get('fps', 3)},scale='min(1600,iw)':-2", '-q:v', '2', os.path.join(photos, 'f%05d.jpg')], check=True)
 poses_file = os.path.join(work, 'poses.pkl')
-if not os.path.exists(poses_file):
+if not os.path.exists(poses_file) or 'ids' not in pickle.load(open(poses_file, 'rb'))[0]:
     import pycolmap
     sparse = opt.get('sparse')
     if not sparse:
@@ -59,14 +59,14 @@ if not os.path.exists(poses_file):
         sparse = max((os.path.join(sparse_root, k) for k in os.listdir(sparse_root)), key=lambda p: len(pycolmap.Reconstruction(p).images))
     r = pycolmap.Reconstruction(sparse); V = []
     for im in sorted(r.images.values(), key=lambda i: i.name):
-        T = im.cam_from_world() if callable(im.cam_from_world) else im.cam_from_world; R, t = np.asarray(T.rotation.matrix()), np.asarray(T.translation); cam = r.cameras[im.camera_id]; xy, z = [], []
+        T = im.cam_from_world() if callable(im.cam_from_world) else im.cam_from_world; R, t = np.asarray(T.rotation.matrix()), np.asarray(T.translation); cam = r.cameras[im.camera_id]; xy, z, ids = [], [], []
         for p in im.points2D:
             if p.has_point3D():
                 zc = (R @ r.points3D[p.point3D_id].xyz + t)[2]
-                if zc > 0: xy.append(p.xy); z.append(zc)
+                if zc > 0: xy.append(p.xy); z.append(zc); ids.append(p.point3D_id)
         if len(z) < 30: continue
         fx = float(cam.params[0]); pin = cam.model.name == 'PINHOLE'; cx, cy = (float(cam.params[2]), float(cam.params[3])) if pin else (float(cam.params[1]), float(cam.params[2]))
-        V.append({'name': im.name, 'R': R, 't': t, 'xy': np.array(xy, np.float32), 'z': np.array(z, np.float32), 'f': fx, 'cx': cx, 'cy': cy, 'w': cam.width, 'h': cam.height})
+        V.append({'name': im.name, 'R': R, 't': t, 'xy': np.array(xy, np.float32), 'z': np.array(z, np.float32), 'ids': np.array(ids, np.int64), 'f': fx, 'cx': cx, 'cy': cy, 'w': cam.width, 'h': cam.height})
     pickle.dump(V, open(poses_file, 'wb'))
 V = pickle.load(open(poses_file, 'rb')); n = len(V); total_frames = len([f for f in os.listdir(photos) if re.search(r'\.(jpe?g|png|webp)$', f, re.I)])
 print(f'{n} of {total_frames} frames placed', flush=True)
@@ -83,45 +83,82 @@ def gauss(a, sigma):
     k = int(3 * sigma) + 1; w = np.exp(-np.arange(-k, k + 1) ** 2 / (2 * sigma * sigma)); w /= w.sum(); p = np.pad(a, [(k, k)] + [(0, 0)] * (a.ndim - 1), mode='edge')
     return np.stack([np.tensordot(w, p[i:i + 2 * k + 1], axes=(0, 0)) for i in range(len(a))])
 d = np.linalg.norm(np.diff(P, axis=0), axis=1); cuts = [i + 1 for i in range(n - 1) if d[i] > max(8 * np.median(d), 1.5)]; runs = [(a, b) for a, b in zip([0] + cuts, cuts + [n]) if b - a >= 12]
-segments = []
-for a, b in runs:
-    S = gauss(P[a:b], 6.0)                                               # the route, with the camera's wandering ironed out
-    S = S - np.outer((S - np.median(S, 0)) @ down, down) * 0.85          # and held near one height
+level = np.degrees(np.arcsin(np.clip(FW @ down, -1, 1)))
+def resample(S):
+    """the same line, as points one step apart"""
     L = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(S, axis=0), axis=1))])
-    if L[-1] < 2.0: continue
-    s = np.arange(0, L[-1], STEP); Q = np.stack([np.interp(s, L, S[:, k]) for k in range(3)], 1)
+    if L[-1] < 4 * STEP: return None
+    s = np.arange(0, L[-1], STEP); return np.stack([np.interp(s, L, S[:, k]) for k in range(3)], 1)
+def looks(Q, pool):
+    """The walk looks where the frames near it really look, so there is always a real picture behind the view: at each
+    point, the frame that is close by and faces most nearly the way the walk is going sets the direction; among the
+    nearest few at each point, the chain of frames whose directions change least from one point to the next is taken."""
     T = gauss(np.gradient(gauss(Q, 0.5 / STEP), axis=0), 1.1 / STEP); T = T - np.outer(T @ down, down); nrm = np.linalg.norm(T, axis=1, keepdims=True)
     T = np.where(nrm > 1e-6, T / np.maximum(nrm, 1e-6), 0)               # the direction of travel
-    # The walk looks where the frames near it really look, so there is always a real picture behind the view: at each
-    # point, the frame that is close by and faces most nearly the way the walk is going sets the direction, and the
-    # directions are then smoothed into slow, even turns of the head.
-    pool = np.arange(max(0, a - 40), min(n, b + 40)); lv = np.degrees(np.arcsin(np.clip(FW[pool] @ down, -1, 1))); pool = pool[(lv > -8) & (lv < 38)]
-    K = 8; cand, unary = [], []
+    lv = pool[(level[pool] > -8) & (level[pool] < 38)]; pool = lv if len(lv) else pool; K = min(8, len(pool)); cand, unary = [], []
     for q, t in zip(Q, T):
         c = np.linalg.norm(P[pool] - q, axis=1) + 0.55 * np.arccos(np.clip(FW[pool] @ t, -1, 1)); o = np.argsort(c)[:K]; cand.append(pool[o]); unary.append(c[o])
-    # among the nearest few at each point, the chain of frames whose directions change least from one point to the next
     cost = unary[0].copy(); back = []
     for i in range(1, len(Q)):
         tr = 0.9 * np.arccos(np.clip(FW[cand[i - 1]] @ FW[cand[i]].T, -1, 1)); tot = cost[:, None] + tr; back.append(np.argmin(tot, 0)); cost = tot.min(0) + unary[i]
     j = int(np.argmin(cost)); pick = [j]
     for bk in reversed(back): j = int(bk[j]); pick.append(j)
-    pick.reverse(); look = np.stack([FW[cand[i][pick[i]]] for i in range(len(Q))])
-    F = gauss(look, 1.2 / STEP); F /= np.maximum(np.linalg.norm(F, axis=1, keepdims=True), 1e-6)
+    pick.reverse(); return np.stack([FW[cand[i][pick[i]]] for i in range(len(Q))])
+# each unbroken run of the footage gives a piece of path: the route the camera took, with its wandering ironed out and held near one height
+pieces = []
+for a, b in runs:
+    S = gauss(P[a:b], 6.0); S = S - np.outer((S - np.median(S, 0)) @ down, down) * 0.85; Q = resample(S)
+    if Q is None or len(Q) * STEP < 2.0: continue
+    pool = np.arange(max(0, a - 40), min(n, b + 40)); pieces.append({'Q': Q, 'look': looks(Q, pool), 'pool': pool, 'ends': (a, b - 1)})
+if not pieces: sys.exit('The footage gave no usable route. See the note above about the footage.')
+# Where the footage jumps (the camera was carried to another room between shots, or the recording was paused), the
+# pieces are joined by a way through the home that the camera really went at some other moment: from frame to frame,
+# only between frames that are close together and show some of the same things, so never through a wall.
+import heapq
+ids = [np.unique(v['ids']) for v in V]; DD = np.linalg.norm(P[:, None] - P[None], axis=2); adj = [[] for _ in range(n)]
+for i in range(n):
+    for j in np.nonzero(DD[i, i + 1:] < 2.5)[0] + i + 1:
+        if j - i <= 2 or len(np.intersect1d(ids[i], ids[j], assume_unique=True)) >= 40:
+            c = DD[i, j] * (1 + DD[i, j]) + 0.4 * float(np.arccos(np.clip(FW[i] @ FW[j], -1, 1))) + 0.05; adj[i].append((int(j), c)); adj[j].append((i, c))
+def way(src, dst):
+    best = {src: 0.0}; prev = {}; heap = [(0.0, src)]
+    while heap:
+        c, i = heapq.heappop(heap)
+        if i == dst: break
+        if c > best.get(i, 1e18): continue
+        for j, w in adj[i]:
+            if c + w < best.get(j, 1e18): best[j] = c + w; prev[j] = i; heapq.heappush(heap, (c + w, j))
+    if dst not in best: return None
+    r = [dst]
+    while r[-1] != src: r.append(prev[r[-1]])
+    return r[::-1]
+chains = [[pieces[0]]]
+for prev_, pc in zip(pieces, pieces[1:]):
+    route = way(prev_['ends'][1], pc['ends'][0]); bridge = None
+    if route is not None:
+        poly = np.vstack([prev_['Q'][-1:], P[route[1:-1]].reshape(-1, 3), pc['Q'][:1]]); Lp = np.concatenate([[0], np.cumsum(np.linalg.norm(np.diff(poly, axis=0), axis=1))]); t = Lp / max(Lp[-1], 1e-9)
+        h0, h1 = prev_['Q'][-1] @ down, pc['Q'][0] @ down; poly = poly + np.outer(h0 + (h1 - h0) * t - poly @ down, down)       # level, from one piece's height to the next's
+        Qb = resample(poly)
+        if Qb is not None and len(Qb) > 2:
+            Sm = gauss(Qb, 0.5 / STEP); tt = np.linspace(0, 1, len(Sm))[:, None]; Sm = Sm + (1 - tt) * (Qb[0] - Sm[0]) + tt * (Qb[-1] - Sm[-1]); Sm = Sm[1:]
+            pool = np.unique(np.concatenate([np.arange(max(0, r - 12), min(n, r + 13)) for r in route])); bridge = {'Q': Sm, 'look': looks(Sm, pool), 'pool': pool, 'bridge': True}
+        if Lp[-1] > 30: route = None                                    # too far to cross in one go: a change of scene instead
+    if route is None: chains.append([pc])
+    else: chains[-1].extend([bridge, pc] if bridge else [pc])
+stretches = []
+for ch in chains:
+    Q = gauss(np.vstack([p['Q'] for p in ch]), 0.3 / STEP); look = np.vstack([p['look'] for p in ch]); pid = np.concatenate([[i] * len(p['Q']) for i, p in enumerate(ch)])
+    F = gauss(look, 1.2 / STEP); F /= np.maximum(np.linalg.norm(F, axis=1, keepdims=True), 1e-6)                                # the directions, smoothed into slow, even turns of the head
     # never staring at the floor or the ceiling: between level and 22 degrees down
     hz = F - np.outer(F @ down, down); hz /= np.maximum(np.linalg.norm(hz, axis=1, keepdims=True), 1e-6); pt = np.clip(np.arcsin(np.clip(F @ down, -1, 1)), np.radians(2), np.radians(22)); F = hz * np.cos(pt)[:, None] + np.outer(np.sin(pt), down)
-    # where no frame is close to what the walk would see, the walk is cut: better a change of scene than a view with holes in it
-    sc = np.array([np.min(np.linalg.norm(P[pool] - q, axis=1) + TURN * np.arccos(np.clip(FW[pool] @ f, -1, 1))) for q, f in zip(Q, F)]); good = gauss(sc[:, None], 0.3 / STEP)[:, 0] < 0.95
-    i = 0
-    while i < len(Q):
-        if not good[i]: i += 1; continue
-        j = i
-        while j < len(Q) and good[j]: j += 1
-        if (j - i) * STEP >= 3.0: segments.append({'pos': Q[i:j], 'fwd': F[i:j], 'frames': (a, b)})
-        i = j
-print('path:', [f"{len(s['pos']) * STEP:.0f} units from frames {s['frames'][0]}-{s['frames'][1]}" for s in segments], flush=True)
+    pools = []
+    for p in ch: lv = p['pool'][(level[p['pool']] > -12) & (level[p['pool']] < 42)]; pools.append(lv if len(lv) else p['pool'])  # leaving out shots of the floor and the ceiling
+    # where no frame is close to what the walk would see, the walk does not linger: it crosses that part at speed (see below)
+    sc = np.array([np.min(np.linalg.norm(P[pools[k]] - q, axis=1) + TURN * np.arccos(np.clip(FW[pools[k]] @ f, -1, 1))) for q, f, k in zip(Q, F, pid)])
+    stretches.append({'pos': Q, 'fwd': F, 'pid': pid, 'pools': pools, 'near': gauss(sc[:, None], 0.3 / STEP)[:, 0] < 0.95, 'bridges': sum(1 for p in ch if p.get('bridge'))})
+print('path:', [f"{len(s['pos']) * STEP:.0f} units, {s['bridges']} joins" for s in stretches], flush=True)
 
 # ---- 3. the frames along the path, and their depth --------------------------------------------------------------------
-level = np.degrees(np.arcsin(np.clip(FW @ down, -1, 1)))
 def nearest(p, f, pool):
     sc = np.linalg.norm(P[pool] - p, axis=1) + TURN * np.arccos(np.clip(FW[pool] @ f, -1, 1)); return pool[np.argsort(sc)[:3]], np.sort(sc)[:3]
 import onnxruntime as ort
@@ -161,11 +198,10 @@ def room_names(logits):
         for j, (l, i0, i1) in enumerate(runs_):
             if i1 - i0 < MIN and len(runs_) > 1: nb = runs_[j - 1][0] if j > 0 else runs_[j + 1][0]; lab[i0:i1] = [nb] * (i1 - i0); changed = True; break
     return [{'label': ROOMS[l], 'from': i0, 'to': i1 - 1} for l, i0, i1 in runs_]
-for seg in segments:
-    a, b = seg['frames']; pool = np.arange(max(0, a - 40), min(n, b + 40)); pool = pool[(level[pool] > -12) & (level[pool] < 42)]      # frames from this stretch, leaving out shots of the floor and the ceiling
+for seg in stretches:
     chosen, near3, cur = [], [], None
-    for p, f in zip(seg['pos'], seg['fwd']):
-        best, sc = nearest(p, f, pool)
+    for p, f, k in zip(seg['pos'], seg['fwd'], seg['pid']):
+        best, sc = nearest(p, f, seg['pools'][k])
         if cur is None or (np.linalg.norm(P[cur] - p) + TURN * np.arccos(np.clip(FW[cur] @ f, -1, 1))) > 1.4 * sc[0] + 0.12: cur = int(best[0])       # stay with a frame until another is clearly nearer
         trio = [cur] + [int(x) for x in best[:2]]
         for c in trio:
@@ -190,36 +226,44 @@ for seg in segments:
             d_ = info[c]['cloud'] - p; zc = d_ @ f; ok = zc > 0.05; cx_ = (d_[ok] @ x) / zc[ok]; cy_ = (d_[ok] @ y) / zc[ok]; m = (np.abs(cx_) < hw) & (np.abs(cy_) < hh_)
             cells[np.clip(((cy_[m] / hh_ + 1) * 4.5).astype(int), 0, 8), np.clip(((cx_[m] / hw + 1) * 6).astype(int), 0, 11)] = True
         cover.append(cells.mean())
-    good = gauss(np.array(cover)[:, None], 0.25 / STEP)[:, 0] > 0.94; i = 0
+    # The parts worth walking are where a frame is near and the view is filled, for at least three units together. What lies
+    # between them is still travelled, along the real route, but quickly: the site passes it at speed with the picture
+    # streaked by the motion, as a bridge from one room to the next. Anything before the first such part or after the last is dropped.
+    good = seg['near'] & (gauss(np.array(cover)[:, None], 0.25 / STEP)[:, 0] > 0.94); walks = []; i = 0
     while i < len(good):
         if not good[i]: i += 1; continue
         j = i
         while j < len(good) and good[j]: j += 1
-        if (j - i) * STEP >= 3.0:                                           # a stretch worth walking: write it out
-            used = []
-            for trio in near3[i:j]:
-                for c in trio:
-                    if c not in used: used.append(c)
-            folder = f"{len(tour) + 1:02d}-{opt.get('name', 'walk')}"; os.makedirs(os.path.join(out, folder)); metas, logit = [], {}
-            for vi, c in enumerate(used):
-                v, I = V[c], info[c]; im = Image.open(os.path.join(photos, v['name'])).convert('RGB'); W, H, dn, ab = I['W'], I['H'], I['dn'], I['ab']
-                M = np.eye(4); M[:3, :3] = FM @ v['R'].T @ FM; M[:3, 3] = FM @ P[c]
-                hh, ww = dn.shape; dw = 448 if ww >= hh else 336; small = blur(np.asarray(Image.fromarray(dn, mode='F').resize((dw, round(dw * hh / ww)), Image.BILINEAR), np.float32))
-                v16 = np.clip(small * 65535, 0, 65535).astype(np.uint16); rgb = np.zeros(v16.shape + (3,), np.uint8); rgb[..., 0] = v16 >> 8; rgb[..., 1] = v16 & 255
-                base = f'v{vi:03d}'; Image.fromarray(rgb).save(os.path.join(out, folder, base + '-depth.png'), optimize=True)
-                kk = min(1.0, 1152 / max(W, H)); im.resize((round(W * kk), round(H * kk)), Image.LANCZOS).save(os.path.join(out, folder, base + '.webp'), quality=76, method=6)
-                z = 1 / np.maximum(float(ab[0]) * dn + float(ab[1]), 1e-4)
-                metas.append({'src': base + '.webp', 'depth': base + '-depth.png', 'w': W, 'h': H, 'f': round(v['f'] * I['sx'], 2), 'cx': round(v['cx'] * I['sx'], 2), 'cy': round(v['cy'] * I['sy'], 2), 'A': float(ab[0]), 'B': float(ab[1]),
-                              'm': [round(float(x), 5) for x in M.T.flatten()], 'zmed': round(float(np.median(z)), 2), 'znear': round(float(np.percentile(z, 4)), 2), 'from': v['name']})
-                if namer: logit[c] = namer(v['name'])
-            cams = []
-            for p, f, trio in zip(seg['pos'][i:j], seg['fwd'][i:j], near3[i:j]):
-                x = np.cross(down, f); x /= np.linalg.norm(x); y = np.cross(f, x); M = np.eye(4); M[:3, :3] = FM @ np.stack([x, y, f], 1) @ FM; M[:3, 3] = FM @ p
-                cams.append({'m': [round(float(x), 5) for x in M.T.flatten()], 'v': used.index(trio[0])})
-            chapters = room_names([logit[trio[0]] for trio in near3[i:j]]) if namer else []
-            json.dump({'views': metas, 'cams': cams, 'chapters': chapters}, open(os.path.join(out, folder, 'walk.json'), 'w'))
-            tour.append({'dir': folder, 'name': opt.get('name', 'walk'), 'photos': len(metas)}); print(f"{folder}: {len(cams) * STEP:.0f} units of walk, {len(metas)} frames, rooms: {[c['label'] for c in chapters]}", flush=True)
+        if (j - i) * STEP >= 3.0: walks.append((i, j))
         i = j
+    if not walks: continue
+    i0, j0 = walks[0][0], walks[-1][1]; rush = np.ones(len(good))
+    for i, j in walks: rush[i:j] = 0
+    rush = gauss(rush[:, None], 0.35 / STEP)[:, 0]
+    used = []
+    for trio in near3[i0:j0]:
+        for c in trio:
+            if c not in used: used.append(c)
+    folder = f"{len(tour) + 1:02d}-{opt.get('name', 'walk')}"; os.makedirs(os.path.join(out, folder)); metas, logit = [], {}
+    for vi, c in enumerate(used):
+        v, I = V[c], info[c]; im = Image.open(os.path.join(photos, v['name'])).convert('RGB'); W, H, dn, ab = I['W'], I['H'], I['dn'], I['ab']
+        M = np.eye(4); M[:3, :3] = FM @ v['R'].T @ FM; M[:3, 3] = FM @ P[c]
+        hh, ww = dn.shape; dw = 320 if ww >= hh else 240; small = blur(np.asarray(Image.fromarray(dn, mode='F').resize((dw, round(dw * hh / ww)), Image.BILINEAR), np.float32))
+        v16 = np.clip(small * 65535, 0, 65535).astype(np.uint16); rgb = np.zeros(v16.shape + (3,), np.uint8); rgb[..., 0] = v16 >> 8; rgb[..., 1] = v16 & 255
+        base = f'v{vi:03d}'; buf = io.BytesIO(); Image.fromarray(rgb).save(buf, 'PNG', optimize=True); pack = f'depth-{vi // 12:02d}.png'; at = [os.path.getsize(os.path.join(out, folder, pack)) if vi % 12 else 0, buf.tell()]
+        open(os.path.join(out, folder, pack), 'ab' if vi % 12 else 'wb').write(buf.getvalue())          # the depth pictures travel twelve to a file, one after another
+        kk = min(1.0, 1152 / max(W, H)); im.resize((round(W * kk), round(H * kk)), Image.LANCZOS).save(os.path.join(out, folder, base + '.webp'), quality=76, method=6)
+        z = 1 / np.maximum(float(ab[0]) * dn + float(ab[1]), 1e-4)
+        metas.append({'src': base + '.webp', 'depth': pack, 'at': at, 'w': W, 'h': H, 'f': round(v['f'] * I['sx'], 2), 'cx': round(v['cx'] * I['sx'], 2), 'cy': round(v['cy'] * I['sy'], 2), 'A': float(ab[0]), 'B': float(ab[1]),
+                      'm': [round(float(x), 5) for x in M.T.flatten()], 'zmed': round(float(np.median(z)), 2), 'znear': round(float(np.percentile(z, 4)), 2), 'from': v['name']})
+        if namer: logit[c] = namer(v['name'])
+    cams = []
+    for p, f, trio, r_ in zip(seg['pos'][i0:j0], seg['fwd'][i0:j0], near3[i0:j0], rush[i0:j0]):
+        x = np.cross(down, f); x /= np.linalg.norm(x); y = np.cross(f, x); M = np.eye(4); M[:3, :3] = FM @ np.stack([x, y, f], 1) @ FM; M[:3, 3] = FM @ p
+        cams.append({'m': [round(float(x), 5) for x in M.T.flatten()], 'v': used.index(trio[0]), **({'r': round(float(r_), 2)} if r_ > 0.005 else {})})
+    chapters = room_names([logit[trio[0]] for trio in near3[i0:j0]]) if namer else []
+    json.dump({'views': metas, 'cams': cams, 'chapters': chapters}, open(os.path.join(out, folder, 'walk.json'), 'w'))
+    tour.append({'dir': folder, 'name': opt.get('name', 'walk'), 'photos': len(metas)}); print(f"{folder}: {len(cams) * STEP:.0f} units of path ({float(np.sum(rush[i0:j0] < 0.5)) * STEP:.0f} walked, the rest crossed at speed), {len(metas)} frames, rooms: {[c['label'] for c in chapters]}", flush=True)
 json.dump(tour, open(os.path.join(out, 'tour.json'), 'w'), indent=1)
 if not tour: print('\nNo stretch of the footage gave a clean walk, so nothing was written. See the note above about the footage.')
 else: print(f'\nwritten to {out}. Room names found along the walk are captioned by the site; give them words under "rooms" in site.config.js.')

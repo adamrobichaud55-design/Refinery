@@ -13,6 +13,8 @@ import * as THREE from 'three';
 
 const clamp01 = v => Math.min(1, Math.max(0, v)), smooth = v => v * v * (3 - 2 * v);
 const HANDOVER = 0.7;                      // how much of each room's walk is shared with the next one (in path units)
+const STREAK = 0.9;                        // how long the motion streak on a bridge is, as a share of the picture's movement over the next step
+const RUSH = 0.72;                         // how much shorter a bridge between rooms is made: it passes about 3.5 times faster than the walk
 const TURN = 1.2;                          // how much walking one radian of turning counts for, when pacing the walk
 
 window.Walk3D = function (opt) {
@@ -35,11 +37,17 @@ window.Walk3D = function (opt) {
         gl_FragColor = vec4(ab * cover + (1.0 - cover) * ca * C.rgb / max(C.a, 0.001), all); }` });
   // What no photograph shows (a sliver behind a door frame, say) is not left dark: it takes the colours around it,
   // from softer and softer copies of the picture, so a gap reads as a patch of wall and not as a hole.
-  const heal = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { j: { value: rtJ.texture }, audit: join.uniforms.audit, bg: join.uniforms.bg },
-    fragmentShader: `uniform sampler2D j; uniform float audit; uniform vec3 bg; varying vec2 v;
-      void main(){ vec4 s = texture2D(j, v); if (audit > 0.5) { gl_FragColor = s; return; }
-        for (int l = 1; l < 9; l++) { if (s.a > 0.995) break; s += (1.0 - s.a) * textureLod(j, v, float(l)); }
-        gl_FragColor = vec4(s.rgb + (1.0 - clamp(s.a, 0.0, 1.0)) * bg, 1.0); }` });
+  const heal = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { j: { value: rtJ.texture }, audit: join.uniforms.audit, bg: join.uniforms.bg, streak: { value: new THREE.Vector3() } },
+    // On a bridge between rooms the picture is also streaked along the camera's own motion (sideways for a turn, outwards
+    // from the middle for travel forwards), as a fast camera move is on film; it hides what the thin coverage there cannot show.
+    fragmentShader: `uniform sampler2D j; uniform float audit; uniform vec3 bg, streak; varying vec2 v;
+      vec4 healed(vec2 uv, float lod){ vec4 s = textureLod(j, uv, lod); for (int l = 1; l < 9; l++) { if (s.a > 0.995) break; s += (1.0 - s.a) * textureLod(j, uv, lod + float(l)); } return s; }
+      void main(){ if (audit > 0.5) { gl_FragColor = texture2D(j, v); return; }
+        vec2 along = streak.xy + (v - 0.5) * streak.z; float len = length(along); along *= min(1.0, 0.07 / max(len, 1e-5));       // never more than a short streak: the rooms must stay readable
+        float px = length(along * vec2(textureSize(j, 0))); vec4 s;
+        if (px < 1.0) s = healed(v, 0.0);
+        else { float lod = clamp(log2(px / 12.0), 0.0, 5.0); s = vec4(0.0); for (int i = 0; i < 13; i++) s += healed(clamp(v + along * (float(i) / 12.0 - 0.5), 0.0, 1.0), lod); s /= 13.0; }
+        gl_FragColor = vec4(mix(bg, s.rgb / max(s.a, 0.001), smoothstep(0.0, 0.06, s.a)), 1.0); }` });       // a wide gap takes the average colour around it, not the dark ground
   // one room giving way to the next: the next room opens out of the middle of the view
   const cross = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { x: { value: rtX.texture }, y: { value: rtY.texture }, t: { value: 0 }, aspect: { value: 1 } },
     fragmentShader: `uniform sampler2D x, y; uniform float t, aspect; varying vec2 v;
@@ -59,10 +67,11 @@ window.Walk3D = function (opt) {
     if (planned) {
       const keys = r.walk.cams.map(c => { const m = new THREE.Matrix4().fromArray(c.m); return { p: new THREE.Vector3().setFromMatrixPosition(m), q: new THREE.Quaternion().setFromRotationMatrix(m) }; });
       for (let k = 1; k < keys.length; k++) if (keys[k].q.dot(keys[k - 1].q) < 0) keys[k].q.set(-keys[k].q.x, -keys[k].q.y, -keys[k].q.z, -keys[k].q.w);
-      const cum = [0]; for (let k = 1; k < keys.length; k++) cum.push(cum[k - 1] + Math.max(0.02, keys[k].p.distanceTo(keys[k - 1].p) + TURN * keys[k].q.angleTo(keys[k - 1].q)));
+      // parts of the path marked "r" are bridges between rooms: the camera crosses them at several times walking pace
+      const rush = r.walk.cams.map(c => c.r || 0), cum = [0]; for (let k = 1; k < keys.length; k++) cum.push(cum[k - 1] + Math.max(0.02, keys[k].p.distanceTo(keys[k - 1].p) + TURN * keys[k].q.angleTo(keys[k - 1].q)) * (1 - RUSH * (rush[k] + rush[k - 1]) / 2));
       // the view is kept well inside what one frame covers, so that a frame turned a little differently still fills it
       const at = r.walk.cams.map(c => c.v);
-      return { views, keys, cum, len: cum[cum.length - 1], tw: Math.min(...views.map(V => V.tw)) * (opt.marginX || 0.62), th: Math.min(...views.map(V => V.th)) * (opt.marginY || 0.8), centre: seg => at[Math.min(at.length - 1, seg)], reach: 4, chapters: r.walk.chapters || [], name: r.name };
+      return { views, keys, cum, len: cum[cum.length - 1], tw: Math.min(...views.map(V => V.tw)) * (opt.marginX || 0.62), th: Math.min(...views.map(V => V.th)) * (opt.marginY || 0.8), centre: seg => at[Math.min(at.length - 1, seg)], reach: 6, rush, chapters: r.walk.chapters || [], name: r.name };
     }
     const keys = views.map(V => ({ p: V.pos.clone(), q: V.quat.clone() })), L = views[views.length - 1], d = L.d, far = d.far || [0.5, 0.5];
     const toFar = new THREE.Vector3((far[0] * d.w - d.cx) / d.f, -(far[1] * d.h - d.cy) / d.f, -1).normalize(), zmed = d.zmed || 3;
@@ -84,20 +93,27 @@ window.Walk3D = function (opt) {
   function rawPose(room, s, p, q) {
     const K = room.keys, n = K.length; s = Math.min(room.len, Math.max(0, s)); let k = 0; while (k < n - 2 && s > room.cum[k + 1]) k++;
     const u = (s - room.cum[k]) / (room.cum[k + 1] - room.cum[k]), a = K[Math.max(0, k - 1)].p, b = K[k].p, c = K[k + 1].p, d = K[Math.min(n - 1, k + 2)].p;
-    p.set(cr(a.x, b.x, c.x, d.x, u), cr(a.y, b.y, c.y, d.y, u), cr(a.z, b.z, c.z, d.z, u)); q.slerpQuaternions(K[k].q, K[k + 1].q, u); return k;
+    p.set(cr(a.x, b.x, c.x, d.x, u), cr(a.y, b.y, c.y, d.y, u), cr(a.z, b.z, c.z, d.z, u)); q.slerpQuaternions(K[k].q, K[k + 1].q, u); lastU = u; return k;
   }
   /** the pose the camera actually takes: the raw one averaged over a short stretch, so that speed and turning never change abruptly */
-  const tp = new THREE.Vector3(), tq = new THREE.Quaternion(), ref = new THREE.Quaternion();
+  const tp = new THREE.Vector3(), tq = new THREE.Quaternion(), ref = new THREE.Quaternion(); let lastU = 0;
   function pose(room, s) {
-    const acc = new THREE.Vector3(), qa = [0, 0, 0, 0]; let ws = 0, seg = 0;
-    for (let i = -4; i <= 4; i++) { const w = Math.exp(-(i * i) / 6), k = rawPose(room, s + i * 0.12, tp, tq); if (i === 0) { seg = k; ref.copy(tq); } acc.addScaledVector(tp, w); const sg = i < 0 || i > 0 ? Math.sign(tq.dot(ref) || 1) : 1; qa[0] += w * sg * tq.x; qa[1] += w * sg * tq.y; qa[2] += w * sg * tq.z; qa[3] += w * sg * tq.w; ws += w; }
-    return { p: acc.multiplyScalar(1 / ws), q: new THREE.Quaternion(qa[0], qa[1], qa[2], qa[3]).normalize(), seg };
+    const acc = new THREE.Vector3(), qa = [0, 0, 0, 0]; let ws = 0, seg = 0, u0 = 0;
+    for (let i = -4; i <= 4; i++) { const w = Math.exp(-(i * i) / 6), k = rawPose(room, s + i * 0.12, tp, tq); if (i === 0) { seg = k; u0 = lastU; ref.copy(tq); } acc.addScaledVector(tp, w); const sg = i < 0 || i > 0 ? Math.sign(tq.dot(ref) || 1) : 1; qa[0] += w * sg * tq.x; qa[1] += w * sg * tq.y; qa[2] += w * sg * tq.z; qa[3] += w * sg * tq.w; ws += w; }
+    const R = room.rush, rush = R ? R[seg] + (R[Math.min(R.length - 1, seg + 1)] - R[seg]) * clamp01(u0) : 0;
+    return { p: acc.multiplyScalar(1 / ws), q: new THREE.Quaternion(qa[0], qa[1], qa[2], qa[3]).normalize(), seg, rush };
   }
 
+  // depth pictures may come several to a file ("at" says where in it): the file is fetched once and each picture cut out of it
+  const packs = new Map();
+  async function packed(url, at) {
+    if (!packs.has(url)) { packs.set(url, fetch(url).then(r => { if (!r.ok) throw new Error(url + ' ' + r.status); return r.arrayBuffer(); })); packs.get(url).catch(() => packs.delete(url)); if (packs.size > 6) packs.delete(packs.keys().next().value); }
+    const u = URL.createObjectURL(new Blob([(await packs.get(url)).slice(at[0], at[0] + at[1])], { type: 'image/png' })); try { return await img(u); } finally { URL.revokeObjectURL(u); }
+  }
   async function load(V) {
     if (V.state) return; V.state = 'loading';
     try {
-      const d = V.d, [photo, dimg] = await Promise.all([img(V.base + d.src), img(V.base + d.depth)]); if (V.state !== 'loading') return;
+      const d = V.d, [photo, dimg] = await Promise.all([img(V.base + d.src), d.at ? packed(V.base + d.depth, d.at) : img(V.base + d.depth)]); if (V.state !== 'loading') return;
       const c = document.createElement('canvas'); c.width = dimg.naturalWidth; c.height = dimg.naturalHeight; const cx = c.getContext('2d', { willReadFrequently: true }); cx.drawImage(dimg, 0, 0);
       const D = cx.getImageData(0, 0, c.width, c.height).data, dw = c.width, dh = c.height;
       const near = (u, v) => { const x = clamp01(u) * (dw - 1), y = clamp01(v) * (dh - 1), x0 = Math.floor(x), y0 = Math.floor(y), x1 = Math.min(dw - 1, x0 + 1), y1 = Math.min(dh - 1, y0 + 1), fx = x - x0, fy = y - y0, g = (X, Y) => (D[(Y * dw + X) * 4] * 256 + D[(Y * dw + X) * 4 + 1]) / 65535; return (g(x0, y0) * (1 - fx) + g(x1, y0) * fx) * (1 - fy) + (g(x0, y1) * (1 - fx) + g(x1, y1) * fx) * fy; };
@@ -142,6 +158,11 @@ window.Walk3D = function (opt) {
     renderer.setRenderTarget(rtC); renderer.clear(); show([...new Set([A, B, ...others])].map(V => V.whole)); renderer.render(scene, camera);
     if (others.length) { renderer.clearDepth(); show(others.map(V => V.cut)); renderer.render(scene, camera); }
     scene.clear(); join.uniforms.w.value = wA + wB > 0 ? wB / (wA + wB) : 0; quad.material = join; renderer.setRenderTarget(rtJ); renderer.render(quadScene, quadCam);
+    // how the picture moves over the next short step of the path, for the streak on a bridge
+    if (c.rush > 0.01 && !join.uniforms.audit.value) {
+      const n = pose(room, s + 0.1), inv = c.q.clone().invert(), fw = new THREE.Vector3(0, 0, -1).applyQuaternion(inv.clone().multiply(n.q)), dp = n.p.clone().sub(c.p).applyQuaternion(inv), k = (opt.streak ?? STREAK) * c.rush;
+      heal.uniforms.streak.value.set((fw.x / -fw.z / (dh * a)) * 0.5 * k, (fw.y / -fw.z / dh) * 0.5 * k, (-dp.z / 3) * k);
+    } else heal.uniforms.streak.value.set(0, 0, 0);
     quad.material = heal; renderer.setRenderTarget(target); renderer.render(quadScene, quadCam); return true;
   }
   /** the picture at point x of the whole tour */

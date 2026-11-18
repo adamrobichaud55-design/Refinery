@@ -10,10 +10,9 @@
 //
 // --report saves the measurements; --from reuses saved ones instead of measuring again (the measuring takes minutes).
 //
-// Serve the scroll-sites folder first (python3 -m http.server 5197). Without --fix it only reports. With --fix every
-// stretch is cut down to its clean runs of at least --min camera positions: walk.json keeps the first run, further
-// runs become walk-2.json, walk-3.json ... beside it, and walk/tour.json lists them in order. Run it again afterwards
-// to see the result; a clean tour reports nothing to trim.
+// Serve the scroll-sites folder first (python3 -m http.server 5197). Without --fix it only reports. With --fix the
+// broken parts in the middle of a stretch are marked as bridges, which the site crosses at speed with the picture
+// streaked by the motion, and broken parts at either end are cut off. Run it again afterwards to see the result.
 import { createRequire } from 'node:module';
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
@@ -28,6 +27,8 @@ const walkDir = resolve(dirname(fileURLToPath(import.meta.url)), '..', site, 'wa
 const tour = JSON.parse(readFileSync(tourFile, 'utf8'));
 
 let bare, hole;
+// positions already marked as bridges are not measured: they are crossed at speed whatever they show
+const bridge = tour.map(t => (JSON.parse(readFileSync(resolve(walkDir, t.dir, t.file || 'walk.json'), 'utf8')).cams || []).map(c => (c.r || 0) >= 0.5));
 if (opt.from) { const saved = JSON.parse(readFileSync(opt.from, 'utf8')); bare = saved.patched; hole = saved.hole; if (bare.length !== tour.length || bare.some((b, k) => !tour[k])) { console.error('the saved measurements are for a different tour'); process.exit(1); } }
 else {
   const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl'] });
@@ -39,7 +40,7 @@ else {
   for (const [w, h] of [[270, 480], [480, 300]]) {
     await page.setViewportSize({ width: w, height: h }); await page.waitForTimeout(600);
     for (let k = 0; k < plan.length; k++) {
-      for (let j = 0; j < plan[k]; j++) { const a = await page.evaluate(([k, j]) => window.tour.audit(k, j), [k, j]); bare[k][j] = Math.max(bare[k][j], a.patched); hole[k][j] = Math.max(hole[k][j], a.hole); }
+      for (let j = 0; j < plan[k]; j++) { if (bridge[k][j]) continue; const a = await page.evaluate(([k, j]) => window.tour.audit(k, j), [k, j]); bare[k][j] = Math.max(bare[k][j], a.patched); hole[k][j] = Math.max(hole[k][j], a.hole); }
       console.log(`${w}x${h}  ${tour[k].dir}/${tour[k].file || 'walk.json'}: worst ${(Math.max(...bare[k]) * 100).toFixed(1)}% patched, ${(Math.max(...hole[k]) * 100).toFixed(1)}% shown by no photograph`);
     }
   }
@@ -47,23 +48,24 @@ else {
 }
 if (opt.report) writeFileSync(opt.report, JSON.stringify({ tour, patched: bare, hole }));
 
-// the clean runs of each stretch: a position is clean when it and its neighbours stay under the limit
-const out = []; let trimmed = 0;
+// Each stretch is sorted into parts to walk and parts to cross quickly. A position is broken when it or a neighbour is
+// over a limit; a clean run shorter than --min positions is not worth slowing down for. Broken parts in the middle
+// become bridges (the site crosses them at speed, streaked by the motion); broken parts at either end are cut off.
+const out = []; let changed = 0;
 for (const [k, t] of tour.entries()) {
-  const n = bare[k].length, bad = bare[k].map((v, j) => v > LIMIT || hole[k][j] > HOLE), ok = bad.map((v, j) => !(bad[Math.max(0, j - 1)] || v || bad[Math.min(n - 1, j + 1)])), runs = [];
-  for (let j = 0; j < n; j++) if (ok[j]) { let e = j; while (e + 1 < n && ok[e + 1]) e++; if (e - j + 1 >= MIN) runs.push([j, e]); j = e; }
-  const kept = runs.reduce((s, r) => s + r[1] - r[0] + 1, 0); trimmed += n - kept;
-  console.log(`${t.dir}/${t.file || 'walk.json'}: ${n} positions, ${kept} clean` + (kept < n ? `, keeping ${runs.map(r => r.join('-')).join(', ') || 'nothing'}` : ''));
-  if (!opt.fix) continue;
-  const src = resolve(walkDir, t.dir, t.file || 'walk.json'), walk = JSON.parse(readFileSync(src, 'utf8'));
-  if (!walk.cams) { out.push(t); continue; }                       // a room walked from photograph to photograph has no planned path to trim
-  for (const [i, [a, e]] of runs.entries()) {
-    const file = i === 0 ? (t.file || 'walk.json') : (t.file || 'walk.json').replace(/\.json$/, '') + `-${i + 1}.json`;
-    const chapters = (walk.chapters || []).filter(c => c.to >= a && c.from <= e).map(c => ({ ...c, from: Math.max(c.from, a) - a, to: Math.min(c.to, e) - a }));
-    for (let c = chapters.length - 1; c >= 0 && chapters.length > 1; c--) if (chapters[c].to - chapters[c].from < 4) { if (c > 0) chapters[c - 1].to = chapters[c].to; else chapters[1].from = chapters[0].from; chapters.splice(c, 1); }   // a room name left with only a moment on screen joins its neighbour
-    writeFileSync(resolve(walkDir, t.dir, file), JSON.stringify({ ...walk, cams: walk.cams.slice(a, e + 1), chapters }));
-    out.push({ ...t, ...(file === 'walk.json' ? {} : { file }) });
-  }
+  const src = resolve(walkDir, t.dir, t.file || 'walk.json'), walk = JSON.parse(readFileSync(src, 'utf8')), n = bare[k].length;
+  if (!walk.cams) { out.push(t); continue; }                       // a room walked from photograph to photograph has no planned path
+  const was = walk.cams.map(c => (c.r || 0) >= 0.5), bad = bare[k].map((v, j) => !was[j] && (v > LIMIT || hole[k][j] > HOLE));
+  const fast = was.map((v, j) => v || bad[Math.max(0, j - 1)] || bad[j] || bad[Math.min(n - 1, j + 1)]);
+  for (let j = 0; j < n; j++) if (!fast[j]) { let e = j; while (e + 1 < n && !fast[e + 1]) e++; if (e - j + 1 < MIN) for (let i = j; i <= e; i++) fast[i] = true; j = e; }
+  const a = fast.indexOf(false), e = fast.lastIndexOf(false), added = fast.filter((v, j) => v && !was[j]).length; changed += added;
+  console.log(`${t.dir}/${t.file || 'walk.json'}: ${n} positions, ${bad.filter(Boolean).length} newly broken` + (a < 0 ? ', nothing left to walk' : `; walking ${fast.filter(v => !v).length}, crossing ${fast.slice(a, e + 1).filter(Boolean).length} at speed, cutting ${a + n - 1 - e} from the ends`));
+  if (!opt.fix || a < 0) { if (a >= 0 || !opt.fix) out.push(t); continue; }
+  const soft = fast.map((v, j) => [-2, -1, 0, 1, 2].reduce((sum, d, i) => sum + [1, 2, 3, 2, 1][i] * (fast[Math.min(n - 1, Math.max(0, j + d))] ? 1 : 0), 0) / 9);      // the pace changes gradually
+  const cams = walk.cams.slice(a, e + 1).map((c, i) => { const { r, ...rest } = c, v = Math.round(Math.max(r || 0, soft[a + i]) * 100) / 100; return v > 0.005 ? { ...rest, r: v } : rest; });
+  const chapters = (walk.chapters || []).filter(c => c.to >= a && c.from <= e).map(c => ({ ...c, from: Math.max(c.from, a) - a, to: Math.min(c.to, e) - a }));
+  for (let c = chapters.length - 1; c >= 0 && chapters.length > 1; c--) if (chapters[c].to - chapters[c].from < 4) { if (c > 0) chapters[c - 1].to = chapters[c].to; else chapters[1].from = chapters[0].from; chapters.splice(c, 1); }   // a room name left with only a moment on screen joins its neighbour
+  writeFileSync(src, JSON.stringify({ ...walk, cams, chapters })); out.push(t);
 }
-if (opt.fix) { writeFileSync(tourFile, JSON.stringify(out)); console.log(trimmed ? `trimmed ${trimmed} positions; ${out.length} stretches remain. Run the check again to confirm.` : 'nothing to trim'); }
-else console.log(trimmed ? `${trimmed} positions would be trimmed with --fix` : 'the tour is clean');
+if (opt.fix) { writeFileSync(tourFile, JSON.stringify(out)); console.log(changed ? `${changed} more positions are now crossed at speed or cut. Run the check again to confirm.` : 'nothing to change'); }
+else console.log(changed ? `${changed} positions would be changed with --fix` : 'the tour is clean');
