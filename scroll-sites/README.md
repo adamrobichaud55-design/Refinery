@@ -59,6 +59,6 @@ The fonts are Google Fonts under the Open Font License.
 
 ```
 node ../smartweld/node_modules/vite/bin/vite.js --config studio/vite.config.mjs &     # the studio page
-cd studio && node capture.mjs frames house land && node capture.mjs frames house port   # render (about 20 minutes each)
+cd studio && node capture.mjs frames house land && node capture.mjs frames house port   # render (about 20 minutes each; the car lot is "carlot", its stock photos "carcard card")
 cd .. && node tools/pack-frames.mjs home-services --land studio/out/house-land --port studio/out/house-port
 ```
