@@ -7,7 +7,7 @@ complete site: copy it to any web host and it works. Nothing needs installing or
 | --- | --- |
 | `home-services/` | A heating, plumbing, electrical, roofing or building firm. The film opens up a model house and lights each system in turn. |
 | `car-dealer/` | A used-car lot. The film flies over the forecourt at dusk to three featured cars, then a car finder, a two-car comparison, a monthly-payment sum and the stock. |
-| `property-listing/` | One house for sale, for an estate agent. The address and price over the film, then facts, photographs, rooms, a mortgage estimate and a viewing form. |
+| `property-listing/` | One house for sale, for an estate agent. Its film is made from photographs (here, twelve original pictures of the model house, in `originals/`), then facts, the gallery, rooms, a mortgage estimate and a viewing form. |
 | `holiday-rental/` | A holiday home, for a host who wants direct bookings beside (or instead of) a platform listing. The film, then facts, photographs and a calendar that blocks booked nights and prices any free dates. |
 
 `demos/` holds mock-ups made for a named business to show them what their site could be. Each says "Concept design" on
@@ -64,6 +64,7 @@ The fonts are Google Fonts under the Open Font License.
 
 ```
 node ../smartweld/node_modules/vite/bin/vite.js --config studio/vite.config.mjs &     # the studio page
+cd studio && node capture.mjs frames housephotos photo                                    # the twelve listing pictures
 cd studio && node capture.mjs frames house land && node capture.mjs frames house port   # render (about 20 minutes each; the car lot is "carlot", its stock photos "carcard card")
 cd .. && node tools/pack-frames.mjs home-services --land studio/out/house-land --port studio/out/house-port
 ```

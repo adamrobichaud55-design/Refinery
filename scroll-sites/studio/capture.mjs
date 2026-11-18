@@ -1,13 +1,13 @@
 // Renders a scene's frames with a headless browser.
 //   node capture.mjs stills house land 0 60 120      chosen frames to out/stills/
 //   node capture.mjs frames house land               every frame to out/<scene>-<set>/f0000.png, and anchors.json beside them
-// Sets: land = 1440x810, port = 810x1440, card = 720x450 (stock photos). Start the studio first: node ../../smartweld/node_modules/vite/bin/vite.js --config vite.config.mjs
+// Sets: land = 1440x810, port = 810x1440, card = 720x450 (stock photos), photo = 1620x1080 (listing photographs). Start the studio first: node ../../smartweld/node_modules/vite/bin/vite.js --config vite.config.mjs
 import { createRequire } from 'node:module';
 import { mkdirSync, writeFileSync, existsSync } from 'node:fs';
 const require = createRequire('/opt/node-tools/node_modules/');
 const { chromium } = require('playwright');
 const [mode = 'stills', scene = 'house', set = 'land', ...rest] = process.argv.slice(2);
-const [W, H] = set === 'port' ? [810, 1440] : set === 'card' ? [720, 450] : [1440, 810];
+const [W, H] = set === 'port' ? [810, 1440] : set === 'card' ? [720, 450] : set === 'photo' ? [1620, 1080] : [1440, 810];
 const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl'] });
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
 page.on('pageerror', e => console.error('PAGE ERROR', e.message)); page.on('console', m => { if (m.type() === 'error') console.error('console:', m.text()); });

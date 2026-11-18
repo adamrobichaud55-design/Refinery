@@ -179,6 +179,6 @@ export function build({ THREE, portrait, aspect }) {
     const [turn, tilt, dist, ty] = camAt(f), th = (turn * Math.PI) / 180, ph = (tilt * Math.PI) / 180, r = dist * (portrait ? 1.2 : 1);
     camera.position.set(CX + r * Math.sin(th) * Math.cos(ph), ty + r * Math.sin(ph), 0.5 + r * Math.cos(th) * Math.cos(ph)); camera.lookAt(CX, ty, 0.5); camera.updateMatrixWorld();
   }
-  return { scene, camera, frames: FRAMES, apply, bloom: { strength: 0.42, radius: 0.55, threshold: 0.92 },
+  return { scene, camera, frames: FRAMES, apply, bloom: { strength: 0.42, radius: 0.55, threshold: 0.92 }, parts: { G0, G1, glassM, glow, porch, box, cyl, add, M },
     anchors: { furnace: at(furnace, 0.9), condenser: at(cond, 0.5), heater: at(heater, 0.8), sink: at(sink), bath: at(tub, 0.3), panel: at(panel, 0.4), door: () => wp.set(1.5, 1.3, 3.6), ridge: () => wp.set(0, ROOF.position.y + rise + 0.3, 0), van: at(van, 2.1) } };
 }

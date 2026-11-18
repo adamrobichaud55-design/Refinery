@@ -19,12 +19,14 @@
   $('rail').innerHTML = S.chapters.map(c => `<li style="--dot:${esc(c.color || S.accent)}">${esc(c.label)}</li>`).join('');
   const panelEls = [...$('panels').children], calloutEls = [...$('callouts').children], railEls = [...$('rail').children];
   const vis = (c, f) => { const [a, b] = c.frames, e = 5; return c.hero ? Math.min(1, Math.max(0, (b - f) / e)) : Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e))); };
+  const COVER = !!(S.film && S.film.fit === 'cover'); if (COVER) $('stage').classList.add('photo');
   const stage = $('stage'), bg = getComputedStyle(root).getPropertyValue('--bg').trim() || '#010205';
   stage.style.backgroundImage = `url(frames/poster-${innerHeight > innerWidth * 1.05 ? 'port' : 'land'}.jpg)`;
   window.ScrollFilm({
     canvas: $('filmCanvas'), section: $('film'), base: 'frames/', bg,
-    scale: o => (o.portrait ? Math.min(o.cover, (o.width / o.w) * 1.12) : Math.min(o.cover, (o.width / o.w) * 0.88, (o.height / o.h) * 1.05)),
-    shift: (portrait, w) => (portrait ? [0, 0.045] : [w > 820 ? 0.13 : 0, 0.02]),
+    // a film made from photographs fills the screen; the model-house film floats beside the words
+    scale: o => (COVER ? o.cover : o.portrait ? Math.min(o.cover, (o.width / o.w) * 1.12) : Math.min(o.cover, (o.width / o.w) * 0.88, (o.height / o.h) * 1.05)),
+    shift: (portrait, w) => (COVER ? [0, 0] : portrait ? [0, 0.045] : [w > 820 ? 0.13 : 0, 0.02]),
     onUpdate(u) {
       chapters.forEach((c, i) => { const o = vis(c, u.frame), el = panelEls[i]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); });
       S.chapters.forEach((c, i) => railEls[i].classList.toggle('on', u.frame >= c.frames[0] - 4 && u.frame <= c.frames[1] + 2));
@@ -37,7 +39,7 @@
   $('facts').innerHTML = `<div class="in"><div class="head"><span class="label">${esc(L.status)}</span><h2>${esc(L.address)}, <i>${esc(L.town)}</i></h2></div>
     <div class="facts">${L.facts.map(f => `<div><b>${esc(f[0])}</b><span>${esc(f[1])}</span></div>`).join('')}</div>
     <div class="about"><div class="text">${L.description.map(p => `<p>${esc(p)}</p>`).join('')}</div><ul class="ticks">${L.features.map(f => `<li>${esc(f)}</li>`).join('')}</ul></div></div>`;
-  $('gallery').innerHTML = `<div class="in"><div class="head"><span class="label">Photographs</span><h2>Take a look round</h2></div><div class="shots">${L.photos.map((p, i) => `<figure><img src="${esc(p)}" alt="${esc(L.address)}, photograph ${i + 1}" loading="lazy" width="960" height="600"></figure>`).join('')}</div><p class="sample">Sample pictures of a model house. Replace them with photographs of the property.</p></div>`;
+  $('gallery').innerHTML = `<div class="in"><div class="head"><span class="label">Photographs</span><h2>Take a look round</h2></div><div class="shots">${L.photos.map((p, i) => `<figure><img src="${esc(p)}" alt="${esc(L.address)}, photograph ${i + 1}" loading="lazy" width="960" height="600"></figure>`).join('')}</div>${L.photoNote ? `<p class="sample">${esc(L.photoNote)}</p>` : ''}</div>`;
   $('rooms').innerHTML = `<div class="in"><div class="head"><span class="label">Rooms</span><h2>Room by room</h2></div><table class="roomtable"><thead><tr><th scope="col">Room</th><th scope="col">Floor</th><th scope="col">Size</th></tr></thead><tbody>${L.rooms.map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td><td>${esc(r[2])}</td></tr>`).join('')}</tbody></table></div>`;
 
   // ---- the monthly cost ----

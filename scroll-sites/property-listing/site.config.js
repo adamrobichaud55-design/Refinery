@@ -1,6 +1,6 @@
 // One listing, one file. Everything the page says about the property and the agent is here: change it, save, done.
-// The figures and photos below are SAMPLES for a made-up address: replace them with the real listing's details
-// and the agent's own photographs (photos taken from a listings portal belong to someone else).
+// The figures below are SAMPLES for a made-up address, and the pictures are original 3D renders made for this
+// concept, so the whole demo is ours to show. For a real listing, put in its details and the agent's photographs.
 //
 // "frames" under each chapter says which part of the film that text belongs to (the film has 240 frames).
 window.SITE = {
@@ -19,7 +19,11 @@ window.SITE = {
     ],
     features: ['Ducted heat pump (2022)', 'Hot water tank (2023)', '200-amp electrical service', 'Attached single garage', 'Back patio, fully hedged garden', 'Paved drive for three cars'],
     rooms: [['Living room', 'Main', '18 × 14 ft'], ['Kitchen', 'Main', '14 × 12 ft'], ['Dining area', 'Main', '12 × 10 ft'], ['Primary bedroom', 'Upper', '15 × 13 ft'], ['Bedroom', 'Upper', '12 × 11 ft'], ['Bathroom', 'Upper', '10 × 7 ft']],
-    photos: ['photos/1.webp', 'photos/2.webp', 'photos/3.webp', 'photos/4.webp', 'photos/5.webp', 'photos/6.webp'],
+    // The photographs, in walk-through order. The same pictures make the film: after changing them, run
+    //   node tools/photos-to-film.mjs property-listing --photos property-listing/originals
+    photos: ['photos/01-front.webp', 'photos/04-living-room.webp', 'photos/07-kitchen.webp', 'photos/06-dining.webp', 'photos/05-living-to-kitchen.webp', 'photos/08-main-bedroom.webp', 'photos/09-second-bedroom.webp',
+      'photos/10-bathroom.webp', 'photos/03-front-door.webp', 'photos/11-back-patio.webp', 'photos/12-drive-garage.webp', 'photos/02-from-above.webp'],
+    photoNote: 'Original 3D pictures made for this concept. Replace them with photographs of the property.',
     openHouse: 'Open house Saturday, 2:00 to 4:00 pm',
     mapQuery: '12 Example Lane, Riverton',       // opens in the visitor's maps app
   },
@@ -30,12 +34,16 @@ window.SITE = {
 
   hero: { cta: 'Book a viewing', hint: 'Scroll to look inside' },
 
+  // The film is made from the photographs (12 of them, 20 frames each), so it fills the screen.
+  film: { fit: 'cover' },
+
   chapters: [
-    { id: 'inside', frames: [48, 86], label: 'Step inside', title: 'Two floors, lifted apart.', body: 'The main floor is open from the front window to the patio doors. Upstairs: the bedrooms and a full bath.' },
-    { id: 'heat', frames: [100, 126], label: 'Comfort', color: '#ff7a2e', title: 'Heat pump, new in 2022.', body: 'Ducted heating and cooling to every room on both floors.', callouts: [{ anchor: 'furnace', text: 'Air handler' }, { anchor: 'condenser', text: 'Heat pump' }] },
-    { id: 'water', frames: [136, 160], label: 'Water', color: '#39a8ff', title: 'New hot water tank, updated plumbing.', body: 'Replaced in 2023, with a full bath upstairs and a kitchen on the main floor.', callouts: [{ anchor: 'heater', text: 'Hot water tank · 2023' }] },
-    { id: 'power', frames: [171, 194], label: 'Power', color: '#ffd034', title: '200-amp service, ready for a car charger.', body: 'The panel is in the garage, where a charger would go.', callouts: [{ anchor: 'panel', text: '200-amp panel' }] },
-    { id: 'close', frames: [216, 240], label: 'See it', title: 'Lights on this Saturday.', body: 'Come to the open house, or book a private viewing at a time that suits.', cta: 'Book a viewing' },
+    { id: 'door', frames: [42, 58], label: 'Welcome', title: 'Step inside.', body: 'A covered porch, a wide front door and parking right outside.' },
+    { id: 'living', frames: [63, 97], label: 'Main floor', title: 'One open room, front to back.', body: 'The living room runs from the big front window through to the stairs and the kitchen.' },
+    { id: 'kitchen', frames: [103, 137], label: 'Kitchen and dining', title: 'The kitchen is the middle of the house.', body: 'An island with seating, and a table for six beside the garden doors.' },
+    { id: 'beds', frames: [143, 177], label: 'Upstairs', title: 'Quiet bedrooms under the roof.', body: 'The primary bedroom faces the garden. The second takes a double bed and a desk.' },
+    { id: 'bath', frames: [183, 197], label: 'Bathroom', title: 'A full bath upstairs.', body: 'Tub, vanity and a window for daylight.' },
+    { id: 'close', frames: [204, 240], label: 'See it', title: 'Lights on this Saturday.', body: 'Come to the open house, or book a private viewing at a time that suits.', cta: 'Book a viewing' },
   ],
 
   // The payment estimate. "semi-annual" compounding is the Canadian convention for fixed mortgages; use "monthly" elsewhere.
