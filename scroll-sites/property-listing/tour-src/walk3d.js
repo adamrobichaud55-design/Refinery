@@ -75,7 +75,9 @@ window.Walk3D = function (opt) {
       const cum = [0], pace = []; for (let k = 1; k < n; k++) { const w = 1 - ((rush[k] + rush[k - 1]) / 2) * (1 - (fac[k] + fac[k - 1]) / 2); pace.push(w); cum.push(cum[k - 1] + step(k) * w); }
       // the view is kept well inside what one frame covers, so that a frame turned a little differently still fills it
       const at = r.walk.cams.map(c => c.v);
-      return { views, keys, cum, len: cum[cum.length - 1], tw: Math.min(...views.map(V => V.tw)) * (opt.marginX || (r.walk.view || [])[0] || 0.62), th: Math.min(...views.map(V => V.th)) * (opt.marginY || (r.walk.view || [])[1] || 0.8), centre: seg => at[Math.min(at.length - 1, seg)], reach: 8, rush, pace, chapters: r.walk.chapters || [], name: r.name };
+      return { views, keys, cum, len: cum[cum.length - 1], tw: Math.min(...views.map(V => V.tw)) * (opt.marginX || (r.walk.view || [])[0] || 0.62), th: Math.min(...views.map(V => V.th)) * (opt.marginY || (r.walk.view || [])[1] || 0.8), centre: seg => at[Math.min(at.length - 1, seg)], reach: 8, rush, pace,
+        // the frames to have ready at a point of the path: the ones the builder says stand behind it and behind the points just before and after
+        want: r.walk.cams[0].n ? seg => { const set = new Set(); for (let k = Math.max(0, seg - 5); k <= Math.min(n - 1, seg + 8); k++) for (const i of r.walk.cams[k].n) set.add(i); return set; } : null, chapters: r.walk.chapters || [], name: r.name };
     }
     const keys = views.map(V => ({ p: V.pos.clone(), q: V.quat.clone() })), L = views[views.length - 1], d = L.d, far = d.far || [0.5, 0.5];
     const toFar = new THREE.Vector3((far[0] * d.w - d.cx) / d.f, -(far[1] * d.h - d.cy) / d.f, -1).normalize(), zmed = d.zmed || 3;
@@ -141,14 +143,14 @@ window.Walk3D = function (opt) {
   }
   function drop(V) { if (V.state !== 'ready') { if (V.state === 'loading') V.state = ''; return; } V.tex.dispose(); V.material.dispose(); V.cut.geometry.dispose(); V.whole.geometry.dispose(); V.cut = V.whole = V.tex = V.material = null; V.state = ''; }
   /** keep the photographs around stop i of a room in memory, and let go of the rest of that room */
-  function keep(room, i) { const want = []; for (const V of room.views) (V.i > i - room.reach && V.i <= i + room.reach ? (want.push(V), load) : drop)(V); return want; }
+  function keep(room, i) { const want = [], set = typeof i === 'object'; for (const V of room.views) ((set ? i.has(V.i) : V.i > i - room.reach && V.i <= i + room.reach) ? (want.push(V), load) : drop)(V); return want; }
 
   let W = 1, H = 1, cur = 0, dead = false, first = true, lastT = 0, shown = true;
   const scene = new THREE.Scene(), show = list => { scene.clear(); for (const m of list) scene.add(m); };
   function size() { const r = canvas.getBoundingClientRect(); W = Math.max(1, r.width); H = Math.max(1, r.height); const pr = Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 2); renderer.setPixelRatio(pr); renderer.setSize(W, H, false); for (const t of targets) t.setSize(Math.round(W * pr), Math.round(H * pr)); cross.uniforms.aspect.value = W / H; }
   /** the view from a distance s along one room's path, drawn into a target */
   function compose(room, s, target, strict) {
-    const c = pose(room, s), near = keep(room, room.centre(c.seg)), ready = near.filter(V => V.state === 'ready');
+    const c = pose(room, s), near = keep(room, room.want ? room.want(c.seg) : room.centre(c.seg)), ready = near.filter(V => V.state === 'ready');
     if (!ready.length || (strict && ready.length < near.length)) return false;
     camera.position.copy(c.p); camera.quaternion.copy(c.q); if (target !== rtX) rushNow = c.rush;
     const a = W / H, dh = Math.min(room.th, room.tw / a); camera.aspect = a; camera.fov = (2 * Math.atan(dh) * 180) / Math.PI; camera.updateProjectionMatrix(); camera.updateMatrixWorld();

@@ -346,7 +346,7 @@ for seg in stretches:
     cams = []
     for p, f, trio, r_ in zip(seg['pos'][i0:j0], seg['fwd'][i0:j0], near3[i0:j0], rush[i0:j0]):
         x = np.cross(down, f); x /= np.linalg.norm(x); y = np.cross(f, x); M = np.eye(4); M[:3, :3] = FM @ np.stack([x, y, f], 1) @ FM; M[:3, 3] = FM @ p
-        cams.append({'m': [round(float(x), 5) for x in M.T.flatten()], 'v': used.index(trio[0]), **({'r': round(float(r_), 2)} if r_ > 0.005 else {})})
+        cams.append({'m': [round(float(x), 5) for x in M.T.flatten()], 'v': used.index(trio[0]), 'n': [used.index(c) for c in trio], **({'r': round(float(r_), 2)} if r_ > 0.005 else {})})
     chapters = room_names([logit[trio[0]] for trio in near3[i0:j0]]) if namer else []
     json.dump({'views': metas, 'cams': cams, 'chapters': chapters, 'view': VIEW, 'backed': NEARN}, open(os.path.join(out, folder, 'walk.json'), 'w'))
     tour.append({'dir': folder, 'name': opt.get('name', 'walk'), 'photos': len(metas)}); print(f"{folder}: {len(cams) * STEP:.0f} units of path ({float(np.sum(rush[i0:j0] < 0.5)) * STEP:.0f} walked, the rest crossed at speed), {len(metas)} frames, rooms: {[c['label'] for c in chapters]}", flush=True)
