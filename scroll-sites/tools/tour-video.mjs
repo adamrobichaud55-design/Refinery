@@ -24,7 +24,7 @@ const smooth = v => v * v * (3 - 2 * v), track = (pts, x) => { if (x <= pts[0][0
 if (mode === 'stills') for (const f of pos) { await shoot(f, Number(opt.t ?? 0.42), `${out}/tour-${String(f).padStart(3, '0')}.png`); console.log('still', f); }
 else for (let i = 0; i < N; i++) {
   if (i % mod !== rem) continue; const path = `${out}/f${String(i).padStart(4, '0')}.png`; if (existsSync(path)) continue;
-  const u = i / (N - 1), f = top * track([[0, 0], [0.04, 0], [0.97, 1], [1, 1]], u);           // a short hold at each end
+  const u = i / (N - 1), f = top * track([[0, 0], [0.015, 0], [0.985, 1], [1, 1]], u);           // a short hold at each end
   await shoot(f, track([[0, 0.3], [100, 0.52], [160, 0.6], [200, 0.66], [240, 0.6]], f), path); if (i % 50 === 0) console.log(i, '/', N);
 }
 await browser.close();

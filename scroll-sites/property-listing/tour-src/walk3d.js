@@ -50,7 +50,7 @@ window.Walk3D = function (opt) {
     const push = Math.min(0.4 * (d.zto || zmed), 0.6 * zmed, 0.36 * (d.znear || zmed)) * (r.push || 1), look = new THREE.Quaternion().setFromUnitVectors(FWD, toFar), ang = 2 * Math.acos(Math.min(1, Math.abs(look.w)));
     keys.push({ p: L.pos.clone().add(toFar.clone().applyQuaternion(L.quat).multiplyScalar(push)), q: L.quat.clone().multiply(new THREE.Quaternion().slerp(look, ang > 0 ? Math.min(1, 0.09 / ang) : 0)) });
     for (let k = 1; k < keys.length; k++) if (keys[k].q.dot(keys[k - 1].q) < 0) keys[k].q.set(-keys[k].q.x, -keys[k].q.y, -keys[k].q.z, -keys[k].q.w);
-    const cum = [0]; for (let k = 1; k < keys.length; k++) cum.push(cum[k - 1] + Math.max(k < keys.length - 1 ? 0.35 : views.length === 1 ? 2.4 : 1.1, keys[k].p.distanceTo(keys[k - 1].p) + TURN * keys[k].q.angleTo(keys[k - 1].q)));   // the walk into a lone photograph, and the last steps of any room, are given time
+    const cum = [0]; for (let k = 1; k < keys.length; k++) cum.push(cum[k - 1] + Math.max(k < keys.length - 1 ? 0.35 : views.length === 1 ? 1.5 : 0.9, keys[k].p.distanceTo(keys[k - 1].p) + TURN * keys[k].q.angleTo(keys[k - 1].q)));   // the walk into a lone photograph, and the last steps of any room, are given time
     // one field of view for the whole room, inside what every photograph covers
     const m = opt.margin || 0.8, tw = Math.min(...views.map(V => V.tw)) * m, th = Math.min(...views.map(V => V.th)) * m;
     return { views, keys, cum, len: cum[cum.length - 1], tw, th };
