@@ -1,0 +1,7 @@
+<!doctype html><meta charset="utf-8"><title>walk dev</title>
+<style>html,body{margin:0;height:100%;background:#000}canvas{display:block;width:100vw;height:100vh}</style>
+<!-- Developer view of a reconstructed room: ?walk=bedroom loads ../walk/bedroom/walk.json. tour.render(frame) draws any point (0 to 239). -->
+<div id="s" style="height:100vh"><canvas id="c"></canvas></div>
+<script src="../photo3d.bundle.js"></script>
+<script>const q = new URLSearchParams(location.search), dir = '../walk/' + (q.get('walk') || 'bedroom') + '/';
+fetch(dir + 'walk.json').then(r => r.json()).then(walk => { if (q.get('path')) walk.path = q.get('path').split(',').map(Number); window.tour = Walk3D({ canvas: document.getElementById('c'), section: document.getElementById('s'), still: true, base: dir, walk, fill: q.get('fill') != null ? Number(q.get('fill')) : undefined }); window.ready = true; });</script>

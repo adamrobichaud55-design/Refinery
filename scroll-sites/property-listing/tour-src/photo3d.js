@@ -8,6 +8,7 @@
 //   shot = { src, depth, to: [x, y] }     "to": the spot the camera heads for, as fractions of the photograph
 // "land" is used on wide screens and "port" on upright ones (phones).
 import * as THREE from 'three';
+import './walk3d.js';                    // the bundle also carries Walk3D, the walk through a reconstructed room
 
 const OVERLAP = 0.3;                     // how much of each shot is shared with the next one
 const clamp01 = v => Math.min(1, Math.max(0, v)), smooth = v => v * v * (3 - 2 * v);
