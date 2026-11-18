@@ -7,7 +7,7 @@
   if (S.accent) root.style.setProperty('--accent', S.accent);
   document.title = L.address + ', ' + L.town;
   $('mark').textContent = A.brokerage; $('barCall').textContent = A.phone; $('barCall').href = 'tel:' + tel;
-  $('foot').innerHTML = `<span>${esc(L.address)}, ${esc(L.town)}</span><span>${esc(L.id)}</span><span>${esc(A.name)} · ${esc(A.brokerage)}</span>`;
+  $('foot').innerHTML = `<span>${esc(L.address)}, ${esc(L.town)}</span><span>${esc(L.id)}</span><span>${esc(A.name)} · ${esc(A.brokerage)}</span>${L.photoCredit ? `<span>${esc(L.photoCredit)}</span>` : ''}`;
 
   // ---- the film ----
   const hero = { id: 'hero', frames: [0, 36], hero: true }, chapters = [hero, ...S.chapters];
@@ -23,7 +23,7 @@
   const stage = $('stage'), bg = getComputedStyle(root).getPropertyValue('--bg').trim() || '#010205';
   stage.style.backgroundImage = `url(frames/poster-${innerHeight > innerWidth * 1.05 ? 'port' : 'land'}.jpg)`;
   window.ScrollFilm({
-    canvas: $('filmCanvas'), section: $('film'), base: 'frames/', bg,
+    canvas: $('filmCanvas'), section: $('film'), base: 'frames/', bg, count: 240, blend: COVER,
     // a film made from photographs fills the screen; the model-house film floats beside the words
     scale: o => (COVER ? o.cover : o.portrait ? Math.min(o.cover, (o.width / o.w) * 1.12) : Math.min(o.cover, (o.width / o.w) * 0.88, (o.height / o.h) * 1.05)),
     shift: (portrait, w) => (COVER ? [0, 0] : portrait ? [0, 0.045] : [w > 820 ? 0.13 : 0, 0.02]),

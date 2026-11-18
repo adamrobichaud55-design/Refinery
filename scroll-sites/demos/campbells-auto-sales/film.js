@@ -4,6 +4,9 @@
 //
 //   const film = ScrollFilm({ canvas, section, base: 'frames/', bg: '#0b0f16', scale: (o) => o.cover, shift: (portrait) => [dx, dy], onUpdate });
 //   onUpdate({ frame, progress, portrait, place(x, y) -> [px, py], anchors })   every drawn frame
+// Options: count: 240 reports "frame" on a 0..239 scale however many frames the film really has (so the page's
+// chapter numbers survive a shorter film); blend: true dissolves between neighbouring frames, which suits a film
+// made from photographs and lets it be packed with fewer frames.
 (function () {
   'use strict';
   window.ScrollFilm = function (opt) {
@@ -51,19 +54,21 @@
       cur = reduce ? target : Math.abs(target - cur) < 0.02 ? target : cur + (target - cur) * 0.16;
       const i = Math.round(cur), dir = target >= cur ? 1 : -1;
       decode(i); for (let k = 1; k <= 5; k++) { const j = i + dir * k; if (j >= 0 && j < n) decode(j); }
-      const show = cache.has(i) ? i : nearest(i), key = show + '|' + cur.toFixed(2) + '|' + cssW + 'x' + cssH;
+      const lo = Math.floor(cur), mix = opt.blend && cache.has(lo) && cache.has(lo + 1) ? cur - lo : 0;
+      const show = mix ? lo : cache.has(i) ? i : nearest(i), key = show + '|' + cur.toFixed(2) + '|' + cssW + 'x' + cssH;
       if (key === lastKey) return; lastKey = key;
       const R = rect();
       if (show >= 0 && show !== lastDrawn || show >= 0) {
         ctx.fillStyle = opt.bg || '#000'; ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.drawImage(cache.get(show), R.x * dpr, R.y * dpr, R.w * dpr, R.h * dpr);
+        if (mix > 0.01) { ctx.globalAlpha = mix; ctx.drawImage(cache.get(lo + 1), R.x * dpr, R.y * dpr, R.w * dpr, R.h * dpr); ctx.globalAlpha = 1; }
         // the frame's edges melt into the page, so the film can sit off-centre without a seam
         const f = 0.07; for (const [x0, x1] of [[R.x, R.x + R.w * f], [R.x + R.w, R.x + R.w * (1 - f)]]) { const g = ctx.createLinearGradient(x0 * dpr, 0, x1 * dpr, 0); g.addColorStop(0, opt.bg || '#000'); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(Math.min(x0, x1) * dpr - 1, R.y * dpr, Math.abs(x1 - x0) * dpr + 2, R.h * dpr); }
         for (const [y0, y1] of [[R.y, R.y + R.h * f], [R.y + R.h, R.y + R.h * (1 - f)]]) { const g = ctx.createLinearGradient(0, y0 * dpr, 0, y1 * dpr); g.addColorStop(0, opt.bg || '#000'); g.addColorStop(1, 'rgba(0,0,0,0)'); ctx.fillStyle = g; ctx.fillRect(R.x * dpr, Math.min(y0, y1) * dpr - 1, R.w * dpr, Math.abs(y1 - y0) * dpr + 2); }
         lastDrawn = show;
       }
       const an = man.anchors && man.anchors[setName] ? man.anchors[setName][Math.min(n - 1, Math.max(0, i))] : null;
-      opt.onUpdate && opt.onUpdate({ frame: cur, progress: p, portrait: setName === 'port', place: (x, y) => [R.x + x * R.w, R.y + y * R.h], anchors: an || {}, width: cssW, height: cssH });
+      opt.onUpdate && opt.onUpdate({ frame: opt.count && n > 1 ? (cur * (opt.count - 1)) / (n - 1) : cur, progress: p, portrait: setName === 'port', place: (x, y) => [R.x + x * R.w, R.y + y * R.h], anchors: an || {}, width: cssW, height: cssH });
     }
     fetch(base + 'manifest.json').then(r => r.json()).then(m => { man = m; size(); return loadSet(pickSet()); }).catch(e => console.error('ScrollFilm: no manifest', e));
     let rz = 0; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(() => { size(); if (man && pickSet() !== setName) loadSet(pickSet()); }, 120); });

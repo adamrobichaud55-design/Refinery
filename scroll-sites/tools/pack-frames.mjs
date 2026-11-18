@@ -1,6 +1,7 @@
 // Turns footage into the frame bundles a scroll site plays.
 //   node pack-frames.mjs <site-folder> --land <frames-folder | video-file> [--port <frames-folder | video-file>]
-//                        [--frames 240] [--quality 72] [--chunks 4]
+//                        [--frames 240] [--quality 72] [--scale 1] [--chunks 4]
+// Photographs make much heavier frames than drawn scenes: for those use about --quality 45 --scale 0.85.
 // A frames folder holds f0000.png, f0001.png ... (and, from the studio, anchors.json). A video file (a phone clip of the
 // client's shop, a drone pass, an AI-made shot) is cut into --frames evenly spaced stills, cropped to fill 1440x810
 // (land) or 810x1440 (port). Needs ffmpeg. Writes <site>/frames/: manifest.json, <set>-<k>.webp (each a run of WebP frames), poster-<set>.jpg.
@@ -11,7 +12,7 @@ import { tmpdir } from 'node:os';
 const args = process.argv.slice(2), site = args[0], opt = {};
 for (let i = 1; i < args.length; i += 2) opt[args[i].replace(/^--/, '')] = args[i + 1];
 if (!site || !opt.land) { console.error('usage: node pack-frames.mjs <site-folder> --land <frames-folder|video> [--port <frames-folder|video>]'); process.exit(1); }
-const SIZE = { land: [1440, 810], port: [810, 1440] }, quality = String(opt.quality ?? 72), nChunks = Number(opt.chunks ?? 4);
+const even = n => 2 * Math.round(n / 2), k = Number(opt.scale ?? 1), SIZE = { land: [even(1440 * k), even(810 * k)], port: [even(810 * k), even(1440 * k)] }, quality = String(opt.quality ?? 72), nChunks = Number(opt.chunks ?? 4);
 const out = join(site, 'frames'); mkdirSync(out, { recursive: true });
 const ff = a => execFileSync('ffmpeg', ['-v', 'error', '-y', ...a], { stdio: ['ignore', 'inherit', 'inherit'] });
 const manifest = { frames: 0, sets: {}, anchors: {} };
