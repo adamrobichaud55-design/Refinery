@@ -70,6 +70,7 @@ There are two builders. Which one to use depends on what the client can give you
 
 | The client gives you | Use | What the tour is like |
 | --- | --- | --- |
+| A **phone scan** (iPhone or iPad Pro, Stray Scanner app): a video in which the phone tracked itself and measured depth | `build_walk.py --once` | The most reliable: every frame is placed exactly, with no matching step, so frames line up and the view can be wider. |
 | A **video** of someone walking through the home, or **hundreds of overlapping photographs** | `build_walk.py` | The best: one smooth walk along the real route, rooms named automatically. |
 | The usual **listing photographs** (a few per room) | `build_tour.py` | Rooms with several overlapping shots are rebuilt and walked through; a room with one shot gets a short walk into the picture. |
 
@@ -80,11 +81,19 @@ height, landscape; keep moving forward and turn slowly; go through every room on
 you must; lights on, curtains open. Two to four minutes covers most homes. Fast, shaky or blurred footage cannot be
 placed, and the builder says so when that happens.
 
+**Better still, a scan.** With an iPhone or iPad Pro (the models with a depth sensor) and the free Stray Scanner app,
+the recording comes with the phone's own tracking and measured depth. Copy the scan's folder off the phone (`rgb.mp4`,
+`odometry.csv`, `camera_matrix.csv`, `depth/`, `confidence/`) and give that folder to the builder in place of a video.
+Scan slowly, at chest height, pointing along each room and not at the wall beside you; holding the phone upright gives
+a taller picture, which suits visitors on phones. Sweeping about and doubling back does no harm: with `--once` the
+builder plans its own route that visits each part of the home once.
+
 ### Build it (one command)
 
 ```
 pip install pycolmap onnxruntime numpy pillow tokenizers        # once; ffmpeg is needed for video
 
+python3 -I tools/recon/build_walk.py scan-folder/ work/ property-listing/walk --model depth.onnx --clip clip/ --once --view 0.8,0.92
 python3 -I tools/recon/build_walk.py walkthrough.mp4 work/ property-listing/walk --model depth.onnx --clip clip/
 python3 -I tools/recon/build_tour.py client-photos/ work/ property-listing/walk --model depth.onnx
 ```

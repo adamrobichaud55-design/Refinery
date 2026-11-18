@@ -22,9 +22,11 @@ const { chromium } = require('playwright');
 const [site, ...rest] = process.argv.slice(2), opt = {};
 for (let i = 0; i < rest.length; i++) if (rest[i] === '--fix') opt.fix = true; else opt[rest[i].slice(2)] = rest[++i];
 if (!site) { console.error('usage: node tools/tour-check.mjs <site> [--limit 0.10] [--hole 0.03] [--min 14] [--fix] [--report file.json] [--from file.json]'); process.exit(1); }
-const LIMIT = Number(opt.limit ?? 0.10), HOLE = Number(opt.hole ?? 0.03), MIN = Number(opt.min ?? 14);
+const HOLE = Number(opt.hole ?? 0.03), MIN = Number(opt.min ?? 14);
 const walkDir = resolve(dirname(fileURLToPath(import.meta.url)), '..', site, 'walk'), tourFile = resolve(walkDir, 'tour.json');
 const tour = JSON.parse(readFileSync(tourFile, 'utf8'));
+// a scan's frames line up exactly, so several share each view and patching between them is normal there: the limit on it is looser
+const scanned = tour.some(t => (JSON.parse(readFileSync(resolve(walkDir, t.dir, t.file || 'walk.json'), 'utf8')).backed || 3) >= 5), LIMIT = Number(opt.limit ?? (scanned ? 0.4 : 0.10));
 
 let bare, hole;
 // positions already marked as bridges are not measured: they are crossed at speed whatever they show

@@ -75,7 +75,7 @@ window.Walk3D = function (opt) {
       const cum = [0], pace = []; for (let k = 1; k < n; k++) { const w = 1 - ((rush[k] + rush[k - 1]) / 2) * (1 - (fac[k] + fac[k - 1]) / 2); pace.push(w); cum.push(cum[k - 1] + step(k) * w); }
       // the view is kept well inside what one frame covers, so that a frame turned a little differently still fills it
       const at = r.walk.cams.map(c => c.v);
-      return { views, keys, cum, len: cum[cum.length - 1], tw: Math.min(...views.map(V => V.tw)) * (opt.marginX || 0.62), th: Math.min(...views.map(V => V.th)) * (opt.marginY || 0.8), centre: seg => at[Math.min(at.length - 1, seg)], reach: 6, rush, pace, chapters: r.walk.chapters || [], name: r.name };
+      return { views, keys, cum, len: cum[cum.length - 1], tw: Math.min(...views.map(V => V.tw)) * (opt.marginX || (r.walk.view || [])[0] || 0.62), th: Math.min(...views.map(V => V.th)) * (opt.marginY || (r.walk.view || [])[1] || 0.8), centre: seg => at[Math.min(at.length - 1, seg)], reach: 8, rush, pace, chapters: r.walk.chapters || [], name: r.name };
     }
     const keys = views.map(V => ({ p: V.pos.clone(), q: V.quat.clone() })), L = views[views.length - 1], d = L.d, far = d.far || [0.5, 0.5];
     const toFar = new THREE.Vector3((far[0] * d.w - d.cx) / d.f, -(far[1] * d.h - d.cy) / d.f, -1).normalize(), zmed = d.zmed || 3;
