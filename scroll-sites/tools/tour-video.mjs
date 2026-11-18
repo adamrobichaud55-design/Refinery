@@ -17,7 +17,8 @@ const browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--ena
 const page = await browser.newPage({ viewport: { width: W, height: H }, deviceScaleFactor: 1 });
 page.on('pageerror', e => console.error('PAGE ERROR', e.message));
 const site = opt.site ?? 'holiday-rental', top = site === 'holiday-rental' ? 240 : 239;       // --site property-listing draws the photo walk-through
-await page.goto(`http://127.0.0.1:5197/${site}/tour-src/${opt.page ?? 'dev.html'}?f=0&t=${opt.t ?? 0.42}${opt.q ? '&' + opt.q : ''}`);   // --page walk-dev.html --q walk=bedroom draws a reconstructed room await page.waitForFunction(() => window.ready, null, { timeout: 240000 });
+// --page walk-dev.html --q walk=bedroom,living draws reconstructed rooms
+await page.goto(`http://127.0.0.1:5197/${site}/tour-src/${opt.page ?? (site === 'holiday-rental' ? 'dev.html' : 'walk-dev.html')}?f=0&t=${opt.t ?? 0.42}${opt.q ? '&' + opt.q : ''}`); await page.waitForFunction(() => window.ready, null, { timeout: 240000 });
 const shoot = async (f, t, path) => { await page.evaluate(([f, t]) => window.tour.render(f, t), [f, t]); await page.screenshot({ path, timeout: 240000 }); };
 const smooth = v => v * v * (3 - 2 * v), track = (pts, x) => { if (x <= pts[0][0]) return pts[0][1]; for (let i = 1; i < pts.length; i++) if (x <= pts[i][0]) return pts[i - 1][1] + (pts[i][1] - pts[i - 1][1]) * smooth((x - pts[i - 1][0]) / (pts[i][0] - pts[i - 1][0])); return pts[pts.length - 1][1]; };
 if (mode === 'stills') for (const f of pos) { await shoot(f, Number(opt.t ?? 0.42), `${out}/tour-${String(f).padStart(3, '0')}.png`); console.log('still', f); }

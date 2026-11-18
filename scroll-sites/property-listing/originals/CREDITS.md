@@ -6,8 +6,8 @@ now a house museum). They were taken by **Warren LeMay** and are used under the
 
 What the licence asks, in short: credit the photographer and name the licence wherever the pictures are shown, and
 if you change them (crop, resize) share your versions under the same licence. The resized copies in `../photos/`
-and `../photos-upright/`, and the depth maps made from them in `../depth/`, are such versions, so they carry the same
-licence. The rest of
+and the photographs and depth maps in `../walk/` (made from further photographs of the same house, by the same
+photographer, from the same Wikimedia Commons category) are such versions, so they carry the same licence. The rest of
 the site (its code and text) is not affected.
 
 The house is not for sale. The address, price and listing details on the demo page are made up.

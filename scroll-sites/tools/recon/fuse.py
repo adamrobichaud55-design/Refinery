@@ -33,13 +33,13 @@ meta = []
 for i, V in enumerate(views):
     d = V['d']; lo, hi = float(d.min()), float(d.max()); dn = (d - lo) / (hi - lo + 1e-9)
     a, b = V['ab']; A2, B2 = a * (hi - lo) / s, (a * lo + b) / s          # 1/z (scene units) = A2 * dn + B2
-    dw = 384 if d.shape[1] >= d.shape[0] else 288; img = Image.fromarray(dn, mode='F').resize((dw, round(dw * d.shape[0] / d.shape[1])), Image.BILINEAR)
+    dw = 576 if d.shape[1] >= d.shape[0] else 432; img = Image.fromarray(dn, mode='F').resize((dw, round(dw * d.shape[0] / d.shape[1])), Image.BILINEAR)
     v16 = np.clip(np.asarray(img) * 65535, 0, 65535).astype(np.uint16); rgb = np.zeros(v16.shape + (3,), np.uint8); rgb[..., 0] = v16 >> 8; rgb[..., 1] = v16 & 255
     base = f"{prefix}{i:02d}"; Image.fromarray(rgb).save(os.path.join(out, base + '-depth.png'), optimize=True)
     Image.open(os.path.join(imgs, V['name'])).convert('RGB').save(os.path.join(out, base + '.webp'), quality=84, method=6)
     Rw, C = V['R'].T, -V['R'].T @ V['t'] * s              # camera to world; then into the viewer's axes (y up, looking down -z)
     F = np.diag([1.0, -1.0, -1.0]); M = np.eye(4); M[:3, :3] = F @ Rw @ F; M[:3, 3] = F @ C
-    meta.append({'src': base + '.webp', 'depth': base + '-depth.png', 'w': V['W'], 'h': V['H'], 'f': V['f'], 'cx': V['cx'], 'cy': V['cy'], 'A': float(A2), 'B': float(B2), 'm': [round(float(x), 5) for x in M.T.flatten()], 'from': V['name'], 'fit': round(V['err'], 3)})
+    meta.append({'src': base + '.webp', 'depth': base + '-depth.png', 'w': V['W'], 'h': V['H'], 'f': V['f'], 'cx': V['cx'], 'cy': V['cy'], 'A': float(A2), 'B': float(B2), 'm': [round(float(x), 5) for x in M.T.flatten()], 'from': V['name'], 'fit': round(V['err'], 3), 'n': V['n'], 'zmed': round(float(np.median(1 / np.maximum(A2 * dn + B2, 1e-4))), 2)})
 # an order to walk the views in: start at one end, then always the nearest unvisited view (by position and by direction of gaze)
 P = np.array([m['m'][12:15] for m in meta]); Dv = np.array([[-m['m'][8], -m['m'][9], -m['m'][10]] for m in meta])
 cost = lambda i, j: np.linalg.norm(P[i] - P[j]) + 1.5 * np.arccos(np.clip(Dv[i] @ Dv[j], -1, 1))

@@ -25,14 +25,14 @@ window.Walk3D = function (opt) {
   const join = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { a: { value: rtA.texture }, b: { value: rtB.texture }, c: { value: rtC.texture }, w: { value: 0 }, bg: { value: new THREE.Color(opt.bg || '#0b0d10') } },
     fragmentShader: `uniform sampler2D a, b, c; uniform float w; uniform vec3 bg; varying vec2 v;
       void main(){ vec4 A = texture2D(a, v), B = texture2D(b, v), C = texture2D(c, v);
-        float wa = A.a * (1.0 - w) + 0.0005 * A.a, wb = B.a * w + 0.0005 * B.a, s = wa + wb;
+        float k = smoothstep(0.22, 0.78, w), wa = A.a * (1.0 - k) + 0.0005 * A.a, wb = B.a * k + 0.0005 * B.a, s = wa + wb;
         vec3 ab = s > 0.0 ? (A.rgb / max(A.a, 0.001) * wa + B.rgb / max(B.a, 0.001) * wb) / s : vec3(0.0); float cover = clamp(max(A.a, B.a), 0.0, 1.0);
         vec3 fill = mix(bg, C.rgb / max(C.a, 0.001), clamp(C.a, 0.0, 1.0));
         gl_FragColor = vec4(mix(fill, ab, cover), 1.0); }` });
   const cross = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { x: { value: rtX.texture }, y: { value: rtY.texture }, t: { value: 0 } },
     fragmentShader: 'uniform sampler2D x, y; uniform float t; varying vec2 v; void main(){ gl_FragColor = vec4(mix(texture2D(x, v).rgb, texture2D(y, v).rgb, t), 1.0); }' });
-  const photoMat = map => new THREE.ShaderMaterial({ uniforms: { map: { value: map } }, vertexShader: 'varying vec2 v; void main(){ v = uv; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
-    fragmentShader: 'uniform sampler2D map; varying vec2 v; void main(){ gl_FragColor = vec4(texture2D(map, v).rgb, 1.0); }' });
+  const photoMat = map => new THREE.ShaderMaterial({ uniforms: { map: { value: map } }, vertexShader: 'attribute float solid; varying vec2 v; varying float s; void main(){ v = uv; s = solid; gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }',
+    fragmentShader: 'uniform sampler2D map; varying vec2 v; varying float s; void main(){ float a = smoothstep(0.0, 0.9, s); gl_FragColor = vec4(texture2D(map, v).rgb * a, a); }' });   // colour already multiplied by its coverage
   const img = src => new Promise((ok, no) => { const i = new Image(); i.decoding = 'async'; i.onload = () => ok(i); i.onerror = no; i.src = src; });
 
   // ---- rooms and their views ----
@@ -50,7 +50,7 @@ window.Walk3D = function (opt) {
       const c = document.createElement('canvas'); c.width = dimg.naturalWidth; c.height = dimg.naturalHeight; const cx = c.getContext('2d', { willReadFrequently: true }); cx.drawImage(dimg, 0, 0);
       const D = cx.getImageData(0, 0, c.width, c.height).data, dw = c.width, dh = c.height;
       const near = (u, v) => { const x = clamp01(u) * (dw - 1), y = clamp01(v) * (dh - 1), x0 = Math.floor(x), y0 = Math.floor(y), x1 = Math.min(dw - 1, x0 + 1), y1 = Math.min(dh - 1, y0 + 1), fx = x - x0, fy = y - y0, g = (X, Y) => (D[(Y * dw + X) * 4] * 256 + D[(Y * dw + X) * 4 + 1]) / 65535; return (g(x0, y0) * (1 - fx) + g(x1, y0) * fx) * (1 - fy) + (g(x0, y1) * (1 - fx) + g(x1, y1) * fx) * fy; };
-      const GW = d.w >= d.h ? 224 : 168, GH = Math.round((GW * d.h) / d.w), row = GW + 1, pos = new Float32Array(row * (GH + 1) * 3), uv = new Float32Array(row * (GH + 1) * 2), zz = new Float32Array(row * (GH + 1));
+      const GW = d.w >= d.h ? 288 : 216, GH = Math.round((GW * d.h) / d.w), row = GW + 1, pos = new Float32Array(row * (GH + 1) * 3), uv = new Float32Array(row * (GH + 1) * 2), zz = new Float32Array(row * (GH + 1));
       for (let j = 0, k = 0; j <= GH; j++) for (let i = 0; i <= GW; i++, k++) {
         const u = i / GW, v = j / GH, z = Math.min(60, 1 / Math.max(1e-4, d.A * near(u, v) + d.B));        // the distance, in the room's own scale
         pos[k * 3] = ((u * d.w - d.cx) / d.f) * z; pos[k * 3 + 1] = -((v * d.h - d.cy) / d.f) * z; pos[k * 3 + 2] = -z; uv[k * 2] = u; uv[k * 2 + 1] = 1 - v; zz[k] = z;
@@ -58,11 +58,13 @@ window.Walk3D = function (opt) {
       // Two surfaces from the same points. "cut" is torn wherever depth jumps (the edge of a chair against the wall
       // behind it), so nothing is smeared across the gap: another photograph shows what is there. "whole" is not torn;
       // it goes underneath everything as a last resort, so that a gap no photograph covers is never an empty hole.
-      const cut = [], whole = []; for (let j = 0; j < GH; j++) for (let i = 0; i < GW; i++) { const a = j * row + i, b = a + 1, e = a + row, f = e + 1, lo = Math.min(zz[a], zz[b], zz[e], zz[f]), hi = Math.max(zz[a], zz[b], zz[e], zz[f]); whole.push(a, e, b, b, e, f); if (hi / lo < (opt.cut || 1.09)) cut.push(a, e, b, b, e, f); }
-      const posA = new THREE.BufferAttribute(pos, 3), uvA = new THREE.BufferAttribute(uv, 2), geo = idx => { const g = new THREE.BufferGeometry(); g.setAttribute('position', posA); g.setAttribute('uv', uvA); g.setIndex(idx); return g; };
+      const cut = [], whole = [], solid = new Float32Array(row * (GH + 1)).fill(1), torn = [];
+      for (let j = 0; j < GH; j++) for (let i = 0; i < GW; i++) { const a = j * row + i, b = a + 1, e = a + row, f = e + 1, lo = Math.min(zz[a], zz[b], zz[e], zz[f]), hi = Math.max(zz[a], zz[b], zz[e], zz[f]); whole.push(a, e, b, b, e, f); if (hi / lo < (opt.cut || 1.14)) cut.push(a, e, b, b, e, f); else torn.push(a, b, e, f); }
+      for (const k of torn) solid[k] = 0;                                 // the surface fades out towards a tear, so its edge is soft and not a row of steps
+      const posA = new THREE.BufferAttribute(pos, 3), uvA = new THREE.BufferAttribute(uv, 2), one = new THREE.BufferAttribute(new Float32Array(row * (GH + 1)).fill(1), 1), geo = (idx, sol) => { const g = new THREE.BufferGeometry(); g.setAttribute('position', posA); g.setAttribute('uv', uvA); g.setAttribute('solid', sol); g.setIndex(idx); return g; };
       const tex = new THREE.Texture(photo); tex.colorSpace = THREE.NoColorSpace; tex.minFilter = THREE.LinearMipmapLinearFilter; tex.anisotropy = 4; tex.needsUpdate = true;
       const material = photoMat(tex), mk = g => { const m = new THREE.Mesh(g, material); m.matrixAutoUpdate = false; m.matrix.copy(V.m); m.matrixWorld.copy(V.m); m.matrixWorldAutoUpdate = false; m.frustumCulled = false; return m; };
-      V.cut = mk(geo(cut)); V.whole = mk(geo(whole)); V.tex = tex; V.material = material; V.state = 'ready';
+      V.cut = mk(geo(cut, new THREE.BufferAttribute(solid, 1))); V.whole = mk(geo(whole, one)); V.tex = tex; V.material = material; V.state = 'ready';
     } catch (e) { V.state = ''; console.error('Walk3D: could not load', V.d.src, e); }
   }
   function drop(V) { if (V.state !== 'ready') { if (V.state === 'loading') V.state = ''; return; } V.tex.dispose(); V.material.dispose(); V.cut.geometry.dispose(); V.whole.geometry.dispose(); V.cut = V.whole = V.tex = V.material = null; V.state = ''; }

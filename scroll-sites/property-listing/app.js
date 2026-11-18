@@ -1,4 +1,4 @@
-// Builds the listing page from site.config.js and ties the words to the walk through the photographs.
+// Builds the listing page from site.config.js and ties the words to the walk through the house.
 (function () {
   'use strict';
   const S = window.SITE, L = S.listing, A = S.agent, $ = id => document.getElementById(id);
@@ -9,24 +9,24 @@
   $('mark').textContent = A.brokerage; $('barCall').textContent = A.phone; $('barCall').href = 'tel:' + tel;
   $('foot').innerHTML = `<span>${esc(L.address)}, ${esc(L.town)}</span><span>${esc(L.id)}</span><span>${esc(A.name)} · ${esc(A.brokerage)}</span>${L.photoCredit ? `<span>${esc(L.photoCredit)}</span>` : ''}`;
 
-  // ---- the film ----
-  const hero = { id: 'hero', frames: [0, 11], hero: true }, chapters = [hero, ...S.chapters];
-  $('panels').innerHTML = chapters.map(c => c.hero
-    ? `<div class="panel hero"><span class="label">${esc(L.status)} · ${esc(L.town)}</span><h1>${esc(L.address)}</h1><p>${esc(L.summary)}</p><div class="ask">${money(L.price)}<small>${esc(L.facts.slice(0, 2).map(f => f[0] + ' ' + f[1].toLowerCase().slice(0, 3)).join(' · '))}</small></div><a class="btn" href="#contact">${esc(S.hero.cta)}</a><span class="hint">${esc(S.hero.hint)}</span></div>`
-    : `<div class="panel" style="--dot:${esc(c.color || S.accent)}"><span class="label">${esc(c.label)}</span><h2>${esc(c.title)}</h2><p>${esc(c.body)}</p>${c.cta ? `<a class="btn" href="#contact">${esc(c.cta)}</a>` : ''}</div>`).join('');
-  $('rail').innerHTML = S.chapters.map(c => `<li style="--dot:${esc(c.color || S.accent)}">${esc(c.label)}</li>`).join('');
-  const panelEls = [...$('panels').children], railEls = [...$('rail').children];
-  const vis = (c, f) => { const [a, b] = c.frames, e = 5; return c.hero ? Math.min(1, Math.max(0, (b - f) / e)) : Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e))); };
-  const stage = $('stage'); stage.classList.add('photo');
-  stage.style.backgroundImage = `url(${(innerHeight > innerWidth * 1.05 ? S.film.port : S.film.land)[0].src})`;      // the first photograph, until the 3D is ready
-  window.Photo3D({
-    canvas: $('filmCanvas'), section: $('film'), sets: S.film,
-    onUpdate(u) {
-      chapters.forEach((c, i) => { const o = vis(c, u.frame), el = panelEls[i]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); });
-      S.chapters.forEach((c, i) => railEls[i].classList.toggle('on', u.frame >= c.frames[0] - 4 && u.frame <= c.frames[1] + 2));
-    },
-    onLoad: () => { $('loadline').firstElementChild.style.opacity = 0; stage.style.backgroundImage = 'none'; },
-  });
+  // ---- the walk through the house ----
+  const stage = $('stage'); stage.classList.add('photo'); stage.style.backgroundImage = `url(${L.photos[1] || L.photos[0]})`;      // a photograph, until the 3D is ready
+  const heroHTML = `<div class="panel hero"><span class="label">${esc(L.status)} · ${esc(L.town)}</span><h1>${esc(L.address)}</h1><p>${esc(L.summary)}</p><div class="ask">${money(L.price)}<small>${esc(L.facts.slice(0, 2).map(f => f[0] + ' ' + f[1].toLowerCase().slice(0, 3)).join(' · '))}</small></div><a class="btn" href="#contact">${esc(S.hero.cta)}</a><span class="hint">${esc(S.hero.hint)}</span></div>`;
+  $('panels').innerHTML = heroHTML + S.tour.map(c => `<div class="panel"><span class="label">${esc(c.label)}</span><h2>${esc(c.title)}</h2><p>${esc(c.body)}</p>${c.cta ? `<a class="btn" href="#contact">${esc(c.cta)}</a>` : ''}</div>`).join('');
+  $('rail').innerHTML = S.tour.map(c => `<li>${esc(c.label)}</li>`).join('');
+  const panelEls = [...$('panels').children], railEls = [...$('rail').children]; panelEls[0].style.setProperty('--o', 1); panelEls[0].classList.add('on');
+  const fade = (f, a, b, e = 5) => Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e)));
+  Promise.all(S.tour.map(c => fetch(c.dir + '/walk.json').then(r => r.json()).then(walk => ({ base: c.dir + '/', walk })))).then(rooms => {
+    const HERO = 9;                                                    // the address plate shows for the first few frames of the first room
+    window.Walk3D({
+      canvas: $('filmCanvas'), section: $('film'), rooms,
+      onUpdate(u) {
+        const o0 = Math.min(1, Math.max(0, (HERO - u.frame) / 4)); panelEls[0].style.setProperty('--o', o0.toFixed(3)); panelEls[0].classList.toggle('on', o0 > 0.02);
+        u.spans.forEach(([a, b], k) => { const lo = k === 0 ? HERO + 3 : a + 5, o = fade(u.frame, lo, k === u.spans.length - 1 ? 245 : b - 5), el = panelEls[k + 1]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); railEls[k].classList.toggle('on', u.room === k); });
+      },
+      onLoad: () => { $('loadline').firstElementChild.style.opacity = 0; stage.style.backgroundImage = 'none'; },
+    });
+  }).catch(e => console.error('walk-through: could not load', e));
 
   // ---- facts and description ----
   $('facts').innerHTML = `<div class="in"><div class="head"><span class="label">${esc(L.status)}</span><h2>${esc(L.address)}, <i>${esc(L.town)}</i></h2></div>
