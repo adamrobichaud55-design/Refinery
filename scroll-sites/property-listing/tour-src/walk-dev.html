@@ -1,8 +1,8 @@
 <!doctype html><meta charset="utf-8"><title>walk dev</title>
 <style>html,body{margin:0;height:100%;background:#000}canvas{display:block;width:100vw;height:100vh}</style>
-<!-- Developer view of reconstructed rooms: ?walk=bedroom,bathroom loads ../walk/<name>/walk.json for each, in that order.
+<!-- Developer view of the tour: all the rooms in ../walk/tour.json, or only some with ?walk=living-room,kitchen.
      tour.render(frame) draws any point of the whole walk (0 to 239). -->
 <div id="s" style="height:100vh"><canvas id="c"></canvas></div>
 <script src="../photo3d.bundle.js"></script>
-<script>const q = new URLSearchParams(location.search), names = (q.get('walk') || 'bedroom').split(',');
-Promise.all(names.map(n => fetch('../walk/' + n + '/walk.json').then(r => r.json()).then(walk => ({ base: '../walk/' + n + '/', walk })))).then(rooms => { window.tour = Walk3D({ canvas: document.getElementById('c'), section: document.getElementById('s'), still: true, rooms }); window.ready = true; });</script>
+<script>const q = new URLSearchParams(location.search), only = q.get('walk') ? q.get('walk').split(',') : null;
+fetch('../walk/tour.json').then(r => r.json()).then(list => Promise.all(list.filter(t => !only || only.includes(t.name)).map(t => fetch('../walk/' + t.dir + '/walk.json').then(r => r.json()).then(walk => ({ base: '../walk/' + t.dir + '/', walk, push: t.push }))))).then(rooms => { window.tour = Walk3D({ canvas: document.getElementById('c'), section: document.getElementById('s'), still: true, rooms }); window.ready = true; });</script>

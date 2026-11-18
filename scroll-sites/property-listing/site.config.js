@@ -36,15 +36,20 @@ window.SITE = {
 
   hero: { cta: 'Book a viewing', hint: 'Scroll to walk through' },
 
-  // The walk through the house. Each entry is a room rebuilt in 3D from its photographs (the folders under walk/ are
-  // made by tools/recon/), with the words shown while the camera is in it. The rooms play in this order.
+  // The words for the tour. The rooms themselves are in walk/ (made from the photographs by
+  // tools/recon/build_tour.py, which lists them in walk/tour.json); give each one its words here, in the same order.
   tour: [
-    { dir: 'walk/living', label: 'Living room', title: 'A living room built round the fire.', body: 'Brick, redwood and exposed beams, with a wall of windows onto the garden.' },
-    { dir: 'walk/dining', label: 'Dining and kitchen', title: 'Through to the dining room.', body: 'Built-in shelving divides the dining room from the kitchen behind it.' },
-    { dir: 'walk/hallway', label: 'Hallway', title: 'A glazed hallway to the bedrooms.', body: 'Windows down one side, built-in storage down the other.' },
-    { dir: 'walk/main-bedroom', label: 'Main bedroom', title: 'A fireplace of its own.', body: 'The main bedroom has a brick hearth and a wall of fitted drawers.' },
-    { dir: 'walk/guest-room', label: 'Second bedroom', title: 'A second fireside room.', body: 'Day bed, hearth and redwood walls.' },
-    { dir: 'walk/bedroom', label: 'Third bedroom', title: 'Twin beds under the windows.', body: 'A long shelf, a reading lamp and a view to the courtyard.', cta: 'Book a viewing' },
+    { label: 'Arrival', title: 'Come in under the carport.', body: 'A long, low house of redwood and brick, set back from the road.' },
+    { label: 'Living room', title: 'A living room built round the fire.', body: 'Brick, redwood and exposed beams, with a wall of windows onto the garden.' },
+    { label: 'Foyer', title: 'Light from the garden side.', body: 'The foyer opens off the living room, under the same beamed ceiling.' },
+    { label: 'Dining room', title: 'Through to the dining room.', body: 'Built-in shelving divides it from the kitchen behind.' },
+    { label: 'Kitchen', title: 'Morning light in the kitchen.', body: 'A breakfast table under the windows.' },
+    { label: 'Hallway', title: 'A glazed hallway to the bedrooms.', body: 'Windows down one side, built-in storage down the other.' },
+    { label: 'Main bedroom', title: 'A fireplace of its own.', body: 'A brick hearth and a wall of fitted drawers.' },
+    { label: 'Second bedroom', title: 'A second fireside room.', body: 'Day bed, hearth and redwood walls.' },
+    { label: 'Third bedroom', title: 'Twin beds under the windows.', body: 'A long shelf, a reading lamp and a view to the courtyard.' },
+    { label: 'Bathroom', title: 'A bathroom like no other.', body: 'Redwood walls and a deep soaking tub.' },
+    { label: 'Garden', title: 'And out to the garden.', body: 'Come and walk it yourself this Saturday.', cta: 'Book a viewing' },
   ],
 
   // The payment estimate. "semi-annual" compounding is the Canadian convention for fixed mortgages; use "monthly" elsewhere.

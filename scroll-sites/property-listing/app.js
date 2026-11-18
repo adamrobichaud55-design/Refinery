@@ -12,21 +12,24 @@
   // ---- the walk through the house ----
   const stage = $('stage'); stage.classList.add('photo'); stage.style.backgroundImage = `url(${L.photos[1] || L.photos[0]})`;      // a photograph, until the 3D is ready
   const heroHTML = `<div class="panel hero"><span class="label">${esc(L.status)} · ${esc(L.town)}</span><h1>${esc(L.address)}</h1><p>${esc(L.summary)}</p><div class="ask">${money(L.price)}<small>${esc(L.facts.slice(0, 2).map(f => f[0] + ' ' + f[1].toLowerCase().slice(0, 3)).join(' · '))}</small></div><a class="btn" href="#contact">${esc(S.hero.cta)}</a><span class="hint">${esc(S.hero.hint)}</span></div>`;
-  $('panels').innerHTML = heroHTML + S.tour.map(c => `<div class="panel"><span class="label">${esc(c.label)}</span><h2>${esc(c.title)}</h2><p>${esc(c.body)}</p>${c.cta ? `<a class="btn" href="#contact">${esc(c.cta)}</a>` : ''}</div>`).join('');
-  $('rail').innerHTML = S.tour.map(c => `<li>${esc(c.label)}</li>`).join('');
-  const panelEls = [...$('panels').children], railEls = [...$('rail').children]; panelEls[0].style.setProperty('--o', 1); panelEls[0].classList.add('on');
-  const fade = (f, a, b, e = 5) => Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e)));
-  Promise.all(S.tour.map(c => fetch(c.dir + '/walk.json').then(r => r.json()).then(walk => ({ base: c.dir + '/', walk })))).then(rooms => {
-    const HERO = 9;                                                    // the address plate shows for the first few frames of the first room
-    window.Walk3D({
-      canvas: $('filmCanvas'), section: $('film'), rooms,
-      onUpdate(u) {
-        const o0 = Math.min(1, Math.max(0, (HERO - u.frame) / 4)); panelEls[0].style.setProperty('--o', o0.toFixed(3)); panelEls[0].classList.toggle('on', o0 > 0.02);
-        u.spans.forEach(([a, b], k) => { const lo = k === 0 ? HERO + 3 : a + 5, o = fade(u.frame, lo, k === u.spans.length - 1 ? 245 : b - 5), el = panelEls[k + 1]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); railEls[k].classList.toggle('on', u.room === k); });
-      },
-      onLoad: () => { $('loadline').firstElementChild.style.opacity = 0; stage.style.backgroundImage = 'none'; },
-    });
-  }).catch(e => console.error('walk-through: could not load', e));
+  const fade = (f, a, b, e = 4) => Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e)));
+  $('panels').innerHTML = heroHTML; const hero = $('panels').firstElementChild; hero.style.setProperty('--o', 1); hero.classList.add('on');
+  fetch('walk/tour.json').then(r => r.json()).then(list => Promise.all(list.map(t => fetch(`walk/${t.dir}/walk.json`).then(r => r.json()).then(walk => ({ base: `walk/${t.dir}/`, walk, push: t.push }))))
+    .then(rooms => {
+      const words = list.map((t, k) => S.tour[k] || { label: t.name.replace(/-/g, ' '), title: '', body: '' });      // a room with no words yet shows its name
+      $('panels').insertAdjacentHTML('beforeend', words.map(c => `<div class="panel"><span class="label">${esc(c.label)}</span>${c.title ? `<h2>${esc(c.title)}</h2>` : ''}${c.body ? `<p>${esc(c.body)}</p>` : ''}${c.cta ? `<a class="btn" href="#contact">${esc(c.cta)}</a>` : ''}</div>`).join(''));
+      $('rail').innerHTML = words.map(c => `<li>${esc(c.label)}</li>`).join('');
+      const panelEls = [...$('panels').children], railEls = [...$('rail').children], HERO = 7;      // the address plate shows for the first few frames
+      const tour = window.Walk3D({
+        canvas: $('filmCanvas'), section: $('film'), rooms,
+        onUpdate(u) {
+          const o0 = Math.min(1, Math.max(0, (HERO - u.frame) / 3)); hero.style.setProperty('--o', o0.toFixed(3)); hero.classList.toggle('on', o0 > 0.02);
+          u.spans.forEach(([a, b], k) => { const o = fade(u.frame, k === 0 ? HERO + 2 : a + 3, k === u.spans.length - 1 ? 245 : b - 3), el = panelEls[k + 1]; el.style.setProperty('--o', o.toFixed(3)); el.classList.toggle('on', o > 0.02); railEls[k].classList.toggle('on', u.room === k); });
+        },
+        onLoad: () => { $('loadline').firstElementChild.style.opacity = 0; stage.style.backgroundImage = 'none'; },
+      });
+      $('film').style.height = `calc(${Math.round(100 + tour.total * 26)} * 1svh)`;                 // the longer the walk, the longer the scroll: a steady pace throughout
+    })).catch(e => console.error('walk-through: could not load', e));
 
   // ---- facts and description ----
   $('facts').innerHTML = `<div class="in"><div class="head"><span class="label">${esc(L.status)}</span><h2>${esc(L.address)}, <i>${esc(L.town)}</i></h2></div>
