@@ -7,7 +7,8 @@
 // At the end of a room the next one opens out of the middle of the view, the way a doorway comes towards you.
 //
 //   Walk3D({ canvas, section, rooms: [{ base: 'walk/01-living/', walk: { views: [...] } }, ...], onUpdate, onLoad })
-//   onUpdate({ frame 0..239, room, spans: [[from, to] per room, in frames], ... });  returns { total, spans, render(f) }
+//   onUpdate({ frame 0..239, room, spans, chapters, ... });  returns { total, spans, chapters: [{ room, label, from, to }], render(f) }
+// A room's walk.json may bring its own camera path ("cams", from build_walk.py) and the names of the rooms along it.
 import * as THREE from 'three';
 
 const clamp01 = v => Math.min(1, Math.max(0, v)), smooth = v => v * v * (3 - 2 * v);
@@ -24,7 +25,7 @@ window.Walk3D = function (opt) {
   // they are blended by how near each is; where only one does it is used alone; where neither does, C fills in.
   const quad = new THREE.Mesh(new THREE.PlaneGeometry(2, 2)), quadScene = new THREE.Scene(), quadCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1); quadScene.add(quad);
   const vs = 'varying vec2 v; void main(){ v = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }';
-  const join = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { a: { value: rtA.texture }, b: { value: rtB.texture }, c: { value: rtC.texture }, w: { value: 0 }, bg: { value: new THREE.Color(opt.bg || '#0b0d10') } },
+  const join = new THREE.ShaderMaterial({ depthTest: false, vertexShader: vs, uniforms: { a: { value: rtA.texture }, b: { value: rtB.texture }, c: { value: rtC.texture }, w: { value: 0 }, bg: { value: new THREE.Color(opt.bg || '#2a2622') } },
     fragmentShader: `uniform sampler2D a, b, c; uniform float w; uniform vec3 bg; varying vec2 v;
       void main(){ vec4 A = texture2D(a, v), B = texture2D(b, v), C = texture2D(c, v);
         float k = smoothstep(0.2, 0.8, w), wa = A.a * (1.0 - k) + 0.0005 * A.a, wb = B.a * k + 0.0005 * B.a, s = wa + wb;
@@ -44,7 +45,17 @@ window.Walk3D = function (opt) {
   // ---- rooms: their photographs, and the path the camera takes through them ----
   const rooms = opt.rooms.map(r => {
     const views = r.walk.views.map((d, i) => { const m = new THREE.Matrix4().fromArray(d.m), quat = new THREE.Quaternion().setFromRotationMatrix(m); return { d, i, base: r.base || '', state: '', m, pos: new THREE.Vector3().setFromMatrixPosition(m), quat, dir: dirOf(quat), tw: (d.w / 2) / d.f, th: (d.h / 2) / d.f }; });
-    // key poses: each photograph's own viewpoint in turn, then on towards the far end of the last one
+    // A walk planned from a video or a dense set of photographs brings its own camera path; otherwise the key poses
+    // are each photograph's own viewpoint in turn, then on towards the far end of the last one.
+    const planned = r.walk.cams && r.walk.cams.length > 1;
+    if (planned) {
+      const keys = r.walk.cams.map(c => { const m = new THREE.Matrix4().fromArray(c.m); return { p: new THREE.Vector3().setFromMatrixPosition(m), q: new THREE.Quaternion().setFromRotationMatrix(m) }; });
+      for (let k = 1; k < keys.length; k++) if (keys[k].q.dot(keys[k - 1].q) < 0) keys[k].q.set(-keys[k].q.x, -keys[k].q.y, -keys[k].q.z, -keys[k].q.w);
+      const cum = [0]; for (let k = 1; k < keys.length; k++) cum.push(cum[k - 1] + Math.max(0.02, keys[k].p.distanceTo(keys[k - 1].p) + TURN * keys[k].q.angleTo(keys[k - 1].q)));
+      // the view is kept well inside what one frame covers, so that a frame turned a little differently still fills it
+      const at = r.walk.cams.map(c => c.v);
+      return { views, keys, cum, len: cum[cum.length - 1], tw: Math.min(...views.map(V => V.tw)) * (opt.marginX || 0.62), th: Math.min(...views.map(V => V.th)) * (opt.marginY || 0.8), centre: seg => at[Math.min(at.length - 1, seg)], reach: 4, chapters: r.walk.chapters || [], name: r.name };
+    }
     const keys = views.map(V => ({ p: V.pos.clone(), q: V.quat.clone() })), L = views[views.length - 1], d = L.d, far = d.far || [0.5, 0.5];
     const toFar = new THREE.Vector3((far[0] * d.w - d.cx) / d.f, -(far[1] * d.h - d.cy) / d.f, -1).normalize(), zmed = d.zmed || 3;
     const push = Math.min(0.4 * (d.zto || zmed), 0.6 * zmed, 0.36 * (d.znear || zmed)) * (r.push || 1), look = new THREE.Quaternion().setFromUnitVectors(FWD, toFar), ang = 2 * Math.acos(Math.min(1, Math.abs(look.w)));
@@ -53,10 +64,12 @@ window.Walk3D = function (opt) {
     const cum = [0]; for (let k = 1; k < keys.length; k++) cum.push(cum[k - 1] + Math.max(k < keys.length - 1 ? 0.35 : views.length === 1 ? 1.5 : 0.9, keys[k].p.distanceTo(keys[k - 1].p) + TURN * keys[k].q.angleTo(keys[k - 1].q)));   // the walk into a lone photograph, and the last steps of any room, are given time
     // one field of view for the whole room, inside what every photograph covers
     const m = opt.margin || 0.8, tw = Math.min(...views.map(V => V.tw)) * m, th = Math.min(...views.map(V => V.th)) * m;
-    return { views, keys, cum, len: cum[cum.length - 1], tw, th };
+    return { views, keys, cum, len: cum[cum.length - 1], tw, th, centre: seg => Math.min(views.length - 1, seg), reach: 3, chapters: [], name: r.name };
   });
   let at = 0; for (const [k, r] of rooms.entries()) { r.start = at; at += r.len - (k < rooms.length - 1 ? HANDOVER : 0); }
-  const total = at, spans = rooms.map(r => [(r.start / total) * 239, ((r.start + r.len) / total) * 239]);
+  const total = at, fr = x => (x / total) * 239, spans = rooms.map(r => [fr(r.start), fr(r.start + r.len)]);
+  // the stretches of the tour to caption: the named rooms along a planned walk, or each room as a whole
+  const chapters = rooms.flatMap((r, k) => r.chapters.length ? r.chapters.map(c => ({ room: k, label: c.label, from: fr(r.start + r.cum[Math.min(r.cum.length - 1, c.from)]), to: fr(r.start + r.cum[Math.min(r.cum.length - 1, c.to)]) })) : [{ room: k, label: r.name || '', from: spans[k][0], to: spans[k][1] }]);
 
   const cr = (a, b, c, d, u) => 0.5 * ((2 * b) + (-a + c) * u + (2 * a - 5 * b + 4 * c - d) * u * u + (-a + 3 * b - 3 * c + d) * u * u * u);
   /** the camera's raw pose a distance s along a room's path */
@@ -99,14 +112,14 @@ window.Walk3D = function (opt) {
   }
   function drop(V) { if (V.state !== 'ready') { if (V.state === 'loading') V.state = ''; return; } V.tex.dispose(); V.material.dispose(); V.cut.geometry.dispose(); V.whole.geometry.dispose(); V.cut = V.whole = V.tex = V.material = null; V.state = ''; }
   /** keep the photographs around stop i of a room in memory, and let go of the rest of that room */
-  function keep(room, i, reach = 3) { const want = []; for (const V of room.views) (V.i > i - reach && V.i <= i + reach ? (want.push(V), load) : drop)(V); return want; }
+  function keep(room, i) { const want = []; for (const V of room.views) (V.i > i - room.reach && V.i <= i + room.reach ? (want.push(V), load) : drop)(V); return want; }
 
   let W = 1, H = 1, cur = 0, dead = false, first = true, lastT = 0, shown = true;
   const scene = new THREE.Scene(), show = list => { scene.clear(); for (const m of list) scene.add(m); };
   function size() { const r = canvas.getBoundingClientRect(); W = Math.max(1, r.width); H = Math.max(1, r.height); const pr = Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 2); renderer.setPixelRatio(pr); renderer.setSize(W, H, false); for (const t of targets) t.setSize(Math.round(W * pr), Math.round(H * pr)); cross.uniforms.aspect.value = W / H; }
   /** the view from a distance s along one room's path, drawn into a target */
   function compose(room, s, target, strict) {
-    const c = pose(room, s), near = keep(room, Math.min(room.views.length - 1, c.seg)), ready = near.filter(V => V.state === 'ready');
+    const c = pose(room, s), near = keep(room, room.centre(c.seg)), ready = near.filter(V => V.state === 'ready');
     if (!ready.length || (strict && ready.length < near.length)) return false;
     camera.position.copy(c.p); camera.quaternion.copy(c.q);
     const a = W / H, dh = Math.min(room.th, room.tw / a); camera.aspect = a; camera.fov = (2 * Math.atan(dh) * 180) / Math.PI; camera.updateProjectionMatrix(); camera.updateMatrixWorld();
@@ -118,7 +131,7 @@ window.Walk3D = function (opt) {
     renderer.setRenderTarget(rtB); renderer.clear(); show([B.cut]); renderer.render(scene, camera);
     // underneath: the untorn surfaces of A and B, then (drawn over them) whatever the other nearby photographs really show
     const others = list.slice(2, 5).map(e => e[1]);
-    renderer.setRenderTarget(rtC); renderer.clear(); show(A === B ? [A.whole] : [A.whole, B.whole]); renderer.render(scene, camera);
+    renderer.setRenderTarget(rtC); renderer.clear(); show([...new Set([A, B, ...others])].map(V => V.whole)); renderer.render(scene, camera);
     if (others.length) { renderer.clearDepth(); show(others.map(V => V.cut)); renderer.render(scene, camera); }
     scene.clear(); join.uniforms.w.value = wA + wB > 0 ? wB / (wA + wB) : 0; quad.material = join; renderer.setRenderTarget(target); renderer.render(quadScene, quadCam); return true;
   }
@@ -141,12 +154,12 @@ window.Walk3D = function (opt) {
     const p = progress(), goal = p * total; cur = first ? goal : Math.abs(goal - cur) < 0.0004 ? goal : cur + (goal - cur) * Math.min(1, dt * 5);
     if (draw(cur) && first) { first = false; opt.onLoad && opt.onLoad(1); }
     let room = rooms.length - 1; while (room > 0 && cur < rooms[room].start + HANDOVER / 2) room--;
-    opt.onUpdate && opt.onUpdate({ frame: (cur / total) * 239, room, spans, progress: p, portrait: W < H, width: W, height: H, anchors: {}, place: (x, y) => [x * W, y * H] });
+    opt.onUpdate && opt.onUpdate({ frame: (cur / total) * 239, room, spans, chapters, progress: p, portrait: W < H, width: W, height: H, anchors: {}, place: (x, y) => [x * W, y * H] });
   }
   if (window.IntersectionObserver) new IntersectionObserver(e => { shown = e[0].isIntersecting; }).observe(canvas);
   let rz = 0; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(size, 120); });
   size(); if (!opt.still) requestAnimationFrame(tick);
-  return { destroy() { dead = true; }, spans, total,
+  return { destroy() { dead = true; }, spans, chapters, total,
     /** draw one point of the tour (frame 0 to 239), for stills and videos; resolves when the photographs it needs are in */
     async render(f) { dead = true; const x = (f / 239) * total; for (let k = 0; k < 800; k++) { if (draw(x, true)) return true; await new Promise(r => setTimeout(r, 40)); } return false; } };
 };

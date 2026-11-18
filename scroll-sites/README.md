@@ -7,7 +7,7 @@ complete site: copy it to any web host and it works. Nothing needs installing or
 | --- | --- |
 | `home-services/` | A heating, plumbing, electrical, roofing or building firm. The film opens up a model house and lights each system in turn. |
 | `car-dealer/` | A used-car lot. The film flies over the forecourt at dusk to three featured cars, then a car finder, a two-car comparison, a monthly-payment sum and the stock. |
-| `property-listing/` | One house for sale, for an estate agent (or one rental, for a host). **The template for making a scroll-driven house tour from a client's own photographs**: one command turns their photo folder into the tour, and the page plays it as the visitor scrolls. Then facts, the gallery, rooms, a mortgage estimate and a viewing form. The sample photographs are free-licence ones of a real house, credited in `originals/CREDITS.md`. |
+| `property-listing/` | One home for sale (or one rental). **The template for making a scroll-driven house tour from a client's own video or photographs.** The demo is a real apartment rebuilt from a freely available capture (see its `CREDITS.md`): scrolling walks through the office, hallway, living room, kitchen, dining room and bedrooms, with the rooms named automatically. Then facts, the gallery, rooms, a mortgage estimate and a viewing form. |
 | `holiday-rental/` | A holiday apartment, for a host who wants direct bookings. The opening is a **live 3D walkthrough**: scrolling walks the camera through a furnished sea-view apartment in one unbroken move, with a day / sunset / night switch and a Play tour button, ending on a view down into the whole plan. Then facts, pictures and a calendar that prices any free dates. |
 
 `demos/` holds mock-ups made for a named business to show them what their site could be. Each says "Concept design" on
@@ -59,43 +59,58 @@ the new film (it has 240 frames; a chapter's text shows between its two numbers)
 - `film.js`: the scroll film player. No libraries; frames are decoded on demand so phones do not run out of memory.
 - `frames/`: the film, packed into a few files (each `.webp` there is a run of frames, not one picture), plus the first frame as a poster.
 
-## A house tour from a client's photographs (property-listing)
+## A house tour from a client's video or photographs (property-listing)
 
-This is the template for client work. Nothing is modelled by hand: every pixel on screen comes from the client's
-photographs, placed in 3D, and the camera walks through them at a steady pace as the visitor scrolls.
+This is the template for client work. Nothing is modelled by hand: every pixel on screen comes from the client's own
+footage, placed in 3D, and the camera walks through it at a steady pace as the visitor scrolls.
 
-**Only use photographs the client has given you, with their say-so to use them on their site.**
+**Only use footage the client has given you, with their say-so to use it on their site.**
 
-### 1. Get the photographs
+There are two builders. Which one to use depends on what the client can give you.
 
-Ask for the originals, named or numbered in tour order (front of the house first). What you get decides what the tour
-is like:
+| The client gives you | Use | What the tour is like |
+| --- | --- | --- |
+| A **video** of someone walking through the home, or **hundreds of overlapping photographs** | `build_walk.py` | The best: one smooth walk along the real route, rooms named automatically. |
+| The usual **listing photographs** (a few per room) | `build_tour.py` | Rooms with several overlapping shots are rebuilt and walked through; a room with one shot gets a short walk into the picture. |
 
-- **Several overlapping wide shots of a room, taken a few steps apart**: the room is rebuilt in 3D and the camera
-  really walks through it. Five to eight per room is plenty. This is worth asking the client (or their photographer)
-  for; a phone is fine.
-- **One shot of a room** (what most listings have): the camera walks forward into that picture and on to the next.
-- Close-ups of details add nothing to the tour; keep them for the gallery.
+### Asking for a video (the better route)
 
-### 2. Build the tour (one command)
+A phone is enough. Tell the client: walk slowly, about one step a second; hold the phone level and steady, at chest
+height, landscape; keep moving forward and turn slowly; go through every room once, without doubling back more than
+you must; lights on, curtains open. Two to four minutes covers most homes. Fast, shaky or blurred footage cannot be
+placed, and the builder says so when that happens.
+
+### Build it (one command)
 
 ```
-pip install pycolmap onnxruntime numpy pillow          # once
-python3 -I tools/recon/build_tour.py client-photos/ work/ property-listing/walk --model model.onnx
+pip install pycolmap onnxruntime numpy pillow tokenizers        # once; ffmpeg is needed for video
+
+python3 -I tools/recon/build_walk.py walkthrough.mp4 work/ property-listing/walk --model depth.onnx --clip clip/
+python3 -I tools/recon/build_tour.py client-photos/ work/ property-listing/walk --model depth.onnx
 ```
 
-`model.onnx` is the Depth Anything V2 (small) model: `onnx/model.onnx` from `onnx-community/depth-anything-v2-small` on
-Hugging Face (Apache-2.0, about 100 MB, not kept in this repo). Forty photographs take a few minutes on a laptop.
+Two model files are needed, downloaded once from Hugging Face and not kept in this repo:
 
-It writes `work/plan.json`, the list of rooms in order, and pictures of each matched group in `work/sheets/`. **Edit
-`plan.json`** to rename rooms, reorder or drop them, or change which photographs a room uses and in what order, then
-run the same command again (the slow steps are remembered). Add `"push": 0.6` to a room to make the camera travel less
-far into it, if things near the camera stretch.
+- `depth.onnx`: `onnx/model.onnx` from `onnx-community/depth-anything-v2-small` (Apache-2.0, about 100 MB).
+- `clip/`, only for `build_walk.py`'s room names: `onnx/vision_model_quantized.onnx`, `onnx/text_model_quantized.onnx` and
+  `tokenizer.json` from `Xenova/clip-vit-base-patch32` (MIT, about 155 MB).
 
-### 3. Add the words and publish
+**`build_walk.py`** cuts the video into frames, works out where each was taken, plans a smooth path along the route
+(ironing out wobbles and pauses, keeping a steady height, looking where the footage looks), keeps only the stretches
+where the footage really covers the view, estimates depth for the frames it uses, and names the rooms along the way
+(living room, kitchen, bedroom ...). With `--sparse <folder>` it uses an existing COLMAP reconstruction of the frames
+instead of making its own.
 
-The command prints a ready-made list of the rooms. Paste it under `tour` in `property-listing/site.config.js`, write a
-title and a line for each room, fill in the rest of that file (address, price, agent), and upload the folder.
+**`build_tour.py`** matches the photographs, groups them into rooms and writes `work/plan.json`, the list of rooms in
+order, with pictures of each matched group in `work/sheets/`. Edit `plan.json` to rename, reorder or drop rooms, or to
+change which photographs a room uses, then run the same command again (the slow steps are remembered). Add
+`"push": 0.6` to a room to make the camera travel less far into it.
+
+### Add the words and publish
+
+In `property-listing/site.config.js`: for a video tour, give each room name its words under `rooms` (a name with no
+entry is shown on its own); for a photo tour, paste the list the command prints under `tour` and write a line for
+each. Fill in the rest of that file (address, price, agent) and upload the folder.
 
 `node tools/tour-video.mjs video out --site property-listing` records the tour as a video (for a reel or a listing).
 To change the viewer itself, edit `property-listing/tour-src/walk3d.js` and rebuild:
@@ -103,11 +118,12 @@ To change the viewer itself, edit `property-listing/tour-src/walk3d.js` and rebu
 
 ### What to expect
 
-- Within a rebuilt room the camera travels between the spots the photographs were taken from, then on towards the far
-  end of the room. Rooms follow one another with the next opening out of the middle of the view.
 - It is a guided tour along one path, not a free roam: the visitor cannot turn round or wander off.
-- Thin things close to the camera (chair legs, lamp stems, a table edge) can stretch as the camera passes.
-- Photographs with no lens data are assumed to be a typical wide listing lens (`--f35 22` changes that).
+- Where the footage does not cover the view well enough, the walk is cut and picks up again further on, with the next
+  stretch opening out of the middle of the view. Better footage means fewer cuts.
+- Thin things close to the camera (chair legs, lamp stems) can stretch as the camera passes.
+- Mirrors, windows and shiny floors confuse the depth estimate a little.
+- A long walk is heavy: the demo is about 30 MB, loaded a little at a time as the visitor scrolls.
 
 ## The 3D walkthrough (holiday-rental)
 
