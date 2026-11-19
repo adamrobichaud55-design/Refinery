@@ -13,7 +13,8 @@
 import * as THREE from 'three';
 
 const clamp01 = v => Math.min(1, Math.max(0, v));
-const K = 4;                               // how many photographs are projected at once
+const K = 6;                               // how many photographs are projected at once: four facing the way the visitor looks ...
+const LOW = 2;                             // ... and, among the six, two that look down at the floor in front, which the others miss
 const FAR = 40;                            // the furthest distance a projector's view is measured to, in metres
 const TURN = 1.2;                          // how much walking one radian of turning counts for, when scoring photographs
 
@@ -35,20 +36,20 @@ window.Scene3D = function (opt) {
   // ---- the projectors: each photograph, where it was taken ----
   const keys = S.keys.map((d, i) => {
     const r = d.r, pos = new THREE.Vector3(...d.p), toCam = new THREE.Matrix4().set(r[0], r[1], r[2], 0, r[3], r[4], r[5], 0, r[6], r[7], r[8], 0, 0, 0, 0, 1).multiply(new THREE.Matrix4().makeTranslation(-pos.x, -pos.y, -pos.z));
-    return { d, i, pos, dir: new THREE.Vector3(r[6], r[7], r[8]), toCam, lens: new THREE.Vector4(d.f[0], d.f[1], d.c[0], d.c[1]), state: '', tex: null, depth: null, used: 0 };
+    return { d, i, pos, dir: new THREE.Vector3(r[6], r[7], r[8]), toCam, lens: new THREE.Vector4(d.f[0], d.f[1], d.c[0], d.c[1]), gain: new THREE.Vector3(...(d.g || [1, 1, 1])), state: '', tex: null, depth: null, used: 0 };
   });
   const block = k => `{ vec4 c = cam${k} * vec4(vW, 1.0);
       if (wt${k} > 0.0 && c.z > 0.12) { vec2 uv = vec2(lens${k}.x * c.x / c.z + lens${k}.z, lens${k}.y * c.y / c.z + lens${k}.w);
         if (uv.x > 0.0 && uv.x < 1.0 && uv.y > 0.0 && uv.y < 1.0) {
           float seen = unpack(texture2D(dep${k}, vec2(uv.x, 1.0 - uv.y))) * ${FAR.toFixed(1)}, vis = 1.0 - smoothstep(0.03 + 0.02 * c.z, 0.08 + 0.05 * c.z, c.z - seen);      // only what this photograph really saw
           vec2 e = min(uv, 1.0 - uv); float edge = smoothstep(0.0, 0.08, min(e.x, e.y)), ang = pow(max(dot(toEye, normalize(pos${k} - vW)), 0.0), 8.0);
-          float w = wt${k} * vis * edge * (0.03 + ang); w *= w; acc += texture2D(tex${k}, uv).rgb * w; tot += w; } } }`;
+          float w = wt${k} * vis * edge * (0.03 + ang); w *= w; acc += texture2D(tex${k}, uv).rgb * gain${k} * w; tot += w; } } }`;
   const ids = [...Array(K).keys()], uniforms = { eye: { value: new THREE.Vector3() } };
-  for (const k of ids) Object.assign(uniforms, { ['tex' + k]: { value: null }, ['dep' + k]: { value: null }, ['cam' + k]: { value: new THREE.Matrix4() }, ['lens' + k]: { value: new THREE.Vector4() }, ['pos' + k]: { value: new THREE.Vector3() }, ['wt' + k]: { value: 0 } });
+  for (const k of ids) Object.assign(uniforms, { ['tex' + k]: { value: null }, ['dep' + k]: { value: null }, ['cam' + k]: { value: new THREE.Matrix4() }, ['lens' + k]: { value: new THREE.Vector4() }, ['pos' + k]: { value: new THREE.Vector3() }, ['gain' + k]: { value: new THREE.Vector3(1, 1, 1) }, ['wt' + k]: { value: 0 } });
   const material = new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms,
     vertexShader: 'attribute vec4 tint; varying vec3 vW; varying vec3 vTint; void main(){ vW = position; vTint = tint.rgb; gl_Position = projectionMatrix * viewMatrix * vec4(position, 1.0); }',
     fragmentShader: `uniform vec3 eye; varying vec3 vW; varying vec3 vTint;
-      ${ids.map(k => `uniform sampler2D tex${k}, dep${k}; uniform mat4 cam${k}; uniform vec4 lens${k}; uniform vec3 pos${k}; uniform float wt${k};`).join('\n')}
+      ${ids.map(k => `uniform sampler2D tex${k}, dep${k}; uniform mat4 cam${k}; uniform vec4 lens${k}; uniform vec3 pos${k}, gain${k}; uniform float wt${k};`).join('\n')}
       float unpack(vec4 c){ return dot(c, vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0)); }
       void main(){ vec3 acc = vec3(0.0), toEye = normalize(eye - vW); float tot = 0.0;
         ${ids.map(block).join('\n')}
@@ -81,21 +82,21 @@ window.Scene3D = function (opt) {
   let clock = 0;
   /** the photographs nearest a viewpoint: by how far away each was taken and how differently it faces. Their weights
    *  fall to nothing at the first one left out, so the set changes without a jump as the visitor moves. */
-  function choose(p, dir) {
-    const list = keys.map(Kf => [Kf.pos.distanceTo(p) + TURN * Math.acos(Math.min(1, Math.max(-1, Kf.dir.dot(dir)))), Kf]).sort((a, b) => a[0] - b[0]), cut = list[Math.min(K, list.length - 1)][0];
-    return list.slice(0, K).map(([s, Kf]) => ({ Kf, w: list.length > K ? Math.max(0, 1 - s / cut) : 1 }));
+  function choose(p, dir, many, skip) {
+    const list = keys.filter(Kf => !skip || !skip.has(Kf)).map(Kf => [Kf.pos.distanceTo(p) + TURN * Math.acos(Math.min(1, Math.max(-1, Kf.dir.dot(dir)))), Kf]).sort((a, b) => a[0] - b[0]), cut = list[Math.min(many, list.length - 1)][0];
+    return list.slice(0, many).map(([s, Kf]) => ({ Kf, w: list.length > many ? Math.max(0, 1 - s / cut) : 1 }));
   }
-  const fwd = new THREE.Vector3(), eyeP = new THREE.Vector3();
+  const fwd = new THREE.Vector3(), eyeP = new THREE.Vector3(), lowDir = new THREE.Vector3();
   /** draw the scene from the camera as it stands; false if (when strict) a photograph it needs has not arrived */
   function draw(strict) {
     if (!mesh) return false;
     const cam = renderer.xr.isPresenting ? renderer.xr.getCamera() : camera; camera.updateMatrixWorld(); cam.getWorldPosition(eyeP); cam.getWorldDirection(fwd);
-    const pick = choose(eyeP, fwd); clock++;
+    const pick = choose(eyeP, fwd, K - LOW); pick.push(...choose(eyeP, lowDir.set(fwd.x * 0.74, fwd.y * 0.74 - 0.67, fwd.z * 0.74).normalize(), LOW, new Set(pick.map(e => e.Kf)))); clock++;
     for (const { Kf } of pick) { Kf.used = clock; load(Kf); }
     if (strict && pick.some(({ Kf }) => Kf.state !== 'ready')) return false;
     const ready = keys.filter(Kf => Kf.state === 'ready'); if (ready.length > 28) for (const Kf of ready.sort((a, b) => a.used - b.used).slice(0, ready.length - 28)) drop(Kf);
     uniforms.eye.value.copy(eyeP);
-    pick.forEach(({ Kf, w }, k) => { const on = Kf.state === 'ready'; uniforms['wt' + k].value = on ? Math.max(w, 0.0001) : 0; if (on) { uniforms['tex' + k].value = Kf.tex; uniforms['dep' + k].value = Kf.depth.texture; uniforms['cam' + k].value.copy(Kf.toCam); uniforms['lens' + k].value.copy(Kf.lens); uniforms['pos' + k].value.copy(Kf.pos); } });
+    pick.forEach(({ Kf, w }, k) => { const on = Kf.state === 'ready'; uniforms['wt' + k].value = on ? Math.max(w, 0.0001) : 0; if (on) { uniforms['tex' + k].value = Kf.tex; uniforms['dep' + k].value = Kf.depth.texture; uniforms['cam' + k].value.copy(Kf.toCam); uniforms['lens' + k].value.copy(Kf.lens); uniforms['pos' + k].value.copy(Kf.pos); uniforms['gain' + k].value.copy(Kf.gain); } });
     for (let k = pick.length; k < K; k++) uniforms['wt' + k].value = 0;
     renderer.render(world, camera); return true;
   }
@@ -165,7 +166,8 @@ window.Scene3D = function (opt) {
   if (window.IntersectionObserver) new IntersectionObserver(e => { shown = e[0].isIntersecting; }).observe(canvas);
   let rz = 0; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(size, 120); });
   size(); start(0);
-  const ready = fetch(base + S.mesh).then(r => { if (!r.ok) throw new Error(S.mesh + ' ' + r.status); return r.arrayBuffer(); }).then(buf => { mesh = new THREE.Mesh(readGlb(buf), material); mesh.frustumCulled = false; mesh.geometry.computeBoundingSphere(); world.add(mesh); if (!opt.still) renderer.setAnimationLoop(frame); });
+  // (a host that serves only web file types can be given the model wrapped in a .json file instead: { "glb": "<base64>" })
+  const ready = fetch(base + S.mesh).then(r => { if (!r.ok) throw new Error(S.mesh + ' ' + r.status); return S.mesh.endsWith('.json') ? r.json().then(j => Uint8Array.from(atob(j.glb), c => c.charCodeAt(0)).buffer) : r.arrayBuffer(); }).then(buf => { mesh = new THREE.Mesh(readGlb(buf), material); mesh.frustumCulled = false; mesh.geometry.computeBoundingSphere(); world.add(mesh); if (!opt.still) renderer.setAnimationLoop(frame); });
   ready.catch(e => console.error('Scene3D: could not load the model', e));
 
   return { total, chapters, spans: [[0, 239]], ready, view: { camera, renderer }, pose,

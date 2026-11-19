@@ -180,11 +180,23 @@ gl = {'asset': {'version': '2.0'}, 'scene': 0, 'scenes': [{'nodes': [0]}], 'node
       'accessors': [{'bufferView': 0, 'componentType': 5126, 'count': len(pos), 'type': 'VEC3', 'min': [float(x) for x in pos.min(0)], 'max': [float(x) for x in pos.max(0)]}, {'bufferView': 1, 'componentType': 5121, 'normalized': True, 'count': len(col), 'type': 'VEC4'}, {'bufferView': 2, 'componentType': 5125, 'count': len(idx), 'type': 'SCALAR'}]}
 js = json.dumps(gl, separators=(',', ':')).encode(); js += b' ' * (-len(js) % 4); blob += b'\0' * (-len(blob) % 4)
 open(os.path.join(out, 'mesh.glb'), 'wb').write(struct.pack('<III', 0x46546C67, 2, 28 + len(js) + len(blob)) + struct.pack('<II', len(js), 0x4E4F534A) + js + struct.pack('<II', len(blob), 0x004E4942) + blob)
+# A phone changes its exposure as it turns to and from the windows, so two photographs of one wall can differ in
+# brightness and tint, and the join between them would show. Each photograph is compared with the model's own colour
+# (the average of every frame) over the surfaces it sees, and given the correction that brings it into line.
+def match(k, i, im):
+    sm = np.asarray(im.resize((256, 192), Image.BILINEAR), np.float32) / 255.0; Xc = (VX - Cw[i]) @ Rw[i]; z = Xc[:, 2]; ok = z > 0.3
+    u = np.where(ok, K[0, 0] / W0 * Xc[:, 0] / np.maximum(z, 1e-6) + K[0, 2] / W0, -1); v = np.where(ok, K[1, 1] / H0 * Xc[:, 1] / np.maximum(z, 1e-6) + K[1, 2] / H0, -1); ok &= (u > 0.04) & (u < 0.96) & (v > 0.04) & (v < 0.96) & (z < 4.5)
+    if ok.sum() < 300: return [1.0, 1.0, 1.0]
+    d = depth_m(i); dz = d[np.clip((v[ok] * d.shape[0]).astype(int), 0, d.shape[0] - 1), np.clip((u[ok] * d.shape[1]).astype(int), 0, d.shape[1] - 1)]; vis = np.abs(dz - z[ok]) < 0.06
+    if vis.sum() < 300: return [1.0, 1.0, 1.0]
+    ph = sm[np.clip((v[ok][vis] * 192).astype(int), 0, 191), np.clip((u[ok][vis] * 256).astype(int), 0, 255)]; ref = COL[ok][vis]; fine = (ph.max(1) < 0.97) & (ph.min(1) > 0.03)      # not where the photograph is blown out or black
+    if fine.sum() < 300: return [1.0, 1.0, 1.0]
+    return [round(float(np.clip(ref[fine][:, c].mean() / max(ph[fine][:, c].mean(), 1e-3), 0.6, 1.6)), 3) for c in range(3)]
 metas = []
 for k, i in enumerate(keys):
-    im = Image.open(os.path.join(kdir, f'k{k:04d}.jpg')).convert('RGB'); buf = io.BytesIO(); im.save(buf, 'WEBP', quality=78, method=6); pack = f'k{k // 16:02d}.webp'; f = os.path.join(out, pack)
+    im = Image.open(os.path.join(kdir, f'k{k:04d}.jpg')).convert('RGB'); gain = match(k, i, im); buf = io.BytesIO(); im.save(buf, 'WEBP', quality=78, method=6); pack = f'k{k // 16:02d}.webp'; f = os.path.join(out, pack)
     at = [os.path.getsize(f) if k % 16 else 0, buf.tell()]; open(f, 'ab' if k % 16 else 'wb').write(buf.getvalue())
     metas.append({'pack': pack, 'at': at, 'w': im.size[0], 'h': im.size[1], 'f': [round(float(K[0, 0] / W0), 5), round(float(K[1, 1] / H0), 5)], 'c': [round(float(K[0, 2] / W0), 5), round(float(K[1, 2] / H0), 5)],
-                  'p': [round(float(x), 4) for x in Cw[i]], 'r': [round(float(x), 5) for x in Rw[i].T.reshape(-1)]})      # r: the world seen from this camera (rows: its right, its down, its forward)
+                  'g': gain, 'p': [round(float(x), 4) for x in Cw[i]], 'r': [round(float(x), 5) for x in Rw[i].T.reshape(-1)]})      # r: the world seen from this camera (rows: its right, its down, its forward)
 json.dump({'mesh': 'mesh.glb', 'eye': round(EYE, 3), 'size': [round(float(x), 2) for x in (VX.max(0) - VX.min(0))], 'keys': metas, 'path': cams, 'chapters': chapters}, open(os.path.join(out, 'scene.json'), 'w'), separators=(',', ':'))
 print(f'\nwritten to {out}: mesh.glb ({os.path.getsize(os.path.join(out, "mesh.glb")) / 1e6:.1f} MB), {len(keys)} photographs in {(len(keys) + 15) // 16} files, a route of {len(cams)} steps' + (f", rooms: {[c['label'] for c in chapters]}" if chapters else ''))
