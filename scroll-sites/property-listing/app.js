@@ -31,9 +31,9 @@
       const cap = t => t.replace(/^./, m => m.toUpperCase());
       // a walk can pass through a room more than once: its words are shown the first time, only its name after that, and the rail lists each room once
       const names = [...new Set(tour.chapters.map(c => c.label))], met = new Set();
-      const words = tour.chapters.map((c, k) => { const first = !met.has(c.label); met.add(c.label); return { label: cap(c.label), ...(first ? (S.rooms || {})[c.label] || {} : {}), ...((S.tour || [])[k] || {}) }; });
+      const words = tour.chapters.map((c, k) => { const first = !met.has(c.label); met.add(c.label); const own = (S.rooms || {})[c.label] || {}; return { ...(first ? own : {}), label: own.label || cap(c.label), ...((S.tour || [])[k] || {}) }; });
       $('panels').insertAdjacentHTML('beforeend', words.map(c => `<div class="panel"><span class="label">${esc(c.label)}</span>${c.title ? `<h2>${esc(c.title)}</h2>` : ''}${c.body ? `<p>${esc(c.body)}</p>` : ''}${c.cta ? `<a class="btn" href="#contact">${esc(c.cta)}</a>` : ''}</div>`).join(''));
-      $('rail').innerHTML = names.map(n => `<li>${esc(cap(n))}</li>`).join('');
+      $('rail').innerHTML = names.map(n => `<li>${esc(((S.rooms || {})[n] || {}).label || cap(n))}</li>`).join('');
       const panelEls = [...$('panels').children].slice(1), railEls = [...$('rail').children];
       $('film').style.height = `calc(${Math.round(Math.min(2600, 100 + tour.total * (tour.total > 60 ? 15 : 26)))} * 1svh)`;      // the longer the walk, the longer the scroll: a steady pace throughout
     })).catch(e => console.error('walk-through: could not load', e));
