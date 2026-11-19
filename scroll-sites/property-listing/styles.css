@@ -162,3 +162,8 @@ form textarea { min-height: 6.5rem; resize: vertical; }
 /* the walk through the photographs runs longer than the old film, and its captions sit on the pictures */
 .film { height: 1000vh; height: 1000svh; }
 .panel h1, .panel h2, .panel p, .panel .ask, .panel .label, .hint { text-shadow: 0 1px 14px rgba(0, 0, 0, .6); }
+
+/* the invitation to the free 3D view (shown when the tour is a 3D scene) */
+.explore[hidden] { display: none; }
+.explore .in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem 3rem; }
+.explore h2 { margin: .4rem 0 .5rem; } .explore p { margin: 0; color: var(--muted); max-width: 46ch; }

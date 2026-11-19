@@ -8,6 +8,7 @@
 //   shot = { src, depth, to: [x, y] }     "to": the spot the camera heads for, as fractions of the photograph
 // "land" is used on wide screens and "port" on upright ones (phones).
 import * as THREE from 'three';
+import './scene3d.js';                   // ... and Scene3D, the home as one 3D scene (scroll tour, video frames, free look and VR)
 import './walk3d.js';                    // the bundle also carries Walk3D, the walk through a reconstructed room
 
 const OVERLAP = 0.3;                     // how much of each shot is shared with the next one

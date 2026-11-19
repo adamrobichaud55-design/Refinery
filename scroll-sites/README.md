@@ -59,6 +59,55 @@ the new film (it has 240 frames; a chapter's text shows between its two numbers)
 - `film.js`: the scroll film player. No libraries; frames are decoded on demand so phones do not run out of memory.
 - `frames/`: the film, packed into a few files (each `.webp` there is a run of frames, not one picture), plus the first frame as a poster.
 
+## The 3D package: one scan, one scene, three deliveries (property-listing)
+
+This is the offer for photographers and agents: scan the home once and deliver it three ways.
+
+| Delivery | What the client gets | File |
+| --- | --- | --- |
+| **Scroll site** | The listing page: scrolling walks the visitor through the home | `index.html` |
+| **3D view** | The same home to look around freely: drag to look, tap a spot to walk there; on a headset, an *Enter VR* button | `explore.html` |
+| **Video** | The same walk as a film for a reel or a listing | made by `tools/tour-video.mjs` |
+
+All three are drawn from one folder, `property-listing/scene/`, which one command builds from the scan.
+
+**1. Capture.** An iPhone or iPad Pro (the models with a depth sensor) and the free Stray Scanner app. Walk slowly
+through every room, sweeping the phone over walls, floor and furniture; point down each room as well as at what is
+beside you. Ten minutes covers an apartment. Copy the scan's folder off the phone: `rgb.mp4`, `odometry.csv`,
+`camera_matrix.csv`, `depth/`, `confidence/`.
+
+**2. Build the scene.**
+
+```
+pip install open3d numpy pillow onnxruntime tokenizers           # once; ffmpeg is needed too
+python3 -I tools/scene/build_scene.py scan-folder/ work/ property-listing/scene --clip clip/
+```
+
+It fuses the scan's depth pictures into one solid model of the home, keeps about three hundred of its sharpest
+photographs with the exact place each was taken, and plans a walking route that visits each part once. The site
+projects the photographs onto the model, so the picture has their detail and holds together from any angle.
+
+**3. Name the rooms.** The room names along the route are guessed and are often wrong. Open
+`property-listing/scene/scene.json` and correct `chapters`: each has a `label` and the route steps (`from`, `to`,
+ten to a metre) it covers. Give each label its words under `rooms` in `site.config.js`.
+
+**4. Check and deliver.** Serve the folder (`python3 -m http.server 5197` from `scroll-sites`) and open
+`property-listing/` and `property-listing/explore.html`. For the video:
+
+```
+node tools/tour-video.mjs video out --site property-listing --page scene-dev.html --frames 1440
+ffmpeg -framerate 24 -i out/f%04d.png -c:v libx264 -crf 20 -pix_fmt yuv420p tour.mp4
+```
+
+Upload the `property-listing` folder to any static host. A client's footage is theirs: `scene/` is not kept in this
+repository (it is in `.gitignore`), so each job's scene lives with that job.
+
+What to expect: thin things the depth sensor misses (a pendant lamp, chair legs, plants) can look smeared or doubled;
+mirrors, windows and screens confuse it; and anything the scan never looked at shows as a soft patch. A slow,
+thorough scan is the cure for all three. The VR button has not been tried on a headset yet.
+
+With no `scene/` folder the page falls back to the photo walk described next.
+
 ## A house tour from a client's video or photographs (property-listing)
 
 This is the template for client work. Nothing is modelled by hand: every pixel on screen comes from the client's own

@@ -14,11 +14,14 @@
   const heroHTML = `<div class="panel hero"><span class="label">${esc(L.status)} · ${esc(L.town)}</span><h1>${esc(L.address)}</h1><p>${esc(L.summary)}</p><div class="ask">${money(L.price)}<small>${esc(L.facts.slice(0, 2).map(f => f[0] + ' ' + f[1].toLowerCase().slice(0, 3)).join(' · '))}</small></div><a class="btn" href="#contact">${esc(S.hero.cta)}</a><span class="hint">${esc(S.hero.hint)}</span></div>`;
   const fade = (f, a, b, e = 4) => Math.min(1, Math.max(0, Math.min((f - a) / e, (b - f) / e)));
   $('panels').innerHTML = heroHTML; const hero = $('panels').firstElementChild; hero.style.setProperty('--o', 1); hero.classList.add('on');
-  fetch('walk/tour.json').then(r => r.json()).then(list => Promise.all(list.map(t => fetch(`walk/${t.dir}/${t.file || "walk.json"}`).then(r => r.json()).then(walk => ({ base: `walk/${t.dir}/`, walk, push: t.push, name: t.name.replace(/-/g, ' ') }))))
-    .then(rooms => {
+  const walkRooms = () => fetch('walk/tour.json').then(r => r.json()).then(list => Promise.all(list.map(t => fetch(`walk/${t.dir}/${t.file || "walk.json"}`).then(r => r.json()).then(walk => ({ base: `walk/${t.dir}/`, walk, push: t.push, name: t.name.replace(/-/g, ' ') }))))
+    .then(rooms => ({ rooms })));
+  // the home as one 3D scene (scene/, built by tools/scene/build_scene.py) if there is one; otherwise the walk through photographs (walk/)
+  fetch('scene/scene.json').then(r => (r.ok ? r.json() : null)).catch(() => null).then(scene => (scene ? { scene } : walkRooms()))
+    .then(src => {
       const HERO = 5;                                                        // the address plate shows for the first few frames
-      const tour = window.Walk3D({
-        canvas: $('filmCanvas'), section: $('film'), rooms,
+      const tour = (src.scene ? window.Scene3D : window.Walk3D)({
+        canvas: $('filmCanvas'), section: $('film'), ...(src.scene ? { scene: src.scene, base: 'scene/' } : { rooms: src.rooms }),
         onUpdate(u) {
           const o0 = Math.min(1, Math.max(0, (HERO - u.frame) / 2.5)); hero.style.setProperty('--o', o0.toFixed(3)); hero.classList.toggle('on', o0 > 0.02);
           let now = -1;                                                      // (no words while crossing from one room to the next)
@@ -35,8 +38,9 @@
       $('panels').insertAdjacentHTML('beforeend', words.map(c => `<div class="panel"><span class="label">${esc(c.label)}</span>${c.title ? `<h2>${esc(c.title)}</h2>` : ''}${c.body ? `<p>${esc(c.body)}</p>` : ''}${c.cta ? `<a class="btn" href="#contact">${esc(c.cta)}</a>` : ''}</div>`).join(''));
       $('rail').innerHTML = names.map(n => `<li>${esc(((S.rooms || {})[n] || {}).label || cap(n))}</li>`).join('');
       const panelEls = [...$('panels').children].slice(1), railEls = [...$('rail').children];
-      $('film').style.height = `calc(${Math.round(Math.min(2600, 100 + tour.total * (tour.total > 60 ? 15 : 26)))} * 1svh)`;      // the longer the walk, the longer the scroll: a steady pace throughout
-    })).catch(e => console.error('walk-through: could not load', e));
+      $('film').style.height = `calc(${Math.round(Math.min(2600, 100 + tour.total * (src.scene ? 30 : tour.total > 60 ? 15 : 26)))} * 1svh)`;      // the longer the walk, the longer the scroll: a steady pace throughout
+      if (src.scene && $('explore')) $('explore').hidden = false;          // the same scene can be looked around freely, and stood in with a headset
+    }).catch(e => console.error('walk-through: could not load', e));
 
   // ---- facts and description ----
   $('facts').innerHTML = `<div class="in"><div class="head"><span class="label">${esc(L.status)}</span><h2>${esc(L.address)}, <i>${esc(L.town)}</i></h2></div>

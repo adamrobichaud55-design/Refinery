@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Look around in 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500&family=Hanken+Grotesk:wght@400;500;600&family=DM+Mono:wght@400;500&display=swap">
+<style>
+/* The free view of the home: the scene fills the screen; a thin bar of controls sits over it. */
+:root { color-scheme: dark; --bg: #010205; --ink: #f3eee4; --muted: #9ba6b8; --line: rgba(188, 208, 255, .22); --accent: #9fd8c0; --accent-ink: #06150f;
+  --display: "Newsreader", Georgia, serif; --body: "Hanken Grotesk", "Segoe UI", Roboto, Helvetica, Arial, sans-serif; --mono: "DM Mono", ui-monospace, Menlo, Consolas, monospace; }
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; background: var(--bg); color: var(--ink); font-family: var(--body); overflow: hidden; }
+canvas { position: fixed; inset: 0; width: 100%; height: 100%; display: block; cursor: grab; }
+canvas:active { cursor: grabbing; }
+.bar { position: fixed; inset: 0 0 auto 0; display: flex; align-items: center; gap: .75rem; padding: max(12px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) 12px max(16px, env(safe-area-inset-left)); background: linear-gradient(rgba(1, 2, 5, .82), rgba(1, 2, 5, 0)); pointer-events: none; }
+.bar > * { pointer-events: auto; }
+.back { color: var(--ink); text-decoration: none; font: 500 .95rem var(--body); padding: .45rem .1rem; }
+.where { font: 500 1.05rem var(--display); margin-right: auto; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+button { font: 500 .78rem var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--ink); background: rgba(16, 21, 31, .72); border: 1px solid var(--line); border-radius: 4px; padding: .6rem .8rem; cursor: pointer; white-space: nowrap; }
+button[aria-pressed="true"], button.go { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+button:focus-visible, .back:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.hint { position: fixed; inset: auto 0 max(18px, env(safe-area-inset-bottom)) 0; text-align: center; font: 400 .86rem var(--body); color: var(--ink); text-shadow: 0 1px 8px rgba(0, 0, 0, .9); pointer-events: none; transition: opacity .6s; padding: 0 16px; }
+.load { position: fixed; inset: 0; display: grid; place-items: center; background: var(--bg); font: 400 .9rem var(--mono); color: var(--muted); letter-spacing: .06em; transition: opacity .5s; }
+.load.done { opacity: 0; pointer-events: none; }
+@media (max-width: 520px) { .where { display: none; } .bar { justify-content: space-between; } }
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="The home in 3D. Drag to look around; tap or click a spot to walk to it."></canvas>
+<div class="bar"><a class="back" href="./">&larr; Listing</a><span class="where" id="where"></span><button id="tour" aria-pressed="false">Guided tour</button><button id="vr" class="go" hidden>Enter VR</button></div>
+<p class="hint" id="hint">Drag to look around. Tap a spot to walk there.</p>
+<div class="load" id="load">Loading the home&hellip;</div>
+<script src="site.config.js"></script>
+<script src="photo3d.bundle.js"></script>
+<script>
+(function () {
+  var S = window.SITE || {}, L = S.listing || {}; if (S.accent) document.documentElement.style.setProperty('--accent', S.accent);
+  document.getElementById('where').textContent = [L.address, L.town].filter(Boolean).join(', ');
+  fetch('scene/scene.json').then(function (r) { return r.json(); }).then(function (scene) {
+    var view = window.Scene3D({ canvas: document.getElementById('c'), scene: scene, base: 'scene/', explore: true, onLoad: function () { document.getElementById('load').classList.add('done'); } });
+    var tour = document.getElementById('tour'), vr = document.getElementById('vr'), hint = document.getElementById('hint');
+    tour.addEventListener('click', function () { var on = tour.getAttribute('aria-pressed') !== 'true'; tour.setAttribute('aria-pressed', on); view.explore.tour(on); hint.style.opacity = on ? 0 : 1; });
+    document.getElementById('c').addEventListener('pointerdown', function () { tour.setAttribute('aria-pressed', 'false'); setTimeout(function () { hint.style.opacity = 0; }, 2500); });
+    view.explore.vrOffered().then(function (yes) { vr.hidden = !yes; });
+    vr.addEventListener('click', function () { view.explore.vr().then(function (ok) { if (ok) hint.textContent = 'Left stick to walk, right stick to turn.'; }); });
+  }).catch(function (e) { document.getElementById('load').textContent = 'The 3D view could not be loaded.'; console.error(e); });
+})();
+</script>
+</body>
+</html>
