@@ -40,7 +40,7 @@
       $('panels').insertAdjacentHTML('beforeend', words.map(c => `<div class="panel"><span class="label">${esc(c.label)}</span>${c.title ? `<h2>${esc(c.title)}</h2>` : ''}${c.body ? `<p>${esc(c.body)}</p>` : ''}${c.cta ? `<a class="btn" href="#contact">${esc(c.cta)}</a>` : ''}</div>`).join(''));
       $('rail').innerHTML = names.map(n => `<li>${esc(((S.rooms || {})[n] || {}).label || cap(n))}</li>`).join('');
       const panelEls = [...$('panels').children].slice(1), railEls = [...$('rail').children];
-      $('film').style.height = `calc(${Math.round(Math.min(2600, 100 + tour.total * (src.scene ? 30 : tour.total > 60 ? 15 : 26)))} * 1svh)`;      // the longer the walk, the longer the scroll: a steady pace throughout
+      $('film').style.height = `calc(${Math.round(Math.min(2600, 100 + tour.total * (src.scene ? 22 : tour.total > 60 ? 15 : 26)))} * 1svh)`;      // the longer the walk, the longer the scroll: a steady pace throughout
       if (src.scene && $('explore')) $('explore').hidden = false;          // the same scene can be looked around freely, and stood in with a headset
     }).catch(e => console.error('walk-through: could not load', e));
 

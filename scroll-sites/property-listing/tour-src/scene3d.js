@@ -17,6 +17,7 @@ const K = 6;                               // how many photographs are projected
 const LOW = 2;                             // ... and, among the six, two that look down at the floor in front, which the others miss
 const FAR = 40;                            // the furthest distance a projector's view is measured to, in metres
 const TURN = 1.2;                          // how much walking one radian of turning counts for, when scoring photographs
+const PACE = 1.2;                          // how much walking one radian of turning counts for, when pacing the walk
 
 /** the triangles, positions and colours out of the .glb file the builder writes */
 function readGlb(buf) {
@@ -31,7 +32,7 @@ window.Scene3D = function (opt) {
   const canvas = opt.canvas, S = opt.scene, base = opt.base || 'scene/', coarse = window.matchMedia && matchMedia('(pointer: coarse)').matches;
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' }); renderer.outputColorSpace = THREE.LinearSRGBColorSpace; renderer.setClearColor(opt.bg || '#d9dde0', 1);
   const camera = new THREE.PerspectiveCamera(70, 1, 0.05, 80), rig = new THREE.Group(), world = new THREE.Scene(); rig.add(camera); world.add(rig);
-  let W = 1, H = 1, mesh = null, dead = false;
+  let W = 1, H = 1, mesh = null, dead = false, detail = 1;
 
   // ---- the projectors: each photograph, where it was taken ----
   const keys = S.keys.map((d, i) => {
@@ -42,10 +43,13 @@ window.Scene3D = function (opt) {
       if (wt${k} > 0.0 && c.z > 0.12) { vec2 uv = vec2(lens${k}.x * c.x / c.z + lens${k}.z, lens${k}.y * c.y / c.z + lens${k}.w);
         if (uv.x > 0.0 && uv.x < 1.0 && uv.y > 0.0 && uv.y < 1.0) {
           float seen = unpack(texture2D(dep${k}, vec2(uv.x, 1.0 - uv.y))) * ${FAR.toFixed(1)}, vis = 1.0 - smoothstep(0.03 + 0.02 * c.z, 0.08 + 0.05 * c.z, c.z - seen);      // only what this photograph really saw
-          vec2 e = min(uv, 1.0 - uv); float edge = smoothstep(0.0, 0.08, min(e.x, e.y)), ang = pow(max(dot(toEye, normalize(pos${k} - vW)), 0.0), 8.0);
+          vec2 e = min(uv, 1.0 - uv); vec3 toP = pos${k} - vW; float far = length(toP), square = abs(dot(nrm, toP / far)), edge = smoothstep(0.0, 0.08, min(e.x, e.y)), ang = max(dot(toEye, toP / far), 0.0);
           vec2 d1 = vec2(uv.x, 1.0 - uv.y) + vec2(0.004, 0.005), d2 = vec2(uv.x, 1.0 - uv.y) - vec2(0.004, 0.005);
           float rough = max(abs(unpack(texture2D(dep${k}, d1)) * ${FAR.toFixed(1)} - seen), abs(unpack(texture2D(dep${k}, d2)) * ${FAR.toFixed(1)} - seen)), calm = 1.0 - smoothstep(0.06 + 0.03 * c.z, 0.3 + 0.12 * c.z, rough);     // a photograph is trusted less right at the edge of an object, where a small error would paint it onto what is behind
-          float w = wt${k} * vis * edge * (0.03 + ang) * (0.12 + 0.88 * calm); w *= w; acc += texture2D(tex${k}, uv).rgb * gain${k} * w; tot += w; } } }`;
+          // Each surface takes its colour mostly from the photograph that saw it best: squarely and from close by. That choice
+          // belongs to the surface, so it stays put as the visitor moves and the picture does not swim; where the visitor
+          // stands only tips the balance a little, and brings photographs in and out of use gently.
+          float w = smoothstep(0.0, 0.3, wt${k}) * vis * edge * (0.12 + 0.88 * calm) * (0.05 + square * square) / (0.4 + 0.3 * far * far) * (0.45 + 0.55 * ang * ang); r${k} = w; c${k} = texture2D(tex${k}, uv).rgb * gain${k}; } } }`;
   const ids = [...Array(K).keys()], uniforms = { eye: { value: new THREE.Vector3() }, cut: { value: 99 }, plain: { value: 0 }, shell: { value: 0 } };
   for (const k of ids) Object.assign(uniforms, { ['tex' + k]: { value: null }, ['dep' + k]: { value: null }, ['cam' + k]: { value: new THREE.Matrix4() }, ['lens' + k]: { value: new THREE.Vector4() }, ['pos' + k]: { value: new THREE.Vector3() }, ['gain' + k]: { value: new THREE.Vector3(1, 1, 1) }, ['wt' + k]: { value: 0 } });
   const material = new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms,
@@ -54,9 +58,16 @@ window.Scene3D = function (opt) {
       ${ids.map(k => `uniform sampler2D tex${k}, dep${k}; uniform mat4 cam${k}; uniform vec4 lens${k}; uniform vec3 pos${k}, gain${k}; uniform float wt${k};`).join('\n')}
       float unpack(vec4 c){ return dot(c, vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0)); }
       void main(){ if (vW.y > cut) discard;                               // the cutaway: nothing above this height is drawn, so the home can be seen from above
-        vec3 acc = vec3(0.0), toEye = normalize(eye - vW); float tot = 0.0;
+        vec3 acc = vec3(0.0), toEye = normalize(eye - vW), nrm = normalize(cross(dFdx(vW), dFdy(vW))); float tot = 0.0, top = 0.0;
+        ${ids.map(k => `vec3 c${k} = vec3(0.0); float r${k} = 0.0;`).join(' ')}
         ${ids.map(block).join('\n')}
-        vec3 col = mix(vTint, acc / max(tot, 1e-6), smoothstep(0.0, 0.0004, tot) * (1.0 - plain));
+        ${ids.map(k => `top = max(top, r${k});`).join(' ')}
+        float doubt = 0.0;
+        if (top > 0.0) { ${ids.map(k => `{ float w = r${k} / top; w = w * w; acc += c${k} * w; tot += w; }`).join(' ')}      // the best photograph for this surface leads; the others soften its edges
+          vec3 mean = acc / tot; float sum = 0.0; ${ids.map(k => `{ float w = r${k} / top; vec3 d = c${k} - mean; doubt += w * dot(d, d); sum += w; }`).join(' ')} doubt = sqrt(doubt / max(sum, 1e-4)); }
+        // Where the photographs flatly contradict each other about a surface, the model is wrong there (a thin door, a chair
+        // leg, a plant): sharp detail would be sharp nonsense, so the picture falls back toward the model's own soft colour.
+        vec3 col = mix(vTint, acc / max(tot, 1e-6), step(0.5, tot) * (1.0 - plain) * (1.0 - 0.9 * smoothstep(0.16, 0.34, doubt)));
         if (!gl_FrontFacing) col = mix(col, vec3(0.83, 0.82, 0.8) * (0.72 + 0.28 * clamp(vW.y / 2.0, 0.0, 1.0)), shell);        // seen from outside, the walls are a plain shell
         gl_FragColor = vec4(col, 1.0); }` });   // where no photograph reaches, the model's own (softer) colour
   // how far each projector sees, in every direction of its picture: the model drawn from where it stood
@@ -79,11 +90,21 @@ window.Scene3D = function (opt) {
       const buf = await pack(base + Kf.d.pack), url = URL.createObjectURL(new Blob([buf.slice(Kf.d.at[0], Kf.d.at[0] + Kf.d.at[1])], { type: 'image/webp' }));
       const img = await new Promise((ok, no) => { const i = new Image(); i.decoding = 'async'; i.onload = () => ok(i); i.onerror = no; i.src = url; }); URL.revokeObjectURL(url);
       if (Kf.state !== 'loading' || !mesh) { Kf.state = ''; return; }
-      const tex = new THREE.Texture(img); tex.flipY = false; tex.colorSpace = THREE.NoColorSpace; tex.minFilter = THREE.LinearMipmapLinearFilter; tex.anisotropy = 4; tex.needsUpdate = true;
-      Kf.tex = tex; Kf.depth = see(Kf); Kf.state = 'ready';
+      Kf.img = img; arrived.push(Kf);
     } catch (e) { Kf.state = ''; console.error('Scene3D: could not load a photograph', e); }
   }
-  function drop(Kf) { if (Kf.state === 'ready') { Kf.tex.dispose(); Kf.depth.dispose(); Kf.tex = Kf.depth = null; } Kf.state = ''; }
+  // A photograph that has arrived waits its turn: one is made ready each frame (its picture handed to the graphics chip,
+  // and what it can see worked out), so that several arriving together never make the walk hitch. It then fades in.
+  const arrived = [];
+  function admit(all) {
+    while (arrived.length) {
+      const Kf = arrived.shift(); if (Kf.state !== 'loading') continue;
+      const tex = new THREE.Texture(Kf.img); tex.flipY = false; tex.colorSpace = THREE.NoColorSpace; tex.minFilter = THREE.LinearMipmapLinearFilter; tex.anisotropy = 4; tex.needsUpdate = true;
+      Kf.tex = tex; Kf.img = null; Kf.depth = see(Kf); Kf.state = 'ready'; Kf.born = all ? -1e9 : performance.now();
+      if (!all) break;
+    }
+  }
+  function drop(Kf) { if (Kf.state === 'ready') { Kf.tex.dispose(); Kf.depth.dispose(); Kf.tex = Kf.depth = null; } Kf.img = null; Kf.state = ''; }
   let clock = 0;
   /** the photographs nearest a viewpoint: by how far away each was taken and how differently it faces. Their weights
    *  fall to nothing at the first one left out, so the set changes without a jump as the visitor moves. */
@@ -96,24 +117,30 @@ window.Scene3D = function (opt) {
   function draw(strict) {
     if (!mesh) return false;
     const cam = renderer.xr.isPresenting ? renderer.xr.getCamera() : camera; camera.updateMatrixWorld(); cam.getWorldPosition(eyeP); cam.getWorldDirection(fwd);
+    admit(strict);
     const pick = choose(eyeP, fwd, K - LOW); pick.push(...choose(eyeP, lowDir.set(fwd.x * 0.74, fwd.y * 0.74 - 0.67, fwd.z * 0.74).normalize(), LOW, new Set(pick.map(e => e.Kf)))); clock++;
     for (const { Kf } of pick) { Kf.used = clock; load(Kf); }
     if (strict && overNow < 0.999 && pick.some(({ Kf }) => Kf.state !== 'ready')) return false;
     const ready = keys.filter(Kf => Kf.state === 'ready'); if (ready.length > 28) for (const Kf of ready.sort((a, b) => a.used - b.used).slice(0, ready.length - 28)) drop(Kf);
     uniforms.eye.value.copy(eyeP);
-    pick.forEach(({ Kf, w }, k) => { const on = Kf.state === 'ready' && overNow < 0.999; uniforms['wt' + k].value = on ? Math.max(w, 0.0001) : 0; if (on) { uniforms['tex' + k].value = Kf.tex; uniforms['dep' + k].value = Kf.depth.texture; uniforms['cam' + k].value.copy(Kf.toCam); uniforms['lens' + k].value.copy(Kf.lens); uniforms['pos' + k].value.copy(Kf.pos); uniforms['gain' + k].value.copy(Kf.gain); } });
+    const nowT = performance.now();
+    pick.forEach(({ Kf, w }, k) => { const on = Kf.state === 'ready' && overNow < 0.999; uniforms['wt' + k].value = on ? Math.max(w, 0.0001) * clamp01((nowT - Kf.born) / 350) : 0; if (on) { uniforms['tex' + k].value = Kf.tex; uniforms['dep' + k].value = Kf.depth.texture; uniforms['cam' + k].value.copy(Kf.toCam); uniforms['lens' + k].value.copy(Kf.lens); uniforms['pos' + k].value.copy(Kf.pos); uniforms['gain' + k].value.copy(Kf.gain); } });
     for (let k = pick.length; k < K; k++) uniforms['wt' + k].value = 0;
     renderer.render(world, camera); return true;
   }
 
   // ---- the walking route ----
-  const P = S.path.map(c => new THREE.Vector3(...c.p)), D = S.path.map(c => new THREE.Vector3(...c.d).normalize()), n = P.length, STEP = n > 1 ? P[1].distanceTo(P[0]) || 0.1 : 0.1, total = (n - 1) * STEP;
-  const INTRO_ = opt.intro === false || opt.explore ? 0 : 7, fr = s => (s / (total + INTRO_)) * 239, chapters = (S.chapters || []).map(c => ({ room: 0, label: c.label, from: fr(INTRO_ + c.from * STEP), to: fr(INTRO_ + c.to * STEP) }));
+  const P = S.path.map(c => new THREE.Vector3(...c.p)), D = S.path.map(c => new THREE.Vector3(...c.d).normalize()), n = P.length, STEP = n > 1 ? P[1].distanceTo(P[0]) || 0.1 : 0.1;
+  // The walk is paced by what the visitor sees move, not only by distance: turning the head counts as walking does
+  // (a quarter turn takes as long as about two metres), so the view never whips round.
+  const cum = [0]; for (let k = 1; k < n; k++) cum.push(cum[k - 1] + P[k].distanceTo(P[k - 1]) + PACE * D[k].angleTo(D[k - 1]));
+  const total = cum[n - 1];
+  const INTRO_ = opt.intro === false || opt.explore ? 0 : 7, fr = s => (s / (total + INTRO_)) * 239, chapters = (S.chapters || []).map(c => ({ room: 0, label: c.label, from: fr(INTRO_ + cum[Math.min(n - 1, c.from)]), to: fr(INTRO_ + cum[Math.min(n - 1, c.to)]) }));
   const look = new THREE.Matrix4(), UP = new THREE.Vector3(0, 1, 0), tmp = new THREE.Vector3();
   /** the camera a distance s along the route: averaged over a short stretch, so that pace and turning never change abruptly */
   function pose(s) {
-    const p = new THREE.Vector3(), d = new THREE.Vector3(); let ws = 0;
-    for (let i = -4; i <= 4; i++) { const x = Math.min(total, Math.max(0, s + i * 0.09)) / STEP, k = Math.min(n - 2, Math.floor(x)), u = x - k, w = Math.exp(-(i * i) / 6); p.addScaledVector(tmp.copy(P[k]).lerp(P[k + 1], u), w); d.addScaledVector(tmp.copy(D[k]).lerp(D[k + 1], u), w); ws += w; }
+    const p = new THREE.Vector3(), d = new THREE.Vector3(); let ws = 0, k = 0;
+    for (let i = -6; i <= 6; i++) { const x = Math.min(total, Math.max(0, s + i * 0.11)); while (k < n - 2 && cum[k + 1] < x) k++; while (k > 0 && cum[k] > x) k--; const u = clamp01((x - cum[k]) / Math.max(1e-6, cum[k + 1] - cum[k])), w = Math.exp(-(i * i) / 12); p.addScaledVector(tmp.copy(P[k]).lerp(P[k + 1], u), w); d.addScaledVector(tmp.copy(D[k]).lerp(D[k + 1], u), w); ws += w; }
     p.multiplyScalar(1 / ws); d.normalize(); return { p, q: new THREE.Quaternion().setFromRotationMatrix(look.lookAt(p, tmp.copy(p).add(d), UP)) };
   }
   // ---- the overview: the whole home from above with its ceiling off, and the way down into it ----
@@ -146,11 +173,11 @@ window.Scene3D = function (opt) {
 
   function size() {
     const r = canvas.getBoundingClientRect(); W = Math.max(1, r.width); H = Math.max(1, r.height); if (renderer.xr.isPresenting) return;
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 2)); renderer.setSize(W, H, false);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, coarse ? 1.5 : 2) * detail); renderer.setSize(W, H, false);
     camera.aspect = W / H; camera.fov = W < H ? 78 : 60; camera.updateProjectionMatrix();     // a tall screen sees more up and down, a wide one more to the sides: both take in a room
   }
   // ---- scrolling drives the walk ----
-  let cur = 0, first = true, shown = true, lastT = 0, mode = opt.explore ? 'explore' : 'tour';
+  let cur = 0, first = true, shown = true, lastT = 0, mode = opt.explore ? 'explore' : 'tour', tick = 0, pace = 16, calm = 0, sized = 0;
   const progress = () => { if (!opt.section) return 0; const r = opt.section.getBoundingClientRect(), span = r.height - innerHeight; return span > 0 ? clamp01(-r.top / span) : 0; };
   const free = { yaw: 0, pitch: 0, pos: new THREE.Vector3(), goal: null, keys: new Set(), auto: false, over: 0, overGoal: 0 };
   function frame(now) {
@@ -159,6 +186,10 @@ window.Scene3D = function (opt) {
     if (mode === 'tour') { const p = progress(), goal = p * whole; cur = first ? goal : Math.abs(goal - cur) < 0.0004 ? goal : cur + (goal - cur) * Math.min(1, dt * 5); place(cur); }
     else roam(dt);
     if (draw(false) && first && keys.some(Kf => Kf.state === 'ready')) { first = false; opt.onLoad && opt.onLoad(1); }
+    if (mode === 'tour' && cur >= INTRO * 0.4 && (tick++ & 7) === 0) { const a = pose(Math.min(total, Math.max(0, cur - INTRO) + 1.6)), d = tmp2.set(0, 0, -1).applyQuaternion(a.q); for (const { Kf } of choose(a.p, d, K - LOW)) load(Kf); }      // the photographs for a few steps ahead are fetched before they are needed
+    // The picture is drawn with as many pixels as this device can turn out smoothly: fewer if frames are coming slowly, more again if there is time to spare.
+    pace += (dt * 1000 - pace) * 0.08; calm = dt < 0.022 ? calm + dt : 0;
+    if (!renderer.xr.isPresenting && now - sized > 1200) { if (pace > 25 && detail > 0.5) { detail = Math.max(0.5, detail * 0.85); sized = now; size(); } else if (calm > 4 && detail < 1) { detail = Math.min(1, detail * 1.12); sized = now; calm = 0; size(); } }
     if (mode === 'tour') opt.onUpdate && opt.onUpdate({ frame: fr(cur), room: 0, rush: 0, chapters, progress: progress(), portrait: W < H, width: W, height: H });
   }
 
@@ -206,7 +237,7 @@ window.Scene3D = function (opt) {
     { const pa = mesh.geometry.getAttribute('position').array, pts = []; for (let i = 0; i < pa.length; i += 3 * 61) if (pa[i + 1] < 2.05 && pa[i + 1] > -0.2) pts.push(pa[i], pa[i + 1], pa[i + 2]); if (pts.length > 30) shape = new Float32Array(pts); } if (!opt.still) renderer.setAnimationLoop(frame); });
   ready.catch(e => console.error('Scene3D: could not load the model', e));
 
-  return { total: whole, chapters, spans: [[0, 239]], ready, view: { camera, renderer, mid, orbit }, pose, intro: fr(INTRO),
+  return { total: whole, chapters, spans: [[0, 239]], ready, view: { camera, renderer, mid, orbit }, pose, intro: fr(INTRO), frameOfStep: k => fr(INTRO + cum[Math.min(n - 1, k)]),
     destroy() { dead = true; renderer.setAnimationLoop(null); },
     /** draw one point of the tour (frame 0 to 239), for stills and videos; resolves when the photographs it needs are in */
     async render(f) { await ready; renderer.setAnimationLoop(null); place((f / 239) * whole); for (let k = 0; k < 1500; k++) { if (draw(true)) return true; await new Promise(r => setTimeout(r, 30)); } return false; },
