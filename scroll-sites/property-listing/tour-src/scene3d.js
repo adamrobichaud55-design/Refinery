@@ -43,17 +43,22 @@ window.Scene3D = function (opt) {
         if (uv.x > 0.0 && uv.x < 1.0 && uv.y > 0.0 && uv.y < 1.0) {
           float seen = unpack(texture2D(dep${k}, vec2(uv.x, 1.0 - uv.y))) * ${FAR.toFixed(1)}, vis = 1.0 - smoothstep(0.03 + 0.02 * c.z, 0.08 + 0.05 * c.z, c.z - seen);      // only what this photograph really saw
           vec2 e = min(uv, 1.0 - uv); float edge = smoothstep(0.0, 0.08, min(e.x, e.y)), ang = pow(max(dot(toEye, normalize(pos${k} - vW)), 0.0), 8.0);
-          float w = wt${k} * vis * edge * (0.03 + ang); w *= w; acc += texture2D(tex${k}, uv).rgb * gain${k} * w; tot += w; } } }`;
-  const ids = [...Array(K).keys()], uniforms = { eye: { value: new THREE.Vector3() } };
+          vec2 d1 = vec2(uv.x, 1.0 - uv.y) + vec2(0.004, 0.005), d2 = vec2(uv.x, 1.0 - uv.y) - vec2(0.004, 0.005);
+          float rough = max(abs(unpack(texture2D(dep${k}, d1)) * ${FAR.toFixed(1)} - seen), abs(unpack(texture2D(dep${k}, d2)) * ${FAR.toFixed(1)} - seen)), calm = 1.0 - smoothstep(0.06 + 0.03 * c.z, 0.3 + 0.12 * c.z, rough);     // a photograph is trusted less right at the edge of an object, where a small error would paint it onto what is behind
+          float w = wt${k} * vis * edge * (0.03 + ang) * (0.12 + 0.88 * calm); w *= w; acc += texture2D(tex${k}, uv).rgb * gain${k} * w; tot += w; } } }`;
+  const ids = [...Array(K).keys()], uniforms = { eye: { value: new THREE.Vector3() }, cut: { value: 99 }, plain: { value: 0 }, shell: { value: 0 } };
   for (const k of ids) Object.assign(uniforms, { ['tex' + k]: { value: null }, ['dep' + k]: { value: null }, ['cam' + k]: { value: new THREE.Matrix4() }, ['lens' + k]: { value: new THREE.Vector4() }, ['pos' + k]: { value: new THREE.Vector3() }, ['gain' + k]: { value: new THREE.Vector3(1, 1, 1) }, ['wt' + k]: { value: 0 } });
   const material = new THREE.ShaderMaterial({ side: THREE.DoubleSide, uniforms,
     vertexShader: 'attribute vec4 tint; varying vec3 vW; varying vec3 vTint; void main(){ vW = position; vTint = tint.rgb; gl_Position = projectionMatrix * viewMatrix * vec4(position, 1.0); }',
-    fragmentShader: `uniform vec3 eye; varying vec3 vW; varying vec3 vTint;
+    fragmentShader: `uniform vec3 eye; uniform float cut, plain, shell; varying vec3 vW; varying vec3 vTint;
       ${ids.map(k => `uniform sampler2D tex${k}, dep${k}; uniform mat4 cam${k}; uniform vec4 lens${k}; uniform vec3 pos${k}, gain${k}; uniform float wt${k};`).join('\n')}
       float unpack(vec4 c){ return dot(c, vec4(1.0, 1.0 / 255.0, 1.0 / 65025.0, 1.0 / 16581375.0)); }
-      void main(){ vec3 acc = vec3(0.0), toEye = normalize(eye - vW); float tot = 0.0;
+      void main(){ if (vW.y > cut) discard;                               // the cutaway: nothing above this height is drawn, so the home can be seen from above
+        vec3 acc = vec3(0.0), toEye = normalize(eye - vW); float tot = 0.0;
         ${ids.map(block).join('\n')}
-        gl_FragColor = vec4(mix(vTint, acc / max(tot, 1e-6), smoothstep(0.0, 0.0004, tot)), 1.0); }` });   // where no photograph reaches, the model's own (softer) colour
+        vec3 col = mix(vTint, acc / max(tot, 1e-6), smoothstep(0.0, 0.0004, tot) * (1.0 - plain));
+        if (!gl_FrontFacing) col = mix(col, vec3(0.83, 0.82, 0.8) * (0.72 + 0.28 * clamp(vW.y / 2.0, 0.0, 1.0)), shell);        // seen from outside, the walls are a plain shell
+        gl_FragColor = vec4(col, 1.0); }` });   // where no photograph reaches, the model's own (softer) colour
   // how far each projector sees, in every direction of its picture: the model drawn from where it stood
   const depthMat = new THREE.ShaderMaterial({ side: THREE.DoubleSide, vertexShader: 'varying float z; void main(){ vec4 v = viewMatrix * vec4(position, 1.0); z = -v.z; gl_Position = projectionMatrix * v; }',
     fragmentShader: `varying float z; vec4 pack(float v){ vec4 e = fract(v * vec4(1.0, 255.0, 65025.0, 16581375.0)); return e - e.yzww * vec4(1.0 / 255.0, 1.0 / 255.0, 1.0 / 255.0, 0.0); } void main(){ gl_FragColor = pack(clamp(z / ${FAR.toFixed(1)}, 0.0, 0.9999)); }` });
@@ -93,17 +98,17 @@ window.Scene3D = function (opt) {
     const cam = renderer.xr.isPresenting ? renderer.xr.getCamera() : camera; camera.updateMatrixWorld(); cam.getWorldPosition(eyeP); cam.getWorldDirection(fwd);
     const pick = choose(eyeP, fwd, K - LOW); pick.push(...choose(eyeP, lowDir.set(fwd.x * 0.74, fwd.y * 0.74 - 0.67, fwd.z * 0.74).normalize(), LOW, new Set(pick.map(e => e.Kf)))); clock++;
     for (const { Kf } of pick) { Kf.used = clock; load(Kf); }
-    if (strict && pick.some(({ Kf }) => Kf.state !== 'ready')) return false;
+    if (strict && overNow < 0.999 && pick.some(({ Kf }) => Kf.state !== 'ready')) return false;
     const ready = keys.filter(Kf => Kf.state === 'ready'); if (ready.length > 28) for (const Kf of ready.sort((a, b) => a.used - b.used).slice(0, ready.length - 28)) drop(Kf);
     uniforms.eye.value.copy(eyeP);
-    pick.forEach(({ Kf, w }, k) => { const on = Kf.state === 'ready'; uniforms['wt' + k].value = on ? Math.max(w, 0.0001) : 0; if (on) { uniforms['tex' + k].value = Kf.tex; uniforms['dep' + k].value = Kf.depth.texture; uniforms['cam' + k].value.copy(Kf.toCam); uniforms['lens' + k].value.copy(Kf.lens); uniforms['pos' + k].value.copy(Kf.pos); uniforms['gain' + k].value.copy(Kf.gain); } });
+    pick.forEach(({ Kf, w }, k) => { const on = Kf.state === 'ready' && overNow < 0.999; uniforms['wt' + k].value = on ? Math.max(w, 0.0001) : 0; if (on) { uniforms['tex' + k].value = Kf.tex; uniforms['dep' + k].value = Kf.depth.texture; uniforms['cam' + k].value.copy(Kf.toCam); uniforms['lens' + k].value.copy(Kf.lens); uniforms['pos' + k].value.copy(Kf.pos); uniforms['gain' + k].value.copy(Kf.gain); } });
     for (let k = pick.length; k < K; k++) uniforms['wt' + k].value = 0;
     renderer.render(world, camera); return true;
   }
 
   // ---- the walking route ----
   const P = S.path.map(c => new THREE.Vector3(...c.p)), D = S.path.map(c => new THREE.Vector3(...c.d).normalize()), n = P.length, STEP = n > 1 ? P[1].distanceTo(P[0]) || 0.1 : 0.1, total = (n - 1) * STEP;
-  const fr = s => (s / total) * 239, chapters = (S.chapters || []).map(c => ({ room: 0, label: c.label, from: fr(c.from * STEP), to: fr(c.to * STEP) }));
+  const INTRO_ = opt.intro === false || opt.explore ? 0 : 7, fr = s => (s / (total + INTRO_)) * 239, chapters = (S.chapters || []).map(c => ({ room: 0, label: c.label, from: fr(INTRO_ + c.from * STEP), to: fr(INTRO_ + c.to * STEP) }));
   const look = new THREE.Matrix4(), UP = new THREE.Vector3(0, 1, 0), tmp = new THREE.Vector3();
   /** the camera a distance s along the route: averaged over a short stretch, so that pace and turning never change abruptly */
   function pose(s) {
@@ -111,7 +116,33 @@ window.Scene3D = function (opt) {
     for (let i = -4; i <= 4; i++) { const x = Math.min(total, Math.max(0, s + i * 0.09)) / STEP, k = Math.min(n - 2, Math.floor(x)), u = x - k, w = Math.exp(-(i * i) / 6); p.addScaledVector(tmp.copy(P[k]).lerp(P[k + 1], u), w); d.addScaledVector(tmp.copy(D[k]).lerp(D[k + 1], u), w); ws += w; }
     p.multiplyScalar(1 / ws); d.normalize(); return { p, q: new THREE.Quaternion().setFromRotationMatrix(look.lookAt(p, tmp.copy(p).add(d), UP)) };
   }
-  const place = s => { const c = pose(s); rig.position.set(0, 0, 0); rig.quaternion.identity(); camera.position.copy(c.p); camera.quaternion.copy(c.q); };
+  // ---- the overview: the whole home from above with its ceiling off, and the way down into it ----
+  const size3 = S.size || [10, 3, 10], mid = new THREE.Vector3(), bgIn = new THREE.Color(opt.bg || '#d9dde0'), bgOut = new THREE.Color(opt.bgOver || '#010205'), bgNow = new THREE.Color();
+  const yaw0 = (size3[2] >= size3[0] ? 0 : Math.PI / 2), orbit = { yaw: yaw0, tilt: 1.0, zoom: 1 };       // seen along its length on a tall screen, across it on a wide one
+  /** the overview camera: far enough back, for this screen and this angle, to take in the whole home */
+  let shape = new Float32Array([-5, 0, -5, 5, 0, -5, -5, 0, 5, 5, 0, 5]); const box = new THREE.Box3(new THREE.Vector3(-5, 0, -5), new THREE.Vector3(5, 2, 5)), corner = new THREE.Vector3(), cx = new THREE.Vector3(), cy = new THREE.Vector3(), cz = new THREE.Vector3();
+  function overCam() {
+    const off = new THREE.Vector3(Math.cos(orbit.tilt) * Math.sin(orbit.yaw), Math.sin(orbit.tilt), Math.cos(orbit.tilt) * Math.cos(orbit.yaw)), aim = tmp.set(mid.x, 0.9, mid.z).clone();
+    const q = new THREE.Quaternion().setFromRotationMatrix(look.lookAt(off, new THREE.Vector3(), UP)); look.extractBasis(cx, cy, cz);
+    const tv = Math.tan((camera.fov * Math.PI) / 360) * 0.84, th = tv * camera.aspect; let need = 1;                       // the home fills most of the screen, with a margin
+    for (let i = 0; i < shape.length; i += 3) { corner.set(shape[i], shape[i + 1], shape[i + 2]).sub(aim); const x = Math.abs(corner.dot(cx)), y = Math.abs(corner.dot(cy)), z = corner.dot(cz); need = Math.max(need, x / th + z, y / tv + z); }       // every part of the home, as it really is (an L-shaped home is not treated as its bounding box)
+    return { p: aim.addScaledVector(off, need * orbit.zoom), q };
+  }
+  /** the camera for a blend between standing inside (over = 0) and the overview (over = 1): from the overview it comes
+   *  in over the spot, looking down on it, then drops through where the ceiling was and lifts its eyes to the room */
+  const sm = v => v * v * (3 - 2 * v), qDown = new THREE.Quaternion(), eDown = new THREE.Euler(), eOf = new THREE.Euler();
+  function blend(inside, over) {
+    const o = overCam(), t = 1 - over, tA = sm(clamp01(t / 0.62)), tB = sm(clamp01((t - 0.62) / 0.38)), yawIn = eOf.setFromQuaternion(inside.q, 'YXZ').y;
+    qDown.setFromEuler(eDown.set(-1.32, yawIn, 0, 'YXZ'));
+    camera.position.copy(o.p).lerp(tmp.set(inside.p.x, 4.4, inside.p.z), tA).lerp(inside.p, tB); camera.quaternion.copy(o.q).slerp(qDown, tA).slerp(inside.q, tB);
+    rig.position.set(0, 0, 0); rig.quaternion.identity();
+    const out = clamp01((camera.position.y - 1.9) / 0.6);                // the ceiling comes off as the camera rises through it
+    uniforms.cut.value = out > 0 ? 2.05 + (1 - out) * 3 : 99; uniforms.plain.value = clamp01((camera.position.y - 2.4) / 1.6); uniforms.shell.value = out; overNow = uniforms.plain.value;
+    renderer.setClearColor(bgNow.copy(bgIn).lerp(bgOut, out), 1);
+  }
+  let overNow = 0;
+  const INTRO = opt.intro === false || opt.explore ? 0 : 7, whole = total + INTRO;       // the scroll tour opens on the overview, turning, and then goes in
+  const place = s => { if (INTRO && s < INTRO) { const u = s / INTRO; orbit.yaw = yaw0 + (W < H ? 0 : Math.PI / 2) - 0.3 + u * 0.6; blend(pose(0), 1 - clamp01((u - 0.4) / 0.6)); } else { const c = pose(s - INTRO); if (INTRO) blend(c, 0); else { rig.position.set(0, 0, 0); rig.quaternion.identity(); camera.position.copy(c.p); camera.quaternion.copy(c.q); } } };
 
   function size() {
     const r = canvas.getBoundingClientRect(); W = Math.max(1, r.width); H = Math.max(1, r.height); if (renderer.xr.isPresenting) return;
@@ -121,18 +152,18 @@ window.Scene3D = function (opt) {
   // ---- scrolling drives the walk ----
   let cur = 0, first = true, shown = true, lastT = 0, mode = opt.explore ? 'explore' : 'tour';
   const progress = () => { if (!opt.section) return 0; const r = opt.section.getBoundingClientRect(), span = r.height - innerHeight; return span > 0 ? clamp01(-r.top / span) : 0; };
-  const free = { yaw: 0, pitch: 0, pos: new THREE.Vector3(), goal: null, keys: new Set(), auto: false };
+  const free = { yaw: 0, pitch: 0, pos: new THREE.Vector3(), goal: null, keys: new Set(), auto: false, over: 0, overGoal: 0 };
   function frame(now) {
     if (dead) return; const dt = Math.min(0.1, (now - lastT) / 1000 || 0.016); lastT = now;
     if (!shown && !first && !renderer.xr.isPresenting) return;
-    if (mode === 'tour') { const p = progress(), goal = p * total; cur = first ? goal : Math.abs(goal - cur) < 0.0004 ? goal : cur + (goal - cur) * Math.min(1, dt * 5); place(cur); }
+    if (mode === 'tour') { const p = progress(), goal = p * whole; cur = first ? goal : Math.abs(goal - cur) < 0.0004 ? goal : cur + (goal - cur) * Math.min(1, dt * 5); place(cur); }
     else roam(dt);
     if (draw(false) && first && keys.some(Kf => Kf.state === 'ready')) { first = false; opt.onLoad && opt.onLoad(1); }
     if (mode === 'tour') opt.onUpdate && opt.onUpdate({ frame: fr(cur), room: 0, rush: 0, chapters, progress: progress(), portrait: W < H, width: W, height: H });
   }
 
   // ---- looking around freely: drag to look, tap or click a spot to walk to it, arrow keys or WASD to walk; in a headset, the thumbsticks ----
-  const ray = new THREE.Raycaster(), eyeH = S.eye || 1.45;
+  const ray = new THREE.Raycaster(), eyeH = S.eye || 1.45, tmp2 = new THREE.Vector3(), qIn = new THREE.Quaternion(), eIn = new THREE.Euler();
   function roam(dt) {
     const xr = renderer.xr.isPresenting;
     if (free.auto) { cur = (cur + dt * 0.9) % total; const c = pose(cur); free.pos.copy(c.p); const e = new THREE.Euler().setFromQuaternion(c.q, 'YXZ'); free.yaw = e.y; free.pitch = e.x; }
@@ -146,18 +177,22 @@ window.Scene3D = function (opt) {
       if (move.lengthSq() > 0.01) { free.goal = null; move.normalize(); ray.set(free.pos, move); ray.far = 0.4; if (!mesh || !ray.intersectObject(mesh).length) free.pos.addScaledVector(move, dt * 1.3); }       // not through walls
       if (free.goal) { const to = tmp.copy(free.goal).sub(free.pos); to.y = 0; const d = to.length(); if (d < 0.05) free.goal = null; else free.pos.addScaledVector(to.normalize(), Math.min(d, dt * 1.6)); }
     }
+    free.over += Math.sign(free.overGoal - free.over) * Math.min(Math.abs(free.overGoal - free.over), dt / 1.3);
     if (xr) { rig.position.set(free.pos.x, 0, free.pos.z); rig.rotation.set(0, free.yaw, 0); }          // in a headset the visitor's own floor is the home's floor, and their head does the looking
-    else { rig.position.set(0, 0, 0); rig.quaternion.identity(); camera.position.set(free.pos.x, eyeH, free.pos.z); camera.rotation.set(free.pitch, free.yaw, 0, 'YXZ'); }
+    else blend({ p: tmp2.set(free.pos.x, eyeH, free.pos.z), q: qIn.setFromEuler(eIn.set(free.pitch, free.yaw, 0, 'YXZ')) }, free.over);
   }
   function goTo(x, y) {                                                // walk to the spot under a tap: onto the floor there, or up to whatever stands in the way
-    if (!mesh) return; ray.setFromCamera(new THREE.Vector2((x / W) * 2 - 1, -(y / H) * 2 + 1), camera); ray.far = 30; const hit = ray.intersectObject(mesh)[0]; if (!hit) return;
+    if (!mesh) return; ray.setFromCamera(new THREE.Vector2((x / W) * 2 - 1, -(y / H) * 2 + 1), camera); ray.far = 80; const hit = ray.intersectObject(mesh).find(h => h.point.y <= uniforms.cut.value); if (!hit) return;
+    if (free.overGoal > 0.5) { free.pos.set(hit.point.x, eyeH, hit.point.z); free.yaw = orbit.yaw; free.pitch = -0.1; free.goal = null; free.overGoal = 0; free.auto = false; opt.onMode && opt.onMode('walk'); return; }      // from the overview: down into the spot that was tapped
     const g = hit.point.clone(); if (hit.point.y > 0.5) g.addScaledVector(ray.ray.direction, -0.7); g.y = eyeH; free.goal = g; free.auto = false;
   }
   if (opt.explore) {
     let down = null, moved = 0;
     canvas.style.touchAction = 'none';
     canvas.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; moved = 0; canvas.setPointerCapture(e.pointerId); });
-    canvas.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - down[0], dy = e.clientY - down[1]; moved += Math.abs(dx) + Math.abs(dy); down = [e.clientX, e.clientY]; free.auto = false; free.yaw += dx * 0.0045; free.pitch = Math.max(-1.2, Math.min(1.2, free.pitch + dy * 0.0045)); });
+    canvas.addEventListener('pointermove', e => { if (!down) return; const dx = e.clientX - down[0], dy = e.clientY - down[1]; moved += Math.abs(dx) + Math.abs(dy); down = [e.clientX, e.clientY]; free.auto = false;
+      if (free.overGoal > 0.5) { orbit.yaw -= dx * 0.006; orbit.tilt = Math.max(0.45, Math.min(1.45, orbit.tilt + dy * 0.005)); } else { free.yaw += dx * 0.0045; free.pitch = Math.max(-1.2, Math.min(1.2, free.pitch + dy * 0.0045)); } });
+    canvas.addEventListener('wheel', e => { if (free.overGoal > 0.5) { e.preventDefault(); orbit.zoom = Math.max(0.45, Math.min(1.6, orbit.zoom * (1 + e.deltaY * 0.001))); } }, { passive: false });
     canvas.addEventListener('pointerup', e => { if (down && moved < 8) { const r = canvas.getBoundingClientRect(); goTo(e.clientX - r.left, e.clientY - r.top); } down = null; });
     addEventListener('keydown', e => { free.keys.add(e.key.toLowerCase()); free.auto = false; }); addEventListener('keyup', e => free.keys.delete(e.key.toLowerCase()));
   }
@@ -167,16 +202,22 @@ window.Scene3D = function (opt) {
   let rz = 0; addEventListener('resize', () => { clearTimeout(rz); rz = setTimeout(size, 120); });
   size(); start(0);
   // (a host that serves only web file types can be given the model wrapped in a .json file instead: { "glb": "<base64>" })
-  const ready = fetch(base + S.mesh).then(r => { if (!r.ok) throw new Error(S.mesh + ' ' + r.status); return S.mesh.endsWith('.json') ? r.json().then(j => Uint8Array.from(atob(j.glb), c => c.charCodeAt(0)).buffer) : r.arrayBuffer(); }).then(buf => { mesh = new THREE.Mesh(readGlb(buf), material); mesh.frustumCulled = false; mesh.geometry.computeBoundingSphere(); world.add(mesh); if (!opt.still) renderer.setAnimationLoop(frame); });
+  const ready = fetch(base + S.mesh).then(r => { if (!r.ok) throw new Error(S.mesh + ' ' + r.status); return S.mesh.endsWith('.json') ? r.json().then(j => Uint8Array.from(atob(j.glb), c => c.charCodeAt(0)).buffer) : r.arrayBuffer(); }).then(buf => { mesh = new THREE.Mesh(readGlb(buf), material); mesh.frustumCulled = false; mesh.geometry.computeBoundingSphere(); mesh.geometry.computeBoundingBox(); box.copy(mesh.geometry.boundingBox); box.getCenter(mid); world.add(mesh);
+    { const pa = mesh.geometry.getAttribute('position').array, pts = []; for (let i = 0; i < pa.length; i += 3 * 61) if (pa[i + 1] < 2.05 && pa[i + 1] > -0.2) pts.push(pa[i], pa[i + 1], pa[i + 2]); if (pts.length > 30) shape = new Float32Array(pts); } if (!opt.still) renderer.setAnimationLoop(frame); });
   ready.catch(e => console.error('Scene3D: could not load the model', e));
 
-  return { total, chapters, spans: [[0, 239]], ready, view: { camera, renderer }, pose,
+  return { total: whole, chapters, spans: [[0, 239]], ready, view: { camera, renderer, mid, orbit }, pose, intro: fr(INTRO),
     destroy() { dead = true; renderer.setAnimationLoop(null); },
     /** draw one point of the tour (frame 0 to 239), for stills and videos; resolves when the photographs it needs are in */
-    async render(f) { await ready; renderer.setAnimationLoop(null); place((f / 239) * total); for (let k = 0; k < 1500; k++) { if (draw(true)) return true; await new Promise(r => setTimeout(r, 30)); } return false; },
+    async render(f) { await ready; renderer.setAnimationLoop(null); place((f / 239) * whole); for (let k = 0; k < 1500; k++) { if (draw(true)) return true; await new Promise(r => setTimeout(r, 30)); } return false; },
     explore: {
       /** start (or stop) drifting along the planned route */
-      tour(on) { free.auto = on; },
+      tour(on) { free.auto = on; if (on) free.overGoal = 0; },
+      /** rise to the overview of the whole home (true), or come back down (false) */
+      overview(on) { free.overGoal = on ? 1 : 0; free.auto = false; free.goal = null; },
+      /** where the visitor stands and faces, and a way to move them: for a map */
+      where() { return { x: free.pos.x, z: free.pos.z, yaw: free.yaw, over: free.over }; },
+      jump(x, z) { free.pos.set(x, eyeH, z); free.goal = null; free.auto = false; free.overGoal = 0; },
       /** put the scene in a headset, where the browser offers one; resolves to false where it does not */
       async vr() {
         if (!navigator.xr || !(await navigator.xr.isSessionSupported('immersive-vr').catch(() => false))) return false;

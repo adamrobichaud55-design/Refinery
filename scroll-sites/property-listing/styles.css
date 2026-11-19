@@ -167,3 +167,12 @@ form textarea { min-height: 6.5rem; resize: vertical; }
 .explore[hidden] { display: none; }
 .explore .in { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1.5rem 3rem; }
 .explore h2 { margin: .4rem 0 .5rem; } .explore p { margin: 0; color: var(--muted); max-width: 46ch; }
+
+/* the floor plan: the home from above, with each room's name and area set on it */
+#plan[hidden] { display: none; }
+.planfig { position: relative; margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; }
+.planfig img { display: block; width: 100%; height: auto; }
+.planfig figcaption { position: absolute; transform: translate(-50%, -50%); display: grid; justify-items: center; gap: .1rem; padding: .3rem .55rem; background: rgba(1, 2, 5, .78); border: 1px solid var(--line); border-radius: 4px; white-space: nowrap; pointer-events: none; }
+.planfig figcaption b { font: 500 .8rem var(--body); } .planfig figcaption span { font: 400 .68rem var(--mono); color: var(--muted); font-variant-numeric: tabular-nums; }
+.plannote { margin: 1rem 0 0; color: var(--muted); font-size: .9rem; max-width: 62ch; }
+@media (max-width: 560px) { .planfig figcaption { padding: .2rem .35rem; } .planfig figcaption b { font-size: .68rem; } .planfig figcaption span { font-size: .6rem; } }

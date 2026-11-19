@@ -24,12 +24,17 @@ button:focus-visible, .back:focus-visible { outline: 2px solid var(--accent); ou
 .hint { position: fixed; inset: auto 0 max(18px, env(safe-area-inset-bottom)) 0; text-align: center; font: 400 .86rem var(--body); color: var(--ink); text-shadow: 0 1px 8px rgba(0, 0, 0, .9); pointer-events: none; transition: opacity .6s; padding: 0 16px; }
 .load { position: fixed; inset: 0; display: grid; place-items: center; background: var(--bg); font: 400 .9rem var(--mono); color: var(--muted); letter-spacing: .06em; transition: opacity .5s; }
 .load.done { opacity: 0; pointer-events: none; }
+.map { position: fixed; left: max(12px, env(safe-area-inset-left)); bottom: max(54px, calc(env(safe-area-inset-bottom) + 44px)); width: min(42vw, 230px); border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: rgba(1, 2, 5, .8); cursor: pointer; transition: opacity .4s; }
+.map[hidden] { display: none; } .map img { display: block; width: 100%; height: auto; opacity: .92; }
+.map i { position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px rgba(1, 2, 5, .7); }
+.map i::after { content: ""; position: absolute; left: 50%; top: 50%; width: 0; height: 0; border: 5px solid transparent; border-bottom: 11px solid var(--accent); transform: translate(-50%, -150%); transform-origin: 50% 100%; }
 @media (max-width: 520px) { .where { display: none; } .bar { justify-content: space-between; } }
 </style>
 </head>
 <body>
 <canvas id="c" aria-label="The home in 3D. Drag to look around; tap or click a spot to walk to it."></canvas>
-<div class="bar"><a class="back" href="index.html">&larr; Listing</a><span class="where" id="where"></span><button id="tour" aria-pressed="false">Guided tour</button><button id="vr" class="go" hidden>Enter VR</button></div>
+<div class="bar"><a class="back" href="index.html">&larr; Listing</a><span class="where" id="where"></span><button id="over" aria-pressed="false">Overview</button><button id="tour" aria-pressed="false">Guided tour</button><button id="vr" class="go" hidden>Enter VR</button></div>
+<div class="map" id="map" hidden><img id="mapimg" alt="Floor plan. Tap a spot to go there."><i id="dot"></i></div>
 <p class="hint" id="hint">Drag to look around. Tap a spot to walk there.</p>
 <div class="load" id="load">Loading the home&hellip;</div>
 <script src="site.config.js"></script>
@@ -39,9 +44,19 @@ button:focus-visible, .back:focus-visible { outline: 2px solid var(--accent); ou
   var S = window.SITE || {}, L = S.listing || {}; if (S.accent) document.documentElement.style.setProperty('--accent', S.accent);
   document.getElementById('where').textContent = [L.address, L.town].filter(Boolean).join(', ');
   fetch('scene/scene.json').then(function (r) { return r.json(); }).then(function (scene) {
-    var view = window.Scene3D({ canvas: document.getElementById('c'), scene: scene, base: 'scene/', explore: true, onLoad: function () { document.getElementById('load').classList.add('done'); } });
-    var tour = document.getElementById('tour'), vr = document.getElementById('vr'), hint = document.getElementById('hint');
-    tour.addEventListener('click', function () { var on = tour.getAttribute('aria-pressed') !== 'true'; tour.setAttribute('aria-pressed', on); view.explore.tour(on); hint.style.opacity = on ? 0 : 1; });
+    var view = window.Scene3D({ canvas: document.getElementById('c'), scene: scene, base: 'scene/', explore: true, onMode: function () { document.getElementById('over').setAttribute('aria-pressed', 'false'); }, onLoad: function () { document.getElementById('load').classList.add('done'); } });
+    var tour = document.getElementById('tour'), vr = document.getElementById('vr'), hint = document.getElementById('hint'), over = document.getElementById('over');
+    var setOver = function (on) { over.setAttribute('aria-pressed', on); view.explore.overview(on); hint.style.opacity = 1; hint.textContent = on ? 'Drag to turn the home. Tap a room to go in.' : 'Drag to look around. Tap a spot to walk there.'; if (on) tour.setAttribute('aria-pressed', 'false'); };
+    over.addEventListener('click', function () { setOver(over.getAttribute('aria-pressed') !== 'true'); });
+    // the little plan: where the visitor is, which way they face; a tap on it takes them there
+    var P = scene.plan, map = document.getElementById('map'), dot = document.getElementById('dot');
+    if (P) {
+      map.hidden = false; document.getElementById('mapimg').src = 'scene/' + P.img; var c = Math.cos(P.turn), s = Math.sin(P.turn);
+      (function tick() { var w = view.explore.where(), a = c * w.x + s * w.z, b = -s * w.x + c * w.z; dot.style.left = ((a - P.origin[0]) / P.px / P.w * 100) + '%'; dot.style.top = ((b - P.origin[1]) / P.px / P.h * 100) + '%';
+        dot.style.transform = 'rotate(' + (-(w.yaw + P.turn) + Math.PI) + 'rad)'; map.style.opacity = w.over > 0.5 ? 0 : 1; requestAnimationFrame(tick); })();
+      map.addEventListener('click', function (e) { var r = map.getBoundingClientRect(), a = P.origin[0] + (e.clientX - r.left) / r.width * P.w * P.px, b = P.origin[1] + (e.clientY - r.top) / r.height * P.h * P.px; view.explore.jump(c * a - s * b, s * a + c * b); setOver(false); });
+    }
+    tour.addEventListener('click', function () { var on = tour.getAttribute('aria-pressed') !== 'true'; if (on) setOver(false); tour.setAttribute('aria-pressed', on); view.explore.tour(on); hint.style.opacity = on ? 0 : 1; });
     document.getElementById('c').addEventListener('pointerdown', function () { tour.setAttribute('aria-pressed', 'false'); setTimeout(function () { hint.style.opacity = 0; }, 2500); });
     view.explore.vrOffered().then(function (yes) { vr.hidden = !yes; });
     vr.addEventListener('click', function () { view.explore.vr().then(function (ok) { if (ok) hint.textContent = 'Left stick to walk, right stick to turn.'; }); });

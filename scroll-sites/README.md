@@ -65,9 +65,10 @@ This is the offer for photographers and agents: scan the home once and deliver i
 
 | Delivery | What the client gets | File |
 | --- | --- | --- |
-| **Scroll site** | The listing page: scrolling walks the visitor through the home | `index.html` |
-| **3D view** | The same home to look around freely: drag to look, tap a spot to walk there; on a headset, an *Enter VR* button | `explore.html` |
-| **Video** | The same walk as a film for a reel or a listing | made by `tools/tour-video.mjs` |
+| **Scroll site** | The listing page. It opens on the whole home seen from above with its ceiling off, dives in, and walks the visitor through room by room | `index.html` |
+| **Floor plan** | On the listing page: the home from above with each room named and measured, and a table of room sizes | drawn from `scene/plan.webp` |
+| **3D view** | The same home to look around freely: drag to look, tap a spot to walk there, a little plan to jump around by, an *Overview* to see it all and tap into a room; on a headset, an *Enter VR* button | `explore.html` |
+| **Video** | The same opening and walk as a film for a reel or a listing | made by `tools/tour-video.mjs` |
 
 All three are drawn from one folder, `property-listing/scene/`, which one command builds from the scan.
 
@@ -83,19 +84,27 @@ pip install open3d numpy pillow onnxruntime tokenizers           # once; ffmpeg 
 python3 -I tools/scene/build_scene.py scan-folder/ work/ property-listing/scene --clip clip/
 ```
 
-It fuses the scan's depth pictures into one solid model of the home, keeps about three hundred of its sharpest
-photographs with the exact place each was taken, and plans a walking route that visits each part once. The site
-projects the photographs onto the model, so the picture has their detail and holds together from any angle.
+It fuses the scan's depth pictures into one solid model of the home and keeps a few hundred of its sharpest
+photographs with the exact place each was taken; the site projects the photographs onto the model, so the picture
+has their detail and holds together from any angle. From the model alone it then:
 
-**3. Name the rooms.** The room names along the route are guessed and are often wrong. Open
-`property-listing/scene/scene.json` and correct `chapters`: each has a `label` and the route steps (`from`, `to`,
-ten to a metre) it covers. Give each label its words under `rooms` in `site.config.js`.
+- draws the **floor plan** and splits it into rooms (a room is somewhere wide enough to stand clear of the walls; a
+  doorway is not, so it parts two rooms), measuring each wall to wall;
+- **names the rooms** by what the photographs taken in each one show (a bed makes a bedroom; a hob, a sink and a
+  fridge make a kitchen), which needs `--clip`;
+- plans a **walking route** that visits each part once, keeps clear of furniture, and looks where there is something
+  to see instead of at the nearest wall.
+
+**3. Check the rooms.** The command prints the rooms it found, with their sizes and what it saw in each. If a name is
+wrong, correct `label` under `plan.rooms` and under `chapters` in `property-listing/scene/scene.json`. Give each
+room name its words under `rooms` in `site.config.js`. The sizes are measured from the scan and are approximate:
+say so to the client, as the page does.
 
 **4. Check and deliver.** Serve the folder (`python3 -m http.server 5197` from `scroll-sites`) and open
 `property-listing/` and `property-listing/explore.html`. For the video:
 
 ```
-node tools/tour-video.mjs video out --site property-listing --page scene-dev.html --frames 1440
+node tools/tour-video.mjs video out --site property-listing --page scene-dev.html --frames 1560
 ffmpeg -framerate 24 -i out/f%04d.png -c:v libx264 -crf 20 -pix_fmt yuv420p tour.mp4
 ```
 

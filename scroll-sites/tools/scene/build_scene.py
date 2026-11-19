@@ -1,7 +1,7 @@
 # Builds ONE 3D scene of a home from a phone scan, for the scroll site, the tour video and the free-roam / VR page.
 #
 #   python3 -I tools/scene/build_scene.py <scan-folder> <work-folder> <site-folder>/scene [--voxel 0.02] [--triangles 350000]
-#           [--keys 320] [--clip <folder with the room-naming model>]
+#           [--keys 420] [--clip <folder with the room-naming model>]
 #
 # The scan folder is what the Stray Scanner app records on an iPhone or iPad Pro: rgb.mp4, odometry.csv,
 # camera_matrix.csv, depth/ and (optionally) confidence/.
@@ -23,10 +23,9 @@ from PIL import Image
 args = sys.argv[1:]; opt = {}
 for k in ('--voxel', '--triangles', '--keys', '--clip', '--cell'):
     if k in args: i = args.index(k); opt[k[2:]] = args[i + 1]; del args[i:i + 2]
-if len(args) != 3: sys.exit('usage: build_scene.py <scan-folder> <work> <site>/scene [--voxel 0.02] [--triangles 350000] [--keys 320] [--clip dir]')
+if len(args) != 3: sys.exit('usage: build_scene.py <scan-folder> <work> <site>/scene [--voxel 0.02] [--triangles 350000] [--keys 420] [--clip dir]')
 src, work, out = args; os.makedirs(work, exist_ok=True)
-VOXEL = float(opt.get('voxel', 0.02)); TRIS = int(opt.get('triangles', 350000)); NKEYS = int(opt.get('keys', 320))
-ROOMS = ['living room', 'kitchen', 'dining room', 'bedroom', 'bathroom', 'home office', 'hallway', 'staircase', 'balcony']
+VOXEL = float(opt.get('voxel', 0.02)); TRIS = int(opt.get('triangles', 350000)); NKEYS = int(opt.get('keys', 420))
 
 # ---- the scan: where the camera was for every frame ------------------------------------------------------------------
 odo = np.loadtxt(os.path.join(src, 'odometry.csv'), delimiter=',', skiprows=1); K = np.loadtxt(os.path.join(src, 'camera_matrix.csv'), delimiter=','); N = len(odo)
@@ -102,12 +101,12 @@ def pick(cell, turn_):
 cell, turn_ = 0.3, 40.0; keys = pick(cell, turn_)
 while len(keys) > NKEYS: cell *= 1.12; turn_ = min(60.0, turn_ * 1.05); keys = pick(cell, turn_)
 kdir = os.path.join(work, 'keys'); want = os.path.join(kdir, 'frames.json')
-if not os.path.exists(want) or json.load(open(want)) != keys:
+if not os.path.exists(want) or json.load(open(want)) != keys + [1152]:
     import shutil; shutil.rmtree(kdir, ignore_errors=True); os.makedirs(kdir); print(f'taking {len(keys)} photographs from the video', flush=True)
     for a in range(0, len(keys), 80):
         part = keys[a:a + 80]; sel = '+'.join(f'eq(n\\,{i})' for i in part)
-        subprocess.run(['ffmpeg', '-v', 'error', '-i', os.path.join(src, 'rgb.mp4'), '-vf', f"select='{sel}',scale=1024:-2", '-vsync', 'vfr', '-q:v', '2', '-start_number', str(a), os.path.join(kdir, 'k%04d.jpg')], check=True)
-    json.dump(keys, open(want, 'w'))
+        subprocess.run(['ffmpeg', '-v', 'error', '-i', os.path.join(src, 'rgb.mp4'), '-vf', f"select='{sel}',scale=1152:-2", '-vsync', 'vfr', '-q:v', '2', '-start_number', str(a), os.path.join(kdir, 'k%04d.jpg')], check=True)
+    json.dump(keys + [1152], open(want, 'w'))
 
 # ---- 3. a route that visits each part of the home once, at eye height, looking where it is going -------------------------
 def gauss(a, sigma):
@@ -138,36 +137,141 @@ while goal:
     while path[-1] != cur: path.append(int(prev[path[-1]]))
     order += path[::-1][1:]; cur = tgt
     for i in path: goal.pop(cellof[i], None)
-EYE = float(np.clip(np.median(Cw[:, 1]), 1.25, 1.6)); G = gauss(resample(P[order][:, [0, 2]], 0.08), 0.45 / 0.08); G = resample(G, 0.1)
-ahead = np.stack([G[min(len(G) - 1, i + 12)] - G[i] for i in range(len(G))]); ahead = gauss(ahead, 9.0); ahead /= np.maximum(np.linalg.norm(ahead, axis=1, keepdims=True), 1e-6)      # looking a good step ahead, turning slowly
-cams = [{'p': [round(float(g[0]), 3), round(EYE, 3), round(float(g[1]), 3)], 'd': [round(float(a[0]), 4), -0.1, round(float(a[1]), 4)]} for g, a in zip(G, ahead)]
-print(f'route: {len(G) * 0.1:.0f} m through the home (the scan itself wandered for {float(np.sum(np.linalg.norm(np.diff(Cw, axis=0), axis=1))):.0f} m)', flush=True)
+EYE = float(np.clip(np.median(Cw[:, 1]), 1.25, 1.6))
 
-# ---- room names along the route (optional) --------------------------------------------------------------------------------
-chapters = []
+# ---- the floor plan: the home seen from above, and split into its rooms -------------------------------------------------------
+# Everything here is measured from the model itself. The plan is turned so that the walls run up-down and left-right.
+mw = o3d.geometry.TriangleMesh(o3d.utility.Vector3dVector(VX), o3d.utility.Vector3iVector(TR.astype(np.int32))); mw.vertex_colors = o3d.utility.Vector3dVector(COL); mw.compute_vertex_normals()
+pc = mw.sample_points_uniformly(3000000, use_triangle_normal=True); S3 = np.asarray(pc.points); N3 = np.asarray(pc.normals); C3 = np.asarray(pc.colors)
+wl = (np.abs(N3[:, 1]) < 0.25) & (S3[:, 1] > 0.5) & (S3[:, 1] < 2.0); phi = np.arctan2(N3[wl, 2], N3[wl, 0]) % (np.pi / 2); hist, edges = np.histogram(phi, bins=90, range=(0, np.pi / 2)); ANG = float(edges[int(np.argmax(hist))] + np.pi / 360)
+ca, sa = np.cos(ANG), np.sin(ANG); to_plan = lambda X, Z: (ca * X + sa * Z, -sa * X + ca * Z)             # world (x, z) -> plan (a, b)
+A3, B3 = to_plan(S3[:, 0], S3[:, 2]); CP = 0.04; a0, b0 = float(A3.min()) - 0.2, float(B3.min()) - 0.2; PW, PH = int((A3.max() - a0 + 0.2) / CP) + 1, int((B3.max() - b0 + 0.2) / CP) + 1
+def grid(mask, cell=CP, w=None, h=None):
+    w = w or PW; h = h or PH; g = np.zeros((h, w), np.int32); np.add.at(g, (np.clip(((B3[mask] - b0) / cell).astype(int), 0, h - 1), np.clip(((A3[mask] - a0) / cell).astype(int), 0, w - 1)), 1); return g
+def grow(m, k):
+    for _ in range(k): p_ = np.pad(m, 1); m = p_[1:-1, 1:-1] | p_[:-2, 1:-1] | p_[2:, 1:-1] | p_[1:-1, :-2] | p_[1:-1, 2:]
+    return m
+shrink = lambda m, k: ~grow(~m, k)
+wall = (grid((S3[:, 1] > 0.2) & (S3[:, 1] < 0.8)) >= 30) & (grid((S3[:, 1] > 0.9) & (S3[:, 1] < 1.5)) >= 30) & (grid((S3[:, 1] > 1.6) & (S3[:, 1] < 2.2)) >= 30)      # a surface standing from the floor to above head height: a wall, a door, a curtain (a worktop or a bed is not, so rooms are measured wall to wall)
+solid = grid((S3[:, 1] > 0.3) & (S3[:, 1] < 1.8)) >= 10                   # ... and anything a person would walk into
+seen = grid(S3[:, 1] < 0.12) >= 3; ta, tb = to_plan(Cw[:, 0], Cw[:, 2]); track = np.zeros((PH, PW), bool); track[np.clip(((tb - b0) / CP).astype(int), 0, PH - 1), np.clip(((ta - a0) / CP).astype(int), 0, PW - 1)] = True
+inside = shrink(grow(seen | grow(track, 8), 26), 26) & ~wall             # the floor that was seen or walked, with the footprints of beds and sofas filled in
+def edt(free):
+    """how far each free cell is from the nearest cell that is not free, in metres"""
+    edge = ~free & grow(free, 1); ey, ex = np.nonzero(edge); fy, fx = np.nonzero(free); D = np.zeros(free.shape, np.float32)
+    for i in range(0, len(fy), 4000): D[fy[i:i + 4000], fx[i:i + 4000]] = np.sqrt(((fy[i:i + 4000, None] - ey[None]) ** 2 + (fx[i:i + 4000, None] - ex[None]) ** 2).min(1)) * CP
+    return D
+def parts(m):
+    """the separate pieces of a mask, numbered from 1"""
+    lab = np.zeros(m.shape, np.int32); n_ = 0
+    for y, x in zip(*np.nonzero(m)):
+        if lab[y, x]: continue
+        n_ += 1; lab[y, x] = n_; stack = [(y, x)]
+        while stack:
+            cy, cx = stack.pop()
+            for ny, nx in ((cy + 1, cx), (cy - 1, cx), (cy, cx + 1), (cy, cx - 1)):
+                if 0 <= ny < m.shape[0] and 0 <= nx < m.shape[1] and m[ny, nx] and not lab[ny, nx]: lab[ny, nx] = n_; stack.append((ny, nx))
+    return lab, n_
+DW = edt(inside)
+# A room is a place wide enough to stand well clear of the walls; a doorway is too narrow for that, so it parts two rooms.
+# Passages (a hallway) are narrower than rooms but wider than doorways: they are found second, where no room already is.
+core, nc = parts(DW > 0.55); room = np.zeros_like(core); nr = 0; kind = {}
+for k in range(1, nc + 1):
+    if (core == k).sum() * CP * CP >= 0.25: nr += 1; room[core == k] = nr; kind[nr] = 'room'
+mid, nm = parts(DW > 0.44)
+for k in range(1, nm + 1):
+    if not room[mid == k].any() and (mid == k).sum() * CP * CP >= 0.2: nr += 1; room[mid == k] = nr; kind[nr] = 'passage'
+heap = [(-float(DW[y, x]), int(y), int(x)) for y, x in zip(*np.nonzero(room))]; heapq.heapify(heap)        # every other cell joins the room it is reached from first, widest way first
+while heap:
+    _, y, x = heapq.heappop(heap)
+    for ny, nx in ((y + 1, x), (y - 1, x), (y, x + 1), (y, x - 1)):
+        if 0 <= ny < PH and 0 <= nx < PW and inside[ny, nx] and not room[ny, nx]: room[ny, nx] = room[y, x]; heapq.heappush(heap, (-float(DW[ny, nx]), ny, nx))
+cell_of = lambda X, Z: (np.clip(((-sa * X + ca * Z - b0) / CP).astype(int), 0, PH - 1), np.clip(((ca * X + sa * Z - a0) / CP).astype(int), 0, PW - 1))
+def room_at(X, Z):
+    """the room a point of the floor is in (the nearest room, if it is on a wall line or under furniture)"""
+    y, x = cell_of(np.atleast_1d(X), np.atleast_1d(Z)); r = room[y, x].copy()
+    for i in np.nonzero(r == 0)[0]:
+        ys, xs = np.nonzero(room[max(0, y[i] - 12):y[i] + 13, max(0, x[i] - 12):x[i] + 13])
+        if len(ys): j = int(np.argmin((ys - min(12, y[i])) ** 2 + (xs - min(12, x[i])) ** 2)); r[i] = room[max(0, y[i] - 12) + ys[j], max(0, x[i] - 12) + xs[j]]
+    return r
+# what each room is: every photograph taken in it has a say
+# What each room is: by the things found in it. A scan is mostly close-ups, which say little about a room as a whole
+# but show its contents well; so every photograph is asked what single thing it shows, and each room is named from
+# the tally of what was found there (a bed makes a bedroom; a hob, a sink and a fridge make a kitchen).
+THINGS = {'a bed': ('bedroom', 3), 'a sofa': ('living room', 2), 'a television': ('living room', 1), 'a coffee table': ('living room', 1), 'a dining table with chairs': ('dining room', 1), 'a kitchen hob or stove': ('kitchen', 2), 'a kitchen sink': ('kitchen', 1),
+          'a refrigerator': ('kitchen', 1), 'a washing machine': ('kitchen', 0.7), 'a microwave oven': ('kitchen', 1), 'a toilet': ('bathroom', 3), 'a shower': ('bathroom', 1.5), 'a bathtub': ('bathroom', 2), 'a desk with an office chair': ('home office', 0.5),
+          'a wardrobe or closet doors': None, 'a curtain': None, 'a blank wall': None, 'a door': None, 'a wooden floor': None, 'a ceiling': None, 'a window': None, 'a plant': None, 'a lamp': None, 'a shelf': None}
+krooms = room_at(Cw[keys][:, 0], Cw[keys][:, 2]); found = {}
 if opt.get('clip'):
     import onnxruntime as ort
     from tokenizers import Tokenizer
     ort.set_default_logger_severity(3); Cdir = opt['clip']; vs = ort.InferenceSession(os.path.join(Cdir, 'vision_model_quantized.onnx'), providers=['CPUExecutionProvider']); ts = ort.InferenceSession(os.path.join(Cdir, 'text_model_quantized.onnx'), providers=['CPUExecutionProvider'])
-    tok = Tokenizer.from_file(os.path.join(Cdir, 'tokenizer.json')); ids = np.full((len(ROOMS), 77), 49407, np.int64); mask = np.zeros((len(ROOMS), 77), np.int64)
-    for i, r in enumerate(ROOMS): e = tok.encode(f'a photo of a {r} in a home').ids[:77]; ids[i, :len(e)] = e; mask[i, :len(e)] = 1
-    tx = ts.run(None, {i.name: (ids if 'input_ids' in i.name else mask) for i in ts.get_inputs()}); tx = next(o for o in tx if o.ndim == 2 and o.shape[0] == len(ROOMS)); tx = tx / np.linalg.norm(tx, axis=1, keepdims=True)
-    CM, CS = np.array([0.4815, 0.4578, 0.4082], np.float32), np.array([0.2686, 0.2613, 0.2758], np.float32); logit = []
+    said = list(THINGS); tok = Tokenizer.from_file(os.path.join(Cdir, 'tokenizer.json')); ids = np.full((len(said), 77), 49407, np.int64); mask = np.zeros((len(said), 77), np.int64)
+    for i, t in enumerate(said): e = tok.encode('a photo of ' + t).ids[:77]; ids[i, :len(e)] = e; mask[i, :len(e)] = 1
+    tx = ts.run(None, {i.name: (ids if 'input_ids' in i.name else mask) for i in ts.get_inputs()}); tx = next(o for o in tx if o.ndim == 2 and o.shape[0] == len(said)); tx = tx / np.linalg.norm(tx, axis=1, keepdims=True)
+    CM, CS = np.array([0.4815, 0.4578, 0.4082], np.float32), np.array([0.2686, 0.2613, 0.2758], np.float32)
     for k in range(len(keys)):
-        im = Image.open(os.path.join(kdir, f'k{k:04d}.jpg')).convert('RGB').resize((224, 224), Image.BICUBIC); a = (np.asarray(im, np.float32) / 255.0 - CM) / CS
-        o = vs.run(None, {vs.get_inputs()[0].name: a.transpose(2, 0, 1)[None]}); e = next(x for x in o if x.ndim == 2)[0]; logit.append(100 * (tx @ (e / np.linalg.norm(e))))
-    logit = np.array(logit); KP = Cw[keys]; KF = FWD[keys]; lab = []
-    for g, a in zip(G, ahead):                                              # at each point of the route: what the photographs taken near it, facing its way, look like
-        w = np.exp(-(np.linalg.norm(KP[:, [0, 2]] - g, axis=1) / 0.8) ** 2) * np.maximum(0, KF[:, [0, 2]] @ a) ** 2; lab.append((w[:, None] * logit).sum(0) / max(w.sum(), 1e-6))
-    lab = list(np.argmax(gauss(np.array(lab), 12.0), 1)); MIN = 30; changed = True
-    while changed:
-        changed = False; runs = []
-        for i, l in enumerate(lab):
-            if runs and runs[-1][0] == l: runs[-1][2] = i + 1
-            else: runs.append([l, i, i + 1])
-        for j, (l, i0, i1) in enumerate(runs):
-            if i1 - i0 < MIN and len(runs) > 1: lab[i0:i1] = [runs[j - 1][0] if j > 0 else runs[j + 1][0]] * (i1 - i0); changed = True; break
-    chapters = [{'label': ROOMS[l], 'from': i0, 'to': i1 - 1} for l, i0, i1 in runs]
+        im = Image.open(os.path.join(kdir, f'k{k:04d}.jpg')).convert('RGB').resize((224, 224), Image.BICUBIC); a_ = (np.asarray(im, np.float32) / 255.0 - CM) / CS
+        o = vs.run(None, {vs.get_inputs()[0].name: a_.transpose(2, 0, 1)[None]}); e = next(x for x in o if x.ndim == 2)[0]; lg = 100 * (tx @ (e / np.linalg.norm(e))); pr = np.exp(lg - lg.max()); pr /= pr.sum(); t = said[int(np.argmax(pr))]
+        if pr.max() > 0.3 and THINGS[t]: found.setdefault(int(krooms[k]), {}).setdefault(t, 0); found[int(krooms[k])][t] += 1
+plan_rooms = []
+for r in range(1, nr + 1):
+    ys, xs = np.nonzero(room == r); area = len(ys) * CP * CP
+    if area < 0.6: room[room == r] = 0; continue
+    score = {}
+    for t, c in found.get(r, {}).items(): score[THINGS[t][0]] = score.get(THINGS[t][0], 0) + c * THINGS[t][1]
+    best = max(score, key=score.get) if score else None; label = best if best and score[best] >= 3 else ('hallway' if kind[r] == 'passage' else 'room')
+    if label in ('dining room', 'home office') and score.get('living room', 0) >= 3: label = 'living room'            # one open room with a sofa and a table is the living room
+    if label == 'home office' and score.get('bedroom', 0) >= 3: label = 'bedroom'
+    if found.get(r): print(f"  room {r}: {area:.1f} m2, found " + ', '.join(f'{t[2:]} x{c}' for t, c in sorted(found[r].items(), key=lambda e: -e[1])), flush=True)
+    plan_rooms.append({'id': r, 'label': label, 'area': round(area, 1), 'size': [round((np.percentile(xs, 98) - np.percentile(xs, 2)) * CP, 1), round((np.percentile(ys, 98) - np.percentile(ys, 2)) * CP, 1)], 'at': [round(float(np.median(xs)) * CP + a0, 2), round(float(np.median(ys)) * CP + b0, 2)],
+                       'has': sorted({THINGS[t][0] for t, c in found.get(r, {}).items() if c >= 3})})
+names = {}
+for r_ in plan_rooms:                                                       # a second room of a kind is numbered
+    names[r_['label']] = names.get(r_['label'], 0) + 1
+    if names[r_['label']] > 1: r_['label'] += f" {names[r_['label']]}"
+print('rooms: ' + ', '.join(f"{r_['label']} {r_['area']} m2 ({r_['size'][0]} x {r_['size'][1]})" for r_ in plan_rooms), flush=True)
+# the picture of the plan: looking straight down with the ceiling off, 2 cm to a pixel
+IP = 0.02; IW, IH = int(PW * CP / IP), int(PH * CP / IP); low = S3[:, 1] < 2.05; order_ = np.argsort(S3[low, 1]); iy = np.clip(((B3[low][order_] - b0) / IP).astype(int), 0, IH - 1); ix = np.clip(((A3[low][order_] - a0) / IP).astype(int), 0, IW - 1)
+top = np.zeros((IH, IW, 4), np.uint8); top[iy, ix, :3] = np.clip(C3[low][order_] * 255, 0, 255).astype(np.uint8); top[iy, ix, 3] = 255                       # the highest thing under the ceiling wins each pixel
+for _ in range(3):                                                         # pinholes take the colour beside them
+    hole = top[..., 3] == 0; pd = np.pad(top, ((1, 1), (1, 1), (0, 0))); nbs = [pd[1:-1, :-2], pd[1:-1, 2:], pd[:-2, 1:-1], pd[2:, 1:-1]]; cnt = sum((n_[..., 3] > 0).astype(np.int32) for n_ in nbs)
+    fill = hole & (cnt >= 3); avg = sum(n_[..., :3].astype(np.int32) * (n_[..., 3:] > 0) for n_ in nbs) // np.maximum(cnt, 1)[..., None]; top[fill, :3] = avg[fill].astype(np.uint8); top[fill, 3] = 255
+plan_img = Image.fromarray(top, 'RGBA')
+
+# ---- the route, refined: kept clear of what stands in the room, and looking where there is something to see -------------------
+G = gauss(resample(P[order][:, [0, 2]], 0.08), 0.45 / 0.08); DS = edt(inside & ~solid); gy_, gx_ = np.gradient(DS)
+for _ in range(3):                                                         # a step away from anything closer than half a metre
+    y, x = cell_of(G[:, 0], G[:, 1]); near = np.clip(0.5 - DS[y, x], 0, 0.5); ga, gb = gx_[y, x], gy_[y, x]; nrm = np.maximum(np.hypot(ga, gb), 1e-6); da, db = ga / nrm * near * 0.5, gb / nrm * near * 0.5
+    G = G + np.stack([ca * da - sa * db, sa * da + ca * db], 1); G = gauss(G, 3.0)
+G = resample(G, 0.1); travel = np.gradient(gauss(G, 4.0), axis=0); travel /= np.maximum(np.linalg.norm(travel, axis=1, keepdims=True), 1e-6)
+rc = o3d.t.geometry.RaycastingScene(); rc.add_triangles(o3d.t.geometry.TriangleMesh.from_legacy(mw)); NY = 48; yaws = np.arange(NY) * 2 * np.pi / NY
+def openness():
+    """how far the view runs, from each point of the route, in each direction around it"""
+    rays = []
+    for g in G:
+        for th in yaws:
+            for dth, dp in ((-0.14, 0.0), (0.14, 0.0), (0.0, -0.2), (0.0, 0.0)): rays.append([g[0], EYE, g[1], np.sin(th + dth) * np.cos(dp), np.sin(dp), np.cos(th + dth) * np.cos(dp)])
+    t = rc.cast_rays(o3d.core.Tensor(np.array(rays, np.float32)))['t_hit'].numpy(); return np.minimum(t, 6.0).reshape(len(G), NY, 4).mean(2)
+OP = openness(); tyaw = np.arctan2(travel[:, 0], travel[:, 1]); dth = np.abs((yaws[None] - tyaw[:, None] + np.pi) % (2 * np.pi) - np.pi)
+unary = 0.4 * dth ** 2 + 1.3 * np.maximum(0, 1.7 - OP) - 0.3 * OP / 6.0     # facing the way it walks, unless that means a wall in the face; a long view is a small bonus
+step_ = np.abs((yaws[:, None] - yaws[None] + np.pi) % (2 * np.pi) - np.pi); trans = 7.0 * step_ ** 2; cost = unary[0].copy(); back = []
+for i in range(1, len(G)): tot = cost[:, None] + trans; back.append(np.argmin(tot, 0)); cost = tot.min(0) + unary[i]
+j = int(np.argmin(cost)); pick = [j]
+for bk in reversed(back): j = int(bk[j]); pick.append(j)
+pick.reverse(); ahead = gauss(np.stack([np.sin(yaws[pick]), np.cos(yaws[pick])], 1), 7.0); ahead /= np.maximum(np.linalg.norm(ahead, axis=1, keepdims=True), 1e-6)
+cams = [{'p': [round(float(g[0]), 3), round(EYE, 3), round(float(g[1]), 3)], 'd': [round(float(a[0]), 4), -0.1, round(float(a[1]), 4)]} for g, a in zip(G, ahead)]
+print(f'route: {len(G) * 0.1:.0f} m through the home (the scan itself wandered for {float(np.sum(np.linalg.norm(np.diff(Cw, axis=0), axis=1))):.0f} m)', flush=True)
+# the room names along the route: simply the room each step is in (a room passed through in under 1.5 m is not announced)
+rid = list(room_at(G[:, 0], G[:, 1])); label_of = {r_['id']: r_['label'] for r_ in plan_rooms}; changed = True
+while changed:
+    changed = False; runs = []
+    for i, l in enumerate(rid):
+        if runs and runs[-1][0] == l: runs[-1][2] = i + 1
+        else: runs.append([l, i, i + 1])
+    for j_, (l, i0, i1) in enumerate(runs):
+        if (i1 - i0 < 10 or l not in label_of) and len(runs) > 1: rid[i0:i1] = [runs[j_ - 1][0] if j_ > 0 else runs[j_ + 1][0]] * (i1 - i0); changed = True; break
+chapters = [{'label': label_of.get(l, 'room'), 'room': int(l), 'from': i0, 'to': i1 - 1} for l, i0, i1 in runs]
 
 # ---- 4. the scene folder ---------------------------------------------------------------------------------------------------
 os.makedirs(out, exist_ok=True)
@@ -197,6 +301,7 @@ for k, i in enumerate(keys):
     im = Image.open(os.path.join(kdir, f'k{k:04d}.jpg')).convert('RGB'); gain = match(k, i, im); buf = io.BytesIO(); im.save(buf, 'WEBP', quality=78, method=6); pack = f'k{k // 16:02d}.webp'; f = os.path.join(out, pack)
     at = [os.path.getsize(f) if k % 16 else 0, buf.tell()]; open(f, 'ab' if k % 16 else 'wb').write(buf.getvalue())
     metas.append({'pack': pack, 'at': at, 'w': im.size[0], 'h': im.size[1], 'f': [round(float(K[0, 0] / W0), 5), round(float(K[1, 1] / H0), 5)], 'c': [round(float(K[0, 2] / W0), 5), round(float(K[1, 2] / H0), 5)],
-                  'g': gain, 'p': [round(float(x), 4) for x in Cw[i]], 'r': [round(float(x), 5) for x in Rw[i].T.reshape(-1)]})      # r: the world seen from this camera (rows: its right, its down, its forward)
-json.dump({'mesh': 'mesh.glb', 'eye': round(EYE, 3), 'size': [round(float(x), 2) for x in (VX.max(0) - VX.min(0))], 'keys': metas, 'path': cams, 'chapters': chapters}, open(os.path.join(out, 'scene.json'), 'w'), separators=(',', ':'))
+                  'g': gain, 'room': int(krooms[k]), 'p': [round(float(x), 4) for x in Cw[i]], 'r': [round(float(x), 5) for x in Rw[i].T.reshape(-1)]})      # r: the world seen from this camera (rows: its right, its down, its forward)
+plan_img.save(os.path.join(out, 'plan.webp'), 'WEBP', quality=88, method=6)
+json.dump({'mesh': 'mesh.glb', 'eye': round(EYE, 3), 'plan': {'img': 'plan.webp', 'px': IP, 'origin': [round(a0, 3), round(b0, 3)], 'turn': round(ANG, 5), 'w': IW, 'h': IH, 'area': round(float(sum(r_['area'] for r_ in plan_rooms)), 1), 'rooms': plan_rooms}, 'size': [round(float(x), 2) for x in (VX.max(0) - VX.min(0))], 'keys': metas, 'path': cams, 'chapters': chapters}, open(os.path.join(out, 'scene.json'), 'w'), separators=(',', ':'))
 print(f'\nwritten to {out}: mesh.glb ({os.path.getsize(os.path.join(out, "mesh.glb")) / 1e6:.1f} MB), {len(keys)} photographs in {(len(keys) + 15) // 16} files, a route of {len(cams)} steps' + (f", rooms: {[c['label'] for c in chapters]}" if chapters else ''))

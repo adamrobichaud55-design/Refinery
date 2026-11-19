@@ -19,7 +19,7 @@
   // the home as one 3D scene (scene/, built by tools/scene/build_scene.py) if there is one; otherwise the walk through photographs (walk/)
   fetch('scene/scene.json').then(r => (r.ok ? r.json() : null)).catch(() => null).then(scene => (scene ? { scene } : walkRooms()))
     .then(src => {
-      const HERO = 5;                                                        // the address plate shows for the first few frames
+      let HERO = 5;                                                          // the address plate shows for the first few frames (and over the opening view of the whole home)
       const tour = (src.scene ? window.Scene3D : window.Walk3D)({
         canvas: $('filmCanvas'), section: $('film'), ...(src.scene ? { scene: src.scene, base: 'scene/' } : { rooms: src.rooms }),
         onUpdate(u) {
@@ -30,6 +30,8 @@
         },
         onLoad: () => { $('loadline').firstElementChild.style.opacity = 0; stage.style.backgroundImage = 'none'; },
       });
+      if (tour.intro) HERO = tour.intro * 0.62;
+      if (src.scene && src.scene.plan) measured(src.scene.plan);
       // the words for each stretch: by its place in the tour (config "tour"), or by the room's name (config "rooms")
       const cap = t => t.replace(/^./, m => m.toUpperCase());
       // a walk can pass through a room more than once: its words are shown the first time, only its name after that, and the rail lists each room once
@@ -41,6 +43,19 @@
       $('film').style.height = `calc(${Math.round(Math.min(2600, 100 + tour.total * (src.scene ? 30 : tour.total > 60 ? 15 : 26)))} * 1svh)`;      // the longer the walk, the longer the scroll: a steady pace throughout
       if (src.scene && $('explore')) $('explore').hidden = false;          // the same scene can be looked around freely, and stood in with a headset
     }).catch(e => console.error('walk-through: could not load', e));
+
+  // ---- the floor plan and the room sizes, measured from the 3D scene ----
+  const nice = l => ((S.rooms || {})[l.replace(/ \d+$/, '')] || {}).label ? ((S.rooms || {})[l.replace(/ \d+$/, '')].label + (l.match(/ \d+$/) || [''])[0]) : l.replace(/^./, m => m.toUpperCase());
+  const sqft = m2 => Math.round(m2 * 10.7639);
+  function measured(plan) {
+    const rooms = plan.rooms.filter(r => r.area >= 1.5);
+    $('plan').hidden = false;
+    $('plan').innerHTML = `<div class="in"><div class="head"><span class="label">Floor plan</span><h2>${plan.area.toFixed(0)} m² <i>measured from the scan</i></h2></div>
+      <figure class="planfig"><img src="scene/${esc(plan.img)}" alt="The home seen from above with its ceiling removed" width="${plan.w}" height="${plan.h}" loading="lazy">
+      ${rooms.map(r => `<figcaption style="left:${(((r.at[0] - plan.origin[0]) / plan.px / plan.w) * 100).toFixed(1)}%;top:${(((r.at[1] - plan.origin[1]) / plan.px / plan.h) * 100).toFixed(1)}%"><b>${esc(nice(r.label))}</b><span>${r.area.toFixed(1)} m²</span></figcaption>`).join('')}</figure>
+      <p class="plannote">Drawn and measured automatically from the 3D scan of the home. Sizes are approximate (about ${sqft(plan.area).toLocaleString()} sq ft in all) and are not a survey.</p></div>`;
+    $('rooms').innerHTML = `<div class="in"><div class="head"><span class="label">Rooms</span><h2>Room by room</h2></div><table class="roomtable"><thead><tr><th scope="col">Room</th><th scope="col">Size</th><th scope="col">Area</th></tr></thead><tbody>${rooms.map(r => `<tr><td>${esc(nice(r.label))}</td><td>${r.size[0].toFixed(1)} × ${r.size[1].toFixed(1)} m</td><td>${r.area.toFixed(1)} m² · ${sqft(r.area)} sq ft</td></tr>`).join('')}</tbody></table></div>`;
+  }
 
   // ---- facts and description ----
   $('facts').innerHTML = `<div class="in"><div class="head"><span class="label">${esc(L.status)}</span><h2>${esc(L.address)}, <i>${esc(L.town)}</i></h2></div>
