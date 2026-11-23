@@ -12,6 +12,10 @@ export const K = {
   G_FT_S2: 32.174,
   /** K-5 water density lb/ft3 */
   WATER_DENSITY_LB_FT3: 62.4,
+  /** K-7 density of normal-weight concrete, lb/ft3 (civil catalogue, §65) */
+  CONCRETE_DENSITY_LB_FT3: 150,
+  /** K-7 density of normal-weight concrete, lb/in3 */
+  CONCRETE_DENSITY_LB_IN3: 150 / 1728,
 } as const;
 
 /** SW-W-1 / SW-C-1: cross-section area (in2) from weight per foot (lb/ft). */

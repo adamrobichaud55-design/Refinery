@@ -39,6 +39,7 @@ npx vite-node tools/gen-plant.ts P2 public/plants/P2/plant-piping.json   # regen
 npx vite-node tools/export-gt.ts P2              # plant 2 ground truth (public/plants/P2/groundtruth/)
 npx vite-node tools/coverage.ts public/plants/P2/plant-piping.json       # symbol coverage against the SW-COV-2 floor
 npx vite-node tools/export-pcf.ts P1|P2           # one PCF per line from the ground truth (public/.../pcf/, SW-PCF-1..4; tools/pcf-mapping.md)
+npx vite-node tools/catalogue-doc.ts              # the civil and equipment catalogues as documents (docs/CATALOGUE-*.md)
 npx vite-node tools/pcf-check.ts P1|P2            # the owner's eighteen zero-checks on the ground truth and PCF files (SW-LL-8, SW-GT-7, SW-PCF-*, SW-PEN-1)
 npx vite-node tools/erection.ts P1|P2            # structural steel erection drawings (downloads/erection-P*.pdf, sheet previews)
 npx vite-node tools/render-plant.ts P2           # review images of plant 2 (screenshots/stage9/)
@@ -55,7 +56,9 @@ its stem plane.
 DESIGN_BASIS.md        rules and reasons (the only source of rule numbers)
 PROVENANCE.md          audit log, libraries and licences
 src/core               units, dimension basis tags, physical constants
-src/catalogue          designation parser and part rules → PartSpec (plain data)
+src/catalogue          designation parser and part rules → PartSpec (plain data); parts/civil.ts the civil and concrete
+                       catalogue (§65), parts/equipment.ts and parts/equipmentKit.ts the equipment catalogue (§25, §66)
+docs/CATALOGUE-*.md    the civil and equipment catalogues as documents (tools/catalogue-doc.ts)
 src/geometry           profiles, extrusion, transforms → mesh arrays (plain data)
 src/scene              catalogue list and demonstration assemblies (plain data)
 src/generator          building shell, interior, nozzles, line list, router and piping generators → placed parts

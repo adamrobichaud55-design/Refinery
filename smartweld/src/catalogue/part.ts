@@ -7,9 +7,14 @@ export type PartKind =
   | 'Z' | 'CS' | 'ROD' | 'PANEL' | 'TRIM' | 'CONCRETE' | 'DOOR_LEAF' | 'DOOR_CURTAIN' | 'DOOR_DRUM' | 'FILLET_WELD_AROUND'
   | 'GRATING' | 'GRATING_TREAD' | 'CAGE_HOOP' | 'VESSEL_V' | 'VESSEL_H' | 'EXCHANGER' | 'PUMP' | 'TANK'
   | 'PIPE' | 'FLANGE' | 'BLIND' | 'GASKET' | 'STUD' | 'VALVE'
-  | 'ELBOW' | 'TEE' | 'REDUCER' | 'CAP' | 'BUTT_WELD' | 'SUPPORT' | 'FITTING' | 'HOPPER';
+  | 'ELBOW' | 'TEE' | 'REDUCER' | 'CAP' | 'BUTT_WELD' | 'SUPPORT' | 'FITTING' | 'HOPPER'
+  // civil and concrete catalogue (§65)
+  | 'FOOTING' | 'PEDESTAL' | 'PAD' | 'SLAB' | 'OCTAGON' | 'RINGWALL' | 'PIER' | 'GRADE_BEAM' | 'GROUT' | 'CURB' | 'PAVING' | 'TRENCH' | 'SUMP' | 'DIKE'
+  // equipment catalogue (§66)
+  | 'MOTOR' | 'NOZZLE' | 'MANWAY' | 'LIFTING_LUG' | 'VESSEL_LEGS' | 'SUPPORT_LUGS' | 'INSUL_RINGS' | 'DAVIT' | 'COLUMN' | 'REACTOR' | 'AIR_COOLER' | 'COMPRESSOR'
+  | 'BLOWER' | 'HEATER' | 'AGITATED_TANK' | 'FILTER' | 'DUST_COLLECTOR' | 'CYCLONE' | 'SCREW_CONVEYOR' | 'BUCKET_ELEVATOR' | 'SILO' | 'SUMP_PUMP' | 'HAIRPIN' | 'PLATE_EXCHANGER';
 
-export type Category = 'section' | 'plate' | 'hardware' | 'weld' | 'sheet' | 'non-steel' | 'equipment' | 'piping' | 'valve';
+export type Category = 'section' | 'plate' | 'hardware' | 'weld' | 'sheet' | 'non-steel' | 'equipment' | 'piping' | 'valve' | 'civil';
 
 export interface Material {
   grade: string;

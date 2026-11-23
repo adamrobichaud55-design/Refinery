@@ -107,3 +107,46 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage9/P2-bins.png` | Bins, rotary feeders, walkway and fill lines |
 | `stage9/P2-outdoor.png` | Outdoor tanks, drums and silos with the lines through the end wall |
 | `stage9/P2-above.png` | Plan view from above |
+| `stage10/cat10-Spread-footing-60-kip-column-24-in-pedestal.png` | Catalogue entry Spread footing (60 kip column, 24 in pedestal) (Civil) |
+| `stage10/cat10-Pedestal-for-a-16x14-base-plate-36-in.png` | Catalogue entry Pedestal for a 16x14 base plate, 36 in (Civil) |
+| `stage10/cat10-Equipment-pad-108-in-vessel-base.png` | Catalogue entry Equipment pad (108 in vessel base) (Civil) |
+| `stage10/cat10-Pump-pad-30-x-72-baseplate.png` | Catalogue entry Pump pad (30 x 72 baseplate) (Civil) |
+| `stage10/cat10-Slab-on-grade-40-x-20-ft-thickened-edge.png` | Catalogue entry Slab on grade 40 x 20 ft, thickened edge (Civil) |
+| `stage10/cat10-Octagonal-foundation-85-in-base-ring-60-kip.png` | Catalogue entry Octagonal foundation (85 in base ring, 60 kip) (Civil) |
+| `stage10/cat10-Ring-wall-for-a-12-ft-tank.png` | Catalogue entry Ring wall for a 12 ft tank (Civil) |
+| `stage10/cat10-Drilled-pier-24-in-150-kip.png` | Catalogue entry Drilled pier 24 in, 150 kip (Civil) |
+| `stage10/cat10-Grade-beam-20-ft.png` | Catalogue entry Grade beam 20 ft (Civil) |
+| `stage10/cat10-Grout-bed-under-a-16x14-plate.png` | Catalogue entry Grout bed under a 16x14 plate (Civil) |
+| `stage10/cat10-Curb-10-ft.png` | Catalogue entry Curb 10 ft (Civil) |
+| `stage10/cat10-Paving-20-x-40-ft.png` | Catalogue entry Paving 20 x 40 ft (Civil) |
+| `stage10/cat10-Trench-18-x-24-in-30-ft-grating-cover.png` | Catalogue entry Trench 18 x 24 in, 30 ft, grating cover (Civil) |
+| `stage10/cat10-Sump-24-in-cube.png` | Catalogue entry Sump 24 in cube (Civil) |
+| `stage10/cat10-Containment-dike-100-x-60-ft-two-12-ft-tanks.png` | Catalogue entry Containment dike 100 x 60 ft, two 12 ft tanks (Civil) |
+| `stage10/cat10-Nozzle-4-in-P150-with-pad.png` | Catalogue entry Nozzle 4 in P150 with pad (Vessel parts) |
+| `stage10/cat10-Manway-24-in-with-davit.png` | Catalogue entry Manway 24 in with davit (Vessel parts) |
+| `stage10/cat10-Lifting-lug-20-kip-vessel.png` | Catalogue entry Lifting lug (20 kip vessel) (Vessel parts) |
+| `stage10/cat10-Legs-for-a-36-in-vessel.png` | Catalogue entry Legs for a 36 in vessel (Vessel parts) |
+| `stage10/cat10-Support-lugs-on-R-25-in.png` | Catalogue entry Support lugs on R 25 in (Vessel parts) |
+| `stage10/cat10-Insulation-rings-18-ft-shell.png` | Catalogue entry Insulation rings, 18 ft shell (Vessel parts) |
+| `stage10/cat10-Davit-4-in-pipe.png` | Catalogue entry Davit 4 in pipe (Vessel parts) |
+| `stage10/cat10-Motor-18-in-frame.png` | Catalogue entry Motor 18 in frame (Equipment) |
+| `stage10/cat10-Column-72-in-x-40-ft-20-trays.png` | Catalogue entry Column 72 in x 40 ft, 20 trays (Equipment) |
+| `stage10/cat10-Reactor-72-in-x-18-ft.png` | Catalogue entry Reactor 72 in x 18 ft (Equipment) |
+| `stage10/cat10-Air-cooler-8-x-20-ft-2-fans.png` | Catalogue entry Air cooler 8 x 20 ft, 2 fans (Equipment) |
+| `stage10/cat10-Centrifugal-compressor-package.png` | Catalogue entry Centrifugal compressor package (Equipment) |
+| `stage10/cat10-Reciprocating-compressor.png` | Catalogue entry Reciprocating compressor (Equipment) |
+| `stage10/cat10-Blower-36-in-wheel.png` | Catalogue entry Blower, 36 in wheel (Equipment) |
+| `stage10/cat10-Fired-heater-10-ft-x-20-ft-30-ft-stack.png` | Catalogue entry Fired heater 10 ft x 20 ft, 30 ft stack (Equipment) |
+| `stage10/cat10-Agitated-tank-72-in.png` | Catalogue entry Agitated tank 72 in (Equipment) |
+| `stage10/cat10-Filter-24-in-quick-opening.png` | Catalogue entry Filter 24 in, quick-opening (Equipment) |
+| `stage10/cat10-Dust-collector-8-x-10-x-10-ft.png` | Catalogue entry Dust collector 8 x 10 x 10 ft (Equipment) |
+| `stage10/cat10-Cyclone-48-in.png` | Catalogue entry Cyclone 48 in (Equipment) |
+| `stage10/cat10-Screw-conveyor-12-in-x-20-ft.png` | Catalogue entry Screw conveyor 12 in x 20 ft (Equipment) |
+| `stage10/cat10-Bucket-elevator-24-in-x-40-ft.png` | Catalogue entry Bucket elevator 24 in x 40 ft (Equipment) |
+| `stage10/cat10-Silo-8-ft-x-20-ft-cone-bottom.png` | Catalogue entry Silo 8 ft x 20 ft, cone bottom (Equipment) |
+| `stage10/cat10-Vertical-sump-pump-4-in.png` | Catalogue entry Vertical sump pump 4 in (Equipment) |
+| `stage10/cat10-Hairpin-exchanger-2-in-in-4-in.png` | Catalogue entry Hairpin exchanger 2 in in 4 in (Equipment) |
+| `stage10/cat10-Plate-exchanger-80-plates.png` | Catalogue entry Plate exchanger, 80 plates (Equipment) |
+| `stage10/sheet-civil.png` | Civil catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/sheet-vessel-parts.png` | Vessel parts catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/sheet-equipment.png` | Equipment catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |

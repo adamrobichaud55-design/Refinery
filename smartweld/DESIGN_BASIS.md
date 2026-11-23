@@ -70,6 +70,7 @@ and no copyright infringement anywhere in the process (PROVENANCE P-57, P-58).
 | `K-4`    | Gravitational acceleration       | 32.174 ft/s²                | Physical constant. Used by later stages.                      |
 | `K-5`    | Density of water                 | 62.4 lb/ft³                 | Physical property (at ordinary temperature). Later stages.    |
 | `K-6`    | Geometry                         | π, √2, √3, cos 30° = √3/2   | Mathematics.                                                  |
+| `K-7`    | Density of normal-weight concrete| 150 lb/ft³ (0.08681 lb/in³) | Physical property of stone-aggregate concrete, bars included (≈2.4 g/cm³). Civil catalogue (§65). |
 
 ## 2. Units, precision and frames
 
@@ -2514,3 +2515,221 @@ used; the conventions below are SmartWeld's.
   checked by tests: every member instance of the model appears exactly once on a framing plan or
   elevation, every weld part is in the weld schedule, and every number on the sheets comes from the
   model.
+
+## 65. Civil and concrete catalogue (`SW-CIV-*`)
+
+Written 2026-11-23 at the owner's instruction: a catalogue of the concrete and civil work a plant
+stands on, built from SmartWeld's own rules only, with plant 2 as the reference for what the
+plants use (equipment pads, pump pads, rack pedestals, grout beds, the slab). As everywhere in
+this document, no published table or code was consulted; where a rule lands near common practice
+it was written from the reasoning given and not checked against anything (PROVENANCE P-72).
+Every civil part carries its concrete volume, its formed area and its bar list, so a quantity
+take-off reads straight from the catalogue.
+
+- `SW-CIV-1` Materials. Concrete is one of two classes stated on the drawing: class A, compressive
+  strength 3 ksi, for slabs, paving, curbs and fill; class B, 4 ksi, for footings, pedestals,
+  pads, ring walls, piers and anything that carries steel or equipment. Density K-7. Reinforcing
+  bars are "Grade 60" (minimum yield 60 ksi, a grade stated on the drawing as Grade 36 is for
+  steel sections), designated `#n`: SmartWeld's own naming in which n is the bar diameter in
+  eighths of an inch (so `#5` is 5/8 in), area π d²/4, weight per foot = area × K-1 (bars are
+  carbon steel). Reason: two classes are enough for a plant: one for flatwork that carries
+  little, one for everything that carries load; naming a bar by its diameter in eighths keeps
+  the designation and the dimension the same number.
+- `SW-CIV-2` Cover to the bars: 3 in where concrete is cast against earth, 2 in on a formed face
+  that is buried or outdoors, 1.5 in on a slab or a pad top indoors. Reason: the bar is protected
+  by the concrete between it and the wet side; earth is wettest and least controlled, a formed
+  face is better, an indoor slab best.
+- `SW-CIV-3` Spread footing under a column or pedestal. Plan: square, side B = roundup(√(1.1 P /
+  q), 6 in), minimum 36 in, where P is the column load (kips, drawing) and q the allowable
+  bearing (ksf, drawing; `SW-CIV-3a` default 3 ksf, a firm granular soil); the 1.1 carries the
+  footing's own weight and the soil on it. Thickness t = roundup(max(12 in, projection), 3 in),
+  projection = (B − pedestal side)/2: the load spreads at 45° from the pedestal face and reaches
+  the bottom within the footing, so the footing works as a deep block and needs no bending or
+  shear check. Bars: a bottom mat each way of `#5` at a spacing s = min(12 in, the spacing that
+  gives 0.2 % of the gross section b·t), ends hooked 90° (a hook adds 12 d to the bar's length,
+  `SW-CIV-3b`), on 3 in cover (SW-CIV-2). Reason: 0.2 % holds shrinkage cracks closed and gives
+  the block some ductility; 12 in is the widest spacing that still makes a mat.
+- `SW-CIV-4` Pedestal. Plan: the base plate (SW-BP-1) plus 6 in each side, rounded up to 2 in,
+  minimum 12 in square; so the anchor rods (set 1.5 in in from the plate edge, SW-BP-3) have 7.5
+  in of concrete beyond them, more than 6 d for the rods of SW-AR-1. Height stated (6 in above the
+  slab for the rack, SW-RK-4; to the top of a footing outdoors). Bars: one `#5` vertical at each
+  corner and one per further 12 in of side, hooked into the footing; `#3` ties at 12 in with the
+  first tie 3 in below the top. Reason: the pedestal is a short column; the ties hold the
+  verticals and confine the concrete round the anchor rods.
+- `SW-CIV-5` Equipment pad (a housekeeping pad on the slab). Plan: the equipment's base plus 6 in
+  each side, as plant 2 places them (a vessel's base ring plus 18 in, a pump's baseplate plus 6
+  in; SW-LAY-2); height 6 in, 9 in under pumps. Bars: `#4` at 12 in each way at mid-height; `#4`
+  dowels at 24 in round the perimeter, 6 in into the slab and 4 in up into the pad. Reason: a pad
+  keeps base plates and grout above wash-down water; the mesh controls shrinkage; the dowels tie
+  the pad to the slab so it cannot walk.
+- `SW-CIV-6` Slab on grade. Thickness stated (6 in, SW-BLD-3), class A, `#4` at 18 in each way at
+  mid-depth, on a 6 in compacted granular base (not modeled); a thickened edge 12 in wide and 12
+  in deep along the building line with two `#5` continuous. Reason: a 6 in slab on a prepared base
+  carries wheeled plant traffic; the thickened edge carries the wall line and the door jambs.
+- `SW-CIV-7` Octagonal foundation for a skirt-supported vessel (SW-EQ-1). Pedestal: a regular
+  octagon of across-flats width = base ring OD + 12 in, height stated, top 6 in above grade
+  (the pad height of SW-LAY-2 where the vessel stands indoors on the slab); the anchor rods of
+  SW-EQ-1 are cast in it. Footing: an octagon whose across-flats width comes from bearing as
+  SW-CIV-3 with P = the vessel's operating weight (drawing: empty steel + contents, water-full if
+  not stated, the catalogue taking the vessel's shell volume), minimum = pedestal + 24 in, and its
+  thickness as SW-CIV-3. Bars: footing mat as SW-CIV-3; pedestal verticals `#6` at 12 in round the
+  perimeter in one ring, `#4` ties at 12 in. Reason: an octagon is the closest shape to the round
+  base ring that straight forms make; the vessel's whole weight goes to the ground through it.
+- `SW-CIV-8` Ring wall under a flat-bottom tank (SW-EQ-5). A concrete ring centred under the
+  shell, width 12 in, height 42 in: 36 in below grade and 6 in above so the bottom plate stays dry;
+  inside the ring a 3 in sand cushion on compacted granular fill (not modeled). Bars: hoop bars
+  `#5`, count = roundup(T / (0.6 · 60 ksi · A_#5)), minimum 4 (two top, two bottom), where the
+  hoop tension T = ½ p H R (the fill's pressure grows from nothing at grade to p at the bottom,
+  so the force on the wall is the triangle's area times the radius), p = 0.3 γ H the lateral
+  pressure at the bottom of the ring (γ the fill's unit weight, drawing; `SW-CIV-8a` default 120
+  lb/ft³), H the height below grade and R the ring's mean radius; `#4` verticals at 12 in. Reason: the ring carries the shell line load
+  and holds the fill, which pushes outward like a silo's contents; 0.6 of yield leaves a margin.
+- `SW-CIV-9` Drilled pier. Diameter D stated (minimum 18 in). Length L = max(10 ft, 1.1 P / (q_b
+  · π D²/4 + f · π D)), with P the load (kips), q_b the allowable end bearing (ksf, drawing;
+  `SW-CIV-9a` default 10 ksf) and f the allowable side friction (ksf; `SW-CIV-9b` default 0.5
+  ksf). Cage: `#6` verticals, one per 6 in of circumference, minimum 6, full length; `#3` spiral
+  at 6 in pitch; 3 in cover. Reason: the pier takes the load to a firmer stratum below; counting
+  friction at a modest value keeps the length honest.
+- `SW-CIV-10` Grade beam between footings or piers under a wall line: width 12 in, depth 24 in
+  unless stated, two `#5` top and two bottom, `#3` stirrups at 12 in. Reason: a beam of twice its
+  width spans the usual 20 to 25 ft bay with the wall's weight.
+- `SW-CIV-11` Grout bed: 1.5 in (SW-BP-5) of non-shrink cementitious grout under every base plate
+  and base ring, plan = the plate plus 1 in each side, edges chamfered at 45°. Density K-7.
+  Reason: a plate is set on levelling nuts and the gap filled; the extra inch gives the trowel an
+  edge to work to.
+- `SW-CIV-12` Curb: 6 in high, 6 in wide, class A, one `#4` continuous, at door openings and
+  where a slab edge meets a lower floor. Paving: 4 in class A with `#4` at 18 in each way, on
+  grade outdoors under equipment access. Reason: a curb stops wash-down water and wheel loads at
+  the edge; 4 in of paving carries light wheels.
+- `SW-CIV-13` Trench and sump. Trench: inside width and depth stated (default 18 × 24 in), walls
+  and bottom 6 in, `#4` at 12 in each way in each, with a grating cover (SW-GR-*) on an `L2x2x1/4`
+  frame cast flush with the slab (the angle from the structural catalogue). Sump: inside stated
+  (default 24 × 24 × 24 in), walls and bottom 8 in, `#4` at 12 in. Reason: a trench carries drains
+  under the floor with its cover walkable; a sump collects them for a pump.
+- `SW-CIV-14` Containment dike round tanks: a wall whose height H holds 1.1 × the largest tank's
+  volume within the diked plan less the tanks' footprints, minimum 18 in, maximum 72 in; wall 8
+  in thick, class B, `#4` at 12 in each way at mid-thickness, on a footing 24 in wide and 12 in
+  deep with two `#5`. Reason: the dike must hold the largest spill plus rain; a wall over 6 ft
+  blocks the view of the tanks and is a berm instead.
+- `SW-CIV-15` Quantities. Each civil part reports: concrete volume (the drawn solid; the bars'
+  displacement is ignored), concrete weight = volume × K-7, formed area (every face of the solid
+  that is not the top and not cast against earth), and a bar list (designation, count, length,
+  weight = count × length × area × K-1). The part's weight is the concrete plus the bars.
+  Reason: these are the three quantities a civil contractor prices.
+- `SW-CIV-16` Pipe and conduit sleeves through concrete are the penetration sleeves of SW-PEN-1
+  and are items of the line, not of the civil catalogue; anchor rods are SW-AR-*. Reason: each
+  belongs to the discipline that sets it.
+
+## 66. Equipment catalogue (`SW-EQC-*`)
+
+Written 2026-11-23 at the owner's instruction, alongside §65: the equipment envelopes of §25 are
+kept and extended to a catalogue of the equipment a process plant has, with the parts a pressure
+vessel carries. Every item is a true-scale envelope from stated principal dimensions, proportioned
+by the rules here; internals are not modeled unless a rule says so; weights are the drawn steel
+(SW-EQ-7). No published table was consulted (PROVENANCE P-72).
+
+Parts a pressure vessel carries:
+
+- `SW-EQC-1` Nozzle: a neck of pipe of the stated size and class (SW-PIPE-*) projecting 8 in from
+  the shell unless stated, a weld-neck flange of the vessel's class at its end (SW-FLG-*), and for
+  a nozzle of 3 in or larger a reinforcing pad of the shell's thickness and twice the neck's
+  outside diameter round the opening. Reason: the pad gives back the metal the opening removed;
+  8 in clears insulation and the flange's bolting.
+- `SW-EQC-2` Manway: a nozzle as SW-EQC-1 of 20 or 24 in (stated), projecting 10 in, closed by a
+  blind cover (SW-FLG-*) carried on a davit: a 1.5 in round bar post welded to the shell beside
+  the manway, rising 12 in above the cover's top bolt, with an arm reaching the cover's centre.
+  Reason: a cover of this size is swung aside, not lifted.
+- `SW-EQC-3` Lifting lugs: two plate lugs, 180° apart, at the top tangent line of a vertical vessel
+  (on the shell) or above each saddle of a horizontal one. Plate thickness = max(3/4 in, the
+  shell's), hole diameter d_h = roundup(1 + W / 40, 1/8 in) in, W the empty weight in kips; lug
+  width 4 d_h, height above the shell 3 d_h, corners rounded to d_h. Reason: the shackle pin bears
+  on the hole; the plate round the hole is two pin diameters each side, which keeps the plate's
+  tear-out and bearing well below its strength for a shackle sized to the weight.
+- `SW-EQC-4` Legs for a small vertical vessel (ID ≤ 48 in): four round legs `HSS{OD}x1/4` with
+  OD = roundup(max(3 in, ID/12), 1/2 in), at the shell on a 0.9 ID circle, each on a `PL1/2`
+  8 × 8 in base plate with one anchor rod; leg length = the stated bottom-head clearance + the head
+  depth. Reason: below 4 ft diameter a skirt costs more than four legs and hides nothing worth
+  hiding.
+- `SW-EQC-5` Support lugs for a vessel carried on steel: four gusseted brackets as SW-EQ-6 but
+  with a `PL3/4` base 8 × 8 in bearing on the beams, at the stated elevation. Reason: the same
+  bracket that carries a platform carries the vessel when the steel carries the vessel.
+- `SW-EQC-6` Insulation support rings: a `L2x2x1/4` ring round the shell at 10 ft spacing from
+  the bottom tangent line on an insulated vessel, and one 6 in below the top tangent line.
+  Reason: insulation on a vertical shell slides unless it rests on something every storey.
+- `SW-EQC-7` Davit for a tall vessel's top head: a 4 in pipe post 60 in high with a 48 in arm,
+  on the top head beside the top manway or nozzle. Reason: lifts relief valves and internals
+  without a crane.
+
+Equipment items (each `make…` takes the stated dimensions; what is not stated follows the rule):
+
+- `SW-EQC-8` Electric motor: a cylinder of stated frame diameter D and length 1.6 D on a foot
+  box 0.6 D high and 1.2 D long; a conduit box 0.3 D square on the side; shaft stub 0.15 D
+  diameter projecting 0.4 D. Reason: the proportions of a totally enclosed fan-cooled frame,
+  written from the reasoning that the fan cowl adds about half a diameter to the stator's length.
+- `SW-EQC-9` Column: SW-EQ-1 with stated tray count and spacing (trays are data, not solids), a
+  top davit (SW-EQC-7), lifting lugs (SW-EQC-3) and insulation rings (SW-EQC-6) where insulated.
+- `SW-EQC-10` Reactor: SW-EQ-1 with a shell thickness of max(stated, ID/48) and a bottom
+  catalyst-dump nozzle (SW-EQC-1) on the bottom head. Reason: a reactor runs at the highest
+  pressure in the plant; ID/48 is the thickness at which the shell's own weight starts to matter.
+- `SW-EQC-11` Air cooler (fin-fan): a tube bundle box of stated width W, tube length L and depth
+  24 in, with 12 in header boxes at each end, on a plenum 0.5 W deep carrying n fans (stated) of
+  ring diameter 0.9 W/n, on four columns `W6` of stated height with an `L3x3x1/4` brace each side;
+  fan motors by SW-EQC-8 of 12 in frame below the plenum. Reason: envelope of a forced-draught
+  bank; the fan ring fills the bay it serves.
+- `SW-EQC-12` Centrifugal compressor package: a skid `PL1` of stated plan on a 12 in pad (SW-CIV-5
+  with 12 in height); the casing a cylinder of stated diameter D and length 1.2 D along the
+  shaft; a gearbox box 0.8 D cube; the motor by SW-EQC-8 of stated frame; a lube console box
+  36 × 24 × 48 in beside the skid. Reason: envelope only.
+- `SW-EQC-13` Reciprocating compressor: a frame box of stated length and 0.5 length wide, 0.6
+  length high, with two horizontally opposed cylinders of stated bore B as cylinders of 2 B
+  diameter and 3 B length, and a motor by SW-EQC-8 in line. Reason: envelope only.
+- `SW-EQC-14` Blower (centrifugal fan): a scroll casing of stated wheel diameter D drawn as a
+  cylinder of 1.4 D diameter and 0.5 D width with a rectangular outlet 0.5 D × 0.4 D tangential at
+  the top, an inlet cone of 0.6 D at the side, on a pedestal box, with a motor by SW-EQC-8 beside
+  it on a common base `PL1`. Reason: envelope of a backward-curved fan.
+- `SW-EQC-15` Fired heater (vertical cylindrical): a radiant shell of stated diameter D and height
+  H on four `W8` legs 8 ft high with a floor plate; a convection box 0.6 D square and 0.4 D high
+  on top; a stack of 0.3 D diameter and stated height above the convection box. Burners are data.
+  Reason: envelope only.
+- `SW-EQC-16` Agitated tank: a vertical vessel (SW-EQ-1, or flat-bottomed as SW-EQ-5 when stated
+  on legs by SW-EQC-4) with a top-mounted agitator: a motor (SW-EQC-8) on a gearbox box 0.8 D
+  cube over a 6 in nozzle at the centre, a shaft of 0.08 ID diameter down to 0.3 ID above the
+  bottom tangent line, and an impeller of three flat blades of 0.33 ID span and 0.08 ID width.
+  Reason: the drive and impeller are equipment, not internals, and set the nozzle's size.
+- `SW-EQC-17` Filter (vertical, quick-opening): a vertical vessel on legs (SW-EQC-4) whose top
+  head bolts to the shell through a pair of flanges of the shell's size (SW-FLG-*), with the
+  head carried on a davit (SW-EQC-7, post 36 in). Reason: the element is changed from the top.
+- `SW-EQC-18` Dust collector (baghouse): a housing box of stated plan W × L and height H on four
+  `W6` legs of stated height, a pyramidal hopper below the housing at 60° to a square outlet of
+  stated side, a clean-air plenum box 24 in high on top with the outlet nozzle, and a rotary
+  feeder (SW-VLV-ROTARY) at the hopper outlet. Reason: envelope only; 60° keeps dust moving.
+- `SW-EQC-19` Cyclone: a cylinder of stated diameter D and height 1.5 D over a 60° cone to an
+  outlet of 0.25 D, a tangential inlet box 0.5 D × 0.2 D at the top of the cylinder, a vortex
+  finder pipe of 0.5 D projecting 0.5 D above the top plate, on four lugs (SW-EQC-5). Reason: the
+  proportions of a high-efficiency cyclone, written from the reasoning that the inlet area is
+  about a tenth of the body area.
+- `SW-EQC-20` Screw conveyor: a U-trough of stated screw diameter D (trough inside width D + 1 in,
+  depth 1.1 D, plate 3/16 in) and length L with a flat cover, a screw of pitch D on a pipe shaft of
+  0.2 D (SW-PIPE), a drive by SW-EQC-8 at the discharge end, hanger bearings and saddle supports
+  on `L3x3x1/4` legs at 10 ft. Reason: a screw of pitch equal to its diameter is the common
+  proportion for free-flowing solids.
+- `SW-EQC-21` Bucket elevator: two casing legs of stated section W × 0.5 W and height H, a boot
+  box 2 W × W × 1.5 W at the bottom with an inlet, a head box 2 W × W × 2 W at the top with a
+  discharge spout and a drive by SW-EQC-8; the belt and buckets are not modeled. Reason: envelope.
+- `SW-EQC-22` Silo with a cone bottom: a shell of stated diameter D and height H, a 60° cone to an
+  outlet of stated size, on a skirt as SW-EQ-1 reaching from the cone's outlet level to the base
+  (so the outlet stands at the stated height), a top plate with a 20 in manway and a vent nozzle.
+  Reason: a cone-bottom silo discharges by gravity; the skirt carries it as a vessel's does.
+- `SW-EQC-23` Vertical sump pump: a motor (SW-EQC-8) on a mounting plate `PL1` of stated plan at
+  grade, a column pipe of stated size and length down into the sump, a bowl cylinder of 2 × the
+  column's diameter and 1.5 × its diameter long at the bottom, a discharge pipe elbowing up beside
+  the column to a flange at grade. Reason: envelope only.
+- `SW-EQC-24` Double-pipe (hairpin) exchanger: two hairpins of stated inner and outer pipe sizes
+  and leg length, legs 12 in apart on centres joined by return bends of the outer pipe, on two
+  `L3x3x1/4` cradles. Reason: envelope only.
+- `SW-EQC-25` Plate exchanger: a pack of stated plate count at 1/8 in pitch between two frame
+  plates `PL2` of stated width and height, on four tie rods `RD1`, with four nozzles on the fixed
+  frame, on two `C6` feet. Reason: envelope only.
+- `SW-EQC-26` Hopper (for a feeder stand-alone, SW-EQ-8 withdrawn for the rotary valves): kept in
+  the catalogue as an item, not placed in either plant. Reason: the owner's instruction concerned
+  the plants' rotary valves, not the part.

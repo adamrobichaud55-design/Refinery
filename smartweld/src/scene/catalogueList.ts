@@ -1,6 +1,12 @@
 /** The stage-1 catalogue entries shown in the viewer. Designations are examples typed as a drawing would state them. */
 import { makePart, makeBasePlate, makeAnchorRod, makeStiffener, makeGusset, proportionW, makeTrim, makeFilletWeldAround, makePipe, makeFlange, makeBlindFlange, makeGasket, makeStud, designFlange, makeValve, type PartSpec } from '../catalogue';
 import { wProfile } from '../geometry/profiles';
+import {
+  makeFooting, makePedestal, makeEquipmentPad, makeSlab, makeOctagonFoundation, makeRingWall, makeDrilledPier, makeGradeBeam, makeGroutBed, makeCurb, makePaving, makeTrench, makeSump, makeDike,
+  makeNozzle, makeManway, makeLiftingLug, makeVesselLegs, makeSupportLugs, makeInsulationRings, makeDavit, makeMotor, makeColumn, makeReactor, makeAirCooler, makeCompressorPackage, makeRecipCompressor,
+  makeBlower, makeFiredHeater, makeAgitatedTank, makeFilter, makeDustCollector, makeCyclone, makeScrewConveyor, makeBucketElevator, makeSilo, makeSumpPump, makeHairpin, makePlateExchanger,
+} from '../catalogue';
+
 
 export interface Entry { group: string; label: string; build: () => PartSpec }
 
@@ -39,4 +45,46 @@ export const ENTRIES: Entry[] = [
   { group: 'Weld', label: 'FW1/4 × 12 in', build: () => makePart('FW1', 'FW1/4', 12) },
   { group: 'Weld', label: 'Fillet all around W10x49', build: () => makeFilletWeldAround('FWA', wProfile(proportionW(10, 49)), 0.5) },
   { group: 'Weld', label: 'GW1/2 × 12 in', build: () => makePart('GW1', 'GW1/2', 12) },
+  // civil and concrete catalogue (§65, SW-CIV-*)
+  { group: 'Civil', label: 'Spread footing (60 kip column, 24 in pedestal)', build: () => makeFooting('F-1', { loadKips: 60, pedestalSide: 24 }) },
+  { group: 'Civil', label: 'Pedestal for a 16x14 base plate, 36 in', build: () => makePedestal('PD-1', { plateN: 16, plateB: 14, height: 36 }) },
+  { group: 'Civil', label: 'Equipment pad (108 in vessel base)', build: () => makeEquipmentPad('PAD-1', { baseW: 108, baseL: 108 }) },
+  { group: 'Civil', label: 'Pump pad (30 x 72 baseplate)', build: () => makeEquipmentPad('PAD-2', { baseW: 30, baseL: 72, pump: true }) },
+  { group: 'Civil', label: 'Slab on grade 40 x 20 ft, thickened edge', build: () => makeSlab('SL-1', { w: 240, L: 480 }) },
+  { group: 'Civil', label: 'Octagonal foundation (85 in base ring, 60 kip)', build: () => makeOctagonFoundation('OF-1', { baseRingOD: 85, weightKips: 60, pedestalH: 30 }) },
+  { group: 'Civil', label: 'Ring wall for a 12 ft tank', build: () => makeRingWall('RW-1', { tankD: 144 }) },
+  { group: 'Civil', label: 'Drilled pier 24 in, 150 kip', build: () => makeDrilledPier('DP-1', { D: 24, loadKips: 150 }) },
+  { group: 'Civil', label: 'Grade beam 20 ft', build: () => makeGradeBeam('GB-1', { L: 240 }) },
+  { group: 'Civil', label: 'Grout bed under a 16x14 plate', build: () => makeGroutBed('GR-1', 16, 14) },
+  { group: 'Civil', label: 'Curb 10 ft', build: () => makeCurb('CB-1', 120) },
+  { group: 'Civil', label: 'Paving 20 x 40 ft', build: () => makePaving('PV-1', 240, 480) },
+  { group: 'Civil', label: 'Trench 18 x 24 in, 30 ft, grating cover', build: () => makeTrench('TR-1', { L: 360 }) },
+  { group: 'Civil', label: 'Sump 24 in cube', build: () => makeSump('SU-1') },
+  { group: 'Civil', label: 'Containment dike 100 x 60 ft, two 12 ft tanks', build: () => makeDike('DK-1', { planL: 1200, planW: 720, tanks: [{ D: 144, H: 264 }, { D: 144, H: 264 }] }) },
+  // equipment catalogue (§66, SW-EQC-*)
+  { group: 'Vessel parts', label: 'Nozzle 4 in P150 with pad', build: () => makeNozzle('N-1', { NPS: 4, cls: 'P150', shellT: 0.5 }) },
+  { group: 'Vessel parts', label: 'Manway 24 in with davit', build: () => makeManway('MW-1', { D: 24, cls: 'P150', shellT: 0.5 }) },
+  { group: 'Vessel parts', label: 'Lifting lug (20 kip vessel)', build: () => makeLiftingLug('LL-1', 0.5, 20) },
+  { group: 'Vessel parts', label: 'Legs for a 36 in vessel', build: () => makeVesselLegs('LG-1', { ID: 36, clearance: 30 }) },
+  { group: 'Vessel parts', label: 'Support lugs on R 25 in', build: () => makeSupportLugs('SLG-1', 25) },
+  { group: 'Vessel parts', label: 'Insulation rings, 18 ft shell', build: () => makeInsulationRings('IR-1', 37, 216) },
+  { group: 'Vessel parts', label: 'Davit 4 in pipe', build: () => makeDavit('DV-1') },
+  { group: 'Equipment', label: 'Motor 18 in frame', build: () => makeMotor('M-1', 18) },
+  { group: 'Equipment', label: 'Column 72 in x 40 ft, 20 trays', build: () => makeColumn({ tag: 'C-301', ID: 72, t: 0.5, TT: 480, skirtH: 72, trays: 20, insulated: true }) },
+  { group: 'Equipment', label: 'Reactor 72 in x 18 ft', build: () => makeReactor({ tag: 'R-301', ID: 72, t: 0.5, TT: 216, skirtH: 48 }) },
+  { group: 'Equipment', label: 'Air cooler 8 x 20 ft, 2 fans', build: () => makeAirCooler({ tag: 'E-305', W: 96, L: 240, fans: 2, legH: 120 }) },
+  { group: 'Equipment', label: 'Centrifugal compressor package', build: () => makeCompressorPackage({ tag: 'K-301', skidW: 96, skidL: 240, casingD: 36, motorD: 36 }) },
+  { group: 'Equipment', label: 'Reciprocating compressor', build: () => makeRecipCompressor({ tag: 'K-302', frameL: 96, bore: 8, motorD: 30 }) },
+  { group: 'Equipment', label: 'Blower, 36 in wheel', build: () => makeBlower({ tag: 'B-301', wheelD: 36, motorD: 18 }) },
+  { group: 'Equipment', label: 'Fired heater 10 ft x 20 ft, 30 ft stack', build: () => makeFiredHeater({ tag: 'H-301', D: 120, H: 240, stackH: 360 }) },
+  { group: 'Equipment', label: 'Agitated tank 72 in', build: () => makeAgitatedTank({ tag: 'T-305', ID: 72, t: 0.375, TT: 96, skirtH: 36, motorD: 14 }) },
+  { group: 'Equipment', label: 'Filter 24 in, quick-opening', build: () => makeFilter({ tag: 'F-301', ID: 24, t: 0.375, TT: 48, clearance: 30 }) },
+  { group: 'Equipment', label: 'Dust collector 8 x 10 x 10 ft', build: () => makeDustCollector({ tag: 'D-305', W: 96, L: 120, H: 120, legH: 60, outlet: 12 }) },
+  { group: 'Equipment', label: 'Cyclone 48 in', build: () => makeCyclone({ tag: 'S-305', D: 48 }) },
+  { group: 'Equipment', label: 'Screw conveyor 12 in x 20 ft', build: () => makeScrewConveyor({ tag: 'J-301', D: 12, L: 240, motorD: 14 }) },
+  { group: 'Equipment', label: 'Bucket elevator 24 in x 40 ft', build: () => makeBucketElevator({ tag: 'J-302', W: 24, H: 480, motorD: 14 }) },
+  { group: 'Equipment', label: 'Silo 8 ft x 20 ft, cone bottom', build: () => makeSilo({ tag: 'R-305', D: 96, H: 240, outletNPS: 8, outletH: 72 }) },
+  { group: 'Equipment', label: 'Vertical sump pump 4 in', build: () => makeSumpPump({ tag: 'P-305', NPS: 4, cls: 'P150', columnL: 72, motorD: 14, plate: 24 }) },
+  { group: 'Equipment', label: 'Hairpin exchanger 2 in in 4 in', build: () => makeHairpin({ tag: 'E-306', innerNPS: 2, outerNPS: 4, cls: 'P150', legL: 240 }) },
+  { group: 'Equipment', label: 'Plate exchanger, 80 plates', build: () => makePlateExchanger({ tag: 'E-307', plates: 80, W: 24, H: 60 }) },
 ];

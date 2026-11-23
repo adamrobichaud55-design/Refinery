@@ -110,7 +110,12 @@ export function buildGeometry(part: PartSpec): PartGeometry {
       break;
     }
     case 'VESSEL_V': case 'VESSEL_H': case 'EXCHANGER': case 'PUMP': case 'TANK': case 'HOPPER':
+    case 'MOTOR': case 'NOZZLE': case 'MANWAY': case 'LIFTING_LUG': case 'VESSEL_LEGS': case 'SUPPORT_LUGS': case 'INSUL_RINGS': case 'DAVIT': case 'COLUMN': case 'REACTOR': case 'AIR_COOLER': case 'COMPRESSOR':
+    case 'BLOWER': case 'HEATER': case 'AGITATED_TANK': case 'FILTER': case 'DUST_COLLECTOR': case 'CYCLONE': case 'SCREW_CONVEYOR': case 'BUCKET_ELEVATOR': case 'SILO': case 'SUMP_PUMP': case 'HAIRPIN': case 'PLATE_EXCHANGER':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData }[]) solids.push({ name: s.name, role: 'equipment', mesh: s.mesh });
+      break;
+    case 'FOOTING': case 'PEDESTAL': case 'PAD': case 'SLAB': case 'OCTAGON': case 'RINGWALL': case 'PIER': case 'GRADE_BEAM': case 'GROUT': case 'CURB': case 'PAVING': case 'TRENCH': case 'SUMP': case 'DIKE':
+      for (const s of part.extra!.solids as { name: string; mesh: MeshData }[]) solids.push({ name: s.name, role: 'concrete', mesh: s.mesh });   // civil catalogue (§65)
       break;
     case 'ELBOW': case 'TEE': case 'REDUCER': case 'CAP': case 'BUTT_WELD': case 'SUPPORT': case 'FITTING':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData; role: Role }[]) solids.push({ name: s.name, role: s.role, mesh: s.mesh });

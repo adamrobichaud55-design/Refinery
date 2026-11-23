@@ -16,16 +16,16 @@ export const N_REV = 64;
 export interface NozzleSpec { tag: string; service: string; nps: number; elevation: number; angleDeg: number; orientation: 'radial' | 'top' | 'bottom' }
 
 /** 2:1 ellipsoidal head loop (SW-EQ-1): outer and inner surfaces, tangent line at z = 0, apex at ±D/4. */
-function headLoop(R: number, t: number, dir: 1 | -1): { r: number; z: number }[] {
+export function headLoop(R: number, t: number, dir: 1 | -1): { r: number; z: number }[] {
   const n = 16, h = R / 2, out: { r: number; z: number }[] = [];
   for (let i = 0; i <= n; i++) { const a = (Math.PI / 2) * (i / n); out.push({ r: R * Math.cos(a), z: dir * h * Math.sin(a) }); }
   for (let i = n; i >= 0; i--) { const a = (Math.PI / 2) * (i / n); out.push({ r: (R - t) * Math.cos(a), z: dir * (h - t) * Math.sin(a) }); }
   return out;
 }
-const shellRing = (R: number, t: number, L: number): MeshData => extrude({ outer: circle(0, 0, R, N_REV), inner: circle(0, 0, R - t, N_REV) }, L);
+export const shellRing = (R: number, t: number, L: number): MeshData => extrude({ outer: circle(0, 0, R, N_REV), inner: circle(0, 0, R - t, N_REV) }, L);
 
 /** Build solids for a cylindrical vessel along local z (z = 0 at the bottom tangent line). */
-function vesselSolids(R: number, t: number, L: number, bottom: 'head' | 'flat' | 'none', top: 'head' | 'cone' | 'flat', coneRise = 0, flatT = 0): { name: string; mesh: MeshData }[] {
+export function vesselSolids(R: number, t: number, L: number, bottom: 'head' | 'flat' | 'none', top: 'head' | 'cone' | 'flat', coneRise = 0, flatT = 0): { name: string; mesh: MeshData }[] {
   const s: { name: string; mesh: MeshData }[] = [{ name: 'shell', mesh: shellRing(R, t, L) }];
   if (bottom === 'head') s.push({ name: 'bottom head', mesh: revolve(headLoop(R, t, -1), N_REV) });
   if (bottom === 'flat') s.push({ name: 'bottom plate', mesh: transformMesh(extrude({ outer: circle(0, 0, R, N_REV) }, flatT), translate(0, 0, -flatT)) });
@@ -35,7 +35,7 @@ function vesselSolids(R: number, t: number, L: number, bottom: 'head' | 'flat' |
   return s;
 }
 
-function finish(id: string, kind: PartSpec['kind'], designation: string, dims: Record<string, Dim>, lengthIn: number, solids: { name: string; mesh: MeshData }[], material: Material, nozzles: NozzleSpec[], notes: string[], extra: Record<string, unknown> = {}): PartSpec {
+export function finish(id: string, kind: PartSpec['kind'], designation: string, dims: Record<string, Dim>, lengthIn: number, solids: { name: string; mesh: MeshData }[], material: Material, nozzles: NozzleSpec[], notes: string[], extra: Record<string, unknown> = {}): PartSpec {
   const vol = solids.reduce((a, s) => a + signedVolume(s.mesh), 0);
   return {
     id, kind, category: 'equipment', designation, dims: { ...dims, rho: rhoDim() },

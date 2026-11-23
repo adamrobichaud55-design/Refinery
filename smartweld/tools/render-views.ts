@@ -29,7 +29,8 @@ const part = (stage: string, name: string, caption: string, build: () => Paramet
   views.push({ stage, name, caption, make: () => { const ds = partDrawables([{ part: build(), transform: identity() }]); const cut = section ? { n: [1, 0, 0] as [number, number, number], d: 0 } : undefined; const [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx, dir), cut }; } });
 
 // stage 1: catalogue entries and the column-base assembly
-for (const e of ENTRIES) part('stage1', `entry-${e.label.replace(/[^A-Za-z0-9.]+/g, '-').replace(/-+$/, '')}`, `Catalogue entry ${e.label}`, e.build);
+const CAT10 = new Set(['Civil', 'Vessel parts', 'Equipment']);   // stage 10: the civil and equipment catalogues (§65, §66)
+for (const e of ENTRIES) part(CAT10.has(e.group) ? 'stage10' : 'stage1', `${CAT10.has(e.group) ? 'cat10' : 'entry'}-${e.label.replace(/[^A-Za-z0-9.]+/g, '-').replace(/-+$/, '')}`, `Catalogue entry ${e.label}${CAT10.has(e.group) ? ` (${e.group})` : ''}`, e.build);
 views.push({ stage: 'stage1', name: 'assembly-column-base', caption: 'Column base assembly', make: () => { const a = columnBaseAssembly(); const ds = partDrawables(a.instances); const [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx) }; } });
 
 // stages 2-3: building shell and plant interior, at the viewer's cameras
@@ -127,5 +128,19 @@ if (!filter) {
     writeFileSync(`${out}/stage4/sheet-${i + 1}.png`, contactSheet(font, vs.map(v => ({ label: v.caption.replace(/^Valve /, ''), png: new Uint8Array(readFileSync(`${out}/stage4/${v.name}.png`)) }))));
     index.push(`| \`stage4/sheet-${i + 1}.png\` | Valve contact sheet ${i + 1} of 2 (the renders above, tiled and labelled with DejaVu Sans) |`);
   });
-  writeFileSync(`${out}/INDEX.md`, index.join('\n') + '\n');
+}
+if (!filter || filter === 'cat10') {
+  // stage 10: contact sheets of the civil and equipment catalogues (one per group)
+  const font = parseFont(new Uint8Array(readFileSync('assets/fonts/DejaVuSans.ttf')));
+  for (const g of CAT10) {
+    const vs = views.filter(v => v.stage === 'stage10' && ENTRIES.find(e => `cat10-${e.label.replace(/[^A-Za-z0-9.]+/g, '-').replace(/-+$/, '')}` === v.name)?.group === g), name = `sheet-${g.toLowerCase().replace(/\s+/g, '-')}`;
+    writeFileSync(`${out}/stage10/${name}.png`, contactSheet(font, vs.map(v => ({ label: v.caption.replace(/^Catalogue entry /, '').replace(/ \(.*\)$/, ''), png: new Uint8Array(readFileSync(`${out}/stage10/${v.name}.png`)) }))));
+    index.push(`| \`stage10/${name}.png\` | ${g} catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |`);
+  }
+}
+if (!filter) writeFileSync(`${out}/INDEX.md`, index.join('\n') + '\n');
+else if (filter === 'cat10') {   // a stage-10-only run keeps INDEX.md complete: its rows are appended where missing
+  const cur = existsSync(`${out}/INDEX.md`) ? readFileSync(`${out}/INDEX.md`, 'utf8') : '';
+  const add = index.filter(r => r.includes('`stage10/') && !cur.includes(r.slice(0, r.indexOf('|', 2))));
+  if (add.length) writeFileSync(`${out}/INDEX.md`, cur.replace(/\n*$/, '\n') + add.join('\n') + '\n');
 }
