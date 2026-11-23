@@ -2757,8 +2757,10 @@ the plan-like sheets.
   what each surface is made of.
   The catalogue images of every discipline use this style: the structural sections, plates,
   hardware and welds and the valves (stages 1 and 4), the civil and equipment catalogues (stage
-  10, civil parts cut by SW-REN-10) and the piping catalogue as plant 2 uses it, one part of every
-  family (stage 11). The structural and piping parts' geometry is unchanged by this: they are the
+  10, civil parts cut by SW-REN-10), the piping catalogue as plant 2 uses it, one part of every
+  family (stage 11), and structural and piping assemblies as built in plant 2, taken from the
+  plant by tag or by line: a rack bent, a portal frame, the stair tower, platforms, a control
+  station, a pump's piping, an instrument manifold, a hose station, a relief valve (stage 12). The structural and piping parts' geometry is unchanged by this: they are the
   parts the two plants and their ground truth are built from.
 - `SW-REN-5` Light. A sun (the viewer's direction), a sky dome and the ground: direct light on a
   surface is the sun's by the cosine of its angle, cut where another surface stands between it and
@@ -2781,8 +2783,11 @@ the plan-like sheets.
   paint a slight variation. No texture moves a surface (SW-U-5).
 - `SW-REN-9` Tone. Light is summed in linear units, mapped by a filmic curve and encoded with
   gamma 2.2; the background is the sky dome; edges are smoothed by supersampling.
-- `SW-REN-10` Cutaway. A view may cut the concrete of a civil part by a plane and leave its bars
-  and embedded steel whole, to show what is inside. The cut face is drawn as concrete.
+- `SW-REN-10` Cutaway. A view may cut a part by a plane: a valve on its stem plane, or the concrete
+  of a civil part with its bars and embedded steel left whole, to show what is inside. The cut face
+  is closed in the part's own material wherever the cut passes through solid: a point of the plane
+  is inside the part when the line of sight beyond it crosses the part's surface an odd number of
+  times, so a hollow body shows its hollow and a solid block its face.
 
 ## 68. Detail on civil parts and equipment (`SW-DET-*`)
 

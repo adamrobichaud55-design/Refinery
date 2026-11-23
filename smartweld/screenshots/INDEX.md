@@ -108,7 +108,7 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage9/P2-outdoor.png` | Outdoor tanks, drums and silos with the lines through the end wall |
 | `stage9/P2-above.png` | Plan view from above |
 | `stage10/cat10-Spread-footing-60-kip-column-24-in-pedestal.png` | Catalogue entry Spread footing (60 kip column, 24 in pedestal) (Civil) |
-| `stage10/cat10-Pedestal-for-a-16x14-base-plate-36-in.png` | Catalogue entry Pedestal for a 16x14 base plate, 36 in (Civil) |
+| `stage10/cat10-Pedestal-for-a-16x14-base-plate-36-in.png` | Catalogue entry Pedestal for a 16x14 base plate, 36 in (Civil), cut to show the bars |
 | `stage10/cat10-Equipment-pad-108-in-vessel-base.png` | Catalogue entry Equipment pad (108 in vessel base) (Civil) |
 | `stage10/cat10-Pump-pad-30-x-72-baseplate.png` | Catalogue entry Pump pad (30 x 72 baseplate) (Civil) |
 | `stage10/cat10-Slab-on-grade-40-x-20-ft-thickened-edge.png` | Catalogue entry Slab on grade 40 x 20 ft, thickened edge (Civil) |
@@ -150,3 +150,98 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage10/sheet-civil.png` | Civil catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
 | `stage10/sheet-vessel-parts.png` | Vessel parts catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
 | `stage10/sheet-equipment.png` | Equipment catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/cat10-Spread-footing-60-kip-column-24-in-pedestal-whole.png` | Catalogue entry Spread footing (60 kip column, 24 in pedestal) (Civil), as cast |
+| `stage10/cat10-Pedestal-for-a-16x14-base-plate-36-in-whole.png` | Catalogue entry Pedestal for a 16x14 base plate, 36 in (Civil), as cast |
+| `stage10/cat10-Equipment-pad-108-in-vessel-base-whole.png` | Catalogue entry Equipment pad (108 in vessel base) (Civil), as cast |
+| `stage10/cat10-Pump-pad-30-x-72-baseplate-whole.png` | Catalogue entry Pump pad (30 x 72 baseplate) (Civil), as cast |
+| `stage10/cat10-Slab-on-grade-40-x-20-ft-thickened-edge-whole.png` | Catalogue entry Slab on grade 40 x 20 ft, thickened edge (Civil), as cast |
+| `stage10/cat10-Octagonal-foundation-85-in-base-ring-60-kip-whole.png` | Catalogue entry Octagonal foundation (85 in base ring, 60 kip) (Civil), as cast |
+| `stage10/cat10-Ring-wall-for-a-12-ft-tank-whole.png` | Catalogue entry Ring wall for a 12 ft tank (Civil), as cast |
+| `stage10/cat10-Drilled-pier-24-in-150-kip-whole.png` | Catalogue entry Drilled pier 24 in, 150 kip (Civil), as cast |
+| `stage10/cat10-Grade-beam-20-ft-whole.png` | Catalogue entry Grade beam 20 ft (Civil), as cast |
+| `stage10/cat10-Grout-bed-under-a-16x14-plate-whole.png` | Catalogue entry Grout bed under a 16x14 plate (Civil), as cast |
+| `stage10/cat10-Curb-10-ft-whole.png` | Catalogue entry Curb 10 ft (Civil), as cast |
+| `stage10/cat10-Paving-20-x-40-ft-whole.png` | Catalogue entry Paving 20 x 40 ft (Civil), as cast |
+| `stage10/cat10-Trench-18-x-24-in-30-ft-grating-cover-whole.png` | Catalogue entry Trench 18 x 24 in, 30 ft, grating cover (Civil), as cast |
+| `stage10/cat10-Sump-24-in-cube-whole.png` | Catalogue entry Sump 24 in cube (Civil), as cast |
+| `stage10/cat10-Containment-dike-100-x-60-ft-two-12-ft-tanks-whole.png` | Catalogue entry Containment dike 100 x 60 ft, two 12 ft tanks (Civil), as cast |
+| `stage10/cat10-Process-pump-4-x-3-13-in-impeller.png` | Catalogue entry Process pump 4 x 3, 13 in impeller (Equipment) |
+| `stage10/cat10-Vertical-vessel-72-in-x-18-ft-dressed.png` | Catalogue entry Vertical vessel 72 in x 18 ft, dressed (Equipment) |
+| `stage10/cat10-Shell-and-tube-exchanger-36-in-x-16-ft.png` | Catalogue entry Shell-and-tube exchanger 36 in x 16 ft (Equipment) |
+| `stage1/sheet-catalogue.png` | Catalogue list contact sheet: structural sections, plates, hardware, welds, sheet and the first piping entries (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage12/built-rack-bent.png` | Plant 2 as built: a pipe rack bent with its base plates, anchor rods and pedestals |
+| `stage12/built-portal-frame.png` | Plant 2 as built: a portal frame of the building with its knee and ridge plates and bolts |
+| `stage12/built-stair-tower.png` | Plant 2 as built: the stair tower with its landings, treads and guardrail |
+| `stage12/built-exchanger-platform.png` | Plant 2 as built: an exchanger platform with grating, guardrail and posts |
+| `stage12/built-vessel-platforms.png` | Plant 2 as built: the adsorbers' platforms and bridge with their brackets and guardrail |
+| `stage12/built-control-station.png` | Plant 2 as built: a control valve station between block valves (line 4"-P150-CWS-3201) |
+| `stage12/built-pump-piping.png` | Plant 2 as built: pump P-201A with its suction and discharge valves |
+| `stage12/built-instrument-manifold.png` | Plant 2 as built: a socket-weld instrument stub with its four-way manifold (line 1"-P300-I-6234) |
+| `stage12/built-hose-station.png` | Plant 2 as built: a threaded hose station: gate valve, plug and swage (line 1"-P150-HS-5202) |
+| `stage12/built-relief-valve.png` | Plant 2 as built: a relief valve on its nozzle with its outlet line |
+| `stage12/sheet-as-built.png` | Plant 2 as built, contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage11/cat11-BLIND.png` | Piping catalogue: BLIND (BLIND|4|P150) |
+| `stage11/cat11-CAP.png` | Piping catalogue: CAP (CAP|4|P150) |
+| `stage11/cat11-CPLG-SW.png` | Piping catalogue: CPLG SW (CPLG|1.5|P150|SW) |
+| `stage11/cat11-CPLG-TH.png` | Piping catalogue: CPLG TH (CPLG|1.5|P150|TH) |
+| `stage11/cat11-EL-45.png` | Piping catalogue: EL 45 (EL|4|P150|45) |
+| `stage11/cat11-EL-90.png` | Piping catalogue: EL 90 (EL|4|P150|90) |
+| `stage11/cat11-FSLV.png` | Piping catalogue: FSLV (FSLV|4|P150) |
+| `stage11/cat11-GSK.png` | Piping catalogue: GSK (GSK|4|P150) |
+| `stage11/cat11-HANG.png` | Piping catalogue: HANG (HANG|4|P150|35.47) |
+| `stage11/cat11-NIP-PBE.png` | Piping catalogue: NIP PBE (NIP|1.5|P150|7.875|PBE) |
+| `stage11/cat11-NIP-TBE.png` | Piping catalogue: NIP TBE (NIP|1.5|P150|5.250|TBE) |
+| `stage11/cat11-NIP-TOE.png` | Piping catalogue: NIP TOE (NIP|1|P150|4.000|TOE) |
+| `stage11/cat11-OLET-BW.png` | Piping catalogue: OLET BW (OLET|4|2|P150|BW) |
+| `stage11/cat11-OLET-SW.png` | Piping catalogue: OLET SW (OLET|4|1|P300|SW) |
+| `stage11/cat11-OLET-TH.png` | Piping catalogue: OLET TH (OLET|4|0.75|P150|TH) |
+| `stage11/cat11-PIPE.png` | Piping catalogue: PIPE (PIPE|4|P150|36.904) |
+| `stage11/cat11-PIPE-TH.png` | Piping catalogue: PIPE TH (PIPE|1.5|P150|32.063|TH) |
+| `stage11/cat11-PLUG.png` | Piping catalogue: PLUG (PLUG|0.75|P150) |
+| `stage11/cat11-RED.png` | Piping catalogue: RED (RED|4|3|P150) |
+| `stage11/cat11-REDE-top.png` | Piping catalogue: REDE top (REDE|4|3|P150|top) |
+| `stage11/cat11-SHOE-anchor.png` | Piping catalogue: SHOE anchor (SHOE|4|P150|anchor|4.000) |
+| `stage11/cat11-SHOE-guide.png` | Piping catalogue: SHOE guide (SHOE|4|P150|guide|4.000) |
+| `stage11/cat11-SHOE-shoe.png` | Piping catalogue: SHOE shoe (SHOE|4|P150|shoe|4.000) |
+| `stage11/cat11-SOF.png` | Piping catalogue: SOF (SOF|4|P150) |
+| `stage11/cat11-SPADE.png` | Piping catalogue: SPADE (SPADE|4|P150) |
+| `stage11/cat11-SPEC.png` | Piping catalogue: SPEC (SPEC|4|P150) |
+| `stage11/cat11-STAN.png` | Piping catalogue: STAN (STAN|4|P150|94.00) |
+| `stage11/cat11-STUDS.png` | Piping catalogue: STUDS (STUDS|4|P300|4.250) |
+| `stage11/cat11-SWEL-45-TH.png` | Piping catalogue: SWEL 45 TH (SWEL|1.5|P150|45|TH) |
+| `stage11/cat11-SWEL-90-SW.png` | Piping catalogue: SWEL 90 SW (SWEL|1.5|P150|90|SW) |
+| `stage11/cat11-SWEL-90-TH.png` | Piping catalogue: SWEL 90 TH (SWEL|1.5|P150|90|TH) |
+| `stage11/cat11-SWF.png` | Piping catalogue: SWF (SWF|1.5|P150) |
+| `stage11/cat11-SWG-BW-SW.png` | Piping catalogue: SWG BW SW (SWG|3|1|P150|BW|SW) |
+| `stage11/cat11-SWG-SW-SW.png` | Piping catalogue: SWG SW SW (SWG|1.5|1.25|P150|SW|SW) |
+| `stage11/cat11-SWG-SW-TH.png` | Piping catalogue: SWG SW TH (SWG|0.75|0.5|P150|SW|TH) |
+| `stage11/cat11-SWG-TH-TH.png` | Piping catalogue: SWG TH TH (SWG|1.5|0.75|P150|TH|TH) |
+| `stage11/cat11-SWTEE-SW.png` | Piping catalogue: SWTEE SW (SWTEE|1.5|P150|1.5|SW) |
+| `stage11/cat11-TEE.png` | Piping catalogue: TEE (TEE|4|P150|4) |
+| `stage11/cat11-TRAP.png` | Piping catalogue: TRAP (TRAP|4|P300|242.52|242.52|8.00) |
+| `stage11/cat11-TRUN.png` | Piping catalogue: TRUN (TRUN|4|P300|22.00) |
+| `stage11/cat11-VLV-BALL.png` | Piping catalogue: VLV BALL (VLV|BALL|4|P150) |
+| `stage11/cat11-VLV-BALL-SW.png` | Piping catalogue: VLV BALL SW (VLV|BALL|1.5|P150|SW) |
+| `stage11/cat11-VLV-BFLY.png` | Piping catalogue: VLV BFLY (VLV|BFLY|4|P150) |
+| `stage11/cat11-VLV-CHECK.png` | Piping catalogue: VLV CHECK (VLV|CHECK|4|P150) |
+| `stage11/cat11-VLV-CONTROL.png` | Piping catalogue: VLV CONTROL (VLV|CONTROL|4|P300) |
+| `stage11/cat11-VLV-FWAY.png` | Piping catalogue: VLV FWAY (VLV|FWAY|4|P300) |
+| `stage11/cat11-VLV-FWAY-SW.png` | Piping catalogue: VLV FWAY SW (VLV|FWAY|1|P300|SW) |
+| `stage11/cat11-VLV-GATE.png` | Piping catalogue: VLV GATE (VLV|GATE|4|P150) |
+| `stage11/cat11-VLV-GATE-SW.png` | Piping catalogue: VLV GATE SW (VLV|GATE|1|P300|SW) |
+| `stage11/cat11-VLV-GATE-TH.png` | Piping catalogue: VLV GATE TH (VLV|GATE|1.5|P150|TH) |
+| `stage11/cat11-VLV-GLOBE.png` | Piping catalogue: VLV GLOBE (VLV|GLOBE|4|P150) |
+| `stage11/cat11-VLV-GLOBE-TH.png` | Piping catalogue: VLV GLOBE TH (VLV|GLOBE|1|P150|TH) |
+| `stage11/cat11-VLV-LCHECK-TH.png` | Piping catalogue: VLV LCHECK TH (VLV|LCHECK|1|P150|TH) |
+| `stage11/cat11-VLV-NEEDLE-TH.png` | Piping catalogue: VLV NEEDLE TH (VLV|NEEDLE|0.5|P150|TH) |
+| `stage11/cat11-VLV-PLUG.png` | Piping catalogue: VLV PLUG (VLV|PLUG|4|P150) |
+| `stage11/cat11-VLV-PSV.png` | Piping catalogue: VLV PSV (VLV|PSV|3|P150) |
+| `stage11/cat11-VLV-ROTARY.png` | Piping catalogue: VLV ROTARY (VLV|ROTARY|4|P150) |
+| `stage11/cat11-VLV-TWAY.png` | Piping catalogue: VLV TWAY (VLV|TWAY|4|P300) |
+| `stage11/cat11-VLV-TWAY-SW.png` | Piping catalogue: VLV TWAY SW (VLV|TWAY|0.75|P150|SW) |
+| `stage11/cat11-WNF.png` | Piping catalogue: WNF (WNF|4|P150) |
+| `stage11/cat11-WSLV.png` | Piping catalogue: WSLV (WSLV|4|P150) |
+| `stage11/sheet-piping-1.png` | Piping catalogue contact sheet 1 of 4 (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage11/sheet-piping-2.png` | Piping catalogue contact sheet 2 of 4 (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage11/sheet-piping-3.png` | Piping catalogue contact sheet 3 of 4 (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage11/sheet-piping-4.png` | Piping catalogue contact sheet 4 of 4 (the renders above, tiled and labelled with DejaVu Sans) |

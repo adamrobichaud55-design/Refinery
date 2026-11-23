@@ -8,7 +8,8 @@ import { makeValve, type ValveType, type PipeClass } from '../src/catalogue';
 import { identity } from '../src/geometry/transform';
 import { generateBuilding } from '../src/generator/building';
 import { generateInterior } from '../src/generator/interior';
-import type { PipingModel } from '../src/generator/piping';
+import type { PipingModel, LineRun } from '../src/generator/piping';
+import { plantById } from '../src/generator/plants';
 import type { WorkOrder } from '../src/generator/workorders';
 import { partDrawables, pipingDrawables, keyDrawables, byLineClass, HIGHLIGHT, ISOLATION, type Drawable } from '../src/render/scene';
 import { render3d, frameBox, bounds, type Camera } from '../src/render/view3d';
@@ -91,6 +92,33 @@ for (const [t, n, c] of VALVES) {
   }
 }
 
+// stage 12: structural steel and piping as built in plant 2, in the photo style: assemblies taken from the plant by tag or line
+{
+  const p2 = plantById('P2'), steel = () => [...p2.building().instances, ...p2.interior().instances];
+  let m2: PipingModel | null = null; const M2 = () => (m2 ??= JSON.parse(readFileSync('public/plants/P2/plant-piping.json', 'utf8')) as PipingModel);
+  // `focus` (a centre and half-size) frames a part of the assembly and keeps what stands near it
+  const shoot = (name: string, caption: string, ds: () => Drawable[], dir?: [number, number, number], focus?: () => { c: [number, number, number]; r: number }, onSlab = true) => views.push({ stage: 'stage12', name: `built-${name}`, caption: `Plant 2 as built: ${caption}`, make: () => {
+    let d = ds(); const f = focus?.();
+    if (f) d = d.filter(q => [0, 1, 2].every(k => Math.abs(q.T[12 + k] - f.c[k]) < 4 * f.r));
+    const [mn, mx] = bounds(d), lo: [number, number, number] = f ? [f.c[0] - f.r, f.c[1] - f.r, f.c[2] - f.r] : mn, hi: [number, number, number] = f ? [f.c[0] + f.r, f.c[1] + f.r, f.c[2] + f.r] : mx;
+    return { ds: d, cam: frameBox(lo, hi, dir ?? [0.8, 0.5, 1]), photo: { groundY: onSlab ? Math.min(mn[1], 0) : mn[1], radius: f ? f.r * 1.8 : undefined } };
+  } });
+  const at = (line: string, keyPrefix: string) => () => { const c = M2().lines.find(l => l.no === line)!.comps.find(q => q.key.startsWith(keyPrefix))!; return [c.T[12], c.T[13], c.T[14]] as [number, number, number]; };
+  const byTag = (pick: (t: string) => boolean) => () => partDrawables(steel().filter(i => pick(i.tags[0])));
+  const first = (prefix: string) => { const t = steel().map(i => i.tags[0]).filter(x => x.startsWith(prefix)).sort()[0]; return (x: string) => x === t; };
+  shoot('rack-bent', 'a pipe rack bent with its base plates, anchor rods and pedestals', () => byTag(first('rack-bent:'))());
+  shoot('portal-frame', 'a portal frame of the building with its knee and ridge plates and bolts', () => byTag(first('frame:'))());
+  shoot('stair-tower', 'the stair tower with its landings, treads and guardrail', byTag(t => t === 'stair' || t.startsWith('stair-landing')));
+  shoot('exchanger-platform', 'an exchanger platform with grating, guardrail and posts', byTag(t => t.startsWith('E-201-platform')));
+  shoot('vessel-platforms', 'the adsorbers\' platforms and bridge with their brackets and guardrail', byTag(t => t.startsWith('platform-V') || t === 'platform-bridge'));
+  const lines = (pick: (l: LineRun) => boolean) => () => pipingDrawables(M2(), { only: pick, valveCells: 60 });
+  shoot('control-station', 'a control valve station between block valves (line 4"-P150-CWS-3201)', lines(l => l.no === '4"-P150-CWS-3201'), [1, 0.25, 0.7], () => ({ c: at('4"-P150-CWS-3201', 'VLV|CONTROL')(), r: 55 }), false);
+  shoot('pump-piping', 'pump P-201A with its suction and discharge valves', () => [...byTag(t => t === 'P-201A')(), ...lines(l => `${l.from} ${l.to}`.includes('P-201A'))()], [0.9, 0.45, 1], () => { const i = steel().find(q => q.tags[0] === 'P-201A' && q.part.kind === 'PUMP')!; return { c: [i.transform[12], i.transform[13] + 40, i.transform[14]], r: 75 }; });
+  shoot('instrument-manifold', 'a socket-weld instrument stub with its four-way manifold (line 1"-P300-I-6234)', lines(l => l.no === '1"-P300-I-6234'), [1, 0.4, 0.5], undefined, false);
+  shoot('hose-station', 'a threaded hose station: gate valve, plug and swage (line 1"-P150-HS-5202)', lines(l => l.no === '1"-P150-HS-5202'), [1, 0.3, 0.6], () => ({ c: at('1"-P150-HS-5202', 'VLV|GATE')(), r: 22 }), false);
+  shoot('relief-valve', 'a relief valve on its nozzle with its outlet line', lines(l => l.service === 'RV' && l.no === M2().lines.find(x => x.service === 'RV')!.no), undefined, undefined, false);
+}
+
 // stages 5-7: plant piping, line classes, a line, work orders
 const M = () => JSON.parse(readFileSync('public/plant-piping.json', 'utf8')) as PipingModel;
 let pm: PipingModel | null = null; const P = () => (pm ??= M());
@@ -159,6 +187,7 @@ if (!filter || 'pack'.includes(filter)) {
   const valves = views.filter(v => v.stage === 'stage4' && v.name.startsWith('valve-')), half = Math.ceil(valves.length / 2);
   [valves.slice(0, half), valves.slice(half)].forEach((vs, i) => sheet('stage4', `sheet-${i + 1}`, `Valve contact sheet ${i + 1} of 2`, vs, v => v.caption.replace(/^Valve /, '')));
   for (const g of CAT10) sheet('stage10', `sheet-${g.toLowerCase().replace(/\s+/g, '-')}`, `${g} catalogue contact sheet`, views.filter(v => v.stage === 'stage10' && ENTRIES.find(e => `cat10-${slug(e.label)}` === v.name)?.group === g), entry);
+  sheet('stage12', 'sheet-as-built', 'Plant 2 as built, contact sheet', views.filter(v => v.stage === 'stage12'), v => v.caption.replace(/^Plant 2 as built: /, ''));
   const pip = views.filter(v => v.stage === 'stage11');
   for (let i = 0; i * 20 < pip.length; i++) sheet('stage11', `sheet-piping-${i + 1}`, `Piping catalogue contact sheet ${i + 1} of ${Math.ceil(pip.length / 20)}`, pip.slice(i * 20, i * 20 + 20), v => v.caption.replace(/^Piping catalogue: /, '').replace(/ \(.*\)$/, ''));
 }

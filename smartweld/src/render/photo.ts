@@ -149,7 +149,9 @@ export function renderPhoto(ds: Drawable[], cam: Camera, w = 1200, h = 800, ss =
     const den = cut!.n[0] * rx + cut!.n[1] * ry + cut!.n[2] * rz; if (Math.abs(den) < 1e-9) return Infinity;
     const t = (cut!.d - dot(cut!.n, eye)) / den; return t > near ? t : Infinity;
   };
-  const rasterTri = (a: number[], b: number[], c: number[], id: number, cap: boolean) => {
+  // a cut solid is capped where the ray, past the cut plane, crosses its surface an odd number of times: the plane point is then inside it
+  const crossings = cut && dot(cut.n, eye) > cut.d ? new Uint16Array(N) : null, capId = new Int32Array(crossings ? N : 0);
+  const rasterTri = (a: number[], b: number[], c: number[], id: number, count: boolean) => {
     const pj = (q: number[]) => { const iz = 1 / -q[2]; return [((q[0] * f) / aspect * iz * 0.5 + 0.5) * W, (0.5 - q[1] * f * iz * 0.5) * H, iz, q[3] * iz, q[4] * iz, q[5] * iz]; };
     const A = pj(a), B = pj(b), C = pj(c), area = (B[0] - A[0]) * (C[1] - A[1]) - (B[1] - A[1]) * (C[0] - A[0]); if (Math.abs(area) < 1e-12) return;
     const x0 = Math.max(0, Math.floor(Math.min(A[0], B[0], C[0]))), x1 = Math.min(W - 1, Math.ceil(Math.max(A[0], B[0], C[0]))), y0 = Math.max(0, Math.floor(Math.min(A[1], B[1], C[1]))), y1 = Math.min(H - 1, Math.ceil(Math.max(A[1], B[1], C[1])));
@@ -157,7 +159,7 @@ export function renderPhoto(ds: Drawable[], cam: Camera, w = 1200, h = 800, ss =
       const px = x + 0.5, py = y + 0.5, w0 = ((B[0] - px) * (C[1] - py) - (B[1] - py) * (C[0] - px)) / area, w1 = ((C[0] - px) * (A[1] - py) - (C[1] - py) * (A[0] - px)) / area, w2 = 1 - w0 - w1;
       if (w0 < 0 || w1 < 0 || w2 < 0) continue;
       const iz = w0 * A[2] + w1 * B[2] + w2 * C[2], i = y * W + x;
-      if (cap) { const z = capDepth(px, py); if (z < depth[i] && z < 1 / iz) { depth[i] = z; gid[i] = id; gn[3 * i] = cut!.n[0]; gn[3 * i + 1] = cut!.n[1]; gn[3 * i + 2] = cut!.n[2]; } continue; }
+      if (count) { crossings![i]++; capId[i] = id; }
       const z = 1 / iz; if (z >= depth[i]) continue;
       depth[i] = z; gid[i] = id; gn[3 * i] = (w0 * A[3] + w1 * B[3] + w2 * C[3]) * z; gn[3 * i + 1] = (w0 * A[4] + w1 * B[4] + w2 * C[4]) * z; gn[3 * i + 2] = (w0 * A[5] + w1 * B[5] + w2 * C[5]) * z;
     }
@@ -166,13 +168,15 @@ export function renderPhoto(ds: Drawable[], cam: Camera, w = 1200, h = 800, ss =
     const d = ds[di], I = d.mesh.indices, P = WP[di], Nw = WN[di], cutThis = !!cut && (!anyFlag || !!d.cuttable);
     for (let t = 0; t < I.length; t += 3) {
       let poly: number[][] = [0, 1, 2].map(k => { const v = 3 * I[t + k], n = 3 * t + 3 * k; return [P[v], P[v + 1], P[v + 2], Nw[n], Nw[n + 1], Nw[n + 2]]; });
-      const fnx = (poly[1][1] - poly[0][1]) * (poly[2][2] - poly[0][2]) - (poly[1][2] - poly[0][2]) * (poly[2][1] - poly[0][1]), fny = (poly[1][2] - poly[0][2]) * (poly[2][0] - poly[0][0]) - (poly[1][0] - poly[0][0]) * (poly[2][2] - poly[0][2]), fnz = (poly[1][0] - poly[0][0]) * (poly[2][1] - poly[0][1]) - (poly[1][1] - poly[0][1]) * (poly[2][0] - poly[0][0]);
       if (cutThis) { poly = clipW(poly, cut!.n, cut!.d); if (poly.length < 3) continue; }
       for (let k = 1; k < poly.length - 1; k++) smTri(poly[0], poly[k], poly[k + 1]);
-      const back = cutThis && fnx * (eye[0] - poly[0][0]) + fny * (eye[1] - poly[0][1]) + fnz * (eye[2] - poly[0][2]) < 0;
       const cp = clipNear(poly.map(toCam)); if (cp.length < 3) continue;
-      for (let k = 1; k < cp.length - 1; k++) rasterTri(cp[0], cp[k], cp[k + 1], di, back);
+      for (let k = 1; k < cp.length - 1; k++) rasterTri(cp[0], cp[k], cp[k + 1], di, cutThis && !!crossings);
     }
+  }
+  if (crossings) for (let y = 0; y < H; y++) for (let x = 0; x < W; x++) {
+    const i = y * W + x; if (!(crossings[i] & 1)) continue;
+    const z = capDepth(x + 0.5, y + 0.5); if (z < depth[i]) { depth[i] = z; gid[i] = capId[i]; gn[3 * i] = cut!.n[0]; gn[3 * i + 1] = cut!.n[1]; gn[3 * i + 2] = cut!.n[2]; }
   }
 
   // ---- the ground plane (SW-REN-7), analytic ------------------------------------------------------------------------
