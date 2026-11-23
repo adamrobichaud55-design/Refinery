@@ -28,15 +28,15 @@ export const ROLE_COLOUR: Record<Role, RGB> = {
 export const HIGHLIGHT: RGB = C(0xff8c1a), ISOLATION: RGB = C(0x1f6fd1);
 
 const GALVANISED = new Set<PartSpec['kind']>(['GRATING', 'GRATING_TREAD', 'CAGE_HOOP', 'Z', 'CS', 'ROD']), PLATED = new Set<PartSpec['kind']>(['BOLT', 'ANCHOR_ROD', 'STUD']);
-const partCache = new Map<PartSpec, { role: Role; mesh: MeshData }[]>();
+const partCache = new Map<PartSpec, { role: Role; mesh: MeshData; cut?: boolean }[]>();
 /** placed parts (building, interior, a catalogue entry) */
 export function partDrawables(list: { part: PartSpec; transform: Mat4 }[], colour?: (role: Role) => RGB): Drawable[] {
   const out: Drawable[] = [];
   for (const i of list) {
-    let g = partCache.get(i.part); if (!g) { g = buildGeometry(i.part).solids.map(s => ({ role: s.role, mesh: s.mesh })); partCache.set(i.part, g); }
+    let g = partCache.get(i.part); if (!g) { g = buildGeometry(i.part).solids.map(s => ({ role: s.role, mesh: s.mesh, cut: s.cut })); partCache.set(i.part, g); }
     const galv = GALVANISED.has(i.part.kind);   // SW-REN-4: gratings, treads, cage hoops, cold-formed purlins and girts and bracing rods are galvanised
     const zinc = PLATED.has(i.part.kind);   // bolts, anchor rods and studs are zinc plated
-    for (const s of g) out.push({ mesh: s.mesh, T: i.transform, color: colour ? colour(s.role) : galv && s.role === 'steel' ? ROLE_COLOUR.galv : ROLE_COLOUR[s.role] ?? ROLE_COLOUR.steel, finish: zinc ? 'zinc' : galv && s.role === 'steel' ? 'galv' : ROLE_FINISH[s.role] ?? 'paint', cuttable: s.role === 'concrete' || s.role === 'grout' });
+    for (const s of g) out.push({ mesh: s.mesh, T: i.transform, color: colour ? colour(s.role) : galv && s.role === 'steel' ? ROLE_COLOUR.galv : ROLE_COLOUR[s.role] ?? ROLE_COLOUR.steel, finish: zinc ? 'zinc' : galv && s.role === 'steel' ? 'galv' : ROLE_FINISH[s.role] ?? 'paint', cuttable: s.role === 'concrete' || s.role === 'grout' || !!s.cut });
   }
   return out;
 }

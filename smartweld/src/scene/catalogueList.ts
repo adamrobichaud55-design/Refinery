@@ -5,11 +5,12 @@ import {
   makeFooting, makePedestal, makeEquipmentPad, makeSlab, makeOctagonFoundation, makeRingWall, makeDrilledPier, makeGradeBeam, makeGroutBed, makeCurb, makePaving, makeTrench, makeSump, makeDike,
   makeNozzle, makeManway, makeLiftingLug, makeVesselLegs, makeSupportLugs, makeInsulationRings, makeDavit, makeMotor, makeColumn, makeReactor, makeAirCooler, makeCompressorPackage, makeRecipCompressor,
   makeBlower, makeFiredHeater, makeAgitatedTank, makeFilter, makeDustCollector, makeCyclone, makeScrewConveyor, makeBucketElevator, makeSilo, makeSumpPump, makeHairpin, makePlateExchanger,
-  makeDressedVessel, makeProcessPump, makeShellTubeExchanger,
+  makeDressedVessel, makeProcessPump, makeShellTubeExchanger, makeTubeBundle, makeBundleExchanger, makePlatformedColumn,
+  makeCatCracker, makeCokeDrums, makeStack, makeFlareStack, makeWetScrubber, makeSteamDrum, makeMudDrum, makeFlueGasCooler, makeBurner, makeEconomizer, makeWaterTubeBoiler, makeConeRoofTank, makeFloatingRoofTank,
 } from '../catalogue';
 
 
-export interface Entry { group: string; label: string; build: () => PartSpec; /** the axis that is up when the item stands in a plant (catalogue images, SW-REN-7); default z for the civil and equipment groups */ up?: 'y' | 'z' }
+export interface Entry { group: string; label: string; build: () => PartSpec; /** the axis that is up when the item stands in a plant (catalogue images, SW-REN-7); default z for the civil and equipment groups */ up?: 'y' | 'z'; /** cut the solids flagged for it by a plane with this normal (display frame) in the catalogue image (SW-REN-10) */ cut?: [number, number, number] }
 
 export const ENTRIES: Entry[] = [
   { group: 'Wide-flange', label: 'W8x31', build: () => makePart('W8x31', 'W8x31', 120) },
@@ -91,4 +92,22 @@ export const ENTRIES: Entry[] = [
   { group: 'Equipment', label: 'Vertical sump pump 4 in', build: () => makeSumpPump({ tag: 'P-305', NPS: 4, cls: 'P150', columnL: 72, motorD: 14, plate: 24 }) },
   { group: 'Equipment', label: 'Hairpin exchanger 2 in in 4 in', up: 'y', build: () => makeHairpin({ tag: 'E-306', innerNPS: 2, outerNPS: 4, cls: 'P150', legL: 240 }) },
   { group: 'Equipment', label: 'Plate exchanger, 80 plates', up: 'y', build: () => makePlateExchanger({ tag: 'E-307', plates: 80, W: 24, H: 60 }) },
+  // process units, boiler equipment and storage tanks (§69, SW-EQC-27..44)
+  { group: 'Exchangers', label: 'Tube bundle for a 36 in shell, 16 ft', up: 'y', build: () => makeTubeBundle('TB-1', 36, 190) },
+  { group: 'Exchangers', label: 'Shell-and-tube exchanger 36 in x 16 ft with tube bundle', up: 'y', cut: [1, 0, 0], build: () => makeBundleExchanger({ tag: 'E-311', ID: 36, t: 0.5, TT: 192, centreline: 72 }) },
+  { group: 'Towers', label: 'Column 96 in x 80 ft with platforms and ladders every 15 ft', build: () => makePlatformedColumn({ tag: 'C-311', ID: 96, t: 0.625, TT: 960, skirtH: 96, trays: 36 }) },
+  { group: 'Towers', label: 'Cat cracker reactor and regenerator', build: () => makeCatCracker({ tag: 'R-401', regenD: 240, regenTT: 300, reactorD: 144, reactorTT: 240 }) },
+  { group: 'Towers', label: 'Coke drums, pair 24 ft x 60 ft with structure and derricks', build: () => makeCokeDrums({ tag: 'D-501', D: 288, TT: 720 }) },
+  { group: 'Towers', label: 'Flare stack 24 in x 150 ft, self-supporting', build: () => makeFlareStack({ tag: 'FL-1', D: 24, H: 1800 }) },
+  { group: 'Towers', label: 'Flare stack 36 in x 200 ft, derrick supported', build: () => makeFlareStack({ tag: 'FL-2', D: 36, H: 2400, derrick: true }) },
+  { group: 'Towers', label: 'Wet scrubber tower 10 ft x 40 ft', build: () => makeWetScrubber({ tag: 'T-601', D: 120, H: 480 }) },
+  { group: 'Exchangers', label: 'Flue gas cooler 72 in x 20 ft with steam drum', up: 'y', cut: [1, 0, 0], build: () => makeFlueGasCooler({ tag: 'E-601', D: 72, L: 240 }) },
+  { group: 'Boiler', label: 'Water-tube boiler, two drums', cut: [0, 0, 1], build: () => makeWaterTubeBoiler({ tag: 'B-601', steamID: 54, L: 240, centres: 180 }) },
+  { group: 'Boiler', label: 'Steam drum 54 in x 20 ft', up: 'y', build: () => makeSteamDrum({ tag: 'SD-1', ID: 54, L: 240 }) },
+  { group: 'Boiler', label: 'Mud drum 36 in x 20 ft', up: 'y', build: () => makeMudDrum({ tag: 'MD-1', ID: 36, L: 240 }) },
+  { group: 'Boiler', label: 'Economizer 60 x 72 x 96 in', cut: [0.5547, 0, 0.8321], build: () => makeEconomizer('EC-1', 60, 72, 96) },
+  { group: 'Boiler', label: 'Burner, 24 in throat', up: 'y', build: () => makeBurner('BR-1', 24) },
+  { group: 'Boiler', label: 'Stack 60 in x 100 ft', build: () => makeStack('ST-1', 60, 1200) },
+  { group: 'Tanks', label: 'Storage tank 40 ft x 32 ft, fixed cone roof', build: () => makeConeRoofTank({ tag: 'T-701', D: 480, H: 384 }) },
+  { group: 'Tanks', label: 'Storage tank 60 ft x 40 ft, external floating roof', build: () => makeFloatingRoofTank({ tag: 'T-702', D: 720, H: 480 }) },
 ];

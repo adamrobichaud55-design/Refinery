@@ -9,6 +9,7 @@ import {
   makeNozzle, makeManway, makeLiftingLug, makeVesselLegs, makeSupportLugs, makeInsulationRings, makeDavit, makeMotor, makeColumn, makeReactor, makeAirCooler, makeCompressorPackage, makeRecipCompressor,
   makeBlower, makeFiredHeater, makeAgitatedTank, makeFilter, makeDustCollector, makeCyclone, makeScrewConveyor, makeBucketElevator, makeSilo, makeSumpPump, makeHairpin, makePlateExchanger,
   makeDressedVessel, makeProcessPump, makeShellTubeExchanger, MOTOR_SHAFT,
+  makeTubeBundle, makeBundleExchanger, makePlatformedColumn, makeCatCracker, makeCokeDrums, makeStack, makeFlareStack, makeWetScrubber, makeSteamDrum, makeMudDrum, makeFlueGasCooler, makeBurner, makeEconomizer, makeWaterTubeBoiler, makeConeRoofTank, makeFloatingRoofTank, floorsThrough,
 } from '../src/catalogue';
 import { buildGeometry } from '../src/geometry/partGeometry';
 import { isClosed, signedVolume } from '../src/geometry/mesh';
@@ -44,7 +45,13 @@ const equipment: PartSpec[] = [
   makeNozzle('N3', { NPS: 6, cls: 'P150', shellT: 0.5, shellR: 36.5, blind: true }), makeManway('MW2', { D: 20, cls: 'P150', shellT: 0.5, shellR: 24.5 }),
 ];
 
-for (const [name, parts] of [['civil catalogue (SW-CIV-*)', civil], ['equipment catalogue (SW-EQC-*)', equipment]] as const) describe(name, () => {
+const units: PartSpec[] = [
+  makeTubeBundle('TB', 24, 120), makeBundleExchanger({ tag: 'E-311', ID: 24, t: 0.375, TT: 144, centreline: 60 }), makePlatformedColumn({ tag: 'C-311', ID: 96, t: 0.625, TT: 960, skirtH: 96, trays: 36 }),
+  makeCatCracker({ tag: 'R-401', regenD: 240, regenTT: 300, reactorD: 144, reactorTT: 240 }), makeCokeDrums({ tag: 'D-501', D: 288, TT: 720 }), makeStack('ST', 60, 1200), makeFlareStack({ tag: 'FL-1', D: 24, H: 1800 }), makeFlareStack({ tag: 'FL-2', D: 36, H: 2400, derrick: true }),
+  makeWetScrubber({ tag: 'T-601', D: 120, H: 480 }), makeSteamDrum({ tag: 'SD', ID: 54, L: 240 }), makeMudDrum({ tag: 'MD', ID: 36, L: 240 }), makeFlueGasCooler({ tag: 'E-601', D: 48, L: 180 }), makeBurner('BR', 24), makeEconomizer('EC', 60, 72, 96),
+  makeWaterTubeBoiler({ tag: 'B-601', steamID: 54, L: 240, centres: 180 }), makeConeRoofTank({ tag: 'T-701', D: 480, H: 384 }), makeFloatingRoofTank({ tag: 'T-702', D: 720, H: 480 }),
+];
+for (const [name, parts] of [['civil catalogue (SW-CIV-*)', civil], ['equipment catalogue (SW-EQC-*)', equipment], ['process units, boiler equipment and tanks (SW-EQC-27..44)', units]] as const) describe(name, () => {
   for (const p of parts) it(`${p.designation}: builds, closed solids, bases written`, () => {
     const geo = buildGeometry(p);
     expect(geo.solids.length).toBeGreaterThan(0);
@@ -141,5 +148,33 @@ describe('real detail (SW-DET-*)', () => {
     expect(makeMotor('m', 18).dims.fins.value).toBe(Math.round((Math.PI * 18) / 1.5));
     const p = makeProcessPump({ tag: 'P', suctionNPS: 4, dischargeNPS: 3, cls: 'P300', impellerD: 13, motorD: 16 });
     expect(p.dims.shaftY.value).toBeGreaterThanOrEqual(2 + MOTOR_SHAFT(16));
+  });
+});
+
+describe('process units, boiler equipment and tanks: the rules (SW-EQC-27..44)', () => {
+  it('SW-EQC-28: floors are never more than 15 ft apart, and a platformed column has one at each', () => {
+    const fl = floorsThrough([500, 700, 1500]); let last = 0; for (const z of fl) { expect(z - last).toBeLessThanOrEqual(180 + 1e-9); last = z; } expect(fl[fl.length - 1]).toBe(1500);
+    const c = makePlatformedColumn({ tag: 'C', ID: 96, t: 0.625, TT: 960, skirtH: 96, trays: 36 }), floors = c.extra!.floors as number[];
+    for (let i = 1; i < floors.length; i++) expect(floors[i] - floors[i - 1]).toBeLessThanOrEqual(180 + 1e-9);
+    expect(c.dims.platforms.value).toBe(floors.length);
+    const names = (c.extra!.solids as { name: string }[]).map(q => q.name);
+    for (let k = 1; k <= floors.length; k++) { expect(names.some(n => n.startsWith(`platform ${k}:`)), `platform ${k}`).toBe(true); expect(names.some(n => n.startsWith(`ladder ${k}:`)), `ladder ${k}`).toBe(true); }
+  });
+  it('SW-EQC-30: tubes on a 1.25 d triangular pitch inside the limit circle; baffles at 0.4 ID', () => {
+    const b = makeTubeBundle('B', 36, 190);
+    expect(b.dims.pitch.value).toBeCloseTo(0.9375, 9); expect(b.dims.baffleSpacing.value).toBeCloseTo(14.4, 9);
+    const packed = (Math.PI * (36 / 2 - 0.75 - 0.375) ** 2) / (0.9375 * 0.9375 * 0.8660254);   // tubes a triangular lattice puts in the limit circle
+    expect(b.dims.tubes.value).toBeGreaterThan(0.93 * packed); expect(b.dims.tubes.value).toBeLessThan(1.03 * packed);
+  });
+  it('SW-EQC-33: the cat cracker\'s reactor stands above the regenerator; SW-EQC-34: derricks 0.8 of the drum', () => {
+    const f = makeCatCracker({ tag: 'R', regenD: 240, regenTT: 300, reactorD: 144, reactorTT: 240 });
+    expect(f.dims.reactorBase.value).toBeGreaterThan(f.dims.skirtH.value + 240 / 4 + 300); expect(f.dims.riserD.value).toBeCloseTo(36, 9); expect(f.dims.skirtH.value % 12).toBe(0);
+    const k = makeCokeDrums({ tag: 'D', D: 288, TT: 720 }); expect(k.dims.derrick.value).toBeCloseTo(576, 9); expect(k.dims.flange.value).toBeCloseTo(72, 9);
+  });
+  it('SW-EQC-40: the boiler\'s mud drum is 0.65 of the steam drum; SW-EQC-44: tank capacity from the shell', () => {
+    const b = makeWaterTubeBoiler({ tag: 'B', steamID: 54, L: 240, centres: 180 }); expect(b.dims.mudID.value).toBeCloseTo(35.1, 9); expect(b.dims.bank.value).toBe(8 * b.dims.walls.value);
+    const t = makeConeRoofTank({ tag: 'T', D: 480, H: 384 }); expect(t.dims.courses.value).toBe(4); expect(t.dims.capacity.value).toBeGreaterThan(7000); expect(t.dims.capacity.value).toBeLessThan(7200);
+    const names = (makeFloatingRoofTank({ tag: 'T', D: 720, H: 480 }).extra!.solids as { name: string }[]).map(q => q.name);
+    for (const want of ['wind girder walkway', 'floating roof pontoon', 'rim seal', 'rolling ladder', 'stair treads', 'shell manway 1']) expect(names.some(n => n.startsWith(want)), want).toBe(true);
   });
 });

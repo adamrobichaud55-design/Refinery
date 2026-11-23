@@ -32,18 +32,18 @@ const part = (stage: string, name: string, caption: string, build: () => Paramet
   views.push({ stage, name, caption, make: () => { const ds = partDrawables([{ part: build(), transform: identity() }]); const cut = section ? { n: [1, 0, 0] as [number, number, number], d: 0 } : undefined; const [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx, dir), cut, photo: { groundY: mn[1], cut } }; } });   // photo style (SW-REN-4..10)
 
 // stage 1: catalogue entries and the column-base assembly
-const CAT10 = new Set(['Civil', 'Vessel parts', 'Equipment']);   // stage 10: the civil and equipment catalogues (§65, §66)
+const CAT10 = new Set(['Civil', 'Vessel parts', 'Equipment', 'Exchangers', 'Towers', 'Boiler', 'Tanks']);   // stage 10: the civil and equipment catalogues (§65, §66)
 const slug = (l: string) => l.replace(/[^A-Za-z0-9.]+/g, '-').replace(/-+$/, '');
 for (const e of ENTRIES) {
   if (!CAT10.has(e.group)) { part('stage1', `entry-${slug(e.label)}`, `Catalogue entry ${e.label}`, e.build); continue; }
   // photo style (SW-REN-4..10): the item the way up it stands, on a ground plane; a civil part cut to show its bars
-  const civil = e.group === 'Civil', n: [number, number, number] = [0.5547, 0, 0.8321];
+  const civil = e.group === 'Civil' || !!e.cut, n: [number, number, number] = e.cut ?? [0.5547, 0, 0.8321];
   const shot = (cutaway: boolean) => () => {
     const ds = partDrawables([{ part: e.build(), transform: e.up === 'y' ? identity() : standUp() }]), [mn, mx] = bounds(ds);
     return { ds, cam: frameBox(mn, mx, [0.9, 0.5, 1]), photo: { groundY: mn[1], cut: cutaway ? { n, d: (n[0] * (mn[0] + mx[0])) / 2 + (n[2] * (mn[2] + mx[2])) / 2 } : undefined } };
   };
-  views.push({ stage: 'stage10', name: `cat10-${slug(e.label)}`, caption: `Catalogue entry ${e.label} (${e.group})${civil ? ', cut to show the bars' : ''}`, make: shot(civil) });
-  if (civil) views.push({ stage: 'stage10', name: `cat10-${slug(e.label)}-whole`, caption: `Catalogue entry ${e.label} (${e.group}), as cast`, make: shot(false) });
+  views.push({ stage: 'stage10', name: `cat10-${slug(e.label)}`, caption: `Catalogue entry ${e.label} (${e.group})${civil ? (e.cut ? ', cut to show the inside' : ', cut to show the bars') : ''}`, make: shot(civil) });
+  if (civil) views.push({ stage: 'stage10', name: `cat10-${slug(e.label)}-whole`, caption: `Catalogue entry ${e.label} (${e.group}), ${e.cut ? 'whole' : 'as cast'}`, make: shot(false) });
 }
 views.push({ stage: 'stage1', name: 'assembly-column-base', caption: 'Column base assembly', make: () => { const a = columnBaseAssembly(); const ds = partDrawables(a.instances); const [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx), photo: { groundY: mn[1] } }; } });
 
@@ -182,7 +182,7 @@ if (!filter || 'pack'.includes(filter)) {
     writeFileSync(`${out}/${stage}/${name}.png`, contactSheet(font, vs.map(v => ({ label: label(v), png: new Uint8Array(readFileSync(`${out}/${v.stage}/${v.name}.png`)) }))));
     index.push(`| \`${stage}/${name}.png\` | ${caption} (the renders above, tiled and labelled with DejaVu Sans) |`);
   };
-  const entry = (v: View) => v.caption.replace(/^Catalogue entry /, '').replace(/ \((Civil|Vessel parts|Equipment)\).*$/, '');
+  const entry = (v: View) => v.caption.replace(/^Catalogue entry /, '').replace(/ \((Civil|Vessel parts|Equipment|Exchangers|Towers|Boiler|Tanks)\).*$/, '');
   sheet('stage1', 'sheet-catalogue', 'Catalogue list contact sheet: structural sections, plates, hardware, welds, sheet and the first piping entries', views.filter(v => v.stage === 'stage1' && v.name.startsWith('entry-')), entry);
   const valves = views.filter(v => v.stage === 'stage4' && v.name.startsWith('valve-')), half = Math.ceil(valves.length / 2);
   [valves.slice(0, half), valves.slice(half)].forEach((vs, i) => sheet('stage4', `sheet-${i + 1}`, `Valve contact sheet ${i + 1} of 2`, vs, v => v.caption.replace(/^Valve /, '')));

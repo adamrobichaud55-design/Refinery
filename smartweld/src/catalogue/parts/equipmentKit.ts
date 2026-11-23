@@ -21,17 +21,17 @@ import { sweep, torus, hexNut, boltingOf, curvedPad, boxMesh, orient, ringPath, 
 import { SIZE_SERIES } from './pipe';
 
 const RHO = K.STEEL_DENSITY_LB_IN3;
-interface Solid { name: string; mesh: MeshData; role?: DRole }
+export interface Solid { name: string; mesh: MeshData; role?: DRole; /** the solid is cut in a cutaway image (SW-REN-10) */ cut?: boolean }
 const N = 48;   // SW-DET-13
-const box = (x0: number, y0: number, z0: number, x1: number, y1: number, z1: number): MeshData => extrude({ outer: rect(x0, y0, x1, y1) }, z1 - z0, z0);
+export const box = (x0: number, y0: number, z0: number, x1: number, y1: number, z1: number): MeshData => extrude({ outer: rect(x0, y0, x1, y1) }, z1 - z0, z0);
 /** a cylinder along z of radius r from z0 to z1, centred at (cx, cy) */
-const cylZ = (cx: number, cy: number, r: number, z0: number, z1: number, n = N): MeshData => extrude({ outer: circle(cx, cy, r, n) }, z1 - z0, z0);
+export const cylZ = (cx: number, cy: number, r: number, z0: number, z1: number, n = N): MeshData => extrude({ outer: circle(cx, cy, r, n) }, z1 - z0, z0);
 /** a cylinder along x from x0 to x1 at (y, z) */
-const cylX = (y: number, z: number, r: number, x0: number, x1: number, n = N): MeshData => transformMesh(extrude({ outer: circle(0, 0, r, n) }, x1 - x0, 0), multiply(translate(x0, y, z), rotateY(Math.PI / 2)));
+export const cylX = (y: number, z: number, r: number, x0: number, x1: number, n = N): MeshData => transformMesh(extrude({ outer: circle(0, 0, r, n) }, x1 - x0, 0), multiply(translate(x0, y, z), rotateY(Math.PI / 2)));
 /** a cylinder along y from y0 to y1 at (x, z) */
-const cylY = (x: number, z: number, r: number, y0: number, y1: number, n = N): MeshData => transformMesh(extrude({ outer: circle(0, 0, r, n) }, y1 - y0, 0), multiply(translate(x, y0, z), rotateX(-Math.PI / 2)));
-const tube = (r: number, t: number, L: number, z0 = 0): MeshData => extrude({ outer: circle(0, 0, r, N), inner: circle(0, 0, r - t, N) }, L, z0);
-const at = (m: MeshData, x: number, y: number, z: number): MeshData => transformMesh(m, translate(x, y, z));
+export const cylY = (x: number, z: number, r: number, y0: number, y1: number, n = N): MeshData => transformMesh(extrude({ outer: circle(0, 0, r, n) }, y1 - y0, 0), multiply(translate(x, y0, z), rotateX(-Math.PI / 2)));
+export const tube = (r: number, t: number, L: number, z0 = 0): MeshData => extrude({ outer: circle(0, 0, r, N), inner: circle(0, 0, r - t, N) }, L, z0);
+export const at = (m: MeshData, x: number, y: number, z: number): MeshData => transformMesh(m, translate(x, y, z));
 
 /** a weld-neck flange's solids along +z from its face at z = 0 (ring with bolt holes, raised face below the face, hub and neck above) */
 export function flangeSolids(f: FlangeDesign, name = 'flange'): Solid[] {
@@ -43,9 +43,9 @@ export function flangeSolids(f: FlangeDesign, name = 'flange'): Solid[] {
   const loop = [{ r: f.bore / 2, z: f.tf }, { r: f.bore / 2 + f.hubT, z: f.tf }, { r: f.bore / 2 + f.pipeT, z: f.tf + f.hubLen }, { r: f.bore / 2 + f.pipeT, z: f.tf + f.hubLen + f.neckLen }, { r: f.bore / 2, z: f.tf + f.hubLen + f.neckLen }];
   return [{ name: `${name} ring`, mesh: mergeMeshes(cells) }, { name: `${name} raised face`, mesh: at(tube(f.rfOD / 2, (f.rfOD - f.bore) / 2, f.rfH), 0, 0, -f.rfH) }, { name: `${name} hub and neck`, mesh: revolve(loop, N) }];
 }
-const flangeLen = (f: FlangeDesign) => f.tf + f.hubLen + f.neckLen;
+export const flangeLen = (f: FlangeDesign) => f.tf + f.hubLen + f.neckLen;
 
-function done(id: string, kind: PartSpec['kind'], designation: string, dims: Record<string, Dim>, lengthIn: number, solids: Solid[], notes: string[] = [], extra: Record<string, unknown> = {}, material: Material = DEFAULT_MATERIAL): PartSpec {
+export function done(id: string, kind: PartSpec['kind'], designation: string, dims: Record<string, Dim>, lengthIn: number, solids: Solid[], notes: string[] = [], extra: Record<string, unknown> = {}, material: Material = DEFAULT_MATERIAL): PartSpec {
   const { solids: _s, nozzles: _n, ...rest } = extra;   // the item's own solids are the ones passed here, never a sub-part's
   void _s; void _n;
   return finish(id, kind, designation, dims, lengthIn, solids, material, [], notes, rest);
@@ -157,10 +157,10 @@ export function makeDavit(id: string, postH = 60, arm = 48): PartSpec {
 
 // ---- vessel dressing (SW-DET-6..8) ------------------------------------------------------------------------------
 /** the size of the series at or above x */
-const seriesUp = (x: number) => SIZE_SERIES.find(v => v >= x - 1e-9) ?? SIZE_SERIES[SIZE_SERIES.length - 1];
+export const seriesUp = (x: number) => SIZE_SERIES.find(v => v >= x - 1e-9) ?? SIZE_SERIES[SIZE_SERIES.length - 1];
 /** frames (column-major: images of local x, y, z): a part whose z is its axis mounted radially on a z-axis shell at angle 0 (local y round the shell);
  *  a lifting lug's plate turned so its weld edge runs up the shell */
-const RADIAL = rotateY(Math.PI / 2), LUG_ON_SHELL = [0, 0, 1, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1];
+export const RADIAL = rotateY(Math.PI / 2), LUG_ON_SHELL = [0, 0, 1, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1];
 /** SW-DET-6: weld seams of a shell of outer radius R, thickness t, from z0 over length TT (z-axis shell): one mesh */
 export function seamSolids(R: number, t: number, z0: number, TT: number): MeshData {
   const wc = 2 * t + 0.25, parts: MeshData[] = [], zs: number[] = []; for (let z = 0; z < TT - 1; z += 96) zs.push(z); zs.push(TT);
@@ -247,7 +247,7 @@ export function makeMotor(id: string, frameD: number): PartSpec {
 /** a motor's solids under a transform (its shaft is local +z, its feet local −y) */
 const motorAt = (D: number, tr: number[]): Solid[] => motorSolids(D).solids.map(s => ({ ...s, mesh: transformMesh(s.mesh, tr) }));
 /** orientations for a motor (column-major: the images of local x, y, z): shaft along +x with up = +z; shaft along +y with up = +z; shaft down (−z) */
-const SHAFT_X_UP_Z = [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1], SHAFT_Y_UP_Z = [-1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1], SHAFT_DOWN = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1];
+export const SHAFT_X_UP_Z = [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1], SHAFT_Y_UP_Z = [-1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1], SHAFT_DOWN = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1];
 
 export interface ColumnInput extends VesselVInput { trays: number; traySpacing?: number; insulated?: boolean }
 /** SW-EQC-9: column = vertical vessel + davit + lugs + insulation rings; trays as data */
@@ -561,9 +561,9 @@ export function voluteOutline(Rv: number, wN: number, yTop: number, n = 72): Pol
   return pts;
 }
 /** frames for a nozzle on a horizontal (z-axis) shell: pointing up (+y) or down (−y); local y runs round the shell */
-const NOZZLE_UP = [0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1], NOZZLE_DOWN = [0, 0, 1, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 1];
+export const NOZZLE_UP = [0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1], NOZZLE_DOWN = [0, 0, 1, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 1];
 /** a hex-headed anchor bolt standing on a plate at (x, z) whose top is at y */
-const baseBolt = (x: number, y: number, z: number, d: number): MeshData => mergeMeshes([transformMesh(hexNut(d), multiply(translate(x, y, z), rotateX(-Math.PI / 2))), cylY(x, z, d / 2, y - 1, y + 1.5 * d, 10)]);
+export const baseBolt = (x: number, y: number, z: number, d: number): MeshData => mergeMeshes([transformMesh(hexNut(d), multiply(translate(x, y, z), rotateX(-Math.PI / 2))), cylY(x, z, d / 2, y - 1, y + 1.5 * d, 10)]);
 
 export interface ProcessPumpInput { tag: string; suctionNPS: number; dischargeNPS: number; cls: PipeClass; impellerD: number; motorD: number }
 /** SW-EQ-4 in detail (SW-DET-10): an end-suction process pump on a baseplate with its motor; z along the shaft from the suction flange face, y up from the baseplate's underside */

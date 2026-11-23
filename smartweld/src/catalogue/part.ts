@@ -12,7 +12,9 @@ export type PartKind =
   | 'FOOTING' | 'PEDESTAL' | 'PAD' | 'SLAB' | 'OCTAGON' | 'RINGWALL' | 'PIER' | 'GRADE_BEAM' | 'GROUT' | 'CURB' | 'PAVING' | 'TRENCH' | 'SUMP' | 'DIKE'
   // equipment catalogue (§66)
   | 'MOTOR' | 'NOZZLE' | 'MANWAY' | 'LIFTING_LUG' | 'VESSEL_LEGS' | 'SUPPORT_LUGS' | 'INSUL_RINGS' | 'DAVIT' | 'COLUMN' | 'REACTOR' | 'AIR_COOLER' | 'COMPRESSOR'
-  | 'BLOWER' | 'HEATER' | 'AGITATED_TANK' | 'FILTER' | 'DUST_COLLECTOR' | 'CYCLONE' | 'SCREW_CONVEYOR' | 'BUCKET_ELEVATOR' | 'SILO' | 'SUMP_PUMP' | 'HAIRPIN' | 'PLATE_EXCHANGER';
+  | 'BLOWER' | 'HEATER' | 'AGITATED_TANK' | 'FILTER' | 'DUST_COLLECTOR' | 'CYCLONE' | 'SCREW_CONVEYOR' | 'BUCKET_ELEVATOR' | 'SILO' | 'SUMP_PUMP' | 'HAIRPIN' | 'PLATE_EXCHANGER'
+  // process units, boiler equipment and storage tanks (§69)
+  | 'TUBE_BUNDLE' | 'PROCESS_UNIT' | 'FLARE' | 'SCRUBBER' | 'BOILER' | 'DRUM' | 'STACK' | 'ECONOMIZER' | 'BURNER';
 
 export type Category = 'section' | 'plate' | 'hardware' | 'weld' | 'sheet' | 'non-steel' | 'equipment' | 'piping' | 'valve' | 'civil';
 

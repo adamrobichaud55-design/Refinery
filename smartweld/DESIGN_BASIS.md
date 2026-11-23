@@ -2854,3 +2854,123 @@ here; nothing is decorative. Weights include the drawn detail (SW-EQ-7, SW-CIV-1
   inspection doors 18 × 24 in on housings; drive guards in safety yellow.
 - `SW-DET-13` Tessellation: curved solids are drawn with at least 48 segments round and 64 for
   diameters over 48 in, so a curve reads as a curve at the scale of the images.
+
+## 69. Process units, boiler equipment and storage tanks (`SW-EQC-27..44`)
+
+Written 2026-11-23 at the owner's instruction (the equipment catalogue lacked an exchanger with its
+tube bundle, cat cracker, coker and scrubber towers, flare stacks, columns with platforms and ladders
+every 15 ft, the flue gas cooler, boiler drums and components, and above-ground storage tanks).
+As §66: every item is a true-scale arrangement from stated principal dimensions, the rest by the
+rule; the proportions are SmartWeld's own, written from the reasoning given, from no drawing,
+licensor's design, standard or table, for the owner to tune from experience (PROVENANCE P-74).
+
+Shared parts:
+
+- `SW-EQC-27` Column platform: a ring platform round a vertical shell at a stated elevation, over a
+  stated arc (default 270°), 36 in wide from 1 in off the shell: bar grating (SW-GR-1) on radial
+  `L3x3x1/4` bearers at no more than 40° apart, each on a knee brace of the same angle back to the
+  shell; a kerb plate 6 in deep on the outer edge with a 4 in toe plate above the walking surface;
+  a handrail 42 in high of 1.5 in pipe posts at no more than 5 ft with a top rail and a mid rail,
+  round the outer edge and across the closed end. Reason: a platform is where a manway, a valve or
+  an instrument is reached; 36 in is room to work and pass.
+- `SW-EQC-28` Column ladder: a ladder as SW-LD-* (rails 16 in apart, rungs at 12 in, 7 in off the
+  shell) from each platform to the next, each run on the side opposite the one below, rising 42
+  in past the upper platform; a cage (SW-LD-2) from 7 ft above the foot. Platforms stand no more
+  than 15 ft apart (the owner's practice, 2026-11-23), so no run is longer than 15 ft.
+- `SW-EQC-29` Lattice tower (a derrick, or the support of a flare): four legs of `L6x6x1/2` from a
+  square base of stated half-width to a stated top half-width, in panels no taller than 1.2 × their
+  width, each face with a girt `L4x4x3/8` at every panel point and X bracing `L3x3x1/4`.
+  Reason: a square lattice carries wind from any direction; a panel taller than it is wide makes
+  the braces too steep to work.
+- `SW-EQC-30` Tube bundle: straight tubes of stated outside diameter d (default 3/4 in, wall d/9)
+  on a triangular pitch of 1.25 d within a circle 3/4 in inside the shell; a stationary tubesheet
+  ID/12 thick (minimum 1 in) of the shell's flange gasket diameter and a floating tubesheet 1/2 in
+  smaller than the shell with a dished cover; segmental baffles `PL1/4` cut 25 %, alternately top
+  and bottom, at 0.4 ID (minimum 8 in); four tie rods `RD1/2`. The baffles' tube holes are not
+  drawn. Reason: a quarter diameter of ligament lets a tube be expanded into the sheet and
+  cleaned between rows; the triangular pitch packs the most surface into the shell.
+
+Items:
+
+- `SW-EQC-31` Shell-and-tube exchanger with its bundle: SW-EQ-3 in the detail of SW-DET-11 with
+  the bundle of SW-EQC-30 in place; catalogue images cut the shell and channel (SW-REN-10).
+- `SW-EQC-32` Platformed column: SW-EQC-9 with platforms (SW-EQC-27) from the first manway level
+  every 15 ft to the top tangent line, a top platform at the top head, ladders (SW-EQC-28), a
+  manway at each platform and the davit at the top.
+- `SW-EQC-33` Cat cracker reactor and regenerator (side by side): the regenerator a vertical
+  vessel of stated diameter Dg and tangent length on a skirt, its top a cone to a flue gas outlet
+  of 0.25 Dg, an air inlet of 0.2 Dg in the bottom head; the reactor (disengager) of stated
+  diameter Dr set higher, its bottom a cone at 60° to a stripper of 0.5 Dr diameter and 1.5 Dr
+  long, its top head carrying the vapour outlet of 0.2 Dr; a riser of 0.15 Dg diameter rising
+  beside the stripper from a wye at the regenerated-catalyst standpipe's foot and entering the
+  reactor's side; two standpipes of 0.12 Dg diameter, inclined no flatter than 60° to the
+  horizontal, each with a slide valve (a body box 2.5 pipe diameters long with a bonnet and
+  actuator cylinder): spent catalyst from the stripper to the regenerator, regenerated catalyst
+  from the regenerator to the riser wye. Both vessels carry manways and platforms; the reactor
+  stands on a lattice tower (SW-EQC-29) with a ring of `W14` beams under its shell, reached by
+  ladders with landings up the tower (SW-EQC-28). Cyclones, grids and linings are not drawn.
+  Reason: catalyst is a solid that must slide, hence the 60°; the reactor stands above the
+  regenerator's bed so spent catalyst runs down by its own head.
+- `SW-EQC-34` Coke drums (a pair) with their structure: each drum a shell of stated diameter D and
+  tangent length, a top 2:1 head with a top flange of 0.25 D for the drill stem, a bottom cone at
+  60° to a bottom flange of 0.25 D, on a skirt from the cone's rim to a table; the table a steel
+  frame of six `W14` columns and beams at the skirts' base, its deck open under each drum; a
+  cutting deck at the top heads; above each drum a derrick (SW-EQC-29) of height 0.8 × the tangent
+  length with a crown platform; stair access is by the structure's ladder runs (SW-EQC-28).
+  Inlet nozzles in the cones, vapour outlets on the top heads. Reason: the drum is emptied through
+  its bottom and cut from the top, so it stands on a table with a derrick over it.
+- `SW-EQC-35` Flare stack: a riser pipe of stated diameter and height; self-supporting on a flared
+  base (as a stack's, SW-EQC-43: a cone from 1.5 × the riser diameter at grade to the riser over
+  the lowest fifth of the height, on a base ring with anchor chairs), or, when stated, guided inside a lattice tower
+  (SW-EQC-29); a seal drum section of twice the riser diameter and three diameters long below the
+  tip; a flare tip of 1.2 diameters with a wind shield of 1.6 diameters and three pilots of 2 in
+  pipe with their gas and ignition lines running down the riser; a ladder (SW-EQC-28) with rest
+  platforms every 30 ft and a service platform below the tip. Reason: the flame must stand clear
+  of everything; the flared base and anchor chairs carry the wind moment.
+- `SW-EQC-36` Wet scrubber tower: a vertical shell of stated diameter D and height on a flat base
+  plate, its bottom 0.2 of the height a liquid sump; a gas inlet duct of 0.5 D on the side above
+  the sump, sloping down toward the tower; three spray levels above the inlet, each fed through a flanged nozzle
+  of 4 in from an external riser of 6 in (the headers inside are not drawn); a mist eliminator
+  section in the top fifth, between two support rings, with a wash header nozzle of 2 in below it; a top cone at 45° to an outlet stack of 0.5
+  D; two recirculation pumps (SW-DET-10) at the base on the suction nozzle with their discharge
+  riser; manways at the sump, each spray level and the eliminator; platforms and ladders as a
+  column's. Reason: gas rises against sprayed liquid; droplets are caught before the outlet.
+- `SW-EQC-37` Flue gas cooler (a horizontal fire-tube waste heat exchanger with its steam drum):
+  a shell of stated diameter and length with tubesheets and tubes of 2 in on a 1.25 pitch; inlet
+  and outlet channels as cones at 30° from the duct diameter of 0.5 D; a steam drum of 0.6 D
+  diameter and 0.8 of the shell's length above the shell on two saddles, joined to it by four
+  risers of 6 in and two downcomers of 8 in; saddles, nozzles (feedwater, steam outlet, two safety
+  valve nozzles, blowdown), manways in the channels and the drum. Reason: hot flue gas in the
+  tubes boils water in the shell; steam separates in the drum above.
+- `SW-EQC-38` Steam drum: a horizontal drum of stated diameter and length with 2:1 heads, an
+  elliptical manway 12 × 16 in in each head, a steam outlet and two safety valve nozzles on top,
+  a feedwater nozzle, a row of riser stubs along the upper flanks and downcomer nozzles at the
+  bottom, a continuous blowdown nozzle, and a water gauge column on one head. `SW-EQC-39` Mud
+  drum: as the steam drum at 0.65 of its diameter, with tube stubs along the top, a blowdown
+  nozzle at the bottom and one manway.
+- `SW-EQC-40` Water-tube boiler (two drums): the steam drum above the mud drum at a stated centre
+  distance, joined by a bank of generating tubes of 2 in at 4 in pitch along the drums in eight
+  rows fanned between them, and by two external downcomers of 8 in at the ends; a furnace beside
+  the bank enclosed by water-wall tubes of 3 in at 4 in pitch from the mud drum up over the roof
+  to the steam drum; a casing of `PL3/16` with `C6` buckstays at 48 in round the furnace and bank;
+  a burner front of two burners (SW-EQC-42); a gas outlet duct to an economizer (SW-EQC-41) and a
+  stack (SW-EQC-43); a superheater header pair of 8 in pipe with its outlet nozzle; platform and
+  ladder at the steam drum. Catalogue images cut the casing. Reason: water circulates down the
+  cold downcomers and up the heated tubes by density alone.
+- `SW-EQC-41` Economizer: a casing box of stated plan and height with a serpentine coil of 2 in
+  tubes at 4 in pitch (return bends outside the casing in header boxes), inlet and outlet headers
+  of 6 in pipe. `SW-EQC-42` Burner: a register throat of stated diameter d in a windbox 2 d
+  square and d deep, a gas ring of 2 in pipe, an air duct stub d wide, a sight port and igniter
+  stub. `SW-EQC-43` Stack: a self-supporting steel stack of stated diameter and height, the bottom
+  fifth flared to 1.5 diameters, a breeching inlet of the diameter × 1.2 high, stiffening rings
+  at 96 in, a ladder with rest platforms, a sampling platform at 0.8 of the height and a rain cap.
+- `SW-EQC-44` Above-ground storage tanks. Fixed cone roof: SW-EQ-5 in detail: shell courses 96 in
+  high with their seams, a bottom plate projecting 2 in, a top curb angle, the cone roof, two
+  shell manways 24 in, inlet, outlet and drain nozzles, a roof manway, a gauge hatch and a
+  gooseneck vent of 6 in at the roof centre, a spiral stair (rise 8 in, going 10 in, 30 in wide,
+  with a handrail) to a gauger's platform at the roof edge and a rim handrail. External floating
+  roof: an open-top shell with a wind girder walkway `PL1/4` 30 in wide 42 in below the top, a
+  pontoon roof (an annular pontoon 0.1 D wide and 24 in deep round a single deck) floating at
+  0.8 of the height, a rim seal, a rolling ladder from the gauger's platform to the roof, roof
+  drain and legs, and the spiral stair. Reason: a fixed roof keeps rain out of a low-vapour
+  stock; a floating roof rides on the liquid so no vapour space forms.

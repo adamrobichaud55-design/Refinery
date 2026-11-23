@@ -245,3 +245,28 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage11/sheet-piping-2.png` | Piping catalogue contact sheet 2 of 4 (the renders above, tiled and labelled with DejaVu Sans) |
 | `stage11/sheet-piping-3.png` | Piping catalogue contact sheet 3 of 4 (the renders above, tiled and labelled with DejaVu Sans) |
 | `stage11/sheet-piping-4.png` | Piping catalogue contact sheet 4 of 4 (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/cat10-Shell-and-tube-exchanger-36-in-x-16-ft-with-tube-bundle.png` | Catalogue entry Shell-and-tube exchanger 36 in x 16 ft with tube bundle (Exchangers), cut to show the inside |
+| `stage10/cat10-Shell-and-tube-exchanger-36-in-x-16-ft-with-tube-bundle-whole.png` | Catalogue entry Shell-and-tube exchanger 36 in x 16 ft with tube bundle (Exchangers), whole |
+| `stage10/cat10-Column-96-in-x-80-ft-with-platforms-and-ladders-every-15-ft.png` | Catalogue entry Column 96 in x 80 ft with platforms and ladders every 15 ft (Towers) |
+| `stage10/sheet-towers.png` | Towers catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/cat10-Cat-cracker-reactor-and-regenerator.png` | Catalogue entry Cat cracker reactor and regenerator (Towers) |
+| `stage10/cat10-Coke-drums-pair-24-ft-x-60-ft-with-structure-and-derricks.png` | Catalogue entry Coke drums, pair 24 ft x 60 ft with structure and derricks (Towers) |
+| `stage10/cat10-Flare-stack-24-in-x-150-ft-self-supporting.png` | Catalogue entry Flare stack 24 in x 150 ft, self-supporting (Towers) |
+| `stage10/cat10-Flare-stack-36-in-x-200-ft-derrick-supported.png` | Catalogue entry Flare stack 36 in x 200 ft, derrick supported (Towers) |
+| `stage10/cat10-Stack-60-in-x-100-ft.png` | Catalogue entry Stack 60 in x 100 ft (Boiler) |
+| `stage10/sheet-boiler.png` | Boiler catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/cat10-Wet-scrubber-tower-10-ft-x-40-ft.png` | Catalogue entry Wet scrubber tower 10 ft x 40 ft (Towers) |
+| `stage10/cat10-Flue-gas-cooler-72-in-x-20-ft-with-steam-drum.png` | Catalogue entry Flue gas cooler 72 in x 20 ft with steam drum (Exchangers), cut to show the inside |
+| `stage10/cat10-Flue-gas-cooler-72-in-x-20-ft-with-steam-drum-whole.png` | Catalogue entry Flue gas cooler 72 in x 20 ft with steam drum (Exchangers), whole |
+| `stage10/cat10-Water-tube-boiler-two-drums.png` | Catalogue entry Water-tube boiler, two drums (Boiler), cut to show the inside |
+| `stage10/cat10-Water-tube-boiler-two-drums-whole.png` | Catalogue entry Water-tube boiler, two drums (Boiler), whole |
+| `stage10/cat10-Steam-drum-54-in-x-20-ft.png` | Catalogue entry Steam drum 54 in x 20 ft (Boiler) |
+| `stage10/cat10-Mud-drum-36-in-x-20-ft.png` | Catalogue entry Mud drum 36 in x 20 ft (Boiler) |
+| `stage10/cat10-Economizer-60-x-72-x-96-in.png` | Catalogue entry Economizer 60 x 72 x 96 in (Boiler), cut to show the inside |
+| `stage10/cat10-Economizer-60-x-72-x-96-in-whole.png` | Catalogue entry Economizer 60 x 72 x 96 in (Boiler), whole |
+| `stage10/cat10-Burner-24-in-throat.png` | Catalogue entry Burner, 24 in throat (Boiler) |
+| `stage10/cat10-Storage-tank-40-ft-x-32-ft-fixed-cone-roof.png` | Catalogue entry Storage tank 40 ft x 32 ft, fixed cone roof (Tanks) |
+| `stage10/cat10-Storage-tank-60-ft-x-40-ft-external-floating-roof.png` | Catalogue entry Storage tank 60 ft x 40 ft, external floating roof (Tanks) |
+| `stage10/sheet-tanks.png` | Tanks catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/cat10-Tube-bundle-for-a-36-in-shell-16-ft.png` | Catalogue entry Tube bundle for a 36 in shell, 16 ft (Exchangers) |
+| `stage10/sheet-exchangers.png` | Exchangers catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |

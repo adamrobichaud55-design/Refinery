@@ -58,7 +58,7 @@ DESIGN_BASIS.md        rules and reasons (the only source of rule numbers)
 PROVENANCE.md          audit log, libraries and licences
 src/core               units, dimension basis tags, physical constants
 src/catalogue          designation parser and part rules → PartSpec (plain data); parts/civil.ts the civil and concrete
-                       catalogue (§65), parts/equipment.ts and parts/equipmentKit.ts the equipment catalogue (§25, §66)
+                       catalogue (§65), parts/equipment.ts, parts/equipmentKit.ts and parts/processUnits.ts the equipment catalogue (§25, §66, §69)
 docs/CATALOGUE-*.md    the civil and equipment catalogues as documents (tools/catalogue-doc.ts)
 src/geometry           profiles, extrusion, transforms → mesh arrays (plain data)
 src/scene              catalogue list and demonstration assemblies (plain data)
