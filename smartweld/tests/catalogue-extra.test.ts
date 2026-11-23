@@ -5,6 +5,8 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { ENTRIES } from '../src/scene/catalogueList';
+import { makeHorizontalDrum, makeBullet, makeDesalter, makeDeaerator, makeKettleReboiler, makeEjector, makeSteamTurbine, makeInlinePump, makeSulfurFurnace, makeDuctRun, makeSphere, makeCoolingTower, makeCabinHeater, makeReformer, makePsaUnit, makeIncinerator, makePrecipitator, makeVentSilencer, makeMultiBedReactor, makeSwagedTower, seriesUp } from '../src/catalogue';
+import { makePileCap, makeRetainingWall, makeCatchBasin, makeManhole, makeSleeper, makeMachineBlock, makeTableTop, makeSeparatorBasin, makeSulfurPit, makeBoxCulvert, makeDuctBank, planeMat, type Bar } from '../src/catalogue';
 import { makeMitreBend, makeInsulatedPipe, insulationThickness, makeExpansionJoint, makeYStrainer, makeStubIn, makeSpringHanger, makeConeStrainer, makeLateral, makeSteamTrap, bendPath, pipeDims, designFlange } from '../src/catalogue';
 import { makePipeRack, makeStairFlight, makeStairTower, makePlatform, makeFixedLadder, makePipeBridge, makeFireproofedColumn, makeTSupport, makeGoalPost, makeMonorail, makeProcessStructure, stairFlight, stairTower, sec, colSec, zReq } from '../src/scene/structures';
 import { buildGeometry } from '../src/geometry/partGeometry';
@@ -121,5 +123,95 @@ describe('structural assemblies (SW-STA-*)', () => {
     expect(p.dims.beamSpacing.value).toBeLessThanOrEqual(48); expect(p.dims.grid.value).toBeLessThanOrEqual(240);
     expect(() => makeProcessStructure('S', { L: 480, W: 240, floors: [120, 288] })).toThrow(/SW-STA-12/);
     expect(makeProcessStructure('S', { L: 480, W: 240, floors: [144, 288], floorPsf: 100 }).dims.girderW.value).toBeLessThan(p.dims.girderW.value);
+  });
+});
+
+describe('further process equipment (SW-EQC-45..65)', () => {
+  const solidsOf = (p: ReturnType<typeof makeSphere>) => buildGeometry(p).solids;
+  it('SW-EQC-45: drum thickness, connections and boot follow the diameter', () => {
+    const p = makeHorizontalDrum({ tag: 'D', ID: 96, L: 288, boot: true }), q = makeHorizontalDrum({ tag: 'D', ID: 96, L: 288 });
+    expect(p.dims.t.value).toBe(1); expect(makeHorizontalDrum({ tag: 'D', ID: 24, L: 96 }).dims.t.value).toBe(0.375); expect(p.dims.inlet.value).toBe(seriesUp(12)); expect(p.dims.outlet.value).toBe(seriesUp(8)); expect(p.dims.saddle.value).toBeCloseTo(0.2 * 288);
+    expect(p.dims.bootD.value).toBe(32); expect(p.dims.bootL.value).toBe(48); expect(q.dims.bootD).toBeUndefined(); expect(q.dims.centreline.value).toBeCloseTo(49 + 36); expect(p.dims.centreline.value).toBeGreaterThan(q.dims.centreline.value + 48);
+    expect(makeHorizontalDrum({ tag: 'D', ID: 36, L: 120 }).dims.manway.value).toBe(20);
+  });
+  it('SW-EQC-46, -47, -50: bullet, desalter and deaerator', () => {
+    const b = makeBullet({ tag: 'V', ID: 120, L: 720 }); expect(b.dims.t.value).toBeCloseTo(Math.ceil((120 / 72) * 8) / 8); expect(b.dims.walkway.value).toBeCloseTo(432); expect(solidsOf(b).some(s => s.name.includes('ladder cage'))).toBe(true);
+    const d = makeDesalter({ tag: 'D', ID: 144, L: 600 }); expect(d.dims.transformer.value).toBe(36); expect(d.dims.header.value).toBe(seriesUp(18)); expect(solidsOf(d).filter(s => s.name === 'transformer tanks').length).toBe(2);
+    const a = makeDeaerator({ tag: 'DA', ID: 96, L: 240, centreline: 108 }); expect(a.dims.domeD.value).toBe(48); expect(a.dims.domeH.value).toBe(72);
+    const top = Math.max(...solidsOf(a).flatMap(s => Array.from(s.mesh.positions).filter((_, i) => i % 3 === 1))); expect(top).toBeGreaterThan(49 + 72);
+  });
+  it('SW-EQC-48: a sphere stands on columns that grow in number with its size', () => {
+    const p = makeSphere({ tag: 'T', D: 600 }); expect(p.dims.t.value).toBe(3); expect(p.dims.columns.value).toBe(13); expect(p.dims.columnOD.value).toBe(38); expect(p.dims.clear.value).toBe(100);
+    expect(makeSphere({ tag: 'T', D: 240 }).dims.columns.value).toBe(6); expect(makeSphere({ tag: 'T', D: 240 }).dims.clear.value).toBe(60); expect(makeSphere({ tag: 'T', D: 240 }).dims.t.value).toBe(1.25);
+    const shell = solidsOf(p).find(s => s.name === 'shell')!; expect(signedVolume(shell.mesh) / ((4 / 3) * Math.PI * (303 ** 3 - 300 ** 3))).toBeCloseTo(1, 2);
+  });
+  it('SW-EQC-49: a cooling tower is weighed without its basin', () => {
+    const p = makeCoolingTower({ tag: 'CT', cells: 2, cellL: 360, cellW: 360, H: 300, riserNPS: 24 }), g = solidsOf(p), all = g.reduce((a, s) => a + signedVolume(s.mesh), 0);
+    expect(p.dims.stackD.value).toBeCloseTo(216); expect(p.dims.inlet.value).toBeCloseTo(90); expect(g.filter(s => s.name === 'fan motor: motor frame').length).toBe(2); expect(g.some(s => s.role === 'concrete')).toBe(true); expect(p.weight.value).toBeLessThan((all * 490) / 1728 / 2);
+  });
+  it('SW-EQC-53, -54: heaters count their burners and tubes by rule', () => {
+    const c = makeCabinHeater({ tag: 'H', L: 480, W: 192, H: 240 }); expect(c.dims.burners.value).toBe(5); expect(c.dims.throat.value).toBeCloseTo(23.04); expect(c.dims.convW.value).toBeCloseTo(76.8); expect(c.dims.stackH.value).toBe(360);
+    const r = makeReformer({ tag: 'H', L: 480, W: 384, H: 480 }); expect(r.dims.rows.value).toBe(4); expect(r.dims.tubes.value).toBe(4 * 37); expect(r.dims.burners.value).toBe(5 * 9);
+  });
+  it('SW-EQC-55, -58, -59, -60: units', () => {
+    const a = makePsaUnit({ tag: 'A', ID: 72, TT: 216 }); expect(a.dims.beds.value).toBe(4); expect(a.dims.pitch.value).toBeCloseTo(1.75 * 73.5); expect(makePsaUnit({ tag: 'A', ID: 72, TT: 216, beds: 6 }).dims.beds.basis.kind).toBe('drawing');
+    const i = makeIncinerator({ tag: 'F', D: 96, L: 288, stackH: 1200 }); expect(i.dims.stackD.value).toBeCloseTo(57.6); expect(i.dims.burner.value).toBeCloseTo(28.8);
+    const e = makePrecipitator({ tag: 'EP', L: 432, W: 288, H: 360 }); expect(e.dims.fields.value).toBe(3); expect(e.dims.hoppers.value).toBe(6); expect(e.dims.hopperH.value).toBeCloseTo(0.6 * 144);
+    const v = makeVentSilencer('SL', 48); expect(v.dims.H.value).toBe(144); expect(v.dims.inlet.value).toBe(seriesUp(16));
+  });
+  it('SW-EQC-62, -65: tall vessels keep their platforms within 15 ft', () => {
+    const r = makeMultiBedReactor({ tag: 'R', ID: 120, TT: 720, t: 4, skirtH: 120 }); expect(r.dims.beds.value).toBe(3); expect(r.dims.bedH.value).toBe(240); expect((120 + 32 + 720 - 6) / r.dims.platforms.value).toBeLessThanOrEqual(180);
+    expect(solidsOf(r).some(s => s.name.startsWith('quench nozzle 2'))).toBe(true); expect(solidsOf(r).some(s => s.name.startsWith('quench nozzle 3'))).toBe(false);
+    const c = makeSwagedTower({ tag: 'C', sections: [[120, 240], [240, 480], [144, 300]], skirtH: 180 }); expect(c.dims.cone1.value).toBeCloseTo(60 / Math.tan(Math.PI / 6)); expect(c.dims.cone2.value).toBeCloseTo(48 / Math.tan(Math.PI / 6)); expect(c.dims.overhead.value).toBe(24);
+    const ps = solidsOf(c).filter(s => /^platform \d+: platform grating/.test(s.name)).map(s => Math.max(...Array.from(s.mesh.positions).filter((_, i) => i % 3 === 2))).sort((x, y) => x - y);
+    expect(ps.length).toBe(c.dims.platforms.value); expect(ps[0]).toBeLessThanOrEqual(260); for (let k = 1; k < ps.length; k++) expect(ps[k] - ps[k - 1]).toBeLessThanOrEqual(180.01);
+    expect(() => makeSwagedTower({ tag: 'C', sections: [[120, 240], [240, 480]] as never, skirtH: 180 })).toThrow(/SW-EQC-65/);
+  });
+  it('SW-EQC-51, -52, -61, -63, -64, -56: machines and the rest', () => {
+    expect(makeKettleReboiler({ tag: 'E', bundleD: 30, tubeL: 192 }).dims.shellD.value).toBe(48); expect(makeEjector('J', 6).dims.diverging.value).toBeCloseTo(5 * pipeDims(6, 'P150').OD);
+    const t = makeSteamTurbine('ST', 24); expect(t.dims.casingD.value).toBe(36); expect(t.dims.inlet.value).toBe(4); expect(t.dims.exhaust.value).toBe(8);
+    expect(makeDuctRun('DU', 48, 36).dims.blades.value).toBe(4); expect(makeDuctRun('DU', 48, 40).dims.blades.value).toBe(5);
+    const p = makeInlinePump({ tag: 'P', NPS: 4, motorD: 14 }); expect(p.dims.casingD.value).toBeCloseTo(2.4 * pipeDims(4, 'P150').OD); expect(solidsOf(p).some(s => s.name === 'feet')).toBe(false);
+    const f = makeSulfurFurnace({ tag: 'F', D: 84, furnaceL: 240, boilerL: 240 }); expect(f.dims.burner.value).toBeCloseTo(25.2); expect(solidsOf(f).some(s => s.name.includes('fire tubes'))).toBe(false); expect(solidsOf(f).some(s => s.name.includes('steam drum'))).toBe(true);
+  });
+});
+
+describe('further civil items (SW-CIV-17..28)', () => {
+  const parts = [makePileCap('PC', { pileL: 360 }), makePileCap('PC9', { perSide: 3, pileD: 18, pileL: 240 }), makeRetainingWall('RW', { H: 120, L: 240 }), makeManhole('MH', { depth: 96 }), makeSleeper('SL', { L: 120 }), makeMachineBlock('MB', { weightKips: 40, baseL: 144, baseW: 72, reciprocating: true }), makeMachineBlock('MB2', { weightKips: 20, baseL: 96, baseW: 60 }),
+    makeTableTop('TT', { L: 360, W: 192, H: 216 }), makeSeparatorBasin('SB', { w: 72, d: 72, L: 480 }), makeSulfurPit('SP', { L: 240, W: 120, D: 96 }), makeBoxCulvert('BC', { span: 72, rise: 48, L: 240 }), makeDuctBank('DB', { rows: 3, cols: 3, L: 240 })];
+  it('SW-CIV-15: every bar in the list is drawn, and the weight is concrete plus bars', () => {
+    for (const p of parts) {
+      const list = p.extra!.bars as Bar[], drawn = p.extra!.barsDrawn as number[];
+      expect(drawn.length, p.id).toBe(list.length); list.forEach((b, i) => expect(drawn[i], `${p.id} ${b.note}`).toBe(b.count));
+      expect(p.weight.value).toBeCloseTo(p.dims.concreteWeight.value + p.dims.barWeight.value, 3); expect(p.category).toBe('civil');
+      for (const s of buildGeometry(p).solids) { expect(isClosed(s.mesh), `${p.id} ${s.name}`).toBe(true); expect(signedVolume(s.mesh)).toBeGreaterThan(0); }
+    }
+  });
+  it('SW-CIV-17: a mat has a bar every spacing each way', () => {
+    const m = planeMat(5, [0, 0, 0], [1, 0, 0], [0, 1, 0], 120, 60, 'test'); expect(m.list[0].count).toBe(Math.ceil(56 / 12) + 1); expect(m.list[1].count).toBe(Math.ceil(116 / 12) + 1); expect(m.list[0].length).toBe(116); expect(m.list[1].length).toBe(56);
+  });
+  it('SW-CIV-18: the cap is as deep as its piles are apart', () => {
+    const p = parts[0], q = parts[1]; expect(p.dims.piles.value).toBe(4); expect(p.dims.spacing.value).toBe(48); expect(p.dims.B.value).toBe(48 + 16 + 18); expect(p.dims.t.value).toBe(48); expect(q.dims.piles.value).toBe(9); expect(q.dims.spacing.value).toBe(54); expect(q.dims.t.value).toBe(54); expect(q.dims.pileD.basis.kind).toBe('drawing');
+  });
+  it('SW-CIV-19: wall proportions follow the retained height', () => {
+    const p = parts[2]; expect(p.dims.stem.value).toBe(12); expect(p.dims.base.value).toBe(84); expect(p.dims.toe.value).toBe(28); expect(p.dims.heel.value).toBe(44); expect(makeRetainingWall('R', { H: 180, L: 120 }).dims.stem.value).toBe(18);
+  });
+  it('SW-CIV-20, -21, -22: basin, manhole and sleeper', () => {
+    const c = makeCatchBasin('CB'); expect(c.dims.d.value).toBe(36); expect(c.dims.outlet.value).toBe(8); expect(buildGeometry(c).solids.some(s => s.role === 'pipe')).toBe(true);
+    const m = parts[3]; expect(m.dims.ID.value).toBe(48); expect(m.dims.rungs.value).toBe(7); expect(buildGeometry(m).solids.filter(s => s.role === 'casting').length).toBe(2);
+    expect(parts[4].dims.footingW.value).toBe(24); expect(buildGeometry(parts[4]).solids.some(s => s.name.startsWith('wear strip'))).toBe(true);
+  });
+  it('SW-CIV-23: the block outweighs its machine by the factor and stays squat', () => {
+    for (const p of [parts[5], parts[6]]) { expect(p.dims.concreteWeight.value).toBeGreaterThanOrEqual(p.dims.factor.value * p.dims.W.value * 1000 * 0.98); expect(p.dims.depth.value).toBeLessThanOrEqual(0.6 * p.dims.B.value + 1e-6); expect(p.dims.depth.value).toBeGreaterThanOrEqual(36); }
+    expect(parts[5].dims.factor.value).toBe(5); expect(parts[6].dims.factor.value).toBe(3);
+  });
+  it('SW-CIV-24: table-top columns and depths', () => {
+    const p = parts[7]; expect(p.dims.columns.value).toBe(6); expect(p.dims.column.value).toBe(30); expect(p.dims.deck.value).toBe(42); expect(makeTableTop('T', { L: 240, W: 144, H: 144 }).dims.columns.value).toBe(4);
+  });
+  it('SW-CIV-25..28: basin, pit, culvert and duct bank', () => {
+    expect(parts[8].dims.weir.value).toBe(60); expect(parts[8].dims.channels.value).toBe(2); expect(buildGeometry(parts[8]).solids.filter(s => s.name === 'outlet weir wall').length).toBe(2);
+    expect(parts[9].dims.roof.value).toBe(10); expect(buildGeometry(parts[9]).solids.some(s => s.name.startsWith('steam coil'))).toBe(true);
+    expect(parts[10].dims.t.value).toBe(8); expect(makeBoxCulvert('B', { span: 144, rise: 96, L: 240 }).dims.t.value).toBe(12);
+    const d = parts[11], Wd = d.dims.W.value, Hd = d.dims.H.value; expect(Wd).toBe(25.5); expect((d.extra!.concreteVolume as number) / ((Wd * Hd - 9 * Math.PI * 2.25 * 2.25) * 240)).toBeCloseTo(1, 2);
   });
 });

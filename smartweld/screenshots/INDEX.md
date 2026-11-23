@@ -305,3 +305,47 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage10/cat10-Goal-post-12-ft-high-10-ft-span.png` | Catalogue entry Goal post 12 ft high, 10 ft span (Structural assemblies) |
 | `stage10/cat10-Monorail-2-ton-20-ft-span-with-trolley-hoist.png` | Catalogue entry Monorail 2 ton, 20 ft span, with trolley hoist (Structural assemblies) |
 | `stage10/sheet-structural-assemblies.png` | Structural assemblies catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/cat10-Knock-out-drum-8-ft-x-24-ft-with-boot.png` | Catalogue entry Knock-out drum 8 ft x 24 ft with boot (Process equipment) |
+| `stage10/cat10-Storage-bullet-10-ft-x-60-ft.png` | Catalogue entry Storage bullet 10 ft x 60 ft (Process equipment) |
+| `stage10/cat10-Desalter-12-ft-x-50-ft.png` | Catalogue entry Desalter 12 ft x 50 ft (Process equipment) |
+| `stage10/cat10-Deaerator-8-ft-x-20-ft-with-dome.png` | Catalogue entry Deaerator 8 ft x 20 ft with dome (Process equipment) |
+| `stage10/cat10-Kettle-reboiler-30-in-bundle-x-16-ft.png` | Catalogue entry Kettle reboiler, 30 in bundle x 16 ft (Process equipment) |
+| `stage10/cat10-Sulfur-plant-reaction-furnace-with-waste-heat-boiler.png` | Catalogue entry Sulfur plant reaction furnace with waste heat boiler (Process equipment) |
+| `stage10/cat10-Sulfur-condenser-with-seal-pot.png` | Catalogue entry Sulfur condenser with seal pot (Process equipment) |
+| `stage10/cat10-Steam-turbine-driver-24-in-wheel.png` | Catalogue entry Steam turbine driver, 24 in wheel (Process equipment) |
+| `stage10/cat10-Steam-jet-ejector-6-in-suction.png` | Catalogue entry Steam jet ejector, 6 in suction (Process equipment) |
+| `stage10/cat10-Vertical-in-line-pump-4-in.png` | Catalogue entry Vertical in-line pump 4 in (Process equipment) |
+| `stage10/cat10-Duct-run-48-x-36-in-with-elbow-expansion-joint-and-damper.png` | Catalogue entry Duct run 48 x 36 in with elbow, expansion joint and damper (Process equipment) |
+| `stage10/cat10-Sphere-50-ft.png` | Catalogue entry Sphere 50 ft (Process equipment) |
+| `stage10/cat10-Cooling-tower-two-cells-30-x-30-ft.png` | Catalogue entry Cooling tower, two cells 30 x 30 ft (Process equipment) |
+| `stage10/cat10-Cabin-heater-40-x-16-x-20-ft.png` | Catalogue entry Cabin heater 40 x 16 x 20 ft (Process equipment) |
+| `stage10/cat10-Reformer-furnace-top-fired-40-x-32-x-40-ft.png` | Catalogue entry Reformer furnace, top fired, 40 x 32 x 40 ft (Process equipment) |
+| `stage10/cat10-Pressure-swing-adsorption-unit-four-beds.png` | Catalogue entry Pressure swing adsorption unit, four beds (Process equipment) |
+| `stage10/cat10-Incinerator-8-ft-x-24-ft-with-stack-100-ft.png` | Catalogue entry Incinerator 8 ft x 24 ft with stack 100 ft (Process equipment) |
+| `stage10/cat10-Electrostatic-precipitator-36-x-24-x-30-ft.png` | Catalogue entry Electrostatic precipitator 36 x 24 x 30 ft (Process equipment) |
+| `stage10/cat10-Vent-silencer-48-in.png` | Catalogue entry Vent silencer 48 in (Process equipment) |
+| `stage10/cat10-Multi-bed-reactor-10-ft-x-60-ft-three-beds.png` | Catalogue entry Multi-bed reactor 10 ft x 60 ft, three beds (Process equipment) |
+| `stage10/cat10-Swaged-tower-10-20-12-ft-vacuum-column.png` | Catalogue entry Swaged tower 10 / 20 / 12 ft, vacuum column (Process equipment) |
+| `stage10/sheet-process-equipment.png` | Process equipment catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/cat10-Pile-cap-on-four-piles-16-in-x-30-ft.png` | Catalogue entry Pile cap on four piles, 16 in x 30 ft (Civil), cut to show the bars |
+| `stage10/cat10-Pile-cap-on-four-piles-16-in-x-30-ft-whole.png` | Catalogue entry Pile cap on four piles, 16 in x 30 ft (Civil), as cast |
+| `stage10/cat10-Retaining-wall-10-ft-retained-x-20-ft.png` | Catalogue entry Retaining wall, 10 ft retained x 20 ft (Civil), cut to show the bars |
+| `stage10/cat10-Retaining-wall-10-ft-retained-x-20-ft-whole.png` | Catalogue entry Retaining wall, 10 ft retained x 20 ft (Civil), as cast |
+| `stage10/cat10-Catch-basin-24-x-24-x-36-in-with-outlet.png` | Catalogue entry Catch basin 24 x 24 x 36 in with outlet (Civil), cut to show the bars |
+| `stage10/cat10-Catch-basin-24-x-24-x-36-in-with-outlet-whole.png` | Catalogue entry Catch basin 24 x 24 x 36 in with outlet (Civil), as cast |
+| `stage10/cat10-Manhole-48-in-x-8-ft-deep.png` | Catalogue entry Manhole 48 in x 8 ft deep (Civil), cut to show the inside |
+| `stage10/cat10-Manhole-48-in-x-8-ft-deep-whole.png` | Catalogue entry Manhole 48 in x 8 ft deep (Civil), whole |
+| `stage10/cat10-Pipe-sleeper-10-ft.png` | Catalogue entry Pipe sleeper 10 ft (Civil), cut to show the bars |
+| `stage10/cat10-Pipe-sleeper-10-ft-whole.png` | Catalogue entry Pipe sleeper 10 ft (Civil), as cast |
+| `stage10/cat10-Machine-foundation-block-for-a-40-kip-compressor.png` | Catalogue entry Machine foundation block for a 40 kip compressor (Civil), cut to show the bars |
+| `stage10/cat10-Machine-foundation-block-for-a-40-kip-compressor-whole.png` | Catalogue entry Machine foundation block for a 40 kip compressor (Civil), as cast |
+| `stage10/cat10-Table-top-foundation-30-x-16-ft-at-18-ft.png` | Catalogue entry Table-top foundation 30 x 16 ft at 18 ft (Civil), cut to show the bars |
+| `stage10/cat10-Table-top-foundation-30-x-16-ft-at-18-ft-whole.png` | Catalogue entry Table-top foundation 30 x 16 ft at 18 ft (Civil), as cast |
+| `stage10/cat10-Gravity-separator-basin-two-channels-6-x-6-x-40-ft.png` | Catalogue entry Gravity separator basin, two channels 6 x 6 x 40 ft (Civil), cut to show the bars |
+| `stage10/cat10-Gravity-separator-basin-two-channels-6-x-6-x-40-ft-whole.png` | Catalogue entry Gravity separator basin, two channels 6 x 6 x 40 ft (Civil), as cast |
+| `stage10/cat10-Sulfur-pit-20-x-10-x-8-ft-with-steam-coil.png` | Catalogue entry Sulfur pit 20 x 10 x 8 ft with steam coil (Civil), cut to show the inside |
+| `stage10/cat10-Sulfur-pit-20-x-10-x-8-ft-with-steam-coil-whole.png` | Catalogue entry Sulfur pit 20 x 10 x 8 ft with steam coil (Civil), whole |
+| `stage10/cat10-Box-culvert-6-x-4-ft-x-20-ft-with-headwalls.png` | Catalogue entry Box culvert 6 x 4 ft x 20 ft with headwalls (Civil), cut to show the bars |
+| `stage10/cat10-Box-culvert-6-x-4-ft-x-20-ft-with-headwalls-whole.png` | Catalogue entry Box culvert 6 x 4 ft x 20 ft with headwalls (Civil), as cast |
+| `stage10/cat10-Duct-bank-3-x-3-conduits-20-ft.png` | Catalogue entry Duct bank 3 x 3 conduits, 20 ft (Civil), cut to show the bars |
+| `stage10/cat10-Duct-bank-3-x-3-conduits-20-ft-whole.png` | Catalogue entry Duct bank 3 x 3 conduits, 20 ft (Civil), as cast |

@@ -33,7 +33,7 @@ export function bars(n: number, count: number, length: number, note: string): Ba
   return { designation: `#${n}`, n, count, length, weight: count * length * barArea(n) * RHO_S, note };
 }
 /** bars of size n at spacing s across a width w (cover c each side): count and the clear spacing used */
-const spaced = (w: number, s: number, c: number) => Math.max(2, Math.ceil((w - 2 * c) / s) + 1);
+export const spaced = (w: number, s: number, c: number) => Math.max(2, Math.ceil((w - 2 * c) / s) + 1);
 
 const box = (x0: number, y0: number, z0: number, x1: number, y1: number, z1: number): MeshData => extrude({ outer: rect(x0, y0, x1, y1) }, z1 - z0, z0);
 /** a regular octagon of across-flats width F, centred */
@@ -45,21 +45,21 @@ export function octagon(F: number): Polygon {
 export const octagonArea = (F: number) => 2 * (Math.SQRT2 - 1) * F * F;
 
 interface Solid { name: string; mesh: MeshData }
-const CH = 0.75;   // SW-DET-2: chamfer on exposed edges
-const even = (lo: number, hi: number, n: number): number[] => (n <= 1 ? [(lo + hi) / 2] : Array.from({ length: n }, (_, i) => lo + ((hi - lo) * i) / (n - 1)));
+export const CH = 0.75;   // SW-DET-2: chamfer on exposed edges
+export const even = (lo: number, hi: number, n: number): number[] => (n <= 1 ? [(lo + hi) / 2] : Array.from({ length: n }, (_, i) => lo + ((hi - lo) * i) / (n - 1)));
 /** SW-DET-1: the drawn bars of one bar-list entry, merged; `paths` one per bar (closed = a loop) */
-function drawn(b: Bar, paths: V3[][], closed = false): DSolid & { count: number } {
+export function drawn(b: Bar, paths: V3[][], closed = false): DSolid & { count: number } {
   return { name: `bars ${b.designation}: ${b.note}`, role: 'rebar', count: paths.length, mesh: mergeMeshes(paths.map(p => sweep(p, barDiameter(b.n) / 2, 8, closed))) };
 }
 /** n points evenly along a closed polygon's perimeter */
-function alongPerimeter(poly: Polygon, n: number): { x: number; y: number; nx: number; ny: number }[] {
+export function alongPerimeter(poly: Polygon, n: number): { x: number; y: number; nx: number; ny: number }[] {
   const m = poly.length, len = poly.map((p, i) => Math.hypot(poly[(i + 1) % m].x - p.x, poly[(i + 1) % m].y - p.y)), total = len.reduce((a, b) => a + b, 0), out: { x: number; y: number; nx: number; ny: number }[] = [];
   const cx = poly.reduce((a, p) => a + p.x, 0) / m, cy = poly.reduce((a, p) => a + p.y, 0) / m;
   for (let k = 0; k < n; k++) { let s = (total * (k + 0.5)) / n, i = 0; while (s > len[i]) { s -= len[i]; i++; } const p = poly[i], q = poly[(i + 1) % m], t = s / len[i], x = p.x + (q.x - p.x) * t, y = p.y + (q.y - p.y) * t, l = Math.hypot(x - cx, y - cy) || 1; out.push({ x, y, nx: (x - cx) / l, ny: (y - cy) / l }); }
   return out;
 }
 /** SW-DET-3: an anchor rod of diameter d from z0 to z1 with its plate washer and nut run down on the concrete at zTop */
-function anchorRod(x: number, y: number, d: number, z0: number, z1: number, zTop: number): MeshData {
+export function anchorRod(x: number, y: number, d: number, z0: number, z1: number, zTop: number): MeshData {
   const n = 16, rod = extrude({ outer: Array.from({ length: n }, (_, i) => ({ x: x + (d / 2) * Math.cos((2 * Math.PI * i) / n), y: y + (d / 2) * Math.sin((2 * Math.PI * i) / n) })) }, z1 - z0, z0);
   return mergeMeshes([rod, boxMesh(x - 1.5 * d, y - 1.5 * d, zTop, x + 1.5 * d, y + 1.5 * d, zTop + 0.375), transformMesh(hexNut(d), translate(x, y, zTop + 0.375))]);
 }
@@ -72,7 +72,7 @@ function ringFrustum(outer0: Polygon, inner0: Polygon, outer1: Polygon, inner1: 
   return orient({ positions, indices });
 }
 /** SW-CIV-15: volume, weight, formed area and bars onto the spec; `detail` are the drawn bars and embedded steel (SW-DET-*) */
-function finishCivil(id: string, kind: PartSpec['kind'], designation: string, dims: Record<string, Dim>, lengthIn: number, solids: Solid[], material: Material, barList: Bar[], formedIn2: number, notes: string[], extra: Record<string, unknown> = {}, detail: DSolid[] = []): PartSpec {
+export function finishCivil(id: string, kind: PartSpec['kind'], designation: string, dims: Record<string, Dim>, lengthIn: number, solids: Solid[], material: Material, barList: Bar[], formedIn2: number, notes: string[], extra: Record<string, unknown> = {}, detail: DSolid[] = []): PartSpec {
   const vol = solids.reduce((a, s) => a + signedVolume(s.mesh), 0), wC = vol * RHO_C, wB = barList.reduce((a, b) => a + b.weight, 0);
   return {
     id, kind, category: 'civil', designation,
@@ -87,7 +87,7 @@ function finishCivil(id: string, kind: PartSpec['kind'], designation: string, di
     extra: { solids: [...solids.map(s => ({ ...s, role: material === GROUT ? 'grout' : 'concrete' })), ...detail.map(d => ({ name: d.name, mesh: d.mesh, role: d.role }))], bars: barList, barsDrawn: detail.filter(d => d.role === 'rebar').map(d => (d as DSolid & { count?: number }).count ?? 0), concreteVolume: vol, ...extra },
   };
 }
-const cover = { earth: 3, formed: 2, slab: 1.5 };   // SW-CIV-2
+export const cover = { earth: 3, formed: 2, slab: 1.5 };   // SW-CIV-2
 
 export interface FootingInput { loadKips: number; bearingKsf?: number; pedestalSide: number }
 /** SW-CIV-3: square spread footing; z up from the bottom; the pedestal (SW-CIV-4) stands on its top */
@@ -273,7 +273,7 @@ export function makePaving(id: string, w: number, L: number): PartSpec {
 
 export interface TrenchInput { L: number; w?: number; d?: number }
 /** SW-DET-4: a grating cover drawn bar by bar (SW-GR-1): bearing bars across the opening (along y) at 1-1/2 in, cross bars along x at 4 in; top at z = zTop */
-function gratingCover(x0: number, x1: number, y0: number, y1: number, zTop: number): MeshData {
+export function gratingCover(x0: number, x1: number, y0: number, y1: number, zTop: number): MeshData {
   const parts: MeshData[] = [], nb = Math.max(2, Math.floor((x1 - x0) / 1.5)), nc = Math.max(2, Math.floor((y1 - y0) / 4));
   for (const x of even(x0 + 0.1, x1 - 0.1 - 0.1875, nb)) parts.push(boxMesh(x, y0, zTop - 1.5, x + 0.1875, y1, zTop));
   for (const y of even(y0 + 1, y1 - 1.25, nc)) parts.push(boxMesh(x0, y, zTop - 0.25, x1, y + 0.25, zTop));

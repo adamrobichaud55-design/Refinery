@@ -16,7 +16,9 @@ export type PartKind =
   // process units, boiler equipment and storage tanks (§69)
   | 'TUBE_BUNDLE' | 'PROCESS_UNIT' | 'FLARE' | 'SCRUBBER' | 'BOILER' | 'DRUM' | 'STACK' | 'ECONOMIZER' | 'BURNER'
   // structural assemblies (§71), catalogue items only
-  | 'STRUCTURE';
+  | 'STRUCTURE'
+  // further civil items (§73), catalogue items only
+  | 'PILE_CAP' | 'RETAINING_WALL' | 'MANHOLE' | 'SLEEPER' | 'MACHINE_BLOCK' | 'TABLE_TOP' | 'BASIN' | 'PIT' | 'CULVERT' | 'DUCT_BANK';
 
 export type Category = 'section' | 'plate' | 'hardware' | 'weld' | 'sheet' | 'non-steel' | 'equipment' | 'piping' | 'valve' | 'civil' | 'structure';
 

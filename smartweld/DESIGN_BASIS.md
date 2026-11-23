@@ -3142,7 +3142,8 @@ series" are rounded up to the size series of SW-PIPE-*.
   to the series and 2 in least; a manway on top at mid-length, 24 in (20 in under 48 in ID); two
   2 in level connections on the side; a 2 in vent and a 2 in drain. A boot, where stated, is a
   vertical pot of ID / 3 diameter and ID / 2 length under the drum at 0.85 L with the liquid
-  outlet in its bottom. Reason: inlet and outlet at opposite ends give liquid the longest path
+  outlet in its bottom; the drum then stands high enough for the boot, its nozzle and 42 in
+  under it. Reason: inlet and outlet at opposite ends give liquid the longest path
   to drop out; a boot collects the heavier water where it can be drawn off.
 - `SW-EQC-46` Storage bullet: a drum as SW-EQC-45 with shell ID / 72, 1/2 in least; two 4 in
   relief nozzles on top; fill and outlet nozzles underneath; a grating walkway 36 in wide with
@@ -3159,7 +3160,8 @@ series" are rounded up to the size series of SW-PIPE-*.
   top, while the water it sheds settles and leaves at the bottom.
 - `SW-EQC-48` Sphere: stated inside diameter D; shell D / 200, 1 in least, to 1/8 in. Columns of
   pipe, max(6, round(π D / 150 in)) of them, of outside diameter D / 16 to the next 2 in,
-  standing at the equator's radius with the shell welded into them from 20° below the equator;
+  standing so that the shell is let into them from 20° below the equator up to their caps
+  just above it;
   the bottom pole clear of grade by D / 6, 60 in least; crossed rod bracing of 1-1/2 in between
   neighbouring columns; base plates. On the crown: a platform of radius D / 8 with guardrail,
   two 6 in relief nozzles, a 2 in vent and a 24 in manway; at the bottom pole an outlet of
@@ -3188,7 +3190,7 @@ series" are rounded up to the size series of SW-PIPE-*.
 - `SW-EQC-51` Steam turbine driver: from a stated wheel diameter d. A casing split on the
   horizontal joint, 1.5 d in diameter and 0.8 d long, with a joint flange 2 in thick standing
   3 in proud; a steam chest 0.5 d × 0.4 d × 0.4 d on top with an inlet flange of d / 6 to the
-  series facing sideways; an exhaust nozzle of d / 3 to the series facing down the other side;
+  series facing sideways; an exhaust nozzle of d / 3 to the series facing the other side, below the joint;
   a bearing housing 0.45 d in diameter and 0.35 d long at each end; a shaft d / 8 in diameter
   with a coupling half at the drive end and a governor housing at the other; pedestals to a
   baseplate 1.3 d wide and 2.6 d long, the shaft 0.9 d above it. Reason: envelope of a
@@ -3218,8 +3220,9 @@ series" are rounded up to the size series of SW-PIPE-*.
   each row, the manifolds joined to a transfer line of 24 in. Roof burners (SW-EQC-42, 12 in
   throat, firing down) in lines between and outside the rows at 48 in. A flue duct from the
   box's end at the floor to a convection section 0.3 of the width wide beside it, the full
-  height, and a stack of 0.2 of the width in diameter one box height above it. The penthouse
-  over the headers is not drawn, so the tube tops are seen. Reason: the reaction takes heat
+  height, and a stack of 0.2 of the width in diameter one box height above it. Guardrail round the roof and
+  a ladder with landings. The penthouse over the headers is not drawn, so the tube tops are
+  seen. Reason: the reaction takes heat
   along the whole tube, so burners fire down beside the tubes and the gas leaves at the floor.
 - `SW-EQC-55` Pressure swing adsorption unit: stated beds (4 where not stated) of vertical
   vessels on skirts (SW-EQ-1) in a row at 1.75 outside diameters; a nozzle of ID / 8 to the
@@ -3286,3 +3289,91 @@ series" are rounded up to the size series of SW-PIPE-*.
   ladders as SW-EQC-32 at 15 ft at most, each platform ringing the shell at its own height,
   with a manway at each. Reason: under vacuum the vapour volume is greatest where the feed
   flashes, so the tower is widest there and necks in where the traffic is less.
+
+## 73. Further civil and concrete items (`SW-CIV-17..28`) — catalogue items only
+
+Written 2026-11-23 at the owner's instruction (a comprehensive catalogue of 3D items; nothing that
+affects the isometric generator or plant 2). As §65: every part is a true-scale concrete solid
+with its bars drawn in place and its quantities (SW-CIV-15); class B concrete unless a rule says
+otherwise; covers by SW-CIV-2. The proportions are SmartWeld's own, from the reasoning given, from
+no code, table or published detail, for the owner to tune (PROVENANCE P-78).
+
+- `SW-CIV-17` Walls and slabs of the items below, unless their rule says otherwise: `#5` at 12 in
+  each way, in one layer at mid-thickness where the member is 12 in thick or less and in each
+  face where it is thicker. Reason: a thin member has room for one layer with cover both sides;
+  a thick one cracks at its faces, so the steel goes there.
+- `SW-CIV-18` Pile cap: stated piles per side (2 gives four piles, 3 gives nine), pile diameter
+  d (16 in where not stated) and pile length. Piles at 3 d centres; the cap's edge d / 2 + 9 in
+  beyond the outer piles' centres; cap thickness = the pile spacing rounded up to 3 in, 30 in
+  least; piles let 6 in into the cap. Cap bars: a bottom mat of `#7` at 8 in each way, hooked up,
+  3 in above the pile heads, and a top mat of `#5` at 12 in. Piles: cages as SW-CIV-9 (`#6`
+  verticals one per 6 in of circumference, 6 least, `#3` spiral at 6 in pitch), the verticals
+  running 24 in into the cap. Reason: a cap as deep as the piles are apart carries the column
+  load to them along struts no flatter than 45°; three diameters keeps each pile's ground its own.
+- `SW-CIV-19` Cantilever retaining wall: stated retained height H and length. Stem thickness
+  roundup(H / 10, 1 in), 12 in least; base thickness the same; base width roundup(0.6 (H + base
+  thickness), 6 in) with a third of it as toe in front of the stem and the rest, less the stem,
+  as heel under the retained earth; the toe covered by 12 in of earth; the stem 6 in higher
+  than the retained grade. Bars: `#5` verticals at 12 in on the earth face of the stem, hooked
+  into the heel; `#4` horizontals at 12 in on them; `#5` at 12 in across the bottom of the base
+  full width and across the top of the heel; `#4` longitudinals at 12 in in the base. Reason:
+  the earth on the heel holds the wall down against the earth pushing it over; a base of six
+  tenths of the height is where SmartWeld starts, and the owner sets it for the soil.
+- `SW-CIV-20` Catch basin: a sump by SW-CIV-13 of stated inside size (24 × 24 × 36 in deep
+  where not stated) with its grating cover, and an outlet pipe of 8 in through one wall with
+  its invert 12 in above the floor. Reason: surface water falls through the grating, grit
+  settles below the outlet and the water leaves above it.
+- `SW-CIV-21` Manhole: round, of stated inside diameter (48 in where not stated) and depth; wall
+  8 in; a base slab 8 in thick and 6 in wider all round; a top slab 8 in thick with a 24 in
+  opening against one side under a cast frame and cover 26 in across; step rungs of `RD3/4`, 16
+  in wide and 6 in out from the wall, at 12 in below the opening; two pipe stubs of 12 in
+  opposite each other with inverts 6 in above the floor. Bars: `#4` verticals at 12 in round
+  the wall and `#4` hoops at 12 in; `#4` at 12 in each way in each slab. Reason: a person
+  climbs in beside the wall, so the opening and rungs are at one side.
+- `SW-CIV-22` Pipe sleeper: a stem 12 in wide of stated length and height above grade (12 in
+  where not stated), running 12 in below grade to a footing 24 in wide and 12 in deep; a steel
+  strip `PL3/8x6` cast flush in its top with 1/2 in studs 4 in long at 12 in. Bars: stem, two
+  `#5` top and two bottom with `#3` ties at 12 in; footing, three `#5` along and `#4` across at
+  12 in. Reason: lines at grade rest on sleepers; the steel strip is a wear face a pipe shoe
+  can slide on without crumbling the concrete edge.
+- `SW-CIV-23` Machine foundation block: stated machine weight and base plan. Plan 12 in larger
+  than the base all round; weight of the block 3 times the machine's for a rotating machine and
+  5 times for a reciprocating one, so depth = that weight / (K-7 × plan), rounded up to 6 in,
+  36 in least; where the depth would pass 0.6 of the block's width, the margin round the base
+  is widened 6 in at a time until it does not; the top 12 in above grade. Bars: `#5` at 12 in each way on every face. Eight
+  anchor rods of 1 in round the base, 3 in in from its edge, and a grout bed 2 in thick under
+  it. Reason: a block several times heavier than the machine moves little when the machine
+  shakes it; a reciprocating machine shakes hardest; a squat block rocks less than a deep,
+  narrow one. The factors are SmartWeld's own starting points for the owner to tune.
+- `SW-CIV-24` Table-top foundation for a machine set above grade: stated deck length, width and
+  height. A deck slab of depth roundup(column spacing / 4, 6 in), 36 in least, with an opening
+  a third of its length and width at its centre; columns under the long edges, two per side
+  up to 20 ft of deck and three above, square of side roundup(height / 8, 6 in), 24 in least;
+  a mat of the deck's depth 24 in larger than the deck all round, its top at grade. Bars: deck
+  and mat `#6` at 12 in each way top and bottom; columns eight `#8` verticals with `#4` ties at
+  12 in. Reason: the machine stands a storey up so its condenser and piping fit below; the
+  deck is deep so it is stiff under the running machine.
+- `SW-CIV-25` Gravity separator basin: stated channels (two where not stated), each of stated
+  inside width, liquid depth and length, side by side. Walls and base 12 in; the walls 12 in
+  above the liquid. An inlet bay 60 in long across all channels and an outlet bay 48 in long;
+  in each channel an under-flow baffle at its head and an oil-retention baffle near its end,
+  each from the wall top down to 24 in above the floor, and an outlet weir wall rising to 12 in
+  below the liquid surface; a slotted skimmer pipe of 8 in across each channel ahead of the
+  oil baffle; a grating walkway 36 in wide with guardrail across the basin there; inlet and
+  outlet pipe stubs of 12 in. Bars by SW-CIV-17. Reason: oil rises to the surface in slow,
+  even flow, so the channels are long; the baffles hold the oil back while the water passes
+  beneath, and the skimmer draws the oil off.
+- `SW-CIV-26` Sulfur pit: stated inside length, width and depth; walls and base 12 in; a roof
+  slab 10 in thick with its top 12 in above grade, with a pump opening and an access opening,
+  each 30 in square under a steel cover plate, and a vent of 8 in pipe rising 60 in. Steam
+  coils of 2 in pipe on the floor at 12 in centres, 6 in above it. Bars by SW-CIV-17.
+  Reason: liquid sulfur is kept hot below grade by steam coils and pumped out through the roof.
+- `SW-CIV-27` Box culvert: stated inside span, rise and length; walls and slabs of thickness
+  roundup(span / 12, 1 in), 8 in least; a headwall 12 in thick at each end, 24 in wider than
+  the box each side and 12 in higher. Bars by SW-CIV-17, the transverse bars as closed hoops
+  round the box. Reason: the box carries a road or a pipeway over a drain; the hoops carry
+  the roof's load round into the walls.
+- `SW-CIV-28` Duct bank: stated rows and columns of 4 in conduits and length; conduits at 7.5 in
+  centres (3 in of concrete between), 3 in of concrete outside the outer conduits; class A;
+  four `#4` longitudinals at the corners with `#3` ties at 24 in; the conduits 6 in proud at
+  each end. Reason: encasing cables' conduits protects them under paving and traffic.

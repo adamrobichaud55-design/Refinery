@@ -118,6 +118,7 @@ export function buildGeometry(part: PartSpec): PartGeometry {
       for (const s of part.extra!.solids as { name: string; mesh: MeshData; role?: Role; cut?: boolean }[]) solids.push({ name: s.name, role: s.role ?? 'equipment', mesh: s.mesh, ...(s.cut ? { cut: true } : {}) });
       break;
     case 'FOOTING': case 'PEDESTAL': case 'PAD': case 'SLAB': case 'OCTAGON': case 'RINGWALL': case 'PIER': case 'GRADE_BEAM': case 'GROUT': case 'CURB': case 'PAVING': case 'TRENCH': case 'SUMP': case 'DIKE':
+    case 'PILE_CAP': case 'RETAINING_WALL': case 'MANHOLE': case 'SLEEPER': case 'MACHINE_BLOCK': case 'TABLE_TOP': case 'BASIN': case 'PIT': case 'CULVERT': case 'DUCT_BANK':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData; role?: Role }[]) solids.push({ name: s.name, role: s.role ?? 'concrete', mesh: s.mesh });   // civil catalogue (§65)
       break;
     case 'ELBOW': case 'TEE': case 'REDUCER': case 'CAP': case 'BUTT_WELD': case 'SUPPORT': case 'FITTING':
