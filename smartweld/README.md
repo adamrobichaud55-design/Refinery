@@ -60,6 +60,7 @@ src/core               units, dimension basis tags, physical constants
 src/catalogue          designation parser and part rules → PartSpec (plain data); parts/civil.ts the civil and concrete
                        catalogue (§65), parts/equipment.ts, parts/equipmentKit.ts and parts/processUnits.ts the equipment catalogue (§25, §66, §69);
                        parts/pipingSpecials.ts the piping specials (§70), catalogue items only
+src/scene/structures.ts  structural assemblies for the catalogue (§71): racks, bridges, platforms, stairs, ladders, supports
 docs/CATALOGUE-*.md    the civil and equipment catalogues as documents (tools/catalogue-doc.ts)
 src/geometry           profiles, extrusion, transforms → mesh arrays (plain data)
 src/scene              catalogue list and demonstration assemblies (plain data)

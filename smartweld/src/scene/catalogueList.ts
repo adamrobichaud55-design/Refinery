@@ -10,6 +10,7 @@ import {
   makeCatCracker, makeCokeDrums, makeStack, makeFlareStack, makeWetScrubber, makeSteamDrum, makeMudDrum, makeFlueGasCooler, makeBurner, makeEconomizer, makeWaterTubeBoiler, makeConeRoofTank, makeFloatingRoofTank,
 } from '../catalogue';
 
+import { makePipeRack, makeStairFlight, makeStairTower, makePlatform, makeFixedLadder, makePipeBridge, makeFireproofedColumn, makeTSupport, makeGoalPost, makeMonorail, makeProcessStructure } from './structures';
 
 export interface Entry { group: string; label: string; build: () => PartSpec; /** the axis that is up when the item stands in a plant (catalogue images, SW-REN-7); default z for the civil and equipment groups */ up?: 'y' | 'z'; /** cut the solids flagged for it by a plane with this normal (display frame) in the catalogue image (SW-REN-10) */ cut?: [number, number, number] }
 
@@ -131,4 +132,16 @@ export const ENTRIES: Entry[] = [
   { group: 'Piping specials', label: 'Insulated and steam-traced pipe 6 in', up: 'y', build: () => makeInsulatedPipe('IP-1', 6, 'P150') },
   { group: 'Piping specials', label: 'Expansion loop 6 in, 8 ft x 6 ft', up: 'y', build: () => makeExpansionLoop('EL-1', 6, 'P150', 96, 72) },
   { group: 'Piping specials', label: 'Hose connection 1 in with cap', up: 'y', build: () => makeHoseConnection('HC-1', 1) },
+  { group: 'Structural assemblies', label: 'Pipe rack module 20 ft wide, two tiers, three bents', build: () => makePipeRack('RK-1', { width: 240, tiers: [192, 264], bents: 3 }) },
+  { group: 'Structural assemblies', label: 'Pipe bridge 60 ft span', build: () => makePipeBridge('PB-1', { span: 720, width: 120, depth: 96, clear: 216 }) },
+  { group: 'Structural assemblies', label: 'Open process structure 40 x 20 ft, two floors, with stair tower', build: () => makeProcessStructure('PS-1', { L: 480, W: 240, floors: [144, 288] }) },
+  { group: 'Structural assemblies', label: 'Operating platform 20 x 8 ft at 12 ft with ladder', build: () => makePlatform('PF-1', { L: 240, W: 96, elevation: 144 }) },
+  { group: 'Structural assemblies', label: 'Stair tower 24 ft, two flights', build: () => makeStairTower('STW-1', 288) },
+  { group: 'Structural assemblies', label: 'Stair flight 10 ft rise', build: () => makeStairFlight('SF-1', 120) },
+  { group: 'Structural assemblies', label: 'Fixed ladder 12 ft', build: () => makeFixedLadder('LD-1', 144) },
+  { group: 'Structural assemblies', label: 'Fixed ladder 30 ft, caged', build: () => makeFixedLadder('LD-2', 360) },
+  { group: 'Structural assemblies', label: 'Fireproofed column W14x90, cased to 15 ft', cut: [0.5547, 0, 0.8321], build: () => makeFireproofedColumn('FC-1', 14, 90, 240, 180) },
+  { group: 'Structural assemblies', label: 'T-support 10 ft high, 8 ft beam', build: () => makeTSupport('TS-1', 120, 96) },
+  { group: 'Structural assemblies', label: 'Goal post 12 ft high, 10 ft span', build: () => makeGoalPost('GP-1', 144, 120) },
+  { group: 'Structural assemblies', label: 'Monorail 2 ton, 20 ft span, with trolley hoist', build: () => makeMonorail('MR-1', { span: 240, width: 96, hookBeam: 168, tons: 2 }) },
 ];

@@ -3031,3 +3031,258 @@ reasoning given, for the owner to tune (PROVENANCE P-75).
 - `SW-PSP-18` Weight of a piping special: the drawn metal at steel density (K-1); insulation
   and glass are drawn but not weighed. Reason: the catalogue weight is what a rigger lifts in
   steel; a light covering is not a rule-made number worth stating.
+
+## 71. Structural assemblies (`SW-STA-*`) — catalogue items only
+
+Written 2026-11-23 at the owner's instruction (a comprehensive catalogue of 3D items; nothing that
+affects the isometric generator or plant 2). A structural assembly is a module of members drawn
+in place as it stands, z up from the top of concrete, built by the rules already written for
+members and access (§4–10, §19–24). These are catalogue items only: they are in no plant and no
+ground truth. Arrangements and proportions are SmartWeld's own, from the reasoning given, for
+the owner to tune (PROVENANCE P-76).
+
+- `SW-STA-1` Common to every assembly. Beams and columns are W shapes sized by the SW-PF-3
+  search at the depth their rule gives; where a rule says "lightest", the weight is the family
+  reference member (area 0.045 D²) rounded up to 5 lb/ft. A column that carries floors is the
+  lightest weight at its depth (5 lb/ft steps) whose area is at least P / (0.45 F_y), P being
+  its tributary floor load on every floor above; 0.45 is half of the 0.9 used in bending,
+  because a slender column buckles well before it yields. Every column stands on a base plate
+  by SW-BP-1..5 with four anchor rods of 3/4 in and nuts, on its grout bed over a concrete
+  pedestal 6 in high and 3 in larger than the plate all round (SW-RK-4). Bolts, clips and end
+  plates of member-to-member joints are not drawn in a catalogue module (they are drawn in the
+  plants by §8–10). The weight is the drawn steel (K-1); grout and concrete are drawn and not
+  weighed. Reason: the module shows arrangement and true member sizes; its joints repeat
+  details the catalogue already holds.
+- `SW-STA-2` Guardrail on an assembly, by SW-HR-1, -2: posts and two rails of round HSS 2 in ×
+  1/8 in, the top rail at 42 in and the mid rail at 21 in, posts at every end and at 6 ft at
+  most, a toe plate `PL1/4x4` on every guarded edge. Grating by SW-GR-1, -2: bearing bars
+  across the span between beams, cross bars at 4 in.
+- `SW-STA-3` Pipe rack module: stated width, tier elevations and number of bents; bents at 20
+  ft (SW-RK-1); tier beams of depth roundup(width / 20, 2 in) for 40 psf × 20 ft, columns of
+  depth roundup(height / 24, 2 in) for half the beam moment (SW-RK-2); struts at every tier on
+  both column lines of the beam depth − 4 in (6 in least), lightest (SW-RK-3); rod bracing
+  `RD3/4` crossed in the column planes of one bay, storey by storey, and crossed in plan under
+  the top tier of that bay. Reason: as §24; one braced bay holds a module of up to four.
+- `SW-STA-4` Stair flight: by SW-SR-1..5. The number of risers is round(height / 7.5 in) and
+  the rise is the height divided by it, the run 10 in; channel stringers of depth
+  roundup(slope length / 16, 2 in), 10 in least, the lightest whole lb/ft whose web is 1/4 in;
+  grating treads 36 in wide by 10 in deep with a nosing angle; a rail each side at 36 in
+  above the nosing line with a mid rail, on posts at the ends and at 6 ft at most. Reason: a
+  whole number of equal risers must close the height; rounding keeps the rise within a
+  quarter inch of 7.5 for any flight above 10 ft.
+- `SW-STA-5` Stair tower: two or more flights of equal rise, none above 12 ft (SW-SR-3), side
+  by side with 4 in between and turning back at a landing 42 in long across the full width at
+  each end; four W columns of depth roundup(height / 36, 2 in), 6 in least, lightest; landing
+  frames and long-face ties at each landing level of W6 lightest; rod bracing `RD3/4` crossed in the two long faces storey by storey;
+  the short faces are left open for entry and exit and are tied by the landing frames;
+  guardrail round each landing except where a flight meets it and at the exit. Reason: a
+  switchback tower takes the least ground for its height.
+- `SW-STA-6` Operating platform, free-standing: stated length, width and elevation; by
+  SW-PLT-1..3: edge and intermediate beams at 4 ft at most of depth roundup(span / 20, 2 in),
+  6 in least, for 100 psf; columns at the corners and at 20 ft at most along the length, of
+  depth roundup(height / 36, 2 in), 6 in least, lightest; rod bracing crossed in one bay each
+  way; guardrail on every edge but the ladder opening; a fixed ladder by SW-LD-1..3 (caged
+  above 20 ft of climb) at one end.
+- `SW-STA-7` Fixed ladder as a catalogue item: stated climb; rails, rungs, walk-through, cage
+  and brackets by SW-LD-1..3; the structure it climbs is not drawn.
+- `SW-STA-8` Pipe bridge: a pair of parallel-chord trusses of stated span, width and depth
+  carrying a tier of pipe on floor beams at the bottom chord and a second at the top chord.
+  Panels: round(span / depth) equal panels. Chords: W8, the lightest weight (5 lb/ft steps)
+  whose area is at least F / (0.9 F_y), with F = (w L² / 8) / depth and w = 40 psf × width for
+  the two tiers shared by two trusses. Verticals and diagonals `L4x4x3/8`, the diagonals
+  sloping down toward mid-span. Floor beams by SW-RK-2 at every panel point, top and bottom.
+  Plan bracing `RD3/4` crossed in every top panel. End bents by SW-STA-3 at each support.
+  Reason: a truss replaces a beam where the span is several times what a tier beam can
+  carry; diagonals sloping to mid-span are in tension under gravity, so slender angles serve.
+- `SW-STA-9` Fireproofed column: a W column cased in concrete from its base plate to a stated
+  height, the casing a solid rectangle 2 in clear of the flange faces and tips with its top
+  sloped 1 in to shed water. The casing is drawn and not weighed as steel; its concrete
+  weight is stated (K-7). Reason: SmartWeld's own choice of cover — enough concrete that the
+  steel inside heats slowly while a pool fire is fought; the owner sets the figure and height.
+- `SW-STA-10` T-support and goal post for pipe at grade: posts of depth roundup(height / 20,
+  2 in), 6 in least, lightest; the cross beam the same section; a T-support's arms are equal
+  and, where an arm is longer than 24 in, carried by a knee brace `L3x3x1/4` at 45°; a goal
+  post has a post at each end of its beam. Reason: one section for post and beam makes the
+  joint flange to flange; a brace halves a long arm's moment at the post.
+- `SW-STA-11` Monorail: a W beam of depth roundup(span / 15, 2 in), 8 in least, sized by
+  SW-PF-3 for M = 1.25 P L / 4 with P the stated capacity, hung under the cross beams of two
+  bents, running 24 in past each bent. Cross beams of depth roundup(width / 20, 2 in), 6 in
+  least, sized for the same load at their own mid-span; columns of depth roundup(height / 36,
+  2 in), 6 in least, lightest; each bent kneed by `L3x3x1/4` braces at 45° reaching 24 in, and
+  rod bracing crossed between the bents on both column lines. End stops
+  `L4x4x3/8` and a trolley hoist drawn as an envelope: two side plates on four wheels riding
+  the bottom flange, a hoist body, a chain and a hook. Reason: a lifted load at mid-span
+  governs; 1.25 covers the jerk of a load starting to lift; span / 15 keeps the beam stiff
+  enough that the trolley does not roll to the middle.
+- `SW-STA-12` Open process structure: stated plan, floor elevations and floor load (250 psf
+  where the drawing states none: equipment and piping stand on a process floor, where the 100
+  psf of SW-PLT-1 is for people); columns on a grid of 20 ft at most, of depth roundup(height
+  / 36, 2 in), 8 in least, sized for their floors by SW-STA-1; girders along the column lines
+  across the width of depth roundup(span / 20, 2 in) for the floor load × the column spacing;
+  floor beams between girders at 4 ft at most, sized for the floor load; grating floors; guardrail
+  on every open edge; rod bracing crossed in one bay each way in every storey; a stair tower
+  (SW-STA-5) beside one long side with a landing at each floor and the guardrail open there.
+  Reason: an open structure lets equipment be set by crane and leaks disperse.
+
+## 72. Further process equipment (`SW-EQC-45..64`) — catalogue items only
+
+Written 2026-11-23 at the owner's instruction (a comprehensive catalogue of 3D items; nothing that
+affects the isometric generator or plant 2). As §66 and §69: every item is a true-scale
+arrangement from stated principal dimensions; what is not stated follows the rule here;
+internals are not drawn unless a rule says so; weights are the drawn steel (SW-EQ-7). The
+proportions are SmartWeld's own, from the reasoning given, from no drawing, licensor's design,
+maker's data, standard or table, for the owner to tune (PROVENANCE P-77). Nozzle sizes "to the
+series" are rounded up to the size series of SW-PIPE-*.
+
+- `SW-EQC-45` Horizontal drum, dressed (knock-out drum, accumulator, surge drum): stated inside
+  diameter and tangent length; shell ID / 96, 3/8 in least, to 1/8 in, unless stated; 2:1 heads;
+  two saddles at 0.2 and 0.8 of the length, the shell's underside 36 in above grade (the
+  centreline at R + 36 in) unless stated. Connections: inlet on top at 0.1 L and vapour
+  outlet on top at 0.9 L, both ID / 8 to the series; liquid outlet underneath at 0.85 L, ID / 12
+  to the series and 2 in least; a manway on top at mid-length, 24 in (20 in under 48 in ID); two
+  2 in level connections on the side; a 2 in vent and a 2 in drain. A boot, where stated, is a
+  vertical pot of ID / 3 diameter and ID / 2 length under the drum at 0.85 L with the liquid
+  outlet in its bottom. Reason: inlet and outlet at opposite ends give liquid the longest path
+  to drop out; a boot collects the heavier water where it can be drawn off.
+- `SW-EQC-46` Storage bullet: a drum as SW-EQC-45 with shell ID / 72, 1/2 in least; two 4 in
+  relief nozzles on top; fill and outlet nozzles underneath; a grating walkway 36 in wide with
+  guardrail along the top over the middle 0.6 L on posts from the shell, reached by a caged
+  ladder at one end (SW-EQC-28). Reason: liquefied gas is stored under its own vapour
+  pressure, so the shell is heavier and the valves on top need safe access.
+- `SW-EQC-47` Desalter: a drum as SW-EQC-45 with shell ID / 96, 1/2 in least. Two transformer
+  units on top at 0.3 and 0.7 L, each a box 0.25 ID square and 0.3 ID high on a frame over an
+  8 in entrance bushing nozzle. An inlet header of ID / 8 pipe under the drum with three risers
+  into its underside; an outlet collector of the same pipe over the drum with three risers
+  from its top; a 6 in water outlet underneath at 0.9 L; four 2 in try connections up one head.
+  A walkway and ladder as SW-EQC-46 over 0.8 L. Reason: salty crude enters low through a
+  distributor, rises through the electric field fed from the transformers and leaves at the
+  top, while the water it sheds settles and leaves at the bottom.
+- `SW-EQC-48` Sphere: stated inside diameter D; shell D / 200, 1 in least, to 1/8 in. Columns of
+  pipe, max(6, round(π D / 150 in)) of them, of outside diameter D / 16 to the next 2 in,
+  standing at the equator's radius with the shell welded into them from 20° below the equator;
+  the bottom pole clear of grade by D / 6, 60 in least; crossed rod bracing of 1-1/2 in between
+  neighbouring columns; base plates. On the crown: a platform of radius D / 8 with guardrail,
+  two 6 in relief nozzles, a 2 in vent and a 24 in manway; at the bottom pole an outlet of
+  D / 40 to the series (4 in least) and a 2 in drain. Access: a stair spiralling round the
+  columns from grade to the equator, then a stair over the crown to the platform. Reason: a
+  sphere holds pressure with the least steel for its volume; columns at the equator meet the
+  shell where it is vertical, so they load it in its own plane.
+- `SW-EQC-49` Cooling tower, induced draft: stated cells, each of stated plan and casing height.
+  A concrete basin 48 in deep under all cells, its walls 12 in thick and 24 in outside the
+  casing; a casing of sheet on a frame of `W8` columns at the cell corners; air inlets with
+  louvre blades at 45° over the lowest 0.3 of the height of both long faces; a fan deck on
+  top; over each cell a fan stack of 0.6 of the cell width in diameter and 0.25 of it high,
+  flared out by a tenth at top and bottom, a fan of six blades of 0.55 of the cell width, a
+  right-angle gear under the hub and a drive shaft to a motor on the deck outside the stack; a
+  riser of stated size up one end to a header along the deck with a branch into each cell;
+  guardrail round the deck and a caged ladder. Fill and drift eliminators are not drawn.
+  Reason: the fan on top pulls air up against the falling water; the tall stack carries the
+  wet air clear of the inlets.
+- `SW-EQC-50` Deaerator: a storage drum as SW-EQC-45 with a deaerating dome on top at
+  mid-length: a vertical shell of 0.5 ID diameter and 0.75 ID height with a 2:1 head, on a
+  neck of 0.25 ID; a water inlet of 6 in on the dome's side, a 2 in vent on its head, a steam
+  inlet of ID / 8 to the series on the drum's top at 0.2 L, a 4 in relief nozzle at 0.8 L and
+  the outlet underneath; saddles carrying the centreline at a stated height. Reason: water
+  falls through steam in the dome and gives up its dissolved gas, which leaves by the vent;
+  the drum below stores the stripped water high enough to feed the pumps.
+- `SW-EQC-51` Steam turbine driver: from a stated wheel diameter d. A casing split on the
+  horizontal joint, 1.5 d in diameter and 0.8 d long, with a joint flange 2 in thick standing
+  3 in proud; a steam chest 0.5 d × 0.4 d × 0.4 d on top with an inlet flange of d / 6 to the
+  series facing sideways; an exhaust nozzle of d / 3 to the series facing down the other side;
+  a bearing housing 0.45 d in diameter and 0.35 d long at each end; a shaft d / 8 in diameter
+  with a coupling half at the drive end and a governor housing at the other; pedestals to a
+  baseplate 1.3 d wide and 2.6 d long, the shaft 0.9 d above it. Reason: envelope of a
+  single-stage driver; steam enters high and leaves low.
+- `SW-EQC-52` Steam jet ejector: from the suction size (outside diameter OD). A suction
+  chamber 1.6 OD in diameter and 2 OD long with the suction nozzle on its side; the motive
+  steam nozzle on the axis at the back, a third of the suction size to the series, 1 in
+  least; a diffuser of a converging cone 2 OD long to a throat of 0.45 OD, a throat 1 OD
+  long and a diverging cone 5 OD long to a discharge flange of the suction size. Reason: the
+  jet entrains the suction gas; the diverging cone is long so the flow stays attached while
+  it slows and regains pressure.
+- `SW-EQC-53` Cabin heater: a radiant box of stated length, width and height standing 84 in
+  above grade on `W8` columns at its corners and at 20 ft at most; floor burners in one row on
+  the centreline at a spacing of half the width, each by SW-EQC-42 with a throat of 0.12 of
+  the width; a hip of 0.25 of the width in height narrowing to a convection section 0.4 of
+  the width wide and half the radiant height high, the full length, with a header box 12 in
+  deep at each end; a breeching cone to a stack of 0.25 of the width in diameter, standing
+  1.5 radiant heights above the convection section; buckstays `W6` on the long walls at 8 ft
+  at most; a platform 36 in wide along one long wall at the hip with a ladder. Tubes and
+  refractory are not drawn. Reason: burners fire up between tube walls; the gas turns into
+  the convection section above, where the remaining heat is taken, and leaves by the stack.
+- `SW-EQC-54` Reformer furnace, top fired: a box of stated length, width and height standing
+  96 in above grade on `W10` columns. Catalyst tubes of 5 in outside diameter in
+  round(width / 96 in) rows along the length at 12 in pitch, through the roof and the floor:
+  36 in above the roof to an inlet header of 8 in pipe over each row, each tube fed by a
+  pigtail of 1 in pipe; 24 in below the floor into an outlet manifold of 12 in pipe under
+  each row, the manifolds joined to a transfer line of 24 in. Roof burners (SW-EQC-42, 12 in
+  throat, firing down) in lines between and outside the rows at 48 in. A flue duct from the
+  box's end at the floor to a convection section 0.3 of the width wide beside it, the full
+  height, and a stack of 0.2 of the width in diameter one box height above it. The penthouse
+  over the headers is not drawn, so the tube tops are seen. Reason: the reaction takes heat
+  along the whole tube, so burners fire down beside the tubes and the gas leaves at the floor.
+- `SW-EQC-55` Pressure swing adsorption unit: stated beds (4 where not stated) of vertical
+  vessels on skirts (SW-EQ-1) in a row at 1.75 outside diameters; a nozzle of ID / 8 to the
+  series in each head; two headers of that size along the row below (feed, tail gas) and two
+  above (product, equalising), each with a branch to every bed; header supports at grade.
+  Switching valves are catalogue valves and are not drawn. Reason: each bed takes feed, is
+  let down, purged and repressured in turn, so every bed joins every header.
+- `SW-EQC-56` Sulfur plant reaction furnace with waste heat boiler: a furnace chamber of
+  stated diameter and length on saddles, its front a flat end with a burner on the axis
+  (SW-EQC-42, throat 0.3 D) and its rear a 30° cone to the gas duct of a fire-tube boiler by
+  SW-EQC-37 of the same diameter and a stated length with its steam drum. Refractory is not
+  drawn. Reason: acid gas is burnt with a third of its air in the chamber and the hot gas is
+  cooled at once, raising steam.
+- `SW-EQC-57` Sulfur condenser: a shell-and-tube exchanger by SW-EQC-26 with a sulfur outlet
+  of 4 in under its outlet channel dropping to a seal pot 18 in in diameter and 36 in high at
+  grade. Reason: liquid sulfur drains by gravity through a seal that holds back the gas.
+- `SW-EQC-58` Incinerator: a horizontal chamber of stated diameter and length on saddles with a
+  burner on its front (SW-EQC-42, throat 0.3 D) and its rear entering the breeching of a stack
+  by SW-EQC-43 of 0.6 D diameter and stated height. Reason: tail gas is burnt at the front and
+  the products rise in the stack for dispersion.
+- `SW-EQC-59` Electrostatic precipitator: a casing of stated length, width and height; fields
+  = round(length / 144 in); two hoppers across by one per field, each an inverted pyramid 0.6
+  of its plan side high to a 12 in outlet; an inlet and an outlet transition, each a pyramid
+  0.4 of the length long from 0.8 of the casing face to a duct of half that; on the roof an
+  insulator compartment each side of every field and a transformer-rectifier at each; `W10`
+  columns under the hopper corners with 96 in clear under the outlets; guardrail round the
+  roof and a caged ladder. Plates and electrodes are not drawn. Reason: dust charged in the
+  field falls from the plates into hoppers; the long transitions spread the gas evenly.
+- `SW-EQC-60` Vent silencer: a vertical shell of stated diameter D and 3 D high with a cone to
+  an inlet nozzle of D / 3 to the series underneath, an open top under a weather hood on four
+  posts, four support lugs at mid-height (SW-EQC-5) and a 1 in drain. Reason: the gas expands
+  into a body several pipe diameters across and leaves upward through the absorber.
+- `SW-EQC-61` Duct run: a rectangular duct of stated section in 3/16 in plate with angle frames
+  `L3x3x1/4` at its ends and stiffener frames at 36 in at most; a 90° mitred elbow; a fabric
+  expansion joint 12 in long between frames; a louvre damper 18 in long with blades of 9 in at
+  most across the shorter side, their shafts through the wall to a link bar and lever.
+  Reason: flat plate needs frames to stay flat under draught; fabric takes up growth that
+  plate cannot.
+- `SW-EQC-62` Multi-bed reactor: a vertical vessel of stated inside diameter, tangent length,
+  wall and skirt, with stated beds (3 where not stated) of equal height. An inlet of ID / 8
+  to the series on the top head with an elbow; an outlet of the same size on the bottom head;
+  between beds a 4 in quench nozzle and a 24 in manway; at the foot of each bed a 6 in
+  catalyst dump nozzle; at the middle of each bed three 2 in thermowell nozzles round the
+  shell. Platforms (SW-EQC-27) at every manway and at the top, none more than 15 ft above
+  the last, with ladders between (SW-EQC-28). Reason: the reaction gives out heat, so the
+  catalyst is split into beds and cold gas is added between them.
+- `SW-EQC-63` Kettle reboiler: from a stated bundle diameter Db and tube length. A channel
+  and tubesheet of the bundle's diameter; an eccentric cone, flat along the bottom, 0.6 Db
+  long to a shell of 1.6 Db; the shell 1.15 tube lengths long with a 2:1 head; two vapour
+  nozzles on top (Db / 3 to the series) and a liquid outlet underneath beyond the tube ends,
+  a feed nozzle underneath near the cone; two saddles. The bundle and weir are inside and
+  not drawn. Reason: the wide shell leaves space above the boiling bundle for vapour to
+  leave without carrying liquid; the bottom is flat so the bundle draws straight out.
+- `SW-EQC-64` Vertical in-line pump: suction and discharge flanges of stated size in one line;
+  a casing of 2.4 suction outside diameters across and one deep between them; a motor support
+  head of the casing's width and one motor frame high with two hand holes; the motor
+  (SW-EQC-8) standing on it, shaft down; a base ring under the casing. Reason: the pump sits
+  in the line like a valve and needs no baseplate.
+- `SW-EQC-65` Swaged tower (vacuum or crude column): three shells of stated diameters and
+  lengths, bottom to top, joined by cones at 30° to the axis; a skirt of the bottom diameter;
+  2:1 heads; an overhead nozzle of a third of the top diameter (to the series, 24 in at most)
+  on the top head; a feed nozzle of a quarter of the middle diameter low on the middle shell;
+  a bottoms nozzle of ID / 8 of the bottom shell; three side draws of 6 in; platforms and
+  ladders as SW-EQC-32 at 15 ft at most, each platform ringing the shell at its own height,
+  with a manway at each. Reason: under vacuum the vapour volume is greatest where the feed
+  flashes, so the tower is widest there and necks in where the traffic is less.

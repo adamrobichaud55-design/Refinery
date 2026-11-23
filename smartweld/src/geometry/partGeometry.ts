@@ -114,6 +114,7 @@ export function buildGeometry(part: PartSpec): PartGeometry {
     case 'MOTOR': case 'NOZZLE': case 'MANWAY': case 'LIFTING_LUG': case 'VESSEL_LEGS': case 'SUPPORT_LUGS': case 'INSUL_RINGS': case 'DAVIT': case 'COLUMN': case 'REACTOR': case 'AIR_COOLER': case 'COMPRESSOR':
     case 'BLOWER': case 'HEATER': case 'AGITATED_TANK': case 'FILTER': case 'DUST_COLLECTOR': case 'CYCLONE': case 'SCREW_CONVEYOR': case 'BUCKET_ELEVATOR': case 'SILO': case 'SUMP_PUMP': case 'HAIRPIN': case 'PLATE_EXCHANGER':
     case 'TUBE_BUNDLE': case 'PROCESS_UNIT': case 'FLARE': case 'SCRUBBER': case 'BOILER': case 'DRUM': case 'STACK': case 'ECONOMIZER': case 'BURNER':
+    case 'STRUCTURE':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData; role?: Role; cut?: boolean }[]) solids.push({ name: s.name, role: s.role ?? 'equipment', mesh: s.mesh, ...(s.cut ? { cut: true } : {}) });
       break;
     case 'FOOTING': case 'PEDESTAL': case 'PAD': case 'SLAB': case 'OCTAGON': case 'RINGWALL': case 'PIER': case 'GRADE_BEAM': case 'GROUT': case 'CURB': case 'PAVING': case 'TRENCH': case 'SUMP': case 'DIKE':

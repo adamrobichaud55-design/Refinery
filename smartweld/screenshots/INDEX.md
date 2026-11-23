@@ -291,3 +291,17 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage10/cat10-Expansion-loop-6-in-8-ft-x-6-ft.png` | Catalogue entry Expansion loop 6 in, 8 ft x 6 ft (Piping specials) |
 | `stage10/cat10-Hose-connection-1-in-with-cap.png` | Catalogue entry Hose connection 1 in with cap (Piping specials) |
 | `stage10/sheet-piping-specials.png` | Piping specials catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/cat10-Pipe-rack-module-20-ft-wide-two-tiers-three-bents.png` | Catalogue entry Pipe rack module 20 ft wide, two tiers, three bents (Structural assemblies) |
+| `stage10/cat10-Pipe-bridge-60-ft-span.png` | Catalogue entry Pipe bridge 60 ft span (Structural assemblies) |
+| `stage10/cat10-Open-process-structure-40-x-20-ft-two-floors-with-stair-tower.png` | Catalogue entry Open process structure 40 x 20 ft, two floors, with stair tower (Structural assemblies) |
+| `stage10/cat10-Operating-platform-20-x-8-ft-at-12-ft-with-ladder.png` | Catalogue entry Operating platform 20 x 8 ft at 12 ft with ladder (Structural assemblies) |
+| `stage10/cat10-Stair-tower-24-ft-two-flights.png` | Catalogue entry Stair tower 24 ft, two flights (Structural assemblies) |
+| `stage10/cat10-Stair-flight-10-ft-rise.png` | Catalogue entry Stair flight 10 ft rise (Structural assemblies) |
+| `stage10/cat10-Fixed-ladder-12-ft.png` | Catalogue entry Fixed ladder 12 ft (Structural assemblies) |
+| `stage10/cat10-Fixed-ladder-30-ft-caged.png` | Catalogue entry Fixed ladder 30 ft, caged (Structural assemblies) |
+| `stage10/cat10-Fireproofed-column-W14x90-cased-to-15-ft.png` | Catalogue entry Fireproofed column W14x90, cased to 15 ft (Structural assemblies), cut to show the inside |
+| `stage10/cat10-Fireproofed-column-W14x90-cased-to-15-ft-whole.png` | Catalogue entry Fireproofed column W14x90, cased to 15 ft (Structural assemblies), whole |
+| `stage10/cat10-T-support-10-ft-high-8-ft-beam.png` | Catalogue entry T-support 10 ft high, 8 ft beam (Structural assemblies) |
+| `stage10/cat10-Goal-post-12-ft-high-10-ft-span.png` | Catalogue entry Goal post 12 ft high, 10 ft span (Structural assemblies) |
+| `stage10/cat10-Monorail-2-ton-20-ft-span-with-trolley-hoist.png` | Catalogue entry Monorail 2 ton, 20 ft span, with trolley hoist (Structural assemblies) |
+| `stage10/sheet-structural-assemblies.png` | Structural assemblies catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
