@@ -10,8 +10,10 @@ import { generateBuilding } from '../src/generator/building';
 import { generateInterior } from '../src/generator/interior';
 import type { PipingModel } from '../src/generator/piping';
 import type { WorkOrder } from '../src/generator/workorders';
-import { partDrawables, pipingDrawables, byLineClass, HIGHLIGHT, ISOLATION, type Drawable } from '../src/render/scene';
+import { partDrawables, pipingDrawables, keyDrawables, byLineClass, HIGHLIGHT, ISOLATION, type Drawable } from '../src/render/scene';
 import { render3d, frameBox, bounds, type Camera } from '../src/render/view3d';
+import { renderPhoto, type PhotoOpts } from '../src/render/photo';
+import { standUp } from '../src/geometry/transform';
 import { contactSheet } from '../src/render/sheet';
 import { parseFont } from '../src/pdf/ttf';
 import { pagePng } from '../src/render/page';
@@ -23,15 +25,26 @@ import type { GTLine, GTEquipment, GroundTruth } from '../src/generator/groundtr
 import type { ImportedIndex } from '../src/generator/imported';
 
 const out = process.argv[2] ?? 'screenshots', filter = process.argv[3];
-type View = { stage: string; name: string; caption: string; make: () => { ds: Drawable[]; cam: Camera; cut?: { n: [number, number, number]; d: number } } };
+type View = { stage: string; name: string; caption: string; make: () => { ds: Drawable[]; cam: Camera; cut?: { n: [number, number, number]; d: number }; photo?: PhotoOpts } };
 const views: View[] = [];
 const part = (stage: string, name: string, caption: string, build: () => Parameters<typeof partDrawables>[0][0]['part'], dir?: [number, number, number], section = false) =>
-  views.push({ stage, name, caption, make: () => { const ds = partDrawables([{ part: build(), transform: identity() }]); const cut = section ? { n: [1, 0, 0] as [number, number, number], d: 0 } : undefined; const [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx, dir), cut }; } });
+  views.push({ stage, name, caption, make: () => { const ds = partDrawables([{ part: build(), transform: identity() }]); const cut = section ? { n: [1, 0, 0] as [number, number, number], d: 0 } : undefined; const [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx, dir), cut, photo: { groundY: mn[1], cut } }; } });   // photo style (SW-REN-4..10)
 
 // stage 1: catalogue entries and the column-base assembly
 const CAT10 = new Set(['Civil', 'Vessel parts', 'Equipment']);   // stage 10: the civil and equipment catalogues (§65, §66)
-for (const e of ENTRIES) part(CAT10.has(e.group) ? 'stage10' : 'stage1', `${CAT10.has(e.group) ? 'cat10' : 'entry'}-${e.label.replace(/[^A-Za-z0-9.]+/g, '-').replace(/-+$/, '')}`, `Catalogue entry ${e.label}${CAT10.has(e.group) ? ` (${e.group})` : ''}`, e.build);
-views.push({ stage: 'stage1', name: 'assembly-column-base', caption: 'Column base assembly', make: () => { const a = columnBaseAssembly(); const ds = partDrawables(a.instances); const [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx) }; } });
+const slug = (l: string) => l.replace(/[^A-Za-z0-9.]+/g, '-').replace(/-+$/, '');
+for (const e of ENTRIES) {
+  if (!CAT10.has(e.group)) { part('stage1', `entry-${slug(e.label)}`, `Catalogue entry ${e.label}`, e.build); continue; }
+  // photo style (SW-REN-4..10): the item the way up it stands, on a ground plane; a civil part cut to show its bars
+  const civil = e.group === 'Civil', n: [number, number, number] = [0.5547, 0, 0.8321];
+  const shot = (cutaway: boolean) => () => {
+    const ds = partDrawables([{ part: e.build(), transform: e.up === 'y' ? identity() : standUp() }]), [mn, mx] = bounds(ds);
+    return { ds, cam: frameBox(mn, mx, [0.9, 0.5, 1]), photo: { groundY: mn[1], cut: cutaway ? { n, d: (n[0] * (mn[0] + mx[0])) / 2 + (n[2] * (mn[2] + mx[2])) / 2 } : undefined } };
+  };
+  views.push({ stage: 'stage10', name: `cat10-${slug(e.label)}`, caption: `Catalogue entry ${e.label} (${e.group})${civil ? ', cut to show the bars' : ''}`, make: shot(civil) });
+  if (civil) views.push({ stage: 'stage10', name: `cat10-${slug(e.label)}-whole`, caption: `Catalogue entry ${e.label} (${e.group}), as cast`, make: shot(false) });
+}
+views.push({ stage: 'stage1', name: 'assembly-column-base', caption: 'Column base assembly', make: () => { const a = columnBaseAssembly(); const ds = partDrawables(a.instances); const [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx), photo: { groundY: mn[1] } }; } });
 
 // stages 2-3: building shell and plant interior, at the viewer's cameras
 let bld: ReturnType<typeof generateBuilding> | null = null, intr: ReturnType<typeof generateInterior> | null = null;
@@ -62,6 +75,20 @@ if (flange) part('stage4', 'flange', `Catalogue entry ${flange.label}`, flange.b
 for (const [t, n, c] of VALVES) {
   part('stage4', `valve-${t}-${n}-${c}`, `Valve ${t} ${n}" ${c}`, () => makeValve(`${t}${n}-${c}`, t, n, c), [1, 0.45, 0.9]);
   if (['GATE', 'GLOBE', 'CHECK', 'LCHECK', 'BALL', 'PLUG', 'DIAPH', 'PSV', 'CONTROL'].includes(t) && !(t === 'GATE' && n === 16)) part('stage4', `valve-${t}-${n}-${c}-section`, `Valve ${t} ${n}" ${c}, cut on the stem plane`, () => makeValve(`${t}${n}-${c}`, t, n, c), [1, 0.45, 0.9], true);
+}
+
+// stage 11: the piping catalogue in the photo style: one part of every family plant 2 uses (pipe, fittings, small bore, flanges, valves, supports, sleeves)
+{
+  const p2 = JSON.parse(readFileSync('public/plants/P2/plant-piping.json', 'utf8')) as { lines: { comps: { key: string }[]; supports: { key: string }[]; pens?: { key: string }[] }[] };
+  const famOf = (key: string) => { const t = key.split('|'); return [t[0], ...t.slice(1).filter(x => !/^P\d+$/.test(x) && (!/^[\d.]+$/.test(x) || ((t[0] === 'EL' || t[0] === 'SWEL') && (x === '45' || x === '90'))))].join('|'); };
+  const fams = new Map<string, Set<string>>();
+  for (const l of p2.lines) for (const c of [...l.comps, ...l.supports, ...(l.pens ?? [])]) { const f = famOf(c.key); (fams.get(f) ?? fams.set(f, new Set()).get(f)!).add(c.key); }
+  const nums = (key: string) => key.split('|').filter(x => /^[\d.]+$/.test(x)).map(Number);
+  for (const f of [...fams.keys()].sort()) {
+    // the family's representative: the size nearest 4 in (1 in for small bore), then the length nearest 3 ft
+    const key = [...fams.get(f)!].sort((a, b) => { const na = nums(a), nb = nums(b); return Math.abs(Math.log(na[0] / 4)) - Math.abs(Math.log(nb[0] / 4)) || Math.abs((na[na.length - 1] ?? 0) - 36) - Math.abs((nb[nb.length - 1] ?? 0) - 36) || a.localeCompare(b); })[0];
+    views.push({ stage: 'stage11', name: `cat11-${slug(f)}`, caption: `Piping catalogue: ${f.replace(/\|/g, ' ')} (${key})`, make: () => { const ds = keyDrawables(key, identity()), [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx, [0.9, 0.5, 1]), photo: { groundY: mn[1] } }; } });
+  }
 }
 
 // stages 5-7: plant piping, line classes, a line, work orders
@@ -96,9 +123,9 @@ for (const v of views) {
   if (filter && !v.name.includes(filter)) continue;
   index.push(`| \`${v.stage}/${v.name}.png\` | ${v.caption} |`);
   if (process.env.RENDER_SKIP_EXISTING && existsSync(`${out}/${v.stage}/${v.name}.png`)) continue;
-  const t0 = Date.now(), { ds, cam, cut } = v.make(), big = ds.length > 2000;
+  const t0 = Date.now(), { ds, cam, cut, photo } = v.make(), big = ds.length > 2000;
   mkdirSync(`${out}/${v.stage}`, { recursive: true });
-  writeFileSync(`${out}/${v.stage}/${v.name}.png`, render3d(ds, cam, big ? 1400 : 1000, big ? 900 : 700, big ? 2 : 3, cut));
+  writeFileSync(`${out}/${v.stage}/${v.name}.png`, photo ? renderPhoto(ds, cam, 1000, 700, 2, photo) : render3d(ds, cam, big ? 1400 : 1000, big ? 900 : 700, big ? 2 : 3, cut));
   console.log(`${v.stage}/${v.name} ${((Date.now() - t0) / 1000).toFixed(1)} s`);
 }
 if (!filter || 'pack'.includes(filter)) {
@@ -119,28 +146,26 @@ if (!filter || 'pack'.includes(filter)) {
     index.push(`| \`stage8/pack-WO-400-05-page${k}.png\` | Work-order pack WO-400-05, page ${k}: ${what} (page preview of the PDF, SW-REN-2) |`);
   }
 }
-if (!filter) {
-  // the valve contact sheets for the IP review (IP_REVIEW.md §4), from the renders above
+// contact sheets: the renders of a group, tiled and labelled; written when every tile exists and the run touched the group
+{
   const font = parseFont(new Uint8Array(readFileSync('assets/fonts/DejaVuSans.ttf')));
-  const valves = views.filter(v => v.stage === 'stage4' && v.name.startsWith('valve-'));
-  const half = Math.ceil(valves.length / 2);
-  [valves.slice(0, half), valves.slice(half)].forEach((vs, i) => {
-    writeFileSync(`${out}/stage4/sheet-${i + 1}.png`, contactSheet(font, vs.map(v => ({ label: v.caption.replace(/^Valve /, ''), png: new Uint8Array(readFileSync(`${out}/stage4/${v.name}.png`)) }))));
-    index.push(`| \`stage4/sheet-${i + 1}.png\` | Valve contact sheet ${i + 1} of 2 (the renders above, tiled and labelled with DejaVu Sans) |`);
-  });
-}
-if (!filter || filter === 'cat10') {
-  // stage 10: contact sheets of the civil and equipment catalogues (one per group)
-  const font = parseFont(new Uint8Array(readFileSync('assets/fonts/DejaVuSans.ttf')));
-  for (const g of CAT10) {
-    const vs = views.filter(v => v.stage === 'stage10' && ENTRIES.find(e => `cat10-${e.label.replace(/[^A-Za-z0-9.]+/g, '-').replace(/-+$/, '')}` === v.name)?.group === g), name = `sheet-${g.toLowerCase().replace(/\s+/g, '-')}`;
-    writeFileSync(`${out}/stage10/${name}.png`, contactSheet(font, vs.map(v => ({ label: v.caption.replace(/^Catalogue entry /, '').replace(/ \(.*\)$/, ''), png: new Uint8Array(readFileSync(`${out}/stage10/${v.name}.png`)) }))));
-    index.push(`| \`stage10/${name}.png\` | ${g} catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |`);
-  }
+  const sheet = (stage: string, name: string, caption: string, vs: View[], label: (v: View) => string) => {
+    if (!vs.length || !vs.every(v => existsSync(`${out}/${v.stage}/${v.name}.png`)) || (filter && !vs.some(v => v.name.includes(filter)))) return;
+    writeFileSync(`${out}/${stage}/${name}.png`, contactSheet(font, vs.map(v => ({ label: label(v), png: new Uint8Array(readFileSync(`${out}/${v.stage}/${v.name}.png`)) }))));
+    index.push(`| \`${stage}/${name}.png\` | ${caption} (the renders above, tiled and labelled with DejaVu Sans) |`);
+  };
+  const entry = (v: View) => v.caption.replace(/^Catalogue entry /, '').replace(/ \((Civil|Vessel parts|Equipment)\).*$/, '');
+  sheet('stage1', 'sheet-catalogue', 'Catalogue list contact sheet: structural sections, plates, hardware, welds, sheet and the first piping entries', views.filter(v => v.stage === 'stage1' && v.name.startsWith('entry-')), entry);
+  const valves = views.filter(v => v.stage === 'stage4' && v.name.startsWith('valve-')), half = Math.ceil(valves.length / 2);
+  [valves.slice(0, half), valves.slice(half)].forEach((vs, i) => sheet('stage4', `sheet-${i + 1}`, `Valve contact sheet ${i + 1} of 2`, vs, v => v.caption.replace(/^Valve /, '')));
+  for (const g of CAT10) sheet('stage10', `sheet-${g.toLowerCase().replace(/\s+/g, '-')}`, `${g} catalogue contact sheet`, views.filter(v => v.stage === 'stage10' && ENTRIES.find(e => `cat10-${slug(e.label)}` === v.name)?.group === g), entry);
+  const pip = views.filter(v => v.stage === 'stage11');
+  for (let i = 0; i * 20 < pip.length; i++) sheet('stage11', `sheet-piping-${i + 1}`, `Piping catalogue contact sheet ${i + 1} of ${Math.ceil(pip.length / 20)}`, pip.slice(i * 20, i * 20 + 20), v => v.caption.replace(/^Piping catalogue: /, '').replace(/ \(.*\)$/, ''));
 }
 if (!filter) writeFileSync(`${out}/INDEX.md`, index.join('\n') + '\n');
-else if (filter === 'cat10') {   // a stage-10-only run keeps INDEX.md complete: its rows are appended where missing
-  const cur = existsSync(`${out}/INDEX.md`) ? readFileSync(`${out}/INDEX.md`, 'utf8') : '';
-  const add = index.filter(r => r.includes('`stage10/') && !cur.includes(r.slice(0, r.indexOf('|', 2))));
-  if (add.length) writeFileSync(`${out}/INDEX.md`, cur.replace(/\n*$/, '\n') + add.join('\n') + '\n');
+else {   // a filtered run keeps INDEX.md complete: its rows replace or join the ones there
+  const cur = existsSync(`${out}/INDEX.md`) ? readFileSync(`${out}/INDEX.md`, 'utf8').replace(/\n*$/, '').split('\n') : [];
+  const idOf = (r: string) => r.slice(0, r.indexOf('|', 2));
+  for (const r of index.filter(r => r.startsWith('| `'))) { const k = cur.findIndex(c => idOf(c) === idOf(r)); if (k >= 0) cur[k] = r; else cur.push(r); }
+  writeFileSync(`${out}/INDEX.md`, cur.join('\n') + '\n');
 }

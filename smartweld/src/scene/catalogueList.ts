@@ -5,10 +5,11 @@ import {
   makeFooting, makePedestal, makeEquipmentPad, makeSlab, makeOctagonFoundation, makeRingWall, makeDrilledPier, makeGradeBeam, makeGroutBed, makeCurb, makePaving, makeTrench, makeSump, makeDike,
   makeNozzle, makeManway, makeLiftingLug, makeVesselLegs, makeSupportLugs, makeInsulationRings, makeDavit, makeMotor, makeColumn, makeReactor, makeAirCooler, makeCompressorPackage, makeRecipCompressor,
   makeBlower, makeFiredHeater, makeAgitatedTank, makeFilter, makeDustCollector, makeCyclone, makeScrewConveyor, makeBucketElevator, makeSilo, makeSumpPump, makeHairpin, makePlateExchanger,
+  makeDressedVessel, makeProcessPump, makeShellTubeExchanger,
 } from '../catalogue';
 
 
-export interface Entry { group: string; label: string; build: () => PartSpec }
+export interface Entry { group: string; label: string; build: () => PartSpec; /** the axis that is up when the item stands in a plant (catalogue images, SW-REN-7); default z for the civil and equipment groups */ up?: 'y' | 'z' }
 
 export const ENTRIES: Entry[] = [
   { group: 'Wide-flange', label: 'W8x31', build: () => makePart('W8x31', 'W8x31', 120) },
@@ -69,13 +70,16 @@ export const ENTRIES: Entry[] = [
   { group: 'Vessel parts', label: 'Support lugs on R 25 in', build: () => makeSupportLugs('SLG-1', 25) },
   { group: 'Vessel parts', label: 'Insulation rings, 18 ft shell', build: () => makeInsulationRings('IR-1', 37, 216) },
   { group: 'Vessel parts', label: 'Davit 4 in pipe', build: () => makeDavit('DV-1') },
-  { group: 'Equipment', label: 'Motor 18 in frame', build: () => makeMotor('M-1', 18) },
+  { group: 'Equipment', label: 'Motor 18 in frame', up: 'y', build: () => makeMotor('M-1', 18) },
+  { group: 'Equipment', label: 'Process pump 4 x 3, 13 in impeller', up: 'y', build: () => makeProcessPump({ tag: 'P-301', suctionNPS: 4, dischargeNPS: 3, cls: 'P300', impellerD: 13, motorD: 16 }) },
+  { group: 'Equipment', label: 'Vertical vessel 72 in x 18 ft, dressed', build: () => makeDressedVessel({ tag: 'V-301', ID: 72, t: 0.5, TT: 216, skirtH: 48 }) },
+  { group: 'Equipment', label: 'Shell-and-tube exchanger 36 in x 16 ft', up: 'y', build: () => makeShellTubeExchanger({ tag: 'E-301', ID: 36, t: 0.5, TT: 192, centreline: 72 }) },
   { group: 'Equipment', label: 'Column 72 in x 40 ft, 20 trays', build: () => makeColumn({ tag: 'C-301', ID: 72, t: 0.5, TT: 480, skirtH: 72, trays: 20, insulated: true }) },
   { group: 'Equipment', label: 'Reactor 72 in x 18 ft', build: () => makeReactor({ tag: 'R-301', ID: 72, t: 0.5, TT: 216, skirtH: 48 }) },
   { group: 'Equipment', label: 'Air cooler 8 x 20 ft, 2 fans', build: () => makeAirCooler({ tag: 'E-305', W: 96, L: 240, fans: 2, legH: 120 }) },
-  { group: 'Equipment', label: 'Centrifugal compressor package', build: () => makeCompressorPackage({ tag: 'K-301', skidW: 96, skidL: 240, casingD: 36, motorD: 36 }) },
-  { group: 'Equipment', label: 'Reciprocating compressor', build: () => makeRecipCompressor({ tag: 'K-302', frameL: 96, bore: 8, motorD: 30 }) },
-  { group: 'Equipment', label: 'Blower, 36 in wheel', build: () => makeBlower({ tag: 'B-301', wheelD: 36, motorD: 18 }) },
+  { group: 'Equipment', label: 'Centrifugal compressor package', up: 'y', build: () => makeCompressorPackage({ tag: 'K-301', skidW: 96, skidL: 240, casingD: 36, motorD: 36 }) },
+  { group: 'Equipment', label: 'Reciprocating compressor', up: 'y', build: () => makeRecipCompressor({ tag: 'K-302', frameL: 96, bore: 8, motorD: 30 }) },
+  { group: 'Equipment', label: 'Blower, 36 in wheel', up: 'y', build: () => makeBlower({ tag: 'B-301', wheelD: 36, motorD: 18 }) },
   { group: 'Equipment', label: 'Fired heater 10 ft x 20 ft, 30 ft stack', build: () => makeFiredHeater({ tag: 'H-301', D: 120, H: 240, stackH: 360 }) },
   { group: 'Equipment', label: 'Agitated tank 72 in', build: () => makeAgitatedTank({ tag: 'T-305', ID: 72, t: 0.375, TT: 96, skirtH: 36, motorD: 14 }) },
   { group: 'Equipment', label: 'Filter 24 in, quick-opening', build: () => makeFilter({ tag: 'F-301', ID: 24, t: 0.375, TT: 48, clearance: 30 }) },
@@ -85,6 +89,6 @@ export const ENTRIES: Entry[] = [
   { group: 'Equipment', label: 'Bucket elevator 24 in x 40 ft', build: () => makeBucketElevator({ tag: 'J-302', W: 24, H: 480, motorD: 14 }) },
   { group: 'Equipment', label: 'Silo 8 ft x 20 ft, cone bottom', build: () => makeSilo({ tag: 'R-305', D: 96, H: 240, outletNPS: 8, outletH: 72 }) },
   { group: 'Equipment', label: 'Vertical sump pump 4 in', build: () => makeSumpPump({ tag: 'P-305', NPS: 4, cls: 'P150', columnL: 72, motorD: 14, plate: 24 }) },
-  { group: 'Equipment', label: 'Hairpin exchanger 2 in in 4 in', build: () => makeHairpin({ tag: 'E-306', innerNPS: 2, outerNPS: 4, cls: 'P150', legL: 240 }) },
-  { group: 'Equipment', label: 'Plate exchanger, 80 plates', build: () => makePlateExchanger({ tag: 'E-307', plates: 80, W: 24, H: 60 }) },
+  { group: 'Equipment', label: 'Hairpin exchanger 2 in in 4 in', up: 'y', build: () => makeHairpin({ tag: 'E-306', innerNPS: 2, outerNPS: 4, cls: 'P150', legL: 240 }) },
+  { group: 'Equipment', label: 'Plate exchanger, 80 plates', up: 'y', build: () => makePlateExchanger({ tag: 'E-307', plates: 80, W: 24, H: 60 }) },
 ];

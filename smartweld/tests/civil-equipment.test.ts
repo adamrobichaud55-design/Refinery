@@ -8,6 +8,7 @@ import {
   barArea, barDiameter, octagonArea, octagon, type Bar,
   makeNozzle, makeManway, makeLiftingLug, makeVesselLegs, makeSupportLugs, makeInsulationRings, makeDavit, makeMotor, makeColumn, makeReactor, makeAirCooler, makeCompressorPackage, makeRecipCompressor,
   makeBlower, makeFiredHeater, makeAgitatedTank, makeFilter, makeDustCollector, makeCyclone, makeScrewConveyor, makeBucketElevator, makeSilo, makeSumpPump, makeHairpin, makePlateExchanger,
+  makeDressedVessel, makeProcessPump, makeShellTubeExchanger, MOTOR_SHAFT,
 } from '../src/catalogue';
 import { buildGeometry } from '../src/geometry/partGeometry';
 import { isClosed, signedVolume } from '../src/geometry/mesh';
@@ -39,6 +40,8 @@ const equipment: PartSpec[] = [
   makeFilter({ tag: 'F-301', ID: 24, t: 0.375, TT: 48, clearance: 30 }), makeDustCollector({ tag: 'D-305', W: 96, L: 120, H: 120, legH: 60, outlet: 12 }), makeCyclone({ tag: 'S-305', D: 48 }),
   makeScrewConveyor({ tag: 'J-301', D: 12, L: 240, motorD: 14 }), makeBucketElevator({ tag: 'J-302', W: 24, H: 480, motorD: 14 }), makeSilo({ tag: 'R-305', D: 96, H: 240, outletNPS: 8, outletH: 72 }),
   makeSumpPump({ tag: 'P-305', NPS: 4, cls: 'P150', columnL: 72, motorD: 14, plate: 24 }), makeHairpin({ tag: 'E-306', innerNPS: 2, outerNPS: 4, cls: 'P150', legL: 240 }), makePlateExchanger({ tag: 'E-307', plates: 80, W: 24, H: 60 }),
+  makeDressedVessel({ tag: 'V-301', ID: 72, t: 0.5, TT: 216, skirtH: 48 }), makeProcessPump({ tag: 'P-301', suctionNPS: 4, dischargeNPS: 3, cls: 'P300', impellerD: 13, motorD: 16 }), makeShellTubeExchanger({ tag: 'E-301', ID: 36, t: 0.5, TT: 192, centreline: 72 }),
+  makeNozzle('N3', { NPS: 6, cls: 'P150', shellT: 0.5, shellR: 36.5, blind: true }), makeManway('MW2', { D: 20, cls: 'P150', shellT: 0.5, shellR: 24.5 }),
 ];
 
 for (const [name, parts] of [['civil catalogue (SW-CIV-*)', civil], ['equipment catalogue (SW-EQC-*)', equipment]] as const) describe(name, () => {
@@ -108,5 +111,35 @@ describe('equipment proportions (SW-EQC-*)', () => {
   });
   it('weights come from the drawn steel (SW-EQ-7)', () => {
     for (const p of equipment) { const geo = buildGeometry(p); expect(p.weight.value).toBeCloseTo(geo.volume * K.STEEL_DENSITY_LB_IN3, 3); }
+  });
+});
+
+describe('real detail (SW-DET-*)', () => {
+  it('SW-DET-1: the drawn bars equal the bar list in count, for every civil part', () => {
+    for (const p of civil) {
+      const list = p.extra!.bars as Bar[], drawnCounts = p.extra!.barsDrawn as number[];
+      expect(drawnCounts.reduce((a, b) => a + b, 0), p.designation).toBe(list.reduce((a, b) => a + b.count, 0));
+    }
+  });
+  it('SW-DET-2: a chamfered pad holds less concrete than its square block, by the chamfer strips', () => {
+    const pad = makeEquipmentPad('P', { baseW: 108, baseL: 108 }), w = 120, h = 6, vol = pad.extra!.concreteVolume as number;
+    expect(vol).toBeLessThan(w * w * h); expect(w * w * h - vol).toBeLessThan(4 * w * 0.75 * 0.75);
+  });
+  it('SW-DET-3: a pedestal carries four anchor rods; an octagon the vessel\'s', () => {
+    const names = (p: PartSpec) => (p.extra!.solids as { name: string }[]).map(s => s.name);
+    expect(names(makePedestal('P', { plateN: 16, plateB: 14, height: 36 })).some(n => n.startsWith('anchor rods'))).toBe(true);
+    expect(names(makeOctagonFoundation('O', { baseRingOD: 85, weightKips: 60, pedestalH: 30, rods: 12 })).some(n => n.startsWith('anchor rods 12'))).toBe(true);
+  });
+  it('SW-DET-5/-7: a dressed vessel has its manway, nozzles, seams, lugs and chairs, with bolting on closed joints', () => {
+    const names = (makeDressedVessel({ tag: 'V', ID: 72, t: 0.5, TT: 216, skirtH: 48 }).extra!.solids as { name: string }[]).map(s => s.name);
+    for (const want of ['weld seams', 'inlet nozzle', 'top nozzle', 'vent', 'drain', 'level connection', 'manway', 'lifting lug', 'nameplate', 'anchor chairs', 'skirt vent']) expect(names.some(n => n.startsWith(want)), want).toBe(true);
+    expect(names.some(n => n.includes('studs and nuts'))).toBe(true);
+    expect(names.some(n => n.startsWith('manway'))).toBe(true);
+    expect((makeDressedVessel({ tag: 'V', ID: 30, t: 0.375, TT: 96, skirtH: 36 }).extra!.solids as { name: string }[]).some(s => s.name.startsWith('manway'))).toBe(false);
+  });
+  it('SW-DET-9/-10: motor fins by the 1.5 in rule; the pump and motor shafts line up', () => {
+    expect(makeMotor('m', 18).dims.fins.value).toBe(Math.round((Math.PI * 18) / 1.5));
+    const p = makeProcessPump({ tag: 'P', suctionNPS: 4, dischargeNPS: 3, cls: 'P300', impellerD: 13, motorD: 16 });
+    expect(p.dims.shaftY.value).toBeGreaterThanOrEqual(2 + MOTOR_SHAFT(16));
   });
 });

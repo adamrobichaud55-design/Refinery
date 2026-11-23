@@ -23,7 +23,7 @@ Solids: neck, flange ring, flange raised face, flange hub and neck, reinforcing 
 
 ### Manway 24" P150 with davit
 
-Kind `MANWAY`, Grade 36; weight 853 lb (proportioned by SmartWeld rule SW-EQ-7); 8 solids, drawn volume 3007 in³.
+Kind `MANWAY`, Grade 36; weight 878 lb (proportioned by SmartWeld rule SW-EQ-7); 11 solids, drawn volume 3095 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 
@@ -37,7 +37,7 @@ Kind `MANWAY`, Grade 36; weight 853 lb (proportioned by SmartWeld rule SW-EQ-7);
 | Davit arm reach (`davitArm`) | 19.1 | in | proportioned by SmartWeld rule SW-EQC-2 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: neck, flange ring, flange raised face, flange hub and neck, reinforcing pad, blind cover, davit post 1-1/2 bar, davit arm.
+Solids: neck, flange ring, flange raised face, flange hub and neck, reinforcing pad, blind cover, studs and nuts (SW-DET-5), davit post 1-1/2 bar, davit arm, davit eye bolt, cover handle.
 
 ### Lifting lug PL0.75 6" × 4.5", hole 1.5"
 
@@ -124,7 +124,7 @@ Solids: davit post 4 in pipe, davit arm 4 in pipe.
 
 ### Motor 18" frame
 
-Kind `MOTOR`, Grade 36; weight 3426 lb (proportioned by SmartWeld rule SW-EQ-7); 4 solids, drawn volume 12081 in³.
+Kind `MOTOR`, Grade 36; weight 1275 lb (proportioned by SmartWeld rule SW-EQ-7); 14 solids, drawn volume 4498 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 
@@ -132,18 +132,90 @@ Kind `MOTOR`, Grade 36; weight 3426 lb (proportioned by SmartWeld rule SW-EQ-7);
 |---|---|---|---|
 | Frame diameter (`D`) | 18.0 | in | stated on drawing |
 | Frame length (1.6 D) (`L`) | 28.8 | in | proportioned by SmartWeld rule SW-EQC-8 |
-| Foot height (`footH`) | 10.8 | in | proportioned by SmartWeld rule SW-EQC-8 |
-| Shaft centreline above the foot (`shaftY`) | 19.8 | in | proportioned by SmartWeld rule SW-EQC-8 |
+| Shaft centreline above the feet (0.62 D) (`shaftY`) | 11.2 | in | proportioned by SmartWeld rule SW-EQC-8 |
+| Cooling fin positions round the frame (`fins`) | 38.0 | count | proportioned by SmartWeld rule SW-DET-9 |
+| Shaft diameter (0.15 D) (`shaftD`) | 2.7 | in | proportioned by SmartWeld rule SW-EQC-8 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: motor frame, motor foot, conduit box, shaft stub.
+Solids: motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, nameplate, lifting eye, feet, holding-down bolts, shaft stub, shaft key.
+
+### P-301 process pump 4" × 3", 13" impeller
+
+Kind `PUMP`, Grade 36; weight 2463 lb (proportioned by SmartWeld rule SW-EQ-7); 39 solids, drawn volume 8686 in³.
+
+- Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
+- End suction, top discharge; coupling guard in safety yellow (SW-DET-10).
+
+| Dimension | Value | Unit | Basis |
+|---|---|---|---|
+| Suction size (`suction`) | 4 | in | stated on drawing |
+| Discharge size (`discharge`) | 3 | in | stated on drawing |
+| Impeller diameter (`impellerD`) | 13.0 | in | stated on drawing |
+| Motor frame (`motorD`) | 16.0 | in | stated on drawing |
+| Volute radius at the tongue (0.6 D), growing 25 % round (`voluteR`) | 7.8 | in | proportioned by SmartWeld rule SW-DET-10 |
+| Casing width (0.35 D) (`casingW`) | 4.55 | in | proportioned by SmartWeld rule SW-DET-10 |
+| Bearing frame diameter (0.35 of the casing) (`bearingD`) | 6.825 | in | proportioned by SmartWeld rule SW-DET-10 |
+| Shaft centreline above the baseplate underside (`shaftY`) | 13.8 | in | proportioned by SmartWeld rule SW-DET-10 |
+| Baseplate width (`baseW`) | 27.5 | in | proportioned by SmartWeld rule SW-DET-10 |
+| Baseplate length (`baseL`) | 71.1 | in | proportioned by SmartWeld rule SW-DET-10 |
+| Baseplate thickness (`baseT`) | 1 | in | proportioned by SmartWeld rule SW-EQ-4 |
+| Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
+
+Solids: baseplate PL1, baseplate rim, anchor bolts, volute casing, casing foot, suction nozzle, suction flange ring, suction flange raised face, suction flange hub and neck, discharge nozzle, discharge flange ring, discharge flange raised face, discharge flange hub and neck, casing cover, cover studs, seal chamber, bearing frame, bearing frame flange, bearing frame foot, oiler, shaft, coupling, coupling guard, guard feet, motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, nameplate, lifting eye, feet, holding-down bolts, shaft stub, shaft key, motor riser.
+
+### V-301 vertical vessel 72" ID × 216" T/T, dressed
+
+Kind `VESSEL_V`, Grade 36; weight 11419 lb (proportioned by SmartWeld rule SW-EQ-7); 59 solids, drawn volume 40269 in³.
+
+- Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
+- Standard connections, seams, lugs and anchor chairs by SW-DET-6..8.
+
+| Dimension | Value | Unit | Basis |
+|---|---|---|---|
+| Inside diameter (`ID`) | 72.0 | in | stated on drawing |
+| Shell thickness (`t`) | 0.5 | in | stated on drawing |
+| Tangent to tangent (`TT`) | 216 | in | stated on drawing |
+| Skirt height (`skirtH`) | 48.0 | in | stated on drawing |
+| Head depth (2:1 ellipsoidal) (`headDepth`) | 18.3 | in | proportioned by SmartWeld rule SW-EQ-1 |
+| Skirt thickness (`skirtT`) | 0.375 | in | proportioned by SmartWeld rule SW-EQ-1 |
+| Base ring width (`baseRingW`) | 6 | in | proportioned by SmartWeld rule SW-EQ-1 |
+| Anchor rod count (`rods`) | 8 | count | proportioned by SmartWeld rule SW-EQ-1 |
+| Top tangent line elevation above base (`topTangent`) | 282 | in | proportioned by SmartWeld rule SW-EQ-1 |
+| Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
+| Inlet and top nozzle size (ID/8, to the series) (`nozzle`) | 10.0 | in | proportioned by SmartWeld rule SW-DET-7 |
+
+Solids: shell, bottom head, top head, skirt (below opening), skirt (at opening), skirt (above opening), base ring, weld seams (SW-DET-6), inlet nozzle: neck, inlet nozzle: flange ring, inlet nozzle: flange raised face, inlet nozzle: flange hub and neck, inlet nozzle: reinforcing pad, top nozzle: neck, top nozzle: flange ring, top nozzle: flange raised face, top nozzle: flange hub and neck, top nozzle: reinforcing pad, vent: neck, vent: flange ring, vent: flange raised face, vent: flange hub and neck, drain: neck, drain: flange ring, drain: flange raised face, drain: flange hub and neck, level connection: neck, level connection: flange ring, level connection: flange raised face, level connection: flange hub and neck, level connection: blind flange, level connection: studs and nuts (SW-DET-5), manway: neck, manway: flange ring, manway: flange raised face, manway: flange hub and neck, manway: reinforcing pad, manway: blind cover, manway: studs and nuts (SW-DET-5), manway: davit post 1-1/2 bar, manway: davit arm, manway: davit eye bolt, manway: cover handle, lifting lug, nameplate, nameplate bracket, earthing lug PL1/4, skirt opening frame PL3/8, skirt vent 4 in, anchor chairs 8 × (2 PL3/8 gussets, PL3/4 top), anchor rods 8 × AR1 with washers and nuts.
+
+### E-301 shell-and-tube exchanger 36" ID × 192", detailed
+
+Kind `EXCHANGER`, Grade 36; weight 9847 lb (proportioned by SmartWeld rule SW-EQ-7); 46 solids, drawn volume 34727 in³.
+
+- Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
+- Body flanges with bolting, nozzles two each side, saddles with ribs (SW-DET-11).
+
+| Dimension | Value | Unit | Basis |
+|---|---|---|---|
+| Inside diameter (`ID`) | 36.0 | in | stated on drawing |
+| Shell thickness (`t`) | 0.5 | in | stated on drawing |
+| Tubesheet to rear tangent line (`TT`) | 192 | in | stated on drawing |
+| Centreline elevation above the pad (`centreline`) | 72.0 | in | stated on drawing |
+| Body flange OD (SW-FLG-*) (`flangeOD`) | 46.8 | in | proportioned by SmartWeld rule SW-DET-11 |
+| Tubesheet thickness (ID/12, min 1 in) (`tubesheet`) | 3 | in | proportioned by SmartWeld rule SW-DET-11 |
+| Channel length (`channel`) | 33.1 | in | proportioned by SmartWeld rule SW-EQ-3 |
+| Channel cover thickness (`coverT`) | 3 | in | proportioned by SmartWeld rule SW-EQ-3 |
+| Saddle width (`saddleW`) | 12.0 | in | proportioned by SmartWeld rule SW-EQ-2 |
+| Shell nozzle size (ID/6, to the series) (`nozzle`) | 6 | in | proportioned by SmartWeld rule SW-DET-11 |
+| Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
+
+Solids: shell, rear head, weld seams (SW-DET-6), shell flange ring, shell flange raised face, shell flange hub and neck, channel flange ring, channel flange raised face, channel flange hub and neck, tubesheet, channel, channel cover flange ring, channel cover flange raised face, channel cover flange hub and neck, channel cover, body flange studs and nuts (SW-DET-5), cover studs and nuts (SW-DET-5), shell inlet: neck, shell inlet: flange ring, shell inlet: flange raised face, shell inlet: flange hub and neck, shell inlet: reinforcing pad, shell outlet: neck, shell outlet: flange ring, shell outlet: flange raised face, shell outlet: flange hub and neck, shell outlet: reinforcing pad, channel inlet: neck, channel inlet: flange ring, channel inlet: flange raised face, channel inlet: flange hub and neck, channel inlet: reinforcing pad, channel outlet: neck, channel outlet: flange ring, channel outlet: flange raised face, channel outlet: flange hub and neck, channel outlet: reinforcing pad, saddle web PL1/2, saddle base PL1/2, saddle wear plate, saddle ribs PL3/8, saddle anchor bolts.
 
 ### C-301 column 72" ID × 480" T/T, 20 trays
 
-Kind `COLUMN`, Grade 36; weight 19256 lb (proportioned by SmartWeld rule SW-EQ-7); 16 solids, drawn volume 67907 in³.
+Kind `COLUMN`, Grade 36; weight 20782 lb (proportioned by SmartWeld rule SW-EQ-7); 66 solids, drawn volume 73288 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 - Trays are data (elevations), not solids (SW-EQC-9).
+- Standard connections, seams, lugs and anchor chairs by SW-DET-6..8.
 
 | Dimension | Value | Unit | Basis |
 |---|---|---|---|
@@ -161,13 +233,14 @@ Kind `COLUMN`, Grade 36; weight 19256 lb (proportioned by SmartWeld rule SW-EQ-7
 | Tray spacing (`traySpacing`) | 24.0 | in | proportioned by SmartWeld rule SW-EQC-9 |
 | First tray elevation (trays centred in the shell) (`firstTray`) | 102 | in | proportioned by SmartWeld rule SW-EQC-9 |
 
-Solids: shell, bottom head, top head, skirt (below opening), skirt (at opening), skirt (above opening), base ring, davit post 4 in pipe, davit arm 4 in pipe, lug plate, insulation ring L2x2x1/4.
+Solids: shell, bottom head, top head, skirt (below opening), skirt (at opening), skirt (above opening), base ring, weld seams (SW-DET-6), inlet nozzle: neck, inlet nozzle: flange ring, inlet nozzle: flange raised face, inlet nozzle: flange hub and neck, inlet nozzle: reinforcing pad, top nozzle: neck, top nozzle: flange ring, top nozzle: flange raised face, top nozzle: flange hub and neck, top nozzle: reinforcing pad, vent: neck, vent: flange ring, vent: flange raised face, vent: flange hub and neck, drain: neck, drain: flange ring, drain: flange raised face, drain: flange hub and neck, level connection: neck, level connection: flange ring, level connection: flange raised face, level connection: flange hub and neck, level connection: blind flange, level connection: studs and nuts (SW-DET-5), manway: neck, manway: flange ring, manway: flange raised face, manway: flange hub and neck, manway: reinforcing pad, manway: blind cover, manway: studs and nuts (SW-DET-5), manway: davit post 1-1/2 bar, manway: davit arm, manway: davit eye bolt, manway: cover handle, lifting lug, nameplate, nameplate bracket, earthing lug PL1/4, skirt opening frame PL3/8, skirt vent 4 in, anchor chairs 8 × (2 PL3/8 gussets, PL3/4 top), anchor rods 8 × AR1 with washers and nuts, davit post 4 in pipe, davit arm 4 in pipe, insulation ring L2x2x1/4.
 
 ### R-301 reactor 72" ID × 216" T/T, t 1.5"
 
-Kind `REACTOR`, Grade 36; weight 27417 lb (proportioned by SmartWeld rule SW-EQ-7); 12 solids, drawn volume 96686 in³.
+Kind `REACTOR`, Grade 36; weight 29588 lb (proportioned by SmartWeld rule SW-EQ-7); 62 solids, drawn volume 104343 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
+- Standard connections, seams, lugs and anchor chairs by SW-DET-6..8.
 
 | Dimension | Value | Unit | Basis |
 |---|---|---|---|
@@ -183,11 +256,11 @@ Kind `REACTOR`, Grade 36; weight 27417 lb (proportioned by SmartWeld rule SW-EQ-
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 | Catalyst dump nozzle (`dump`) | 4 | in | stated on drawing |
 
-Solids: shell, bottom head, top head, skirt (below opening), skirt (at opening), skirt (above opening), base ring, neck, flange ring, flange raised face, flange hub and neck, reinforcing pad.
+Solids: shell, bottom head, top head, skirt (below opening), skirt (at opening), skirt (above opening), base ring, weld seams (SW-DET-6), inlet nozzle: neck, inlet nozzle: flange ring, inlet nozzle: flange raised face, inlet nozzle: flange hub and neck, inlet nozzle: reinforcing pad, top nozzle: neck, top nozzle: flange ring, top nozzle: flange raised face, top nozzle: flange hub and neck, top nozzle: reinforcing pad, vent: neck, vent: flange ring, vent: flange raised face, vent: flange hub and neck, level connection: neck, level connection: flange ring, level connection: flange raised face, level connection: flange hub and neck, level connection: blind flange, level connection: studs and nuts (SW-DET-5), manway: neck, manway: flange ring, manway: flange raised face, manway: flange hub and neck, manway: reinforcing pad, manway: blind cover, manway: studs and nuts (SW-DET-5), manway: davit post 1-1/2 bar, manway: davit arm, manway: davit eye bolt, manway: cover handle, lifting lug, nameplate, nameplate bracket, earthing lug PL1/4, skirt opening frame PL3/8, skirt vent 4 in, anchor chairs 8 × (2 PL3/8 gussets, PL3/4 top), anchor rods 8 × AR1 with washers and nuts, catalyst dump: neck, catalyst dump: flange ring, catalyst dump: flange raised face, catalyst dump: flange hub and neck, catalyst dump: reinforcing pad, catalyst dump: blind flange, catalyst dump: studs and nuts (SW-DET-5).
 
 ### E-305 air cooler 96" × 240", 2 fans
 
-Kind `AIR_COOLER`, Grade 36; weight 180702 lb (proportioned by SmartWeld rule SW-EQ-7); 22 solids, drawn volume 637251 in³.
+Kind `AIR_COOLER`, Grade 36; weight 171106 lb (proportioned by SmartWeld rule SW-EQ-7); 58 solids, drawn volume 603412 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 
@@ -203,11 +276,11 @@ Kind `AIR_COOLER`, Grade 36; weight 180702 lb (proportioned by SmartWeld rule SW
 | Header box depth (`header`) | 12.0 | in | proportioned by SmartWeld rule SW-EQC-11 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: tube bundle, header box, plenum, fan ring, fan hub, motor frame, motor foot, conduit box, shaft stub, column W6x15, brace L3x3x1/4.
+Solids: tube bundle (lower rows), finned tubes, top row (36), bundle side frames, header inlet: neck, header inlet: flange ring, header inlet: flange raised face, header inlet: flange hub and neck, header inlet: reinforcing pad, header outlet: neck, header outlet: flange ring, header outlet: flange raised face, header outlet: flange hub and neck, header outlet: reinforcing pad, header box, plenum, fan ring, fan hub, fan blades (4), fan guard, motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, nameplate, lifting eye, feet, holding-down bolts, shaft stub, shaft key, column W6x15, brace L3x3x1/4.
 
 ### K-301 centrifugal compressor package 96" × 240" skid
 
-Kind `COMPRESSOR`, Grade 36; weight 78878 lb (proportioned by SmartWeld rule SW-EQ-7); 9 solids, drawn volume 278165 in³.
+Kind `COMPRESSOR`, Grade 36; weight 49898 lb (proportioned by SmartWeld rule SW-EQ-7); 35 solids, drawn volume 175968 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 - On a 12 in pad (SW-CIV-5).
@@ -220,14 +293,14 @@ Kind `COMPRESSOR`, Grade 36; weight 78878 lb (proportioned by SmartWeld rule SW-
 | Motor frame (`motorD`) | 36.0 | in | stated on drawing |
 | Casing length (1.2 D) (`casingL`) | 43.2 | in | proportioned by SmartWeld rule SW-EQC-12 |
 | Gearbox cube (0.8 D) (`gearbox`) | 28.8 | in | proportioned by SmartWeld rule SW-EQC-12 |
-| Shaft centreline above the skid (`shaftY`) | 40.6 | in | proportioned by SmartWeld rule SW-EQC-12 |
+| Shaft centreline above the skid (`shaftY`) | 23.3 | in | proportioned by SmartWeld rule SW-EQC-12 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: skid PL1, compressor casing, casing pedestal, gearbox, motor frame, motor foot, conduit box, shaft stub, lube console.
+Solids: skid PL1, compressor casing, casing end covers, bearing housings, casing pedestal, suction nozzle: neck, suction nozzle: flange ring, suction nozzle: flange raised face, suction nozzle: flange hub and neck, suction nozzle: reinforcing pad, discharge nozzle: neck, discharge nozzle: flange ring, discharge nozzle: flange raised face, discharge nozzle: flange hub and neck, discharge nozzle: reinforcing pad, gearbox, gearbox feet, shafts, coupling guards, motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, nameplate, lifting eye, feet, holding-down bolts, shaft stub, shaft key, lube console, lube oil piping.
 
 ### K-302 reciprocating compressor, frame 96", bore 8"
 
-Kind `COMPRESSOR`, Grade 36; weight 94074 lb (proportioned by SmartWeld rule SW-EQ-7); 9 solids, drawn volume 331755 in³.
+Kind `COMPRESSOR`, Grade 36; weight 93292 lb (proportioned by SmartWeld rule SW-EQ-7); 46 solids, drawn volume 328997 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 
@@ -242,11 +315,11 @@ Kind `COMPRESSOR`, Grade 36; weight 94074 lb (proportioned by SmartWeld rule SW-
 | Cylinder length (3 B) (`cylL`) | 24.0 | in | proportioned by SmartWeld rule SW-EQC-13 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: frame, cylinder, distance piece, motor frame, motor foot, conduit box, shaft stub.
+Solids: frame, frame top cover, cover bolts, cylinder, distance piece, cylinder head, cylinder support, discharge nozzle: neck, discharge nozzle: flange ring, discharge nozzle: flange raised face, discharge nozzle: flange hub and neck, discharge nozzle: reinforcing pad, suction nozzle: neck, suction nozzle: flange ring, suction nozzle: flange raised face, suction nozzle: flange hub and neck, suction nozzle: reinforcing pad, motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, nameplate, lifting eye, feet, holding-down bolts, shaft stub, shaft key, flywheel guard.
 
 ### B-301 blower, wheel 36"
 
-Kind `BLOWER`, Grade 36; weight 19582 lb (proportioned by SmartWeld rule SW-EQ-7); 9 solids, drawn volume 69057 in³.
+Kind `BLOWER`, Grade 36; weight 17509 lb (proportioned by SmartWeld rule SW-EQ-7); 25 solids, drawn volume 61744 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 
@@ -261,11 +334,11 @@ Kind `BLOWER`, Grade 36; weight 19582 lb (proportioned by SmartWeld rule SW-EQ-7
 | Shaft centreline above the base (`shaftY`) | 32.2 | in | proportioned by SmartWeld rule SW-EQC-14 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: base PL1, scroll casing, casing pedestal, outlet, inlet cone, motor frame, motor foot, conduit box, shaft stub.
+Solids: base PL1, scroll casing (volute), casing pedestal, outlet flange, inlet cone, inlet flange, shaft, bearing block, bearing stand, drive guard, motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, nameplate, lifting eye, feet, holding-down bolts, shaft stub, shaft key, motor riser.
 
 ### H-301 fired heater 120" dia × 240" radiant, stack 360"
 
-Kind `HEATER`, Grade 36; weight 12242 lb (proportioned by SmartWeld rule SW-EQ-7); 9 solids, drawn volume 43170 in³.
+Kind `HEATER`, Grade 36; weight 12655 lb (proportioned by SmartWeld rule SW-EQ-7); 13 solids, drawn volume 44628 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 - Burners are data.
@@ -280,11 +353,11 @@ Kind `HEATER`, Grade 36; weight 12242 lb (proportioned by SmartWeld rule SW-EQ-7
 | Stack diameter (0.3 D) (`stackD`) | 36.0 | in | proportioned by SmartWeld rule SW-EQC-15 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: leg W8x24, floor plate, radiant shell, convection box, convection roof, stack.
+Solids: leg W8x24, floor plate, radiant shell, convection box, convection roof, stack, stack stiffening rings, burners (4 × 8 in), peep doors, shell stiffening rings L3x3x1/4.
 
 ### T-305 agitated tank 72" ID × 96" T/T
 
-Kind `AGITATED_TANK`, Grade 36; weight 7515 lb (proportioned by SmartWeld rule SW-EQ-7); 22 solids, drawn volume 26503 in³.
+Kind `AGITATED_TANK`, Grade 36; weight 7818 lb (proportioned by SmartWeld rule SW-EQ-7); 79 solids, drawn volume 27571 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 
@@ -306,7 +379,7 @@ Kind `AGITATED_TANK`, Grade 36; weight 7515 lb (proportioned by SmartWeld rule S
 | Impeller span (0.33 ID) (`impeller`) | 23.8 | in | proportioned by SmartWeld rule SW-EQC-16 |
 | Impeller elevation (0.3 ID above the bottom tangent line) (`impellerZ`) | 75.8 | in | proportioned by SmartWeld rule SW-EQC-16 |
 
-Solids: shell, bottom head, top head, skirt (below opening), skirt (at opening), skirt (above opening), base ring, neck, flange ring, flange raised face, flange hub and neck, reinforcing pad, gearbox, motor frame, motor foot, conduit box, shaft stub, agitator shaft, impeller hub, impeller blade.
+Solids: shell, bottom head, top head, skirt (below opening), skirt (at opening), skirt (above opening), base ring, weld seams (SW-DET-6), inlet nozzle: neck, inlet nozzle: flange ring, inlet nozzle: flange raised face, inlet nozzle: flange hub and neck, inlet nozzle: reinforcing pad, vent: neck, vent: flange ring, vent: flange raised face, vent: flange hub and neck, drain: neck, drain: flange ring, drain: flange raised face, drain: flange hub and neck, level connection: neck, level connection: flange ring, level connection: flange raised face, level connection: flange hub and neck, level connection: blind flange, level connection: studs and nuts (SW-DET-5), manway: neck, manway: flange ring, manway: flange raised face, manway: flange hub and neck, manway: reinforcing pad, manway: blind cover, manway: studs and nuts (SW-DET-5), manway: davit post 1-1/2 bar, manway: davit arm, manway: davit eye bolt, manway: cover handle, lifting lug, nameplate, nameplate bracket, earthing lug PL1/4, skirt opening frame PL3/8, skirt vent 4 in, anchor chairs 8 × (2 PL3/8 gussets, PL3/4 top), anchor rods 8 × AR1 with washers and nuts, neck, flange ring, flange raised face, flange hub and neck, reinforcing pad, gearbox, motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, lifting eye, feet, holding-down bolts, shaft stub, shaft key, agitator shaft, impeller hub, impeller blade.
 
 ### F-301 filter 24" ID × 48" T/T, quick-opening
 
@@ -328,7 +401,7 @@ Solids: leg HSS3x1/4, base plate PL1/2 8x8, shell, bottom head, top head, shell 
 
 ### D-305 dust collector 96" × 120" × 120"
 
-Kind `DUST_COLLECTOR`, Grade 36; weight 6462 lb (proportioned by SmartWeld rule SW-EQ-7); 18 solids, drawn volume 22787 in³.
+Kind `DUST_COLLECTOR`, Grade 36; weight 7196 lb (proportioned by SmartWeld rule SW-EQ-7); 21 solids, drawn volume 25378 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 - Rotary feeder at the outlet is a valve of the piping catalogue (SW-VLV-ROTARY).
@@ -345,7 +418,7 @@ Kind `DUST_COLLECTOR`, Grade 36; weight 6462 lb (proportioned by SmartWeld rule 
 | Plate thickness (`t`) | 0.188 | in | proportioned by SmartWeld rule SW-EQC-18 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: leg W6x15, hopper (south), hopper (north), hopper (east), hopper (west), housing, tube sheet, clean-air plenum, plenum roof, neck, flange ring, flange raised face, flange hub and neck, reinforcing pad, outlet flange (feeder mount).
+Solids: leg W6x15, hopper (south), hopper (north), hopper (east), hopper (west), housing, tube sheet, clean-air plenum, plenum roof, neck, flange ring, flange raised face, flange hub and neck, reinforcing pad, outlet flange (feeder mount), housing stiffeners L3x3x1/4, inspection door 18 × 24, door handle.
 
 ### S-305 cyclone 48" dia
 
@@ -368,7 +441,7 @@ Solids: cone, body, top plate, vortex finder, inlet box, lug gusset PL1/2, lug b
 
 ### J-301 screw conveyor 12" × 20'
 
-Kind `SCREW_CONVEYOR`, Grade 36; weight 2841 lb (proportioned by SmartWeld rule SW-EQ-7); 17 solids, drawn volume 10017 in³.
+Kind `SCREW_CONVEYOR`, Grade 36; weight 1831 lb (proportioned by SmartWeld rule SW-EQ-7); 27 solids, drawn volume 6457 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 
@@ -384,11 +457,11 @@ Kind `SCREW_CONVEYOR`, Grade 36; weight 2841 lb (proportioned by SmartWeld rule 
 | Trough bottom height (`legH`) | 36.0 | in | proportioned by SmartWeld rule SW-EQC-20 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: trough, cover, shaft pipe, screw flight, leg L3x3x1/4, saddle PL1/4, motor frame, motor foot, conduit box, shaft stub.
+Solids: trough, cover, shaft pipe, screw flight, leg L3x3x1/4, saddle PL1/4, motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, nameplate, lifting eye, feet, holding-down bolts, shaft stub, shaft key.
 
 ### J-302 bucket elevator 24" × 40'
 
-Kind `BUCKET_ELEVATOR`, Grade 36; weight 6018 lb (proportioned by SmartWeld rule SW-EQ-7); 12 solids, drawn volume 21221 in³.
+Kind `BUCKET_ELEVATOR`, Grade 36; weight 5008 lb (proportioned by SmartWeld rule SW-EQ-7); 22 solids, drawn volume 17661 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 - Belt and buckets not modeled (SW-EQC-21).
@@ -404,11 +477,11 @@ Kind `BUCKET_ELEVATOR`, Grade 36; weight 6018 lb (proportioned by SmartWeld rule
 | Plate thickness (`t`) | 0.188 | in | proportioned by SmartWeld rule SW-EQC-21 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: boot, boot bottom, casing leg, head, head roof, discharge spout, inlet chute, motor frame, motor foot, conduit box, shaft stub.
+Solids: boot, boot bottom, casing leg, head, head roof, discharge spout, inlet chute, motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, nameplate, lifting eye, feet, holding-down bolts, shaft stub, shaft key.
 
 ### R-305 silo 96" dia × 240", cone bottom
 
-Kind `SILO`, Grade 36; weight 12222 lb (proportioned by SmartWeld rule SW-EQ-7); 19 solids, drawn volume 43101 in³.
+Kind `SILO`, Grade 36; weight 13171 lb (proportioned by SmartWeld rule SW-EQ-7); 27 solids, drawn volume 46447 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 - Skirt and base ring as SW-EQ-1 (anchor rods SW-AR-*).
@@ -425,11 +498,11 @@ Kind `SILO`, Grade 36; weight 12222 lb (proportioned by SmartWeld rule SW-EQ-7);
 | Skirt thickness (`skirtT`) | 0.375 | in | proportioned by SmartWeld rule SW-EQ-1 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: cone, shell, top plate, skirt, base ring PL3/4, skirt opening frame, neck, flange ring, flange raised face, flange hub and neck, reinforcing pad, blind cover, davit post 1-1/2 bar, davit arm.
+Solids: cone, shell, top plate, skirt, base ring PL3/4, skirt opening frame, neck, flange ring, flange raised face, flange hub and neck, reinforcing pad, blind cover, studs and nuts (SW-DET-5), davit post 1-1/2 bar, davit arm, davit eye bolt, cover handle, ladder rails and brackets, ladder rungs RD3/4, ladder cage hoops, roof handrail posts, roof handrail rails.
 
 ### P-305 vertical sump pump 4" column × 72"
 
-Kind `SUMP_PUMP`, Grade 36; weight 1931 lb (proportioned by SmartWeld rule SW-EQ-7); 12 solids, drawn volume 6811 in³.
+Kind `SUMP_PUMP`, Grade 36; weight 922 lb (proportioned by SmartWeld rule SW-EQ-7); 22 solids, drawn volume 3251 in³.
 
 - Envelope only; internals not modeled (SW-EQ-*). Nozzles placed in stage 5.
 
@@ -443,7 +516,7 @@ Kind `SUMP_PUMP`, Grade 36; weight 1931 lb (proportioned by SmartWeld rule SW-EQ
 | Bowl length (1.5 × column OD) (`bowlL`) | 6 | in | proportioned by SmartWeld rule SW-EQC-23 |
 | Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
 
-Solids: bowl, column pipe, mounting plate PL1, discharge pipe, discharge elbow, discharge flange ring, discharge flange raised face, discharge flange hub and neck, motor frame, motor foot, conduit box, shaft stub.
+Solids: bowl, column pipe, mounting plate PL1, discharge pipe, discharge elbow, discharge flange ring, discharge flange raised face, discharge flange hub and neck, motor frame, cooling fins, drive-end bell, fan cowl, cowl grille, terminal box, terminal box lid, cable gland, nameplate, lifting eye, feet, holding-down bolts, shaft stub, shaft key.
 
 ### E-306 hairpin exchanger 2" in 4" × 20'
 

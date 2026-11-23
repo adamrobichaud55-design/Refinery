@@ -9,24 +9,33 @@ import { partFromKey, type PipingModel, type LineRun } from '../generator/piping
 import { makeValve, type PartSpec, type ValveType, type PipeClass } from '../catalogue';
 import { classColour } from '../generator/lineclass';
 import type { RGB } from './raster';
+import type { FinishName } from './photo';
 
 /** a part's mesh template, its placement (column-major 4 × 4) and its colour; templates are shared, never copied */
-export interface Drawable { mesh: MeshData; T: Mat4; color: RGB }
+export interface Drawable { mesh: MeshData; T: Mat4; color: RGB; finish?: FinishName; cuttable?: boolean }
+/** SW-REN-4: the finish each role wears in the photo style */
+export const ROLE_FINISH: Record<Role, FinishName> = {
+  steel: 'paint', hardware: 'zinc', weld: 'weld', sheet: 'paint', concrete: 'concrete', door: 'paint', equipment: 'gloss', casting: 'paint', closure: 'stainless', stem: 'stainless', polymer: 'polymer', pipe: 'paint', operator: 'gloss',
+  rebar: 'rebar', galv: 'galv', jacket: 'aluminium', machine: 'gloss', safety: 'gloss', grout: 'concrete', nameplate: 'stainless',
+};
 const C = (h: number): RGB => [(h >> 16) & 255, (h >> 8) & 255, h & 255];
 /** the viewer's finish colours (src/viewer/main.ts MATERIALS), one per role */
 export const ROLE_COLOUR: Record<Role, RGB> = {
   steel: C(0x6f7b8a), hardware: C(0x2e3238), weld: C(0xc8a24a), sheet: C(0xb8c4cf), concrete: C(0xb9b4a8), door: C(0x8a4b3c),
   equipment: C(0x9aa7a0), casting: C(0x56606a), closure: C(0xa9adb2), stem: C(0xb8bcc1), polymer: C(0x222222), pipe: C(0x6e7781), operator: C(0xb3261e),
+  rebar: C(0x6b4a3a), galv: C(0xc3c8cc), jacket: C(0xdfe2e4), machine: C(0x2f5f8f), safety: C(0xe2b21c), grout: C(0xcfcbc0), nameplate: C(0xd0d3d6),
 } as Record<Role, RGB>;
 export const HIGHLIGHT: RGB = C(0xff8c1a), ISOLATION: RGB = C(0x1f6fd1);
 
+const GALVANISED = new Set<PartSpec['kind']>(['GRATING', 'GRATING_TREAD', 'CAGE_HOOP', 'Z', 'CS', 'ROD']);
 const partCache = new Map<PartSpec, { role: Role; mesh: MeshData }[]>();
 /** placed parts (building, interior, a catalogue entry) */
 export function partDrawables(list: { part: PartSpec; transform: Mat4 }[], colour?: (role: Role) => RGB): Drawable[] {
   const out: Drawable[] = [];
   for (const i of list) {
     let g = partCache.get(i.part); if (!g) { g = buildGeometry(i.part).solids.map(s => ({ role: s.role, mesh: s.mesh })); partCache.set(i.part, g); }
-    for (const s of g) out.push({ mesh: s.mesh, T: i.transform, color: colour ? colour(s.role) : ROLE_COLOUR[s.role] ?? ROLE_COLOUR.steel });
+    const galv = GALVANISED.has(i.part.kind);   // SW-REN-4: gratings, treads, cage hoops, cold-formed purlins and girts and bracing rods are galvanised
+    for (const s of g) out.push({ mesh: s.mesh, T: i.transform, color: colour ? colour(s.role) : galv && s.role === 'steel' ? ROLE_COLOUR.galv : ROLE_COLOUR[s.role] ?? ROLE_COLOUR.steel, finish: galv && s.role === 'steel' ? 'galv' : ROLE_FINISH[s.role] ?? 'paint', cuttable: s.role === 'concrete' || s.role === 'grout' });
   }
   return out;
 }
@@ -37,15 +46,19 @@ function solidsOfKey(key: string, valveCells: number) {
   let g = keyCache.get(ck);
   if (!g) {
     if (key.startsWith('VLV')) {
-      const [, t, n, c] = key.split('|');
+      const [, t, n, c, e] = key.split('|');
       setMaxCells(valveCells);
-      try { g = buildGeometry(makeValve(ck, t as ValveType, Number(n), c as PipeClass)).solids.map(s => ({ role: s.role, mesh: s.mesh })); } finally { setMaxCells(110); }
+      try { g = buildGeometry(makeValve(ck, t as ValveType, Number(n), c as PipeClass, (e as 'SW' | 'TH' | undefined) ?? 'RF')).solids.map(s => ({ role: s.role, mesh: s.mesh })); } finally { setMaxCells(110); }
     } else g = buildGeometry(partFromKey(key)).solids.map(s => ({ role: s.role, mesh: s.mesh }));
     keyCache.set(ck, g);
   }
   return g;
 }
 
+/** a piping or support part by its model key, placed: for the catalogue images of the piping families (SW-REN-4) */
+export function keyDrawables(key: string, T: Mat4, valveCells = 110): Drawable[] {
+  return solidsOfKey(key, valveCells).map(s => ({ mesh: s.mesh, T, color: ROLE_COLOUR[s.role] ?? ROLE_COLOUR.steel, finish: ROLE_FINISH[s.role] ?? 'paint' }));
+}
 export interface PipingOpts {
   only?: (l: LineRun) => boolean;
   /** colour by line (e.g. by line class); default the finish colour of each part */

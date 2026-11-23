@@ -16,7 +16,8 @@ import { revolve } from './mesh';
 import { wProfile, cProfile, lProfile, hssRectProfile, hssRoundProfile, filletProfile, grooveProfile, ringAroundHole, N_CIRCLE } from './profiles';
 const arcPts = (r: number, a0: number, a1: number, n: number) => Array.from({ length: n + 1 }, (_, i) => { const a = a0 + ((a1 - a0) * i) / n; return { x: r * Math.cos(a), y: r * Math.sin(a) }; });
 
-export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door' | 'equipment' | 'casting' | 'closure' | 'stem' | 'polymer' | 'operator' | 'pipe';
+export type Role = 'steel' | 'hardware' | 'weld' | 'sheet' | 'concrete' | 'door' | 'equipment' | 'casting' | 'closure' | 'stem' | 'polymer' | 'operator' | 'pipe'
+  | 'rebar' | 'galv' | 'jacket' | 'machine' | 'safety' | 'grout' | 'nameplate';   // finishes of §67 (SW-REN-4) used by the civil and equipment catalogues
 export interface Solid { name: string; mesh: MeshData; role: Role }
 export interface PartGeometry { partId: string; solids: Solid[]; profile?: Profile; volume: number }
 
@@ -112,10 +113,10 @@ export function buildGeometry(part: PartSpec): PartGeometry {
     case 'VESSEL_V': case 'VESSEL_H': case 'EXCHANGER': case 'PUMP': case 'TANK': case 'HOPPER':
     case 'MOTOR': case 'NOZZLE': case 'MANWAY': case 'LIFTING_LUG': case 'VESSEL_LEGS': case 'SUPPORT_LUGS': case 'INSUL_RINGS': case 'DAVIT': case 'COLUMN': case 'REACTOR': case 'AIR_COOLER': case 'COMPRESSOR':
     case 'BLOWER': case 'HEATER': case 'AGITATED_TANK': case 'FILTER': case 'DUST_COLLECTOR': case 'CYCLONE': case 'SCREW_CONVEYOR': case 'BUCKET_ELEVATOR': case 'SILO': case 'SUMP_PUMP': case 'HAIRPIN': case 'PLATE_EXCHANGER':
-      for (const s of part.extra!.solids as { name: string; mesh: MeshData }[]) solids.push({ name: s.name, role: 'equipment', mesh: s.mesh });
+      for (const s of part.extra!.solids as { name: string; mesh: MeshData; role?: Role }[]) solids.push({ name: s.name, role: s.role ?? 'equipment', mesh: s.mesh });
       break;
     case 'FOOTING': case 'PEDESTAL': case 'PAD': case 'SLAB': case 'OCTAGON': case 'RINGWALL': case 'PIER': case 'GRADE_BEAM': case 'GROUT': case 'CURB': case 'PAVING': case 'TRENCH': case 'SUMP': case 'DIKE':
-      for (const s of part.extra!.solids as { name: string; mesh: MeshData }[]) solids.push({ name: s.name, role: 'concrete', mesh: s.mesh });   // civil catalogue (§65)
+      for (const s of part.extra!.solids as { name: string; mesh: MeshData; role?: Role }[]) solids.push({ name: s.name, role: s.role ?? 'concrete', mesh: s.mesh });   // civil catalogue (§65)
       break;
     case 'ELBOW': case 'TEE': case 'REDUCER': case 'CAP': case 'BUTT_WELD': case 'SUPPORT': case 'FITTING':
       for (const s of part.extra!.solids as { name: string; mesh: MeshData; role: Role }[]) solids.push({ name: s.name, role: s.role, mesh: s.mesh });

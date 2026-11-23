@@ -93,7 +93,7 @@ describe('renderer (SW-REN-1..3)', () => {
   });
   it('every stage-9 rule ID used in code is written in DESIGN_BASIS.md', () => {
     const basis = rd('DESIGN_BASIS.md').toString();
-    for (const f of ['src/pdf/ttf.ts', 'src/pdf/pdf.ts', 'src/pdf/wopdf.ts', 'src/render/raster.ts', 'src/render/page.ts', 'src/render/scene.ts', 'src/render/view3d.ts', 'src/render/sheet.ts', 'tools/render-views.ts', 'tools/export-wo.ts', 'tools/isoparse.py']) {
+    for (const f of ['src/pdf/ttf.ts', 'src/pdf/pdf.ts', 'src/pdf/wopdf.ts', 'src/render/raster.ts', 'src/render/page.ts', 'src/render/scene.ts', 'src/render/photo.ts', 'src/render/view3d.ts', 'src/render/sheet.ts', 'tools/render-views.ts', 'tools/export-wo.ts', 'tools/isoparse.py']) {
       for (const id of new Set(rd(f).toString().match(/SW-(?:LIC|PDF|REN)-\d+/g) ?? [])) expect(basis.includes('`' + id + '`'), `${id} in ${f}`).toBe(true);
     }
   });

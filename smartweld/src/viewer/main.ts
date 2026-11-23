@@ -68,6 +68,14 @@ const MATERIALS: Record<Role, THREE.Material> = {
   stem: new THREE.MeshStandardMaterial({ color: 0xb8bcc1, metalness: 0.9, roughness: 0.25, side: THREE.DoubleSide }),
   polymer: new THREE.MeshStandardMaterial({ color: 0x222222, roughness: 0.9, side: THREE.DoubleSide }),
   pipe: new THREE.MeshStandardMaterial({ color: 0x6e7781, metalness: 0.35, roughness: 0.5, side: THREE.DoubleSide }),
+  // finishes of §67 (SW-REN-4) for the civil and equipment catalogues
+  rebar: new THREE.MeshStandardMaterial({ color: 0x6b4a3a, metalness: 0.6, roughness: 0.75 }),
+  galv: new THREE.MeshStandardMaterial({ color: 0xc3c8cc, metalness: 0.9, roughness: 0.5, side: THREE.DoubleSide }),
+  jacket: new THREE.MeshStandardMaterial({ color: 0xdfe2e4, metalness: 0.95, roughness: 0.34 }),
+  machine: new THREE.MeshStandardMaterial({ color: 0x2f5f8f, metalness: 0.1, roughness: 0.4, side: THREE.DoubleSide }),
+  safety: new THREE.MeshStandardMaterial({ color: 0xe2b21c, metalness: 0.1, roughness: 0.4, side: THREE.DoubleSide }),
+  grout: new THREE.MeshStandardMaterial({ color: 0xcfcbc0, roughness: 0.95 }),
+  nameplate: new THREE.MeshStandardMaterial({ color: 0xd0d3d6, metalness: 0.9, roughness: 0.3 }),
   operator: new THREE.MeshStandardMaterial({ color: 0xb3261e, metalness: 0.1, roughness: 0.45, side: THREE.DoubleSide }),   // F-10 red handwheels and levers
 };
 

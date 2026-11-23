@@ -2662,10 +2662,12 @@ Parts a pressure vessel carries:
 
 Equipment items (each `make…` takes the stated dimensions; what is not stated follows the rule):
 
-- `SW-EQC-8` Electric motor: a cylinder of stated frame diameter D and length 1.6 D on a foot
-  box 0.6 D high and 1.2 D long; a conduit box 0.3 D square on the side; shaft stub 0.15 D
-  diameter projecting 0.4 D. Reason: the proportions of a totally enclosed fan-cooled frame,
-  written from the reasoning that the fan cowl adds about half a diameter to the stator's length.
+- `SW-EQC-8` Electric motor: stated frame diameter D over the fins, length 1.6 D (fan cowl 0.35 D,
+  stator 1.0 D, drive-end bell and bearing boss 0.25 D), shaft centreline 0.62 D above the
+  underside of its feet, shaft stub 0.15 D diameter projecting 0.4 D; the frame's parts by
+  SW-DET-9 (amended 2026-11-23 from a plain cylinder on a foot box). Reason: the proportions of a
+  totally enclosed fan-cooled frame, written from the reasoning that the fan cowl adds about a
+  third of a diameter to the stator's length and the feet lift the frame clear of its base.
 - `SW-EQC-9` Column: SW-EQ-1 with stated tray count and spacing (trays are data, not solids), a
   top davit (SW-EQC-7), lifting lugs (SW-EQC-3) and insulation rings (SW-EQC-6) where insulated.
 - `SW-EQC-10` Reactor: SW-EQ-1 with a shell thickness of max(stated, ID/48) and a bottom
@@ -2733,3 +2735,117 @@ Equipment items (each `make…` takes the stated dimensions; what is not stated 
 - `SW-EQC-26` Hopper (for a feeder stand-alone, SW-EQ-8 withdrawn for the rotary valves): kept in
   the catalogue as an item, not placed in either plant. Reason: the owner's instruction concerned
   the plants' rotary valves, not the part.
+
+## 67. Realistic review images (`SW-REN-4..10`)
+
+Written 2026-11-23 at the owner's instruction ("this needs to be more hyper realistic"). The images
+stay SmartWeld's own renders (SW-LIC-2): the renderer of §56 gains a second shading style, `photo`,
+written from the physics of light on a surface. Geometry is never altered for appearance (SW-U-5):
+realism comes from light, finish and the real detail of §68. The flat style of SW-REN-1 stays for
+the plan-like sheets.
+
+- `SW-REN-4` Finishes. Every solid has a finish: a base colour, a roughness from 0 (mirror) to 1
+  (matt), whether it is bare metal, and a texture. By role: structural steel, pipe, equipment,
+  castings, cladding and doors are painted (not metal; roughness 0.45 to 0.7); hardware is zinc
+  plated and closures and stems stainless (metal, roughness 0.25 to 0.45); welds are bare weld
+  metal; concrete and grout are matt (0.95) with the concrete texture; reinforcing bars are bare
+  dark steel; gratings, handrail-like parts and conveyor troughs are galvanised (metal, 0.5, spangle
+  texture); insulated vessels wear an aluminium jacket; motors and driven machines a machinery
+  blue; davits, guards and lifting lugs safety yellow. Structural gratings, stair treads, ladder
+  cage hoops, cold-formed purlins and girts and bracing rods are galvanised whatever their role.
+  A solid may name its finish; else its role gives it. Reason: a plant looks as it does because of
+  what each surface is made of.
+  The catalogue images of every discipline use this style: the structural sections, plates,
+  hardware and welds and the valves (stages 1 and 4), the civil and equipment catalogues (stage
+  10, civil parts cut by SW-REN-10) and the piping catalogue as plant 2 uses it, one part of every
+  family (stage 11). The structural and piping parts' geometry is unchanged by this: they are the
+  parts the two plants and their ground truth are built from.
+- `SW-REN-5` Light. A sun (the viewer's direction), a sky dome and the ground: direct light on a
+  surface is the sun's by the cosine of its angle, cut where another surface stands between it and
+  the sun (a depth map drawn from the sun, softened over neighbouring samples); indirect light is
+  the sky's colour from above and the ground's from below by where the surface faces, reduced in
+  corners and contacts by how much of its surroundings other surfaces block (ambient occlusion,
+  measured in the depth buffer round each sample). Reason: shadows and contact shading are what
+  tell the eye that a part stands on something.
+- `SW-REN-6` Surface. Curved surfaces are shaded smoothly: a vertex takes the area-weighted mean
+  of the faces round it that lie within 40° of each other, so a cylinder is round and an edge
+  stays an edge. A highlight follows the finish's roughness (a microfacet lobe); every surface
+  reflects the sky dome by Fresnel's law, metals in their own colour and coatings at 4 % rising
+  toward grazing. Reason: these are what make steel look like steel and paint like paint.
+- `SW-REN-7` Ground. Scenes without a floor of their own (catalogue entries, single items) stand
+  on a ground plane at their lowest point, matt, catching their shadows and fading into the
+  background with distance. Plants stand on their own slab. Catalogue entries are shown the way
+  up they stand in a plant.
+- `SW-REN-8` Texture is colour only, computed from position (three-dimensional value noise):
+  concrete has aggregate speckle, trowel variation and broad tonal drift; galvanising has spangle;
+  paint a slight variation. No texture moves a surface (SW-U-5).
+- `SW-REN-9` Tone. Light is summed in linear units, mapped by a filmic curve and encoded with
+  gamma 2.2; the background is the sky dome; edges are smoothed by supersampling.
+- `SW-REN-10` Cutaway. A view may cut the concrete of a civil part by a plane and leave its bars
+  and embedded steel whole, to show what is inside. The cut face is drawn as concrete.
+
+## 68. Detail on civil parts and equipment (`SW-DET-*`)
+
+Written 2026-11-23 with §67. A detail is a part the real item has, at its true size, from a rule
+here; nothing is decorative. Weights include the drawn detail (SW-EQ-7, SW-CIV-15).
+
+- `SW-DET-1` Reinforcing bars are drawn: every bar of a civil part's bar list is a solid of its
+  true diameter in its true place, at the cover of SW-CIV-2, hooks as a 90° bend of 12 d (SW-CIV-3b)
+  on a bend radius of 3 d; ties, stirrups and hoops as closed loops; spirals as helices. The
+  drawn bars equal the bar list in count. Their weight is the bar list's, not counted twice.
+- `SW-DET-2` Chamfer: every exposed concrete edge above grade or above the slab (pad, pedestal
+  top, octagonal pedestal top, ring wall top, curb, dike wall top, sump and trench rims) has a
+  3/4 in chamfer. Reason: a sharp concrete arris spalls; forms carry a chamfer strip.
+- `SW-DET-3` Anchor rods are drawn where a civil part carries steel: on a pedestal, the four rods
+  of SW-BP-3 at the plate's corners; on an octagonal pedestal, the vessel's rods (SW-EQ-1) on the
+  base ring's bolt circle; each projecting by SW-AR-3 with its nut and plate washer (SW-B-3,
+  SW-BP-4) and embedded by SW-AR-2.
+- `SW-DET-4` Covers and frames: a trench's grating cover is drawn bar by bar (SW-GR-1) on its
+  `L2x2x1/4` frame; a sump has the same frame and cover.
+- `SW-DET-5` Bolting on equipment: every flanged joint drawn on equipment (nozzle flange with its
+  blind or cover, a filter's body flanges, a manway cover) carries its studs and nuts, the count
+  and diameter from the flange (SW-FLG-*), each stud = joint thickness + two nuts + two thread
+  pitches of d/8 each end, nuts by SW-B-3. A nozzle left open for piping carries none: the line's
+  studs belong to the line (SW-STD-*).
+- `SW-DET-6` Vessel seams: a pressure shell is made of rolled courses 96 in long (the last
+  shorter), so a circumferential weld seam stands at each course joint and at each head; each
+  course has one longitudinal seam, turned 90° from the next course's. A seam is a weld cap
+  1/8 in proud and 2 t + 1/4 in wide. Reason: plate comes 8 ft wide; staggering the long seams
+  keeps them from lining up.
+- `SW-DET-7` Vessel dressing (a catalogue vessel's standard connections, where a plant does not
+  give its own nozzle schedule): top head centre nozzle of ID/8 rounded up to the size series
+  (minimum 2 in); a side inlet of the same size at 0.75 TT; a 24 in manway at 30 in above the
+  bottom tangent line for ID ≥ 36 in (20 in below 48 in ID); a pair of 2 in level connections
+  at 0.2 and 0.6 TT on one generator; a 2 in drain at the bottom head centre and a 2 in vent
+  beside the top nozzle; two lifting lugs (SW-EQC-3); a nameplate 8 × 5 in of 1/16 in stainless on a
+  bracket standing 2 in off the shell 60 in above the base; an earthing lug `PL1/4` 2 × 3 in on the
+  skirt. All nozzles by SW-EQC-1, 180° from the manway unless stated. Reason: these are the
+  connections any vessel has; a catalogue item without them is a tank of unknown purpose.
+- `SW-DET-8` Skirt and anchor chairs: the skirt's access opening has a `PL3/8` frame 3 in deep;
+  two 4 in vent pipes pass the skirt 6 in below the head; each anchor rod has a chair: two
+  `PL3/8` gussets 6 in high either side of the rod and a `PL3/4` top plate 4 × 4 in with the rod,
+  nut and washer on it (SW-AR-*).
+- `SW-DET-9` Motor: the frame carries axial cooling fins, n = round(π D / 1.5 in), each 0.08 D
+  high and 3/16 in thick over the stator length 1.0 D; a drive-end bell dished 0.15 D; a fan
+  cowl of 1.04 D diameter and 0.35 D long at the other end with an end grille of five concentric
+  slots; a terminal box 0.3 D cube with a cable gland of 0.08 D; a lifting eye of 0.14 D on top;
+  two foot rails with four bolt bosses; a shaft key d/4 square over 0.75 of the stub; a
+  nameplate. Reason: the parts of a fan-cooled motor; the fin count gives fins about 1.5 in apart.
+- `SW-DET-10` Rotating machines: a pump or blower casing is a volute, its radius growing
+  linearly by 25 % round the wheel to a tangential discharge neck; suction and discharge end in
+  flanges (SW-FLG-*); the bearing frame is a cylinder of 0.35 of the casing diameter on a foot;
+  the coupling guard a half-round sheet cover (safety yellow); the baseplate has a 1 in rim and
+  anchor bolts at its corners. Compressor casings carry suction and discharge nozzles on top.
+  Reason: what the item is recognised by.
+- `SW-DET-11` Exchanger and cooler detail: a shell-and-tube exchanger's channel and shell meet in
+  a pair of body flanges with bolting; shell and channel nozzles two each; saddles have a web,
+  two ribs each side and a base plate with two slotted holes at the sliding end. An air cooler's
+  bundle is drawn with its side frames and rows of finned tubes as cylinders of 2 in at 2.5 in
+  pitch on the top row, fan blades (four per fan, 0.45 of the ring diameter long), a fan guard
+  ring, and inlet and outlet nozzles on the headers.
+- `SW-DET-12` Fired heater, silo, cyclone, collector and conveyors: plate stiffeners
+  `L3x3x1/4` round rectangular housings at 48 in; peep doors and burners on the heater's floor as
+  8 in pipe stubs (four); a caged ladder (SW-LD-*) and a top handrail on a silo over 15 ft;
+  inspection doors 18 × 24 in on housings; drive guards in safety yellow.
+- `SW-DET-13` Tessellation: curved solids are drawn with at least 48 segments round and 64 for
+  diameters over 48 in, so a curve reads as a curve at the scale of the images.

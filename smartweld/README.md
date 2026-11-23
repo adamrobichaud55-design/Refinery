@@ -40,6 +40,7 @@ npx vite-node tools/export-gt.ts P2              # plant 2 ground truth (public/
 npx vite-node tools/coverage.ts public/plants/P2/plant-piping.json       # symbol coverage against the SW-COV-2 floor
 npx vite-node tools/export-pcf.ts P1|P2           # one PCF per line from the ground truth (public/.../pcf/, SW-PCF-1..4; tools/pcf-mapping.md)
 npx vite-node tools/catalogue-doc.ts              # the civil and equipment catalogues as documents (docs/CATALOGUE-*.md)
+npx vite-node tools/render-views.ts screenshots cat10   # catalogue images in the photo style (cat10 civil and equipment, cat11 piping, entry- structural, valve-)
 npx vite-node tools/pcf-check.ts P1|P2            # the owner's eighteen zero-checks on the ground truth and PCF files (SW-LL-8, SW-GT-7, SW-PCF-*, SW-PEN-1)
 npx vite-node tools/erection.ts P1|P2            # structural steel erection drawings (downloads/erection-P*.pdf, sheet previews)
 npx vite-node tools/render-plant.ts P2           # review images of plant 2 (screenshots/stage9/)
@@ -68,6 +69,7 @@ src/viewer             three.js browser viewer (rendering only)
 tests                  vitest rule/geometry/audit tests
 src/pdf                SmartWeld's own PDF writer: font subsetting, layout, the work-order packs (SW-PDF-*)
 src/render             SmartWeld's own renderer: 3D views, page previews, contact sheets, PNG (SW-REN-*)
+                       photo.ts: the photo style (finishes, shadows, occlusion, sky reflection, ground, cutaways; §67)
 assets/fonts           DejaVu Sans and its licence (the only font; SW-LIC-3)
 tools/render-views.ts  renders the review images in screenshots/
 tools/gen-piping.ts    runs the piping generator and the §40 checks; writes the plant data
