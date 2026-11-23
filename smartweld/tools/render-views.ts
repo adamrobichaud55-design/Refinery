@@ -32,7 +32,7 @@ const part = (stage: string, name: string, caption: string, build: () => Paramet
   views.push({ stage, name, caption, make: () => { const ds = partDrawables([{ part: build(), transform: identity() }]); const cut = section ? { n: [1, 0, 0] as [number, number, number], d: 0 } : undefined; const [mn, mx] = bounds(ds); return { ds, cam: frameBox(mn, mx, dir), cut, photo: { groundY: mn[1], cut } }; } });   // photo style (SW-REN-4..10)
 
 // stage 1: catalogue entries and the column-base assembly
-const CAT10 = new Set(['Civil', 'Vessel parts', 'Equipment', 'Exchangers', 'Towers', 'Boiler', 'Tanks']);   // stage 10: the civil and equipment catalogues (§65, §66)
+const CAT10 = new Set(['Civil', 'Vessel parts', 'Equipment', 'Exchangers', 'Towers', 'Boiler', 'Tanks', 'Piping specials', 'Structural assemblies']);   // stage 10: the civil and equipment catalogues (§65, §66)
 const slug = (l: string) => l.replace(/[^A-Za-z0-9.]+/g, '-').replace(/-+$/, '');
 for (const e of ENTRIES) {
   if (!CAT10.has(e.group)) { part('stage1', `entry-${slug(e.label)}`, `Catalogue entry ${e.label}`, e.build); continue; }
@@ -182,7 +182,7 @@ if (!filter || 'pack'.includes(filter)) {
     writeFileSync(`${out}/${stage}/${name}.png`, contactSheet(font, vs.map(v => ({ label: label(v), png: new Uint8Array(readFileSync(`${out}/${v.stage}/${v.name}.png`)) }))));
     index.push(`| \`${stage}/${name}.png\` | ${caption} (the renders above, tiled and labelled with DejaVu Sans) |`);
   };
-  const entry = (v: View) => v.caption.replace(/^Catalogue entry /, '').replace(/ \((Civil|Vessel parts|Equipment|Exchangers|Towers|Boiler|Tanks)\).*$/, '');
+  const entry = (v: View) => v.caption.replace(/^Catalogue entry /, '').replace(new RegExp(` \\((${[...CAT10].join('|')})\\).*$`), '');
   sheet('stage1', 'sheet-catalogue', 'Catalogue list contact sheet: structural sections, plates, hardware, welds, sheet and the first piping entries', views.filter(v => v.stage === 'stage1' && v.name.startsWith('entry-')), entry);
   const valves = views.filter(v => v.stage === 'stage4' && v.name.startsWith('valve-')), half = Math.ceil(valves.length / 2);
   [valves.slice(0, half), valves.slice(half)].forEach((vs, i) => sheet('stage4', `sheet-${i + 1}`, `Valve contact sheet ${i + 1} of 2`, vs, v => v.caption.replace(/^Valve /, '')));

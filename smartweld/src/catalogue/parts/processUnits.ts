@@ -24,8 +24,8 @@ const dot = (a: V3, b: V3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
 const N = 48;
 
 // ---- shared parts ---------------------------------------------------------------------------------------------------
-const P_L3: Profile = { outer: lProfile(3, 3, 0.25) }, P_L4: Profile = { outer: lProfile(4, 4, 0.375) }, P_L6: Profile = { outer: lProfile(6, 6, 0.5) };
-const P_W14: Profile = { outer: wProfile(proportionW(14, 61)) }, P_W8: Profile = { outer: wProfile(proportionW(8, 24)) }, P_C6: Profile = { outer: cProfile(proportionC(6, 8.2)) };
+export const P_L3: Profile = { outer: lProfile(3, 3, 0.25) }, P_L4: Profile = { outer: lProfile(4, 4, 0.375) }, P_L6: Profile = { outer: lProfile(6, 6, 0.5) };
+export const P_W14: Profile = { outer: wProfile(proportionW(14, 61)) }, P_W8: Profile = { outer: wProfile(proportionW(8, 24)) }, P_C6: Profile = { outer: cProfile(proportionC(6, 8.2)) };
 /** a member of constant section from a to b; `up` turns the section's y */
 export function member(a: V3, b: V3, prof: Profile, up: V3 = [0, 0, 1]): MeshData {
   const d = sub(b, a), L = Math.hypot(d[0], d[1], d[2]), z: V3 = [d[0] / L, d[1] / L, d[2] / L];
@@ -34,17 +34,17 @@ export function member(a: V3, b: V3, prof: Profile, up: V3 = [0, 0, 1]): MeshDat
   return orient(transformMesh(extrude(prof, L, 0), frameFromAxes(a, y, z)));
 }
 /** a tube swept along points: the outer surface and, turned inward, the bore, so the drawn metal is the wall (SW-EQ-7) */
-function hollowSweep(pts: V3[], r: number, wall: number, n = 8): MeshData {
+export function hollowSweep(pts: V3[], r: number, wall: number, n = 8): MeshData {
   const o = sweep(pts, r, n), i = sweep(pts, r - wall, n), idx = [...i.indices]; for (let k = 0; k < idx.length; k += 3) { const t = idx[k + 1]; idx[k + 1] = idx[k + 2]; idx[k + 2] = t; }
   return mergeMeshes([o, { positions: i.positions, indices: idx }]);
 }
 /** a pipe run of outside diameter OD through points; wall OD/14, at least 0.2 in */
-const pipeRun = (pts: V3[], OD: number, n = 12): MeshData => hollowSweep(pts, OD / 2, Math.min(OD / 4, Math.max(0.2, OD / 14)), n);
+export const pipeRun = (pts: V3[], OD: number, n = 12): MeshData => hollowSweep(pts, OD / 2, Math.min(OD / 4, Math.max(0.2, OD / 14)), n);
 /** a hollow frustum (a cone section) about z: outer radii r0 at z0 and r1 at z1, wall t */
-const frustum = (r0: number, r1: number, z0: number, z1: number, t: number, n = 64): MeshData => orient(revolve([{ r: r0, z: z0 }, { r: r1, z: z1 }, { r: Math.max(r1 - t, 0.01), z: z1 }, { r: Math.max(r0 - t, 0.01), z: z0 }], n));
-const turn = (list: Solid[], th: number): Solid[] => list.map(s => ({ ...s, mesh: transformMesh(s.mesh, rotateZ(th)) }));
-const lift = (list: Solid[], x: number, y: number, z: number): Solid[] => list.map(s => ({ ...s, mesh: at(s.mesh, x, y, z) }));
-const partSolids = (p: PartSpec): Solid[] => p.extra!.solids as Solid[];
+export const frustum = (r0: number, r1: number, z0: number, z1: number, t: number, n = 64): MeshData => orient(revolve([{ r: r0, z: z0 }, { r: r1, z: z1 }, { r: Math.max(r1 - t, 0.01), z: z1 }, { r: Math.max(r0 - t, 0.01), z: z0 }], n));
+export const turn = (list: Solid[], th: number): Solid[] => list.map(s => ({ ...s, mesh: transformMesh(s.mesh, rotateZ(th)) }));
+export const lift = (list: Solid[], x: number, y: number, z: number): Solid[] => list.map(s => ({ ...s, mesh: at(s.mesh, x, y, z) }));
+export const partSolids = (p: PartSpec): Solid[] => p.extra!.solids as Solid[];
 
 /** SW-EQC-28: a caged ladder on a vertical shell of outer radius R at angle th, from z0 to z1 and 42 in past it */
 export function ladderSolids(R: number, th: number, z0: number, z1: number): Solid[] {
@@ -160,11 +160,11 @@ export function makePlatformedColumn(inp: PlatformedColumnInput): PartSpec {
 }
 
 // ---- placing parts on shells, access --------------------------------------------------------------------------------
-const named = (p: PartSpec, label: string, tr: (m: MeshData) => MeshData): Solid[] => partSolids(p).map(s => ({ ...s, name: `${label}: ${s.name}`, mesh: tr(s.mesh) }));
+export const named = (p: PartSpec, label: string, tr: (m: MeshData) => MeshData): Solid[] => partSolids(p).map(s => ({ ...s, name: `${label}: ${s.name}`, mesh: tr(s.mesh) }));
 /** a nozzle or manway (its z its axis) on a vertical shell of outer radius R at angle th and height z, about the axis (cx, cy) */
-const onShell = (p: PartSpec, R: number, th: number, z: number, label: string, cx = 0, cy = 0): Solid[] => named(p, label, m => at(transformMesh(m, multiply(rotateZ(th), multiply(translate(R, 0, z), RADIAL))), cx, cy, 0));
-const pointUp = (p: PartSpec, x: number, y: number, z: number, label: string): Solid[] => named(p, label, m => at(m, x, y, z));
-const pointDown = (p: PartSpec, x: number, y: number, z: number, label: string): Solid[] => named(p, label, m => transformMesh(m, multiply(translate(x, y, z), rotateX(Math.PI))));
+export const onShell = (p: PartSpec, R: number, th: number, z: number, label: string, cx = 0, cy = 0): Solid[] => named(p, label, m => at(transformMesh(m, multiply(rotateZ(th), multiply(translate(R, 0, z), RADIAL))), cx, cy, 0));
+export const pointUp = (p: PartSpec, x: number, y: number, z: number, label: string): Solid[] => named(p, label, m => at(m, x, y, z));
+export const pointDown = (p: PartSpec, x: number, y: number, z: number, label: string): Solid[] => named(p, label, m => transformMesh(m, multiply(translate(x, y, z), rotateX(Math.PI))));
 /** floors through the target elevations with no climb longer than 15 ft (SW-EQC-28) */
 export function floorsThrough(targets: number[], from = 0): number[] {
   const out: number[] = []; let z = from;
@@ -172,7 +172,7 @@ export function floorsThrough(targets: number[], from = 0): number[] {
   return out;
 }
 /** ladder runs with landings up one face of a square tower of half-width b about (cx, cy), the face at angle th, from z0 to z1 (SW-EQC-28) */
-function towerAccess(cx: number, cy: number, b: number, th: number, z0: number, z1: number): Solid[] {
+export function towerAccess(cx: number, cy: number, b: number, th: number, z0: number, z1: number): Solid[] {
   const fl = floorsThrough([z1], z0), out: Solid[] = [], land: MeshData[] = [];
   fl.forEach((z, k) => {
     out.push(...ladderSolids(b + 1, th + (k % 2 ? -1 : 1) * (14 / b), k ? fl[k - 1] : z0, z).map(q => ({ ...q, name: `tower ladder ${k + 1}: ${q.name}` })));
@@ -182,9 +182,9 @@ function towerAccess(cx: number, cy: number, b: number, th: number, z0: number, 
   return lift(out, cx, cy, 0);
 }
 /** a flat flange ring (the end of a duct or a large nozzle) about z at height z */
-const ringFlange = (r: number, z: number, w = 4, t = 1.5): MeshData => at(extrude({ outer: circle(0, 0, r + w, 64), inner: circle(0, 0, r - 0.5, 64) }, t, 0), 0, 0, z);
+export const ringFlange = (r: number, z: number, w = 4, t = 1.5): MeshData => at(extrude({ outer: circle(0, 0, r + w, 64), inner: circle(0, 0, r - 0.5, 64) }, t, 0), 0, 0, z);
 /** a rectangular plate rail: posts and two rails along a straight edge from a to b at floor height (z of a) */
-function straightRail(a: V3, b: V3): MeshData {
+export function straightRail(a: V3, b: V3): MeshData {
   const L = Math.hypot(b[0] - a[0], b[1] - a[1]), n = Math.max(2, Math.ceil(L / 60) + 1), parts: MeshData[] = [];
   for (let i = 0; i < n; i++) { const t = i / (n - 1); parts.push(cylZ(a[0] + (b[0] - a[0]) * t, a[1] + (b[1] - a[1]) * t, 0.95, a[2], a[2] + 42, 8)); }
   parts.push(sweep([[a[0], a[1], a[2] + 42], [b[0], b[1], a[2] + 42]], 0.95, 8), sweep([[a[0], a[1], a[2] + 21], [b[0], b[1], a[2] + 21]], 0.66, 8));
@@ -365,7 +365,7 @@ export function makeWetScrubber(inp: ScrubberInput): PartSpec {
 
 // ---- drums, the flue gas cooler, the boiler (SW-EQC-37..42) ------------------------------------------------------------
 /** two saddles' worth of one saddle: web to the shell's underside, ribs, base and wear plate, for a z-axis shell of outer radius R with its base at y = −cl */
-function saddleSolids(R: number, cl: number, zs: number, sw: number): Solid[] {
+export function saddleSolids(R: number, cl: number, zs: number, sw: number): Solid[] {
   const xr = 0.9 * R, yArc = (x: number) => -Math.sqrt(Math.max((R + 0.5) ** 2 - x * x, 0));
   const web: Polygon = [{ x: -xr, y: -cl + 0.5 }, { x: xr, y: -cl + 0.5 }, ...Array.from({ length: 25 }, (_, i) => { const x = xr - (2 * xr * i) / 24; return { x, y: yArc(x) }; })];
   return [{ name: 'saddle web PL1/2', role: 'steel', mesh: at(extrude({ outer: web }, 0.5, 0), 0, 0, zs - 0.25) }, { name: 'saddle base PL1/2', role: 'steel', mesh: boxMesh(-xr - 2, -cl, zs - sw / 2, xr + 2, -cl + 0.5, zs + sw / 2) },
@@ -374,10 +374,10 @@ function saddleSolids(R: number, cl: number, zs: number, sw: number): Solid[] {
     { name: 'saddle anchor bolts', role: 'hardware', mesh: mergeMeshes([-xr, xr].map(x => baseBolt(x, -cl + 0.5, zs + sw / 2 - 1.5, 0.75))) }];
 }
 const NOZZLE_DOWN_Z = [0, 0, 1, 0, -1, 0, 0, 0, 0, -1, 0, 0, 0, 0, 0, 1];
-const upOn = (p: PartSpec, R: number, z: number, label: string, y0 = 0): Solid[] => named(p, label, m => transformMesh(m, multiply(translate(0, y0 + R, z), NOZZLE_UP)));
-const downOn = (p: PartSpec, R: number, z: number, label: string, y0 = 0): Solid[] => named(p, label, m => transformMesh(m, multiply(translate(0, y0 - R, z), NOZZLE_DOWN_Z)));
+export const upOn = (p: PartSpec, R: number, z: number, label: string, y0 = 0): Solid[] => named(p, label, m => transformMesh(m, multiply(translate(0, y0 + R, z), NOZZLE_UP)));
+export const downOn = (p: PartSpec, R: number, z: number, label: string, y0 = 0): Solid[] => named(p, label, m => transformMesh(m, multiply(translate(0, y0 - R, z), NOZZLE_DOWN_Z)));
 /** a horizontal drum along z from 0 to L (tangent lines) with 2:1 heads */
-const drumBody = (R: number, t: number, L: number): Solid[] => [{ name: 'shell', mesh: shellRing(R, t, L) }, { name: 'head', mesh: orient(revolve(headLoop(R, t, -1), 64)) }, { name: 'head', mesh: at(orient(revolve(headLoop(R, t, 1), 64)), 0, 0, L) }, { name: 'weld seams', mesh: seamSolids(R, t, 0, L) }];
+export const drumBody = (R: number, t: number, L: number): Solid[] => [{ name: 'shell', mesh: shellRing(R, t, L) }, { name: 'head', mesh: orient(revolve(headLoop(R, t, -1), 64)) }, { name: 'head', mesh: at(orient(revolve(headLoop(R, t, 1), 64)), 0, 0, L) }, { name: 'weld seams', mesh: seamSolids(R, t, 0, L) }];
 /** SW-EQC-38: an elliptical manway 12 × 16 in on a head's apex at z (cover, yoke and stud), facing dir (±1 along z) */
 function headManway(z: number, dir: 1 | -1): Solid[] {
   const ell: Polygon = Array.from({ length: 32 }, (_, i) => ({ x: 8.5 * Math.cos((2 * Math.PI * i) / 32), y: 6.5 * Math.sin((2 * Math.PI * i) / 32) })), z0 = dir > 0 ? z - 1 : z - 0.5;
@@ -514,7 +514,7 @@ export function makeWaterTubeBoiler(inp: BoilerInput): PartSpec {
 
 // ---- SW-EQC-44: above-ground storage tanks -----------------------------------------------------------------------------
 /** a spiral stair round a tank shell of outer radius R from z0 to z1, starting at angle a0 and rising anticlockwise */
-function spiralStair(R: number, z0: number, z1: number, a0: number): { solids: Solid[]; aEnd: number } {
+export function spiralStair(R: number, z0: number, z1: number, a0: number): { solids: Solid[]; aEnd: number } {
   const n = Math.ceil((z1 - z0) / 8), rise = (z1 - z0) / n, rIn = R + 3, rOut = R + 33, dth = 10 / (R + 18), treads: MeshData[] = [], str: MeshData[] = [], rail: MeshData[] = [], brk: MeshData[] = [], top: V3[] = [];
   for (let k = 0; k < n; k++) {
     const a = a0 + (k + 0.5) * dth, z = z0 + (k + 1) * rise;
@@ -534,7 +534,7 @@ function tankSeams(R: number, t: number, z0: number, H: number): MeshData {
   for (let k = 0; k < courses; k++) for (let i = 0; i < nv; i++) parts.push(transformMesh(boxMesh(R - 0.02, -wc / 2, z0 + 96 * k + (k ? wc / 2 : 0), R + 0.125, wc / 2, Math.min(z0 + H, z0 + 96 * (k + 1)) - wc / 2), rotateZ((2 * Math.PI * (i + (k % 3) / 3)) / nv)));
   return mergeMeshes(parts);
 }
-const ringRail = (r: number, z: number): MeshData => { const np = Math.max(8, Math.ceil((2 * Math.PI * r) / 72)), parts: MeshData[] = []; for (let i = 0; i < np; i++) { const a = (2 * Math.PI * (i + 0.5)) / np; parts.push(cylZ(r * Math.cos(a), r * Math.sin(a), 0.95, z, z + 42, 8)); } const ring = (h: number, rad: number) => sweep(Array.from({ length: 96 }, (_, i) => [r * Math.cos((2 * Math.PI * i) / 96), r * Math.sin((2 * Math.PI * i) / 96), z + h] as V3), rad, 8, true); parts.push(ring(42, 0.95), ring(21, 0.66)); return mergeMeshes(parts); };
+export const ringRail = (r: number, z: number): MeshData => { const np = Math.max(8, Math.ceil((2 * Math.PI * r) / 72)), parts: MeshData[] = []; for (let i = 0; i < np; i++) { const a = (2 * Math.PI * (i + 0.5)) / np; parts.push(cylZ(r * Math.cos(a), r * Math.sin(a), 0.95, z, z + 42, 8)); } const ring = (h: number, rad: number) => sweep(Array.from({ length: 96 }, (_, i) => [r * Math.cos((2 * Math.PI * i) / 96), r * Math.sin((2 * Math.PI * i) / 96), z + h] as V3), rad, 8, true); parts.push(ring(42, 0.95), ring(21, 0.66)); return mergeMeshes(parts); };
 export interface StorageTankInput { tag: string; D: number; H: number; t?: number }
 function tankCommon(inp: StorageTankInput): { s: Solid[]; R: number; t: number; aEnd: number } {
   const R = inp.D / 2, t = inp.t ?? 0.3125, H = inp.H, s: Solid[] = [];

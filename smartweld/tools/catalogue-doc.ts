@@ -1,6 +1,6 @@
 // The civil and equipment catalogues as readable documents (DESIGN_BASIS.md §65, §66): every entry of the viewer's
 // catalogue list in those groups, with its dimensions, their bases, its weight and (civil) its quantities and bar list.
-//   vite-node tools/catalogue-doc.ts      writes docs/CATALOGUE-CIVIL.md and docs/CATALOGUE-EQUIPMENT.md
+//   vite-node tools/catalogue-doc.ts      writes docs/CATALOGUE-*.md
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { ENTRIES } from '../src/scene/catalogueList';
 import { basisText } from '../src/core/basis';
@@ -27,4 +27,6 @@ function doc(title: string, groups: string[], rules: string, intro: string): str
 mkdirSync('docs', { recursive: true });
 writeFileSync('docs/CATALOGUE-CIVIL.md', doc('Civil and concrete catalogue', ['Civil'], '§65 (SW-CIV-*)', 'Every part is a true-scale concrete solid with its bar list and quantities (concrete volume, formed area, bar weight). No published table was used (PROVENANCE P-72).'));
 writeFileSync('docs/CATALOGUE-EQUIPMENT.md', doc('Equipment catalogue', ['Vessel parts', 'Equipment', 'Exchangers', 'Towers', 'Boiler', 'Tanks'], '§25 (SW-EQ-*), §66 and §69 (SW-EQC-*) and §68 (SW-DET-*)', 'Every item is a true-scale envelope from its stated principal dimensions; what is not stated follows the rule named on the dimension. Weights are the drawn steel (SW-EQ-7). No published table was used (PROVENANCE P-72).'));
+writeFileSync('docs/CATALOGUE-PIPING-SPECIALS.md', doc('Piping specials catalogue', ['Piping specials'], '§70 (SW-PSP-*)', 'Catalogue items only: strainers, traps, expansion joints, hoses, arrestors, sight glasses, disc holders, drip rings, laterals, mitre bends, stub-ins, spring hangers, insulation and tracing, loops and hose connections. They are not in the plants, the ground truth or the PCF mapping. Weights are the drawn metal (SW-PSP-18). No published table was used (PROVENANCE P-75).'));
+console.log(`wrote docs/CATALOGUE-PIPING-SPECIALS.md (${ENTRIES.filter(e => e.group === 'Piping specials').length} entries)`);
 console.log(`wrote docs/CATALOGUE-CIVIL.md (${ENTRIES.filter(e => e.group === 'Civil').length} entries) and docs/CATALOGUE-EQUIPMENT.md (${ENTRIES.filter(e => ['Vessel parts', 'Equipment', 'Exchangers', 'Towers', 'Boiler', 'Tanks'].includes(e.group)).length} entries)`);

@@ -107,21 +107,21 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage9/P2-bins.png` | Bins, rotary feeders, walkway and fill lines |
 | `stage9/P2-outdoor.png` | Outdoor tanks, drums and silos with the lines through the end wall |
 | `stage9/P2-above.png` | Plan view from above |
-| `stage10/cat10-Spread-footing-60-kip-column-24-in-pedestal.png` | Catalogue entry Spread footing (60 kip column, 24 in pedestal) (Civil) |
+| `stage10/cat10-Spread-footing-60-kip-column-24-in-pedestal.png` | Catalogue entry Spread footing (60 kip column, 24 in pedestal) (Civil), cut to show the bars |
 | `stage10/cat10-Pedestal-for-a-16x14-base-plate-36-in.png` | Catalogue entry Pedestal for a 16x14 base plate, 36 in (Civil), cut to show the bars |
-| `stage10/cat10-Equipment-pad-108-in-vessel-base.png` | Catalogue entry Equipment pad (108 in vessel base) (Civil) |
-| `stage10/cat10-Pump-pad-30-x-72-baseplate.png` | Catalogue entry Pump pad (30 x 72 baseplate) (Civil) |
-| `stage10/cat10-Slab-on-grade-40-x-20-ft-thickened-edge.png` | Catalogue entry Slab on grade 40 x 20 ft, thickened edge (Civil) |
-| `stage10/cat10-Octagonal-foundation-85-in-base-ring-60-kip.png` | Catalogue entry Octagonal foundation (85 in base ring, 60 kip) (Civil) |
-| `stage10/cat10-Ring-wall-for-a-12-ft-tank.png` | Catalogue entry Ring wall for a 12 ft tank (Civil) |
-| `stage10/cat10-Drilled-pier-24-in-150-kip.png` | Catalogue entry Drilled pier 24 in, 150 kip (Civil) |
-| `stage10/cat10-Grade-beam-20-ft.png` | Catalogue entry Grade beam 20 ft (Civil) |
-| `stage10/cat10-Grout-bed-under-a-16x14-plate.png` | Catalogue entry Grout bed under a 16x14 plate (Civil) |
-| `stage10/cat10-Curb-10-ft.png` | Catalogue entry Curb 10 ft (Civil) |
-| `stage10/cat10-Paving-20-x-40-ft.png` | Catalogue entry Paving 20 x 40 ft (Civil) |
-| `stage10/cat10-Trench-18-x-24-in-30-ft-grating-cover.png` | Catalogue entry Trench 18 x 24 in, 30 ft, grating cover (Civil) |
-| `stage10/cat10-Sump-24-in-cube.png` | Catalogue entry Sump 24 in cube (Civil) |
-| `stage10/cat10-Containment-dike-100-x-60-ft-two-12-ft-tanks.png` | Catalogue entry Containment dike 100 x 60 ft, two 12 ft tanks (Civil) |
+| `stage10/cat10-Equipment-pad-108-in-vessel-base.png` | Catalogue entry Equipment pad (108 in vessel base) (Civil), cut to show the bars |
+| `stage10/cat10-Pump-pad-30-x-72-baseplate.png` | Catalogue entry Pump pad (30 x 72 baseplate) (Civil), cut to show the bars |
+| `stage10/cat10-Slab-on-grade-40-x-20-ft-thickened-edge.png` | Catalogue entry Slab on grade 40 x 20 ft, thickened edge (Civil), cut to show the bars |
+| `stage10/cat10-Octagonal-foundation-85-in-base-ring-60-kip.png` | Catalogue entry Octagonal foundation (85 in base ring, 60 kip) (Civil), cut to show the bars |
+| `stage10/cat10-Ring-wall-for-a-12-ft-tank.png` | Catalogue entry Ring wall for a 12 ft tank (Civil), cut to show the bars |
+| `stage10/cat10-Drilled-pier-24-in-150-kip.png` | Catalogue entry Drilled pier 24 in, 150 kip (Civil), cut to show the bars |
+| `stage10/cat10-Grade-beam-20-ft.png` | Catalogue entry Grade beam 20 ft (Civil), cut to show the bars |
+| `stage10/cat10-Grout-bed-under-a-16x14-plate.png` | Catalogue entry Grout bed under a 16x14 plate (Civil), cut to show the bars |
+| `stage10/cat10-Curb-10-ft.png` | Catalogue entry Curb 10 ft (Civil), cut to show the bars |
+| `stage10/cat10-Paving-20-x-40-ft.png` | Catalogue entry Paving 20 x 40 ft (Civil), cut to show the bars |
+| `stage10/cat10-Trench-18-x-24-in-30-ft-grating-cover.png` | Catalogue entry Trench 18 x 24 in, 30 ft, grating cover (Civil), cut to show the bars |
+| `stage10/cat10-Sump-24-in-cube.png` | Catalogue entry Sump 24 in cube (Civil), cut to show the bars |
+| `stage10/cat10-Containment-dike-100-x-60-ft-two-12-ft-tanks.png` | Catalogue entry Containment dike 100 x 60 ft, two 12 ft tanks (Civil), cut to show the bars |
 | `stage10/cat10-Nozzle-4-in-P150-with-pad.png` | Catalogue entry Nozzle 4 in P150 with pad (Vessel parts) |
 | `stage10/cat10-Manway-24-in-with-davit.png` | Catalogue entry Manway 24 in with davit (Vessel parts) |
 | `stage10/cat10-Lifting-lug-20-kip-vessel.png` | Catalogue entry Lifting lug (20 kip vessel) (Vessel parts) |
@@ -270,3 +270,24 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage10/sheet-tanks.png` | Tanks catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
 | `stage10/cat10-Tube-bundle-for-a-36-in-shell-16-ft.png` | Catalogue entry Tube bundle for a 36 in shell, 16 ft (Exchangers) |
 | `stage10/sheet-exchangers.png` | Exchangers catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |
+| `stage10/cat10-Y-strainer-4-in-P150.png` | Catalogue entry Y strainer 4 in P150 (Piping specials) |
+| `stage10/cat10-Basket-strainer-6-in-P150.png` | Catalogue entry Basket strainer 6 in P150 (Piping specials) |
+| `stage10/cat10-Temporary-cone-strainer-6-in-P150.png` | Catalogue entry Temporary cone strainer 6 in P150 (Piping specials) |
+| `stage10/cat10-Steam-trap-3-4-in-disc-type.png` | Catalogue entry Steam trap 3/4 in, disc type (Piping specials) |
+| `stage10/cat10-Steam-trap-3-4-in-bucket-type.png` | Catalogue entry Steam trap 3/4 in, bucket type (Piping specials) |
+| `stage10/cat10-Expansion-joint-8-in-P150-bellows-with-limit-rods.png` | Catalogue entry Expansion joint 8 in P150, bellows with limit rods (Piping specials) |
+| `stage10/cat10-Flexible-hose-2-in-P150-x-24-in.png` | Catalogue entry Flexible hose 2 in P150 x 24 in (Piping specials) |
+| `stage10/cat10-Flame-arrestor-4-in-P150.png` | Catalogue entry Flame arrestor 4 in P150 (Piping specials) |
+| `stage10/cat10-Sight-glass-3-in-P150.png` | Catalogue entry Sight glass 3 in P150 (Piping specials) |
+| `stage10/cat10-Rupture-disc-holder-4-in-P150.png` | Catalogue entry Rupture disc holder 4 in P150 (Piping specials) |
+| `stage10/cat10-Drip-ring-6-in-P150.png` | Catalogue entry Drip ring 6 in P150 (Piping specials) |
+| `stage10/cat10-Lateral-45-deg-6-in-P150.png` | Catalogue entry Lateral 45 deg 6 in P150 (Piping specials) |
+| `stage10/cat10-Reducing-tee-8-x-4-in-P150.png` | Catalogue entry Reducing tee 8 x 4 in P150 (Piping specials) |
+| `stage10/cat10-Mitre-bend-90-deg-24-in-3-pieces.png` | Catalogue entry Mitre bend 90 deg 24 in, 3 pieces (Piping specials) |
+| `stage10/cat10-Mitre-bend-90-deg-24-in-5-pieces.png` | Catalogue entry Mitre bend 90 deg 24 in, 5 pieces (Piping specials) |
+| `stage10/cat10-Stub-in-12-x-4-in-with-reinforcing-pad.png` | Catalogue entry Stub-in 12 x 4 in with reinforcing pad (Piping specials) |
+| `stage10/cat10-Spring-hanger-for-8-in-pipe.png` | Catalogue entry Spring hanger for 8 in pipe (Piping specials) |
+| `stage10/cat10-Insulated-and-steam-traced-pipe-6-in.png` | Catalogue entry Insulated and steam-traced pipe 6 in (Piping specials) |
+| `stage10/cat10-Expansion-loop-6-in-8-ft-x-6-ft.png` | Catalogue entry Expansion loop 6 in, 8 ft x 6 ft (Piping specials) |
+| `stage10/cat10-Hose-connection-1-in-with-cap.png` | Catalogue entry Hose connection 1 in with cap (Piping specials) |
+| `stage10/sheet-piping-specials.png` | Piping specials catalogue contact sheet (the renders above, tiled and labelled with DejaVu Sans) |

@@ -9,7 +9,7 @@ import { hexHardware } from './hardware';
 import type { FlangeDesign } from './pipe';
 
 export type V3 = [number, number, number];
-export type DRole = 'steel' | 'hardware' | 'weld' | 'concrete' | 'equipment' | 'stem' | 'rebar' | 'galv' | 'jacket' | 'machine' | 'safety' | 'grout' | 'nameplate' | 'polymer' | 'closure' | 'casting';
+export type DRole = 'steel' | 'hardware' | 'weld' | 'concrete' | 'equipment' | 'stem' | 'rebar' | 'galv' | 'jacket' | 'machine' | 'safety' | 'grout' | 'nameplate' | 'polymer' | 'closure' | 'casting' | 'pipe' | 'sheet';
 export interface DSolid { name: string; mesh: MeshData; role?: DRole }
 
 const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];

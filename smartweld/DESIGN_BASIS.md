@@ -2974,3 +2974,60 @@ Items:
   0.8 of the height, a rim seal, a rolling ladder from the gauger's platform to the roof, roof
   drain and legs, and the spiral stair. Reason: a fixed roof keeps rain out of a low-vapour
   stock; a floating roof rides on the liquid so no vapour space forms.
+
+## 70. Piping specials (`SW-PSP-*`) — catalogue items only
+
+Written 2026-11-23 at the owner's instruction: a comprehensive catalogue of 3D items, with nothing
+that affects the isometric generator or plant 2. These parts are catalogue items: they are not in
+the plants, the line lists, the ground truth or the PCF mapping (§58), and instrument tags are
+out of scope (they belong to the P&ID). In-line items lie along z from one end face to the other;
+flanges, pipe and bolting by SW-PIPE-*, SW-FLG-*. Proportions are SmartWeld's own, from the
+reasoning given, for the owner to tune (PROVENANCE P-75).
+
+- `SW-PSP-1` Y strainer (flanged): face to face 2 flange lengths + 2.5 OD; a cast body of 1.5 OD
+  diameter; a screen pocket of the pipe's bore at 45° below the run toward the outlet, 1.6 OD
+  long, closed by a bolted cover with a drain plug. Reason: the pocket holds a screen as long as
+  the flow area needs and empties downward.
+- `SW-PSP-2` Basket strainer: a vertical body of 2 OD diameter and 3.2 OD height with in-line
+  flanged nozzles 0.3 OD above its middle, a bolted cover with a lifting handle, a drain nozzle
+  and three legs. `SW-PSP-3` Temporary cone strainer: a ring `PL1/8` held between flanges inside
+  the bolt circle, with a handle tab past the flange rim and a cone 1.5 OD long of perforated
+  plate (perforations not drawn).
+- `SW-PSP-4` Steam trap, small bore: disc type, a body block 2.2 OD square (minimum 1.5 in) with a
+  round cap on top and threaded ends, 2.4 body widths long; bucket type, a vertical body 2 widths
+  in diameter and 2.5 high hung below the line under a bolted cover, 3.4 widths end to end.
+  Reason: envelope of the two common types; the bucket needs a body wider than the line fitting.
+- `SW-PSP-5` Expansion joint (bellows): stated convolutions (default 5) at a pitch of 0.2 OD
+  (minimum 3/4 in), each 0.6 pitch high, of 1/16 in plate, between 2 in weld ends and flanges;
+  four limit rods of 3/4 in on lugs at the flange rims. Reason: thin convolutions take movement;
+  limit rods keep pressure thrust from stretching them. `SW-PSP-6` Flexible hose: the same
+  corrugation at a pitch of 0.1 OD over the stated length, with a braid collar at each end.
+- `SW-PSP-7` Flame arrestor (in-line): cones from the pipe to an element housing of 2 OD diameter
+  and 0.8 OD length clamped between two ring flanges by eight tie bolts. Reason: the element
+  needs several times the pipe's area to pass flow through its narrow passages.
+- `SW-PSP-8` Sight glass: a body cross of 1.6 OD with a glass disc of 1.2 OD each side under a
+  bolted retaining ring. `SW-PSP-9` Rupture disc holder: two holder rings 3/4 in thick inside
+  the bolt circle with the domed disc between and a tag stem past the flange rim. `SW-PSP-10`
+  Drip ring: a ring 1.5 in thick between flanges with two tapped bosses of 3/4 in, one plugged.
+- `SW-PSP-11` Lateral (45°, butt weld): a run of 1.0 OD + 2 in before the branch point and 2.7 OD
+  + 2 in after it, the branch 2.7 OD + 2 in long at 45° toward the outlet. `SW-PSP-12` Mitre
+  bend: a 90° bend of stated pieces (default 3) on a centreline radius of 1.5 OD, each joint
+  turning the same angle, the end pieces half the length of the middle ones; shown standing in
+  a vertical plane, turning up. `SW-PSP-13`
+  Stub-in: a branch pipe set straight on the run with a reinforcing pad of the run's thickness
+  and twice the branch's outside diameter, rolled to the run. Reason: where no fitting is made.
+- `SW-PSP-14` Spring hanger: a spring can 7 in in diameter and 14 in high with a load scale
+  window, hung by a 3/4 in rod from a welded lug on the steel, a turnbuckle below it and a
+  two-bolt pipe clamp of `PL3/8` × 2.5 in. Reason: a spring carries the pipe while it moves up
+  or down with temperature.
+- `SW-PSP-15` Insulation and tracing on a pipe: insulation 1 in thick to 2 in pipe, 1.5 in to 6
+  in, 2 in to 12 in and 3 in above, under a 0.02 in aluminium jacket banded every 12 in; where
+  traced, a 1/2 in tracer tube along the pipe at five o'clock and the insulation one size
+  roomier. Shown stepped back at the ends so each layer is seen. Reason: heat loss per foot
+  falls slowly with thickness, so thickness steps with size.
+- `SW-PSP-16` Expansion loop: a flat U of stated width and height in the run's plane on long
+  radius bends (SW-FIT-1), shown with 3 OD + 12 in of straight each side. `SW-PSP-17` Hose
+  connection: a threaded quick coupling with two cam arms and a chained cap on a nipple.
+- `SW-PSP-18` Weight of a piping special: the drawn metal at steel density (K-1); insulation
+  and glass are drawn but not weighed. Reason: the catalogue weight is what a rigger lifts in
+  steel; a light covering is not a rule-made number worth stating.
