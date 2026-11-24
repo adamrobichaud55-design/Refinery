@@ -383,10 +383,10 @@ function headManway(z: number, dir: 1 | -1): Solid[] {
   const ell: Polygon = Array.from({ length: 32 }, (_, i) => ({ x: 8.5 * Math.cos((2 * Math.PI * i) / 32), y: 6.5 * Math.sin((2 * Math.PI * i) / 32) })), z0 = dir > 0 ? z - 1 : z - 0.5;
   return [{ name: 'manway cover 12 × 16', mesh: extrude({ outer: ell }, 1.5, z0) }, { name: 'manway yoke and stud', role: 'hardware', mesh: mergeMeshes([boxMesh(-10, -1, dir > 0 ? z + 0.5 : z - 2, 10, 1, dir > 0 ? z + 2 : z - 0.5), cylZ(0, 0, 0.5, dir > 0 ? z + 0.5 : z - 4, dir > 0 ? z + 4 : z - 0.5, 10)]) }];
 }
-export interface DrumInput { tag: string; ID: number; L: number; saddles?: boolean }
+export interface DrumInput { tag: string; ID: number; L: number; saddles?: boolean; /** a stated wall in place of the proportion (§72) */ t?: number }
 /** SW-EQC-38: the steam drum's solids (z along the drum, y up) */
 export function steamDrumSolids(inp: DrumInput): { solids: Solid[]; R: number; t: number } {
-  const t = Math.max(1, Math.ceil((inp.ID / 48) * 8) / 8), R = inp.ID / 2 + t, L = inp.L, s: Solid[] = [...drumBody(R, t, L)];
+  const t = inp.t ?? Math.max(1, Math.ceil((inp.ID / 48) * 8) / 8), R = inp.ID / 2 + t, L = inp.L, s: Solid[] = [...drumBody(R, t, L)];
   s.push(...headManway(-R / 2, -1), ...headManway(L + R / 2, 1));
   s.push(...upOn(makeNozzle(`${inp.tag}-ST`, { NPS: seriesUp(Math.max(4, inp.ID / 7)), cls: 'P600', shellT: t, shellR: R }), R, L / 2, 'steam outlet'));
   for (const [k, f] of [0.3, 0.7].entries()) s.push(...upOn(makeNozzle(`${inp.tag}-SV${k}`, { NPS: 4, cls: 'P600', shellT: t, shellR: R, projection: 10 }), R, f * L, `safety valve nozzle ${k + 1}`));
@@ -419,10 +419,10 @@ export function makeMudDrum(inp: DrumInput): PartSpec {
   return done(inp.tag, 'DRUM', `${inp.tag} mud drum ${inp.ID}" ID × ${(inp.L / 12).toFixed(0)}'`, { ID: drawing(inp.ID, 'Inside diameter'), L: drawing(inp.L, 'Tangent length'), t: rule(d.t, 'SW-EQC-39', 'Shell thickness (ID/48, min 1 in)') }, inp.L + d.R, d.solids);
 }
 
-export interface FlueGasCoolerInput { tag: string; D: number; L: number }
+export interface FlueGasCoolerInput { tag: string; D: number; L: number; /** a stated shell wall in place of the fixed 3/4 in (§72) */ t?: number; /** a stated wall for its steam drum */ drumT?: number }
 /** SW-EQC-37: a horizontal fire-tube flue gas cooler with its steam drum; z along the shell from the inlet tubesheet, y up */
 export function makeFlueGasCooler(inp: FlueGasCoolerInput): PartSpec {
-  const D = inp.D, L = inp.L, t = 0.75, R = D / 2 + t, ts = 2, barrel = 0.33 * D, rd = 0.25 * D, coneL = (R - rd - t) / Math.tan(Math.PI / 6), cl = R + 36, s: Solid[] = [];
+  const D = inp.D, L = inp.L, t = inp.t ?? 0.75, R = D / 2 + t, ts = 2, barrel = 0.33 * D, rd = 0.25 * D, coneL = (R - rd - t) / Math.tan(Math.PI / 6), cl = R + 36, s: Solid[] = [];
   s.push({ name: 'shell', cut: true, mesh: shellRing(R, t, L) }, { name: 'weld seams', cut: true, mesh: seamSolids(R, t, 0, L) }, { name: 'tubesheets', role: 'closure', mesh: mergeMeshes([cylZ(0, 0, R + 2, -ts, 0, 64), cylZ(0, 0, R + 2, L, L + ts, 64)]) });
   const tubes: MeshData[] = [], p = 2.5, Rl = D / 2 - 2, rowH = p * 0.8660254;
   for (let j = -Math.ceil(Rl / rowH); j <= Math.ceil(Rl / rowH); j++) for (let i = -Math.ceil(Rl / p) - 1; i <= Math.ceil(Rl / p) + 1; i++) { const x = i * p + (Math.abs(j) % 2 ? p / 2 : 0), y = j * rowH; if (Math.hypot(x, y) <= Rl - 1) tubes.push(extrude({ outer: circle(x, y, 1, 8), inner: circle(x, y, 0.85, 8) }, L + 2 * ts, -ts)); }
@@ -434,14 +434,14 @@ export function makeFlueGasCooler(inp: FlueGasCoolerInput): PartSpec {
     s.push(...upOn(makeManway(`${inp.tag}-CM${k}`, { D: 20, cls: 'P150', shellT: t, shellR: R }), R, zb0 + barrel / 2, `${label} channel manway`));
   }
   for (const f of [0.2, 0.8]) s.push(...saddleSolids(R, cl, f * L, Math.max(6, D / 3)));
-  const drum = steamDrumSolids({ tag: `${inp.tag}-SD`, ID: 0.6 * D, L: 0.8 * L, saddles: false }), Rd = drum.R, yd = R + 30 + Rd;
+  const drum = steamDrumSolids({ tag: `${inp.tag}-SD`, ID: 0.6 * D, L: 0.8 * L, saddles: false, t: inp.drumT }), Rd = drum.R, yd = R + 30 + Rd;
   s.push(...drum.solids.filter(q => !/riser stubs|downcomer nozzle|continuous blowdown/.test(q.name)).map(q => ({ ...q, name: `steam drum ${q.name}`, mesh: at(q.mesh, 0, yd, 0.1 * L) })));
   s.push({ name: 'steam drum pedestals', role: 'steel', mesh: mergeMeshes([0.3 * L, 0.7 * L].map(z => boxMesh(-0.4 * Rd, Math.sqrt(R * R - (0.4 * Rd) ** 2) - 0.5, z - 3, 0.4 * Rd, yd - Math.sqrt(Rd * Rd - (0.4 * Rd) ** 2) + 0.5, z + 3))) });
   s.push({ name: 'risers (4 × 6 in)', mesh: mergeMeshes([0.2, 0.4, 0.6, 0.8].map((f, i) => cylY((i % 2 ? 1 : -1) * 0.25 * Rd, f * L, 3.3125, R - 1, yd - Rd + 2, 16))) });
   s.push({ name: 'downcomers (2 × 8 in)', mesh: mergeMeshes([0.14 * L, 0.86 * L].map(z => pipeRun([[0.7 * Rd, yd - 0.7 * Rd, z], [R + 14, yd - Rd - 12, z], [R + 14, -0.45 * R, z], [0.88 * R, -0.45 * R, z]], 8.625, 14))) });
   s.push(...downOn(makeNozzle(`${inp.tag}-BD`, { NPS: 2, cls: 'P300', shellT: t, shellR: R }), R, 0.5 * L, 'shell blowdown'));
   return done(inp.tag, 'EXCHANGER', `${inp.tag} flue gas cooler ${D}" × ${(L / 12).toFixed(0)}' with steam drum`, {
-    D: drawing(D, 'Shell inside diameter'), L: drawing(L, 'Shell length between tubesheets'), duct: rule(0.5 * D, 'SW-EQC-37', 'Gas duct diameter (0.5 D)'), coneL: rule(coneL, 'SW-EQC-37', 'Channel cone length (30°)'),
+    D: drawing(D, 'Shell inside diameter'), L: drawing(L, 'Shell length between tubesheets'), ...(inp.t ? { t: drawing(t, 'Shell thickness (stated)') } : {}), duct: rule(0.5 * D, 'SW-EQC-37', 'Gas duct diameter (0.5 D)'), coneL: rule(coneL, 'SW-EQC-37', 'Channel cone length (30°)'),
     tubes: rule(tubes.length, 'SW-EQC-37', 'Fire tubes 2 in on 2-1/2 in pitch', 'count'), drumD: rule(0.6 * D, 'SW-EQC-37', 'Steam drum diameter (0.6 D)'), drumL: rule(0.8 * L, 'SW-EQC-37', 'Steam drum length (0.8 L)'), risers: rule(4, 'SW-EQC-37', 'Risers 6 in', 'count'), downcomers: rule(2, 'SW-EQC-37', 'Downcomers 8 in', 'count'),
   }, L + 2 * (ts + barrel + coneL + 14), s, ['Refractory in the inlet channel and the tube ferrules are not drawn; catalogue images cut the shell and channels.'], { yd });
 }
@@ -474,10 +474,10 @@ export function makeEconomizer(id: string, a: number, b: number, h: number): Par
   return done(id, 'ECONOMIZER', `Economizer ${a}" × ${b}" × ${h}"`, { a: drawing(a, 'Casing width (tube length)'), b: drawing(b, 'Casing depth'), h: drawing(h, 'Casing height'), tubes: rule(e.tubes, 'SW-EQC-41', 'Coil tubes 2 in at 4 in pitch', 'count'), headers: rule(6, 'SW-EQC-41', 'Header size') }, h, e.solids, ['Return bends are inside the end boxes and not drawn.']);
 }
 
-export interface BoilerInput { tag: string; steamID: number; L: number; centres: number; stackD?: number; stackH?: number }
+export interface BoilerInput { tag: string; steamID: number; L: number; centres: number; stackD?: number; stackH?: number; /** a stated wall for the steam drum in place of the proportion (§72) */ drumT?: number }
 /** SW-EQC-40: a two-drum water-tube boiler; drums along y, z up from grade, the furnace on +x */
 export function makeWaterTubeBoiler(inp: BoilerInput): PartSpec {
-  const L = inp.L, C = inp.centres, sd = steamDrumSolids({ tag: `${inp.tag}-SD`, ID: inp.steamID, L, saddles: false }), md = mudDrumSolids({ tag: `${inp.tag}-MD`, ID: 0.65 * inp.steamID, L, saddles: false });
+  const L = inp.L, C = inp.centres, sd = steamDrumSolids({ tag: `${inp.tag}-SD`, ID: inp.steamID, L, saddles: false, t: inp.drumT }), md = mudDrumSolids({ tag: `${inp.tag}-MD`, ID: 0.65 * inp.steamID, L, saddles: false });
   const Rs = sd.R, Rm = md.R, zm = Rm + 36, zs = zm + C, Wf = 0.9 * C, zr = zs + 0.25 * Rs, zf = zm - 8, xb = -(Rs + 30), s: Solid[] = [];
   const DY = [-1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1];   // a drum built along z with y up, laid along y with z up
   s.push(...sd.solids.filter(q => !/riser stubs|downcomer nozzle/.test(q.name)).map(q => ({ ...q, name: `steam drum ${q.name}`, mesh: at(transformMesh(q.mesh, DY), 0, 0, zs) })), ...md.solids.filter(q => !/tube stubs/.test(q.name)).map(q => ({ ...q, name: `mud drum ${q.name}`, mesh: at(transformMesh(q.mesh, DY), 0, 0, zm) })));

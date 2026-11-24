@@ -18,7 +18,7 @@ must accompany any distribution of the viewer. No published dimension tables, st
 | 7     | Equipment metadata; 25 shutdown work orders with scope, isolations, demo welding specs, NDE, tests and ITPs (`public/workorders/`); the generated isometrics of this stage were withdrawn in stage 8 | done |
 | 8     | The owner's isometric drawings (139 drawings, 240 sheets) imported and matched to the model; the project's only isometrics; their sheets are attached to the work-order packs (`public/isometrics-imported/`) | done |
 | 9     | Plant 2 (`public/plants/P2/`): the coverage plant with socket-weld and threaded piping, every symbol class of the owner's generator at least 20 times (SW-COV-2), its ground truth, answer key and designer package (`downloads/designer-package-P2.zip`); structural steel erection drawings with weld details for both plants (`downloads/erection-P1.pdf`, `erection-P2.pdf`) | done |
-| R     | Plant 3, the coastal refinery (in progress; `src/refinery/`, DESIGN_BASIS §74–§77): an invented 60,000 barrel-a-day refinery on an invented coastal site, about ten times plant 2. Done so far: the basis of design; the process model: material balance, the flowsheets of sixteen units (374 equipment items, 615 process lines), every stream between units, and sizes for duty (`docs/REFINERY-PROCESS.md`, `public/refinery/process/`); the site: an invented coast as a formula, benches and roads graded into it, and the plot plan checked against its spacings (`docs/REFINERY-PLOT.md`, `screenshots/refinery/`). the equipment of the nine process units, the tanks, spheres and flare as catalogue bodies at their sized dimensions, each unit arranged about its rack and set on its plot (`screenshots/refinery/unit-*.png`, `plant-*.png`). To come: the offsite units' equipment, piping, pressure equipment and piping records. A demonstration, not a process design; not in the plant list, and plants 1 and 2 are untouched | in progress |
+| R     | Plant 3, the coastal refinery (in progress; `src/refinery/`, DESIGN_BASIS §74–§78): an invented 60,000 barrel-a-day refinery on an invented coastal site, about ten times plant 2. Done so far: the basis of design; the process model: material balance, the flowsheets of sixteen units (374 equipment items, 615 process lines), every stream between units, and sizes for duty (`docs/REFINERY-PROCESS.md`, `public/refinery/process/`); the site: an invented coast as a formula, benches and roads graded into it, and the plot plan checked against its spacings (`docs/REFINERY-PLOT.md`, `screenshots/refinery/`). the equipment of the nine process units, the tanks, spheres and flare as catalogue bodies at their sized dimensions, each unit arranged about its rack and set on its plot (`screenshots/refinery/unit-*.png`, `plant-*.png`); the code layer, first part: a record for each of 205 pressure vessels and boilers whose wall is the wall its body is drawn with, the fluid service, line class and severity of each of 742 lines, and invented registration numbers, with printable records (`docs/REFINERY-REGISTRY.md`, `public/refinery/registry/`; code names and categories recalled and flagged for the owner to verify, numbers invented, no form reproduced). To come: the offsite units' equipment, piping, and the registration of each piping component. A demonstration, not a process design; not in the plant list, and plants 1 and 2 are untouched | in progress |
 
 ## Run
 
@@ -64,12 +64,16 @@ src/catalogue          designation parser and part rules → PartSpec (plain dat
                        parts/processEquipment.ts further process equipment (§72), catalogue items only;
                        parts/civil2.ts further civil items (§73), catalogue items only
 src/scene/structures.ts  structural assemblies for the catalogue (§71): racks, bridges, platforms, stairs, ladders, supports
-src/refinery           plant 3, the coastal refinery (§74–§77): balance.ts, flowsheet.ts and units/ the process;
+src/refinery           plant 3, the coastal refinery (§74–§78): balance.ts, flowsheet.ts and units/ the process;
                        process.ts the streams between units; sizing.ts sizes for duty; report.ts the document
                        terrain.ts the ground; site.ts the plot plan; siteChecks.ts its spacings
 docs/REFINERY-PROCESS.md  plant 3's process as a document (tools/refinery-process.ts); data in public/refinery/process/
                        cell.ts a unit's equipment about its rack; assemble.ts the units on the site (tools/refinery-model.ts)
 docs/REFINERY-PLOT.md  plant 3's site and plot plan (tools/refinery-site.ts); data in public/refinery/site/
+                       registry.ts the code layer (§76): pressure equipment and line records, registration numbers;
+                       registryReport.ts and registryPdf.ts its document and printable records
+docs/REFINERY-REGISTRY.md  plant 3's pressure equipment and piping records (tools/refinery-registry.ts); data and
+                       printable records in public/refinery/registry/ (demonstration data)
 docs/CATALOGUE-*.md    the civil and equipment catalogues as documents (tools/catalogue-doc.ts)
 src/geometry           profiles, extrusion, transforms → mesh arrays (plain data)
 src/scene              catalogue list and demonstration assemblies (plain data)

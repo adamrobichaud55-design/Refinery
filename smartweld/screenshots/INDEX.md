@@ -380,3 +380,8 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/plant-process-units-from-the-south.png` | Plant 3: the process units on both sides of the main pipeway, from the south |
 | `refinery/plant-crude-and-vacuum-units.png` | Plant 3: the crude and vacuum units |
 | `refinery/plant-tank-farm-from-the-north-east.png` | Plant 3: the tank terraces from the north-east |
+| `refinery/registry-record-of-a-column.png` | Plant 3: a printable pressure equipment record (the crude column), demonstration data in SmartWeld's own layout |
+| `refinery/registry-record-of-an-exchanger.png` | Plant 3: a printable pressure equipment record of a two-chamber exchanger, demonstration data |
+| `refinery/registry-record-of-a-boiler.png` | Plant 3: a printable boiler record with its drums as parts, demonstration data |
+| `refinery/registry-line-register.png` | Plant 3: a unit's line register with fluid service, line class and severity, demonstration data |
+| `refinery/registry-line-classes.png` | Plant 3: the registration index's first page, with the line classes and their severity, demonstration data |

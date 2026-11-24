@@ -3137,6 +3137,14 @@ proportions are SmartWeld's own, from the reasoning given, from no drawing, lice
 maker's data, standard or table, for the owner to tune (PROVENANCE P-77). Nozzle sizes "to the
 series" are rounded up to the size series of SW-PIPE-*.
 
+Stated wall (added 2026-11-24 for plant 3). Where an item of this section or of §69 gives its
+shell a wall in proportion to its diameter for want of a duty — the sphere (SW-EQC-48), the
+deaerator (SW-EQC-50), the adsorber vessels (SW-EQC-55), the flue gas cooler (SW-EQC-37), the
+sulfur furnace's waste heat boiler (SW-EQC-56), and the steam drum (SW-EQC-38) of these two and
+of the water-tube boiler (SW-EQC-40) — the item also takes a stated wall, which
+replaces the proportion and changes nothing else. Without one the item is as before, so the
+catalogue's own entries are unchanged. Plant 3 states the wall of SW-PRC-14.
+
 - `SW-EQC-45` Horizontal drum, dressed (knock-out drum, accumulator, surge drum): stated inside
   diameter and tangent length; shell ID / 96, 3/8 in least, to 1/8 in, unless stated; 2:1 heads;
   two saddles at 0.2 and 0.8 of the length, the shell's underside 36 in above grade (the
@@ -3749,10 +3757,18 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   is the logarithmic mean of the temperature differences at the two ends in counter-flow,
   5 °F at least at either end; steam condenses at about 490 °F at 600 psi, 365 °F at 150 psi
   and 300 °F at 50 psi, and water boils in a steam generator at the same temperatures
-  (properties of water, round figures). Tubes 3/4 in on the bundle rule of SW-EQC-30, 20 ft
+  (properties of water, round figures); the steam a generator raises leaves it saturated, at
+  that temperature. Tubes 3/4 in on the bundle rule of SW-EQC-30, 20 ft
   long; shells from 12 to 60 in inside diameter in 6 in steps; the fewest shells, then the
   smallest diameter, that give the surface. Reason: heat flows in proportion to surface, temperature difference and how
   readily the two films pass it, which thick oils do poorly and condensing steam does well.
+  A gas at less than 50 psi that flows inside the tubes (the sulfur unit's condensers and
+  reheaters, the cracker's flue gas cooler) passes through them no faster than 100 ft/s at its
+  mean temperature, and the shell is enlarged until it does. Reason: such a gas has only a
+  fraction of a psi to spend on friction in each item. The flue gas cooler is the catalogue's
+  fire-tube item (SW-EQC-37), whose tubes are 2 in at 2.5 in centres, wall d / 9 as SW-EQC-30:
+  its shell, from 36 in up in 6 in steps, is the smallest that gives both the surface and that
+  velocity.
 - `SW-PRC-9` Air coolers. A bay is 14 ft wide with tubes 32 ft long and two fans, four rows of
   1 in tubes at 2.5 in centres; duty per bay = 80 Btu/h·ft²·°F × its bare tube surface × ΔT_lm
   against air rising from 90 °F to 130 °F; bays = duty / that, rounded up. Process is cooled
@@ -3798,6 +3814,23 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   a factor of two on yield, as SW-PIPE-3; steel keeps most of its strength to about 650 °F and
   about half near 1,000 °F; a thin large shell must still hold its shape when lifted and under
   external pressure.
+  - A sphere: t = P R / 2 S + corrosion allowance, 3/4 in at least, with no floor of
+    diameter / 250. Reason: across any great circle the pressure's force P π R² is carried by
+    the whole rim 2 π R t, half the stress of a cylinder's hoop; a shell curved both ways holds
+    its shape.
+  - An exchanger's shell, channels and heads are drawn at one thickness: the larger of what its
+    two sides need, each at its own pressure and temperature. The same holds for a steam
+    generator whose shell holds the boiling water (the sulfur condensers, the sulfur furnace's
+    waste heat boiler, the cracker's flue gas cooler).
+  - Packaged vessels take their wall from this rule too: the four adsorbers of the hydrogen
+    purifier, the deaerator, the liquid nitrogen vessel (its inner vessel; the vacuum jacket is
+    not drawn).
+  - Steam drums take their wall from this rule at the design temperature of the saturated
+    steam they hold (its condensing temperature of SW-PRC-8 + 50 °F), whatever the superheated
+    steam leaving the boiler is designed for.
+  - Where the catalogue fixes a wall by a rule of its own (the cracker's vessels at 1 in, the
+    boilers' mud drums), a test checks that P R / (t − corrosion allowance) does not exceed S
+    at the item's design temperature.
 - `SW-PRC-15` Utility and safety connections on equipment: water coolers take cooling water
   supply and return; steam heaters and reboilers take steam and return condensate; every pump
   has a seal flush connection; every pressure vessel has a relief valve to the flare header, a
@@ -3853,20 +3886,35 @@ So this section is different in kind from every other in this document, and is k
 - `SW-REG-1` Which code an item is labelled with.
   - Pressure vessels — columns, drums, reactors, the shells and channels of exchangers, air
     cooler headers, filters, adsorber beds, spheres and bullets, the waste heat boiler and
-    condensers of the sulfur unit — "ASME Boiler and Pressure Vessel Code, Section VIII,
-    Division 1".
+    condensers of the sulfur unit, and with them the desalter, the deaerator, the treating
+    vessels, the liquid nitrogen vessel, the cracker's two vessels and the condensers of the
+    vacuum ejector set — "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1".
   - Power boilers and their pressure parts — the two water-tube boilers with their steam and
     mud drums and economizers, and the cracker's flue gas cooler with its steam drum —
     "ASME Boiler and Pressure Vessel Code, Section I".
   - Piping — all process and utility piping — "ASME B31.3 Process Piping"; the steam and
     feed water piping from a Section I boiler out to its first stop valves is boiler external
     piping, labelled "ASME Section I / B31.1".
-  - Storage tanks at atmospheric pressure, fired heater coils, pumps, compressors and
-    structures are outside this layer: they are not labelled and get no record.
+  - Fired heater coils. As recalled, the Canadian standard for boilers, pressure vessels and
+    pressure piping counts the coil of a fired process heater (its tubes, return bends,
+    crossovers and manifolds inside the casing) as pressure equipment whose design is
+    registered. Each heater's coil is listed in the registration index with a design number,
+    labelled "ASME B31.3 Process Piping (fired heater pressure coil)", with its design
+    conditions and material label; it is not a vessel and gets no vessel record.
+  - Storage tanks at atmospheric pressure, catalyst hoppers, basins and pits (open to the
+    atmosphere, SW-PRC-2), pumps, compressors and structures are outside this layer: they are
+    not labelled and get no record. As recalled, the casings of rotating machines are not
+    registered as vessels or fittings.
+  - Packaged items that are neither vessels nor piping runs — the steam let-down and
+    desuperheating stations, the nitrogen vaporisers, the ejectors — are counted with the
+    fittings, in category H of SW-REG-6.
 - `SW-REG-2` Report designation named on a record. Section VIII Division 1: `U-1` for a vessel of
-  more than one chamber or one assembled in the field (exchangers, columns, reactors, the
-  cracker's vessels, spheres); `U-1A` for a single-chamber vessel finished in the shop (drums,
-  filters, small vessels). Section I: `P-3` for a water-tube boiler unit, its drums listed on
+  more than one chamber or one assembled in the field (exchangers, among them the sulfur
+  condensers, the sulfur furnace with its waste heat boiler and the ejector condensers; columns;
+  reactors; the cracker's reactor vessel and its regenerator, a record each; spheres); `U-1A`
+  for a single-chamber vessel finished in the shop (drums, filters, treating vessels, the
+  desalter, the deaerator, each adsorber, the liquid nitrogen vessel, bullets, and each air
+  cooler bay's bundle of headers and tubes). Section I: `P-3` for a water-tube boiler unit, its drums listed on
   it and carrying `P-4` as parts; `P-4A` for the boiler external piping.
 - `SW-REG-3` A pressure equipment record carries the content such a report carries, in
   SmartWeld's layout: tag and service; a fictional fabricator ("Demonstration Fabricator A"
@@ -3885,7 +3933,28 @@ So this section is different in kind from every other in this document, and is k
     hydrogen above 600 psi or the vessel is in lethal service; otherwise spot, efficiency 0.85;
   - heat treatment after welding: where the wall is over 1-1/4 in, or the service is amine,
     caustic or wet hydrogen sulfide;
-  - lethal service: vessels whose contents are Category M by SW-REG-4.
+  - lethal service: vessels whose contents are Category M by SW-REG-4;
+  - minimum design metal temperature colder than −20 °F: −50 °F for the storage of three-carbon
+    liquefied gas (propane boils at about −44 °F at atmospheric pressure, a property of the
+    substance from general knowledge, and a vessel let down to the atmosphere chills to it);
+    −320 °F for the liquid nitrogen vessel (nitrogen boils at about −320 °F);
+  - corrosion allowance: the 1/8 in of SW-PRC-14; none on the stainless nitrogen vessel.
+  What the model's own values mean on a record:
+  - thickness is the wall the body is drawn with (SW-PRC-14, or the catalogue's own rule where
+    it fixes one); a test checks every record's P R / t (P R / 2 t for a sphere) against S;
+  - empty weight is the catalogue's weight of the body as drawn (shell, heads, supports, and
+    platforms where it has them), to which a shell-and-tube exchanger's tubes are added (their
+    number × length × the tube section of SW-EQC-30), since its body is drawn without them. An
+    air cooler bay's record is of its pressure parts only: its tubes (four rows of 1 in tubes,
+    wall d / 9, SW-PRC-9) and two header boxes, each drawn 12 in × 24 in × the bay's width and
+    weighed as 1 in plate; the catalogue's weight of a bay counts a solid block standing for
+    the bundle and is not used;
+  - volume is the shell's cylinder and its two 2:1 heads, or the sphere; it is not stated for
+    exchangers, boilers and air coolers;
+  - nozzles are the item's process and utility connections of SW-PRC-15 with the size and class
+    of their lines; manways, vents, drains and instrument connections are not listed;
+  - the relief valve is named after the vessel's number and set at the working pressure; one
+    is named for each chamber. The valves themselves enter the model with the piping.
 - `SW-REG-4` Fluid service of a line, the categories of B31.3 as recalled:
   - **Category D**: the fluid is not flammable, not toxic and not damaging to human tissue; the
     design pressure is 150 psi or less; the design temperature is from −20 °F to 366 °F.
@@ -3902,14 +3971,23 @@ So this section is different in kind from every other in this document, and is k
   welds (D: visual; Normal: visual and 5 % random radiography of girth butt welds; M: visual and
   20 % random radiography, with a sensitive leak test); leak test (hydrostatic at 1.5 × design
   pressure; D may take an initial service test); and for M, no threaded joints (its small bore
-  is socket-welded or butt-welded in this model).
+  is socket-welded or butt-welded in this model). A line whose design temperature is 800 °F or
+  more (heater outlets and reactor circuits of the reformer, the hot ends of the crude, vacuum
+  and cracking units) is marked "elevated-temperature provisions may apply: for the owner to
+  decide"; the model designates no line under them, and 800 °F is SmartWeld's round figure, not
+  the code's threshold.
 - `SW-REG-5` Material designations on records are labels, recalled, and change no geometry
   (SmartWeld's own grades remain the basis of every wall): carbon steel plate `SA-516-70`,
   pipe `A106-B`, fittings `A234-WPB`, forgings and flanges `A105`, studs `A193-B7` with
   `A194-2H` nuts, exchanger tubes `SA-179`; for hot hydrogen service (reactor circuits of units
-  13 to 16) plate `SA-387-11` and pipe `A335-P11`; for hot sulfur-bearing oil above 550 °F
-  (heater outlets and transfer lines of units 11, 12 and 17) pipe `A335-P5`; for amine
-  regenerator and sour water overheads `A312-TP316L`.
+  13 to 16: hydrogen or reactor effluent at a design temperature above 500 °F) plate
+  `SA-387-11` and pipe `A335-P11` with fittings `A234-WP11` and flanges `A182-F11`; for hot
+  sulfur-bearing oil above 550 °F (heater outlets and transfer lines of units 11, 12 and 17: a
+  flammable stream at a design temperature above 600 °F) pipe `A335-P5` with fittings
+  `A234-WP5` and flanges `A182-F5`; for amine regenerator and sour water overheads
+  `A312-TP316L` with fittings `A403-WP316L` and flanges `A182-F316L`; for the liquid nitrogen
+  vessel plate `SA-240-304`. A fired heater's coil takes the pipe label of its unit's hot
+  service (`A335-P5` in units 11 and 12, `A335-P11` in units 13 to 16).
 - `SW-REG-6` Registration numbers. As recalled: in Canada a pressure vessel, boiler or
   exchanger design, a pressure piping system's design, and each type of fitting are registered
   with the province's boiler and pressure vessel regulator and given a Canadian Registration
@@ -3921,13 +3999,38 @@ So this section is different in kind from every other in this document, and is k
   7 for New Brunswick. In this model: every vessel record has a design number; every piping
   line class in every unit has a piping system number, carried by each of its lines and pipe
   pieces; every fitting, flange and valve carries the number of its fitting category for its
-  class and fictional maker. **Every number is invented** by a rule from the item's own tag,
+  class and fictional maker, of which there are three ("Demonstration Maker 1" to "3", no real
+  company). The piping system number is keyed by unit and line class (SW-REG-8). **Every number is invented** by a rule from the item's own tag,
   issued by no regulator and looked up nowhere; it may by accident equal a real number and
   means nothing if it does. Each is stored with `"demonstration": true`.
 - `SW-REG-7` Files: `public/refinery/registry/` holds the equipment records, the line records
   and the registration index as JSON; printable records are written by SmartWeld's own PDF
   writer (SW-PDF-*) with the band "DEMONSTRATION DATA — not a manufacturer's data report, not a
   registration" on every page.
+- `SW-REG-8` Line class and severity (SmartWeld's own scheme, not recalled; the owner's
+  instruction that line classes be told apart by working pressure and by the risk of what
+  flows). A plant 3 line class is written `{group}{rating}-{material}-{service}{rank}`:
+  - group and rating as the generator's line class (SW-LC-*): the fluid group's letter (`H`
+    process, `W` water, `S` steam, `C` condensate and boiler feed water, `G` air and nitrogen,
+    `F` flare) and the pipe class number, which follows from the design pressure and
+    temperature (SW-PRC-3);
+  - material: `CS` carbon steel, `C1` the 1-1/4 Cr alloy steel label, `C5` the 5 Cr alloy steel
+    label, `SS` the stainless steel label (SW-REG-5);
+  - service: `D`, `N` or `M`, the fluid service of SW-REG-4, followed by the medium rank below.
+  So `H600-C1-N4`, `W150-CS-D1`, `H150-SS-M5`: the class name itself carries the working
+  pressure (its rating) and the risk of the medium (its last digit). Each class has a severity
+  level from 1 to 5, the larger of two ranks:
+  - pressure rank by pipe class: P150 1, P300 2, P600 3, P1200 4, higher 5;
+  - medium rank: 1 a Category D fluid; 2 a fluid that is neither flammable nor toxic but is
+    beyond Category D or harmful on contact (steam, condensate and boiler feed water at
+    pressure, amine, caustic, liquid sulfur, sour water);
+    3 a flammable liquid; 4 a flammable gas or a liquid that flashes to one (any flammable
+    stream that is vapour or two-phase in its line, liquefied gas, hydrogen and reactor
+    effluent, flare); 5 Category M.
+  Reason: a leak's consequence grows with the pressure behind it and with what escapes; taking
+  the larger rank keeps a low-pressure toxic line and a high-pressure water line both in view.
+  The level is a label for sorting and for choosing how closely to look; it sets no
+  examination by itself (SW-REG-4 does).
 
 ## 77. Plant 3: site, terrain and plot plan (`SW-SITE-*`)
 
@@ -4074,7 +4177,10 @@ their own geometry rules, which are unchanged.
     diameters high. The flue gas cooler (SW-EQC-37), sulfur furnace and condensers (SW-EQC-56,
     -57), incinerator (SW-EQC-58), adsorbers (SW-EQC-55), boilers (SW-EQC-40), cooling tower
     (SW-EQC-49) and flare (SW-EQC-35) are the catalogue's items at the size their flow or duty
-    gives; packages with no body of their own are shown as a vessel of their volume.
+    gives; packages with no body of their own are shown as a vessel of their volume. The
+    adsorbers are four vessels of 72 in × 20 ft between tangents; the sulfur furnace is 72 in
+    with 15 ft of chamber and 15 ft of waste heat boiler; a boiler's steam drum is 54 in × 25 ft.
+    Each takes the wall of SW-PRC-14 where the catalogue lets a wall be stated (§72).
   - Every body stands on an equipment pad 6 in high and 12 in larger all round, as in plants 1
     and 2 (SW-LAY-*). Nozzles are not part of a body: the piping stage adds each one from the
     nozzle schedule, so that the nozzle and the line that meets it are of one size and class.

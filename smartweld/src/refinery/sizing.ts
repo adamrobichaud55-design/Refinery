@@ -7,7 +7,7 @@
 import { K } from '../core/constants';
 import { CLASS_PRESSURE, CLASS_SERIES, pipeDims, type PipeClass } from '../catalogue';
 import { FLUIDS, rho, rhoL, rhoV, cfs, ATM, BBL_FT3, liquid, vapour, type State } from './fluids';
-import { STEAM_SAT, type UnitSheet, type Equip, type PLine, type Util, type End } from './flowsheet';
+import { STEAM, STEAM_SAT, type UnitSheet, type Equip, type PLine, type Util, type End } from './flowsheet';
 import { processModel } from './process';
 
 const G = K.G_FT_S2, up = (x: number, step: number) => Math.ceil(x / step - 1e-9) * step;
@@ -66,6 +66,18 @@ export function tubeCount(ID: number, d = 0.75): number {
 /** SW-PRC-8: surface of one shell, ft² (3/4 in tubes 20 ft long) */
 export const shellArea = (ID: number) => tubeCount(ID) * Math.PI * (0.75 / 12) * 20;
 export const SHELL_IDS = [12, 18, 24, 30, 36, 42, 48, 54, 60];
+/** SW-PRC-14: a sphere's shell, stressed half as much as a cylinder's of its diameter */
+export function sphereWall(ID: number, P: number, T: number): number { return up(Math.max((P * ID) / 4 / allowable(T) + 0.125, 0.75), 0.125); }
+/** SW-EQC-37: the fire tubes of the flue gas cooler, 2 in on a 2.5 in triangular pitch within a circle 2 in inside the shell */
+export function fireTubeCount(D: number): number {
+  const p = 2.5, Rl = D / 2 - 2, rowH = p * 0.8660254; let n = 0;
+  for (let j = -Math.ceil(Rl / rowH); j <= Math.ceil(Rl / rowH); j++) for (let i = -Math.ceil(Rl / p) - 1; i <= Math.ceil(Rl / p) + 1; i++) if (Math.hypot(i * p + (Math.abs(j) % 2 ? p / 2 : 0), j * rowH) <= Rl - 1) n++;
+  return n;
+}
+/** the bore of a tube of outside diameter d and wall d / 9 (SW-EQC-30), ft² */
+export const tubeBore = (d: number) => (Math.PI / 4) * ((d * (7 / 9)) / 12) ** 2;
+/** SW-PRC-8: a gas under 50 psi passes through tubes no faster than this, ft/s */
+export const TUBE_GAS_FTS = 100;
 const lmtd = (hi: number, ho: number, ci: number, co: number) => { const a = Math.max(5, hi - co), b = Math.max(5, ho - ci); return Math.abs(a - b) < 1e-6 ? a : (a - b) / Math.log(a / b); };
 /** SW-PRC-6: settling velocity of a drop, ft/s */
 const settle = (dL: number, dV: number) => 0.18 * Math.sqrt(Math.max(dL - dV, 1) / dV);
@@ -274,11 +286,17 @@ function sizeEquip(sh: UnitSheet, e: Equip, lines: LineSize[], utils: UnitSizing
       else { const lv = key as keyof typeof STEAM_SAT; if (!STEAM_SAT[lv]) throw new Error(`${e.tag}: no second side`); other = { fluid: lv, Tin: STEAM_SAT[lv], Tout: STEAM_SAT[lv], P: 0, gas: true, condensing: true, how: 'steam' }; }
       const a = proc[0], Q = Math.max(...Object.values(e.duty).map(Math.abs)), hot = a.Tin > a.Tout || (a.Tin === a.Tout && other.Tin < a.Tin) ? a : other, cold = hot === a ? other : a;
       const dT = lmtd(hot.Tin, hot.Tout, cold.Tin, cold.Tout), U = coefficient(a, other), A = Q / (0.9 * U * dT);
-      let n = 1; while (n * shellArea(60) < A) n++;
-      const ID = SHELL_IDS.find(d => n * shellArea(d) >= A)!;
-      Object.assign(r, { count: n, running: n }); Object.assign(r.d, { dutyMMBtu: Q / 1e6, lmtd: dT, U, areaFt2: A, shells: n, ID, tubes: tubeCount(ID), tubeLength: 240, tShell: wall(ID, (sides.shell ?? sides.process).designP, (sides.shell ?? sides.process).designT) });
+      // SW-PRC-8: a gas under 50 psi inside the tubes needs this much bore, ft²
+      const ti = e.kind === 'hx' ? port('tube in') : port('process in') ?? port('inlet'), to = e.kind === 'hx' ? port('tube out') : port('process out') ?? port('outlet');
+      const bore = ti && to && ti.s.ph === 'V' && ti.s.P < 50 ? cfs({ ...ti.s, T: (ti.s.T + to.s.T) / 2 }) / TUBE_GAS_FTS : 0;
+      const fire = e.kind === 'fluegascooler', dTube = fire ? 2 : 0.75, ids = fire ? [36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144] : SHELL_IDS;
+      const count = (d: number) => (fire ? fireTubeCount(d) : tubeCount(d)), area = (d: number) => count(d) * Math.PI * (dTube / 12) * 20, enough = (k: number, d: number) => k * area(d) >= A && k * count(d) * tubeBore(dTube) >= bore;
+      let n = 1; while (!enough(n, ids[ids.length - 1])) n++;
+      const ID = ids.find(d => enough(n, d))!;
+      const tShell = Math.max(...Object.entries(sides).filter(([k]) => k !== 'utility').map(([, q]) => wall(ID, q.designP, q.designT, q.vacuum)));
+      Object.assign(r, { count: n, running: n }); Object.assign(r.d, { dutyMMBtu: Q / 1e6, lmtd: dT, U, areaFt2: A, shells: n, ID, tubes: count(ID), tubeOD: dTube, tubeLength: 240, tShell, ...(fire ? { drumT: wall(0.6 * ID, (sides['steam side'] ?? sides.process).designP, (sides['steam side'] ?? sides.process).designT) } : {}), ...(bore ? { tubeGasFts: (bore * TUBE_GAS_FTS) / (n * count(ID) * tubeBore(dTube)) } : {}) });
       r.type = key.startsWith('SG-') || e.kind !== 'hx' ? 'steam generator' : key === 'CW' ? 'water cooler' : key ? 'steam heater' : 'process to process';
-      r.text = `${(Q / 1e6).toFixed(1)} million Btu/h, ${Math.round(A).toLocaleString('en-US')} ft²: ${n > 1 ? `${n} shells of ` : ''}${ID} in × 20 ft, ${tubeCount(ID)} tubes${n > 1 ? ' each' : ''}`;
+      r.text = `${(Q / 1e6).toFixed(1)} million Btu/h, ${Math.round(A).toLocaleString('en-US')} ft²: ${n > 1 ? `${n} shells of ` : ''}${ID} in × 20 ft, ${count(ID).toLocaleString('en-US')} tubes${fire ? ' of 2 in' : ''}${n > 1 ? ' each' : ''}${bore ? `, the gas at ${Math.round(r.d.tubeGasFts)} ft/s in them` : ''}`;
       break;
     }
     case 'aircooler': {                                                                                 // SW-PRC-9
@@ -315,7 +333,7 @@ function sizeEquip(sh: UnitSheet, e: Equip, lines: LineSize[], utils: UnitSizing
     }
     case 'tank': {                                                                                      // SW-PRC-13
       const vol = num('bbl') * BBL_FT3;
-      if (num('vertical')) { const D = up(Math.cbrt((4 * vol) / (3 * Math.PI)) * 12, 6); Object.assign(r.d, { bbl: num('bbl'), D, H: 3 * D }); r.type = 'vertical vessel, vacuum insulated'; r.text = `${num('bbl').toLocaleString('en-US')} bbl: ${ft(D)} diameter × ${ft(3 * D)} high`; break; }
+      if (num('vertical')) { const D = up(Math.cbrt((4 * vol) / (3 * Math.PI)) * 12, 6); Object.assign(r.d, { bbl: num('bbl'), D, H: 3 * D, t: wall(D, designP, designT) }); r.type = 'vertical vessel, vacuum insulated'; r.text = `${num('bbl').toLocaleString('en-US')} bbl: ${ft(D)} diameter × ${ft(3 * D)} high`; break; }
       let H = 48, D = up(Math.sqrt((4 * vol) / (Math.PI * H)), 5);
       if (D < H) { H = Math.max(16, Math.floor(Math.cbrt((4 * vol) / Math.PI) / 8) * 8); D = up(Math.sqrt((4 * vol) / (Math.PI * H)), 5); }
       if (D > 180) throw new Error(`${e.tag}: ${D} ft is over 180 ft; use more tanks`);
@@ -323,13 +341,16 @@ function sizeEquip(sh: UnitSheet, e: Equip, lines: LineSize[], utils: UnitSizing
       r.text = `${Math.round(num('bbl')).toLocaleString('en-US')} bbl: ${D} ft diameter × ${H} ft high, ${r.type}`;
       break;
     }
-    case 'sphere': { const D = up(Math.cbrt((6 * num('bbl') * BBL_FT3) / Math.PI), 1); if (D > 60) throw new Error(`${e.tag}: sphere of ${D} ft`); Object.assign(r.d, { bbl: num('bbl'), Dft: D, t: wall(D * 12, designP, designT) }); r.type = 'sphere'; r.text = `${Math.round(num('bbl')).toLocaleString('en-US')} bbl: ${D} ft inside diameter`; break; }
+    case 'sphere': { const D = up(Math.cbrt((6 * num('bbl') * BBL_FT3) / Math.PI), 1); if (D > 60) throw new Error(`${e.tag}: sphere of ${D} ft`); Object.assign(r.d, { bbl: num('bbl'), Dft: D, t: sphereWall(D * 12, designP, designT) }); r.type = 'sphere'; r.text = `${Math.round(num('bbl')).toLocaleString('en-US')} bbl: ${D} ft inside diameter`; break; }
     case 'bullet': { const D = up(Math.cbrt((4 * num('bbl') * BBL_FT3) / (6 * Math.PI)) * 12, 6); Object.assign(r.d, { bbl: num('bbl'), D, L: 6 * D, t: wall(D, designP, designT) }); r.type = 'horizontal'; r.text = `${num('bbl')} bbl: ${D} in inside diameter × ${ft(6 * D)} between tangents`; break; }
     case 'coolingtower': {                                                                              // SW-PRC-16
       const ret = port('return')!.s, gal = (ret.w / K.WATER_DENSITY_LB_FT3 / 60) * (1728 / 231), cells = Math.ceil(gal / 5000 - 1e-9) + 1, side = Math.ceil(Math.sqrt(5000 / 4));
       Object.assign(r, { count: cells, running: cells - 1 }); Object.assign(r.d, { gpm: gal, cells, cellFt: side }); r.type = 'induced draught, counterflow'; r.text = `${Math.round(gal).toLocaleString('en-US')} gpm: ${cells} cells of ${side} ft × ${side} ft`;
       break;
     }
+    case 'psa': Object.assign(r, { count: 4, running: 4 }); Object.assign(r.d, { D: 72, TT: 240, beds: 4, t: wall(72, designP, designT) }); r.type = 'four adsorbers'; r.text = 'four adsorbers of 72 in × 20 ft between tangents'; break;   // SW-CELL-4
+    case 'furnace': { const b = sides.utility ?? sides.process; Object.assign(r.d, { D: 72, furnaceL: 180, boilerL: 180, t: 0.75, boilerT: wall(72, b.designP, b.designT), drumT: wall(0.6 * 72, b.designP, b.designT) }); r.type = 'reaction furnace with waste heat boiler'; r.text = '72 in: 15 ft of chamber and 15 ft of waste heat boiler'; break; }   // SW-CELL-4
+    case 'boiler': { const Ts = designTemperature(STEAM_SAT.HS); Object.assign(r.d, { steamID: 54, L: 300, centres: 180, drumT: wall(54, designP, Ts), drumDesignT: Ts }); r.type = 'water-tube, two drums'; r.text = `${Math.round(num('lbh')).toLocaleString('en-US')} lb/h of steam at ${STEAM.HS.P} psi and ${STEAM.HS.T} °F: steam drum 54 in × 25 ft`; break; }   // SW-CELL-4
     default: r.text = '';                                                                               // the remaining kinds are sized with their bodies (stage R5)
   }
   return r;

@@ -90,7 +90,7 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
         Object.assign(s, { shape: 'hx', R, yc, axis: 'z', len: TT, o: [s.x, yc, zo] });
       } };
     });
-    case 'fluegascooler': return [boxy(e.tag, 'vessel', 240 + d.ID, d.ID + 96, d.ID + 150, (c, s) => { pad(c, s.x, s.z, 264, d.ID + 48, e.tag); place(c, bare(makeFlueGasCooler({ tag: e.tag, D: d.ID, L: 240 })), frameFromAxes([s.x - 120, PAD + d.ID / 2 + 36, s.z], [0, 1, 0], [1, 0, 0]), e.tag); })];
+    case 'fluegascooler': return [boxy(e.tag, 'vessel', 240 + d.ID, d.ID + 96, d.ID + 150, (c, s) => { pad(c, s.x, s.z, 264, d.ID + 48, e.tag); place(c, bare(makeFlueGasCooler({ tag: e.tag, D: d.ID, L: 240, t: d.tShell, drumT: d.drumT })), frameFromAxes([s.x - 120, PAD + d.ID / 2 + 36, s.z], [0, 1, 0], [1, 0, 0]), e.tag); })];
     case 'aircooler': return tags(d.bays).map(tag => boxy(tag, 'air', 168 + 12, 384 + 24, 144 + 110, (c, s) => place(c, bare(makeAirCooler({ tag, W: 168, L: 384, fans: 2, legH: 144 })), multiply(translate(s.x, 0, s.z), multiply(rotateY(Math.PI / 2), standUp())), tag), 0));
     case 'drum': {
       if (e.p.vertical) return [vertical(e.tag, d.D, d.t, d.L, 60, false)];
@@ -98,7 +98,7 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
     }
     case 'desalter': return [horizontal(e.tag, d.D, d.t, d.L, 60)];
     case 'deaerator': return [boxy(e.tag, 'vessel', d.L + d.D, d.D + 24, 180 + 2 * d.D, (c, s) => { pad(c, s.x, s.z, d.L + 24, d.D + 24, e.tag); for (const f of [0.2, 0.8]) pad(c, s.x - d.L / 2 + f * d.L, s.z, 48, d.D, e.tag, 162, 'pier'), c.out[c.out.length - 1].transform = frameFromAxes([s.x - d.L / 2 + f * d.L - 24, PAD + 81, s.z], [0, 1, 0], [1, 0, 0]);
-      place(c, bare(makeDeaerator({ tag: e.tag, ID: d.D, L: d.L, centreline: d.D / 2 + 18 })), frameFromAxes([s.x - d.L / 2, PAD + 162 + 18 + d.D / 2, s.z], [0, 1, 0], [1, 0, 0]), e.tag); Object.assign(s, { shape: 'hv', R: d.D / 2 + 0.5, yc: PAD + 180 + d.D / 2, axis: 'x', len: d.L }); })];
+      place(c, bare(makeDeaerator({ tag: e.tag, ID: d.D, L: d.L, centreline: d.D / 2 + 18, t: d.t })), frameFromAxes([s.x - d.L / 2, PAD + 162 + 18 + d.D / 2, s.z], [0, 1, 0], [1, 0, 0]), e.tag); Object.assign(s, { shape: 'hv', R: d.D / 2 + 0.5, yc: PAD + 180 + d.D / 2, axis: 'x', len: d.L }); })];
     case 'column': {
       if (d.Dtop) return [boxy(e.tag, 'vessel', d.D + 132, d.D + 132, Y_VESSEL + d.skirt + d.TT + d.D / 2, (c, s) => { pad(c, s.x, s.z, d.D + 48, d.D + 48, e.tag); place(c, bare(makeSwagedTower({ tag: e.tag, sections: [[d.Dbot, d.hBot], [d.D, d.hMid], [d.Dtop, d.hTop]], t: d.t, skirtH: d.skirt })), upright(s.x, Y_VESSEL, s.z, s.side > 0 ? -Math.PI / 2 : Math.PI / 2), e.tag); Object.assign(s, { shape: 'vv', R: d.D / 2 + d.t, yb: Y_VESSEL + d.skirt, yt: Y_VESSEL + d.skirt + d.TT }); }, 96)];
       return [vertical(e.tag, d.D, d.t, d.TT, d.skirt, d.skirt + d.TT > 360, d.trays)];
@@ -115,7 +115,7 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       return boxy(tag, 'exchanger', skidW + 24, skidL + 24, 2 * Math.max(casingD, motorD) + 24, (c, s) => { pad(c, s.x, s.z, skidW + 24, skidL + 24, tag, 12, 'machine pad'); place(c, bare(makeCompressorPackage({ tag, skidW, skidL, casingD, motorD })), frameFromAxes([s.x, 12, s.z], [0, 1, 0], [0, 0, s.side]), tag); });
     });
     case 'tank': {
-      if (e.p.vertical) return [vertical(e.tag, d.D, 0.5, d.H, 36, false)];
+      if (e.p.vertical) return [vertical(e.tag, d.D, d.t, d.H, 36, false)];
       const D = d.Dft * 12, H = d.Hft * 12;
       return [boxy(e.tag, 'vessel', D + 120, D + 120, H + D / 16, (c, s) => { pad(c, s.x, s.z, D + 24, D + 24, e.tag); place(c, bare(makeConeRoofTank({ tag: e.tag, D, H })), upright(s.x, PAD, s.z), e.tag); Object.assign(s, { shape: 'tank', R: D / 2, yb: PAD, yt: PAD + H }); }, 120)];
     }
@@ -124,10 +124,10 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       return [boxy(e.tag, 'vessel', 3.2 * regenD, 2 * regenD, 6 * regenD, (c, s) => { pad(c, s.x, s.z, 3 * regenD, 1.6 * regenD, e.tag); place(c, bare(makeCatCracker({ tag: e.tag, regenD, regenTT, reactorD, reactorTT })), upright(s.x - 0.6 * regenD, PAD, s.z), e.tag); }, 120)];
     }
     case 'scrubber': { const gas = e.ports.find(p => p.name.startsWith('stack'))!.s, D = up(Math.sqrt((4 * cfs(gas)) / (Math.PI * 10)) * 12, 6); return [boxy(e.tag, 'vessel', D + 96, D + 96, 8 * D, (c, s) => { pad(c, s.x, s.z, D + 36, D + 36, e.tag); place(c, bare(makeWetScrubber({ tag: e.tag, D, H: 8 * D })), upright(s.x, PAD, s.z), e.tag); }, 96)]; }
-    case 'furnace': return [boxy(e.tag, 'vessel', 420, 144, 144, (c, s) => { pad(c, s.x, s.z, 420, 120, e.tag); place(c, bare(makeSulfurFurnace({ tag: e.tag, D: 72, furnaceL: 180, boilerL: 180 })), frameFromAxes([s.x - 190, PAD + 66, s.z], [0, 1, 0], [1, 0, 0]), e.tag); })];
+    case 'furnace': return [boxy(e.tag, 'vessel', 420, 144, 144, (c, s) => { pad(c, s.x, s.z, 420, 120, e.tag); place(c, bare(makeSulfurFurnace({ tag: e.tag, D: d.D, furnaceL: d.furnaceL, boilerL: d.boilerL, boilerT: d.boilerT, drumT: d.drumT })), frameFromAxes([s.x - 190, PAD + 66, s.z], [0, 1, 0], [1, 0, 0]), e.tag); })];
     case 'incinerator': return [boxy(e.tag, 'heater', 420, 144, 1300, (c, s) => { pad(c, s.x, s.z, 408, 120, e.tag); place(c, bare(makeIncinerator({ tag: e.tag, D: 72, L: 240, stackH: 1200 })), upright(s.x - 190, PAD, s.z), e.tag); }, 240)];
-    case 'psa': return [boxy(e.tag, 'vessel', 4 * 96 + 60, 144, 360, (c, s) => { pad(c, s.x, s.z, 4 * 96 + 36, 120, e.tag); place(c, bare(makePsaUnit({ tag: e.tag, ID: 72, TT: 240, beds: 4 })), upright(s.x - 144, PAD, s.z), e.tag); })];
-    case 'boiler': return [boxy(e.tag, 'vessel', 420, 420, 1200, (c, s) => { pad(c, s.x, s.z, 396, 396, e.tag); place(c, bare(makeWaterTubeBoiler({ tag: e.tag, steamID: 54, L: 300, centres: 180, stackD: 72, stackH: 1200 })), upright(s.x - 60, PAD, s.z + 150), e.tag); }, 180)];
+    case 'psa': return [boxy(e.tag, 'vessel', 4 * 96 + 60, 144, 360, (c, s) => { pad(c, s.x, s.z, 4 * 96 + 36, 120, e.tag); place(c, bare(makePsaUnit({ tag: e.tag, ID: d.D, TT: d.TT, beds: d.beds, t: d.t })), upright(s.x - 144, PAD, s.z), e.tag); })];
+    case 'boiler': return [boxy(e.tag, 'vessel', 420, 420, 1200, (c, s) => { pad(c, s.x, s.z, 396, 396, e.tag); place(c, bare(makeWaterTubeBoiler({ tag: e.tag, steamID: d.steamID, L: d.L, centres: d.centres, stackD: 72, stackH: 1200, drumT: d.drumT })), upright(s.x - 60, PAD, s.z + 150), e.tag); }, 180)];
     case 'coolingtower': return [boxy(e.tag, 'vessel', d.cells * d.cellFt * 12 + 48, d.cellFt * 12 + 96, 560, (c, s) => place(c, bare(makeCoolingTower({ tag: e.tag, cells: d.cells, cellL: d.cellFt * 12, cellW: d.cellFt * 12, H: 480, riserNPS: 24 })), upright(s.x - (d.cells * d.cellFt * 12) / 2, 0, s.z + d.cellFt * 6), e.tag), 240)];
     case 'hopper': return [boxy(e.tag, 'vessel', 192, 192, 480, (c, s) => { pad(c, s.x, s.z, 180, 180, e.tag); place(c, bare(makeSilo({ tag: e.tag, D: 144, H: 300, outletNPS: 8, outletH: 96 })), upright(s.x, Y_VESSEL, s.z), e.tag); })];
     case 'ejector': return [boxy(e.tag, 'vessel', 240, 96, 240, (c, s) => { pad(c, s.x, s.z, 240, 84, e.tag); for (const [k, dx] of [-84, 0, 84].entries()) place(c, bare(makeEjector(`${e.tag}-${k + 1}`, [10, 8, 6][k])), frameFromAxes([s.x + dx, PAD + 156, s.z - 30], [0, 1, 0], [0, 0, 1]), `${e.tag}-${k + 1}`);

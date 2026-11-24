@@ -41,7 +41,7 @@ export function siteParts(): SitePart[] {
   for (const s of spheres()) {
     const el = bench('lpg').el * 12, e = Z.get(21)!.equip.get(s.tag)!;
     if (s.L) out.push({ part: makeHorizontalVessel({ tag: s.tag, ID: e.d.D, t: e.d.t, TT: e.d.L, centreline: e.d.D / 2 + 30 }), transform: frameFromAxes([(s.x - s.L / 2) * 12, el + e.d.D / 2 + 36, s.z * 12], [0, 1, 0], [1, 0, 0]), tags: [s.tag, 'equipment'], unit: 21 });
-    else out.push({ part: bare(makeSphere({ tag: s.tag, D: s.D * 12 })), transform: multiply(translate(s.x * 12, el, s.z * 12), standUp()), tags: [s.tag, 'equipment'], unit: 21 });
+    else out.push({ part: bare(makeSphere({ tag: s.tag, D: s.D * 12, t: e.d.t })), transform: multiply(translate(s.x * 12, el, s.z * 12), standUp()), tags: [s.tag, 'equipment'], unit: 21 });
   }
   // the flare, in its derrick
   out.push({ part: bare(makeFlareStack({ tag: 'X-2501', D: 36, H: 2640, derrick: true })), transform: multiply(translate(FLARE.x * 12, bench('flare').el * 12, FLARE.z * 12), standUp()), tags: ['X-2501', 'equipment'], unit: 25 });

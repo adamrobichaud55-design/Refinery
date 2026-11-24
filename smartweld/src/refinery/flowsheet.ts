@@ -121,7 +121,7 @@ export class UnitBuilder {
     e.p.utility = k;
     if (k === 'CW') { const w = a / 20; this.utility('CWS', e.tag, port('in'), 'to', w, 85, 60); this.utility('CWR', e.tag, port('out'), 'from', w, 105, 45); }
     else if (k === 'LS' || k === 'MS' || k === 'HS') { const w = a / FLUIDS[k].latent; this.utility(k, e.tag, side ? `${pre}in` : 'steam in', 'to', w, STEAM[k].T, STEAM[k].P); this.utility('CO', e.tag, side ? `${pre}out` : 'condensate out', 'from', w, STEAM[k].T - 40, STEAM[k].P - 10); }
-    else { const lv = k.slice(3) as 'LS' | 'MS' | 'HS', w = a / (FLUIDS[lv].latent + 150); this.utility('BW', e.tag, side ? `${pre}in` : 'feed water in', 'to', w, 250, STEAM[lv].P + 100); this.utility(lv, e.tag, side ? `${pre}out` : 'steam out', 'from', w, STEAM[lv].T, STEAM[lv].P); }
+    else { const lv = k.slice(3) as 'LS' | 'MS' | 'HS', w = a / (FLUIDS[lv].latent + 150); this.utility('BW', e.tag, side ? `${pre}in` : 'feed water in', 'to', w, 250, STEAM[lv].P + 100); this.utility(lv, e.tag, side ? `${pre}out` : 'steam out', 'from', w, STEAM_SAT[lv], STEAM[lv].P); }
   }
   /** a port open to the atmosphere or to a duct, with no line (an air intake, a stack) */
   open(tag: string, port: string, dir: 'in' | 'out', s: State): void { const e = this.sheet.equip.get(tag); if (!e) throw new Error(`${tag} is not declared`); e.ports.push({ name: `${port} (open)`, dir, s: { ...s } }); }
