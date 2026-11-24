@@ -1,0 +1,166 @@
+{
+ "demonstration": true,
+ "crude": {
+  "bpd": 60000,
+  "lbh": 758884.4,
+  "sg": 0.86643,
+  "api": 31.81383,
+  "sulfurPct": 1.606446
+ },
+ "cuts": [
+  {
+   "key": "LE",
+   "name": "Light ends (four carbons and lighter)",
+   "range": "below 90",
+   "vol": 1.8,
+   "sg": 0.56,
+   "sulfur": 0,
+   "lbh": 8828.82
+  },
+  {
+   "key": "LN",
+   "name": "Light naphtha",
+   "range": "90–180",
+   "vol": 5.6,
+   "sg": 0.67,
+   "sulfur": 0.02,
+   "lbh": 32862.83
+  },
+  {
+   "key": "HN",
+   "name": "Heavy naphtha",
+   "range": "180–360",
+   "vol": 15.2,
+   "sg": 0.755,
+   "sulfur": 0.05,
+   "lbh": 100515.4
+  },
+  {
+   "key": "KE",
+   "name": "Kerosene",
+   "range": "360–480",
+   "vol": 10.4,
+   "sg": 0.805,
+   "sulfur": 0.25,
+   "lbh": 73328.26
+  },
+  {
+   "key": "DI",
+   "name": "Diesel",
+   "range": "480–650",
+   "vol": 18.6,
+   "sg": 0.85,
+   "sulfur": 1.05,
+   "lbh": 138475.8
+  },
+  {
+   "key": "AGO",
+   "name": "Atmospheric gas oil",
+   "range": "650–720",
+   "vol": 6,
+   "sg": 0.885,
+   "sulfur": 1.6,
+   "lbh": 46508.96
+  },
+  {
+   "key": "LVGO",
+   "name": "Light vacuum gas oil",
+   "range": "720–850",
+   "vol": 6.4,
+   "sg": 0.905,
+   "sulfur": 1.9,
+   "lbh": 50730.68
+  },
+  {
+   "key": "HVGO",
+   "name": "Heavy vacuum gas oil",
+   "range": "850–1,020",
+   "vol": 17,
+   "sg": 0.935,
+   "sulfur": 2.2,
+   "lbh": 139220.3
+  },
+  {
+   "key": "VR",
+   "name": "Vacuum residue",
+   "range": "above 1,020",
+   "vol": 19,
+   "sg": 1.012,
+   "sulfur": 3.4,
+   "lbh": 168413.2
+  }
+ ],
+ "products": {
+  "c3": {
+   "lbh": 18552.75,
+   "sg": 0.51,
+   "bpd": 2491.995
+  },
+  "c4": {
+   "lbh": 22623.7,
+   "sg": 0.585,
+   "bpd": 2649.213
+  },
+  "gasoline": {
+   "lbh": 244657.6,
+   "sg": 0.7452444,
+   "bpd": 22488.94
+  },
+  "jet": {
+   "lbh": 72741.63,
+   "sg": 0.805,
+   "bpd": 6190.08
+  },
+  "diesel": {
+   "lbh": 150229.2,
+   "sg": 0.845,
+   "bpd": 12178.86
+  },
+  "fuelOil": {
+   "lbh": 160228.7,
+   "sg": 1.006805,
+   "bpd": 10901.95
+  },
+  "asphalt": {
+   "lbh": 58944.64,
+   "sg": 1.012,
+   "bpd": 3990
+  },
+  "sulfur": {
+   "lbh": 3909.492
+  },
+  "fuelGas": {
+   "lbh": 13914.75
+  },
+  "coke": {
+   "lbh": 12768.84
+  }
+ },
+ "hydrogen": {
+  "made": 2145.641,
+  "madeMmscfd": 9.693699,
+  "nht": 135.5496,
+  "kht": 183.3206,
+  "dht": 997.4356,
+  "toPsa": 1826.771,
+  "purified": 1589.29,
+  "surplus": 591.8548,
+  "psaTail": 237.4802,
+  "surplusMmscfd": 2.673916
+ },
+ "sulfur": {
+  "inCrude": 12191.07,
+  "nht": 56.83027,
+  "kht": 174.1546,
+  "dht": 1833.053,
+  "fcc": 1908.349,
+  "sws": 100,
+  "toSru": 4072.388,
+  "recovered": 3909.492,
+  "longTonsPerDay": 41.88742,
+  "tailGas": 162.8955,
+  "flueGas": 477.0874,
+  "h2sMass": 4328.976
+ },
+ "closure": 1.534032e-16
+}

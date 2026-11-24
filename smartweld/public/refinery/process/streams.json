@@ -1,0 +1,2385 @@
+{
+ "demonstration": true,
+ "transfers": [
+  {
+   "key": "desalter brine",
+   "fluid": "OW",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 43800,
+     "T": 110,
+     "P": 130,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 24,
+     "lbh": 43800,
+     "T": 110,
+     "P": 40,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "oily water",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 65,
+   "designT": 160
+  },
+  {
+   "key": "crude overhead gas",
+   "fluid": "HG",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 1765.764,
+     "T": 100,
+     "P": 10,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 17,
+     "lbh": 1765.764,
+     "T": 100,
+     "P": 9,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "hydrocarbon gas",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 50,
+   "designT": 150
+  },
+  {
+   "key": "straight-run naphtha",
+   "fluid": "NA",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 140441.3,
+     "T": 100,
+     "P": 130,
+     "standby": false
+    },
+    {
+     "unit": 21,
+     "lbh": 140441.3,
+     "T": 100,
+     "P": 130,
+     "standby": true
+    }
+   ],
+   "to": [
+    {
+     "unit": 13,
+     "lbh": 140441.3,
+     "T": 100,
+     "P": 110,
+     "standby": false
+    },
+    {
+     "unit": 21,
+     "lbh": 140441.3,
+     "T": 100,
+     "P": 50,
+     "standby": true
+    }
+   ],
+   "note": "",
+   "fluidName": "naphtha",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 135,
+   "designT": 150
+  },
+  {
+   "key": "sour water",
+   "fluid": "SW",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 14000,
+     "T": 100,
+     "P": 90,
+     "standby": false
+    },
+    {
+     "unit": 12,
+     "lbh": 20000,
+     "T": 110,
+     "P": 90,
+     "standby": false
+    },
+    {
+     "unit": 13,
+     "lbh": 2000,
+     "T": 100,
+     "P": 350,
+     "standby": false
+    },
+    {
+     "unit": 15,
+     "lbh": 3500,
+     "T": 110,
+     "P": 340,
+     "standby": false
+    },
+    {
+     "unit": 16,
+     "lbh": 12000,
+     "T": 140,
+     "P": 770,
+     "standby": false
+    },
+    {
+     "unit": 17,
+     "lbh": 30000,
+     "T": 100,
+     "P": 90,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 18,
+     "lbh": 81500,
+     "T": 105,
+     "P": 60,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "sour water",
+   "hazard": "harmful",
+   "NPS": 4,
+   "cls": "P150",
+   "designP": 85,
+   "designT": 190
+  },
+  {
+   "key": "straight-run kerosene",
+   "fluid": "KE",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 73328.26,
+     "T": 100,
+     "P": 130,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 15,
+     "lbh": 73328.26,
+     "T": 100,
+     "P": 80,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "kerosene",
+   "hazard": "flammable",
+   "NPS": 4,
+   "cls": "P150",
+   "designP": 105,
+   "designT": 150
+  },
+  {
+   "key": "straight-run diesel",
+   "fluid": "DI",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 138475.8,
+     "T": 140,
+     "P": 135,
+     "standby": false
+    },
+    {
+     "unit": 21,
+     "lbh": 138475.8,
+     "T": 140,
+     "P": 100,
+     "standby": true
+    }
+   ],
+   "to": [
+    {
+     "unit": 16,
+     "lbh": 138475.8,
+     "T": 140,
+     "P": 80,
+     "standby": false
+    },
+    {
+     "unit": 21,
+     "lbh": 138475.8,
+     "T": 140,
+     "P": 50,
+     "standby": true
+    }
+   ],
+   "note": "",
+   "fluidName": "diesel",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 105,
+   "designT": 190
+  },
+  {
+   "key": "atmospheric gas oil",
+   "fluid": "GO",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 46508.96,
+     "T": 375.3519,
+     "P": 140,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 17,
+     "lbh": 46508.96,
+     "T": 370,
+     "P": 100,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "gas oil",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 125,
+   "designT": 430
+  },
+  {
+   "key": "atmospheric residue",
+   "fluid": "RS",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 358364.3,
+     "T": 650,
+     "P": 200,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 12,
+     "lbh": 358364.3,
+     "T": 650,
+     "P": 150,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "residue",
+   "hazard": "flammable",
+   "NPS": 8,
+   "cls": "P300",
+   "designP": 175,
+   "designT": 700
+  },
+  {
+   "key": "vacuum gas oil pumparound return",
+   "fluid": "GO",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 322000,
+     "T": 445.6325,
+     "P": 120,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 12,
+     "lbh": 322000,
+     "T": 445,
+     "P": 110,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "gas oil",
+   "hazard": "flammable",
+   "NPS": 8,
+   "cls": "P150",
+   "designP": 145,
+   "designT": 500
+  },
+  {
+   "key": "vacuum residue rundown",
+   "fluid": "RS",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 11,
+     "lbh": 168413.2,
+     "T": 350,
+     "P": 110,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 168413.2,
+     "T": 350,
+     "P": 100,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "residue",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P300",
+   "designP": 220,
+   "designT": 400
+  },
+  {
+   "key": "crude",
+   "fluid": "CR",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 20,
+     "lbh": 758884.4,
+     "T": 60,
+     "P": 60,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 11,
+     "lbh": 758884.4,
+     "T": 60,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "crude oil",
+   "hazard": "flammable",
+   "NPS": 16,
+   "cls": "P150",
+   "designP": 120,
+   "designT": 150
+  },
+  {
+   "key": "stripped water",
+   "fluid": "PW",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 18,
+     "lbh": 52800,
+     "T": 120,
+     "P": 115,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 11,
+     "lbh": 43800,
+     "T": 110,
+     "P": 60,
+     "standby": false
+    },
+    {
+     "unit": 13,
+     "lbh": 2000,
+     "T": 110,
+     "P": 100,
+     "standby": false
+    },
+    {
+     "unit": 15,
+     "lbh": 1000,
+     "T": 110,
+     "P": 100,
+     "standby": false
+    },
+    {
+     "unit": 16,
+     "lbh": 6000,
+     "T": 110,
+     "P": 100,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "process and wash water",
+   "hazard": "benign",
+   "NPS": 4,
+   "cls": "P150",
+   "designP": 125,
+   "designT": 170
+  },
+  {
+   "key": "vacuum gas oil pumparound supply",
+   "fluid": "GO",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 12,
+     "lbh": 322000,
+     "T": 550,
+     "P": 150,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 11,
+     "lbh": 322000,
+     "T": 550,
+     "P": 130,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "gas oil",
+   "hazard": "flammable",
+   "NPS": 8,
+   "cls": "P300",
+   "designP": 260,
+   "designT": 600
+  },
+  {
+   "key": "vacuum residue hot",
+   "fluid": "RS",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 12,
+     "lbh": 168413.2,
+     "T": 690,
+     "P": 150,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 11,
+     "lbh": 168413.2,
+     "T": 680,
+     "P": 130,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "residue",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P600",
+   "designP": 155,
+   "designT": 740
+  },
+  {
+   "key": "slop oil",
+   "fluid": "OW",
+   "carry": "collected",
+   "from": [
+    {
+     "unit": 12,
+     "lbh": 1500,
+     "T": 110,
+     "P": 80,
+     "standby": false
+    },
+    {
+     "unit": 18,
+     "lbh": 2500,
+     "T": 105,
+     "P": 70,
+     "standby": false
+    },
+    {
+     "unit": 19,
+     "lbh": 50,
+     "T": 100,
+     "P": 60,
+     "standby": false
+    },
+    {
+     "unit": 22,
+     "lbh": 2000,
+     "T": 60,
+     "P": 100,
+     "standby": false
+    },
+    {
+     "unit": 23,
+     "lbh": 900,
+     "T": 80,
+     "P": 80,
+     "standby": false
+    },
+    {
+     "unit": 24,
+     "lbh": 800,
+     "T": 90,
+     "P": 80,
+     "standby": false
+    },
+    {
+     "unit": 25,
+     "lbh": 30000,
+     "T": 150,
+     "P": 80,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 30000,
+     "T": 100,
+     "P": 40,
+     "standby": false
+    }
+   ],
+   "note": "pumped out of drums and sumps as they fill; the header is sized for the largest of them",
+   "fluidName": "oily water",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 65,
+   "designT": 200
+  },
+  {
+   "key": "light vacuum gas oil",
+   "fluid": "GO",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 12,
+     "lbh": 50730.68,
+     "T": 150,
+     "P": 115,
+     "standby": false
+    },
+    {
+     "unit": 21,
+     "lbh": 50730.68,
+     "T": 150,
+     "P": 100,
+     "standby": true
+    }
+   ],
+   "to": [
+    {
+     "unit": 17,
+     "lbh": 50730.68,
+     "T": 150,
+     "P": 80,
+     "standby": false
+    },
+    {
+     "unit": 21,
+     "lbh": 50730.68,
+     "T": 150,
+     "P": 50,
+     "standby": true
+    }
+   ],
+   "note": "",
+   "fluidName": "gas oil",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 105,
+   "designT": 200
+  },
+  {
+   "key": "heavy vacuum gas oil",
+   "fluid": "GO",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 12,
+     "lbh": 139220.3,
+     "T": 400,
+     "P": 140,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 17,
+     "lbh": 139220.3,
+     "T": 400,
+     "P": 100,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "gas oil",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 125,
+   "designT": 450
+  },
+  {
+   "key": "stripper gas",
+   "fluid": "HG",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 13,
+     "lbh": 8000.285,
+     "T": 120,
+     "P": 170,
+     "standby": false
+    },
+    {
+     "unit": 15,
+     "lbh": 607.577,
+     "T": 120,
+     "P": 30,
+     "standby": false
+    },
+    {
+     "unit": 16,
+     "lbh": 429.952,
+     "T": 140,
+     "P": 140,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 17,
+     "lbh": 9037.814,
+     "T": 110,
+     "P": 25,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "hydrocarbon gas",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 50,
+   "designT": 190
+  },
+  {
+   "key": "light naphtha",
+   "fluid": "NA",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 13,
+     "lbh": 32698.52,
+     "T": 100,
+     "P": 80,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 32698.52,
+     "T": 100,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "naphtha",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 75,
+   "designT": 150
+  },
+  {
+   "key": "hydrotreated heavy naphtha",
+   "fluid": "NA",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 13,
+     "lbh": 102173.4,
+     "T": 310,
+     "P": 110,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 14,
+     "lbh": 102173.4,
+     "T": 300,
+     "P": 60,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "naphtha",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 85,
+   "designT": 360
+  },
+  {
+   "key": "heavy naphtha to storage",
+   "fluid": "NA",
+   "carry": "alternate",
+   "from": [
+    {
+     "unit": 13,
+     "lbh": 102173.4,
+     "T": 140,
+     "P": 105,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 102173.4,
+     "T": 140,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "note": "when unit 14 is down",
+   "fluidName": "naphtha",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 75,
+   "designT": 190
+  },
+  {
+   "key": "wild naphtha",
+   "fluid": "NA",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 15,
+     "lbh": 329.9771,
+     "T": 120,
+     "P": 110,
+     "standby": false
+    },
+    {
+     "unit": 16,
+     "lbh": 1841.42,
+     "T": 120,
+     "P": 160,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 13,
+     "lbh": 2171.397,
+     "T": 110,
+     "P": 80,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "naphtha",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 105,
+   "designT": 170
+  },
+  {
+   "key": "reformer net gas",
+   "fluid": "HY",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 14,
+     "lbh": 610.4088,
+     "T": 110,
+     "P": 515,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 13,
+     "lbh": 259.4807,
+     "T": 110,
+     "P": 500,
+     "standby": false
+    },
+    {
+     "unit": 15,
+     "lbh": 350.9281,
+     "T": 110,
+     "P": 500,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "hydrogen-rich gas",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P600",
+   "designP": 395,
+   "designT": 160
+  },
+  {
+   "key": "hydrogen",
+   "fluid": "HY",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 14,
+     "lbh": 997.4356,
+     "T": 110,
+     "P": 505,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 16,
+     "lbh": 997.4356,
+     "T": 110,
+     "P": 495,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "hydrogen-rich gas",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P600",
+   "designP": 545,
+   "designT": 160
+  },
+  {
+   "key": "surplus hydrogen",
+   "fluid": "HY",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 14,
+     "lbh": 591.8548,
+     "T": 110,
+     "P": 60,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 19,
+     "lbh": 591.8548,
+     "T": 110,
+     "P": 60,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "hydrogen-rich gas",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 85,
+   "designT": 160
+  },
+  {
+   "key": "stabiliser gas",
+   "fluid": "FG",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 14,
+     "lbh": 490.4322,
+     "T": 110,
+     "P": 210,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 19,
+     "lbh": 490.4322,
+     "T": 110,
+     "P": 200,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "fuel gas",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 95,
+   "designT": 160
+  },
+  {
+   "key": "reformer liquefied gas",
+   "fluid": "LP",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 14,
+     "lbh": 7867.35,
+     "T": 110,
+     "P": 260,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 17,
+     "lbh": 7867.35,
+     "T": 110,
+     "P": 250,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "liquefied petroleum gas",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P300",
+   "designP": 275,
+   "designT": 160
+  },
+  {
+   "key": "reformate",
+   "fluid": "RF",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 14,
+     "lbh": 89708.23,
+     "T": 100,
+     "P": 200,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 89708.23,
+     "T": 100,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "reformate",
+   "hazard": "flammable",
+   "NPS": 4,
+   "cls": "P150",
+   "designP": 75,
+   "designT": 150
+  },
+  {
+   "key": "heavy naphtha from storage",
+   "fluid": "NA",
+   "carry": "alternate",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 102173.4,
+     "T": 140,
+     "P": 80,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 14,
+     "lbh": 102173.4,
+     "T": 140,
+     "P": 60,
+     "standby": false
+    }
+   ],
+   "note": "when unit 13 is down",
+   "fluidName": "naphtha",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 85,
+   "designT": 190
+  },
+  {
+   "key": "treated kerosene",
+   "fluid": "KE",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 15,
+     "lbh": 72741.63,
+     "T": 100,
+     "P": 105,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 72741.63,
+     "T": 100,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "kerosene",
+   "hazard": "flammable",
+   "NPS": 4,
+   "cls": "P150",
+   "designP": 75,
+   "designT": 150
+  },
+  {
+   "key": "rich amine",
+   "fluid": "AM",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 16,
+     "lbh": 41948.55,
+     "T": 140,
+     "P": 80,
+     "standby": false
+    },
+    {
+     "unit": 17,
+     "lbh": 82574.13,
+     "T": 135,
+     "P": 80,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 18,
+     "lbh": 124522.7,
+     "T": 135,
+     "P": 70,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "amine solution",
+   "hazard": "harmful",
+   "NPS": 4,
+   "cls": "P150",
+   "designP": 95,
+   "designT": 190
+  },
+  {
+   "key": "treated diesel",
+   "fluid": "DI",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 16,
+     "lbh": 150229.2,
+     "T": 110,
+     "P": 150,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 150229.2,
+     "T": 110,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "diesel",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 75,
+   "designT": 160
+  },
+  {
+   "key": "light cycle oil to hydrotreating",
+   "fluid": "DI",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 17,
+     "lbh": 14975.8,
+     "T": 140,
+     "P": 255,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 16,
+     "lbh": 14975.8,
+     "T": 140,
+     "P": 80,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "diesel",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 105,
+   "designT": 190
+  },
+  {
+   "key": "lean amine",
+   "fluid": "AM",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 18,
+     "lbh": 120000,
+     "T": 120,
+     "P": 305,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 16,
+     "lbh": 40000,
+     "T": 120,
+     "P": 60,
+     "standby": false
+    },
+    {
+     "unit": 17,
+     "lbh": 80000,
+     "T": 120,
+     "P": 300,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "amine solution",
+   "hazard": "harmful",
+   "NPS": 4,
+   "cls": "P600",
+   "designP": 330,
+   "designT": 170
+  },
+  {
+   "key": "slurry oil",
+   "fluid": "SL",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 17,
+     "lbh": 20808.48,
+     "T": 200,
+     "P": 115,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 20808.48,
+     "T": 200,
+     "P": 60,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "slurry oil",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 85,
+   "designT": 250
+  },
+  {
+   "key": "light cycle oil to fuel oil",
+   "fluid": "DI",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 17,
+     "lbh": 29951.6,
+     "T": 140,
+     "P": 255,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 29951.6,
+     "T": 140,
+     "P": 60,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "diesel",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 85,
+   "designT": 190
+  },
+  {
+   "key": "fuel gas",
+   "fluid": "FG",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 17,
+     "lbh": 10924.79,
+     "T": 115,
+     "P": 178,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 19,
+     "lbh": 10924.79,
+     "T": 115,
+     "P": 170,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "fuel gas",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 95,
+   "designT": 165
+  },
+  {
+   "key": "cracked gasoline",
+   "fluid": "GS",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 17,
+     "lbh": 112554.9,
+     "T": 100,
+     "P": 126,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 112554.9,
+     "T": 100,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "gasoline",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 75,
+   "designT": 150
+  },
+  {
+   "key": "three-carbon liquefied gas",
+   "fluid": "LP",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 17,
+     "lbh": 18552.75,
+     "T": 110,
+     "P": 260,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 18552.75,
+     "T": 110,
+     "P": 240,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "liquefied petroleum gas",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P300",
+   "designP": 265,
+   "designT": 160
+  },
+  {
+   "key": "four-carbon liquefied gas",
+   "fluid": "LP",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 17,
+     "lbh": 32319.58,
+     "T": 100,
+     "P": 211,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 21,
+     "lbh": 32319.58,
+     "T": 100,
+     "P": 200,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "liquefied petroleum gas",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P300",
+   "designP": 225,
+   "designT": 150
+  },
+  {
+   "key": "stripped water to wastewater",
+   "fluid": "OW",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 18,
+     "lbh": 28100,
+     "T": 120,
+     "P": 115,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 24,
+     "lbh": 28100,
+     "T": 120,
+     "P": 30,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "oily water",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 55,
+   "designT": 170
+  },
+  {
+   "key": "fire water make-up",
+   "fluid": "RW",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 19,
+     "lbh": 250000,
+     "T": 50,
+     "P": 90,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 26,
+     "lbh": 250000,
+     "T": 50,
+     "P": 40,
+     "standby": false
+    }
+   ],
+   "note": "refilling the fire water tanks",
+   "fluidName": "raw and service water",
+   "hazard": "benign",
+   "NPS": 6,
+   "cls": "P300",
+   "designP": 160,
+   "designT": 150
+  },
+  {
+   "key": "boiler blowdown",
+   "fluid": "OW",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 19,
+     "lbh": 5000,
+     "T": 212,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 24,
+     "lbh": 5000,
+     "T": 212,
+     "P": 30,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "oily water",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 55,
+   "designT": 265
+  },
+  {
+   "key": "cooling tower blowdown",
+   "fluid": "OW",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 19,
+     "lbh": 40000,
+     "T": 85,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 24,
+     "lbh": 40000,
+     "T": 85,
+     "P": 30,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "oily water",
+   "hazard": "flammable",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 55,
+   "designT": 150
+  },
+  {
+   "key": "raw water",
+   "fluid": "RW",
+   "carry": "steady",
+   "from": [],
+   "to": [
+    {
+     "unit": 19,
+     "lbh": 455000,
+     "T": 50,
+     "P": 40,
+     "standby": false
+    }
+   ],
+   "boundary": "in",
+   "where": "the intake",
+   "note": "from the intake at the site boundary",
+   "fluidName": "raw and service water",
+   "hazard": "benign",
+   "NPS": 8,
+   "cls": "P150",
+   "designP": 65,
+   "designT": 150
+  },
+  {
+   "key": "purchased gas",
+   "fluid": "FG",
+   "carry": "steady",
+   "from": [],
+   "to": [
+    {
+     "unit": 19,
+     "lbh": 8500,
+     "T": 60,
+     "P": 100,
+     "standby": false
+    }
+   ],
+   "boundary": "in",
+   "where": "the gas main",
+   "note": "from the gas main at the site boundary",
+   "fluidName": "fuel gas",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 95,
+   "designT": 150
+  },
+  {
+   "key": "tank farm oily water",
+   "fluid": "OW",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 20,
+     "lbh": 6000,
+     "T": 60,
+     "P": 50,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 24,
+     "lbh": 6000,
+     "T": 60,
+     "P": 30,
+     "standby": false
+    }
+   ],
+   "note": "",
+   "fluidName": "oily water",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 110,
+   "designT": 150
+  },
+  {
+   "key": "crude from the marine terminal",
+   "fluid": "CR",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 22,
+     "lbh": 7588844,
+     "T": 60,
+     "P": 120,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 20,
+     "lbh": 7588844,
+     "T": 60,
+     "P": 90,
+     "standby": false
+    }
+   ],
+   "note": "while a tanker discharges",
+   "fluidName": "crude oil",
+   "hazard": "flammable",
+   "NPS": 36,
+   "cls": "P150",
+   "designP": 145,
+   "designT": 150
+  },
+  {
+   "key": "slop oil to crude",
+   "fluid": "OW",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 4000,
+     "T": 80,
+     "P": 100,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 20,
+     "lbh": 4000,
+     "T": 80,
+     "P": 80,
+     "standby": false
+    }
+   ],
+   "note": "recovered oil worked off into the crude charge",
+   "fluidName": "oily water",
+   "hazard": "flammable",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 105,
+   "designT": 150
+  },
+  {
+   "key": "three-carbon liquefied gas to loading",
+   "fluid": "LP",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 44669.62,
+     "T": 90,
+     "P": 255,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 23,
+     "lbh": 44669.62,
+     "T": 90,
+     "P": 240,
+     "standby": false
+    }
+   ],
+   "note": "while trucks load",
+   "fluidName": "liquefied petroleum gas",
+   "hazard": "flammable",
+   "NPS": 4,
+   "cls": "P300",
+   "designP": 265,
+   "designT": 150
+  },
+  {
+   "key": "four-carbon liquefied gas to loading",
+   "fluid": "LP",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 51238.69,
+     "T": 90,
+     "P": 220,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 23,
+     "lbh": 51238.69,
+     "T": 90,
+     "P": 200,
+     "standby": false
+    }
+   ],
+   "note": "while trucks load",
+   "fluidName": "liquefied petroleum gas",
+   "hazard": "flammable",
+   "NPS": 4,
+   "cls": "P300",
+   "designP": 225,
+   "designT": 150
+  },
+  {
+   "key": "gasoline to the marine terminal",
+   "fluid": "GS",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 2610964,
+     "T": 90,
+     "P": 150,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 22,
+     "lbh": 2610964,
+     "T": 90,
+     "P": 120,
+     "standby": false
+    }
+   ],
+   "note": "while a cargo loads",
+   "fluidName": "gasoline",
+   "hazard": "flammable",
+   "NPS": 24,
+   "cls": "P300",
+   "designP": 235,
+   "designT": 150
+  },
+  {
+   "key": "gasoline to truck loading",
+   "fluid": "GS",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 217580.3,
+     "T": 90,
+     "P": 90,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 23,
+     "lbh": 217580.3,
+     "T": 90,
+     "P": 70,
+     "standby": false
+    }
+   ],
+   "note": "while trucks load",
+   "fluidName": "gasoline",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 95,
+   "designT": 150
+  },
+  {
+   "key": "jet fuel to the marine terminal",
+   "fluid": "KE",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 1410159,
+     "T": 90,
+     "P": 150,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 22,
+     "lbh": 1410159,
+     "T": 90,
+     "P": 120,
+     "standby": false
+    }
+   ],
+   "note": "while a cargo loads",
+   "fluidName": "kerosene",
+   "hazard": "flammable",
+   "NPS": 16,
+   "cls": "P300",
+   "designP": 235,
+   "designT": 150
+  },
+  {
+   "key": "jet fuel to truck loading",
+   "fluid": "KE",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 235026.5,
+     "T": 90,
+     "P": 90,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 23,
+     "lbh": 235026.5,
+     "T": 90,
+     "P": 70,
+     "standby": false
+    }
+   ],
+   "note": "while trucks load",
+   "fluidName": "kerosene",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 95,
+   "designT": 150
+  },
+  {
+   "key": "diesel to the marine terminal",
+   "fluid": "DI",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 2960457,
+     "T": 90,
+     "P": 150,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 22,
+     "lbh": 2960457,
+     "T": 90,
+     "P": 120,
+     "standby": false
+    }
+   ],
+   "note": "while a cargo loads",
+   "fluidName": "diesel",
+   "hazard": "flammable",
+   "NPS": 24,
+   "cls": "P300",
+   "designP": 235,
+   "designT": 150
+  },
+  {
+   "key": "diesel to truck loading",
+   "fluid": "DI",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 246704.8,
+     "T": 90,
+     "P": 90,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 23,
+     "lbh": 246704.8,
+     "T": 90,
+     "P": 70,
+     "standby": false
+    }
+   ],
+   "note": "while trucks load",
+   "fluidName": "diesel",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 95,
+   "designT": 150
+  },
+  {
+   "key": "fuel oil to the marine terminal",
+   "fluid": "RS",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 2645505,
+     "T": 200,
+     "P": 160,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 22,
+     "lbh": 2645505,
+     "T": 200,
+     "P": 130,
+     "standby": false
+    }
+   ],
+   "note": "while a cargo loads",
+   "fluidName": "residue",
+   "hazard": "flammable",
+   "NPS": 18,
+   "cls": "P300",
+   "designP": 245,
+   "designT": 250
+  },
+  {
+   "key": "asphalt to truck loading",
+   "fluid": "RS",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 21,
+     "lbh": 221596.4,
+     "T": 320,
+     "P": 90,
+     "standby": false
+    }
+   ],
+   "to": [
+    {
+     "unit": 23,
+     "lbh": 221596.4,
+     "T": 320,
+     "P": 70,
+     "standby": false
+    }
+   ],
+   "note": "while trucks load",
+   "fluidName": "residue",
+   "hazard": "flammable",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 95,
+   "designT": 370
+  },
+  {
+   "key": "treated effluent",
+   "fluid": "PW",
+   "carry": "steady",
+   "from": [
+    {
+     "unit": 24,
+     "lbh": 152900,
+     "T": 90,
+     "P": 40,
+     "standby": false
+    }
+   ],
+   "to": [],
+   "boundary": "out",
+   "where": "the outfall",
+   "note": "to the outfall",
+   "fluidName": "process and wash water",
+   "hazard": "benign",
+   "NPS": 6,
+   "cls": "P150",
+   "designP": 65,
+   "designT": 150
+  },
+  {
+   "key": "flare header",
+   "fluid": "FL",
+   "carry": "collected",
+   "from": [],
+   "to": [
+    {
+     "unit": 25,
+     "lbh": 400000,
+     "T": 250,
+     "P": 8,
+     "standby": false
+    }
+   ],
+   "boundary": "in",
+   "where": "every unit",
+   "note": "from the relief valves of every unit, by the flare header in the pipeway",
+   "fluidName": "flare gas",
+   "hazard": "flammable",
+   "NPS": 36,
+   "cls": "P150",
+   "designP": 50,
+   "designT": 300
+  },
+  {
+   "key": "fire water ring main",
+   "fluid": "FW",
+   "carry": "intermittent",
+   "from": [
+    {
+     "unit": 26,
+     "lbh": 3004200,
+     "T": 50,
+     "P": 150,
+     "standby": false
+    }
+   ],
+   "to": [],
+   "boundary": "out",
+   "where": "the ring main",
+   "note": "to the ring main and its hydrants and monitors (noted, not drawn: SW-REF-11)",
+   "fluidName": "fire water",
+   "hazard": "benign",
+   "NPS": 20,
+   "cls": "P300",
+   "designP": 245,
+   "designT": 150
+  }
+ ],
+ "headers": [
+  {
+   "fluid": "HS",
+   "name": "high-pressure steam",
+   "direction": "supply",
+   "capacity": 67000,
+   "made": [
+    {
+     "unit": 14,
+     "lbh": 18000
+    },
+    {
+     "unit": 17,
+     "lbh": 41135.97
+    },
+    {
+     "unit": 18,
+     "lbh": 9000
+    }
+   ],
+   "used": [
+    {
+     "unit": 13,
+     "lbh": 9659.589
+    },
+    {
+     "unit": 14,
+     "lbh": 44000.14
+    },
+    {
+     "unit": 17,
+     "lbh": 60000
+    },
+    {
+     "unit": 18,
+     "lbh": 798.9304
+    }
+   ]
+  },
+  {
+   "fluid": "MS",
+   "name": "medium-pressure steam",
+   "direction": "supply",
+   "capacity": 22000,
+   "made": [
+    {
+     "unit": 12,
+     "lbh": 17710.39
+    },
+    {
+     "unit": 17,
+     "lbh": 54620.55
+    }
+   ],
+   "used": [
+    {
+     "unit": 12,
+     "lbh": 12000
+    },
+    {
+     "unit": 13,
+     "lbh": 8802.326
+    },
+    {
+     "unit": 15,
+     "lbh": 2500
+    },
+    {
+     "unit": 16,
+     "lbh": 6000
+    },
+    {
+     "unit": 17,
+     "lbh": 37574.68
+    },
+    {
+     "unit": 25,
+     "lbh": 20000
+    }
+   ]
+  },
+  {
+   "fluid": "LS",
+   "name": "low-pressure steam",
+   "direction": "supply",
+   "capacity": 8000,
+   "made": [
+    {
+     "unit": 11,
+     "lbh": 16210.27
+    },
+    {
+     "unit": 14,
+     "lbh": 30000
+    },
+    {
+     "unit": 17,
+     "lbh": 60000
+    },
+    {
+     "unit": 18,
+     "lbh": 4500
+    }
+   ],
+   "used": [
+    {
+     "unit": 11,
+     "lbh": 13500
+    },
+    {
+     "unit": 12,
+     "lbh": 6000
+    },
+    {
+     "unit": 18,
+     "lbh": 33821.27
+    },
+    {
+     "unit": 19,
+     "lbh": 35000
+    },
+    {
+     "unit": 21,
+     "lbh": 15000
+    }
+   ]
+  },
+  {
+   "fluid": "CO",
+   "name": "condensate",
+   "direction": "return",
+   "capacity": 95000,
+   "made": [
+    {
+     "unit": 13,
+     "lbh": 18461.91
+    },
+    {
+     "unit": 14,
+     "lbh": 14000.14
+    },
+    {
+     "unit": 17,
+     "lbh": 8574.68
+    },
+    {
+     "unit": 18,
+     "lbh": 34620.21
+    },
+    {
+     "unit": 21,
+     "lbh": 15000
+    }
+   ],
+   "used": []
+  },
+  {
+   "fluid": "BW",
+   "name": "boiler feed water",
+   "direction": "supply",
+   "capacity": 180000,
+   "made": [],
+   "used": [
+    {
+     "unit": 11,
+     "lbh": 16210.27
+    },
+    {
+     "unit": 12,
+     "lbh": 17710.39
+    },
+    {
+     "unit": 14,
+     "lbh": 18000
+    },
+    {
+     "unit": 17,
+     "lbh": 95756.53
+    },
+    {
+     "unit": 18,
+     "lbh": 13500
+    }
+   ]
+  },
+  {
+   "fluid": "CWS",
+   "name": "cooling water supply",
+   "direction": "supply",
+   "capacity": 7500000,
+   "made": [],
+   "used": [
+    {
+     "unit": 11,
+     "lbh": 626132.4
+    },
+    {
+     "unit": 12,
+     "lbh": 950000
+    },
+    {
+     "unit": 13,
+     "lbh": 205674.3
+    },
+    {
+     "unit": 14,
+     "lbh": 518654.4
+    },
+    {
+     "unit": 15,
+     "lbh": 189185.2
+    },
+    {
+     "unit": 16,
+     "lbh": 130699.4
+    },
+    {
+     "unit": 17,
+     "lbh": 2896924
+    },
+    {
+     "unit": 18,
+     "lbh": 60720
+    }
+   ]
+  },
+  {
+   "fluid": "CWR",
+   "name": "cooling water return",
+   "direction": "return",
+   "capacity": 7500000,
+   "made": [
+    {
+     "unit": 11,
+     "lbh": 626132.4
+    },
+    {
+     "unit": 12,
+     "lbh": 950000
+    },
+    {
+     "unit": 13,
+     "lbh": 205674.3
+    },
+    {
+     "unit": 14,
+     "lbh": 518654.4
+    },
+    {
+     "unit": 15,
+     "lbh": 189185.2
+    },
+    {
+     "unit": 16,
+     "lbh": 130699.4
+    },
+    {
+     "unit": 17,
+     "lbh": 2896924
+    },
+    {
+     "unit": 18,
+     "lbh": 60720
+    }
+   ],
+   "used": []
+  },
+  {
+   "fluid": "FG",
+   "name": "fuel gas to users",
+   "direction": "supply",
+   "capacity": 13683.55,
+   "made": [],
+   "used": [
+    {
+     "unit": 11,
+     "lbh": 6156.07
+    },
+    {
+     "unit": 12,
+     "lbh": 2129.105
+    },
+    {
+     "unit": 13,
+     "lbh": 908.2357
+    },
+    {
+     "unit": 14,
+     "lbh": 1882.886
+    },
+    {
+     "unit": 15,
+     "lbh": 402.1905
+    },
+    {
+     "unit": 16,
+     "lbh": 620.1335
+    },
+    {
+     "unit": 18,
+     "lbh": 400
+    },
+    {
+     "unit": 25,
+     "lbh": 200
+    }
+   ]
+  },
+  {
+   "fluid": "IA",
+   "name": "instrument air",
+   "direction": "supply",
+   "capacity": 6900,
+   "made": [],
+   "used": [
+    {
+     "unit": 17,
+     "lbh": 800
+    }
+   ]
+  },
+  {
+   "fluid": "PA",
+   "name": "plant air",
+   "direction": "supply",
+   "capacity": 4600,
+   "made": [],
+   "used": []
+  },
+  {
+   "fluid": "NI",
+   "name": "nitrogen",
+   "direction": "supply",
+   "capacity": 2200,
+   "made": [],
+   "used": []
+  },
+  {
+   "fluid": "RW",
+   "name": "service water",
+   "direction": "supply",
+   "capacity": 100000,
+   "made": [],
+   "used": [
+    {
+     "unit": 17,
+     "lbh": 40000
+    },
+    {
+     "unit": 25,
+     "lbh": 2000
+    }
+   ]
+  },
+  {
+   "fluid": "CA",
+   "name": "caustic",
+   "direction": "supply",
+   "capacity": 1600,
+   "made": [],
+   "used": [
+    {
+     "unit": 17,
+     "lbh": 1600
+    }
+   ]
+  }
+ ]
+}

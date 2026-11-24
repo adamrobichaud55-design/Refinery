@@ -3436,8 +3436,8 @@ What is new, and is kept apart from geometry:
   |---|---|---|
   | 11 | Crude distillation (atmospheric) | 60,000 |
   | 12 | Vacuum distillation | 25,500 |
-  | 13 | Naphtha hydrotreater and splitter | 12,500 |
-  | 14 | Catalytic reformer, fixed bed, with hydrogen purification | 9,100 |
+  | 13 | Naphtha hydrotreater and splitter | 13,500 |
+  | 14 | Catalytic reformer, fixed bed, with hydrogen purification | 9,300 |
   | 15 | Kerosene hydrotreater | 6,300 |
   | 16 | Diesel hydrotreater | 12,300 |
   | 17 | Fluid catalytic cracker with gas concentration | 17,700 |
@@ -3478,6 +3478,9 @@ What is new, and is kept apart from geometry:
 - `SW-REF-6` Unit yields, as mass per cent of each unit's fresh feed, so that every balance closes
   by construction; volumes follow from the specific gravities given.
   - Crude and vacuum units: the cuts of SW-REF-5. The atmospheric residue is the three heaviest.
+    The two-carbon-and-lighter fifth of the light ends leaves the crude unit's accumulator as
+    gas; the rest leaves dissolved in the naphtha, is driven off in unit 13's stripper and is
+    recovered as liquefied gas in unit 17.
   - Naphtha hydrotreater (feed: light and heavy naphtha, and the wild naphtha of units 15 and
     16): hydrogen taken up 0.10; sour gas 0.60; the rest leaves as light and heavy naphtha in the
     proportion they entered, split by the splitter.
@@ -3500,9 +3503,17 @@ What is new, and is kept apart from geometry:
   but cuts the vacuum residue to fuel oil viscosity. Sulfur removed as hydrogen sulfide: all of
   the naphtha's, 95 % of the kerosene's, 99 % of the diesel hydrotreater feed's and 40 % of the
   cracker feed's (the rest of the cracker's leaves in its liquid products and, as oxides, in the
-  regenerator flue gas, which is scrubbed); sour water stripper gas adds 100 lb/h. Reason: a
-  plant of this size without a cracked-stock hydrotreater can live on its reformer's hydrogen;
-  the model checks that it does rather than assuming it.
+  regenerator flue gas, which is scrubbed); sour water stripper gas adds 100 lb/h. Sulfur leaves
+  the hydrocarbon as hydrogen sulfide, 34.08 / 32.06 of the sulfur's mass (the ratio of the
+  molecular weights), the difference being hydrogen the unit took up; each unit's sour gas
+  includes it, and fuel gas is the gases less the hydrogen sulfide amine takes out. Reformer
+  net gas is the hydrogen made with four fifths of the reformer's two-carbon-and-lighter gas;
+  the hydrocarbon that rides with it into the naphtha and kerosene hydrotreaters leaves in
+  their stripper gas. With these two statements the fuel gas of the unit flowsheets (unit 17's
+  treated gas, the stabiliser gas, the surplus hydrogen and the adsorbers' tail gas) equals the
+  fuel gas of the balance, which a test checks. Reason: a plant of this size without a
+  cracked-stock hydrotreater can live on its reformer's hydrogen; the model checks that it does
+  rather than assuming it.
 - `SW-REF-8` Product routes. Liquefied gas: three-carbon and four-carbon streams to pressure
   storage. Gasoline: light naphtha, reformate, cracked gasoline and butane, blended. Jet:
   treated kerosene. Diesel: hydrotreated diesel. Heavy fuel oil and asphalt: vacuum residue,
@@ -3513,7 +3524,14 @@ What is new, and is kept apart from geometry:
 - `SW-REF-9` Storage (days of the stream's rate; SmartWeld's own figures): crude 14 (a tanker's
   parcel and more); unit feeds held between units 3; gasoline components 4; finished products
   10; heavy fuel oil 12 and asphalt 20 (seasonal lifting); liquefied gas 5; slop 2 % of crude
-  for 5 days. Tank count and sizes follow by SW-PRC-13.
+  for 5 days. Tank count and sizes follow by SW-PRC-13. The unit feeds held are straight-run
+  naphtha (unit 13), hydrotreated heavy naphtha (unit 14, through a rundown cooler, because it
+  leaves the splitter too hot for a tank), diesel (unit 16) and gas oil (unit 17, on the cooled
+  light vacuum gas oil line, sized for three days of the cracker's whole feed); each tank
+  stands on the line between two units, taking the rundown when the unit downstream is down and
+  feeding it when the unit upstream is. Kerosene and atmospheric residue run unit to unit:
+  the kerosene hydrotreater follows the crude unit's rate, and the crude and vacuum units run
+  as one. Fire water: two tanks, each four hours at 6,000 US gallons a minute.
 - `SW-REF-10` Process scheme of each unit. Every equipment item in the model has a duty in one
   of these schemes; the list, with tags, duties and conditions, is drawing data in
   `src/refinery/` and is printed in `docs/REFINERY-PROCESS.md`. Pressures are gauge.
@@ -3522,40 +3540,50 @@ What is new, and is kept apart from geometry:
     a desalter at 150 psi, boosted, heated in a first hot train (against gas oil and the bottom
     pumparound) to 400 °F, flashed in a preflash drum whose vapour goes straight to the column,
     pumped through a second hot train (against vacuum gas oil pumparound and vacuum residue
-    from unit 12) to 520 °F and through the crude heater to 680 °F. The atmospheric column
+    from unit 12) to 505 °F and through the crude heater to 680 °F. The atmospheric column
     (flash zone 670 °F and 22 psi; top 250 °F and 15 psi) has three pumparounds and three side
     draws, each steam-stripped in a section of a stacked side stripper. Overhead is condensed
     by air and trim coolers to 100 °F in an accumulator with a water boot: reflux returns,
     naphtha goes to unit 13, sour water to unit 18, gas to the unit 17 wet gas compressor.
     Kerosene and diesel are cooled and sent to units 15 and 16; gas oil goes hot to unit 17;
-    residue goes hot, at 660 °F, to the vacuum heater.
-  - **12 Vacuum distillation.** Residue is heated to 750 °F and flashed at 30 mm of mercury in
-    a swaged column (stripping section, wide flash and wash zone, narrower top). Light and heavy
+    residue goes hot, at 650 °F, to the vacuum heater. Vacuum residue, having preheated the
+    crude, raises 50 psi steam on its way to the tanks.
+  - **12 Vacuum distillation.** Residue is heated to 750 °F and flashed at 30 mm of mercury
+    (20 mm at the top) in a swaged column (stripping section, wide flash and wash zone,
+    narrower top). Light and heavy
     vacuum gas oil pumparounds give their heat to crude preheat and steam generation; the gas
     oils go to unit 17. Vacuum residue is quenched, pumped through crude preheat and coolers and
     sent hot to fuel oil and asphalt tanks. A three-stage steam ejector set with surface
     condensers holds the vacuum; its hotwell separates slop oil and sour water, and its gas is
     burned in the vacuum heater.
-  - **13 Naphtha hydrotreater and splitter.** Naphtha from a surge drum is pumped to 500 psi,
+  - **13 Naphtha hydrotreater and splitter.** Naphtha from a surge drum is pumped to 460 psi,
     joined by hydrogen-rich gas, heated against reactor effluent and in a charge heater to
-    600 °F, and passed through one reactor bed. Effluent is cooled to 100 °F; a separator at
-    420 psi returns gas through a recycle compressor; the liquid is stripped in a reboiled
-    stripper (sour gas to amine treating) and split into light naphtha (to gasoline blending)
-    and heavy naphtha (to unit 14).
+    600 °F, and passed through one reactor bed. Effluent is washed with stripped water and
+    cooled to 100 °F; a separator at 350 psi returns gas through a recycle compressor; the
+    liquid is stripped in a reboiled stripper (its gas to the unit 17 wet gas compressor, and
+    so to amine treating) and split into light naphtha (to gasoline blending) and heavy naphtha
+    (hot to unit 14, or through a rundown cooler to its feed tank).
   - **14 Catalytic reformer.** Heavy naphtha and recycle gas are heated against effluent and
     passed through three reactors at 950 °F and 300 psi with a fired heater ahead of each (the
     reactions absorb heat). Effluent is cooled to 100 °F; a separator at 250 psi returns recycle
-    gas through a turbine-driven compressor; net gas is boosted to 550 psi for the
+    gas through a turbine-driven compressor; net gas is boosted to 530 psi for the
     hydrotreaters and a four-bed pressure swing adsorption unit; the liquid is stabilised in a
     debutaniser (liquefied gas and fuel gas overhead, reformate bottoms). The heaters' flue gas
     raises steam in a convection section with a steam drum.
-  - **15 Kerosene hydrotreater.** As unit 13 at 500 psi and 600 °F with one reactor, a steam
-    stripper and a product coalescer; treated kerosene to jet storage.
-  - **16 Diesel hydrotreater.** Feed is filtered, pumped to 1,000 psi, heated against effluent
-    and in a charge heater to 650 °F and passed through a two-bed reactor with hydrogen quench
-    between the beds, at 900 psi. Effluent is cooled, washed and separated at 850 psi; recycle
-    gas is scrubbed with amine in a high-pressure absorber and recompressed; the liquid is
-    flashed, steam-stripped, dried and cooled to storage.
+  - **15 Kerosene hydrotreater.** As unit 13, at the same pressures and 600 °F, with one
+    reactor, a steam stripper and a product coalescer; treated kerosene to jet storage. The
+    stripper's feed is heated against its bottoms and then against reactor effluent: a steam
+    stripper has no reboiler, so its bottoms leave cooler than its feed and cannot heat it all
+    the way.
+  - **16 Diesel hydrotreater.** Feed is filtered, pumped to 900 psi, heated against effluent
+    and in a charge heater to 610 °F and passed through a two-bed reactor with hydrogen quench
+    between the beds, at 800 psi, leaving at 650 °F. Effluent is cooled, washed and separated
+    at 770 psi; recycle gas is scrubbed with amine in a high-pressure absorber and
+    recompressed; the liquid is flashed, heated against stripper bottoms and reactor effluent
+    (as in unit 15), steam-stripped, dried and cooled to storage.
+    The pressures of units 13, 15 and 16 are chosen so that each reactor circuit, with its
+    charge pump blocked in (SW-PRC-2), stays within one pressure class, and the temperatures so
+    that only the reformer's circuit takes the hot-service class step of SW-PRC-3.
   - **17 Fluid catalytic cracker.** Gas oil from a surge drum is preheated to 450 °F against
     the main column's pumparounds and cracked on hot catalyst in a riser at 980 °F and 30 psi.
     Spent catalyst is steam-stripped and regenerated by burning its coke with air from a main
@@ -3567,28 +3595,59 @@ What is new, and is kept apart from geometry:
     a debutaniser and a depropaniser separate fuel gas, three-carbon and four-carbon liquefied
     gas and stabilised gasoline; fuel gas and liquefied gas are amine-treated and the gasoline
     and liquefied gas caustic-washed.
-  - **18 Sulfur block.** Rich amine from the absorbers of units 13, 16 and 17 is flashed,
+  - **18 Sulfur block.** Rich amine from the absorbers of units 16 and 17 is flashed,
     heated against lean amine and regenerated in a steam-reboiled column; lean amine is cooled,
-    filtered and returned. Sour water from every unit is collected, heated and steam-stripped;
-    stripped water returns to the desalter. Acid gas from both goes to a sulfur recovery train:
+    a tenth of it filtered, and returned. Sour water from every unit is collected, degassed,
+    heated and steam-stripped; stripped water returns as wash water to the desalter and the
+    hydrotreaters, and the rest goes to wastewater treatment. The flash drum's and degassing
+    drum's gases are burned in the incinerator. Acid gas from both goes to a sulfur recovery train:
     a reaction furnace with waste heat boiler, then two catalytic stages, each of reheater,
     converter and sulfur condenser, with a final condenser; liquid sulfur drains through seal
     pots to a heated pit and is loaded to trucks; tail gas is burned in an incinerator with a
     stack. A tail gas treating unit is not modeled (stated).
-  - **19 Utilities.** Two water-tube boilers raise 600 psi steam; let-down gives 150 psi and
-    50 psi steam. Condensate and demineralised make-up are deaerated and pumped as boiler feed
-    water. A four-cell cooling tower and its circulating pumps serve every water cooler.
+  - **19 Utilities.** Two water-tube boilers, one carrying the load and one standing by, raise
+    600 psi steam at 650 °F; let-down gives 150 psi and 50 psi steam, and the process units'
+    own steam generators and turbine exhausts feed the same headers. Raw water from the intake
+    is stored, filtered and demineralised; condensate and demineralised make-up are deaerated
+    with 50 psi steam and pumped as boiler feed water to the boilers and to the units' steam
+    generators. A four-cell cooling tower and its circulating pumps serve every water cooler.
     Three air compressors with dryers and receivers give instrument and plant air; nitrogen is
-    held as liquid and vaporised. A fuel gas drum mixes the plant's gases with purchased gas.
+    held as liquid and vaporised; caustic is held in a tank and pumped to unit 17. A fuel gas
+    drum mixes the plant's gases with purchased gas. Service water and fire water tank make-up
+    come from the raw water pumps.
   - **20, 21 Tank farm.** Floating-roof tanks for crude, naphthas and gasolines; cone-roof
-    tanks for kerosene, diesel, gas oils and fuel oils, the black oils heated; spheres and
-    bullets for liquefied gas; transfer, blending and shipping pumps on slabs outside the dikes.
-  - **22 Marine terminal.** A trestle carries the lines to a berth in deep water with loading
-    arms for crude discharge and product loading, dolphins and walkways.
-  - **23–27.** Truck loading racks; a wastewater plant (separator basin, equalisation, flotation,
-    biological treatment and clarifier) at the low point of the site; a derrick-supported flare
-    with knock-out and seal drums, remote; fire water tanks and pumps with a ring main; control
-    building, substations, workshops, stores, laboratory and offices.
+    tanks for kerosene, diesel, gas oils and fuel oils, the black oils heated; spheres for
+    liquefied gas and bullets at its truck rack; transfer, blending and shipping pumps on slabs
+    outside the dikes. Crude is boosted to unit 11 and its settled water drawn off. Gasoline
+    components run down to their own tanks and are pumped together, with butane, into a blend
+    header that fills the gasoline tanks. Vacuum residue goes to asphalt tanks and, cut with
+    light cycle oil and slurry oil and cooled, to fuel oil tanks. Slop from every unit is
+    collected and worked off into the crude.
+  - **22 Marine terminal.** A trestle carries the lines to a berth in deep water with three
+    arms for crude discharge at 25,000 barrels an hour and three for loading gasoline and jet
+    fuel, diesel, and fuel oil at 5,000 to 10,000 barrels an hour, with dolphins, walkways and
+    a slop drum.
+  - **23–27.** Truck loading racks for gasoline, jet fuel, diesel, asphalt and liquefied gas; a
+    wastewater plant (separator basin, equalisation, flotation, biological treatment and
+    clarifier) at the low point of the site; a derrick-supported flare with knock-out and seal
+    drums, remote, sized for a relief of 400,000 lb/h; fire water tanks and pumps (two engine
+    driven and one motor driven, any two giving 6,000 US gallons a minute) with a ring main;
+    control building, substations, workshops, stores, laboratory and offices.
+- `SW-REF-12` Streams between units. A stream that crosses a unit's battery limit carries one
+  name in the unit it leaves and in the unit it enters, and the model lists every such stream
+  with the units at each end (`src/refinery/process.ts`). A steady stream's sources and sinks
+  balance to the pound; several units may feed one stream (sour water, rich amine, stripper
+  gas, wild naphtha) or draw from one (lean amine, stripped water, reformer net gas). A stream
+  arrives within 10 °F of the temperature it left at and at no higher pressure. The others
+  are named for how they flow: an alternate route used when a unit is down; an intermittent
+  transfer (a ship or trucks loading, a tank being refilled), given at its rate while it runs;
+  a collected stream (slop oil, the flare header), whose line is sized for its largest
+  contributor. A tank that stands on a line between two units appears at both ends of that
+  stream, and takes no part in its balance. Streams that cross the site boundary are raw water
+  and purchased gas in, and treated effluent out. Utilities are headers: unit 19 supplies
+  each (or, for condensate and cooling water return, receives it), other units add what they
+  make, and a test checks that supply and make cover every use. Reason: the pipeways are
+  drawn from this list, so a stream that did not balance would be a line with nowhere to go.
 - `SW-REF-11` Out of scope, stated: instrumentation and control (the owner's instruction: it is
   shown on other drawings); electrical cable and trays; catalyst and chemical handling beyond
   the hoppers and tanks named; tail gas treating; small-bore piping beyond the vent, drain,
@@ -3620,7 +3679,19 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   relief valve set at the design pressure must stay shut in normal running, which wants a
   margin above the highest operating pressure, a tenth of it or 25 psi when the pressure is
   low; a centrifugal pump blocked in makes about a quarter more head than at its rating; metal
-  runs hotter than the fluid in upsets.
+  runs hotter than the fluid in upsets. A pump's discharge system is the run from the pump to
+  the first control valve station downstream (SW-LL-3), through any exchangers, filters and
+  branches on the way, and to the first vessel, column or tank where there is no such valve;
+  past it, the relief valve of the receiving equipment protects the line. Equipment lined
+  with refractory (the cracker's reactor and regenerator, fired heaters' fireboxes, the sulfur
+  furnace, the incinerator, and flue gas lines above 1,000 °F) is designed for a shell
+  temperature of 650 °F: the lining keeps the steel cool. Design conditions are taken side by
+  side: an exchanger's shell and tubes, a heater's process coil, steam coil and fuel, and the
+  steam side of a steam generator each have their own. A vessel, column or tank is designed
+  for the pressure of what leaves it, since what enters comes through a valve or from
+  something at a higher pressure; a nozzle takes the class of its line. Storage tanks,
+  basins, pits, the cooling tower, hoppers, loading arms and stacks are open to the
+  atmosphere and have no design pressure; their connections are of the lowest class.
 - `SW-PRC-3` Pressure class of equipment nozzles and lines: the smallest SmartWeld class
   (SW-PIPE-1) whose pressure is at least the design pressure, and one class higher where the
   design temperature is above 700 °F. Reason: SmartWeld's wall and flange rules carry no
@@ -3636,33 +3707,51 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
 - `SW-PRC-5` Pumps. Rated flow 1.1 × normal; head = pressure rise × 144 / (SG × K-5); hydraulic
   power = flow × head × density; shaft power = hydraulic / 0.70 (0.55 below 100 gallons a
   minute); motor the next rating in the series 1, 1.5, 2, 3, 5, 7.5 × a power of ten
-  horsepower. Impeller diameter from the head at two-pole speed (3,560 rpm at 60 hertz): tip
-  speed u = √(g H / 0.5), D = 60 u / (π N); four-pole speed where that passes 16 in; stages of
-  equal head where it would still pass 24 in. Motor frame diameter = 10 in × (horsepower /
+  horsepower. Speed: two-pole (3,560 rpm at 60 hertz) to 3,000 US gallons a minute, four-pole
+  (1,780 rpm) above. Impeller diameter from the head: tip speed u = √(g H / 0.5),
+  D = 60 u / (π N); stages of equal head so that no impeller passes 16 in at two-pole speed or
+  24 in at four-pole. Motor frame diameter = 10 in × (horsepower /
   10)^(1/3). Every process pump has an installed spare. Suction and discharge nozzles are one
   size below their lines (SW-LL-7). Reason: an impeller's head is about half its tip speed
   squared over g; torque sets a motor's size and grows with its volume.
 - `SW-PRC-6` Drums. Liquid hold-up at half full: feed surge drums 15 minutes of feed; reflux
   accumulators 5 minutes of reflux plus product; separators and flash drums 5 minutes of liquid.
   Horizontal, length three diameters, diameter in 6 in steps and 36 in at least, unless the
-  vapour sets it: vapour space velocity at most u = 0.18 √((ρ_L − ρ_V) / ρ_V) ft/s over half the
-  cross-section. Knock-out drums are sized on that velocity alone. Reason: hold-up gives the
-  operator time; the velocity is the settling speed of a 0.2 mm drop in turbulent drag
-  (drag coefficient 0.44) taken at 70 %.
+  vapour sets it. A drop settles at u = 0.18 √((ρ_L − ρ_V) / ρ_V) ft/s. In a horizontal drum the
+  gas crosses lengthwise over the liquid, and a drop need only fall the half diameter while the
+  gas travels the length, so the gas may move at u × length / half diameter = 6 u through the
+  upper half of the cross-section. In a vertical drum the gas rises against the drop, so it
+  may move at u through the whole cross-section; a vertical drum is three diameters between
+  tangents. Knock-out drums are sized on these velocities alone, with five minutes of whatever
+  liquid they catch. Drums that hold a stated time (slop and drain drums, 30 minutes) use it.
+  Reason: hold-up gives the operator time; the velocity is the settling speed of a 0.2 mm drop
+  in turbulent drag (drag coefficient 0.44) taken at 70 %.
 - `SW-PRC-7` Columns. Diameter from the largest vapour load in each section at
   u = 0.25 √((ρ_L − ρ_V) / ρ_V) ft/s over 85 % of the cross-section (the rest is downcomers), in
   6 in steps. Height: the stated number of trays at 24 in, plus 12 ft for the sump and feed
   zone and 8 ft above the top tray; skirt 15 ft where the bottoms feed a pump. Tray counts are
-  stated per column. Platforms, ladders and manways by SW-EQC-32. Reason: the velocity is that
+  stated per column. The vapour loads are the stated one and what each reboiler boils. The
+  column is also wide enough that the largest liquid stream on its trays (a draw, or the
+  bottoms with what the reboiler boils from it) passes down at no more than 0.05 ft/s on the
+  whole cross-section. Platforms, ladders and manways by SW-EQC-32. The vacuum column is given
+  as three sections (stripping, flash and wash, top), each with its own vapour load and a
+  stated height, joined by cones. A column in which two liquids pass (the liquefied gas amine
+  contactor) is sized for the light liquid rising at 0.05 ft/s. Reason: the velocity is that
   of a 0.5 mm spray drop at about 60 % of its settling speed, which keeps liquid from being
   carried up to the tray above; the skirt gives the bottoms pump its suction head.
 - `SW-PRC-8` Shell-and-tube exchangers. Duty Q = flow × specific heat × temperature change (plus
   latent heat where stated); surface A = Q / (0.9 U ΔT_lm), with U in Btu/h·ft²·°F by the pair of
-  fluids: heavy oil both sides 40; light oil to oil, and gas to gas at pressure, 60; oil to
-  cooling water 70; condensing vapour to water 90; steam to oil 100; amine to amine 100; steam
-  to water 250. Tubes 3/4 in on the bundle rule of SW-EQC-30, 20 ft long; shells from 24 to
-  60 in inside diameter in 6 in steps; the fewest shells, then the smallest diameter, that give
-  the surface. Reason: heat flows in proportion to surface, temperature difference and how
+  fluids: heavy oil both sides 40; heavy oil to water or to boiling water 50; light oil to oil,
+  gas to gas at pressure, and gas to water, 60; oil to cooling water or boiling water 70;
+  condensing vapour to water 90; steam to oil 100; amine to amine 100; water or amine to water
+  150; steam to water or amine 250; gas below 50 psi to water or boiling water 20. Heavy oils
+  are crude, gas oil, residue and slurry. ΔT_lm
+  is the logarithmic mean of the temperature differences at the two ends in counter-flow,
+  5 °F at least at either end; steam condenses at about 490 °F at 600 psi, 365 °F at 150 psi
+  and 300 °F at 50 psi, and water boils in a steam generator at the same temperatures
+  (properties of water, round figures). Tubes 3/4 in on the bundle rule of SW-EQC-30, 20 ft
+  long; shells from 12 to 60 in inside diameter in 6 in steps; the fewest shells, then the
+  smallest diameter, that give the surface. Reason: heat flows in proportion to surface, temperature difference and how
   readily the two films pass it, which thick oils do poorly and condensing steam does well.
 - `SW-PRC-9` Air coolers. A bay is 14 ft wide with tubes 32 ft long and two fans, four rows of
   1 in tubes at 2.5 in centres; duty per bay = 80 Btu/h·ft²·°F × its bare tube surface × ΔT_lm
@@ -3672,11 +3761,11 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   outside surface so the bare-tube coefficient is as good as a water cooler's.
 - `SW-PRC-10` Fired heaters. Fired duty = absorbed duty / 0.85. The radiant section absorbs 70 %
   of the duty at 10,000 Btu/h per ft² of tube surface, on 6 in tubes at 12 in centres in one
-  row along each long wall (π/2 ft² of tube per ft² of wall). Above 15 million Btu/h absorbed
+  row along each long wall (π/2 ft² of tube per ft² of wall). Above 30 million Btu/h absorbed
   the heater is a cabin (SW-EQC-53): width 16 ft to 50 million Btu/h and 20 ft above, radiant
   height twice the width, length = wall surface needed / (2 × height), 20 ft at least; at or
-  below 15 million it is a vertical cylinder (SW-EQC-14) of height 2.5 diameters whose shell
-  gives that wall surface. Reason: tube metal sets how much heat a square foot may take, and
+  below 30 million it is a vertical cylinder (SW-EQC-14) of height 2.5 diameters whose shell
+  gives that wall surface, 6 ft across at least. Reason: tube metal sets how much heat a square foot may take, and
   the firebox is as big as the tube surface it must hold.
 - `SW-PRC-11` Reactors. Catalyst volume = liquid feed volume an hour / space velocity: naphtha
   hydrotreater 6, kerosene 3, diesel 1.2 (two beds), reformer 1.6 over three reactors in the
@@ -3687,15 +3776,19 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   weighted to the last reactor.
 - `SW-PRC-12` Compressors and blowers. Gas power = moles × R × T₁ × k/(k − 1) × (r^((k−1)/k) − 1)
   / 0.75, k = 1.3 for hydrocarbon gas and 1.4 for hydrogen-rich gas and air; one stage up to a
-  pressure ratio of 3.5, more of equal ratio beyond. Driver by SW-PRC-5's motor series, or a
+  pressure ratio of 3.5, more of equal ratio beyond, cooled back to the suction temperature
+  between stages, so that the power is the stages' sum. The wet gas compressor's two stages
+  are two casings on one turbine's shaft. Driver by SW-PRC-5's motor series, or a
   steam turbine where stated (wheel diameter 12 in × (horsepower / 100)^(1/3)). Reason: the
   work of compression from the gas law; a stage's temperature rise limits its ratio.
 - `SW-PRC-13` Storage. Working volume = days of SW-REF-9 × the stream's rate / 0.85 (heel and
   freeboard), shared by the stated number of tanks. Shell height 48 ft (six courses of 8 ft,
   SW-EQC-44), less where the diameter would fall below the height, when tank is as tall as it
-  is wide; diameter in 5 ft steps, 180 ft at most. Floating roof for stocks that boil below
-  350 °F; cone roof for the rest; black oils heated. Liquefied gas in spheres of 60 ft at most
-  (SW-EQC-48). Dikes by SW-CIV-14.
+  is wide; diameter in 5 ft steps, 180 ft at most. Such a small tank's height is the whole
+  number of 8 ft courses next below that width, two courses at least, and its diameter follows.
+  Floating roof for stocks that boil below 350 °F; cone roof for the rest; black oils heated.
+  Liquefied gas in spheres of 60 ft at most, to the next foot (SW-EQC-48), and in bullets six
+  diameters long, to the next 6 in. Dikes by SW-CIV-14.
 - `SW-PRC-14` Wall of a pressure vessel: t = P R / S + corrosion allowance, in 1/8 in steps, not
   below the larger of 3/8 in and inside diameter / 250; S = 18,000 psi (half the yield of
   Grade 36 plate) up to 650 °F design temperature, falling in a straight line to half that at
@@ -3709,6 +3802,29 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   has a seal flush connection; every pressure vessel has a relief valve to the flare header, a
   vent, a drain and two instrument connections (SW-LL-3, SW-LL-6); hose stations for steam,
   air, water and nitrogen stand along each unit's rack. Reason: as plants 1 and 2.
+- `SW-PRC-17` Other vessels sized for their duty.
+  - Desalter: horizontal, four diameters long, holding 20 minutes of the crude. Reason: salt
+    water drops need that long to settle out of the oil in the electric field.
+  - Deaerator: a horizontal storage vessel three diameters long holding 10 minutes of boiler
+    feed water at half full, with a vertical heater section on it of half its diameter and one
+    diameter tall. Reason: the storage rides out a short loss of make-up.
+  - Treating vessels (ion exchangers, caustic wash drums, air dryers): vertical, 2.5 diameters
+    between tangents, holding 10 minutes of a liquid or 20 seconds of a gas at its conditions;
+    36 in at least; in parallel where a number is stated.
+  - Filters: a vertical housing two diameters tall through whose cross-section a liquid passes
+    at 0.1 ft/s and a gas at the vertical-drum velocity of SW-PRC-6; 24 in at least.
+  - Air receivers hold 30 seconds of the compressors' flow at pressure; a steam drum holds
+    5 minutes of the feed water it receives.
+  - Sulfur converters: horizontal, three diameters long, the gas passing down through a bed
+    3 ft deep at 1 ft/s on the bed's plan (diameter × length).
+  Diameters in 6 in steps. Reason: each is a residence time or a velocity the service needs.
+- `SW-PRC-16` Cooling tower. One cell for each 5,000 US gallons a minute circulated, and one
+  more; a cell is square, of the plan area that passes its water at 4 gallons a minute per
+  square foot, to the next foot: 36 ft. Water returns at 105 °F and leaves at 85 °F; a fiftieth
+  of the circulation evaporates (a thousand Btu a pound against a 20 °F range), and blowdown
+  holds the dissolved solids at about five times the make-up's. Circulating pumps share the
+  flow with one spare. Reason: the fill wets only so much water per square foot before it
+  floods; the extra cell lets one be taken out for cleaning in summer.
 
 ## 76. Plant 3: the code layer (`SW-REG-*`) — recalled from general knowledge, flagged, for the owner to verify
 
