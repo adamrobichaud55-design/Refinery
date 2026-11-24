@@ -1,0 +1,1989 @@
+{
+ "demonstration": true,
+ "note": "An invented site: its ground is a formula and its arrangement SmartWeld's own. Feet; E = x, N = −z, elevations above the model's mean sea level.",
+ "site": {
+  "east": 5000,
+  "south": 5400,
+  "tide": 11
+ },
+ "benches": [
+  {
+   "id": "process",
+   "name": "Process bench",
+   "x0": 850,
+   "x1": 3050,
+   "z0": 2110,
+   "z1": 3260,
+   "el": 58
+  },
+  {
+   "id": "south",
+   "name": "South tank terrace",
+   "x0": 940,
+   "x1": 3560,
+   "z0": 1390,
+   "z1": 1860,
+   "el": 84
+  },
+  {
+   "id": "north",
+   "name": "North tank terrace",
+   "x0": 1000,
+   "x1": 3160,
+   "z0": 740,
+   "z1": 1200,
+   "el": 116
+  },
+  {
+   "id": "lpg",
+   "name": "Liquefied gas bench",
+   "x0": 3760,
+   "x1": 4260,
+   "z0": 1480,
+   "z1": 1880,
+   "el": 45
+  },
+  {
+   "id": "waste",
+   "name": "Wastewater bench",
+   "x0": 3600,
+   "x1": 4300,
+   "z0": 2750,
+   "z1": 3250,
+   "el": 23
+  },
+  {
+   "id": "admin",
+   "name": "Administration bench",
+   "x0": 140,
+   "x1": 760,
+   "z0": 2250,
+   "z1": 3150,
+   "el": 55
+  },
+  {
+   "id": "truck",
+   "name": "Truck loading bench",
+   "x0": 200,
+   "x1": 780,
+   "z0": 1500,
+   "z1": 2050,
+   "el": 77
+  },
+  {
+   "id": "flare",
+   "name": "Flare pad",
+   "x0": 470,
+   "x1": 570,
+   "z0": 470,
+   "z1": 570,
+   "el": 192
+  },
+  {
+   "id": "jetty",
+   "name": "Jetty head",
+   "x0": 1080,
+   "x1": 1320,
+   "z0": 4080,
+   "z1": 4260,
+   "el": 39
+  },
+  {
+   "id": "pond",
+   "name": "Storm pond",
+   "x0": 3720,
+   "x1": 4080,
+   "z0": 3300,
+   "z1": 3400,
+   "el": 15
+  }
+ ],
+ "plots": [
+  {
+   "id": "U19",
+   "name": "Utilities",
+   "unit": 19,
+   "bench": "process",
+   "kind": "unit",
+   "x0": 1000,
+   "x1": 1420,
+   "z0": 2170,
+   "z1": 2650,
+   "faces": "S",
+   "elevation": 58
+  },
+  {
+   "id": "U11",
+   "name": "Crude distillation",
+   "unit": 11,
+   "bench": "process",
+   "kind": "unit",
+   "x0": 1520,
+   "x1": 1820,
+   "z0": 2230,
+   "z1": 2650,
+   "faces": "S",
+   "elevation": 58
+  },
+  {
+   "id": "U12",
+   "name": "Vacuum distillation",
+   "unit": 12,
+   "bench": "process",
+   "kind": "unit",
+   "x0": 1920,
+   "x1": 2180,
+   "z0": 2350,
+   "z1": 2650,
+   "faces": "S",
+   "elevation": 58
+  },
+  {
+   "id": "U17",
+   "name": "Fluid catalytic cracker",
+   "unit": 17,
+   "bench": "process",
+   "kind": "unit",
+   "x0": 2280,
+   "x1": 2620,
+   "z0": 2170,
+   "z1": 2650,
+   "faces": "S",
+   "elevation": 58
+  },
+  {
+   "id": "CT",
+   "name": "Cooling tower",
+   "unit": 19,
+   "bench": "process",
+   "kind": "tower",
+   "x0": 2720,
+   "x1": 2920,
+   "z0": 2190,
+   "z1": 2590,
+   "elevation": 58
+  },
+  {
+   "id": "U13",
+   "name": "Naphtha hydrotreater",
+   "unit": 13,
+   "bench": "process",
+   "kind": "unit",
+   "x0": 1000,
+   "x1": 1240,
+   "z0": 2750,
+   "z1": 3070,
+   "faces": "N",
+   "elevation": 58
+  },
+  {
+   "id": "U14",
+   "name": "Catalytic reformer",
+   "unit": 14,
+   "bench": "process",
+   "kind": "unit",
+   "x0": 1340,
+   "x1": 1600,
+   "z0": 2750,
+   "z1": 3110,
+   "faces": "N",
+   "elevation": 58
+  },
+  {
+   "id": "U15",
+   "name": "Kerosene hydrotreater",
+   "unit": 15,
+   "bench": "process",
+   "kind": "unit",
+   "x0": 1700,
+   "x1": 1920,
+   "z0": 2750,
+   "z1": 3010,
+   "faces": "N",
+   "elevation": 58
+  },
+  {
+   "id": "U16",
+   "name": "Diesel hydrotreater",
+   "unit": 16,
+   "bench": "process",
+   "kind": "unit",
+   "x0": 2020,
+   "x1": 2260,
+   "z0": 2750,
+   "z1": 3070,
+   "faces": "N",
+   "elevation": 58
+  },
+  {
+   "id": "U18",
+   "name": "Sulfur block",
+   "unit": 18,
+   "bench": "process",
+   "kind": "unit",
+   "x0": 2360,
+   "x1": 2620,
+   "z0": 2750,
+   "z1": 3150,
+   "faces": "N",
+   "elevation": 58
+  },
+  {
+   "id": "FUT",
+   "name": "Space for a future unit",
+   "unit": 0,
+   "bench": "process",
+   "kind": "spare",
+   "x0": 2720,
+   "x1": 2940,
+   "z0": 2750,
+   "z1": 3150,
+   "elevation": 58
+  },
+  {
+   "id": "U23",
+   "name": "Truck loading",
+   "unit": 23,
+   "bench": "truck",
+   "kind": "unit",
+   "x0": 260,
+   "x1": 720,
+   "z0": 1560,
+   "z1": 1990,
+   "elevation": 77
+  },
+  {
+   "id": "U24",
+   "name": "Wastewater treatment",
+   "unit": 24,
+   "bench": "waste",
+   "kind": "unit",
+   "x0": 3660,
+   "x1": 4240,
+   "z0": 2810,
+   "z1": 3190,
+   "elevation": 23
+  },
+  {
+   "id": "U25",
+   "name": "Flare stack and seal drum",
+   "unit": 25,
+   "bench": "flare",
+   "kind": "pad",
+   "x0": 480,
+   "x1": 560,
+   "z0": 480,
+   "z1": 560,
+   "elevation": 192
+  },
+  {
+   "id": "U25K",
+   "name": "Flare knock-out drum",
+   "unit": 25,
+   "bench": "process",
+   "kind": "pad",
+   "x0": 865,
+   "x1": 945,
+   "z0": 2170,
+   "z1": 2290,
+   "elevation": 58
+  },
+  {
+   "id": "U22",
+   "name": "Marine terminal shore station",
+   "unit": 22,
+   "bench": "jetty",
+   "kind": "unit",
+   "x0": 1100,
+   "x1": 1300,
+   "z0": 4100,
+   "z1": 4250,
+   "elevation": 39
+  },
+  {
+   "id": "POND",
+   "name": "Storm pond",
+   "unit": 24,
+   "bench": "pond",
+   "kind": "pond",
+   "x0": 3740,
+   "x1": 4060,
+   "z0": 3315,
+   "z1": 3385,
+   "elevation": 15
+  },
+  {
+   "id": "U26",
+   "name": "Fire water tanks and pumps",
+   "unit": 26,
+   "bench": "admin",
+   "kind": "unit",
+   "x0": 520,
+   "x1": 740,
+   "z0": 2290,
+   "z1": 2450,
+   "elevation": 55
+  },
+  {
+   "id": "B-GATE",
+   "name": "Gatehouse",
+   "unit": 27,
+   "bench": "admin",
+   "kind": "building",
+   "x0": 160,
+   "x1": 200,
+   "z0": 2650,
+   "z1": 2680,
+   "height": 12,
+   "elevation": 55
+  },
+  {
+   "id": "B-WARE",
+   "name": "Warehouse",
+   "unit": 27,
+   "bench": "admin",
+   "kind": "building",
+   "x0": 230,
+   "x1": 470,
+   "z0": 2290,
+   "z1": 2400,
+   "height": 28,
+   "elevation": 55
+  },
+  {
+   "id": "B-FIRE",
+   "name": "Fire station",
+   "unit": 27,
+   "bench": "admin",
+   "kind": "building",
+   "x0": 230,
+   "x1": 350,
+   "z0": 2450,
+   "z1": 2530,
+   "height": 22,
+   "elevation": 55
+  },
+  {
+   "id": "B-CANT",
+   "name": "Canteen and change house",
+   "unit": 27,
+   "bench": "admin",
+   "kind": "building",
+   "x0": 230,
+   "x1": 390,
+   "z0": 2575,
+   "z1": 2645,
+   "height": 14,
+   "elevation": 55
+  },
+  {
+   "id": "B-ADMIN",
+   "name": "Administration office",
+   "unit": 27,
+   "bench": "admin",
+   "kind": "building",
+   "x0": 230,
+   "x1": 430,
+   "z0": 2760,
+   "z1": 2850,
+   "height": 28,
+   "elevation": 55
+  },
+  {
+   "id": "B-LAB",
+   "name": "Laboratory",
+   "unit": 27,
+   "bench": "admin",
+   "kind": "building",
+   "x0": 230,
+   "x1": 350,
+   "z0": 2900,
+   "z1": 2960,
+   "height": 16,
+   "elevation": 55
+  },
+  {
+   "id": "B-SHOP",
+   "name": "Workshop",
+   "unit": 27,
+   "bench": "admin",
+   "kind": "building",
+   "x0": 230,
+   "x1": 430,
+   "z0": 3010,
+   "z1": 3100,
+   "height": 30,
+   "elevation": 55
+  },
+  {
+   "id": "B-SUB",
+   "name": "Main substation",
+   "unit": 27,
+   "bench": "admin",
+   "kind": "building",
+   "x0": 620,
+   "x1": 740,
+   "z0": 2500,
+   "z1": 2590,
+   "height": 20,
+   "elevation": 55
+  },
+  {
+   "id": "B-CTRL",
+   "name": "Control building",
+   "unit": 27,
+   "bench": "admin",
+   "kind": "building",
+   "x0": 640,
+   "x1": 740,
+   "z0": 2790,
+   "z1": 2910,
+   "height": 18,
+   "elevation": 55
+  }
+ ],
+ "dikes": [
+  {
+   "id": "crude",
+   "name": "Crude oil",
+   "unit": 20,
+   "bench": "south",
+   "tanks": [
+    {
+     "tag": "T-2001",
+     "unit": 20,
+     "x": 1125.5,
+     "z": 1588,
+     "D": 175,
+     "H": 48
+    },
+    {
+     "tag": "T-2002",
+     "unit": 20,
+     "x": 1388,
+     "z": 1588,
+     "D": 175,
+     "H": 48
+    },
+    {
+     "tag": "T-2003",
+     "unit": 20,
+     "x": 1650.5,
+     "z": 1588,
+     "D": 175,
+     "H": 48
+    },
+    {
+     "tag": "T-2004",
+     "unit": 20,
+     "x": 1913,
+     "z": 1588,
+     "D": 175,
+     "H": 48
+    },
+    {
+     "tag": "T-2005",
+     "unit": 20,
+     "x": 2175.5,
+     "z": 1588,
+     "D": 175,
+     "H": 48
+    }
+   ],
+   "x0": 1014,
+   "x1": 2287,
+   "z0": 1460.5,
+   "z1": 1715.5,
+   "wall": 6,
+   "holds": 1226105.44,
+   "needs": 1220676.11,
+   "elevation": 84
+  },
+  {
+   "id": "black",
+   "name": "Fuel oil, asphalt and gas oil",
+   "unit": 21,
+   "bench": "south",
+   "tanks": [
+    {
+     "tag": "T-2115",
+     "unit": 21,
+     "x": 2499,
+     "z": 1588,
+     "D": 110,
+     "H": 48
+    },
+    {
+     "tag": "T-2116",
+     "unit": 21,
+     "x": 2664,
+     "z": 1588,
+     "D": 110,
+     "H": 48
+    },
+    {
+     "tag": "T-2117",
+     "unit": 21,
+     "x": 2816.5,
+     "z": 1588,
+     "D": 85,
+     "H": 48
+    },
+    {
+     "tag": "T-2118",
+     "unit": 21,
+     "x": 2951.5,
+     "z": 1588,
+     "D": 85,
+     "H": 48
+    },
+    {
+     "tag": "T-2104",
+     "unit": 21,
+     "x": 3094,
+     "z": 1588,
+     "D": 100,
+     "H": 48
+    },
+    {
+     "tag": "T-2119",
+     "unit": 21,
+     "x": 3219,
+     "z": 1588,
+     "D": 50,
+     "H": 40
+    }
+   ],
+   "x0": 2420,
+   "x1": 3268,
+   "z0": 1509,
+   "z1": 1667,
+   "wall": 5.5,
+   "holds": 515959.86,
+   "needs": 475277.29,
+   "elevation": 84
+  },
+  {
+   "id": "slop",
+   "name": "Slop oil",
+   "unit": 21,
+   "bench": "south",
+   "tanks": [
+    {
+     "tag": "T-2120",
+     "unit": 21,
+     "x": 3402.5,
+     "z": 1588,
+     "D": 35,
+     "H": 24
+    },
+    {
+     "tag": "T-2121",
+     "unit": 21,
+     "x": 3487.5,
+     "z": 1588,
+     "D": 35,
+     "H": 24
+    }
+   ],
+   "x0": 3370,
+   "x1": 3520,
+   "z0": 1555.5,
+   "z1": 1620.5,
+   "wall": 3,
+   "holds": 23477.32,
+   "needs": 21795.25,
+   "elevation": 84
+  },
+  {
+   "id": "gasoline",
+   "name": "Gasoline",
+   "unit": 21,
+   "bench": "north",
+   "tanks": [
+    {
+     "tag": "T-2108",
+     "unit": 21,
+     "x": 1151.5,
+     "z": 950,
+     "D": 115,
+     "H": 48
+    },
+    {
+     "tag": "T-2109",
+     "unit": 21,
+     "x": 1324,
+     "z": 950,
+     "D": 115,
+     "H": 48
+    },
+    {
+     "tag": "T-2110",
+     "unit": 21,
+     "x": 1496.5,
+     "z": 950,
+     "D": 115,
+     "H": 48
+    }
+   ],
+   "x0": 1070,
+   "x1": 1578,
+   "z0": 829.5,
+   "z1": 1070.5,
+   "wall": 6,
+   "holds": 547603.97,
+   "needs": 544677.47,
+   "elevation": 116
+  },
+  {
+   "id": "components",
+   "name": "Naphthas and gasoline components",
+   "unit": 21,
+   "bench": "north",
+   "tanks": [
+    {
+     "tag": "T-2107",
+     "unit": 21,
+     "x": 1744.5,
+     "z": 950,
+     "D": 85,
+     "H": 48
+    },
+    {
+     "tag": "T-2106",
+     "unit": 21,
+     "x": 1874.5,
+     "z": 950,
+     "D": 75,
+     "H": 48
+    },
+    {
+     "tag": "T-2105",
+     "unit": 21,
+     "x": 1987,
+     "z": 950,
+     "D": 50,
+     "H": 48
+    },
+    {
+     "tag": "T-2101",
+     "unit": 21,
+     "x": 2104.5,
+     "z": 950,
+     "D": 85,
+     "H": 48
+    },
+    {
+     "tag": "T-2102",
+     "unit": 21,
+     "x": 2232,
+     "z": 950,
+     "D": 70,
+     "H": 48
+    }
+   ],
+   "x0": 1678,
+   "x1": 2291,
+   "z0": 883.5,
+   "z1": 1016.5,
+   "wall": 5,
+   "holds": 299750.93,
+   "needs": 298790.72,
+   "elevation": 116
+  },
+  {
+   "id": "distillates",
+   "name": "Jet fuel and diesel",
+   "unit": 21,
+   "bench": "north",
+   "tanks": [
+    {
+     "tag": "T-2111",
+     "unit": 21,
+     "x": 2452.5,
+     "z": 950,
+     "D": 75,
+     "H": 48
+    },
+    {
+     "tag": "T-2112",
+     "unit": 21,
+     "x": 2577.5,
+     "z": 950,
+     "D": 75,
+     "H": 48
+    },
+    {
+     "tag": "T-2113",
+     "unit": 21,
+     "x": 2720,
+     "z": 950,
+     "D": 105,
+     "H": 48
+    },
+    {
+     "tag": "T-2114",
+     "unit": 21,
+     "x": 2877.5,
+     "z": 950,
+     "D": 105,
+     "H": 48
+    },
+    {
+     "tag": "T-2103",
+     "unit": 21,
+     "x": 3022.5,
+     "z": 950,
+     "D": 80,
+     "H": 48
+    }
+   ],
+   "x0": 2391,
+   "x1": 3086.5,
+   "z0": 873.5,
+   "z1": 1026.5,
+   "wall": 6,
+   "holds": 451387.16,
+   "needs": 442451.63,
+   "elevation": 116
+  }
+ ],
+ "pressureStorage": [
+  {
+   "tag": "S-2101",
+   "x": 3927,
+   "z": 1720,
+   "D": 54,
+   "elevation": 45
+  },
+  {
+   "tag": "S-2102",
+   "x": 4033,
+   "z": 1720,
+   "D": 50,
+   "elevation": 45
+  },
+  {
+   "tag": "S-2103",
+   "x": 4133,
+   "z": 1720,
+   "D": 50,
+   "elevation": 45
+  },
+  {
+   "tag": "S-2104",
+   "x": 3940,
+   "z": 1560,
+   "D": 10,
+   "L": 60,
+   "elevation": 45
+  },
+  {
+   "tag": "S-2105",
+   "x": 3940,
+   "z": 1580,
+   "D": 10,
+   "L": 60,
+   "elevation": 45
+  }
+ ],
+ "roads": [
+  {
+   "id": "main",
+   "name": "Main road from the gate",
+   "width": 24,
+   "pts": [
+    [
+     0,
+     2700
+    ],
+    [
+     140,
+     2700
+    ],
+    [
+     760,
+     2700
+    ],
+    [
+     975,
+     2700
+    ]
+   ],
+   "el": [
+    52.85,
+    55,
+    55,
+    58
+   ],
+   "length": 975,
+   "steepest": 0.02
+  },
+  {
+   "id": "ring",
+   "name": "Process ring road",
+   "width": 24,
+   "pts": [
+    [
+     975,
+     2135
+    ],
+    [
+     3025,
+     2135
+    ],
+    [
+     3025,
+     3235
+    ],
+    [
+     975,
+     3235
+    ],
+    [
+     975,
+     2135
+    ]
+   ],
+   "el": [
+    58,
+    58,
+    58,
+    58,
+    58
+   ],
+   "length": 6300,
+   "steepest": 0
+  },
+  {
+   "id": "n1",
+   "name": "Road between units",
+   "width": 20,
+   "pts": [
+    [
+     1470,
+     2135
+    ],
+    [
+     1470,
+     2650
+    ]
+   ],
+   "el": [
+    58,
+    58
+   ],
+   "length": 515,
+   "steepest": 0
+  },
+  {
+   "id": "n2",
+   "name": "Road between units",
+   "width": 20,
+   "pts": [
+    [
+     1870,
+     2135
+    ],
+    [
+     1870,
+     2650
+    ]
+   ],
+   "el": [
+    58,
+    58
+   ],
+   "length": 515,
+   "steepest": 0
+  },
+  {
+   "id": "n3",
+   "name": "Road between units",
+   "width": 20,
+   "pts": [
+    [
+     2230,
+     2135
+    ],
+    [
+     2230,
+     2650
+    ]
+   ],
+   "el": [
+    58,
+    58
+   ],
+   "length": 515,
+   "steepest": 0
+  },
+  {
+   "id": "s1",
+   "name": "Road between units",
+   "width": 20,
+   "pts": [
+    [
+     1290,
+     2750
+    ],
+    [
+     1290,
+     3235
+    ]
+   ],
+   "el": [
+    58,
+    58
+   ],
+   "length": 485,
+   "steepest": 0
+  },
+  {
+   "id": "s2",
+   "name": "Road between units",
+   "width": 20,
+   "pts": [
+    [
+     1650,
+     2750
+    ],
+    [
+     1650,
+     3235
+    ]
+   ],
+   "el": [
+    58,
+    58
+   ],
+   "length": 485,
+   "steepest": 0
+  },
+  {
+   "id": "s3",
+   "name": "Road between units",
+   "width": 20,
+   "pts": [
+    [
+     1970,
+     2750
+    ],
+    [
+     1970,
+     3235
+    ]
+   ],
+   "el": [
+    58,
+    58
+   ],
+   "length": 485,
+   "steepest": 0
+  },
+  {
+   "id": "s4",
+   "name": "Road between units",
+   "width": 20,
+   "pts": [
+    [
+     2310,
+     2750
+    ],
+    [
+     2310,
+     3235
+    ]
+   ],
+   "el": [
+    58,
+    58
+   ],
+   "length": 485,
+   "steepest": 0
+  },
+  {
+   "id": "cross",
+   "name": "Road across the pipeway",
+   "width": 20,
+   "pts": [
+    [
+     2670,
+     2135
+    ],
+    [
+     2670,
+     3235
+    ]
+   ],
+   "el": [
+    58,
+    58
+   ],
+   "length": 1100,
+   "steepest": 0
+  },
+  {
+   "id": "rampSouth",
+   "name": "Ramp to the south terrace",
+   "width": 24,
+   "pts": [
+    [
+     1470,
+     2135
+    ],
+    [
+     1100,
+     1840
+    ]
+   ],
+   "el": [
+    58,
+    84
+   ],
+   "length": 473.21,
+   "steepest": 0.05
+  },
+  {
+   "id": "south",
+   "name": "South terrace road",
+   "width": 24,
+   "pts": [
+    [
+     965,
+     1840
+    ],
+    [
+     3535,
+     1840
+    ],
+    [
+     3535,
+     1410
+    ],
+    [
+     965,
+     1410
+    ],
+    [
+     965,
+     1840
+    ]
+   ],
+   "el": [
+    84,
+    84,
+    84,
+    84,
+    84
+   ],
+   "length": 6000,
+   "steepest": 0
+  },
+  {
+   "id": "southMid",
+   "name": "Road between the dikes",
+   "width": 20,
+   "pts": [
+    [
+     2353,
+     1410
+    ],
+    [
+     2353,
+     1840
+    ]
+   ],
+   "el": [
+    84,
+    84
+   ],
+   "length": 430,
+   "steepest": 0
+  },
+  {
+   "id": "rampNorth",
+   "name": "Ramp to the north terrace",
+   "width": 24,
+   "pts": [
+    [
+     2353,
+     1410
+    ],
+    [
+     2880,
+     1180
+    ]
+   ],
+   "el": [
+    84,
+    116
+   ],
+   "length": 575,
+   "steepest": 0.06
+  },
+  {
+   "id": "north",
+   "name": "North terrace road",
+   "width": 24,
+   "pts": [
+    [
+     1020,
+     1180
+    ],
+    [
+     3140,
+     1180
+    ],
+    [
+     3140,
+     760
+    ],
+    [
+     1020,
+     760
+    ],
+    [
+     1020,
+     1180
+    ]
+   ],
+   "el": [
+    116,
+    116,
+    116,
+    116,
+    116
+   ],
+   "length": 5080,
+   "steepest": 0
+  },
+  {
+   "id": "lpg",
+   "name": "Road to the liquefied gas bench",
+   "width": 20,
+   "pts": [
+    [
+     3025,
+     2135
+    ],
+    [
+     3780,
+     1860
+    ]
+   ],
+   "el": [
+    58,
+    45
+   ],
+   "length": 803.52,
+   "steepest": 0.02
+  },
+  {
+   "id": "lpgRing",
+   "name": "Liquefied gas bench road",
+   "width": 20,
+   "pts": [
+    [
+     3780,
+     1860
+    ],
+    [
+     4240,
+     1860
+    ],
+    [
+     4240,
+     1500
+    ],
+    [
+     3780,
+     1500
+    ],
+    [
+     3780,
+     1860
+    ]
+   ],
+   "el": [
+    45,
+    45,
+    45,
+    45,
+    45
+   ],
+   "length": 1640,
+   "steepest": 0
+  },
+  {
+   "id": "waste",
+   "name": "Road to the wastewater bench",
+   "width": 20,
+   "pts": [
+    [
+     3025,
+     2700
+    ],
+    [
+     3620,
+     3000
+    ]
+   ],
+   "el": [
+    58,
+    23
+   ],
+   "length": 666.35,
+   "steepest": 0.05
+  },
+  {
+   "id": "east",
+   "name": "East road",
+   "width": 20,
+   "pts": [
+    [
+     3900,
+     1880
+    ],
+    [
+     3900,
+     2750
+    ]
+   ],
+   "el": [
+    45,
+    23
+   ],
+   "length": 870,
+   "steepest": 0.03
+  },
+  {
+   "id": "wasteRing",
+   "name": "Wastewater bench road",
+   "width": 20,
+   "pts": [
+    [
+     3620,
+     3000
+    ],
+    [
+     3620,
+     2770
+    ],
+    [
+     4280,
+     2770
+    ],
+    [
+     4280,
+     3230
+    ],
+    [
+     3620,
+     3230
+    ],
+    [
+     3620,
+     3000
+    ]
+   ],
+   "el": [
+    23,
+    23,
+    23,
+    23,
+    23,
+    23
+   ],
+   "length": 2240,
+   "steepest": 0
+  },
+  {
+   "id": "jetty",
+   "name": "Road to the jetty",
+   "width": 20,
+   "pts": [
+    [
+     975,
+     3235
+    ],
+    [
+     1100,
+     4100
+    ]
+   ],
+   "el": [
+    58,
+    39
+   ],
+   "length": 873.99,
+   "steepest": 0.02
+  },
+  {
+   "id": "truckGate",
+   "name": "Truck gate road",
+   "width": 24,
+   "pts": [
+    [
+     0,
+     1775
+    ],
+    [
+     200,
+     1775
+    ],
+    [
+     240,
+     1775
+    ]
+   ],
+   "el": [
+    74.18,
+    77,
+    77
+   ],
+   "length": 240,
+   "steepest": 0.01
+  },
+  {
+   "id": "truckRing",
+   "name": "Truck loading road",
+   "width": 24,
+   "pts": [
+    [
+     240,
+     1530
+    ],
+    [
+     760,
+     1530
+    ],
+    [
+     760,
+     2020
+    ],
+    [
+     240,
+     2020
+    ],
+    [
+     240,
+     1530
+    ]
+   ],
+   "el": [
+    77,
+    77,
+    77,
+    77,
+    77
+   ],
+   "length": 2020,
+   "steepest": 0
+  },
+  {
+   "id": "adminTruck",
+   "name": "Road from the offices to truck loading",
+   "width": 20,
+   "pts": [
+    [
+     700,
+     2270
+    ],
+    [
+     300,
+     2040
+    ]
+   ],
+   "el": [
+    55,
+    77
+   ],
+   "length": 461.41,
+   "steepest": 0.05
+  },
+  {
+   "id": "adminNorth",
+   "name": "Administration road",
+   "width": 20,
+   "pts": [
+    [
+     490,
+     2700
+    ],
+    [
+     490,
+     2270
+    ],
+    [
+     700,
+     2270
+    ]
+   ],
+   "el": [
+    55,
+    55,
+    55
+   ],
+   "length": 640,
+   "steepest": 0
+  },
+  {
+   "id": "adminSouth",
+   "name": "Administration road",
+   "width": 20,
+   "pts": [
+    [
+     490,
+     2700
+    ],
+    [
+     490,
+     3125
+    ]
+   ],
+   "el": [
+    55,
+    55
+   ],
+   "length": 425,
+   "steepest": 0
+  },
+  {
+   "id": "truckSouth",
+   "name": "Road from truck loading to the tanks",
+   "width": 20,
+   "pts": [
+    [
+     780,
+     1800
+    ],
+    [
+     965,
+     1800
+    ]
+   ],
+   "el": [
+    77,
+    84
+   ],
+   "length": 185,
+   "steepest": 0.04
+  },
+  {
+   "id": "flare",
+   "name": "Track to the flare",
+   "width": 16,
+   "pts": [
+    [
+     1020,
+     760
+    ],
+    [
+     1000,
+     300
+    ],
+    [
+     640,
+     300
+    ],
+    [
+     300,
+     400
+    ],
+    [
+     470,
+     520
+    ]
+   ],
+   "el": [
+    116,
+    141.3,
+    161.09,
+    180.56,
+    192
+   ],
+   "length": 1382.92,
+   "steepest": 0.05
+  }
+ ],
+ "pipeways": [
+  {
+   "id": "main",
+   "name": "Main pipeway",
+   "kind": "rack",
+   "width": 40,
+   "pts": [
+    [
+     990,
+     2700
+    ],
+    [
+     2990,
+     2700
+    ]
+   ]
+  },
+  {
+   "id": "tanks",
+   "name": "Tank farm pipeway",
+   "kind": "sleepers",
+   "width": 30,
+   "pts": [
+    [
+     2200,
+     2650
+    ],
+    [
+     2200,
+     2135
+    ],
+    [
+     2200,
+     1805
+    ],
+    [
+     2390,
+     1805
+    ],
+    [
+     2390,
+     1150
+    ]
+   ]
+  },
+  {
+   "id": "southTrack",
+   "name": "South terrace pipe track",
+   "kind": "sleepers",
+   "width": 24,
+   "pts": [
+    [
+     990,
+     1805
+    ],
+    [
+     3500,
+     1805
+    ]
+   ]
+  },
+  {
+   "id": "northTrack",
+   "name": "North terrace pipe track",
+   "kind": "sleepers",
+   "width": 24,
+   "pts": [
+    [
+     1050,
+     1150
+    ],
+    [
+     3110,
+     1150
+    ]
+   ]
+  },
+  {
+   "id": "jetty",
+   "name": "Jetty pipeway",
+   "kind": "sleepers",
+   "width": 30,
+   "pts": [
+    [
+     990,
+     1805
+    ],
+    [
+     900,
+     1900
+    ],
+    [
+     900,
+     3300
+    ],
+    [
+     1200,
+     4100
+    ],
+    [
+     1200,
+     4260
+    ]
+   ]
+  },
+  {
+   "id": "trestle",
+   "name": "Jetty trestle",
+   "kind": "trestle",
+   "width": 40,
+   "pts": [
+    [
+     1200,
+     4260
+    ],
+    [
+     1200,
+     5060
+    ]
+   ]
+  },
+  {
+   "id": "flare",
+   "name": "Flare line",
+   "kind": "sleepers",
+   "width": 12,
+   "pts": [
+    [
+     990,
+     2700
+    ],
+    [
+     905,
+     2700
+    ],
+    [
+     905,
+     2290
+    ],
+    [
+     905,
+     2170
+    ],
+    [
+     900,
+     1900
+    ],
+    [
+     900,
+     1250
+    ],
+    [
+     900,
+     850
+    ],
+    [
+     560,
+     550
+    ]
+   ]
+  },
+  {
+   "id": "lpg",
+   "name": "Liquefied gas lines",
+   "kind": "sleepers",
+   "width": 16,
+   "pts": [
+    [
+     2990,
+     2700
+    ],
+    [
+     3000,
+     2200
+    ],
+    [
+     3760,
+     1820
+    ]
+   ]
+  },
+  {
+   "id": "waste",
+   "name": "Wastewater lines",
+   "kind": "sleepers",
+   "width": 16,
+   "pts": [
+    [
+     2990,
+     2700
+    ],
+    [
+     3040,
+     2730
+    ],
+    [
+     3620,
+     3030
+    ]
+   ]
+  },
+  {
+   "id": "truck",
+   "name": "Truck loading lines",
+   "kind": "sleepers",
+   "width": 16,
+   "pts": [
+    [
+     990,
+     1805
+    ],
+    [
+     780,
+     1830
+    ],
+    [
+     740,
+     1830
+    ]
+   ]
+  }
+ ],
+ "jetty": {
+  "deck": 32,
+  "platform": {
+   "x0": 1130,
+   "x1": 1270,
+   "z0": 5060,
+   "z1": 5140
+  },
+  "breasting": [
+   [
+    1040,
+    5150
+   ],
+   [
+    1360,
+    5150
+   ]
+  ],
+  "mooring": [
+   [
+    780,
+    5110
+   ],
+   [
+    1620,
+    5110
+   ]
+  ],
+  "berthLine": 5160,
+  "ship": {
+   "x0": 800,
+   "x1": 1600,
+   "z0": 5165,
+   "z1": 5305
+  }
+ },
+ "gates": [
+  {
+   "name": "Main gate",
+   "x": 50,
+   "z": 2700
+  },
+  {
+   "name": "Truck gate",
+   "x": 50,
+   "z": 1775
+  }
+ ],
+ "flare": {
+  "x": 520,
+  "z": 520,
+  "sterile": 300,
+  "clear": 500,
+  "elevation": 192
+ },
+ "checks": [
+  {
+   "rule": "SW-SITE-3",
+   "what": "benches stand twice their difference in level apart (least margin)",
+   "asks": "at least 0 ft over",
+   "has": "34 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-3",
+   "what": "every plot lies on its bench",
+   "asks": "all",
+   "has": "27 of 27",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-3",
+   "what": "every dike lies on its terrace, 40 ft inside its edge",
+   "asks": "all",
+   "has": "6 of 6",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "the cooling tower stands east (downwind) of every process unit",
+   "asks": "at least 100 ft",
+   "has": "100 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "the tank terraces stand above the process bench (lower terrace)",
+   "asks": "above",
+   "has": "26 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "the liquefied gas bench lies below the tank terraces",
+   "asks": "below",
+   "has": "39 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "the wastewater bench lies below the process bench, so drains reach it by gravity",
+   "asks": "below",
+   "has": "35 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "the wastewater bench stands above the highest tide",
+   "asks": "above 11 ft",
+   "has": "23 ft elevation",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "flare to the nearest tank shell",
+   "asks": "at least 500 ft",
+   "has": "706 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "flare to the nearest unit or building",
+   "asks": "at least 500 ft",
+   "has": "1,040 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "flare to the property line",
+   "asks": "at least 500 ft",
+   "has": "520 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "offices, laboratory, workshop, stores and fire station to the nearest process unit",
+   "asks": "at least 500 ft",
+   "has": "530 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "control building to the nearest process unit",
+   "asks": "at least 250 ft",
+   "has": "260 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "buildings stand west (upwind) of every process unit",
+   "asks": "all",
+   "has": "9 of 9",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "water at the berth at low tide",
+   "asks": "at least 60 ft",
+   "has": "65 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-4",
+   "what": "the berth from the shore",
+   "asks": "at most 900 ft",
+   "has": "840 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-5",
+   "what": "process unit to process unit",
+   "asks": "at least 100 ft",
+   "has": "100 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-5",
+   "what": "tank shell to tank shell, over what the rule asks (least margin)",
+   "asks": "half the larger diameter, 50 ft at least",
+   "has": "0 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-5",
+   "what": "tank shell to the toe of its dike, over what the rule asks (least margin)",
+   "asks": "half its height, 15 ft at least",
+   "has": "0 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-CIV-14",
+   "what": "each dike holds 1.1 × its largest tank within a wall of 6 ft at most (highest wall)",
+   "asks": "at most 6 ft",
+   "has": "6 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-5",
+   "what": "dike to dike",
+   "asks": "at least 100 ft",
+   "has": "100 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-5",
+   "what": "tank shell to the nearest process unit",
+   "asks": "at least 250 ft",
+   "has": "495 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-5",
+   "what": "sphere to sphere",
+   "asks": "one diameter",
+   "has": "0 ft over",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-5",
+   "what": "spheres to the nearest tank, unit or building",
+   "asks": "at least 200 ft",
+   "has": "414 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-5",
+   "what": "process units and tanks to the property line",
+   "asks": "at least 200 ft",
+   "has": "842 ft",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-6",
+   "what": "steepest road",
+   "asks": "at most 6 %",
+   "has": "6 %",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-6",
+   "what": "process units with a road on two sides or more",
+   "asks": "all",
+   "has": "10 of 10",
+   "ok": true
+  },
+  {
+   "rule": "SW-SITE-6",
+   "what": "fence inside the property line",
+   "asks": "50 ft",
+   "has": "50 ft",
+   "ok": true
+  }
+ ],
+ "earthworks": {
+  "cut": 859685.6,
+  "fill": 825112.1
+ }
+}

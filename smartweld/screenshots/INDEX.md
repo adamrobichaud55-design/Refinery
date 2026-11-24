@@ -349,3 +349,9 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `stage10/cat10-Box-culvert-6-x-4-ft-x-20-ft-with-headwalls-whole.png` | Catalogue entry Box culvert 6 x 4 ft x 20 ft with headwalls (Civil), as cast |
 | `stage10/cat10-Duct-bank-3-x-3-conduits-20-ft.png` | Catalogue entry Duct bank 3 x 3 conduits, 20 ft (Civil), cut to show the bars |
 | `stage10/cat10-Duct-bank-3-x-3-conduits-20-ft-whole.png` | Catalogue entry Duct bank 3 x 3 conduits, 20 ft (Civil), as cast |
+| `refinery/site-plot-plan.png` | Plant 3: plot plan, with ground contours, benches, units, tanks, roads and pipeways |
+| `refinery/site-from-the-south-west.png` | Plant 3: the graded site from the south-west, over the headland and the jetty (tanks, buildings and jetty as massing; units not yet built) |
+| `refinery/site-from-the-south-east.png` | Plant 3: the graded site from the south-east, over the cove |
+| `refinery/site-from-the-north.png` | Plant 3: the graded site from the north, over the flare hill and the tank terraces |
+| `refinery/site-process-bench-and-terraces.png` | Plant 3: the process bench with the tank terraces rising behind it |
+| `refinery/site-jetty-and-headland.png` | Plant 3: the jetty trestle, berth and dolphins off the headland |

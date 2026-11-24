@@ -3938,28 +3938,43 @@ company practice was consulted, and they are for the owner to tune (PROVENANCE P
 
 - `SW-SITE-1` Frame and datum. Site x is east, z is south, y is up (SW-U-4); the origin is the
   north-west corner of the property; elevations are feet above the model's mean sea level.
+  The site is 5,000 ft east to west and 5,400 ft north to south, the southern part of it water.
+  Site data are written in feet and the model is built in inches, as everything else is.
   Plant coordinates in every export: E = x, N = −z, EL = y. A unit or pipeway is built in its own
   level local frame and set on the site by a turn about the vertical in quarter turns, a shift
   and its bench elevation (SW-CELL-*, to follow).
-- `SW-SITE-2` Natural ground, a formula in `src/refinery/terrain.ts`. A shoreline z = s(x) that
-  runs east–west with a headland pushed 420 ft seaward in the south-west and a cove drawn
-  300 ft inland in the south-east; behind it a rock bank rising 38 ft in the first 60 ft (about
-  10 ft at the cove, where there is a beach), then a plateau climbing inland at 3 %, a hill of
-  60 ft in the north-west corner, a ravine along the east boundary falling to the cove, and
-  undulations of a few feet. Seaward the bed falls at 9 % off the headland and 2 % in the cove.
-  The tide ranges 11 ft either side of mean sea level. Reason: deep water close to a headland
-  is where a berth goes; a plateau above a rock bank keeps the plant above the sea; ground that
-  falls to one side gives the drainage a way out.
+- `SW-SITE-2` Natural ground, a formula in `src/refinery/terrain.ts`, in feet, with the bell
+  b(t) = (1 − t²)² for |t| < 1 and 0 beyond.
+  - Shoreline: z = 3,900 + 420 b((x − 1,200) / 750) − 300 b((x − 3,900) / 650): it runs east–west
+    with a headland pushed 420 ft seaward in the south-west and a cove drawn 300 ft inland in
+    the south-east.
+  - Inland, at a distance d from the shoreline: a rock bank rising 38 − 28 b((x − 3,900) / 650) ft
+    in the first 60 ft (38 ft generally, 10 ft at the cove, where there is a beach); then a
+    plateau climbing at 1.5 % for 1,900 ft and at 4.5 % beyond; a hill of 60 ft and 700 ft
+    radius in the north-west corner; a ravine 260 ft across along the east boundary, 10 ft deep
+    at the north and 28 ft where it reaches the cove; and undulations of up to 4 ft.
+  - Seaward the bed falls at 4 %, at 9 % off the headland and at 2 % in the cove.
+  - The tide ranges 11 ft either side of mean sea level.
+  Reason: deep water close to a headland is where a berth goes; a plateau above a rock bank
+  keeps the plant above the sea; a gentle plateau takes the process units on one level with
+  little earth moved, and the steeper ground behind it terraces the tanks above them; ground
+  that falls to one side gives the drainage a way out.
 - `SW-SITE-3` Benches. Each area stands on a level bench cut and filled into the natural ground,
-  with slopes of 2 horizontal to 1 vertical running out to meet it. A bench's elevation is near
-  the natural ground at its middle, so cut about balances fill. Benches are drawn level: the
-  falls for drainage within a bench (a few inches) are not modeled. Reason: equipment and
+  with slopes of 2 horizontal to 1 vertical running out to meet it. A bench's elevation is the
+  mean of the natural ground over it, to the foot, so cut about balances fill; two benches
+  stand at least twice their difference in elevation apart, so that the slope between them
+  fits. Roads between benches are graded the same way, as ribbons with 2 : 1 side slopes.
+  Benches are drawn level: the falls for drainage within a bench (a few inches) are not
+  modeled. Reason: equipment and
   racks want level ground; a 2 : 1 slope stands in soil and weathered rock without a wall.
 - `SW-SITE-4` Where each area goes, and why.
   - Process units, on one bench at mid-height: on both sides of a main pipeway that runs
-    east–west, each unit's own rack at right angles to it, the unit's battery limit at the
-    pipeway. Fired heaters stand at the outer end of their unit, away from the pipeway and
-    from equipment that can leak.
+    east–west in a corridor 100 ft wide (the rack, and an access way each side, which keeps
+    facing units 100 ft apart), each unit's own rack at right angles to it, the unit's battery
+    limit at the pipeway. Fired heaters stand at the outer end of their unit, away from the
+    pipeway and from equipment that can leak. The crude and vacuum units stand side by side,
+    since they exchange hot streams; the hydrogen users stand beside the reformer that feeds
+    them; the sulfur block stands downwind of the others; room is left for one more unit.
   - Utilities at the west end of the process bench, upwind in the prevailing west-south-west
     wind, so their fired boilers and air intakes stand in clean air.
   - The cooling tower at the east end, downwind, its length across the wind, so its plume and
@@ -3970,7 +3985,10 @@ company practice was consulted, and they are for the owner to tune (PROVENANCE P
   - Liquefied gas spheres at the north-east, beside the ravine and lower than the tank
     terraces, so that a heavy vapour release drains away from the plant and down the ravine.
   - The flare on the north-west hill, at least 500 ft from every tank, unit, building and
-    boundary, with a sterile circle of 300 ft radius kept bare.
+    boundary, with a sterile circle of 300 ft radius kept bare. Its knock-out drum stands at
+    the low end of the flare header, at the west end of the process bench, so that what
+    condenses in the header drains to the drum and what condenses in the line climbing to the
+    flare drains back to it; the water seal drum stands at the foot of the stack.
   - The marine terminal off the south-west headland, where the bed reaches 60 ft at low water
     within 900 ft of the shore.
   - Wastewater treatment at the low south-east, where every drain reaches it by gravity, with a
@@ -3982,8 +4000,10 @@ company practice was consulted, and they are for the owner to tune (PROVENANCE P
 - `SW-SITE-5` Spacing kept on the plot (clear distances): unit to unit 100 ft, with a road
   between; equipment to a fired heater 50 ft; tank shell to tank shell half the larger
   diameter, 50 ft at least; tank shell to its dike's inner toe half its height, 15 ft at least;
-  tanks to a process unit 250 ft; spheres to anything else 200 ft; units and tanks to the
-  property line 200 ft. Reason: a fire in one unit, tank or dike should not carry to the next
+  tanks to a process unit 250 ft; spheres and bullets one diameter from each other and 200 ft
+  from anything else; units and tanks to the property line 200 ft. Tanks of one kind of stock
+  stand in a row in one dike, which is widened beyond the toe clearance where its wall would
+  otherwise pass the 6 ft of SW-CIV-14; dikes stand 100 ft apart with a road between. Reason: a fire in one unit, tank or dike should not carry to the next
   before it is fought, and fire-fighters need a road and room between.
 - `SW-SITE-6` Roads: primary roads 24 ft wide and secondary 20 ft, on their own graded benches
   at 6 % at most, with a road round the process bench, round each tank terrace and to every

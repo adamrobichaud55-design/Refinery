@@ -191,7 +191,10 @@ if (!filter || 'pack'.includes(filter)) {
   const pip = views.filter(v => v.stage === 'stage11');
   for (let i = 0; i * 20 < pip.length; i++) sheet('stage11', `sheet-piping-${i + 1}`, `Piping catalogue contact sheet ${i + 1} of ${Math.ceil(pip.length / 20)}`, pip.slice(i * 20, i * 20 + 20), v => v.caption.replace(/^Piping catalogue: /, '').replace(/ \(.*\)$/, ''));
 }
-if (!filter) writeFileSync(`${out}/INDEX.md`, index.join('\n') + '\n');
+if (!filter) {   // a full run keeps the rows of image folders written by other tools (plant 3's site and units)
+  const others = existsSync(`${out}/INDEX.md`) ? readFileSync(`${out}/INDEX.md`, 'utf8').split('\n').filter(r => r.startsWith('| `refinery/')) : [];
+  writeFileSync(`${out}/INDEX.md`, [...index, ...others].join('\n') + '\n');
+}
 else {   // a filtered run keeps INDEX.md complete: its rows replace or join the ones there
   const cur = existsSync(`${out}/INDEX.md`) ? readFileSync(`${out}/INDEX.md`, 'utf8').replace(/\n*$/, '').split('\n') : [];
   const idOf = (r: string) => r.slice(0, r.indexOf('|', 2));
