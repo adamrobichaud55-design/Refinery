@@ -397,3 +397,22 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/unit-16-piping-from-the-exchanger-side.png` | Plant 3, unit 16 (Diesel hydrotreater) piped, from the exchanger side |
 | `refinery/unit-16-piping-valve-bay.png` | Plant 3, unit 16: the valve bay at the battery limit, a block valve and spool on each line |
 | `refinery/unit-16-piping-exchangers.png` | Plant 3, unit 16: piping at the exchangers |
+| `refinery/unit-14-piping-from-the-vessel-side.png` | Plant 3, unit 14 (Catalytic reformer and hydrogen purification) piped, from the vessel side: lines coloured by line class |
+| `refinery/unit-14-piping-from-the-exchanger-side.png` | Plant 3, unit 14 (Catalytic reformer and hydrogen purification) piped, from the exchanger side |
+| `refinery/unit-14-piping-valve-bay.png` | Plant 3, unit 14: the valve bay at the battery limit, a block valve and spool on each line |
+| `refinery/unit-14-piping-exchangers.png` | Plant 3, unit 14: piping at the exchangers |
+| `refinery/unit-11-piping-from-the-vessel-side.png` | Plant 3, unit 11 (Crude distillation) piped, from the vessel side: lines coloured by line class |
+| `refinery/unit-11-piping-from-the-exchanger-side.png` | Plant 3, unit 11 (Crude distillation) piped, from the exchanger side |
+| `refinery/unit-11-piping-valve-bay.png` | Plant 3, unit 11: the valve bay at the battery limit, a block valve and spool on each line |
+| `refinery/unit-11-piping-exchangers.png` | Plant 3, unit 11: piping at the exchangers |
+| `refinery/unit-18-piping-from-the-vessel-side.png` | Plant 3, unit 18 (Sulfur block) piped, from the vessel side: lines coloured by line class |
+| `refinery/unit-18-piping-from-the-exchanger-side.png` | Plant 3, unit 18 (Sulfur block) piped, from the exchanger side |
+| `refinery/unit-18-piping-valve-bay.png` | Plant 3, unit 18: the valve bay at the battery limit, a block valve and spool on each line |
+| `refinery/unit-18-piping-exchangers.png` | Plant 3, unit 18: piping at the exchangers |
+| `stage10/cat10-Turbine-driven-compressor-package-30-in-casing.png` | Catalogue entry Turbine-driven compressor package, 30 in casing (Process equipment) |
+| `stage10/cat10-Top-loading-station-for-a-road-tanker-3-in-arm.png` | Catalogue entry Top loading station for a road tanker, 3 in arm (Process equipment) |
+| `refinery/unit-19-piping-from-the-vessel-side.png` | Plant 3, unit 19 (Utilities) piped, from the vessel side: lines coloured by line class |
+| `refinery/unit-19-piping-from-the-exchanger-side.png` | Plant 3, unit 19 (Utilities) piped, from the exchanger side |
+| `refinery/unit-19-piping-valve-bay.png` | Plant 3, unit 19: the valve bay at the battery limit, a block valve and spool on each line |
+| `refinery/unit-19-piping-exchangers.png` | Plant 3, unit 19: piping at the exchangers |
+| `refinery/plant-piped-units-along-the-pipeway.png` | Plant 3: the piped units along the main pipeway, their lines coloured by line class |

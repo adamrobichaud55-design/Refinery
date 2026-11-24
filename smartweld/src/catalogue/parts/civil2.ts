@@ -158,7 +158,7 @@ export function makeSeparatorBasin(id: string, inp: { channels?: number; w: numb
   }, Li + 24, solids, CONCRETE_B, m.list, formed, ['Skimmer pipes, walkway and pipe stubs are steel, drawn in place; the liquid is not drawn.'], { Li, Wi }, detail);
 }
 // ---- SW-CIV-26: sulfur pit -------------------------------------------------------------------------------------------------------------
-export function makeSulfurPit(id: string, inp: { L: number; W: number; D: number }): PartSpec {
+export function makeSulfurPit(id: string, inp: { L: number; W: number; D: number; /** SW-CIV-26: the pump's discharge pipe left out, where a plant's own line starts at the pump's head */ noDischarge?: boolean }): PartSpec {
   const { L, W: Wd, D } = inp, zf = 12, zr = zf + D, zt = zr + 10, holes: Hole[] = [0.25, 0.75].map(f => ({ a0: f * L - 15, a1: f * L + 15, b0: Wd / 2 - 15, b1: Wd / 2 + 15 }));
   const solids = [{ name: 'base', mesh: boxMesh(-12, -12, 0, L + 12, Wd + 12, 12) }, { name: 'walls', mesh: extrude({ outer: rect(-12, -12, L + 12, Wd + 12), inner: rect(0, 0, L, Wd) }, D, zf) }];
   let x = -12; for (const h of holes) { solids.push({ name: 'roof slab', mesh: boxMesh(x, -12, zr, h.a0 - 20, Wd + 12, zt) }, { name: 'roof slab', mesh: extrude({ outer: rect(h.a0 - 20, -12, h.a1 + 20, Wd + 12), inner: rect(h.a0, h.b0, h.a1, h.b1) }, 10, zr) }); x = h.a1 + 20; }
@@ -169,7 +169,7 @@ export function makeSulfurPit(id: string, inp: { L: number; W: number; D: number
   ys.forEach((y, i) => { coil.push(i % 2 ? [L - 10, y, zf + 6] : [10, y, zf + 6], i % 2 ? [10, y, zf + 6] : [L - 10, y, zf + 6]); });
   const last = coil[coil.length - 1]; coil.push([last[0], last[1], zt + 8]);
   const detail: DSolid[] = [...m.detail, { name: `steam coil 2 in (${ys.length} passes)`, role: 'closure', mesh: sweep(coil, 1.1875, 8) }, { name: 'cover plates PL3/8', role: 'steel', mesh: mergeMeshes(holes.map(h => boxMesh(h.a0 - 3, h.b0 - 3, zt, h.a1 + 3, h.b1 + 3, zt + 0.375))) },
-    { name: 'pump head and discharge', role: 'machine', mesh: mergeMeshes([cylZ(holes[0].a0 + 15, Wd / 2, 6, zt + 0.375, zt + 30, 24), boxMesh(holes[0].a0 + 6, Wd / 2 - 9, zt + 30, holes[0].a0 + 24, Wd / 2 + 9, zt + 54), pipeAlong('y', 4.5, 0.237, Wd / 2 + 6, Wd + 20, [holes[0].a0 + 15, zt + 18])]) },
+    { name: 'pump head and discharge', role: 'machine', mesh: mergeMeshes([cylZ(holes[0].a0 + 15, Wd / 2, 6, zt + 0.375, zt + 30, 24), boxMesh(holes[0].a0 + 6, Wd / 2 - 9, zt + 30, holes[0].a0 + 24, Wd / 2 + 9, zt + 54), ...(inp.noDischarge ? [] : [pipeAlong('y', 4.5, 0.237, Wd / 2 + 6, Wd + 20, [holes[0].a0 + 15, zt + 18])])]) },
     { name: 'vent 8 in with hood', role: 'pipe', mesh: mergeMeshes([transformMesh(tube(4.3125, 0.322, 62, 0), translate(L / 2, Wd / 2, zr + 2)), cylZ(L / 2, Wd / 2, 8, zt + 58, zt + 58.25, 24)]) }];
   const formed = 2 * (L + Wd + 48) * (D + 22) + 2 * (L + Wd) * D + L * Wd;
   return finishCivil(id, 'PIT', `Sulfur pit ${(L / 12).toFixed(0)}' × ${(Wd / 12).toFixed(0)}' × ${(D / 12).toFixed(0)}' inside with steam coil (class B)`, { L: drawing(L, 'Inside length'), W: drawing(Wd, 'Inside width'), D: drawing(D, 'Inside depth'), wall: rule(12, 'SW-CIV-26', 'Wall and base thickness'), roof: rule(10, 'SW-CIV-26', 'Roof slab thickness'), above: rule(12, 'SW-CIV-26', 'Roof top above grade'), openings: rule(30, 'SW-CIV-26', 'Pump and access openings, square'), vent: rule(8, 'SW-CIV-26', 'Vent pipe'), coil: rule(12, 'SW-CIV-26', 'Steam coil passes at'), coilH: rule(6, 'SW-CIV-26', 'Coil above the floor') },

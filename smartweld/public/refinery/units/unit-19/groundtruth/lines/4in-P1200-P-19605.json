@@ -1,0 +1,1063 @@
+{
+ "header": {
+  "line": "4\"-P1200-P-19605",
+  "lineClass": "H1200",
+  "fluid": "Hydrocarbon process",
+  "service": "P",
+  "NPS": 4,
+  "cls": "P1200",
+  "designPressure": 1200,
+  "insulated": false,
+  "kind": "routed",
+  "from": "tap 4\"-P1200-P-19019",
+  "to": "RS-1905-A",
+  "flow": "tap 4\"-P1200-P-19019 → RS-1905-A",
+  "joint": "BW"
+ },
+ "items": [
+  {
+   "tag": "4\"-P1200-P-19605/p1",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "pipe",
+   "itemNo": 1,
+   "description": "PIPE 4\" P1200 BEVELLED ENDS",
+   "designation": "PIPE4-P1200",
+   "key": "PIPE|4|P1200|62.000",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 62,
+   "weight": 45.6854,
+   "spool": "4\"-P1200-P-19605-SP01",
+   "a": {
+    "E": 1356,
+    "N": 33.3333,
+    "EL": 1452
+   },
+   "b": {
+    "E": 1356,
+    "N": 95.3333,
+    "EL": 1452
+   },
+   "centre": {
+    "E": 1356,
+    "N": 64.3333,
+    "EL": 1452
+   },
+   "axis": {
+    "E": 0,
+    "N": 1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/el2",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "elbow",
+   "itemNo": 2,
+   "description": "ELBOW 90° R = 5/3 OD 4\" P1200",
+   "designation": "EL90-4-P1200",
+   "key": "EL|4|P1200|90",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 7.6628,
+   "spool": "4\"-P1200-P-19605-SP01",
+   "a": {
+    "E": 1356,
+    "N": 95.3333,
+    "EL": 1452
+   },
+   "b": {
+    "E": 1362.6667,
+    "N": 102,
+    "EL": 1452
+   },
+   "centre": {
+    "E": 1359.3333,
+    "N": 98.6667,
+    "EL": 1452
+   },
+   "axis": {
+    "E": 0.7071,
+    "N": 0.7071,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/p3",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "pipe",
+   "itemNo": 1,
+   "description": "PIPE 4\" P1200 BEVELLED ENDS",
+   "designation": "PIPE4-P1200",
+   "key": "PIPE|4|P1200|28.667",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 28.6666,
+   "weight": 21.1236,
+   "spool": "4\"-P1200-P-19605-SP01",
+   "a": {
+    "E": 1362.6667,
+    "N": 102,
+    "EL": 1452
+   },
+   "b": {
+    "E": 1391.3333,
+    "N": 102,
+    "EL": 1452
+   },
+   "centre": {
+    "E": 1377,
+    "N": 102,
+    "EL": 1452
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/el4",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "elbow",
+   "itemNo": 2,
+   "description": "ELBOW 90° R = 5/3 OD 4\" P1200",
+   "designation": "EL90-4-P1200",
+   "key": "EL|4|P1200|90",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 7.6628,
+   "spool": "4\"-P1200-P-19605-SP01",
+   "a": {
+    "E": 1391.3333,
+    "N": 102,
+    "EL": 1452
+   },
+   "b": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1458.6667
+   },
+   "centre": {
+    "E": 1394.6667,
+    "N": 102,
+    "EL": 1455.3333
+   },
+   "axis": {
+    "E": 0.7071,
+    "N": 0,
+    "EL": 0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/p5",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "pipe",
+   "itemNo": 1,
+   "description": "PIPE 4\" P1200 BEVELLED ENDS",
+   "designation": "PIPE4-P1200",
+   "key": "PIPE|4|P1200|4.667",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 4.6666,
+   "weight": 3.4389,
+   "spool": "4\"-P1200-P-19605-SP01",
+   "a": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1458.6667
+   },
+   "b": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1463.3333
+   },
+   "centre": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1461
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/el6",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "elbow",
+   "itemNo": 2,
+   "description": "ELBOW 90° R = 5/3 OD 4\" P1200",
+   "designation": "EL90-4-P1200",
+   "key": "EL|4|P1200|90",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 7.6628,
+   "spool": "4\"-P1200-P-19605-SP01",
+   "a": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1463.3333
+   },
+   "b": {
+    "E": 1404.6667,
+    "N": 102,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1401.3333,
+    "N": 102,
+    "EL": 1466.6667
+   },
+   "axis": {
+    "E": 0.7071,
+    "N": 0,
+    "EL": 0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/p7",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "pipe",
+   "itemNo": 1,
+   "description": "PIPE 4\" P1200 BEVELLED ENDS",
+   "designation": "PIPE4-P1200",
+   "key": "PIPE|4|P1200|2.458",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 2.4583,
+   "weight": 1.8112,
+   "spool": "4\"-P1200-P-19605-SP01",
+   "a": {
+    "E": 1404.6667,
+    "N": 102,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1407.125,
+    "N": 102,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1405.8958,
+    "N": 102,
+    "EL": 1470
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/B6",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P1200",
+   "designation": "STUDS 4×1x6.25 (4-P1200)",
+   "key": "STUDS|4|P1200|3.750",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 1415.75,
+    "N": 102,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1409.5,
+    "N": 102,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1412.625,
+    "N": 102,
+    "EL": 1470
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/B5",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 4\" P1200 RAISED FACE",
+   "designation": "FLG4-P1200",
+   "key": "WNF|4|P1200",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 28.967,
+   "spool": "4\"-P1200-P-19605-SP02",
+   "a": {
+    "E": 1412.5625,
+    "N": 102,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1407.125,
+    "N": 102,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1409.8438,
+    "N": 102,
+    "EL": 1470
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/B4",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "gasket",
+   "itemNo": 5,
+   "description": "GASKET 4\" P1200 COMPRESSED SHEET",
+   "designation": "GASKET4-P1200",
+   "key": "GSK|4|P1200",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1412.6875,
+    "N": 102,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1412.5625,
+    "N": 102,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1412.625,
+    "N": 102,
+    "EL": 1470
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/B3",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P1200",
+   "designation": "STUDS 4×1x6.25 (4-P1200)",
+   "key": "STUDS|4|P1200|3.750",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 1431.0625,
+    "N": 102,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1424.8125,
+    "N": 102,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1427.9375,
+    "N": 102,
+    "EL": 1470
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/B2",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "valve",
+   "itemNo": 6,
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P1200",
+   "designation": "GATE4-P1200",
+   "key": "VLV|GATE|4|P1200",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 173.1926,
+   "spool": "loose",
+   "a": {
+    "E": 1427.875,
+    "N": 102,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1412.6875,
+    "N": 102,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1420.2813,
+    "N": 102,
+    "EL": 1470
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/B1",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "kind": "gasket",
+   "itemNo": 5,
+   "description": "GASKET 4\" P1200 COMPRESSED SHEET",
+   "designation": "GASKET4-P1200",
+   "key": "GSK|4|P1200",
+   "NPS": 4,
+   "cls": "P1200",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1428,
+    "N": 102,
+    "EL": 1470
+   },
+   "b": {
+    "E": 1427.875,
+    "N": 102,
+    "EL": 1470
+   },
+   "centre": {
+    "E": 1427.9375,
+    "N": 102,
+    "EL": 1470
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "4\"-P1200-P-19605/W1",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 4,
+   "cls": "P1200",
+   "joins": [
+    "4\"-P1200-P-19019/T:4\"-P1200-P-19605",
+    "4\"-P1200-P-19605/p1"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "4\"-P1200-P-19019-SP03",
+    "4\"-P1200-P-19605-SP01"
+   ],
+   "at": {
+    "E": 1356,
+    "N": 33.3333,
+    "EL": 1452
+   },
+   "key": "BW|4|P1200",
+   "weight": 0.1717,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/W2",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 4,
+   "cls": "P1200",
+   "joins": [
+    "4\"-P1200-P-19605/p1",
+    "4\"-P1200-P-19605/el2"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P1200-P-19605-SP01",
+   "spools": [
+    "4\"-P1200-P-19605-SP01",
+    "4\"-P1200-P-19605-SP01"
+   ],
+   "at": {
+    "E": 1356,
+    "N": 95.3333,
+    "EL": 1452
+   },
+   "key": "BW|4|P1200",
+   "weight": 0.1717,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/W3",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 4,
+   "cls": "P1200",
+   "joins": [
+    "4\"-P1200-P-19605/el2",
+    "4\"-P1200-P-19605/p3"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P1200-P-19605-SP01",
+   "spools": [
+    "4\"-P1200-P-19605-SP01",
+    "4\"-P1200-P-19605-SP01"
+   ],
+   "at": {
+    "E": 1362.6667,
+    "N": 102,
+    "EL": 1452
+   },
+   "key": "BW|4|P1200",
+   "weight": 0.1717,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/W4",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 4,
+   "cls": "P1200",
+   "joins": [
+    "4\"-P1200-P-19605/p3",
+    "4\"-P1200-P-19605/el4"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P1200-P-19605-SP01",
+   "spools": [
+    "4\"-P1200-P-19605-SP01",
+    "4\"-P1200-P-19605-SP01"
+   ],
+   "at": {
+    "E": 1391.3333,
+    "N": 102,
+    "EL": 1452
+   },
+   "key": "BW|4|P1200",
+   "weight": 0.1717,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/W5",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 4,
+   "cls": "P1200",
+   "joins": [
+    "4\"-P1200-P-19605/el4",
+    "4\"-P1200-P-19605/p5"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P1200-P-19605-SP01",
+   "spools": [
+    "4\"-P1200-P-19605-SP01",
+    "4\"-P1200-P-19605-SP01"
+   ],
+   "at": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1458.6667
+   },
+   "key": "BW|4|P1200",
+   "weight": 0.1717,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/W6",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 4,
+   "cls": "P1200",
+   "joins": [
+    "4\"-P1200-P-19605/p5",
+    "4\"-P1200-P-19605/el6"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P1200-P-19605-SP01",
+   "spools": [
+    "4\"-P1200-P-19605-SP01",
+    "4\"-P1200-P-19605-SP01"
+   ],
+   "at": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1463.3333
+   },
+   "key": "BW|4|P1200",
+   "weight": 0.1717,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/W7",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 4,
+   "cls": "P1200",
+   "joins": [
+    "4\"-P1200-P-19605/el6",
+    "4\"-P1200-P-19605/p7"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P1200-P-19605-SP01",
+   "spools": [
+    "4\"-P1200-P-19605-SP01",
+    "4\"-P1200-P-19605-SP01"
+   ],
+   "at": {
+    "E": 1404.6667,
+    "N": 102,
+    "EL": 1470
+   },
+   "key": "BW|4|P1200",
+   "weight": 0.1717,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-P-19605/W8",
+   "line": "4\"-P1200-P-19605",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.2188,
+   "NPS": 4,
+   "cls": "P1200",
+   "joins": [
+    "4\"-P1200-P-19605/p7",
+    "4\"-P1200-P-19605/B5"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "4\"-P1200-P-19605-SP01",
+    "4\"-P1200-P-19605-SP02"
+   ],
+   "at": {
+    "E": 1407.125,
+    "N": 102,
+    "EL": 1470
+   },
+   "key": "BW|4|P1200",
+   "weight": 0.1717,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [],
+ "spools": [
+  {
+   "id": "4\"-P1200-P-19605-SP01",
+   "items": [
+    "4\"-P1200-P-19605/p1",
+    "4\"-P1200-P-19605/el2",
+    "4\"-P1200-P-19605/p3",
+    "4\"-P1200-P-19605/el4",
+    "4\"-P1200-P-19605/p5",
+    "4\"-P1200-P-19605/el6",
+    "4\"-P1200-P-19605/p7"
+   ],
+   "shopWelds": [
+    "4\"-P1200-P-19605/W2",
+    "4\"-P1200-P-19605/W3",
+    "4\"-P1200-P-19605/W4",
+    "4\"-P1200-P-19605/W5",
+    "4\"-P1200-P-19605/W6",
+    "4\"-P1200-P-19605/W7"
+   ],
+   "weight": 96.0779
+  },
+  {
+   "id": "4\"-P1200-P-19605-SP02",
+   "items": [
+    "4\"-P1200-P-19605/B5"
+   ],
+   "shopWelds": [],
+   "weight": 28.967
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "PIPE 4\" P1200 BEVELLED ENDS",
+   "qty": 4,
+   "length": 97.7915,
+   "weight": 72.0591
+  },
+  {
+   "itemNo": 2,
+   "description": "ELBOW 90° R = 5/3 OD 4\" P1200",
+   "qty": 3,
+   "weight": 22.9883
+  },
+  {
+   "itemNo": 3,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P1200",
+   "qty": 2,
+   "weight": 16.4129
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 4\" P1200 RAISED FACE",
+   "qty": 1,
+   "weight": 28.967
+  },
+  {
+   "itemNo": 5,
+   "description": "GASKET 4\" P1200 COMPRESSED SHEET",
+   "qty": 2,
+   "weight": 0
+  },
+  {
+   "itemNo": 6,
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P1200",
+   "qty": 1,
+   "weight": 173.1926
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 1356,
+    "N": 33.3333,
+    "EL": 1452
+   },
+   "kind": "pipe start",
+   "ref": "4\"-P1200-P-19605/p1"
+  },
+  {
+   "at": {
+    "E": 1356,
+    "N": 95.3333,
+    "EL": 1452
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P1200-P-19605/p1"
+  },
+  {
+   "at": {
+    "E": 1356,
+    "N": 102,
+    "EL": 1452
+   },
+   "kind": "elbow work point",
+   "ref": "4\"-P1200-P-19605/el2"
+  },
+  {
+   "at": {
+    "E": 1362.6667,
+    "N": 102,
+    "EL": 1452
+   },
+   "kind": "elbow end",
+   "ref": "4\"-P1200-P-19605/el2"
+  },
+  {
+   "at": {
+    "E": 1391.3333,
+    "N": 102,
+    "EL": 1452
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P1200-P-19605/p3"
+  },
+  {
+   "at": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1452
+   },
+   "kind": "elbow work point",
+   "ref": "4\"-P1200-P-19605/el4"
+  },
+  {
+   "at": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1458.6667
+   },
+   "kind": "elbow end",
+   "ref": "4\"-P1200-P-19605/el4"
+  },
+  {
+   "at": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1463.3333
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P1200-P-19605/p5"
+  },
+  {
+   "at": {
+    "E": 1398,
+    "N": 102,
+    "EL": 1470
+   },
+   "kind": "elbow work point",
+   "ref": "4\"-P1200-P-19605/el6"
+  },
+  {
+   "at": {
+    "E": 1404.6667,
+    "N": 102,
+    "EL": 1470
+   },
+   "kind": "elbow end",
+   "ref": "4\"-P1200-P-19605/el6"
+  },
+  {
+   "at": {
+    "E": 1407.125,
+    "N": 102,
+    "EL": 1470
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P1200-P-19605/p7"
+  },
+  {
+   "at": {
+    "E": 1412.5625,
+    "N": 102,
+    "EL": 1470
+   },
+   "kind": "flange end",
+   "ref": "4\"-P1200-P-19605/B5"
+  },
+  {
+   "at": {
+    "E": 1412.6875,
+    "N": 102,
+    "EL": 1470
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P1200-P-19605/B4"
+  },
+  {
+   "at": {
+    "E": 1427.875,
+    "N": 102,
+    "EL": 1470
+   },
+   "kind": "valve end",
+   "ref": "4\"-P1200-P-19605/B2"
+  },
+  {
+   "at": {
+    "E": 1428,
+    "N": 102,
+    "EL": 1470
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P1200-P-19605/B1"
+  }
+ ],
+ "totals": {
+  "items": 13,
+  "welds": 8,
+  "fieldWelds": 2,
+  "supports": 0,
+  "pipeLength": 97.7915,
+  "weight": 313.6199
+ }
+}

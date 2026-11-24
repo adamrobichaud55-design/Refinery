@@ -1,0 +1,1560 @@
+{
+ "header": {
+  "line": "2\"-P1200-SC-13404",
+  "lineClass": "C1200",
+  "fluid": "Steam condensate",
+  "service": "SC",
+  "NPS": 2,
+  "cls": "P1200",
+  "designPressure": 1200,
+  "insulated": true,
+  "kind": "header",
+  "from": "cap",
+  "to": "cap",
+  "flow": "cap → cap",
+  "joint": "BW"
+ },
+ "items": [
+  {
+   "tag": "2\"-P1200-SC-13404/cap0",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 2\" P1200",
+   "designation": "CAP2-P1200",
+   "key": "CAP|2|P1200",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 0.4057,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 370.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 372,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 371.25,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/p2",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P1200 BEVELLED ENDS",
+   "designation": "PIPE2-P1200",
+   "key": "PIPE|2|P1200|365.333",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 365.3333,
+   "weight": 93.759,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 372,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 737.3333,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 554.6667,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/p3",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P1200 BEVELLED ENDS",
+   "designation": "PIPE2-P1200",
+   "key": "PIPE|2|P1200|365.333",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 365.3334,
+   "weight": 93.759,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 737.3333,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 1102.6667,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 920,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/p4",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P1200 BEVELLED ENDS",
+   "designation": "PIPE2-P1200",
+   "key": "PIPE|2|P1200|365.333",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 365.3333,
+   "weight": 93.759,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 1102.6667,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 1468,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 1285.3333,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/T:2\"-P1200-SC-13504",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE EQUAL 2\" P1200",
+   "designation": "TEE2-P1200",
+   "key": "TEE|2|P1200|2",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 1.2616,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 1468,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 1472,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 1470,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/p6",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P1200 BEVELLED ENDS",
+   "designation": "PIPE2-P1200",
+   "key": "PIPE|2|P1200|338.000",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 338,
+   "weight": 86.7443,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 1472,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 1810,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 1641,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/T:2\"-P300-SC-13508",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE EQUAL 2\" P1200",
+   "designation": "TEE2-P1200",
+   "key": "TEE|2|P1200|2",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 1.2616,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 1810,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 1814,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 1812,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/p8",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P1200 BEVELLED ENDS",
+   "designation": "PIPE2-P1200",
+   "key": "PIPE|2|P1200|365.500",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 365.5,
+   "weight": 93.8019,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 1814,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 2179.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 1996.75,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/p9",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P1200 BEVELLED ENDS",
+   "designation": "PIPE2-P1200",
+   "key": "PIPE|2|P1200|359.500",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 359.5,
+   "weight": 92.2621,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 2179.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 2539,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 2359.25,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/p10",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P1200 BEVELLED ENDS",
+   "designation": "PIPE2-P1200",
+   "key": "PIPE|2|P1200|323.500",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 323.5,
+   "weight": 83.023,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 2539,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 2862.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 2700.75,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/p11",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 2\" P1200 BEVELLED ENDS",
+   "designation": "PIPE2-P1200",
+   "key": "PIPE|2|P1200|365.500",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 365.5,
+   "weight": 93.8019,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 2862.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 3228,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 3045.25,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/cap1",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 2\" P1200",
+   "designation": "CAP2-P1200",
+   "key": "CAP|2|P1200",
+   "NPS": 2,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 0.4057,
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "a": {
+    "E": 3228,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 3229.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 3228.75,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "2\"-P1200-SC-13404/W1",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/cap0",
+    "2\"-P1200-SC-13404/p2"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 372,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W2",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/p2",
+    "2\"-P1200-SC-13404/p3"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 737.3333,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W3",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/p3",
+    "2\"-P1200-SC-13404/p4"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 1102.6667,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W4",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/p4",
+    "2\"-P1200-SC-13404/T:2\"-P1200-SC-13504"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 1468,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W5",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/T:2\"-P1200-SC-13504",
+    "2\"-P1200-SC-13404/p6"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 1472,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W6",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/p6",
+    "2\"-P1200-SC-13404/T:2\"-P300-SC-13508"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 1810,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W7",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/T:2\"-P300-SC-13508",
+    "2\"-P1200-SC-13404/p8"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 1814,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W8",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/p8",
+    "2\"-P1200-SC-13404/p9"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 2179.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W9",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/p9",
+    "2\"-P1200-SC-13404/p10"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 2539,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W10",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/p10",
+    "2\"-P1200-SC-13404/p11"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 2862.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/W11",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 2,
+   "cls": "P1200",
+   "joins": [
+    "2\"-P1200-SC-13404/p11",
+    "2\"-P1200-SC-13404/cap1"
+   ],
+   "shopField": "shop",
+   "spool": "2\"-P1200-SC-13404-SP01",
+   "spools": [
+    "2\"-P1200-SC-13404-SP01",
+    "2\"-P1200-SC-13404-SP01"
+   ],
+   "at": {
+    "E": 3228,
+    "N": 42,
+    "EL": 1542
+   },
+   "key": "BW|2|P1200",
+   "weight": 0.0524,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "2\"-P1200-SC-13404/S1",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 480,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S2",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "guide",
+   "description": "GUIDE FOR 2\" LINE (GUIDE-2)",
+   "designation": "GUIDE-2",
+   "key": "SHOE|2|P1200|guide|5.000",
+   "material": "Grade 36",
+   "weight": 16.3014,
+   "spool": "loose",
+   "at": {
+    "E": 600,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S3",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 720,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S4",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 840,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S5",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 960,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S6",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1080,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S7",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1200,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S8",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1320,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S9",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1440,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S10",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "guide",
+   "description": "GUIDE FOR 2\" LINE (GUIDE-2)",
+   "designation": "GUIDE-2",
+   "key": "SHOE|2|P1200|guide|5.000",
+   "material": "Grade 36",
+   "weight": 16.3014,
+   "spool": "loose",
+   "at": {
+    "E": 1560,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S11",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1680,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S12",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "anchor",
+   "description": "ANCHOR FOR 2\" LINE (ANCHOR-2)",
+   "designation": "ANCHOR-2",
+   "key": "SHOE|2|P1200|anchor|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1800,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S13",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 1920,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S14",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "guide",
+   "description": "GUIDE FOR 2\" LINE (GUIDE-2)",
+   "designation": "GUIDE-2",
+   "key": "SHOE|2|P1200|guide|5.000",
+   "material": "Grade 36",
+   "weight": 16.3014,
+   "spool": "loose",
+   "at": {
+    "E": 2040,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S15",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 2160,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S16",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 2280,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S17",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 2400,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S18",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 2520,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S19",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 2640,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S20",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 2760,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S21",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 2880,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S22",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "guide",
+   "description": "GUIDE FOR 2\" LINE (GUIDE-2)",
+   "designation": "GUIDE-2",
+   "key": "SHOE|2|P1200|guide|5.000",
+   "material": "Grade 36",
+   "weight": 16.3014,
+   "spool": "loose",
+   "at": {
+    "E": 3000,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-13404/S23",
+   "line": "2\"-P1200-SC-13404",
+   "lineClass": "C1200",
+   "type": "shoe",
+   "description": "SHOE FOR 2\" LINE (SHOE-2)",
+   "designation": "SHOE-2",
+   "key": "SHOE|2|P1200|shoe|5.000",
+   "material": "Grade 36",
+   "weight": 11.1973,
+   "spool": "loose",
+   "at": {
+    "E": 3120,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "2\"-P1200-SC-13404-SP01",
+   "items": [
+    "2\"-P1200-SC-13404/cap0",
+    "2\"-P1200-SC-13404/p2",
+    "2\"-P1200-SC-13404/p3",
+    "2\"-P1200-SC-13404/p4",
+    "2\"-P1200-SC-13404/T:2\"-P1200-SC-13504",
+    "2\"-P1200-SC-13404/p6",
+    "2\"-P1200-SC-13404/T:2\"-P300-SC-13508",
+    "2\"-P1200-SC-13404/p8",
+    "2\"-P1200-SC-13404/p9",
+    "2\"-P1200-SC-13404/p10",
+    "2\"-P1200-SC-13404/p11",
+    "2\"-P1200-SC-13404/cap1"
+   ],
+   "shopWelds": [
+    "2\"-P1200-SC-13404/W1",
+    "2\"-P1200-SC-13404/W2",
+    "2\"-P1200-SC-13404/W3",
+    "2\"-P1200-SC-13404/W4",
+    "2\"-P1200-SC-13404/W5",
+    "2\"-P1200-SC-13404/W6",
+    "2\"-P1200-SC-13404/W7",
+    "2\"-P1200-SC-13404/W8",
+    "2\"-P1200-SC-13404/W9",
+    "2\"-P1200-SC-13404/W10",
+    "2\"-P1200-SC-13404/W11"
+   ],
+   "weight": 734.8212
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "CAP 2\" P1200",
+   "qty": 2,
+   "weight": 0.8114
+  },
+  {
+   "itemNo": 2,
+   "description": "PIPE 2\" P1200 BEVELLED ENDS",
+   "qty": 8,
+   "length": 2848,
+   "weight": 730.9103
+  },
+  {
+   "itemNo": 3,
+   "description": "TEE EQUAL 2\" P1200",
+   "qty": 2,
+   "weight": 2.5232
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 370.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "cap start",
+   "ref": "2\"-P1200-SC-13404/cap0"
+  },
+  {
+   "at": {
+    "E": 372,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "cap end",
+   "ref": "2\"-P1200-SC-13404/cap0"
+  },
+  {
+   "at": {
+    "E": 737.3333,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P1200-SC-13404/p2"
+  },
+  {
+   "at": {
+    "E": 1102.6667,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P1200-SC-13404/p3"
+  },
+  {
+   "at": {
+    "E": 1468,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P1200-SC-13404/p4"
+  },
+  {
+   "at": {
+    "E": 1470,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P1200-SC-13404/T:2\"-P1200-SC-13504"
+  },
+  {
+   "at": {
+    "E": 1472,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "tee end",
+   "ref": "2\"-P1200-SC-13404/T:2\"-P1200-SC-13504"
+  },
+  {
+   "at": {
+    "E": 1810,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P1200-SC-13404/p6"
+  },
+  {
+   "at": {
+    "E": 1812,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "tee centre",
+   "ref": "2\"-P1200-SC-13404/T:2\"-P300-SC-13508"
+  },
+  {
+   "at": {
+    "E": 1814,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "tee end",
+   "ref": "2\"-P1200-SC-13404/T:2\"-P300-SC-13508"
+  },
+  {
+   "at": {
+    "E": 2179.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P1200-SC-13404/p8"
+  },
+  {
+   "at": {
+    "E": 2539,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P1200-SC-13404/p9"
+  },
+  {
+   "at": {
+    "E": 2862.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P1200-SC-13404/p10"
+  },
+  {
+   "at": {
+    "E": 3228,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "2\"-P1200-SC-13404/p11"
+  },
+  {
+   "at": {
+    "E": 3229.5,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "cap end",
+   "ref": "2\"-P1200-SC-13404/cap1"
+  }
+ ],
+ "totals": {
+  "items": 12,
+  "welds": 11,
+  "fieldWelds": 0,
+  "supports": 23,
+  "pipeLength": 2848,
+  "weight": 734.2449
+ }
+}

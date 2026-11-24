@@ -510,7 +510,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | D-1903 | Wet air receiver | vertical | 145 psi, 160 °F | P150 | 48 in inside diameter × 12 ft between tangents, vertical |
 | D-1904 | Instrument air receiver | vertical | 130 psi, 160 °F | P150 | 42 in inside diameter × 10.5 ft between tangents, vertical |
 | T-1903 | Liquid nitrogen tank | vertical vessel, vacuum insulated | 175 psi, 150 °F | P300 | 400 bbl: 10 ft diameter × 30 ft high |
-| D-1905 | Fuel gas mixing drum | vertical | 85 psi, 165 °F | P150 | 48 in inside diameter × 12 ft between tangents, vertical |
+| D-1905 | Fuel gas mixing drum | horizontal | 85 psi, 165 °F | P150 | 36 in inside diameter × 9 ft between tangents, horizontal |
 | T-1904 | Caustic tank | cone roof | atmospheric | P150 | 1,500 bbl: 30 ft diameter × 16 ft high, cone roof |
 | P-1901 | Raw water pump | motor driven | 160 psi, 150 °F | P300 | 499 gpm each × 196 ft, 50 hp at 3560 rpm; 3 installed, 2 running |
 | F-1901 | Pressure filters | vertical | 160 psi, 150 °F | P300 | 3 × 24 in inside diameter × 4 ft between tangents, vertical |

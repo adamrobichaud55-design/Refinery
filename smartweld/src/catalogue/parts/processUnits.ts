@@ -419,7 +419,7 @@ export function makeMudDrum(inp: DrumInput): PartSpec {
   return done(inp.tag, 'DRUM', `${inp.tag} mud drum ${inp.ID}" ID × ${(inp.L / 12).toFixed(0)}'`, { ID: drawing(inp.ID, 'Inside diameter'), L: drawing(inp.L, 'Tangent length'), t: rule(d.t, 'SW-EQC-39', 'Shell thickness (ID/48, min 1 in)') }, inp.L + d.R, d.solids);
 }
 
-export interface FlueGasCoolerInput { tag: string; D: number; L: number; /** a stated shell wall in place of the fixed 3/4 in (§72) */ t?: number; /** a stated wall for its steam drum */ drumT?: number }
+export interface FlueGasCoolerInput { tag: string; D: number; L: number; /** a stated shell wall in place of the fixed 3/4 in (§72) */ t?: number; /** a stated wall for its steam drum */ drumT?: number; /** SW-EQC-37: stated outside diameters for the gas ducts in place of half the shell's, and the ducts left without their flanges where a plant's own nozzle is to stand on them */ ducts?: { inletOD?: number; outletOD?: number; plain?: ('inlet' | 'outlet')[] } }
 /** SW-EQC-37: a horizontal fire-tube flue gas cooler with its steam drum; z along the shell from the inlet tubesheet, y up */
 export function makeFlueGasCooler(inp: FlueGasCoolerInput): PartSpec {
   const D = inp.D, L = inp.L, t = inp.t ?? 0.75, R = D / 2 + t, ts = 2, barrel = 0.33 * D, rd = 0.25 * D, coneL = (R - rd - t) / Math.tan(Math.PI / 6), cl = R + 36, s: Solid[] = [];
@@ -428,9 +428,11 @@ export function makeFlueGasCooler(inp: FlueGasCoolerInput): PartSpec {
   for (let j = -Math.ceil(Rl / rowH); j <= Math.ceil(Rl / rowH); j++) for (let i = -Math.ceil(Rl / p) - 1; i <= Math.ceil(Rl / p) + 1; i++) { const x = i * p + (Math.abs(j) % 2 ? p / 2 : 0), y = j * rowH; if (Math.hypot(x, y) <= Rl - 1) tubes.push(extrude({ outer: circle(x, y, 1, 8), inner: circle(x, y, 0.85, 8) }, L + 2 * ts, -ts)); }
   s.push({ name: `fire tubes (${tubes.length} × 2 in on 2-1/2 in pitch)`, role: 'closure', mesh: mergeMeshes(tubes) });
   for (const [k, dir] of ([-1, 1] as const).entries()) {
-    const zb0 = dir < 0 ? -ts - barrel : L + ts, zc0 = dir < 0 ? zb0 - coneL : zb0 + barrel, label = dir < 0 ? 'inlet' : 'outlet';
-    s.push({ name: `${label} channel`, cut: true, mesh: at(shellRing(R, t, barrel), 0, 0, zb0) }, { name: `${label} cone`, cut: true, mesh: dir < 0 ? frustum(rd + t, R, zc0, zb0, t) : frustum(R, rd + t, zc0, zc0 + coneL, t) },
-      { name: `${label} duct`, cut: true, mesh: tube(rd + t, t, 12, dir < 0 ? zc0 - 12 : zc0 + coneL) }, { name: `${label} duct flange`, mesh: ringFlange(rd + t, dir < 0 ? zc0 - 13.5 : zc0 + coneL + 12) });
+    const label = dir < 0 ? 'inlet' : 'outlet', od = dir < 0 ? inp.ducts?.inletOD : inp.ducts?.outletOD, rk = od === undefined ? rd : od / 2 - t, ck = od === undefined ? coneL : (R - rk - t) / Math.tan(Math.PI / 6);
+    const zb0 = dir < 0 ? -ts - barrel : L + ts, zc0 = dir < 0 ? zb0 - ck : zb0 + barrel;
+    s.push({ name: `${label} channel`, cut: true, mesh: at(shellRing(R, t, barrel), 0, 0, zb0) }, { name: `${label} cone`, cut: true, mesh: dir < 0 ? frustum(rk + t, R, zc0, zb0, t) : frustum(R, rk + t, zc0, zc0 + ck, t) },
+      { name: `${label} duct`, cut: true, mesh: tube(rk + t, t, 12, dir < 0 ? zc0 - 12 : zc0 + ck) });
+    if (!inp.ducts?.plain?.includes(label)) s.push({ name: `${label} duct flange`, mesh: ringFlange(rk + t, dir < 0 ? zc0 - 13.5 : zc0 + ck + 12) });
     s.push(...upOn(makeManway(`${inp.tag}-CM${k}`, { D: 20, cls: 'P150', shellT: t, shellR: R }), R, zb0 + barrel / 2, `${label} channel manway`));
   }
   for (const f of [0.2, 0.8]) s.push(...saddleSolids(R, cl, f * L, Math.max(6, D / 3)));

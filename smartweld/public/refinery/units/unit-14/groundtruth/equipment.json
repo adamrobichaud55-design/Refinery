@@ -1,0 +1,4657 @@
+[
+ {
+  "tag": "E-1401",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1401 shell-and-tube exchanger 42\" ID × 240\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "E-1401 shell-and-tube exchanger 42\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 14327.185,
+  "origin": {
+   "E": 456,
+   "N": -505.5,
+   "EL": 1330.125
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 1.125,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 40.125,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 11.0625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 14,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 21,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1401-N1",
+    "service": "tube in",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 456,
+     "N": -516,
+     "EL": 1300.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P600-P-14004",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1401-N2",
+    "service": "tube out",
+    "NPS": 12,
+    "cls": "P1200",
+    "face": {
+     "E": 456,
+     "N": -516,
+     "EL": 1364
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "12\"-P1200-P-14007",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "E-1401-N3",
+    "service": "shell in",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 456,
+     "N": -432,
+     "EL": 1365.1875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "14\"-P1200-P-14013",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "E-1401-N4",
+    "service": "shell out",
+    "NPS": 12,
+    "cls": "P600",
+    "face": {
+     "E": 456,
+     "N": -276,
+     "EL": 1296.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "12\"-P600-P-14014",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "K-1401",
+  "type": "COMPRESSOR",
+  "description": "K-1401 centrifugal compressor package, turbine driven, 96\" × 174\" skid",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "K-1401 centrifugal compressor package, turbine driven, 96\" × 174\" skid",
+  "material": "Grade 36",
+  "weight": 69241.6744,
+  "origin": {
+   "E": 624,
+   "N": -358.8,
+   "EL": 1215.1
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "skidW",
+    "label": "Skid width",
+    "value": 96,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skidL",
+    "label": "Skid length",
+    "value": 174,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 37,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "wheelD",
+    "label": "Turbine wheel diameter",
+    "value": 31,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingL",
+    "label": "Casing length (1.2 D)",
+    "value": 44.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "gearbox",
+    "label": "Gearbox length and width (0.8 D)",
+    "value": 29.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the skid (the turbine's 0.9 d over its 4 in baseplate)",
+    "value": 32.9,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-66"
+   },
+   {
+    "name": "least",
+    "label": "Least skid length for casing, gearbox and turbine",
+    "value": 173.05,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-66"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "K-1401-N1",
+    "service": "inlet",
+    "NPS": 8,
+    "cls": "P300",
+    "face": {
+     "E": 624,
+     "N": -268.3312,
+     "EL": 1248
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "8\"-P300-P-14005",
+    "lineClass": "H300"
+   },
+   {
+    "id": "K-1401-N2",
+    "service": "outlet",
+    "NPS": 8,
+    "cls": "P600",
+    "face": {
+     "E": 624,
+     "N": -300,
+     "EL": 1275.9688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P600-P-14006",
+    "lineClass": "H600"
+   },
+   {
+    "id": "K-1401-N3",
+    "service": "turbine steam in",
+    "NPS": 6,
+    "cls": "P1200",
+    "face": {
+     "E": 624,
+     "N": -396,
+     "EL": 1289.8188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P1200-LS-14501",
+    "lineClass": "S1200"
+   },
+   {
+    "id": "K-1401-N4",
+    "service": "turbine exhaust",
+    "NPS": 10,
+    "cls": "P150",
+    "face": {
+     "E": 593.7736,
+     "N": -396,
+     "EL": 1236
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "10\"-P150-LS-14502",
+    "lineClass": "S150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1402",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1402 shell-and-tube exchanger 30\" ID × 240\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "E-1402 shell-and-tube exchanger 30\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 4656.2589,
+  "origin": {
+   "E": 780,
+   "N": -508.5,
+   "EL": 1311.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 33.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 7.75,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1402-N1",
+    "service": "shell in",
+    "NPS": 8,
+    "cls": "P600",
+    "face": {
+     "E": 780,
+     "N": -462,
+     "EL": 1336.4688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P600-P-14015",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1402-N2",
+    "service": "shell out",
+    "NPS": 8,
+    "cls": "P600",
+    "face": {
+     "E": 780,
+     "N": -282,
+     "EL": 1286.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "8\"-P600-P-14016",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1402-N3",
+    "service": "tube in",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 780,
+     "N": -516,
+     "EL": 1288.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-CWS-14503",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-1402-N4",
+    "service": "tube out",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 780,
+     "N": -516,
+     "EL": 1334.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-CWR-14504",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "K-1402A",
+  "type": "COMPRESSOR",
+  "description": "K-1402A centrifugal compressor package 90\" × 174\" skid",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "K-1402A centrifugal compressor package 90\" × 174\" skid",
+  "material": "Grade 36",
+  "weight": 40896.0147,
+  "origin": {
+   "E": 942,
+   "N": -354,
+   "EL": 1214.96
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "skidW",
+    "label": "Skid width",
+    "value": 90,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skidL",
+    "label": "Skid length",
+    "value": 174,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor frame",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingL",
+    "label": "Casing length (1.2 D)",
+    "value": 30,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "gearbox",
+    "label": "Gearbox cube (0.8 D)",
+    "value": 20,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the skid",
+    "value": 27.04,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "K-1402A-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 942,
+     "N": -265.4375,
+     "EL": 1242
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-14017",
+    "lineClass": "H300"
+   },
+   {
+    "id": "K-1402A-N2",
+    "service": "outlet",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 942,
+     "N": -288,
+     "EL": 1261.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-14018",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "K-1402B",
+  "type": "COMPRESSOR",
+  "description": "K-1402B centrifugal compressor package 90\" × 174\" skid",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "K-1402B centrifugal compressor package 90\" × 174\" skid",
+  "material": "Grade 36",
+  "weight": 40896.0147,
+  "origin": {
+   "E": 1140,
+   "N": -354,
+   "EL": 1214.96
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "skidW",
+    "label": "Skid width",
+    "value": 90,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skidL",
+    "label": "Skid length",
+    "value": 174,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor frame",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingL",
+    "label": "Casing length (1.2 D)",
+    "value": 30,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "gearbox",
+    "label": "Gearbox cube (0.8 D)",
+    "value": 20,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the skid",
+    "value": 27.04,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "K-1402B-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1140,
+     "N": -265.4375,
+     "EL": 1242
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-14305",
+    "lineClass": "H300"
+   },
+   {
+    "id": "K-1402B-N2",
+    "service": "outlet",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1140,
+     "N": -288,
+     "EL": 1261.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-14306",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "E-1403",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1403 shell-and-tube exchanger 12\" ID × 240\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "E-1403 shell-and-tube exchanger 12\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 1224.7206,
+  "origin": {
+   "E": 1284,
+   "N": -507,
+   "EL": 1296.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 12,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 24.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 3.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1403-N1",
+    "service": "shell in",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1284,
+     "N": -480,
+     "EL": 1309.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-14018",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1403-N2",
+    "service": "shell out",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1284,
+     "N": -282,
+     "EL": 1283.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P600-P-14019",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1403-N3",
+    "service": "tube in",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1284,
+     "N": -510,
+     "EL": 1283.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P150-CWS-14505",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-1403-N4",
+    "service": "tube out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1284,
+     "N": -510,
+     "EL": 1309.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-CWR-14506",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1404",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1404 shell-and-tube exchanger 24\" ID × 240\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "E-1404 shell-and-tube exchanger 24\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 2757.3056,
+  "origin": {
+   "E": 1386,
+   "N": -504,
+   "EL": 1278.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 30.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 6.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1404-N1",
+    "service": "tube in",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1386,
+     "N": -510,
+     "EL": 1258.4375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-14026",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1404-N2",
+    "service": "tube out",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1386,
+     "N": -510,
+     "EL": 1298.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-14027",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1404-N3",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1386,
+     "N": -462,
+     "EL": 1298.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-14036",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1404-N4",
+    "service": "shell out",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1386,
+     "N": -276,
+     "EL": 1258.4375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-14037",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "E-1405",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1405 shell-and-tube exchanger 24\" ID × 240\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "E-1405 shell-and-tube exchanger 24\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 2757.3056,
+  "origin": {
+   "E": 1494,
+   "N": -504,
+   "EL": 1308.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 30.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 6.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1405-N1",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1494,
+     "N": -462,
+     "EL": 1328.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-14028",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1405-N2",
+    "service": "shell out",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1494,
+     "N": -276,
+     "EL": 1289.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P300-P-14029",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1405-N3",
+    "service": "tube in",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1494,
+     "N": -510,
+     "EL": 1288.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-CWS-14507",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-1405-N4",
+    "service": "tube out",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1494,
+     "N": -510,
+     "EL": 1328.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-CWR-14508",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1407",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1407 shell-and-tube exchanger 24\" ID × 240\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "E-1407 shell-and-tube exchanger 24\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 2757.3056,
+  "origin": {
+   "E": 1602,
+   "N": -504,
+   "EL": 1314.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 30.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 6.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1407-N1",
+    "service": "shell in",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1602,
+     "N": -474,
+     "EL": 1334.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-14038",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1407-N2",
+    "service": "shell out",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1602,
+     "N": -276,
+     "EL": 1294.4375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-14039",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1407-N3",
+    "service": "tube in",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1602,
+     "N": -510,
+     "EL": 1294.4375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P150-CWS-14511",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-1407-N4",
+    "service": "tube out",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1602,
+     "N": -510,
+     "EL": 1334.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-CWR-14512",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "A-1401A",
+  "type": "AIR_COOLER",
+  "description": "A-1401A air cooler 168\" × 384\", 2 fans",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "A-1401A air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 690,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1401A-N1",
+    "service": "inlet",
+    "NPS": 12,
+    "cls": "P600",
+    "face": {
+     "E": 654,
+     "N": -198,
+     "EL": 1789.625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "12\"-P600-P-14014",
+    "lineClass": "H600"
+   },
+   {
+    "id": "A-1401A-N2",
+    "service": "outlet",
+    "NPS": 8,
+    "cls": "P600",
+    "face": {
+     "E": 726,
+     "N": -213.4687,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P600-P-14015",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "A-1401B",
+  "type": "AIR_COOLER",
+  "description": "A-1401B air cooler 168\" × 384\", 2 fans",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "A-1401B air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 870,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1401B-N1",
+    "service": "inlet",
+    "NPS": 12,
+    "cls": "P600",
+    "face": {
+     "E": 834,
+     "N": -198,
+     "EL": 1789.625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "12\"-P600-P-14303",
+    "lineClass": "H600"
+   },
+   {
+    "id": "A-1401B-N2",
+    "service": "outlet",
+    "NPS": 8,
+    "cls": "P600",
+    "face": {
+     "E": 906,
+     "N": -213.4687,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P600-P-14304",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "A-1402",
+  "type": "AIR_COOLER",
+  "description": "A-1402 air cooler 168\" × 384\", 2 fans",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "A-1402 air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 1050,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1402-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1014,
+     "N": -198,
+     "EL": 1785.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-14037",
+    "lineClass": "H300"
+   },
+   {
+    "id": "A-1402-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1086,
+     "N": -211.5625,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-14038",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "D-1401",
+  "type": "Horizontal drum",
+  "description": "D-1401 horizontal vessel 102\" ID × 306\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "D-1401 horizontal vessel 102\" ID × 306\"",
+  "material": "Grade 36",
+  "weight": 19709.7,
+  "origin": {
+   "E": 459,
+   "N": 540,
+   "EL": 1377.5
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 102,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 306,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 69.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 25.75,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 34,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 61.2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1401-N1",
+    "service": "inlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 480,
+     "N": 540,
+     "EL": 1436.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-14701",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1401-N2",
+    "service": "inlet 2",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 504,
+     "N": 540,
+     "EL": 1436.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-14702",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1401-N3",
+    "service": "outlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 564,
+     "N": 540,
+     "EL": 1316.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "8\"-P150-P-14003",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "D-1402",
+  "type": "Horizontal drum",
+  "description": "D-1402 horizontal vessel 66\" ID × 198\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "D-1402 horizontal vessel 66\" ID × 198\"",
+  "material": "Grade 36",
+  "weight": 12067.6119,
+  "origin": {
+   "E": 885,
+   "N": 540,
+   "EL": 1299.75
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 66,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.75,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 198,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 51.75,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 16.875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 22,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 39.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1402-N1",
+    "service": "recycle gas",
+    "NPS": 8,
+    "cls": "P300",
+    "face": {
+     "E": 1038,
+     "N": 540,
+     "EL": 1342.9688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P300-P-14005",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-1402-N2",
+    "service": "inlet",
+    "NPS": 8,
+    "cls": "P600",
+    "face": {
+     "E": 906,
+     "N": 540,
+     "EL": 1342.9688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P600-P-14016",
+    "lineClass": "H600"
+   },
+   {
+    "id": "D-1402-N3",
+    "service": "net gas",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1062,
+     "N": 540,
+     "EL": 1341.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-14017",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-1402-N4",
+    "service": "liquid",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1008,
+     "N": 540,
+     "EL": 1258.4375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-14026",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "D-1403",
+  "type": "Vertical vessel",
+  "description": "D-1403 vertical vessel 36\" ID × 108\" T/T",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "D-1403 vertical vessel 36\" ID × 108\" T/T",
+  "material": "Grade 36",
+  "weight": 4068.741,
+  "origin": {
+   "E": 1200,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.75,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 108,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 177.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1403-N1",
+    "service": "inlet",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1200,
+     "N": 514.4063,
+     "EL": 1368
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P600-P-14019",
+    "lineClass": "H600"
+   },
+   {
+    "id": "D-1403-N2",
+    "service": "gas",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1200,
+     "N": 540,
+     "EL": 1401.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-14020",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "D-1404",
+  "type": "Vertical vessel",
+  "description": "D-1404 vertical vessel 36\" ID × 108\" T/T",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "D-1404 vertical vessel 36\" ID × 108\" T/T",
+  "material": "Grade 36",
+  "weight": 2411.6907,
+  "origin": {
+   "E": 1326,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 108,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 177.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1404-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1326,
+     "N": 514.0625,
+     "EL": 1368
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-14024",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1404-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1326,
+     "N": 540,
+     "EL": 1402.1875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-14025",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "X-1401A",
+  "type": "Vertical vessel",
+  "description": "X-1401A vertical vessel 72\" ID × 240\" T/T",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "X-1401A vertical vessel 72\" ID × 240\" T/T",
+  "material": "Grade 36",
+  "weight": 25210.3252,
+  "origin": {
+   "E": 1470,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 1.25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 18.625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 318.625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "X-1401A-N1",
+    "service": "feed",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1470,
+     "N": 495.9063,
+     "EL": 1302
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P600-P-14704",
+    "lineClass": "H600"
+   },
+   {
+    "id": "X-1401A-N2",
+    "service": "hydrogen",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1470,
+     "N": 540,
+     "EL": 1552.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-14022",
+    "lineClass": "H600"
+   },
+   {
+    "id": "X-1401A-N3",
+    "service": "tail gas",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1470,
+     "N": 495.1875,
+     "EL": 1338
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-14024",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "X-1401B",
+  "type": "Vertical vessel",
+  "description": "X-1401B vertical vessel 72\" ID × 240\" T/T",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "X-1401B vertical vessel 72\" ID × 240\" T/T",
+  "material": "Grade 36",
+  "weight": 25210.3252,
+  "origin": {
+   "E": 1632,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 1.25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 18.625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 318.625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "X-1401B-N1",
+    "service": "feed",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1632,
+     "N": 495.9063,
+     "EL": 1302
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P600-P-14307",
+    "lineClass": "H600"
+   },
+   {
+    "id": "X-1401B-N2",
+    "service": "hydrogen",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1632,
+     "N": 540,
+     "EL": 1552.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-14310",
+    "lineClass": "H600"
+   },
+   {
+    "id": "X-1401B-N3",
+    "service": "tail gas",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1632,
+     "N": 495.1875,
+     "EL": 1338
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-14313",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "X-1401C",
+  "type": "Vertical vessel",
+  "description": "X-1401C vertical vessel 72\" ID × 240\" T/T",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "X-1401C vertical vessel 72\" ID × 240\" T/T",
+  "material": "Grade 36",
+  "weight": 25210.3252,
+  "origin": {
+   "E": 1794,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 1.25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 18.625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 318.625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "X-1401C-N1",
+    "service": "feed",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1794,
+     "N": 495.9063,
+     "EL": 1302
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P600-P-14308",
+    "lineClass": "H600"
+   },
+   {
+    "id": "X-1401C-N2",
+    "service": "hydrogen",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1794,
+     "N": 540,
+     "EL": 1552.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-14311",
+    "lineClass": "H600"
+   },
+   {
+    "id": "X-1401C-N3",
+    "service": "tail gas",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1794,
+     "N": 495.1875,
+     "EL": 1338
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-14314",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "X-1401D",
+  "type": "Vertical vessel",
+  "description": "X-1401D vertical vessel 72\" ID × 240\" T/T",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "X-1401D vertical vessel 72\" ID × 240\" T/T",
+  "material": "Grade 36",
+  "weight": 25210.3252,
+  "origin": {
+   "E": 1956,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 1.25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 18.625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 318.625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "X-1401D-N1",
+    "service": "feed",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1956,
+     "N": 495.9063,
+     "EL": 1302
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P600-P-14309",
+    "lineClass": "H600"
+   },
+   {
+    "id": "X-1401D-N2",
+    "service": "hydrogen",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1956,
+     "N": 540,
+     "EL": 1552.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-14312",
+    "lineClass": "H600"
+   },
+   {
+    "id": "X-1401D-N3",
+    "service": "tail gas",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1956,
+     "N": 495.1875,
+     "EL": 1338
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-14315",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "C-1401",
+  "type": "COLUMN",
+  "description": "C-1401 column 66\" ID × 960\" T/T with 7 platforms and ladders",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "C-1401 column 66\" ID × 960\" T/T with 7 platforms and ladders",
+  "material": "Grade 36",
+  "weight": 58034.6067,
+  "origin": {
+   "E": 2166,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 66,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 960,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 16.8125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 1156.8125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "trays",
+    "label": "Tray count",
+    "value": 30,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "traySpacing",
+    "label": "Tray spacing",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "firstTray",
+    "label": "First tray elevation (trays centred in the shell)",
+    "value": 328.8125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "platforms",
+    "label": "Platforms (first manway level, then every 15 ft, and the top)",
+    "value": 7,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-32"
+   },
+   {
+    "name": "spacing",
+    "label": "Platform spacing (15 ft)",
+    "value": 180,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-28"
+   },
+   {
+    "name": "platformW",
+    "label": "Platform width",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "handrail",
+    "label": "Handrail height",
+    "value": 42,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "platformArc",
+    "label": "Arc the platforms cover about the manways",
+    "value": 180,
+    "unit": "deg",
+    "basis": "stated on drawing"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "C-1401-N1",
+    "service": "feed",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 2166,
+     "N": 498.5938,
+     "EL": 1890
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P300-P-14709",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1401-N2",
+    "service": "overhead",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 2166,
+     "N": 540,
+     "EL": 2413.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-14028",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1401-N3",
+    "service": "reflux",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2166,
+     "N": 499.5313,
+     "EL": 2352
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P300-P-14711",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1401-N4",
+    "service": "reboiler draw",
+    "NPS": 8,
+    "cls": "P300",
+    "face": {
+     "E": 2166,
+     "N": 496.9063,
+     "EL": 1470
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P300-P-14034",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1401-N5",
+    "service": "reboiler return",
+    "NPS": 10,
+    "cls": "P300",
+    "face": {
+     "E": 2166,
+     "N": 496.0625,
+     "EL": 1536
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "10\"-P300-P-14035",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1401-N6",
+    "service": "bottoms",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 2166,
+     "N": 498.5938,
+     "EL": 1422
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P300-P-14036",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "E-1406",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1406 shell-and-tube exchanger 30\" ID × 240\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "E-1406 shell-and-tube exchanger 30\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 6524.4421,
+  "origin": {
+   "E": 2310,
+   "N": 652.5,
+   "EL": 1299.75
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.75,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 33.75,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 7.875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1406-N1",
+    "service": "shell in",
+    "NPS": 8,
+    "cls": "P300",
+    "face": {
+     "E": 2310,
+     "N": 426,
+     "EL": 1274.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "8\"-P300-P-14034",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1406-N2",
+    "service": "shell out",
+    "NPS": 10,
+    "cls": "P300",
+    "face": {
+     "E": 2310,
+     "N": 600,
+     "EL": 1325.8125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "10\"-P300-P-14035",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1406-N3",
+    "service": "tube in",
+    "NPS": 4,
+    "cls": "P1200",
+    "face": {
+     "E": 2310,
+     "N": 660,
+     "EL": 1323.0313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P1200-LS-14509",
+    "lineClass": "S1200"
+   },
+   {
+    "id": "E-1406-N4",
+    "service": "tube out",
+    "NPS": 2,
+    "cls": "P1200",
+    "face": {
+     "E": 2310,
+     "N": 660,
+     "EL": 1278.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P1200-SC-14510",
+    "lineClass": "C1200"
+   }
+  ]
+ },
+ {
+  "tag": "D-1405",
+  "type": "Horizontal drum",
+  "description": "D-1405 horizontal vessel 48\" ID × 144\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "D-1405 horizontal vessel 48\" ID × 144\"",
+  "material": "Grade 36",
+  "weight": 4565.1357,
+  "origin": {
+   "E": 2418,
+   "N": 540,
+   "EL": 1350.5
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 144,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 42.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 12.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 16,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 28.8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1405-N1",
+    "service": "inlet",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2436,
+     "N": 540,
+     "EL": 1381.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-14029",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-1405-N2",
+    "service": "gas",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2544,
+     "N": 540,
+     "EL": 1381.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-14030",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-1405-N3",
+    "service": "liquid",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 2478,
+     "N": 540,
+     "EL": 1318.4375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-14031",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "D-1406",
+  "type": "Horizontal drum",
+  "description": "D-1406 horizontal vessel 36\" ID × 108\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "D-1406 horizontal vessel 36\" ID × 108\"",
+  "material": "Grade 36",
+  "weight": 4300.241,
+  "origin": {
+   "E": 2658,
+   "N": 540,
+   "EL": 1284.875
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.875,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 108,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 36.875,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.4375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 21.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1406-N1",
+    "service": "downcomer",
+    "NPS": 6,
+    "cls": "P1200",
+    "face": {
+     "E": 2718,
+     "N": 540,
+     "EL": 1258.2813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P1200-P-14040",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "D-1406-N2",
+    "service": "riser",
+    "NPS": 8,
+    "cls": "P1200",
+    "face": {
+     "E": 2676,
+     "N": 540,
+     "EL": 1313.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P1200-P-14041",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "D-1406-N3",
+    "service": "feed water in",
+    "NPS": 2,
+    "cls": "P1200",
+    "face": {
+     "E": 2700,
+     "N": 540,
+     "EL": 1309.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "2\"-P1200-SC-14513",
+    "lineClass": "C1200"
+   },
+   {
+    "id": "D-1406-N4",
+    "service": "steam out",
+    "NPS": 6,
+    "cls": "P1200",
+    "face": {
+     "E": 2748,
+     "N": 540,
+     "EL": 1311.4688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P1200-LS-14514",
+    "lineClass": "S1200"
+   }
+  ]
+ },
+ {
+  "tag": "R-1401",
+  "type": "Vertical vessel",
+  "description": "R-1401 vertical vessel 72\" ID × 192\" T/T",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "R-1401 vertical vessel 72\" ID × 192\" T/T",
+  "material": "Grade 36",
+  "weight": 32298.8641,
+  "origin": {
+   "E": 2898,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 1.875,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 192,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 96,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 18.9375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 306.9375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "R-1401-N1",
+    "service": "inlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 2898,
+     "N": 540,
+     "EL": 1547.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "14\"-P1200-P-14008",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "R-1401-N2",
+    "service": "outlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 2898,
+     "N": 489.1875,
+     "EL": 1338
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "14\"-P1200-P-14009",
+    "lineClass": "H1200"
+   }
+  ]
+ },
+ {
+  "tag": "R-1402",
+  "type": "Vertical vessel",
+  "description": "R-1402 vertical vessel 78\" ID × 228\" T/T",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "R-1402 vertical vessel 78\" ID × 228\" T/T",
+  "material": "Grade 36",
+  "weight": 40250.0672,
+  "origin": {
+   "E": 3066,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 78,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 1.875,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 228,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 96,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 20.4375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 344.4375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "R-1402-N1",
+    "service": "inlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 3066,
+     "N": 540,
+     "EL": 1586.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "14\"-P1200-P-14010",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "R-1402-N2",
+    "service": "outlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 3066,
+     "N": 486.1875,
+     "EL": 1338
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "14\"-P1200-P-14011",
+    "lineClass": "H1200"
+   }
+  ]
+ },
+ {
+  "tag": "R-1403",
+  "type": "Vertical vessel",
+  "description": "R-1403 vertical vessel 96\" ID × 258\" T/T",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "R-1403 vertical vessel 96\" ID × 258\" T/T",
+  "material": "Grade 36",
+  "weight": 63378.5345,
+  "origin": {
+   "E": 492,
+   "N": 870,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 96,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 2.125,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 258,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 96,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 25.0625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 379.0625,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "R-1403-N1",
+    "service": "inlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 492,
+     "N": 870,
+     "EL": 1625.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "14\"-P1200-P-14012",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "R-1403-N2",
+    "service": "outlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 492,
+     "N": 806.9375,
+     "EL": 1344
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "14\"-P1200-P-14013",
+    "lineClass": "H1200"
+   }
+  ]
+ },
+ {
+  "tag": "P-1401A",
+  "type": "Centrifugal pump",
+  "description": "P-1401A centrifugal pump",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "P-1401A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 10088.1542,
+  "origin": {
+   "E": 552,
+   "N": 263,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 84,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 45,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1401A-S",
+    "service": "suction",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 552,
+     "N": 219.2188,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-14003",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1401A-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P600",
+    "face": {
+     "E": 552,
+     "N": 234,
+     "EL": 1241.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-14004",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "P-1401B",
+  "type": "Centrifugal pump",
+  "description": "P-1401B centrifugal pump",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "P-1401B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 10088.1542,
+  "origin": {
+   "E": 642,
+   "N": 263,
+   "EL": 1209
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 84,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 45,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1401B-S",
+    "service": "suction",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 642,
+     "N": 219.2188,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-14301",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1401B-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P600",
+    "face": {
+     "E": 642,
+     "N": 234,
+     "EL": 1241.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-14302",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "P-1402A",
+  "type": "Centrifugal pump",
+  "description": "P-1402A centrifugal pump",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "P-1402A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1168.1109,
+  "origin": {
+   "E": 2436,
+   "N": 243,
+   "EL": 1213
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 12,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1402A-S",
+    "service": "suction",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2436,
+     "N": 218.1563,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-14031",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-1402A-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 2436,
+     "N": 228,
+     "EL": 1235.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-14032",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "P-1402B",
+  "type": "Centrifugal pump",
+  "description": "P-1402B centrifugal pump",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "P-1402B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1168.1109,
+  "origin": {
+   "E": 2508,
+   "N": 243,
+   "EL": 1213
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 12,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1402B-S",
+    "service": "suction",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2508,
+     "N": 218.1563,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-14316",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-1402B-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 2508,
+     "N": 228,
+     "EL": 1235.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-14317",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "H-1401",
+  "type": "HEATER",
+  "description": "H-1401 fired heater 114\" dia × 285\" radiant, stack 180\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "H-1401 fired heater 114\" dia × 285\" radiant, stack 180\"",
+  "material": "Grade 36",
+  "weight": 12014.7101,
+  "origin": {
+   "E": 3924,
+   "N": 252,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Radiant shell diameter",
+    "value": 114,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Radiant height",
+    "value": 285,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "stackH",
+    "label": "Stack height above the convection box",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Legs W8, 8 ft",
+    "value": 96,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   },
+   {
+    "name": "convection",
+    "label": "Convection box side (0.6 D)",
+    "value": 68.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   },
+   {
+    "name": "stackD",
+    "label": "Stack diameter (0.3 D)",
+    "value": 34.2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "H-1401-N1",
+    "service": "inlet",
+    "NPS": 12,
+    "cls": "P1200",
+    "face": {
+     "E": 3878.05,
+     "N": 252,
+     "EL": 1614
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "12\"-P1200-P-14703",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "H-1401-N2",
+    "service": "outlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 3924,
+     "N": 321.9375,
+     "EL": 1326
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "14\"-P1200-P-14008",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "H-1401-N3",
+    "service": "tail gas",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 3960,
+     "N": 187.4375,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-14708",
+    "lineClass": "H150"
+   },
+   {
+    "id": "H-1401-N4",
+    "service": "steam coil in",
+    "NPS": 6,
+    "cls": "P1200",
+    "face": {
+     "E": 3924,
+     "N": 293.9188,
+     "EL": 1614
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "6\"-P1200-P-14040",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "H-1401-N5",
+    "service": "steam coil out",
+    "NPS": 8,
+    "cls": "P1200",
+    "face": {
+     "E": 3924,
+     "N": 208.3938,
+     "EL": 1614
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P1200-P-14041",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "H-1401-N6",
+    "service": "fuel gas",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3924,
+     "N": 189.125,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-P-14515",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "H-1402",
+  "type": "HEATER",
+  "description": "H-1402 fired heater 96\" dia × 240\" radiant, stack 144\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "H-1402 fired heater 96\" dia × 240\" radiant, stack 144\"",
+  "material": "Grade 36",
+  "weight": 8785.7926,
+  "origin": {
+   "E": 3912,
+   "N": -24,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Radiant shell diameter",
+    "value": 96,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Radiant height",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "stackH",
+    "label": "Stack height above the convection box",
+    "value": 144,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Legs W8, 8 ft",
+    "value": 96,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   },
+   {
+    "name": "convection",
+    "label": "Convection box side (0.6 D)",
+    "value": 57.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   },
+   {
+    "name": "stackD",
+    "label": "Stack diameter (0.3 D)",
+    "value": 28.8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "H-1402-N1",
+    "service": "inlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 3870.2625,
+     "N": -24,
+     "EL": 1566
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "14\"-P1200-P-14009",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "H-1402-N2",
+    "service": "outlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 3912,
+     "N": 36.9375,
+     "EL": 1326
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "14\"-P1200-P-14010",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "H-1402-N3",
+    "service": "fuel gas",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3912,
+     "N": -77.875,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-P-14516",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "H-1403",
+  "type": "HEATER",
+  "description": "H-1403 fired heater 72\" dia × 180\" radiant, stack 108\"",
+  "area": "U14",
+  "areaName": "Catalytic reformer and hydrogen purification",
+  "designation": "H-1403 fired heater 72\" dia × 180\" radiant, stack 108\"",
+  "material": "Grade 36",
+  "weight": 5339.9523,
+  "origin": {
+   "E": 3900,
+   "N": -276,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Radiant shell diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Radiant height",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "stackH",
+    "label": "Stack height above the convection box",
+    "value": 108,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Legs W8, 8 ft",
+    "value": 96,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   },
+   {
+    "name": "convection",
+    "label": "Convection box side (0.6 D)",
+    "value": 43.2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   },
+   {
+    "name": "stackD",
+    "label": "Stack diameter (0.3 D)",
+    "value": 21.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "H-1403-N1",
+    "service": "inlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 3865.4625,
+     "N": -276,
+     "EL": 1500
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "14\"-P1200-P-14011",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "H-1403-N2",
+    "service": "outlet",
+    "NPS": 14,
+    "cls": "P1200",
+    "face": {
+     "E": 3900,
+     "N": -227.0625,
+     "EL": 1326
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "14\"-P1200-P-14012",
+    "lineClass": "H1200"
+   },
+   {
+    "id": "H-1403-N3",
+    "service": "fuel gas",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3900,
+     "N": -317.875,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-P-14517",
+    "lineClass": "H150"
+   }
+  ]
+ }
+]

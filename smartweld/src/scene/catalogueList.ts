@@ -7,7 +7,7 @@ import {
   makeBlower, makeFiredHeater, makeAgitatedTank, makeFilter, makeDustCollector, makeCyclone, makeScrewConveyor, makeBucketElevator, makeSilo, makeSumpPump, makeHairpin, makePlateExchanger,
   makeDressedVessel, makeProcessPump, makeShellTubeExchanger, makeTubeBundle, makeBundleExchanger, makePlatformedColumn,
   makeYStrainer, makeBasketStrainer, makeConeStrainer, makeSteamTrap, makeExpansionJoint, makeFlexHose, makeFlameArrestor, makeSightGlass, makeRuptureDiscHolder, makeDripRing, makeLateral, makeMitreBend, makeStubIn, makeSpringHanger, makeInsulatedPipe, makeExpansionLoop, makeHoseConnection, makeTee,
-  makeHorizontalDrum, makeBullet, makeDesalter, makeDeaerator, makeKettleReboiler, makeEjector, makeSteamTurbine, makeInlinePump, makeSulfurFurnace, makeSulfurCondenser, makeDuctRun, makeSphere, makeCoolingTower, makeCabinHeater, makeReformer, makePsaUnit, makeIncinerator, makePrecipitator, makeVentSilencer, makeMultiBedReactor, makeSwagedTower,
+  makeHorizontalDrum, makeBullet, makeDesalter, makeDeaerator, makeKettleReboiler, makeEjector, makeSteamTurbine, makeTurbineCompressor, makeLoadingStation, makeInlinePump, makeSulfurFurnace, makeSulfurCondenser, makeDuctRun, makeSphere, makeCoolingTower, makeCabinHeater, makeReformer, makePsaUnit, makeIncinerator, makePrecipitator, makeVentSilencer, makeMultiBedReactor, makeSwagedTower,
   makePileCap, makeRetainingWall, makeCatchBasin, makeManhole, makeSleeper, makeMachineBlock, makeTableTop, makeSeparatorBasin, makeSulfurPit, makeBoxCulvert, makeDuctBank,
   makeCatCracker, makeCokeDrums, makeStack, makeFlareStack, makeWetScrubber, makeSteamDrum, makeMudDrum, makeFlueGasCooler, makeBurner, makeEconomizer, makeWaterTubeBoiler, makeConeRoofTank, makeFloatingRoofTank,
 } from '../catalogue';
@@ -155,6 +155,8 @@ export const ENTRIES: Entry[] = [
   { group: 'Process equipment', label: 'Sulfur condenser with seal pot', up: 'y', build: () => makeSulfurCondenser({ tag: 'E-802', ID: 48, TT: 240 }) },
   { group: 'Process equipment', label: 'Steam turbine driver, 24 in wheel', up: 'y', build: () => makeSteamTurbine('ST-801', 24) },
   { group: 'Process equipment', label: 'Steam jet ejector, 6 in suction', up: 'y', build: () => makeEjector('J-801', 6) },
+  { group: 'Process equipment', label: 'Turbine-driven compressor package, 30 in casing', up: 'y', build: () => makeTurbineCompressor({ tag: 'K-801', skidW: 84, skidL: 162, casingD: 30, wheelD: 30 }) },
+  { group: 'Process equipment', label: 'Top loading station for a road tanker, 3 in arm', build: () => makeLoadingStation({ tag: 'X-801', NPS: 3 }) },
   { group: 'Process equipment', label: 'Vertical in-line pump 4 in', up: 'y', build: () => makeInlinePump({ tag: 'P-801', NPS: 4, motorD: 14 }) },
   { group: 'Process equipment', label: 'Duct run 48 x 36 in with elbow, expansion joint and damper', up: 'y', build: () => makeDuctRun('DU-1', 48, 36) },
   { group: 'Process equipment', label: 'Sphere 50 ft', build: () => makeSphere({ tag: 'T-801', D: 600 }) },

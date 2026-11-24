@@ -1,0 +1,4269 @@
+[
+ {
+  "tag": "P-1305A",
+  "type": "Centrifugal pump",
+  "description": "P-1305A centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1305A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2300.0288,
+  "origin": {
+   "E": 444,
+   "N": -236.5,
+   "EL": 1214.5
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 21,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1305A-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 444,
+     "N": -212.625,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-13012",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1305A-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P600",
+    "face": {
+     "E": 444,
+     "N": -222,
+     "EL": 1246.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-13013",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "P-1305B",
+  "type": "Centrifugal pump",
+  "description": "P-1305B centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1305B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2300.0288,
+  "origin": {
+   "E": 528,
+   "N": -236.5,
+   "EL": 1214.5
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 21,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1305B-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 528,
+     "N": -212.625,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-13306",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1305B-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P600",
+    "face": {
+     "E": 528,
+     "N": -222,
+     "EL": 1246.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-13307",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "E-1301",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1301 shell-and-tube exchanger 42\" ID × 240\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "E-1301 shell-and-tube exchanger 42\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 11589.3045,
+  "origin": {
+   "E": 456,
+   "N": -613.5,
+   "EL": 1305.875
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.875,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 39.875,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 10.9375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 14,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 21,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1301-N1",
+    "service": "tube in",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 456,
+     "N": -624,
+     "EL": 1276.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P600-P-13004",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1301-N2",
+    "service": "tube out",
+    "NPS": 10,
+    "cls": "P600",
+    "face": {
+     "E": 456,
+     "N": -624,
+     "EL": 1338.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "10\"-P600-P-13008",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1301-N3",
+    "service": "shell in",
+    "NPS": 10,
+    "cls": "P600",
+    "face": {
+     "E": 456,
+     "N": -558,
+     "EL": 1338.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "10\"-P600-P-13010",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1301-N4",
+    "service": "shell out",
+    "NPS": 8,
+    "cls": "P600",
+    "face": {
+     "E": 456,
+     "N": -384,
+     "EL": 1274.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "8\"-P600-P-13011",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "K-1301A",
+  "type": "COMPRESSOR",
+  "description": "K-1301A centrifugal compressor package 60\" × 114\" skid",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "K-1301A centrifugal compressor package 60\" × 114\" skid",
+  "material": "Grade 36",
+  "weight": 17594.2354,
+  "origin": {
+   "E": 606,
+   "N": -432.6,
+   "EL": 1215.36
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "skidW",
+    "label": "Skid width",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skidL",
+    "label": "Skid length",
+    "value": 114,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 14,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor frame",
+    "value": 22,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingL",
+    "label": "Casing length (1.2 D)",
+    "value": 16.8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "gearbox",
+    "label": "Gearbox cube (0.8 D)",
+    "value": 11.2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the skid",
+    "value": 14.64,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "K-1301A-N1",
+    "service": "inlet",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 606,
+     "N": -374.7562,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "3\"-P600-P-13005",
+    "lineClass": "H600"
+   },
+   {
+    "id": "K-1301A-N2",
+    "service": "outlet",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 606,
+     "N": -390,
+     "EL": 1243.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-13007",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "K-1301B",
+  "type": "COMPRESSOR",
+  "description": "K-1301B centrifugal compressor package 60\" × 114\" skid",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "K-1301B centrifugal compressor package 60\" × 114\" skid",
+  "material": "Grade 36",
+  "weight": 17594.2354,
+  "origin": {
+   "E": 774,
+   "N": -432.6,
+   "EL": 1215.36
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "skidW",
+    "label": "Skid width",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skidL",
+    "label": "Skid length",
+    "value": 114,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 14,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor frame",
+    "value": 22,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingL",
+    "label": "Casing length (1.2 D)",
+    "value": 16.8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "gearbox",
+    "label": "Gearbox cube (0.8 D)",
+    "value": 11.2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the skid",
+    "value": 14.64,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-12"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "K-1301B-N1",
+    "service": "inlet",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 774,
+     "N": -374.7562,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "3\"-P600-P-13303",
+    "lineClass": "H600"
+   },
+   {
+    "id": "K-1301B-N2",
+    "service": "outlet",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 774,
+     "N": -390,
+     "EL": 1243.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-13304",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "E-1302",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1302 shell-and-tube exchanger 30\" ID × 240\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "E-1302 shell-and-tube exchanger 30\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 5586.5554,
+  "origin": {
+   "E": 912,
+   "N": -616.5,
+   "EL": 1311.625
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 33.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 7.8125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1302-N1",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 912,
+     "N": -576,
+     "EL": 1335.0313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-13014",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1302-N2",
+    "service": "shell out",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 912,
+     "N": -390,
+     "EL": 1288.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P600-P-13015",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1302-N3",
+    "service": "tube in",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 912,
+     "N": -624,
+     "EL": 1288.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-CWS-13501",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-1302-N4",
+    "service": "tube out",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 912,
+     "N": -624,
+     "EL": 1335.0313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-CWR-13502",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1303",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1303 shell-and-tube exchanger 30\" ID × 240\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "E-1303 shell-and-tube exchanger 30\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 3733.5493,
+  "origin": {
+   "E": 1026,
+   "N": -616.5,
+   "EL": 1281.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 33.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 7.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1303-N1",
+    "service": "tube in",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1026,
+     "N": -624,
+     "EL": 1258.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P300-P-13017",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1303-N2",
+    "service": "tube out",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1026,
+     "N": -624,
+     "EL": 1304.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-13018",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1303-N3",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1026,
+     "N": -576,
+     "EL": 1304.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-13026",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1303-N4",
+    "service": "shell out",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1026,
+     "N": -390,
+     "EL": 1258.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-P-13027",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1305",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1305 shell-and-tube exchanger 18\" ID × 240\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "E-1305 shell-and-tube exchanger 18\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 1923.3684,
+  "origin": {
+   "E": 1134,
+   "N": -613.5,
+   "EL": 1287.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 27.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 4.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 9,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 1.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1305-N1",
+    "service": "shell in",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1134,
+     "N": -588,
+     "EL": 1303.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-13032",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1305-N2",
+    "service": "shell out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1134,
+     "N": -384,
+     "EL": 1271.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P150-P-13033",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1305-N3",
+    "service": "tube in",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1134,
+     "N": -618,
+     "EL": 1272.125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P150-CWS-13505",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-1305-N4",
+    "service": "tube out",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1134,
+     "N": -618,
+     "EL": 1302.625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "2\"-P150-CWR-13506",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "A-1301A",
+  "type": "AIR_COOLER",
+  "description": "A-1301A air cooler 168\" × 384\", 2 fans",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "A-1301A air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 690,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1301A-N1",
+    "service": "inlet",
+    "NPS": 8,
+    "cls": "P600",
+    "face": {
+     "E": 654,
+     "N": -198,
+     "EL": 1787.4688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P600-P-13011",
+    "lineClass": "H600"
+   },
+   {
+    "id": "A-1301A-N2",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 726,
+     "N": -211.7812,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P600-P-13014",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "A-1301B",
+  "type": "AIR_COOLER",
+  "description": "A-1301B air cooler 168\" × 384\", 2 fans",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "A-1301B air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 870,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1301B-N1",
+    "service": "inlet",
+    "NPS": 8,
+    "cls": "P600",
+    "face": {
+     "E": 834,
+     "N": -198,
+     "EL": 1787.4688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P600-P-13305",
+    "lineClass": "H600"
+   },
+   {
+    "id": "A-1301B-N2",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 906,
+     "N": -211.7812,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P600-P-13308",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "A-1302",
+  "type": "AIR_COOLER",
+  "description": "A-1302 air cooler 168\" × 384\", 2 fans",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "A-1302 air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 1050,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1302-N1",
+    "service": "inlet",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1014,
+     "N": 198,
+     "EL": 1785.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-13019",
+    "lineClass": "H300"
+   },
+   {
+    "id": "A-1302-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1086,
+     "N": 211.5625,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-13020",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "A-1303A",
+  "type": "AIR_COOLER",
+  "description": "A-1303A air cooler 168\" × 384\", 2 fans",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "A-1303A air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 1230,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1303A-N1",
+    "service": "inlet",
+    "NPS": 12,
+    "cls": "P150",
+    "face": {
+     "E": 1194,
+     "N": 198,
+     "EL": 1789.625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "12\"-P150-P-13028",
+    "lineClass": "H150"
+   },
+   {
+    "id": "A-1303A-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1266,
+     "N": 211.5625,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-13029",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "A-1303B",
+  "type": "AIR_COOLER",
+  "description": "A-1303B air cooler 168\" × 384\", 2 fans",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "A-1303B air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 1410,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1303B-N1",
+    "service": "inlet",
+    "NPS": 12,
+    "cls": "P150",
+    "face": {
+     "E": 1374,
+     "N": 198,
+     "EL": 1789.625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "12\"-P150-P-13311",
+    "lineClass": "H150"
+   },
+   {
+    "id": "A-1303B-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1446,
+     "N": 211.5625,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-13312",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "A-1304",
+  "type": "AIR_COOLER",
+  "description": "A-1304 air cooler 168\" × 384\", 2 fans",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "A-1304 air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 1590,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1304-N1",
+    "service": "inlet",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1554,
+     "N": 198,
+     "EL": 1785.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-13038",
+    "lineClass": "H300"
+   },
+   {
+    "id": "A-1304-N2",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1626,
+     "N": 211.7813,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "6\"-P300-P-13039",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "D-1301",
+  "type": "Horizontal drum",
+  "description": "D-1301 horizontal vessel 108\" ID × 324\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "D-1301 horizontal vessel 108\" ID × 324\"",
+  "material": "Grade 36",
+  "weight": 22047.1011,
+  "origin": {
+   "E": 462,
+   "N": 540,
+   "EL": 1380.5
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 108,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 324,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 72.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 27.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 64.8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1301-N1",
+    "service": "inlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 480,
+     "N": 540,
+     "EL": 1442.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-13701",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1301-N2",
+    "service": "inlet 2",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 504,
+     "N": 540,
+     "EL": 1441.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-13702",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1301-N3",
+    "service": "outlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 570,
+     "N": 540,
+     "EL": 1316.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "8\"-P150-P-13003",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "D-1302",
+  "type": "Horizontal drum",
+  "description": "D-1302 horizontal vessel 78\" ID × 234\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "D-1302 horizontal vessel 78\" ID × 234\"",
+  "material": "Grade 36",
+  "weight": 21815.029,
+  "origin": {
+   "E": 909,
+   "N": 540,
+   "EL": 1306
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 78,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 234,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 58,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 20,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 26,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 46.8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1302-N1",
+    "service": "gas",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1122,
+     "N": 540,
+     "EL": 1352.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P600-P-13005",
+    "lineClass": "H600"
+   },
+   {
+    "id": "D-1302-N2",
+    "service": "inlet",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 930,
+     "N": 540,
+     "EL": 1353.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-13015",
+    "lineClass": "H600"
+   },
+   {
+    "id": "D-1302-N3",
+    "service": "water",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 1038,
+     "N": 540,
+     "EL": 1259.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P600-P-13016",
+    "lineClass": "H600"
+   },
+   {
+    "id": "D-1302-N4",
+    "service": "liquid",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1062,
+     "N": 540,
+     "EL": 1258.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P300-P-13017",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "C-1301",
+  "type": "COLUMN",
+  "description": "C-1301 column 72\" ID × 720\" T/T with 5 platforms and ladders",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "C-1301 column 72\" ID × 720\" T/T with 5 platforms and ladders",
+  "material": "Grade 36",
+  "weight": 47549.7251,
+  "origin": {
+   "E": 1326,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 720,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 18.3125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 918.3125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "trays",
+    "label": "Tray count",
+    "value": 20,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "traySpacing",
+    "label": "Tray spacing",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "firstTray",
+    "label": "First tray elevation (trays centred in the shell)",
+    "value": 330.3125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "platforms",
+    "label": "Platforms (first manway level, then every 15 ft, and the top)",
+    "value": 5,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-32"
+   },
+   {
+    "name": "spacing",
+    "label": "Platform spacing (15 ft)",
+    "value": 180,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-28"
+   },
+   {
+    "name": "platformW",
+    "label": "Platform width",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "handrail",
+    "label": "Handrail height",
+    "value": 42,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "platformArc",
+    "label": "Arc the platforms cover about the manways",
+    "value": 180,
+    "unit": "deg",
+    "basis": "stated on drawing"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "C-1301-N1",
+    "service": "feed",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1326,
+     "N": 495.5938,
+     "EL": 1770
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P300-P-13705",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1301-N2",
+    "service": "overhead",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1326,
+     "N": 540,
+     "EL": 2174.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-13019",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1301-N3",
+    "service": "reflux",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1326,
+     "N": 496.5313,
+     "EL": 2112
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P300-P-13707",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1301-N4",
+    "service": "reboiler draw",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1326,
+     "N": 495.5938,
+     "EL": 1470
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P300-P-13024",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1301-N5",
+    "service": "reboiler return",
+    "NPS": 8,
+    "cls": "P300",
+    "face": {
+     "E": 1326,
+     "N": 493.9063,
+     "EL": 1518
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P300-P-13025",
+    "lineClass": "H300"
+   },
+   {
+    "id": "C-1301-N6",
+    "service": "bottoms",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1326,
+     "N": 495.5938,
+     "EL": 1422
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P300-P-13026",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "E-1304",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1304 shell-and-tube exchanger 24\" ID × 240\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "E-1304 shell-and-tube exchanger 24\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 4221.6868,
+  "origin": {
+   "E": 1470,
+   "N": 654,
+   "EL": 1290.625
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 30.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 6.3125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1304-N1",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P300",
+    "face": {
+     "E": 1470,
+     "N": 426,
+     "EL": 1270.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P300-P-13024",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1304-N2",
+    "service": "shell out",
+    "NPS": 8,
+    "cls": "P300",
+    "face": {
+     "E": 1470,
+     "N": 606,
+     "EL": 1312.7188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P300-P-13025",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1304-N3",
+    "service": "tube in",
+    "NPS": 4,
+    "cls": "P1200",
+    "face": {
+     "E": 1470,
+     "N": 660,
+     "EL": 1310.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P1200-LS-13503",
+    "lineClass": "S1200"
+   },
+   {
+    "id": "E-1304-N4",
+    "service": "tube out",
+    "NPS": 2,
+    "cls": "P1200",
+    "face": {
+     "E": 1470,
+     "N": 660,
+     "EL": 1272.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P1200-SC-13504",
+    "lineClass": "C1200"
+   }
+  ]
+ },
+ {
+  "tag": "C-1302",
+  "type": "COLUMN",
+  "description": "C-1302 column 78\" ID × 960\" T/T with 7 platforms and ladders",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "C-1302 column 78\" ID × 960\" T/T with 7 platforms and ladders",
+  "material": "Grade 36",
+  "weight": 47613.8763,
+  "origin": {
+   "E": 1656,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 78,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 960,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 19.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 1159.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "trays",
+    "label": "Tray count",
+    "value": 30,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "traySpacing",
+    "label": "Tray spacing",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "firstTray",
+    "label": "First tray elevation (trays centred in the shell)",
+    "value": 331.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "platforms",
+    "label": "Platforms (first manway level, then every 15 ft, and the top)",
+    "value": 7,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-32"
+   },
+   {
+    "name": "spacing",
+    "label": "Platform spacing (15 ft)",
+    "value": 180,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-28"
+   },
+   {
+    "name": "platformW",
+    "label": "Platform width",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "handrail",
+    "label": "Handrail height",
+    "value": 42,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "platformArc",
+    "label": "Arc the platforms cover about the manways",
+    "value": 180,
+    "unit": "deg",
+    "basis": "stated on drawing"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "C-1302-N1",
+    "service": "feed",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1656,
+     "N": 492.8438,
+     "EL": 1890
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-13708",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1302-N2",
+    "service": "overhead",
+    "NPS": 12,
+    "cls": "P150",
+    "face": {
+     "E": 1656,
+     "N": 540,
+     "EL": 2415.9375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "12\"-P150-P-13028",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1302-N3",
+    "service": "reflux",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1656,
+     "N": 493.0625,
+     "EL": 2352
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-13709",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1302-N4",
+    "service": "reboiler draw",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1656,
+     "N": 492.8438,
+     "EL": 1476
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-13034",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1302-N5",
+    "service": "reboiler return",
+    "NPS": 12,
+    "cls": "P150",
+    "face": {
+     "E": 1656,
+     "N": 489,
+     "EL": 1536
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "12\"-P150-P-13035",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1302-N6",
+    "service": "bottoms",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 1656,
+     "N": 491.1563,
+     "EL": 1422
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-13036",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1306",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1306 shell-and-tube exchanger 36\" ID × 240\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "E-1306 shell-and-tube exchanger 36\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 4876.1137,
+  "origin": {
+   "E": 1806,
+   "N": 657,
+   "EL": 1314.375
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 36.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 18,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1306-N1",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1806,
+     "N": 426,
+     "EL": 1288.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-P-13034",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1306-N2",
+    "service": "shell out",
+    "NPS": 12,
+    "cls": "P150",
+    "face": {
+     "E": 1806,
+     "N": 594,
+     "EL": 1344.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "12\"-P150-P-13035",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1306-N3",
+    "service": "tube in",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1806,
+     "N": 666,
+     "EL": 1340.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-LS-13507",
+    "lineClass": "S300"
+   },
+   {
+    "id": "E-1306-N4",
+    "service": "tube out",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 1806,
+     "N": 666,
+     "EL": 1290.125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P300-SC-13508",
+    "lineClass": "C300"
+   }
+  ]
+ },
+ {
+  "tag": "D-1303",
+  "type": "Horizontal drum",
+  "description": "D-1303 horizontal vessel 42\" ID × 126\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "D-1303 horizontal vessel 42\" ID × 126\"",
+  "material": "Grade 36",
+  "weight": 2798.4018,
+  "origin": {
+   "E": 1917,
+   "N": 540,
+   "EL": 1347.375
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 126,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 39.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 10.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 14,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 25.2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1303-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1938,
+     "N": 540,
+     "EL": 1376.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-13020",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-1303-N2",
+    "service": "gas",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2022,
+     "N": 540,
+     "EL": 1375.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-13021",
+    "lineClass": "H300"
+   },
+   {
+    "id": "D-1303-N3",
+    "service": "reflux",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1974,
+     "N": 540,
+     "EL": 1319.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P300-P-13022",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "D-1304",
+  "type": "Horizontal drum",
+  "description": "D-1304 horizontal vessel 66\" ID × 198\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "D-1304 horizontal vessel 66\" ID × 198\"",
+  "material": "Grade 36",
+  "weight": 6629.6109,
+  "origin": {
+   "E": 2145,
+   "N": 540,
+   "EL": 1359.375
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 66,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 198,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 51.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 16.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 22,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 39.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1304-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2166,
+     "N": 540,
+     "EL": 1400.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-13029",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1304-N2",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 2220,
+     "N": 540,
+     "EL": 1318.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-P-13030",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "R-1301",
+  "type": "COLUMN",
+  "description": "R-1301 column 78\" ID × 270\" T/T with 3 platforms and ladders",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "R-1301 column 78\" ID × 270\" T/T with 3 platforms and ladders",
+  "material": "Grade 36",
+  "weight": 38703.3604,
+  "origin": {
+   "E": 2526,
+   "N": 540,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 78,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 1.25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 270,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 96,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 20.125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 386.125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "trays",
+    "label": "Tray count",
+    "value": 1,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "traySpacing",
+    "label": "Tray spacing",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "firstTray",
+    "label": "First tray elevation (trays centred in the shell)",
+    "value": 251.125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "platforms",
+    "label": "Platforms (first manway level, then every 15 ft, and the top)",
+    "value": 3,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-32"
+   },
+   {
+    "name": "spacing",
+    "label": "Platform spacing (15 ft)",
+    "value": 180,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-28"
+   },
+   {
+    "name": "platformW",
+    "label": "Platform width",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "handrail",
+    "label": "Handrail height",
+    "value": 42,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "platformArc",
+    "label": "Arc the platforms cover about the manways",
+    "value": 180,
+    "unit": "deg",
+    "basis": "stated on drawing"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "R-1301-N1",
+    "service": "inlet",
+    "NPS": 10,
+    "cls": "P600",
+    "face": {
+     "E": 2526,
+     "N": 540,
+     "EL": 1642.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "10\"-P600-P-13009",
+    "lineClass": "H600"
+   },
+   {
+    "id": "R-1301-N2",
+    "service": "outlet",
+    "NPS": 10,
+    "cls": "P600",
+    "face": {
+     "E": 2526,
+     "N": 489.4375,
+     "EL": 1338
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "10\"-P600-P-13010",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "P-1301A",
+  "type": "Centrifugal pump",
+  "description": "P-1301A centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1301A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 11935.0265,
+  "origin": {
+   "E": 564,
+   "N": 263,
+   "EL": 1214.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 84,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 21,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 27,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 49,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1301A-S",
+    "service": "suction",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 564,
+     "N": 219.2188,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-13003",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1301A-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P600",
+    "face": {
+     "E": 564,
+     "N": 234,
+     "EL": 1248.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-13004",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "P-1301B",
+  "type": "Centrifugal pump",
+  "description": "P-1301B centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1301B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 11935.0265,
+  "origin": {
+   "E": 654,
+   "N": 263,
+   "EL": 1214.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 84,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 21,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 27,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 49,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 15.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1301B-S",
+    "service": "suction",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 654,
+     "N": 219.2188,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-13301",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1301B-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P600",
+    "face": {
+     "E": 654,
+     "N": 234,
+     "EL": 1248.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-13302",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "P-1304A",
+  "type": "Centrifugal pump",
+  "description": "P-1304A centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1304A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2654.8546,
+  "origin": {
+   "E": 1602,
+   "N": 249,
+   "EL": 1212
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 14,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 14,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 26,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1304A-S",
+    "service": "suction",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1602,
+     "N": 217.2188,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-13036",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1304A-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1602,
+     "N": 228,
+     "EL": 1238.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-13037",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "P-1304B",
+  "type": "Centrifugal pump",
+  "description": "P-1304B centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1304B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2654.8546,
+  "origin": {
+   "E": 1680,
+   "N": 249,
+   "EL": 1212
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 14,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 14,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 26,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1304B-S",
+    "service": "suction",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1680,
+     "N": 217.2188,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-13315",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1304B-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1680,
+     "N": 228,
+     "EL": 1238.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P300-P-13316",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "P-1302A",
+  "type": "Centrifugal pump",
+  "description": "P-1302A centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1302A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1168.1109,
+  "origin": {
+   "E": 1926,
+   "N": 243,
+   "EL": 1213
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 12,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1302A-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 1926,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P300-P-13022",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-1302A-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 1926,
+     "N": 228,
+     "EL": 1235.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-13023",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "P-1302B",
+  "type": "Centrifugal pump",
+  "description": "P-1302B centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1302B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1168.1109,
+  "origin": {
+   "E": 1998,
+   "N": 243,
+   "EL": 1213
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 12,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1302B-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 1998,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P300-P-13309",
+    "lineClass": "H300"
+   },
+   {
+    "id": "P-1302B-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 1998,
+     "N": 228,
+     "EL": 1235.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P300-P-13310",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "P-1303A",
+  "type": "Centrifugal pump",
+  "description": "P-1303A centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1303A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2291.5152,
+  "origin": {
+   "E": 2190,
+   "N": 249,
+   "EL": 1212.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1303A-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2190,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-13030",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1303A-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2190,
+     "N": 228,
+     "EL": 1237.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-13031",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1303B",
+  "type": "Centrifugal pump",
+  "description": "P-1303B centrifugal pump",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "P-1303B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2291.5152,
+  "origin": {
+   "E": 2268,
+   "N": 249,
+   "EL": 1212.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1303B-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2268,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-13313",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1303B-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2268,
+     "N": 228,
+     "EL": 1237.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-13314",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "H-1301",
+  "type": "HEATER",
+  "description": "H-1301 fired heater 114\" dia × 285\" radiant, stack 180\"",
+  "area": "U13",
+  "areaName": "Naphtha hydrotreater and splitter",
+  "designation": "H-1301 fired heater 114\" dia × 285\" radiant, stack 180\"",
+  "material": "Grade 36",
+  "weight": 12014.7101,
+  "origin": {
+   "E": 3444,
+   "N": 0,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Radiant shell diameter",
+    "value": 114,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Radiant height",
+    "value": 285,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "stackH",
+    "label": "Stack height above the convection box",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Legs W8, 8 ft",
+    "value": 96,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   },
+   {
+    "name": "convection",
+    "label": "Convection box side (0.6 D)",
+    "value": 68.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   },
+   {
+    "name": "stackD",
+    "label": "Stack diameter (0.3 D)",
+    "value": 34.2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-15"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "H-1301-N1",
+    "service": "inlet",
+    "NPS": 10,
+    "cls": "P600",
+    "face": {
+     "E": 3399.4875,
+     "N": 0,
+     "EL": 1614
+    },
+    "facing": {
+     "E": -1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "10\"-P600-P-13703",
+    "lineClass": "H600"
+   },
+   {
+    "id": "H-1301-N2",
+    "service": "outlet",
+    "NPS": 10,
+    "cls": "P600",
+    "face": {
+     "E": 3444,
+     "N": 67.3125,
+     "EL": 1326
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "10\"-P600-P-13009",
+    "lineClass": "H600"
+   },
+   {
+    "id": "H-1301-N3",
+    "service": "fuel gas",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 3444,
+     "N": -62.875,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-P-13509",
+    "lineClass": "H150"
+   }
+  ]
+ }
+]

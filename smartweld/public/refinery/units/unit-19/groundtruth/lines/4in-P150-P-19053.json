@@ -1,0 +1,2841 @@
+{
+ "header": {
+  "line": "4\"-P150-P-19053",
+  "lineClass": "H150",
+  "fluid": "Hydrocarbon process",
+  "service": "P",
+  "NPS": 4,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "routed",
+  "from": "tap 8\"-P150-P-19052",
+  "to": "CS-1914-A",
+  "flow": "tap 8\"-P150-P-19052 → CS-1914-A",
+  "joint": "BW"
+ },
+ "items": [
+  {
+   "tag": "4\"-P150-P-19053/O1",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "outlet",
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 8\" × 4\" P150 BUTT-WELD OUTLET",
+   "designation": "BWOLET8x4-P150",
+   "key": "OLET|8|4|P150|BW",
+   "NPS": 4,
+   "NPS2": 8,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "FW×BW",
+   "weight": 4.6755,
+   "spool": "4\"-P150-P-19053-SP01",
+   "a": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1404
+   },
+   "b": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1397.75
+   },
+   "centre": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1400.875
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-FIT-5",
+    "SW-SWT-1",
+    "SW-SWT-6"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/p1",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|8.417",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 8.4167,
+   "weight": 5.3601,
+   "spool": "4\"-P150-P-19053-SP02",
+   "a": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1397.75
+   },
+   "b": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1389.3333
+   },
+   "centre": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1393.5417
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/T:4\"-P150-P-19610",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE EQUAL 4\" P150",
+   "designation": "TEE4-P150",
+   "key": "TEE|4|P150|4",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 5.0521,
+   "spool": "4\"-P150-P-19053-SP02",
+   "a": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1389.3333
+   },
+   "b": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1382.6667
+   },
+   "centre": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1386
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/p3",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|116.000",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 116,
+   "weight": 73.8705,
+   "spool": "4\"-P150-P-19053-SP02",
+   "a": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1382.6667
+   },
+   "b": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1266.6667
+   },
+   "centre": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1324.6667
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/el4",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "elbow",
+   "itemNo": 4,
+   "description": "ELBOW 90° R = 5/3 OD 4\" P150",
+   "designation": "EL90-4-P150",
+   "key": "EL|4|P150|90",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 6.6224,
+   "spool": "4\"-P150-P-19053-SP02",
+   "a": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1266.6667
+   },
+   "b": {
+    "E": 1536,
+    "N": 77.3333,
+    "EL": 1260
+   },
+   "centre": {
+    "E": 1536,
+    "N": 80.6667,
+    "EL": 1263.3334
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/p5",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|106.667",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 106.6666,
+   "weight": 67.9272,
+   "spool": "4\"-P150-P-19053-SP02",
+   "a": {
+    "E": 1536,
+    "N": 77.3333,
+    "EL": 1260
+   },
+   "b": {
+    "E": 1536,
+    "N": -29.3333,
+    "EL": 1260
+   },
+   "centre": {
+    "E": 1536,
+    "N": 24,
+    "EL": 1260
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/el6",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "elbow",
+   "itemNo": 4,
+   "description": "ELBOW 90° R = 5/3 OD 4\" P150",
+   "designation": "EL90-4-P150",
+   "key": "EL|4|P150|90",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 6.6224,
+   "spool": "4\"-P150-P-19053-SP02",
+   "a": {
+    "E": 1536,
+    "N": -29.3333,
+    "EL": 1260
+   },
+   "b": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1253.3333
+   },
+   "centre": {
+    "E": 1536,
+    "N": -32.6667,
+    "EL": 1256.6667
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/p7",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|10.667",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 10.6666,
+   "weight": 6.7929,
+   "spool": "4\"-P150-P-19053-SP02",
+   "a": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1253.3333
+   },
+   "b": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1242.6667
+   },
+   "centre": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1248
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/el8",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "elbow",
+   "itemNo": 4,
+   "description": "ELBOW 90° R = 5/3 OD 4\" P150",
+   "designation": "EL90-4-P150",
+   "key": "EL|4|P150|90",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 6.6224,
+   "spool": "4\"-P150-P-19053-SP02",
+   "a": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1242.6667
+   },
+   "b": {
+    "E": 1542.6667,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1539.3333,
+    "N": -36,
+    "EL": 1239.3333
+   },
+   "axis": {
+    "E": 0.7071,
+    "N": 0,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/p9",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|6.160",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 6.1599,
+   "weight": 3.9228,
+   "spool": "4\"-P150-P-19053-SP02",
+   "a": {
+    "E": 1542.6667,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1548.8266,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1545.7467,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B30",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 5,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "designation": "STUDS 4×1x6.25 (4-P150)",
+   "key": "STUDS|4|P150|3.750",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 1557.4516,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1551.2016,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1554.3266,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B29",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "flange",
+   "itemNo": 6,
+   "description": "FLANGE WELD-NECK 4\" P150 RAISED FACE",
+   "designation": "FLG4-P150",
+   "key": "WNF|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 28.7184,
+   "spool": "4\"-P150-P-19053-SP03",
+   "a": {
+    "E": 1554.2641,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1548.8266,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1551.5454,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B28",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 7,
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET4-P150",
+   "key": "GSK|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1554.3891,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1554.2641,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1554.3266,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B27",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 5,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "designation": "STUDS 4×1x6.25 (4-P150)",
+   "key": "STUDS|4|P150|3.750",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 1572.8266,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1566.5766,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1569.7016,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B26",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 8,
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P150",
+   "designation": "GATE4-P150",
+   "key": "VLV|GATE|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 129.1601,
+   "spool": "loose",
+   "a": {
+    "E": 1569.6391,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1554.3891,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1562.0141,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B25",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 7,
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET4-P150",
+   "key": "GSK|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1569.7641,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1569.6391,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1569.7016,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B24",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "flange",
+   "itemNo": 6,
+   "description": "FLANGE WELD-NECK 4\" P150 RAISED FACE",
+   "designation": "FLG4-P150",
+   "key": "WNF|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 28.7184,
+   "spool": "4\"-P150-P-19053-SP04",
+   "a": {
+    "E": 1575.2016,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1569.7641,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1572.4829,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B23",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "reducer",
+   "itemNo": 9,
+   "description": "REDUCER ECCENTRIC 4\" × 3\" P150 FLAT TOP",
+   "designation": "REDE4x3-P150",
+   "key": "REDE|4|3|P150|top",
+   "NPS": 4,
+   "NPS2": 3,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 2.2274,
+   "spool": "4\"-P150-P-19053-SP04",
+   "a": {
+    "E": 1579.5539,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1575.2016,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1577.3778,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-3",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B22",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 10,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P150",
+   "designation": "STUDS 4×0.875x5.75 (3-P150)",
+   "key": "STUDS|3|P150|3.500",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 5.6895,
+   "spool": "loose",
+   "a": {
+    "E": 1587.6164,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1581.8664,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1584.7414,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B21",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "flange",
+   "itemNo": 11,
+   "description": "FLANGE WELD-NECK 3\" P150 RAISED FACE",
+   "designation": "FLG3-P150",
+   "key": "WNF|3|P150",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 19.3288,
+   "spool": "4\"-P150-P-19053-SP04",
+   "a": {
+    "E": 1584.6789,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1579.5539,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1582.1164,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B20",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 12,
+   "description": "GASKET 3\" P150 COMPRESSED SHEET",
+   "designation": "GASKET3-P150",
+   "key": "GSK|3|P150",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1584.8039,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1584.6789,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1584.7414,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B19",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 10,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P150",
+   "designation": "STUDS 4×0.875x5.75 (3-P150)",
+   "key": "STUDS|3|P150|3.500",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 5.6895,
+   "spool": "loose",
+   "a": {
+    "E": 1602.0227,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1596.2727,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1599.1477,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B18",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 13,
+   "description": "VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 3\" P150",
+   "designation": "CONTROL3-P150",
+   "key": "VLV|CONTROL|3|P150",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 191.0787,
+   "spool": "loose",
+   "a": {
+    "E": 1599.0852,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1584.8039,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1591.9446,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-CV-1",
+    "SW-VLV-F-9",
+    "SW-VLV-GL-1",
+    "SW-VLV-PSV-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B17",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 12,
+   "description": "GASKET 3\" P150 COMPRESSED SHEET",
+   "designation": "GASKET3-P150",
+   "key": "GSK|3|P150",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1599.2102,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1599.0852,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1599.1477,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B16",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "flange",
+   "itemNo": 11,
+   "description": "FLANGE WELD-NECK 3\" P150 RAISED FACE",
+   "designation": "FLG3-P150",
+   "key": "WNF|3|P150",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 19.3288,
+   "spool": "4\"-P150-P-19053-SP05",
+   "a": {
+    "E": 1604.3352,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1599.2102,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1601.7727,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B15",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "reducer",
+   "itemNo": 9,
+   "description": "REDUCER ECCENTRIC 4\" × 3\" P150 FLAT TOP",
+   "designation": "REDE4x3-P150",
+   "key": "REDE|4|3|P150|top",
+   "NPS": 4,
+   "NPS2": 3,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 2.2274,
+   "spool": "4\"-P150-P-19053-SP05",
+   "a": {
+    "E": 1608.6875,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1604.3352,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1606.5114,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-3",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B14",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 5,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "designation": "STUDS 4×1x6.25 (4-P150)",
+   "key": "STUDS|4|P150|3.750",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 1617.3125,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1611.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1614.1875,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B13",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "flange",
+   "itemNo": 6,
+   "description": "FLANGE WELD-NECK 4\" P150 RAISED FACE",
+   "designation": "FLG4-P150",
+   "key": "WNF|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 28.7184,
+   "spool": "4\"-P150-P-19053-SP05",
+   "a": {
+    "E": 1614.125,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1608.6875,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1611.4063,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B12",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 7,
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET4-P150",
+   "key": "GSK|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1614.25,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1614.125,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1614.1875,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B11",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 5,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "designation": "STUDS 4×1x6.25 (4-P150)",
+   "key": "STUDS|4|P150|3.750",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 1632.6875,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1626.4375,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1629.5625,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B10",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 8,
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P150",
+   "designation": "GATE4-P150",
+   "key": "VLV|GATE|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 129.1601,
+   "spool": "loose",
+   "a": {
+    "E": 1629.5,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1614.25,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1621.875,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B9",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 7,
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET4-P150",
+   "key": "GSK|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1629.625,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1629.5,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1629.5625,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B8",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "flange",
+   "itemNo": 6,
+   "description": "FLANGE WELD-NECK 4\" P150 RAISED FACE",
+   "designation": "FLG4-P150",
+   "key": "WNF|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 28.7184,
+   "spool": "4\"-P150-P-19053-SP06",
+   "a": {
+    "E": 1635.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1629.625,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1632.3438,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B7",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|18.000",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 18,
+   "weight": 11.4627,
+   "spool": "4\"-P150-P-19053-SP06",
+   "a": {
+    "E": 1653.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1635.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1644.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B6",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 5,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "designation": "STUDS 4×1x6.25 (4-P150)",
+   "key": "STUDS|4|P150|3.750",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 1661.6875,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1655.4375,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1658.5625,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B5",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "flange",
+   "itemNo": 6,
+   "description": "FLANGE WELD-NECK 4\" P150 RAISED FACE",
+   "designation": "FLG4-P150",
+   "key": "WNF|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 28.7184,
+   "spool": "4\"-P150-P-19053-SP06",
+   "a": {
+    "E": 1658.5,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1653.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1655.7813,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B4",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 7,
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET4-P150",
+   "key": "GSK|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1658.625,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1658.5,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1658.5625,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B3",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 5,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "designation": "STUDS 4×1x6.25 (4-P150)",
+   "key": "STUDS|4|P150|3.750",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 1677.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1670.8125,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1673.9375,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B2",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 8,
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P150",
+   "designation": "GATE4-P150",
+   "key": "VLV|GATE|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 129.1601,
+   "spool": "loose",
+   "a": {
+    "E": 1673.875,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1658.625,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1666.25,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/B1",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 7,
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET4-P150",
+   "key": "GSK|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 1674,
+    "N": -36,
+    "EL": 1236
+   },
+   "b": {
+    "E": 1673.875,
+    "N": -36,
+    "EL": 1236
+   },
+   "centre": {
+    "E": 1673.9375,
+    "N": -36,
+    "EL": 1236
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "4\"-P150-P-19053/W1",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "FW",
+   "size": 0.3125,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "8\"-P150-P-19052/run",
+    "4\"-P150-P-19053/O1"
+   ],
+   "shopField": "shop",
+   "spool": "parent 8\"-P150-P-19052/run",
+   "spools": [
+    "parent 8\"-P150-P-19052/run",
+    "4\"-P150-P-19053-SP01"
+   ],
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1400
+   },
+   "key": "FWR|2|0.3125",
+   "weight": 0.1876,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-WD-1",
+    "SW-WD-2",
+    "SW-WD-3"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W2",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/O1",
+    "4\"-P150-P-19053/p1"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "4\"-P150-P-19053-SP01",
+    "4\"-P150-P-19053-SP02"
+   ],
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1397.75
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W3",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/p1",
+    "4\"-P150-P-19053/T:4\"-P150-P-19610"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP02",
+   "spools": [
+    "4\"-P150-P-19053-SP02",
+    "4\"-P150-P-19053-SP02"
+   ],
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1389.3333
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W4",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/T:4\"-P150-P-19610",
+    "4\"-P150-P-19053/p3"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP02",
+   "spools": [
+    "4\"-P150-P-19053-SP02",
+    "4\"-P150-P-19053-SP02"
+   ],
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1382.6667
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W5",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/p3",
+    "4\"-P150-P-19053/el4"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP02",
+   "spools": [
+    "4\"-P150-P-19053-SP02",
+    "4\"-P150-P-19053-SP02"
+   ],
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1266.6667
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W6",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/el4",
+    "4\"-P150-P-19053/p5"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP02",
+   "spools": [
+    "4\"-P150-P-19053-SP02",
+    "4\"-P150-P-19053-SP02"
+   ],
+   "at": {
+    "E": 1536,
+    "N": 77.3333,
+    "EL": 1260
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W7",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/p5",
+    "4\"-P150-P-19053/el6"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP02",
+   "spools": [
+    "4\"-P150-P-19053-SP02",
+    "4\"-P150-P-19053-SP02"
+   ],
+   "at": {
+    "E": 1536,
+    "N": -29.3333,
+    "EL": 1260
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W8",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/el6",
+    "4\"-P150-P-19053/p7"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP02",
+   "spools": [
+    "4\"-P150-P-19053-SP02",
+    "4\"-P150-P-19053-SP02"
+   ],
+   "at": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1253.3333
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W9",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/p7",
+    "4\"-P150-P-19053/el8"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP02",
+   "spools": [
+    "4\"-P150-P-19053-SP02",
+    "4\"-P150-P-19053-SP02"
+   ],
+   "at": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1242.6667
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W10",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/el8",
+    "4\"-P150-P-19053/p9"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP02",
+   "spools": [
+    "4\"-P150-P-19053-SP02",
+    "4\"-P150-P-19053-SP02"
+   ],
+   "at": {
+    "E": 1542.6667,
+    "N": -36,
+    "EL": 1236
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W11",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/p9",
+    "4\"-P150-P-19053/B29"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "4\"-P150-P-19053-SP02",
+    "4\"-P150-P-19053-SP03"
+   ],
+   "at": {
+    "E": 1548.8266,
+    "N": -36,
+    "EL": 1236
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W12",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/B24",
+    "4\"-P150-P-19053/B23"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP04",
+   "spools": [
+    "4\"-P150-P-19053-SP04",
+    "4\"-P150-P-19053-SP04"
+   ],
+   "at": {
+    "E": 1575.2016,
+    "N": -36,
+    "EL": 1236
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W13",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/B23",
+    "4\"-P150-P-19053/B21"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP04",
+   "spools": [
+    "4\"-P150-P-19053-SP04",
+    "4\"-P150-P-19053-SP04"
+   ],
+   "at": {
+    "E": 1579.5539,
+    "N": -36,
+    "EL": 1236
+   },
+   "key": "BW|3|P150",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W14",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/B16",
+    "4\"-P150-P-19053/B15"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP05",
+   "spools": [
+    "4\"-P150-P-19053-SP05",
+    "4\"-P150-P-19053-SP05"
+   ],
+   "at": {
+    "E": 1604.3352,
+    "N": -36,
+    "EL": 1236
+   },
+   "key": "BW|3|P150",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W15",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/B15",
+    "4\"-P150-P-19053/B13"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP05",
+   "spools": [
+    "4\"-P150-P-19053-SP05",
+    "4\"-P150-P-19053-SP05"
+   ],
+   "at": {
+    "E": 1608.6875,
+    "N": -36,
+    "EL": 1236
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W16",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/B8",
+    "4\"-P150-P-19053/B7"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP06",
+   "spools": [
+    "4\"-P150-P-19053-SP06",
+    "4\"-P150-P-19053-SP06"
+   ],
+   "at": {
+    "E": 1635.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19053/W17",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-19053/B7",
+    "4\"-P150-P-19053/B5"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-19053-SP06",
+   "spools": [
+    "4\"-P150-P-19053-SP06",
+    "4\"-P150-P-19053-SP06"
+   ],
+   "at": {
+    "E": 1653.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "4\"-P150-P-19053/S1",
+   "line": "4\"-P150-P-19053",
+   "lineClass": "H150",
+   "type": "trunnion",
+   "description": "TRUNNION FOR 4\" LINE (TRUNNION-4x58.0)",
+   "designation": "TRUNNION-4x58.0",
+   "key": "TRUN|4|P150|58.00",
+   "material": "Grade 36",
+   "weight": 84.6374,
+   "spool": "loose",
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1258
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-PS-10",
+    "SW-PS-4"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "4\"-P150-P-19053-SP01",
+   "items": [
+    "4\"-P150-P-19053/O1"
+   ],
+   "shopWelds": [],
+   "weight": 4.6755
+  },
+  {
+   "id": "4\"-P150-P-19053-SP02",
+   "items": [
+    "4\"-P150-P-19053/p1",
+    "4\"-P150-P-19053/T:4\"-P150-P-19610",
+    "4\"-P150-P-19053/p3",
+    "4\"-P150-P-19053/el4",
+    "4\"-P150-P-19053/p5",
+    "4\"-P150-P-19053/el6",
+    "4\"-P150-P-19053/p7",
+    "4\"-P150-P-19053/el8",
+    "4\"-P150-P-19053/p9"
+   ],
+   "shopWelds": [
+    "4\"-P150-P-19053/W3",
+    "4\"-P150-P-19053/W4",
+    "4\"-P150-P-19053/W5",
+    "4\"-P150-P-19053/W6",
+    "4\"-P150-P-19053/W7",
+    "4\"-P150-P-19053/W8",
+    "4\"-P150-P-19053/W9",
+    "4\"-P150-P-19053/W10"
+   ],
+   "weight": 183.9033
+  },
+  {
+   "id": "4\"-P150-P-19053-SP03",
+   "items": [
+    "4\"-P150-P-19053/B29"
+   ],
+   "shopWelds": [],
+   "weight": 28.7184
+  },
+  {
+   "id": "4\"-P150-P-19053-SP04",
+   "items": [
+    "4\"-P150-P-19053/B24",
+    "4\"-P150-P-19053/B23",
+    "4\"-P150-P-19053/B21"
+   ],
+   "shopWelds": [
+    "4\"-P150-P-19053/W12",
+    "4\"-P150-P-19053/W13"
+   ],
+   "weight": 50.4943
+  },
+  {
+   "id": "4\"-P150-P-19053-SP05",
+   "items": [
+    "4\"-P150-P-19053/B16",
+    "4\"-P150-P-19053/B15",
+    "4\"-P150-P-19053/B13"
+   ],
+   "shopWelds": [
+    "4\"-P150-P-19053/W14",
+    "4\"-P150-P-19053/W15"
+   ],
+   "weight": 50.4943
+  },
+  {
+   "id": "4\"-P150-P-19053-SP06",
+   "items": [
+    "4\"-P150-P-19053/B8",
+    "4\"-P150-P-19053/B7",
+    "4\"-P150-P-19053/B5"
+   ],
+   "shopWelds": [
+    "4\"-P150-P-19053/W16",
+    "4\"-P150-P-19053/W17"
+   ],
+   "weight": 69.1772
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "BRANCH OUTLET 8\" × 4\" P150 BUTT-WELD OUTLET",
+   "qty": 1,
+   "weight": 4.6755
+  },
+  {
+   "itemNo": 2,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "qty": 6,
+   "length": 265.9098,
+   "weight": 169.3361
+  },
+  {
+   "itemNo": 3,
+   "description": "TEE EQUAL 4\" P150",
+   "qty": 1,
+   "weight": 5.0521
+  },
+  {
+   "itemNo": 4,
+   "description": "ELBOW 90° R = 5/3 OD 4\" P150",
+   "qty": 3,
+   "weight": 19.8671
+  },
+  {
+   "itemNo": 5,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "qty": 6,
+   "weight": 49.2386
+  },
+  {
+   "itemNo": 6,
+   "description": "FLANGE WELD-NECK 4\" P150 RAISED FACE",
+   "qty": 5,
+   "weight": 143.5922
+  },
+  {
+   "itemNo": 7,
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "qty": 6,
+   "weight": 0
+  },
+  {
+   "itemNo": 8,
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P150",
+   "qty": 3,
+   "weight": 387.4802
+  },
+  {
+   "itemNo": 9,
+   "description": "REDUCER ECCENTRIC 4\" × 3\" P150 FLAT TOP",
+   "qty": 2,
+   "weight": 4.4549
+  },
+  {
+   "itemNo": 10,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P150",
+   "qty": 2,
+   "weight": 11.379
+  },
+  {
+   "itemNo": 11,
+   "description": "FLANGE WELD-NECK 3\" P150 RAISED FACE",
+   "qty": 2,
+   "weight": 38.6576
+  },
+  {
+   "itemNo": 12,
+   "description": "GASKET 3\" P150 COMPRESSED SHEET",
+   "qty": 2,
+   "weight": 0
+  },
+  {
+   "itemNo": 13,
+   "description": "VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 3\" P150",
+   "qty": 1,
+   "weight": 191.0787
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1404
+   },
+   "kind": "olet start",
+   "ref": "4\"-P150-P-19053/O1"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1397.75
+   },
+   "kind": "olet end",
+   "ref": "4\"-P150-P-19053/O1"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1389.3333
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-P-19053/p1"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1386
+   },
+   "kind": "tee centre",
+   "ref": "4\"-P150-P-19053/T:4\"-P150-P-19610"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1382.6667
+   },
+   "kind": "tee end",
+   "ref": "4\"-P150-P-19053/T:4\"-P150-P-19610"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1266.6667
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-P-19053/p3"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": 84,
+    "EL": 1260
+   },
+   "kind": "elbow work point",
+   "ref": "4\"-P150-P-19053/el4"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": 77.3333,
+    "EL": 1260
+   },
+   "kind": "elbow end",
+   "ref": "4\"-P150-P-19053/el4"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": -29.3333,
+    "EL": 1260
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-P-19053/p5"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1260
+   },
+   "kind": "elbow work point",
+   "ref": "4\"-P150-P-19053/el6"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1253.3333
+   },
+   "kind": "elbow end",
+   "ref": "4\"-P150-P-19053/el6"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1242.6667
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-P-19053/p7"
+  },
+  {
+   "at": {
+    "E": 1536,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "elbow work point",
+   "ref": "4\"-P150-P-19053/el8"
+  },
+  {
+   "at": {
+    "E": 1542.6667,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "elbow end",
+   "ref": "4\"-P150-P-19053/el8"
+  },
+  {
+   "at": {
+    "E": 1548.8266,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-P-19053/p9"
+  },
+  {
+   "at": {
+    "E": 1554.2641,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "flange end",
+   "ref": "4\"-P150-P-19053/B29"
+  },
+  {
+   "at": {
+    "E": 1554.3891,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-19053/B28"
+  },
+  {
+   "at": {
+    "E": 1569.6391,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "valve end",
+   "ref": "4\"-P150-P-19053/B26"
+  },
+  {
+   "at": {
+    "E": 1569.7641,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-19053/B25"
+  },
+  {
+   "at": {
+    "E": 1575.2016,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "flange end",
+   "ref": "4\"-P150-P-19053/B24"
+  },
+  {
+   "at": {
+    "E": 1579.5539,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "reducer end",
+   "ref": "4\"-P150-P-19053/B23"
+  },
+  {
+   "at": {
+    "E": 1584.6789,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "flange end",
+   "ref": "4\"-P150-P-19053/B21"
+  },
+  {
+   "at": {
+    "E": 1584.8039,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-19053/B20"
+  },
+  {
+   "at": {
+    "E": 1599.0852,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "valve end",
+   "ref": "4\"-P150-P-19053/B18"
+  },
+  {
+   "at": {
+    "E": 1599.2102,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-19053/B17"
+  },
+  {
+   "at": {
+    "E": 1604.3352,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "flange end",
+   "ref": "4\"-P150-P-19053/B16"
+  },
+  {
+   "at": {
+    "E": 1608.6875,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "reducer end",
+   "ref": "4\"-P150-P-19053/B15"
+  },
+  {
+   "at": {
+    "E": 1614.125,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "flange end",
+   "ref": "4\"-P150-P-19053/B13"
+  },
+  {
+   "at": {
+    "E": 1614.25,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-19053/B12"
+  },
+  {
+   "at": {
+    "E": 1629.5,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "valve end",
+   "ref": "4\"-P150-P-19053/B10"
+  },
+  {
+   "at": {
+    "E": 1629.625,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-19053/B9"
+  },
+  {
+   "at": {
+    "E": 1635.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "flange end",
+   "ref": "4\"-P150-P-19053/B8"
+  },
+  {
+   "at": {
+    "E": 1653.0625,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-P-19053/B7"
+  },
+  {
+   "at": {
+    "E": 1658.5,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "flange end",
+   "ref": "4\"-P150-P-19053/B5"
+  },
+  {
+   "at": {
+    "E": 1658.625,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-19053/B4"
+  },
+  {
+   "at": {
+    "E": 1673.875,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "valve end",
+   "ref": "4\"-P150-P-19053/B2"
+  },
+  {
+   "at": {
+    "E": 1674,
+    "N": -36,
+    "EL": 1236
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-19053/B1"
+  }
+ ],
+ "totals": {
+  "items": 40,
+  "welds": 17,
+  "fieldWelds": 2,
+  "supports": 1,
+  "pipeLength": 265.9098,
+  "weight": 1024.8121
+ }
+}

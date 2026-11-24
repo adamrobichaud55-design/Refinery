@@ -7,5 +7,5 @@ export const MODEL_IMAGES: Record<string, string> = {
   'cooling-tower-from-the-vessel-side': 'Plant 3, unit 19: the cooling tower with its circulating pumps', 'cooling-tower-from-the-exchanger-side': 'Plant 3, unit 19: the cooling tower, from the other side',
   'plant-from-the-south-west': 'Plant 3: the plant on its site from the south-west; equipment, racks and tanks, no piping yet',
   'plant-from-the-south-east': 'Plant 3: the plant from the south-east', 'plant-process-units-from-the-south': 'Plant 3: the process units on both sides of the main pipeway, from the south',
-  'plant-crude-and-vacuum-units': 'Plant 3: the crude and vacuum units', 'plant-tank-farm-from-the-north-east': 'Plant 3: the tank terraces from the north-east',
+  'plant-crude-and-vacuum-units': 'Plant 3: the crude and vacuum units', 'plant-tank-farm-from-the-north-east': 'Plant 3: the tank terraces from the north-east', 'plant-piped-units-along-the-pipeway': 'Plant 3: the piped units along the main pipeway, their lines coloured by line class',
 };

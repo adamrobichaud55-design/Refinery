@@ -1,0 +1,1348 @@
+{
+ "header": {
+  "line": "10\"-P150-LS-11404",
+  "lineClass": "S150",
+  "fluid": "Low-pressure steam",
+  "service": "LS",
+  "NPS": 10,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": true,
+  "kind": "header",
+  "from": "cap",
+  "to": "cap",
+  "flow": "cap → cap",
+  "joint": "BW"
+ },
+ "items": [
+  {
+   "tag": "10\"-P150-LS-11404/cap0",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 10\" P150",
+   "designation": "CAP10-P150",
+   "key": "CAP|10|P150",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 11.1711,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 368.5,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 372,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 370.25,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/p2",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "designation": "PIPE10-P150",
+   "key": "PIPE|10|P150|177.667",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 177.6667,
+   "weight": 479.1491,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 372,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 549.6667,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 460.8334,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/T:6\"-P150-LS-11509",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE REDUCING 10\" × 6\" P150",
+   "designation": "TEE10x6-P150",
+   "key": "TEE|10|P150|6",
+   "NPS": 10,
+   "NPS2": 6,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 47.3562,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 549.6667,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 566.3333,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 558,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/p4",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "designation": "PIPE10-P150",
+   "key": "PIPE|10|P150|432.444",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 432.4445,
+   "weight": 1166.2558,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 566.3333,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 998.7778,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 782.5556,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/p5",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "designation": "PIPE10-P150",
+   "key": "PIPE|10|P150|432.444",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 432.4444,
+   "weight": 1166.2558,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 998.7778,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 1431.2222,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 1215,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/p6",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "designation": "PIPE10-P150",
+   "key": "PIPE|10|P150|432.444",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 432.4445,
+   "weight": 1166.2558,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 1431.2222,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 1863.6667,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 1647.4445,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/T:8\"-P150-LS-11508",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "tee",
+   "itemNo": 4,
+   "description": "TEE REDUCING 10\" × 8\" P150",
+   "designation": "TEE10x8-P150",
+   "key": "TEE|10|P150|8",
+   "NPS": 10,
+   "NPS2": 8,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 50.168,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 1863.6667,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 1880.3333,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 1872,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/p8",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "designation": "PIPE10-P150",
+   "key": "PIPE|10|P150|384.917",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 384.9167,
+   "weight": 1038.0805,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 1880.3333,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 2265.25,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 2072.7917,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/p9",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "designation": "PIPE10-P150",
+   "key": "PIPE|10|P150|408.917",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 408.9167,
+   "weight": 1102.806,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 2265.25,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 2674.1667,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 2469.7084,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/p10",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "designation": "PIPE10-P150",
+   "key": "PIPE|10|P150|396.917",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 396.9166,
+   "weight": 1070.4433,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 2674.1667,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 3071.0833,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 2872.625,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/p11",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "designation": "PIPE10-P150",
+   "key": "PIPE|10|P150|396.917",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 396.9167,
+   "weight": 1070.4433,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 3071.0833,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 3468,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 3269.5417,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/cap1",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 10\" P150",
+   "designation": "CAP10-P150",
+   "key": "CAP|10|P150",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 11.1711,
+   "spool": "10\"-P150-LS-11404-SP01",
+   "a": {
+    "E": 3468,
+    "N": 48,
+    "EL": 1548
+   },
+   "b": {
+    "E": 3471.5,
+    "N": 48,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 3469.75,
+    "N": 48,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "10\"-P150-LS-11404/W1",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/cap0",
+    "10\"-P150-LS-11404/p2"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 372,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W2",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/p2",
+    "10\"-P150-LS-11404/T:6\"-P150-LS-11509"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 549.6667,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W3",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/T:6\"-P150-LS-11509",
+    "10\"-P150-LS-11404/p4"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 566.3333,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W4",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/p4",
+    "10\"-P150-LS-11404/p5"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 998.7778,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W5",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/p5",
+    "10\"-P150-LS-11404/p6"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 1431.2222,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W6",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/p6",
+    "10\"-P150-LS-11404/T:8\"-P150-LS-11508"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 1863.6667,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W7",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/T:8\"-P150-LS-11508",
+    "10\"-P150-LS-11404/p8"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 1880.3333,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W8",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/p8",
+    "10\"-P150-LS-11404/p9"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 2265.25,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W9",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/p9",
+    "10\"-P150-LS-11404/p10"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 2674.1667,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W10",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/p10",
+    "10\"-P150-LS-11404/p11"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 3071.0833,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/W11",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-11404/p11",
+    "10\"-P150-LS-11404/cap1"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-11404-SP01",
+   "spools": [
+    "10\"-P150-LS-11404-SP01",
+    "10\"-P150-LS-11404-SP01"
+   ],
+   "at": {
+    "E": 3468,
+    "N": 48,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "10\"-P150-LS-11404/S1",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "guide",
+   "description": "GUIDE FOR 10\" LINE (GUIDE-10)",
+   "designation": "GUIDE-10",
+   "key": "SHOE|10|P150|guide|7.000",
+   "material": "Grade 36",
+   "weight": 25.7282,
+   "spool": "loose",
+   "at": {
+    "E": 600,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S2",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "shoe",
+   "description": "SHOE FOR 10\" LINE (SHOE-10)",
+   "designation": "SHOE-10",
+   "key": "SHOE|10|P150|shoe|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 840,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S3",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "shoe",
+   "description": "SHOE FOR 10\" LINE (SHOE-10)",
+   "designation": "SHOE-10",
+   "key": "SHOE|10|P150|shoe|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 1080,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S4",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "shoe",
+   "description": "SHOE FOR 10\" LINE (SHOE-10)",
+   "designation": "SHOE-10",
+   "key": "SHOE|10|P150|shoe|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 1320,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S5",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "guide",
+   "description": "GUIDE FOR 10\" LINE (GUIDE-10)",
+   "designation": "GUIDE-10",
+   "key": "SHOE|10|P150|guide|7.000",
+   "material": "Grade 36",
+   "weight": 25.7282,
+   "spool": "loose",
+   "at": {
+    "E": 1560,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S6",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "anchor",
+   "description": "ANCHOR FOR 10\" LINE (ANCHOR-10)",
+   "designation": "ANCHOR-10",
+   "key": "SHOE|10|P150|anchor|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 1800,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S7",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "guide",
+   "description": "GUIDE FOR 10\" LINE (GUIDE-10)",
+   "designation": "GUIDE-10",
+   "key": "SHOE|10|P150|guide|7.000",
+   "material": "Grade 36",
+   "weight": 25.7282,
+   "spool": "loose",
+   "at": {
+    "E": 2040,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S8",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "shoe",
+   "description": "SHOE FOR 10\" LINE (SHOE-10)",
+   "designation": "SHOE-10",
+   "key": "SHOE|10|P150|shoe|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 2280,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S9",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "shoe",
+   "description": "SHOE FOR 10\" LINE (SHOE-10)",
+   "designation": "SHOE-10",
+   "key": "SHOE|10|P150|shoe|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 2520,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S10",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "shoe",
+   "description": "SHOE FOR 10\" LINE (SHOE-10)",
+   "designation": "SHOE-10",
+   "key": "SHOE|10|P150|shoe|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 2760,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S11",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "shoe",
+   "description": "SHOE FOR 10\" LINE (SHOE-10)",
+   "designation": "SHOE-10",
+   "key": "SHOE|10|P150|shoe|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 3000,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-11404/S12",
+   "line": "10\"-P150-LS-11404",
+   "lineClass": "S150",
+   "type": "guide",
+   "description": "GUIDE FOR 10\" LINE (GUIDE-10)",
+   "designation": "GUIDE-10",
+   "key": "SHOE|10|P150|guide|7.000",
+   "material": "Grade 36",
+   "weight": 25.7282,
+   "spool": "loose",
+   "at": {
+    "E": 3240,
+    "N": 48,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "10\"-P150-LS-11404-SP01",
+   "items": [
+    "10\"-P150-LS-11404/cap0",
+    "10\"-P150-LS-11404/p2",
+    "10\"-P150-LS-11404/T:6\"-P150-LS-11509",
+    "10\"-P150-LS-11404/p4",
+    "10\"-P150-LS-11404/p5",
+    "10\"-P150-LS-11404/p6",
+    "10\"-P150-LS-11404/T:8\"-P150-LS-11508",
+    "10\"-P150-LS-11404/p8",
+    "10\"-P150-LS-11404/p9",
+    "10\"-P150-LS-11404/p10",
+    "10\"-P150-LS-11404/p11",
+    "10\"-P150-LS-11404/cap1"
+   ],
+   "shopWelds": [
+    "10\"-P150-LS-11404/W1",
+    "10\"-P150-LS-11404/W2",
+    "10\"-P150-LS-11404/W3",
+    "10\"-P150-LS-11404/W4",
+    "10\"-P150-LS-11404/W5",
+    "10\"-P150-LS-11404/W6",
+    "10\"-P150-LS-11404/W7",
+    "10\"-P150-LS-11404/W8",
+    "10\"-P150-LS-11404/W9",
+    "10\"-P150-LS-11404/W10",
+    "10\"-P150-LS-11404/W11"
+   ],
+   "weight": 8387.917
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "CAP 10\" P150",
+   "qty": 2,
+   "weight": 22.3422
+  },
+  {
+   "itemNo": 2,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "qty": 8,
+   "length": 3062.6668,
+   "weight": 8259.6897
+  },
+  {
+   "itemNo": 3,
+   "description": "TEE REDUCING 10\" × 6\" P150",
+   "qty": 1,
+   "weight": 47.3562
+  },
+  {
+   "itemNo": 4,
+   "description": "TEE REDUCING 10\" × 8\" P150",
+   "qty": 1,
+   "weight": 50.168
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 368.5,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "cap start",
+   "ref": "10\"-P150-LS-11404/cap0"
+  },
+  {
+   "at": {
+    "E": 372,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "cap end",
+   "ref": "10\"-P150-LS-11404/cap0"
+  },
+  {
+   "at": {
+    "E": 549.6667,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P150-LS-11404/p2"
+  },
+  {
+   "at": {
+    "E": 558,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "tee centre",
+   "ref": "10\"-P150-LS-11404/T:6\"-P150-LS-11509"
+  },
+  {
+   "at": {
+    "E": 566.3333,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "tee end",
+   "ref": "10\"-P150-LS-11404/T:6\"-P150-LS-11509"
+  },
+  {
+   "at": {
+    "E": 998.7778,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P150-LS-11404/p4"
+  },
+  {
+   "at": {
+    "E": 1431.2222,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P150-LS-11404/p5"
+  },
+  {
+   "at": {
+    "E": 1863.6667,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P150-LS-11404/p6"
+  },
+  {
+   "at": {
+    "E": 1872,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "tee centre",
+   "ref": "10\"-P150-LS-11404/T:8\"-P150-LS-11508"
+  },
+  {
+   "at": {
+    "E": 1880.3333,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "tee end",
+   "ref": "10\"-P150-LS-11404/T:8\"-P150-LS-11508"
+  },
+  {
+   "at": {
+    "E": 2265.25,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P150-LS-11404/p8"
+  },
+  {
+   "at": {
+    "E": 2674.1667,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P150-LS-11404/p9"
+  },
+  {
+   "at": {
+    "E": 3071.0833,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P150-LS-11404/p10"
+  },
+  {
+   "at": {
+    "E": 3468,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P150-LS-11404/p11"
+  },
+  {
+   "at": {
+    "E": 3471.5,
+    "N": 48,
+    "EL": 1548
+   },
+   "kind": "cap end",
+   "ref": "10\"-P150-LS-11404/cap1"
+  }
+ ],
+ "totals": {
+  "items": 12,
+  "welds": 11,
+  "fieldWelds": 0,
+  "supports": 12,
+  "pipeLength": 3062.6668,
+  "weight": 8379.556
+ }
+}

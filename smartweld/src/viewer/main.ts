@@ -17,12 +17,20 @@ import type { WorkOrder } from '../generator/workorders';
 import { classColour } from '../generator/lineclass';
 import { PLANTS, plantById } from '../generator/plants';
 import { setPlantBase } from './pipingView';
+import type { PlantDef } from '../generator/plant';
 
 // --- the plant shown (SW-PLANT-1/2): plant 1 or plant 2, remembered on this device ---
 let plantId = 'P1'; try { plantId = localStorage.getItem('sw-plant') ?? 'P1'; } catch { /* storage may be unavailable */ }
-if (!PLANTS.some(p => p.id === plantId)) plantId = 'P1';
+// plant 3's piped units (ids R<unit>): each a plant in its own frame, its definition built from the refinery's code when it is first chosen
+const UNIT_ID = /^R(\d+)$/, refinery = new Map<string, PlantDef>();
+async function ensurePlant(id: string): Promise<void> {
+  const r = UNIT_ID.exec(id); if (!r || refinery.has(id)) return;
+  const { unitPiping } = await import('../refinery/unitPiping'), up = unitPiping(Number(r[1]));
+  refinery.set(id, { ...up.plant, interior: () => up.cell.interior });                                   // the unit's real steel and equipment, without the blocks the generator is shown
+}
+if (!PLANTS.some(p => p.id === plantId) && !UNIT_ID.test(plantId)) plantId = 'P1';
 setPlantBase(plantId);
-const plantDef = () => plantById(plantId);
+const plantDef = () => refinery.get(plantId) ?? plantById(plantId);
 
 const viewEl = document.getElementById('view')!, infoEl = document.getElementById('info')!, errEl = document.getElementById('err')!, entriesEl = document.getElementById('entries')!;
 
@@ -176,7 +184,7 @@ function drawProfile(outer: { x: number; y: number }[], inner?: { x: number; y: 
 // --- building ------------------------------------------------------------------
 let building: BuildingModel | null = null, interior: InteriorModel | null = null;
 function showBuilding(view: string, withInterior = false, piping?: { line?: string; item?: string; wo?: string }) {
-  const P = plantDef(), P2 = plantId !== 'P1';
+  const P = plantDef(), P2 = plantId !== 'P1', unit = UNIT_ID.test(plantId);
   if (!building) building = P.building();
   if (withInterior && !interior) {
     if (!P2) interior = generateInterior();
@@ -188,7 +196,9 @@ function showBuilding(view: string, withInterior = false, piping?: { line?: stri
   const box = renderInstances(shown);
   const dr = building.drawing, L = dr.bays * dr.bayFt * 12, W = dr.widthFt * 12;
   grid.position.y = -dr.slabIn - 0.5;
-  if (P2 && camP2(view, L, W)) { /* plant 2's own view points */ }
+  if (unit) { const zs = interior ? interior.equipment.map(e => e.transform[14]) : [0], z0 = Math.min(-W / 2, ...zs), z1 = Math.max(W / 2, ...zs);   // a unit of plant 3: from above its vessel side, the whole plot in view
+    if (view === 'piping-above') lookFrom([L * 0.5, Math.max(L, z1 - z0) * 1.1, 40], [L * 0.5, 0, 0]); else if (view === 'rack' || view === 'piping-rack') lookFrom([-200, 420, -420], [L * 0.35, 200, 0]); else lookFrom([L * 0.1, Math.max(L, z1 - z0) * 0.45, z0 - L * 0.35], [L * 0.5, 100, (z0 + z1) / 2]); }
+  else if (P2 && camP2(view, L, W)) { /* plant 2's own view points */ }
   else if (view === 'interior') lookFrom([L * 0.75, 66, W * 0.3], [L * 0.1, 200, -W * 0.2]);
   else if (view === 'knee') lookFrom([L * 0.5 + 420, 250, W / 2 - 420], [L * 0.5, 340, W / 2 - 30]);
   else if (view === 'door') lookFrom([L * 0.1875 + 200, 70, W / 2 + 260], [L * 0.1875, 60, W / 2]);
@@ -215,7 +225,7 @@ function showBuilding(view: string, withInterior = false, piping?: { line?: stri
   const derivedAll = withInterior ? { ...building.derived, ...interior!.derived } : building.derived;
   const notesAll = withInterior ? [...building.notes, ...interior!.notes] : building.notes;
   infoEl.innerHTML = `<h2>${P.name} — ${withInterior ? 'building and interior' : 'building shell'}</h2>
-    <div class="cat">${dr.widthFt} ft × ${dr.bays * dr.bayFt} ft, eave ${dr.eaveFt} ft, slope ${dr.slopeRisePer12}:12 (drawing, SW-BLD-1). ${steelCount.toLocaleString()} steel parts, ${(total / 2000).toFixed(1)} tons. Built in ${((performance.now() - t0) / 1000).toFixed(1)} s.</div>
+    <div class="cat">${UNIT_ID.test(plantId) ? `A process unit in its own frame, about ${dr.widthFt} ft × ${dr.bays * dr.bayFt} ft, with no building (DESIGN_BASIS §78, §79).` : `${dr.widthFt} ft × ${dr.bays * dr.bayFt} ft, eave ${dr.eaveFt} ft, slope ${dr.slopeRisePer12}:12 (drawing, SW-BLD-1).`} ${steelCount.toLocaleString()} steel parts, ${(total / 2000).toFixed(1)} tons. Built in ${((performance.now() - t0) / 1000).toFixed(1)} s.</div>
     <p class="notes">${notesAll.join(' ')}</p>
     ${equip ? `<p class="notes"><b>Equipment:</b> ${equip}</p>` : ''}
     <div class="legend">${piping ? 'Click any pipe, fitting, flange, valve, weld or support to see its metadata. ' : ''}Walk: double-click the 3D view, then W A S D to move, mouse to look, Esc to release.</div>
@@ -410,7 +420,9 @@ const plantSel = document.getElementById('plant') as HTMLSelectElement | null;
 if (plantSel) {
   for (const p of PLANTS) { const o = document.createElement('option'); o.value = p.id; o.textContent = p.name; plantSel.appendChild(o); }
   plantSel.value = plantId;
-  plantSel.addEventListener('change', () => { plantId = plantSel.value; try { localStorage.setItem('sw-plant', plantId); } catch { /* ignore */ } setPlantBase(plantId); building = null; interior = null; pipingModel = null; errEl.style.display = 'none'; try { openFromHash(); } catch (e) { showError(e); } });
+  // plant 3's piped units, as its export lists them
+  fetch('refinery/units/index.json').then(r => (r.ok ? r.json() : [])).then((units: { id: string; unit: number; name: string }[]) => { for (const u of units) { const o = document.createElement('option'); o.value = u.id; o.textContent = `Plant 3, unit ${u.unit}: ${u.name}`; plantSel.appendChild(o); } plantSel.value = plantId; }).catch(() => { /* no refinery export on this server */ });
+  plantSel.addEventListener('change', async () => { try { await ensurePlant(plantSel.value); } catch (e) { showError(e); plantSel.value = plantId; return; } plantId = plantSel.value; try { localStorage.setItem('sw-plant', plantId); } catch { /* ignore */ } setPlantBase(plantId); building = null; interior = null; pipingModel = null; errEl.style.display = 'none'; try { openFromHash(); } catch (e) { showError(e); } });
 }
 const hp = document.createElement('h2'); hp.textContent = 'Plant (building + interior)'; entriesEl.appendChild(hp);
 for (const [label, view] of [['Plant — walk (start)', 'walk'], ['Plant — pipe rack', 'rack'], ['Plant — vessel platforms', 'vessels'], ['Plant — stair tower', 'stair'], ['Plant — column & ladders', 'column'], ['Plant — bins & walkway (plant 2)', 'bins'], ['Plant — tanks', 'tanks'], ['Plant — pumps', 'pumps'], ['Plant — cutaway overview', 'overview']])
@@ -470,9 +482,10 @@ function openFromHash() {
   showPart(ENTRIES[1].build());
 }
 resize();
-openFromHash();
+// a unit of plant 3 remembered from the last visit is built before the first view is drawn; plants 1 and 2 open at once
+if (UNIT_ID.test(plantId)) ensurePlant(plantId).catch(() => { plantId = 'P1'; setPlantBase('P1'); if (plantSel) plantSel.value = 'P1'; }).then(() => { try { openFromHash(); } catch (e) { showError(e); } (window as any).__smartweldReady = true; });
+else { openFromHash(); (window as any).__smartweldReady = true; }
 window.addEventListener('hashchange', () => { errEl.style.display = 'none'; try { openFromHash(); } catch (e) { showError(e); } });
-(window as any).__smartweldReady = true;
 // draw on demand: only when the view, the scene or the camera changed (whole-plant frames are heavy)
 let lastEye = new THREE.Vector3(Infinity, 0, 0);
 renderer.setAnimationLoop(() => {

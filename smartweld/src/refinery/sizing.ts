@@ -107,7 +107,7 @@ const HOLDS = new Set<Equip['kind']>(['drum', 'column', 'desalter', 'deaerator',
 /** SW-PRC-2: items open to the atmosphere, which have no design pressure */
 const ATMOSPHERIC = new Set<Equip['kind']>(['tank', 'basin', 'pit', 'coolingtower', 'stack', 'flare', 'loading', 'hopper', 'scrubber', 'incinerator']);
 /** the side of an item a connection belongs to: exchangers have a shell and a tube side; a heater's steam coil and its fuel are apart from its process coil; utilities to anything else are apart from it */
-function sideOf(e: Equip, name: string, utility: boolean): string {
+export function sideOf(e: Equip, name: string, utility: boolean): string {
   if (e.kind === 'hx') return name.startsWith('tube') ? 'tube' : 'shell';
   if (e.kind === 'condenser' || e.kind === 'fluegascooler') return utility ? 'steam side' : 'process';
   if (e.kind === 'heater') return name.startsWith('steam coil') ? 'steam coil' : utility || /gas$/.test(name) ? 'fuel' : 'process';
@@ -157,7 +157,7 @@ export function sizeUnit(sh: UnitSheet): UnitSizing {
     return { id: l.id, unit: sh.no, NPS: z.NPS, cls, designP, designT, vacuum: l.s.P < 0, v: z.v, by: z.by, n: z.n, ...(b && b.P > designPressure(l.s.P) ? { pump: b.pump } : {}) };
   });
   const utils = sh.utils.map(u => {
-    const s = utilState(u), designP = designPressure(u.P), designT = designTemperature(u.T), cls = classFor(designP, designT), z = lineSize(s, false, cls, FLUIDS[u.fluid].svc === 'P' ? 2 : 0.75);   // SW-PRC-4: a process fluid taken as a utility (fuel gas) is butt-welded pipe, 2 in at least
+    const s = utilState(u), designP = designPressure(u.P), designT = designTemperature(u.T), cls = classFor(designP, designT), z = lineSize(s, false, cls, 2);   // SW-PRC-4: a take-off to a single item is butt-welded pipe, 2 in at least
     return { ...u, NPS: z.NPS, cls, designP, designT };
   });
   // equipment

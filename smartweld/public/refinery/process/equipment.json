@@ -5184,7 +5184,7 @@
      {
       "port": "tube in",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "util": "BW",
       "fluid": "BW",
@@ -5374,7 +5374,7 @@
      {
       "port": "tube in",
       "dir": "in",
-      "NPS": 1,
+      "NPS": 2,
       "cls": "P300",
       "util": "BW",
       "fluid": "BW",
@@ -7252,7 +7252,7 @@
      {
       "port": "tube out",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P1200",
       "util": "CO",
       "fluid": "CO",
@@ -7631,7 +7631,7 @@
      {
       "port": "tube out",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "util": "CO",
       "fluid": "CO",
@@ -15629,7 +15629,7 @@
      {
       "port": "conveying air",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "util": "IA",
       "fluid": "IA",
@@ -21374,7 +21374,7 @@
      {
       "port": "tube out",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "util": "CO",
       "fluid": "CO",
@@ -22708,7 +22708,7 @@
      {
       "port": "feed water in",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P1200",
       "util": "BW",
       "fluid": "BW",
@@ -22971,7 +22971,7 @@
      {
       "port": "steam coil out",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "CO",
       "fluid": "CO",
@@ -25007,7 +25007,7 @@
      {
       "port": "feed water in",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P300",
       "util": "BW",
       "fluid": "BW",
@@ -25117,7 +25117,7 @@
      {
       "port": "shell in",
       "dir": "in",
-      "NPS": 1,
+      "NPS": 2,
       "cls": "P1200",
       "util": "HS",
       "fluid": "HS",
@@ -25126,7 +25126,7 @@
      {
       "port": "shell out",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P1200",
       "util": "CO",
       "fluid": "CO",
@@ -25323,7 +25323,7 @@
      {
       "port": "feed water in",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P300",
       "util": "BW",
       "fluid": "BW",
@@ -25433,7 +25433,7 @@
      {
       "port": "shell in",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P1200",
       "util": "HS",
       "fluid": "HS",
@@ -25442,7 +25442,7 @@
      {
       "port": "shell out",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P1200",
       "util": "CO",
       "fluid": "CO",
@@ -25639,7 +25639,7 @@
      {
       "port": "feed water in",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P300",
       "util": "BW",
       "fluid": "BW",
@@ -26935,7 +26935,7 @@
     "tag": "D-1905",
     "service": "Fuel gas mixing drum",
     "kind": "drum",
-    "type": "vertical",
+    "type": "horizontal",
     "installed": 1,
     "running": 1,
     "designP": 85,
@@ -26951,16 +26951,14 @@
      }
     },
     "size": {
-     "D": 48,
-     "L": 144,
+     "D": 36,
+     "L": 108,
      "t": 0.375,
-     "vertical": 1
+     "vertical": 0
     },
-    "description": "48 in inside diameter × 12 ft between tangents, vertical",
+    "description": "36 in inside diameter × 9 ft between tangents, horizontal",
     "dutyBtuh": {},
-    "given": {
-     "vertical": 1
-    },
+    "given": {},
     "ports": [
      {
       "name": "inlet",
@@ -29578,7 +29576,7 @@
      {
       "port": "heating coil out",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "CO",
       "fluid": "CO",
@@ -30630,7 +30628,7 @@
      {
       "port": "heating coil out",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "CO",
       "fluid": "CO",
@@ -30735,7 +30733,7 @@
      {
       "port": "heating coil out",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "CO",
       "fluid": "CO",
@@ -30840,7 +30838,7 @@
      {
       "port": "heating coil out",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "CO",
       "fluid": "CO",
@@ -30945,7 +30943,7 @@
      {
       "port": "heating coil out",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "CO",
       "fluid": "CO",
@@ -31050,7 +31048,7 @@
      {
       "port": "heating coil out",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "CO",
       "fluid": "CO",
@@ -35976,7 +35974,7 @@
      {
       "port": "seal water in",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "RW",
       "fluid": "RW",

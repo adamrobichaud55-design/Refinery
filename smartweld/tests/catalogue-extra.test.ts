@@ -5,7 +5,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { ENTRIES } from '../src/scene/catalogueList';
-import { makeHorizontalDrum, makeBullet, makeDesalter, makeDeaerator, makeKettleReboiler, makeEjector, makeSteamTurbine, makeInlinePump, makeSulfurFurnace, makeDuctRun, makeSphere, makeCoolingTower, makeCabinHeater, makeReformer, makePsaUnit, makeIncinerator, makePrecipitator, makeVentSilencer, makeMultiBedReactor, makeSwagedTower, seriesUp } from '../src/catalogue';
+import { makeTurbineCompressor, makeLoadingStation, makePlatformedColumn, makeFlueGasCooler, makeHorizontalDrum, makeBullet, makeDesalter, makeDeaerator, makeKettleReboiler, makeEjector, makeSteamTurbine, makeInlinePump, makeSulfurFurnace, makeDuctRun, makeSphere, makeCoolingTower, makeCabinHeater, makeReformer, makePsaUnit, makeIncinerator, makePrecipitator, makeVentSilencer, makeMultiBedReactor, makeSwagedTower, seriesUp } from '../src/catalogue';
 import { makePileCap, makeRetainingWall, makeCatchBasin, makeManhole, makeSleeper, makeMachineBlock, makeTableTop, makeSeparatorBasin, makeSulfurPit, makeBoxCulvert, makeDuctBank, planeMat, type Bar } from '../src/catalogue';
 import { makeMitreBend, makeInsulatedPipe, insulationThickness, makeExpansionJoint, makeYStrainer, makeStubIn, makeSpringHanger, makeConeStrainer, makeLateral, makeSteamTrap, bendPath, pipeDims, designFlange } from '../src/catalogue';
 import { makePipeRack, makeStairFlight, makeStairTower, makePlatform, makeFixedLadder, makePipeBridge, makeFireproofedColumn, makeTSupport, makeGoalPost, makeMonorail, makeProcessStructure, stairFlight, stairTower, sec, colSec, zReq } from '../src/scene/structures';
@@ -167,6 +167,21 @@ describe('further process equipment (SW-EQC-45..65)', () => {
     expect(ps.length).toBe(c.dims.platforms.value); expect(ps[0]).toBeLessThanOrEqual(260); for (let k = 1; k < ps.length; k++) expect(ps[k] - ps[k - 1]).toBeLessThanOrEqual(180.01);
     expect(() => makeSwagedTower({ tag: 'C', sections: [[120, 240], [240, 480]] as never, skirtH: 180 })).toThrow(/SW-EQC-65/);
   });
+  it('SW-EQC-66, -67 and the options a plant states: turbine-driven compressor, loading station, column access, ducts', () => {
+    const k = makeTurbineCompressor({ tag: 'K', skidW: 84, skidL: 162, casingD: 30, wheelD: 30 }); expect(k.dims.shaftY.value).toBe(1 + 0.9 * 30 + 4); expect(k.dims.least.value).toBeLessThanOrEqual(162);
+    expect(solidsOf(k).some(q => q.name === 'turbine: casing')).toBe(true); expect(solidsOf(k).some(q => /motor frame/.test(q.name))).toBe(false);
+    const ls = makeLoadingStation({ tag: 'X', NPS: 3 }); expect(ls.dims.H.value).toBe(144); expect(ls.dims.reach.value).toBe(96); expect(solidsOf(ls).some(q => q.name === 'loading arm riser')).toBe(true);
+    // a column's davit and platform arc as stated; unchanged where they are not
+    const base = { tag: 'C', ID: 72, t: 0.625, TT: 720, skirtH: 96, trays: 20 }, a = makePlatformedColumn(base), b = makePlatformedColumn({ ...base, platformArc: 180, davitAngle: 0 }), box = (p: typeof a, re: RegExp) => { const q = solidsOf(p).filter(v => re.test(v.name)); return [0, 1].map(ax => Math.max(...q.flatMap(v => Array.from(v.mesh.positions).filter((_, i) => i % 3 === ax)))); };
+    expect(JSON.stringify(makePlatformedColumn(base).dims)).toBe(JSON.stringify(a.dims)); expect(a.dims.platformArc).toBeUndefined(); expect(b.dims.platformArc.value).toBe(180);
+    expect(Math.min(...solidsOf(b).filter(v => /^platform \d+: platform grating/.test(v.name)).flatMap(v => Array.from(v.mesh.positions).filter((_, i) => i % 3 === 0)))).toBeGreaterThan(-2);   // a half ring about +x
+    expect(box(b, /^davit arm/)[0]).toBeGreaterThan(box(a, /^davit arm/)[0]);                                    // swung outward
+    // a flue gas cooler's ducts as stated
+    const c0 = makeFlueGasCooler({ tag: 'E', D: 96, L: 240 }), c1 = makeFlueGasCooler({ tag: 'E', D: 96, L: 240, ducts: { outletOD: 24, plain: ['outlet'] } });
+    expect(solidsOf(c0).filter(q => /duct flange/.test(q.name)).length).toBe(2); expect(solidsOf(c1).filter(q => /duct flange/.test(q.name)).length).toBe(1);
+    const od = (p: typeof c0) => { const q = solidsOf(p).find(v => v.name === 'outlet duct')!; return 2 * Math.max(...Array.from(q.mesh.positions).filter((_, i) => i % 3 === 0)); }; expect(od(c0)).toBeCloseTo(0.5 * 96 + 1.5, 1); expect(od(c1)).toBeCloseTo(24, 1);
+    expect(solidsOf(makeSulfurPit('X', { L: 384, W: 180, D: 96, noDischarge: true })).length).toBe(solidsOf(makeSulfurPit('X', { L: 384, W: 180, D: 96 })).length);
+  }, 120_000);
   it('SW-EQC-51, -52, -61, -63, -64, -56: machines and the rest', () => {
     expect(makeKettleReboiler({ tag: 'E', bundleD: 30, tubeL: 192 }).dims.shellD.value).toBe(48); expect(makeEjector('J', 6).dims.diverging.value).toBeCloseTo(5 * pipeDims(6, 'P150').OD);
     const t = makeSteamTurbine('ST', 24); expect(t.dims.casingD.value).toBe(36); expect(t.dims.inlet.value).toBe(4); expect(t.dims.exhaust.value).toBe(8);

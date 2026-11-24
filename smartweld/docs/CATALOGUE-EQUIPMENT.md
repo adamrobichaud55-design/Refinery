@@ -1115,6 +1115,46 @@ Kind `PROCESS_UNIT`, Grade 36; weight 138 lb (proportioned by SmartWeld rule SW-
 
 Solids: suction chamber, diffuser inlet cone, throat, diffuser outlet cone, discharge flange ring, discharge flange raised face, discharge flange hub and neck, motive steam nozzle: neck, motive steam nozzle: flange ring, motive steam nozzle: flange raised face, motive steam nozzle: flange hub and neck, suction nozzle: neck, suction nozzle: flange ring, suction nozzle: flange raised face, suction nozzle: flange hub and neck, suction nozzle: reinforcing pad.
 
+### K-801 centrifugal compressor package, turbine driven, 84" × 162" skid
+
+Kind `COMPRESSOR`, Grade 36; weight 54299 lb (proportioned by SmartWeld rule SW-EQ-7); 38 solids, drawn volume 191489 in³.
+
+- True-scale arrangement; internals are not drawn unless named (SW-EQC-45..65).
+- On a 12 in pad (SW-CIV-5).
+
+| Dimension | Value | Unit | Basis |
+|---|---|---|---|
+| Skid width (`skidW`) | 84.0 | in | stated on drawing |
+| Skid length (`skidL`) | 162 | in | stated on drawing |
+| Casing diameter (`casingD`) | 30.0 | in | stated on drawing |
+| Turbine wheel diameter (`wheelD`) | 30.0 | in | stated on drawing |
+| Casing length (1.2 D) (`casingL`) | 36.0 | in | proportioned by SmartWeld rule SW-EQC-12 |
+| Gearbox length and width (0.8 D) (`gearbox`) | 24.0 | in | proportioned by SmartWeld rule SW-EQC-12 |
+| Shaft centreline above the skid (the turbine's 0.9 d over its 4 in baseplate) (`shaftY`) | 32.0 | in | proportioned by SmartWeld rule SW-EQC-66 |
+| Least skid length for casing, gearbox and turbine (`least`) | 157 | in | proportioned by SmartWeld rule SW-EQC-66 |
+| Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
+
+Solids: skid PL1, compressor casing, casing end covers, bearing housings, casing pedestal, suction nozzle: neck, suction nozzle: flange ring, suction nozzle: flange raised face, suction nozzle: flange hub and neck, suction nozzle: reinforcing pad, discharge nozzle: neck, discharge nozzle: flange ring, discharge nozzle: flange raised face, discharge nozzle: flange hub and neck, discharge nozzle: reinforcing pad, gearbox, gearbox feet, shafts, turbine: casing, turbine: joint flange, turbine: steam chest, turbine: inlet nozzle: neck, turbine: inlet nozzle: flange ring, turbine: inlet nozzle: flange raised face, turbine: inlet nozzle: flange hub and neck, turbine: inlet nozzle: reinforcing pad, turbine: exhaust nozzle: neck, turbine: exhaust nozzle: flange ring, turbine: exhaust nozzle: flange raised face, turbine: exhaust nozzle: flange hub and neck, turbine: exhaust nozzle: reinforcing pad, turbine: bearing housings, turbine: shaft and coupling half, turbine: governor housing, turbine: pedestals, turbine: baseplate, lube console, lube oil piping.
+
+### X-801 top loading station, 3" arm
+
+Kind `PROCESS_UNIT`, Grade 36; weight 4495 lb (proportioned by SmartWeld rule SW-EQ-7); 16 solids, drawn volume 15851 in³.
+
+- True-scale arrangement; internals are not drawn unless named (SW-EQC-45..65).
+- Heating of the arm is not drawn.
+
+| Dimension | Value | Unit | Basis |
+|---|---|---|---|
+| Arm size (`NPS`) | 3 | in | stated on drawing |
+| Platform floor above grade (12 ft) (`H`) | 144 | in | proportioned by SmartWeld rule SW-EQC-67 |
+| Boom reach (8 ft) (`reach`) | 96.0 | in | proportioned by SmartWeld rule SW-EQC-67 |
+| Platform, square (`platform`) | 96.0 | in | proportioned by SmartWeld rule SW-EQC-67 |
+| Riser, from 1 ft above grade to 4 ft above the floor (`riser`) | 180 | in | proportioned by SmartWeld rule SW-EQC-67 |
+| Drop pipe (`drop`) | 48.0 | in | proportioned by SmartWeld rule SW-EQC-67 |
+| Steel density (`rho`) | 490 | lb/ft3 | physical constant K-1 |
+
+Solids: gantry column 1 W8x24, gantry column 2 W8x24, gantry column 3 W8x24, gantry column 4 W8x24, gantry frame W8x24, gantry floor grating (SW-GR-1), gantry handrail, gantry tower ladder 1: ladder rails and brackets, gantry tower ladder 1: ladder rungs RD3/4, gantry tower ladder 1: ladder cage, gantry tower landings with handrail, loading arm riser, riser support, swivel joints, loading arm boom and drop pipe, spout cone.
+
 ### P-801 vertical in-line pump 4" × 4", motor frame 14"
 
 Kind `PUMP`, Grade 36; weight 948 lb (proportioned by SmartWeld rule SW-EQ-7); 25 solids, drawn volume 3345 in³.

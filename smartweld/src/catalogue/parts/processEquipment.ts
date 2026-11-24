@@ -18,6 +18,7 @@ import { sweep, boxMesh, orient, type V3 } from './detailKit';
 import { done, cylZ, cylX, cylY, tube, at, flangeSolids, flangeLen, seriesUp, makeNozzle, makeManway, makeSupportLugs, dressVessel, seamSolids, makeShellTubeExchanger, motorSolids, MOTOR_SHAFT, NOZZLE_UP, SHAFT_X_UP_Z, type Solid } from './equipmentKit';
 import { member, pipeRun, frustum, lift, named, onShell, pointUp, pointDown, floorsThrough, towerAccess, ringFlange, straightRail, saddleSolids, drumBody, spiralStair, ringRail, ringPlatform, ladderSolids, stackSolids, burnerSolids, makeFlueGasCooler, partSolids, P_L3, P_W8 } from './processUnits';
 import { bendPath } from './pipingSpecials';
+import { gratingCover } from './civil';
 
 const NOT_STEEL = new Set(['concrete', 'grout', 'polymer']);
 function equip(id: string, kind: PartSpec['kind'], designation: string, dims: Record<string, Dim>, len: number, solids: Solid[], notes: string[] = []): PartSpec {
@@ -172,6 +173,22 @@ export function makeTurbineCompressor(inp: { tag: string; skidW: number; skidL: 
     least: rule(2 * D + 2.55 * d + 20, 'SW-EQC-66', 'Least skid length for casing, gearbox and turbine'),
   }, skidL, s, ['On a 12 in pad (SW-CIV-5).']);
 }
+// ---- SW-EQC-67: top loading station for a road tanker ---------------------------------------------------------------------------------
+/** z up from grade; the vehicle's bay on the +x side, the ladder on the −x side */
+export function makeLoadingStation(inp: { tag: string; NPS: number; H?: number; reach?: number }): PartSpec {
+  const { tag, NPS } = inp, H = inp.H ?? 144, reach = inp.reach ?? 96, OD = pipeDims(NPS, 'P150').OD, b = 48, xr = b + OD / 2 + 6, zb = H + 54, s: Solid[] = [];
+  // each column a solid of its own: what is piped to the riser passes between them under the floor
+  [[-b, -b], [b, -b], [b, b], [-b, b]].forEach(([x, y], k) => s.push({ name: `gantry column ${k + 1} W8x24`, role: 'steel', mesh: member([x, y, 0], [x, y, H - 8], P_W8, [1, 0, 0]) }));
+  s.push({ name: 'gantry frame W8x24', role: 'steel', mesh: mergeMeshes([[[-b, -b], [b, -b]], [[b, -b], [b, b]], [[b, b], [-b, b]], [[-b, b], [-b, -b]]].map(([p, q]) => member([p[0], p[1], H - 4], [q[0], q[1], H - 4], P_W8))) });
+  s.push({ name: 'gantry floor grating (SW-GR-1)', role: 'galv', mesh: gratingCover(-b, b, -b, b, H) });
+  s.push({ name: 'gantry handrail', role: 'safety', mesh: mergeMeshes([straightRail([-b, -b, H], [b, -b, H]), straightRail([-b, b, H], [b, b, H]), straightRail([-b, 20, H], [-b, b, H]), straightRail([-b, -b, H], [-b, -20, H])]) });
+  s.push(...towerAccess(0, 0, b, Math.PI, 0, H).map(q => ({ ...q, name: `gantry ${q.name}` })));
+  s.push({ name: 'loading arm riser', mesh: mergeMeshes([pipeRun([[xr, 0, 12], [xr, 0, zb - 6]], OD, 20), cylZ(xr, 0, OD / 2, 11.5, 12, 24)]) }, { name: 'riser support', role: 'steel', mesh: mergeMeshes([boxMesh(xr - 6, -6, 0, xr + 6, 6, 0.75), cylZ(xr, 0, Math.max(1.5, OD / 4), 0.75, 11.5, 16), member([b, 0, H - 30], [xr, 0, H - 30], P_L3)]) });
+  s.push({ name: 'swivel joints', role: 'machine', mesh: mergeMeshes([cylZ(xr, 0, 0.75 * OD, zb - 8, zb - 2, 32), transformMesh(cylZ(0, 0, 0.75 * OD, -3, 3, 32), multiply(translate(xr + reach - 1.5 * OD - 4, 0, zb), rotateY(Math.PI / 2)))]) });
+  s.push({ name: 'loading arm boom and drop pipe', mesh: pipeRun(bendPath([[xr, 0, zb - 6], [xr, 0, zb], [xr + reach, 0, zb], [xr + reach, 0, zb - 48]], 1.5 * OD, 6), OD, 20) }, { name: 'spout cone', mesh: at(frustum(OD / 2 + 2, OD / 2, zb - 60, zb - 48, 0.1875, 32), xr + reach, 0, 0) });
+  return equip(tag, 'PROCESS_UNIT', `${tag} top loading station, ${NPS}" arm`, { NPS: drawing(NPS, 'Arm size'), H: inp.H !== undefined ? drawing(H, 'Platform floor above grade') : rule(H, 'SW-EQC-67', 'Platform floor above grade (12 ft)'), reach: inp.reach !== undefined ? drawing(reach, 'Boom reach') : rule(reach, 'SW-EQC-67', 'Boom reach (8 ft)'),
+    platform: rule(96, 'SW-EQC-67', 'Platform, square'), riser: rule(zb - 6 - 12, 'SW-EQC-67', 'Riser, from 1 ft above grade to 4 ft above the floor'), drop: rule(48, 'SW-EQC-67', 'Drop pipe') }, H + 60, s, ['Heating of the arm is not drawn.']);
+}
 // ---- SW-EQC-64: vertical in-line pump -------------------------------------------------------------------------------------------------
 export function makeInlinePump(inp: { tag: string; NPS: number; motorD: number }): PartSpec {
   const { NPS, motorD: Dm, tag } = inp, pd = pipeDims(NPS, 'P150'), OD = pd.OD, f = designFlange(NPS, 'P150'), Lf = flangeLen(f), rc = 1.2 * OD, FF = 2 * rc + 2 * (Lf + 3), zc = FF / 2, yt = 0.5 * OD + Dm, s: Solid[] = [];
@@ -182,8 +199,8 @@ export function makeInlinePump(inp: { tag: string; NPS: number; motorD: number }
   return equip(tag, 'PUMP', `${tag} vertical in-line pump ${NPS}" × ${NPS}", motor frame ${Dm}"`, { NPS: drawing(NPS, 'Suction and discharge size'), motorD: drawing(Dm, 'Motor frame'), casingD: rule(2 * rc, 'SW-EQC-64', 'Casing across (2.4 OD)'), FF: rule(FF, 'SW-EQC-64', 'Face to face'), head: rule(Dm, 'SW-EQC-64', 'Motor support head height (one frame)') }, FF, s);
 }
 // ---- SW-EQC-56, -57: sulfur plant furnace with waste heat boiler; sulfur condenser -----------------------------------------------------
-export function makeSulfurFurnace(inp: { tag: string; D: number; furnaceL: number; boilerL: number; /** stated walls for the waste heat boiler's shell and its steam drum (§72) */ boilerT?: number; drumT?: number }): PartSpec {
-  const { D, furnaceL: Lf, boilerL: Lb, tag } = inp, c = makeFlueGasCooler({ tag: `${tag}-E`, D, L: Lb, t: inp.boilerT, drumT: inp.drumT }), t = 0.75, R = D / 2 + t, rd = 0.25 * D, coneL = (R - rd - t) / Math.tan(Math.PI / 6), zE = -(2 + 0.33 * D + coneL + 13.5), z0 = zE - coneL - Lf, db = 0.3 * D, cl = R + 36, s: Solid[] = [];
+export function makeSulfurFurnace(inp: { tag: string; D: number; furnaceL: number; boilerL: number; /** stated walls for the waste heat boiler's shell and its steam drum (§72) */ boilerT?: number; drumT?: number; /** SW-EQC-56: a stated outside diameter for the boiler's outlet duct, left without its flange for a plant's own nozzle */ outletOD?: number }): PartSpec {
+  const { D, furnaceL: Lf, boilerL: Lb, tag } = inp, c = makeFlueGasCooler({ tag: `${tag}-E`, D, L: Lb, t: inp.boilerT, drumT: inp.drumT, ...(inp.outletOD === undefined ? {} : { ducts: { outletOD: inp.outletOD, plain: ['outlet' as const] } }) }), t = 0.75, R = D / 2 + t, rd = 0.25 * D, coneL = (R - rd - t) / Math.tan(Math.PI / 6), zE = -(2 + 0.33 * D + coneL + 13.5), z0 = zE - coneL - Lf, db = 0.3 * D, cl = R + 36, s: Solid[] = [];
   s.push(...partSolids(c).filter(q => !q.name.startsWith('fire tubes')).map(q => ({ ...q, cut: false, name: `waste heat boiler: ${q.name}` })));
   s.push({ name: 'furnace chamber', mesh: at(shellRing(R, t, Lf), 0, 0, z0) }, { name: 'furnace rear cone', mesh: frustum(R, rd + t, zE - coneL, zE, t) }, { name: 'furnace front plate', mesh: cylZ(0, 0, R + 2, z0 - 1.5, z0, 64) }, { name: 'furnace weld seams', mesh: seamSolids(R, t, z0, Lf) });
   s.push(...burnerSolids(db).map(q => ({ ...q, name: `burner: ${q.name}`, mesh: transformMesh(q.mesh, multiply(translate(0, 0, z0 - 1.5), rotateY(Math.PI))) })));

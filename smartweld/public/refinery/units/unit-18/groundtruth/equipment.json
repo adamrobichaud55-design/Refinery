@@ -1,0 +1,6856 @@
+[
+ {
+  "tag": "K-1801",
+  "type": "BLOWER",
+  "description": "K-1801 blower, wheel 15\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "K-1801 blower, wheel 15\"",
+  "material": "Grade 36",
+  "weight": 5377.603,
+  "origin": {
+   "E": 443.25,
+   "N": -266.25,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "wheelD",
+    "label": "Wheel diameter",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor frame",
+    "value": 25,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter (1.4 D)",
+    "value": 21,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-14"
+   },
+   {
+    "name": "casingW",
+    "label": "Casing width (0.5 D)",
+    "value": 7.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-14"
+   },
+   {
+    "name": "outlet",
+    "label": "Outlet 0.5 D × 0.4 D",
+    "value": 7.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-14"
+   },
+   {
+    "name": "inlet",
+    "label": "Inlet cone diameter (0.6 D)",
+    "value": 9,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-14"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the base",
+    "value": 17.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-14"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "K-1801-N1",
+    "service": "discharge",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 450,
+     "N": -270,
+     "EL": 1247.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-18047",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1801",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1801 shell-and-tube exchanger 30\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1801 shell-and-tube exchanger 30\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 4656.2589,
+  "origin": {
+   "E": 546,
+   "N": -508.5,
+   "EL": 1281.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 33.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 7.75,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1801-N1",
+    "service": "tube in",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 546,
+     "N": -516,
+     "EL": 1258.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-P-18004",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1801-N2",
+    "service": "tube out",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 546,
+     "N": -516,
+     "EL": 1304.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-18005",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1801-N3",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 546,
+     "N": -468,
+     "EL": 1304.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-18014",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1801-N4",
+    "service": "shell out",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 546,
+     "N": -282,
+     "EL": 1258.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P600-P-18015",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "E-1803",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1803 shell-and-tube exchanger 18\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1803 shell-and-tube exchanger 18\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 1923.3684,
+  "origin": {
+   "E": 654,
+   "N": -505.5,
+   "EL": 1299.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 27.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 4.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 9,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 1.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1803-N1",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 654,
+     "N": -468,
+     "EL": 1316.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-18016",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1803-N2",
+    "service": "shell out",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 654,
+     "N": -276,
+     "EL": 1282.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P600-P-18017",
+    "lineClass": "H600"
+   },
+   {
+    "id": "E-1803-N3",
+    "service": "tube in",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 654,
+     "N": -510,
+     "EL": 1283.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P150-CWS-18503",
+    "lineClass": "W150"
+   },
+   {
+    "id": "E-1803-N4",
+    "service": "tube out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 654,
+     "N": -510,
+     "EL": 1315.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-CWR-18504",
+    "lineClass": "W150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1804",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1804 shell-and-tube exchanger 18\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1804 shell-and-tube exchanger 18\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 1923.3684,
+  "origin": {
+   "E": 756,
+   "N": -505.5,
+   "EL": 1275.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 18,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 27.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 4.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 9,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 1.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1804-N1",
+    "service": "tube in",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 756,
+     "N": -510,
+     "EL": 1258.4375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-18029",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1804-N2",
+    "service": "tube out",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 756,
+     "N": -510,
+     "EL": 1292.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-18030",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1804-N3",
+    "service": "shell in",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 756,
+     "N": -474,
+     "EL": 1292.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-18038",
+    "lineClass": "H300"
+   },
+   {
+    "id": "E-1804-N4",
+    "service": "shell out",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 756,
+     "N": -276,
+     "EL": 1258.4375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "4\"-P300-P-18039",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "E-1806",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1806 shell-and-tube exchanger 30\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1806 shell-and-tube exchanger 30\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 3733.5493,
+  "origin": {
+   "E": 864,
+   "N": -508.5,
+   "EL": 1299.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 33.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 7.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1806-N1",
+    "service": "inlet",
+    "NPS": 10,
+    "cls": "P150",
+    "face": {
+     "E": 864,
+     "N": -288,
+     "EL": 1325.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "10\"-P150-P-18048",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1806-N2",
+    "service": "outlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 864,
+     "N": -516,
+     "EL": 1324.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18050",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1806-N3",
+    "service": "sulfur out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 864,
+     "N": -516,
+     "EL": 1277.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P150-P-18049",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1806-N4",
+    "service": "feed water in",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 864,
+     "N": -390,
+     "EL": 1278.125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P300-SC-18509",
+    "lineClass": "C300"
+   },
+   {
+    "id": "E-1806-N5",
+    "service": "steam out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 864,
+     "N": -390,
+     "EL": 1321.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-LS-18510",
+    "lineClass": "S150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1807",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1807 shell-and-tube exchanger 24\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1807 shell-and-tube exchanger 24\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 4221.6868,
+  "origin": {
+   "E": 972,
+   "N": -504,
+   "EL": 1290.625
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 30.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 6.3125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1807-N1",
+    "service": "tube in",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 972,
+     "N": -510,
+     "EL": 1268.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "8\"-P150-P-18050",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1807-N2",
+    "service": "tube out",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 972,
+     "N": -510,
+     "EL": 1312.7188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18051",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1807-N3",
+    "service": "shell in",
+    "NPS": 2,
+    "cls": "P1200",
+    "face": {
+     "E": 972,
+     "N": -480,
+     "EL": 1309.0938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "2\"-P1200-LS-18511",
+    "lineClass": "S1200"
+   },
+   {
+    "id": "E-1807-N4",
+    "service": "shell out",
+    "NPS": 2,
+    "cls": "P1200",
+    "face": {
+     "E": 972,
+     "N": -276,
+     "EL": 1272.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P1200-SC-18512",
+    "lineClass": "C1200"
+   }
+  ]
+ },
+ {
+  "tag": "E-1808",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1808 shell-and-tube exchanger 30\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1808 shell-and-tube exchanger 30\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 3733.5493,
+  "origin": {
+   "E": 1080,
+   "N": -508.5,
+   "EL": 1299.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 33.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 7.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 15,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1808-N1",
+    "service": "inlet",
+    "NPS": 10,
+    "cls": "P150",
+    "face": {
+     "E": 1080,
+     "N": -288,
+     "EL": 1325.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "10\"-P150-P-18052",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1808-N2",
+    "service": "outlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 1080,
+     "N": -516,
+     "EL": 1324.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18054",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1808-N3",
+    "service": "sulfur out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1080,
+     "N": -516,
+     "EL": 1277.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P150-P-18053",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1808-N4",
+    "service": "feed water in",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 1080,
+     "N": -390,
+     "EL": 1278.125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P300-SC-18513",
+    "lineClass": "C300"
+   },
+   {
+    "id": "E-1808-N5",
+    "service": "steam out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1080,
+     "N": -390,
+     "EL": 1321.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-LS-18514",
+    "lineClass": "S150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1809",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1809 shell-and-tube exchanger 24\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1809 shell-and-tube exchanger 24\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 4221.6868,
+  "origin": {
+   "E": 1188,
+   "N": -504,
+   "EL": 1290.625
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 30.625,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 6.3125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1809-N1",
+    "service": "tube in",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 1188,
+     "N": -510,
+     "EL": 1268.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "8\"-P150-P-18054",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1809-N2",
+    "service": "tube out",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 1188,
+     "N": -510,
+     "EL": 1312.7188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18055",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1809-N3",
+    "service": "shell in",
+    "NPS": 2,
+    "cls": "P1200",
+    "face": {
+     "E": 1188,
+     "N": -480,
+     "EL": 1309.0938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "2\"-P1200-LS-18515",
+    "lineClass": "S1200"
+   },
+   {
+    "id": "E-1809-N4",
+    "service": "shell out",
+    "NPS": 2,
+    "cls": "P1200",
+    "face": {
+     "E": 1188,
+     "N": -276,
+     "EL": 1272.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P1200-SC-18516",
+    "lineClass": "C1200"
+   }
+  ]
+ },
+ {
+  "tag": "E-1810",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1810 shell-and-tube exchanger 24\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1810 shell-and-tube exchanger 24\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 2757.3056,
+  "origin": {
+   "E": 1296,
+   "N": -504,
+   "EL": 1290.375
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 30.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 6.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1810-N1",
+    "service": "inlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 1296,
+     "N": -282,
+     "EL": 1312.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18056",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1810-N2",
+    "service": "outlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 1296,
+     "N": -510,
+     "EL": 1312.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18058",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1810-N3",
+    "service": "sulfur out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1296,
+     "N": -510,
+     "EL": 1271.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P150-P-18057",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1810-N4",
+    "service": "feed water in",
+    "NPS": 2,
+    "cls": "P300",
+    "face": {
+     "E": 1296,
+     "N": -384,
+     "EL": 1272.125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P300-SC-18517",
+    "lineClass": "C300"
+   },
+   {
+    "id": "E-1810-N5",
+    "service": "steam out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1296,
+     "N": -384,
+     "EL": 1309.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-LS-18518",
+    "lineClass": "S150"
+   }
+  ]
+ },
+ {
+  "tag": "X-1801",
+  "type": "PIT",
+  "description": "Sulfur pit 32' × 15' × 8' inside with steam coil (class B)",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "Sulfur pit 32' × 15' × 8' inside with steam coil (class B)",
+  "material": "Class B concrete (4 ksi)",
+  "weight": 279226.1481,
+  "origin": {
+   "E": 890,
+   "N": -828,
+   "EL": 1094
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "L",
+    "label": "Inside length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "W",
+    "label": "Inside width",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "D",
+    "label": "Inside depth",
+    "value": 96,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "wall",
+    "label": "Wall and base thickness",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-CIV-26"
+   },
+   {
+    "name": "roof",
+    "label": "Roof slab thickness",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-CIV-26"
+   },
+   {
+    "name": "above",
+    "label": "Roof top above grade",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-CIV-26"
+   },
+   {
+    "name": "openings",
+    "label": "Pump and access openings, square",
+    "value": 30,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-CIV-26"
+   },
+   {
+    "name": "vent",
+    "label": "Vent pipe",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-CIV-26"
+   },
+   {
+    "name": "coil",
+    "label": "Steam coil passes at",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-CIV-26"
+   },
+   {
+    "name": "coilH",
+    "label": "Coil above the floor",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-CIV-26"
+   },
+   {
+    "name": "volume",
+    "label": "Concrete volume",
+    "value": 67.8981,
+    "unit": "yd3",
+    "basis": "proportioned by SmartWeld rule SW-CIV-15"
+   },
+   {
+    "name": "concreteWeight",
+    "label": "Concrete weight (volume × K-7)",
+    "value": 274987.5,
+    "unit": "lb",
+    "basis": "proportioned by SmartWeld rule SW-CIV-15"
+   },
+   {
+    "name": "formedArea",
+    "label": "Formed area",
+    "value": 2235,
+    "unit": "ft2",
+    "basis": "proportioned by SmartWeld rule SW-CIV-15"
+   },
+   {
+    "name": "barWeight",
+    "label": "Reinforcing bar weight (K-1)",
+    "value": 4238.6481,
+    "unit": "lb",
+    "basis": "proportioned by SmartWeld rule SW-CIV-15"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "X-1801-N1",
+    "service": "sulfur in 1",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1020,
+     "N": -678,
+     "EL": 1218.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18049",
+    "lineClass": "H150"
+   },
+   {
+    "id": "X-1801-N2",
+    "service": "sulfur in 2",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1080,
+     "N": -678,
+     "EL": 1218.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18053",
+    "lineClass": "H150"
+   },
+   {
+    "id": "X-1801-N3",
+    "service": "sulfur in 3",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1140,
+     "N": -678,
+     "EL": 1218.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18057",
+    "lineClass": "H150"
+   },
+   {
+    "id": "X-1801-N4",
+    "service": "sulfur out",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 984,
+     "N": -722.1562,
+     "EL": 1254
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18059",
+    "lineClass": "H150"
+   },
+   {
+    "id": "X-1801-N5",
+    "service": "steam coil in",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 900,
+     "N": -660,
+     "EL": 1225.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "2\"-P150-LS-18520",
+    "lineClass": "S150"
+   },
+   {
+    "id": "X-1801-N6",
+    "service": "steam coil out",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 900,
+     "N": -816,
+     "EL": 1225.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "2\"-P150-SC-18521",
+    "lineClass": "C150"
+   }
+  ]
+ },
+ {
+  "tag": "A-1801",
+  "type": "AIR_COOLER",
+  "description": "A-1801 air cooler 168\" × 384\", 2 fans",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "A-1801 air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 690,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1801-N1",
+    "service": "inlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 654,
+     "N": 198,
+     "EL": 1787.4688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18006",
+    "lineClass": "H150"
+   },
+   {
+    "id": "A-1801-N2",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 726,
+     "N": 211.7813,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18007",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "A-1802",
+  "type": "AIR_COOLER",
+  "description": "A-1802 air cooler 168\" × 384\", 2 fans",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "A-1802 air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 870,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1802-N1",
+    "service": "inlet",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 834,
+     "N": -198,
+     "EL": 1785.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-18015",
+    "lineClass": "H600"
+   },
+   {
+    "id": "A-1802-N2",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P600",
+    "face": {
+     "E": 906,
+     "N": -211.7812,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P600-P-18016",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "A-1803",
+  "type": "AIR_COOLER",
+  "description": "A-1803 air cooler 168\" × 384\", 2 fans",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "A-1803 air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 1050,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1803-N1",
+    "service": "inlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1014,
+     "N": 198,
+     "EL": 1785.7813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-18032",
+    "lineClass": "H150"
+   },
+   {
+    "id": "A-1803-N2",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1086,
+     "N": 211.7813,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18033",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "A-1804",
+  "type": "AIR_COOLER",
+  "description": "A-1804 air cooler 168\" × 384\", 2 fans",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "A-1804 air cooler 168\" × 384\", 2 fans",
+  "material": "Grade 36",
+  "weight": 456065.6007,
+  "origin": {
+   "E": 1230,
+   "N": 0,
+   "EL": 1644
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "W",
+    "label": "Bundle width",
+    "value": 168,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Tube length",
+    "value": 384,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "fans",
+    "label": "Fans",
+    "value": 2,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "legH",
+    "label": "Column height to the plenum",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "depth",
+    "label": "Bundle depth",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "plenum",
+    "label": "Plenum depth (0.5 W)",
+    "value": 84,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "fanD",
+    "label": "Fan ring diameter (0.9 W / n)",
+    "value": 75.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   },
+   {
+    "name": "header",
+    "label": "Header box depth",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-11"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "A-1804-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1194,
+     "N": -198,
+     "EL": 1785.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-18039",
+    "lineClass": "H300"
+   },
+   {
+    "id": "A-1804-N2",
+    "service": "outlet",
+    "NPS": 4,
+    "cls": "P300",
+    "face": {
+     "E": 1266,
+     "N": -211.5625,
+     "EL": 1764
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P300-P-18040",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "D-1801",
+  "type": "Horizontal drum",
+  "description": "D-1801 horizontal vessel 84\" ID × 252\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "D-1801 horizontal vessel 84\" ID × 252\"",
+  "material": "Grade 36",
+  "weight": 10569.7811,
+  "origin": {
+   "E": 456,
+   "N": 528,
+   "EL": 1368.375
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 84,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 252,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 60.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 21.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 28,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 50.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1801-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 474,
+     "N": 528,
+     "EL": 1418.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-18701",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1801-N2",
+    "service": "gas",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 690,
+     "N": 528,
+     "EL": 1417.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18002",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1801-N3",
+    "service": "liquid",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 546,
+     "N": 528,
+     "EL": 1318.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-P-18003",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1801-N4",
+    "service": "make-up",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 498,
+     "N": 528,
+     "EL": 1417.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18708",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "D-1802",
+  "type": "Horizontal drum",
+  "description": "D-1802 horizontal vessel 36\" ID × 108\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "D-1802 horizontal vessel 36\" ID × 108\"",
+  "material": "Grade 36",
+  "weight": 2094.5908,
+  "origin": {
+   "E": 816,
+   "N": 528,
+   "EL": 1344.375
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 108,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 36.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 12,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 21.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1802-N1",
+    "service": "inlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 834,
+     "N": 528,
+     "EL": 1370.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-18007",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1802-N2",
+    "service": "reflux",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 864,
+     "N": 528,
+     "EL": 1319.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P150-P-18008",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1802-N3",
+    "service": "acid gas",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 906,
+     "N": 528,
+     "EL": 1370.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-18010",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "C-1801",
+  "type": "COLUMN",
+  "description": "C-1801 column 54\" ID × 768\" T/T with 6 platforms and ladders",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "C-1801 column 54\" ID × 768\" T/T with 6 platforms and ladders",
+  "material": "Grade 36",
+  "weight": 31465.2429,
+  "origin": {
+   "E": 1092,
+   "N": 528,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 54,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 768,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 13.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 961.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "trays",
+    "label": "Tray count",
+    "value": 22,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "traySpacing",
+    "label": "Tray spacing",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "firstTray",
+    "label": "First tray elevation (trays centred in the shell)",
+    "value": 325.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "platforms",
+    "label": "Platforms (first manway level, then every 15 ft, and the top)",
+    "value": 6,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-32"
+   },
+   {
+    "name": "spacing",
+    "label": "Platform spacing (15 ft)",
+    "value": 180,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-28"
+   },
+   {
+    "name": "platformW",
+    "label": "Platform width",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "handrail",
+    "label": "Handrail height",
+    "value": 42,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "platformArc",
+    "label": "Arc the platforms cover about the manways",
+    "value": 180,
+    "unit": "deg",
+    "basis": "stated on drawing"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "C-1801-N1",
+    "service": "feed",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1092,
+     "N": 492.8438,
+     "EL": 1788
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18703",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1801-N2",
+    "service": "overhead",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 1092,
+     "N": 528,
+     "EL": 2217.9375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18006",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1801-N3",
+    "service": "reflux",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1092,
+     "N": 493.7813,
+     "EL": 2154
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18704",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1801-N4",
+    "service": "reboiler draw",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1092,
+     "N": 492.8438,
+     "EL": 1464
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18011",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1801-N5",
+    "service": "reboiler return",
+    "NPS": 16,
+    "cls": "P150",
+    "face": {
+     "E": 1092,
+     "N": 486.9688,
+     "EL": 1518
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "16\"-P150-P-18012",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1801-N6",
+    "service": "bottoms",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1092,
+     "N": 492.8438,
+     "EL": 1416
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18013",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1802",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1802 shell-and-tube exchanger 48\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1802 shell-and-tube exchanger 48\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 7756.2615,
+  "origin": {
+   "E": 1236,
+   "N": 642,
+   "EL": 1332.375
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 42.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 12.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 16,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1802-N1",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1236,
+     "N": 414,
+     "EL": 1300.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-P-18011",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1802-N2",
+    "service": "shell out",
+    "NPS": 16,
+    "cls": "P150",
+    "face": {
+     "E": 1236,
+     "N": 564,
+     "EL": 1370.4063
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "16\"-P150-P-18012",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1802-N3",
+    "service": "tube in",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 1236,
+     "N": 654,
+     "EL": 1366.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-LS-18501",
+    "lineClass": "S150"
+   },
+   {
+    "id": "E-1802-N4",
+    "service": "tube out",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1236,
+     "N": 654,
+     "EL": 1302.125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P150-SC-18502",
+    "lineClass": "C150"
+   }
+  ]
+ },
+ {
+  "tag": "D-1803",
+  "type": "Vertical vessel",
+  "description": "D-1803 vertical vessel 36\" ID × 108\" T/T",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "D-1803 vertical vessel 36\" ID × 108\" T/T",
+  "material": "Grade 36",
+  "weight": 2411.6907,
+  "origin": {
+   "E": 1368,
+   "N": 528,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 108,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 177.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1803-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1368,
+     "N": 502.0625,
+     "EL": 1368
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-18705",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1803-N2",
+    "service": "gas",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1368,
+     "N": 528,
+     "EL": 1402.1875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-18042",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1803-N3",
+    "service": "liquid",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1368,
+     "N": 502.7813,
+     "EL": 1290
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18044",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "D-1804",
+  "type": "Horizontal drum",
+  "description": "D-1804 horizontal vessel 72\" ID × 216\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "D-1804 horizontal vessel 72\" ID × 216\"",
+  "material": "Grade 36",
+  "weight": 7841.4044,
+  "origin": {
+   "E": 1488,
+   "N": 528,
+   "EL": 1362.375
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 216,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 54.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 18.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 43.2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1804-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1506,
+     "N": 528,
+     "EL": 1406.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-18709",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1804-N2",
+    "service": "gas",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1686,
+     "N": 528,
+     "EL": 1405.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18023",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1804-N3",
+    "service": "oil",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1566,
+     "N": 528,
+     "EL": 1319.1563
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "3\"-P150-P-18024",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1804-N4",
+    "service": "water",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1626,
+     "N": 528,
+     "EL": 1318.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-P-18026",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1804-N5",
+    "service": "inlet 2",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1530,
+     "N": 528,
+     "EL": 1405.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18045",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1804-N6",
+    "service": "inlet 3",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1554,
+     "N": 528,
+     "EL": 1405.5938
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18720",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "D-1805",
+  "type": "Vertical vessel",
+  "description": "D-1805 vertical vessel 36\" ID × 108\" T/T",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "D-1805 vertical vessel 36\" ID × 108\" T/T",
+  "material": "Grade 36",
+  "weight": 2411.6907,
+  "origin": {
+   "E": 1824,
+   "N": 528,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 108,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 9.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 177.1875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "D-1805-N1",
+    "service": "inlet",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1824,
+     "N": 502.7813,
+     "EL": 1368
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18715",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1805-N2",
+    "service": "gas",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1824,
+     "N": 528,
+     "EL": 1401.4688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18043",
+    "lineClass": "H150"
+   },
+   {
+    "id": "D-1805-N3",
+    "service": "liquid",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1824,
+     "N": 502.7813,
+     "EL": 1290
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18046",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "C-1802",
+  "type": "COLUMN",
+  "description": "C-1802 column 54\" ID × 960\" T/T with 7 platforms and ladders",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "C-1802 column 54\" ID × 960\" T/T with 7 platforms and ladders",
+  "material": "Grade 36",
+  "weight": 37336.4781,
+  "origin": {
+   "E": 2010,
+   "N": 528,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 54,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 960,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 13.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 1153.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "trays",
+    "label": "Tray count",
+    "value": 30,
+    "unit": "count",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "traySpacing",
+    "label": "Tray spacing",
+    "value": 24,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "firstTray",
+    "label": "First tray elevation (trays centred in the shell)",
+    "value": 325.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-9"
+   },
+   {
+    "name": "platforms",
+    "label": "Platforms (first manway level, then every 15 ft, and the top)",
+    "value": 7,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-32"
+   },
+   {
+    "name": "spacing",
+    "label": "Platform spacing (15 ft)",
+    "value": 180,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-28"
+   },
+   {
+    "name": "platformW",
+    "label": "Platform width",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "handrail",
+    "label": "Handrail height",
+    "value": 42,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-27"
+   },
+   {
+    "name": "platformArc",
+    "label": "Arc the platforms cover about the manways",
+    "value": 180,
+    "unit": "deg",
+    "basis": "stated on drawing"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "C-1802-N1",
+    "service": "feed",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2010,
+     "N": 493.0625,
+     "EL": 1608
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-18713",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1802-N2",
+    "service": "pumparound draw",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 2010,
+     "N": 491.1563,
+     "EL": 1932
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-18031",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1802-N3",
+    "service": "pumparound return",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 2010,
+     "N": 492.8438,
+     "EL": 2256
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18714",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1802-N4",
+    "service": "overhead",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2010,
+     "N": 528,
+     "EL": 2409.9375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18034",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1802-N5",
+    "service": "reboiler draw",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 2010,
+     "N": 492.8438,
+     "EL": 1464
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18035",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1802-N6",
+    "service": "reboiler return",
+    "NPS": 14,
+    "cls": "P150",
+    "face": {
+     "E": 2010,
+     "N": 488.0625,
+     "EL": 1530
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "14\"-P150-P-18036",
+    "lineClass": "H150"
+   },
+   {
+    "id": "C-1802-N7",
+    "service": "bottoms",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 2010,
+     "N": 492.8438,
+     "EL": 1416
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18037",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "E-1805",
+  "type": "Shell-and-tube exchanger",
+  "description": "E-1805 shell-and-tube exchanger 42\" ID × 240\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "E-1805 shell-and-tube exchanger 42\" ID × 240\"",
+  "material": "Grade 36",
+  "weight": 6209.013,
+  "origin": {
+   "E": 2154,
+   "N": 643.5,
+   "EL": 1323.375
+  },
+  "axis": {
+   "E": 0,
+   "N": -1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 42,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 39.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 10.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 14,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "channel",
+    "label": "Channel length",
+    "value": 21,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   },
+   {
+    "name": "coverT",
+    "label": "Channel cover thickness",
+    "value": 3.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-3"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "E-1805-N1",
+    "service": "shell in",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 2154,
+     "N": 414,
+     "EL": 1294.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "6\"-P150-P-18035",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1805-N2",
+    "service": "shell out",
+    "NPS": 14,
+    "cls": "P150",
+    "face": {
+     "E": 2154,
+     "N": 576,
+     "EL": 1357.3125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "14\"-P150-P-18036",
+    "lineClass": "H150"
+   },
+   {
+    "id": "E-1805-N3",
+    "service": "tube in",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 2154,
+     "N": 654,
+     "EL": 1354.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-LS-18505",
+    "lineClass": "S150"
+   },
+   {
+    "id": "E-1805-N4",
+    "service": "tube out",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 2154,
+     "N": 654,
+     "EL": 1296.125
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "2\"-P150-SC-18506",
+    "lineClass": "C150"
+   }
+  ]
+ },
+ {
+  "tag": "H-1801",
+  "type": "PROCESS_UNIT",
+  "description": "H-1801 sulfur plant reaction furnace 72\" × 15' with waste heat boiler 15'",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "H-1801 sulfur plant reaction furnace 72\" × 15' with waste heat boiler 15'",
+  "material": "Grade 36",
+  "weight": 72905.5103,
+  "origin": {
+   "E": 2576,
+   "N": 516,
+   "EL": 1284
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "furnaceL",
+    "label": "Furnace chamber length",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "boilerL",
+    "label": "Boiler length between tubesheets",
+    "value": 180,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "burner",
+    "label": "Burner throat (0.3 D)",
+    "value": 21.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-56"
+   },
+   {
+    "name": "cone",
+    "label": "Rear cone length (30°)",
+    "value": 31.1769,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-56"
+   },
+   {
+    "name": "duct",
+    "label": "Gas duct diameter (0.5 D)",
+    "value": 36,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-37"
+   },
+   {
+    "name": "boilerT",
+    "label": "Waste heat boiler shell thickness (stated)",
+    "value": 1.75,
+    "unit": "in",
+    "basis": "stated on drawing"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "H-1801-N1",
+    "service": "acid gas",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2280,
+     "N": 486.8375,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-18718",
+    "lineClass": "H150"
+   },
+   {
+    "id": "H-1801-N2",
+    "service": "stripper gas",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2280,
+     "N": 544.4438,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18719",
+    "lineClass": "H150"
+   },
+   {
+    "id": "H-1801-N3",
+    "service": "combustion air",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 2280,
+     "N": 516,
+     "EL": 1313.3813
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-18721",
+    "lineClass": "H150"
+   },
+   {
+    "id": "H-1801-N4",
+    "service": "process gas",
+    "NPS": 10,
+    "cls": "P150",
+    "face": {
+     "E": 2860.7972,
+     "N": 516,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 1,
+     "N": 0,
+     "EL": 0
+    },
+    "line": "10\"-P150-P-18048",
+    "lineClass": "H150"
+   },
+   {
+    "id": "H-1801-N5",
+    "service": "feed water in",
+    "NPS": 2,
+    "cls": "P1200",
+    "face": {
+     "E": 2628,
+     "N": 516,
+     "EL": 1403.0438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "2\"-P1200-SC-18507",
+    "lineClass": "C1200"
+   },
+   {
+    "id": "H-1801-N6",
+    "service": "steam out",
+    "NPS": 4,
+    "cls": "P1200",
+    "face": {
+     "E": 2664,
+     "N": 516,
+     "EL": 1404.7313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P1200-LS-18508",
+    "lineClass": "S1200"
+   }
+  ]
+ },
+ {
+  "tag": "X-1802",
+  "type": "PROCESS_UNIT",
+  "description": "X-1802 top loading station, 3\" arm",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "X-1802 top loading station, 3\" arm",
+  "material": "Grade 36",
+  "weight": 4494.9173,
+  "origin": {
+   "E": 2964,
+   "N": 492,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "NPS",
+    "label": "Arm size",
+    "value": 3,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Platform floor above grade (12 ft)",
+    "value": 144,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-67"
+   },
+   {
+    "name": "reach",
+    "label": "Boom reach (8 ft)",
+    "value": 96,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-67"
+   },
+   {
+    "name": "platform",
+    "label": "Platform, square",
+    "value": 96,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-67"
+   },
+   {
+    "name": "riser",
+    "label": "Riser, from 1 ft above grade to 4 ft above the floor",
+    "value": 180,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-67"
+   },
+   {
+    "name": "drop",
+    "label": "Drop pipe",
+    "value": 48,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-67"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "X-1802-N1",
+    "service": "inlet",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 2964,
+     "N": 539.1563,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18722",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "F-1801",
+  "type": "Vertical vessel",
+  "description": "F-1801 vertical vessel 24\" ID × 48\" T/T",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "F-1801 vertical vessel 24\" ID × 48\" T/T",
+  "material": "Grade 36",
+  "weight": 1200.8097,
+  "origin": {
+   "E": 3150,
+   "N": 528,
+   "EL": 1208.25
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.5,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "skirtH",
+    "label": "Skirt height",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 6.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "skirtT",
+    "label": "Skirt thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "baseRingW",
+    "label": "Base ring width",
+    "value": 6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "rods",
+    "label": "Anchor rod count",
+    "value": 8,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   },
+   {
+    "name": "topTangent",
+    "label": "Top tangent line elevation above base",
+    "value": 114.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-1"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "F-1801-N1",
+    "service": "inlet",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 3150,
+     "N": 508.6563,
+     "EL": 1314
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P600-P-18018",
+    "lineClass": "H600"
+   },
+   {
+    "id": "F-1801-N2",
+    "service": "outlet",
+    "NPS": 3,
+    "cls": "P600",
+    "face": {
+     "E": 3150,
+     "N": 508.6563,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P600-P-18019",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "R-1801",
+  "type": "Horizontal drum",
+  "description": "R-1801 horizontal vessel 54\" ID × 162\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "R-1801 horizontal vessel 54\" ID × 162\"",
+  "material": "Grade 36",
+  "weight": 4510.8133,
+  "origin": {
+   "E": 3249,
+   "N": 528,
+   "EL": 1311.375
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 54,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 162,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 45.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 13.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 18,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 32.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "R-1801-N1",
+    "service": "inlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 3270,
+     "N": 528,
+     "EL": 1348.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18051",
+    "lineClass": "H150"
+   },
+   {
+    "id": "R-1801-N2",
+    "service": "outlet",
+    "NPS": 10,
+    "cls": "P150",
+    "face": {
+     "E": 3342,
+     "N": 528,
+     "EL": 1273.6875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "10\"-P150-P-18052",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "R-1802",
+  "type": "Horizontal drum",
+  "description": "R-1802 horizontal vessel 54\" ID × 162\"",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "R-1802 horizontal vessel 54\" ID × 162\"",
+  "material": "Grade 36",
+  "weight": 4510.8133,
+  "origin": {
+   "E": 447,
+   "N": 1152,
+   "EL": 1305.375
+  },
+  "axis": {
+   "E": 1,
+   "N": 0,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "ID",
+    "label": "Inside diameter",
+    "value": 54,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "TT",
+    "label": "Tangent to tangent",
+    "value": 162,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "centreline",
+    "label": "Centreline elevation above the pad",
+    "value": 45.375,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "headDepth",
+    "label": "Head depth (2:1 ellipsoidal)",
+    "value": 13.6875,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleW",
+    "label": "Saddle width",
+    "value": 18,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   },
+   {
+    "name": "saddleZ",
+    "label": "Saddle from tangent line",
+    "value": 32.4,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-2"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "R-1802-N1",
+    "service": "inlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 468,
+     "N": 1152,
+     "EL": 1342.2188
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18055",
+    "lineClass": "H150"
+   },
+   {
+    "id": "R-1802-N2",
+    "service": "outlet",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 546,
+     "N": 1152,
+     "EL": 1268.5313
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": -1
+    },
+    "line": "8\"-P150-P-18056",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "T-1801",
+  "type": "Cone-roof storage tank",
+  "description": "T-1801 storage tank 30' dia × 24', fixed cone roof",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "T-1801 storage tank 30' dia × 24', fixed cone roof",
+  "material": "Grade 36",
+  "weight": 52723.3806,
+  "origin": {
+   "E": 924,
+   "N": 1152,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Diameter",
+    "value": 360,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Shell height",
+    "value": 288,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.3125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "courses",
+    "label": "Shell courses (96 in)",
+    "value": 3,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "roofRise",
+    "label": "Cone roof rise",
+    "value": 11.25,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "stairRise",
+    "label": "Stair rise",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "stairGoing",
+    "label": "Stair going",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "stairW",
+    "label": "Stair width",
+    "value": 30,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "capacity",
+    "label": "Shell capacity, barrels (42 US gal)",
+    "value": 3011.0421,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "T-1801-N1",
+    "service": "inlet",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 906,
+     "N": 966.0585,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18707",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-1801-N2",
+    "service": "outlet",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 942,
+     "N": 966.0585,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18020",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "T-1802",
+  "type": "Cone-roof storage tank",
+  "description": "T-1802 storage tank 50' dia × 48', fixed cone roof",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "T-1802 storage tank 50' dia × 48', fixed cone roof",
+  "material": "Grade 36",
+  "weight": 149739.6828,
+  "origin": {
+   "E": 1644,
+   "N": 1152,
+   "EL": 1206
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Diameter",
+    "value": 600,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "H",
+    "label": "Shell height",
+    "value": 576,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "t",
+    "label": "Shell thickness",
+    "value": 0.3125,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "courses",
+    "label": "Shell courses (96 in)",
+    "value": 6,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "roofRise",
+    "label": "Cone roof rise",
+    "value": 18.75,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-5"
+   },
+   {
+    "name": "stairRise",
+    "label": "Stair rise",
+    "value": 8,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "stairGoing",
+    "label": "Stair going",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "stairW",
+    "label": "Stair width",
+    "value": 30,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   },
+   {
+    "name": "capacity",
+    "label": "Shell capacity, barrels (42 US gal)",
+    "value": 16751.2933,
+    "unit": "count",
+    "basis": "proportioned by SmartWeld rule SW-EQC-44"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "T-1802-N1",
+    "service": "inlet",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1626,
+     "N": 844.978,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "4\"-P150-P-18712",
+    "lineClass": "H150"
+   },
+   {
+    "id": "T-1802-N2",
+    "service": "outlet",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1662,
+     "N": 844.7592,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18028",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1801A",
+  "type": "Centrifugal pump",
+  "description": "P-1801A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1801A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2101.1267,
+  "origin": {
+   "E": 528,
+   "N": 249,
+   "EL": 1213.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 11,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1801A-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 528,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18003",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1801A-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 528,
+     "N": 228,
+     "EL": 1237.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-18004",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1801B",
+  "type": "Centrifugal pump",
+  "description": "P-1801B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1801B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2101.1267,
+  "origin": {
+   "E": 606,
+   "N": 249,
+   "EL": 1213.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 11,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1801B-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 606,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18301",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1801B-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 606,
+     "N": 228,
+     "EL": 1237.0625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-18302",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1802A",
+  "type": "Centrifugal pump",
+  "description": "P-1802A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1802A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1035.5873,
+  "origin": {
+   "E": 816,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1802A-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 816,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18008",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1802A-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 816,
+     "N": 228,
+     "EL": 1234.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18009",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1802B",
+  "type": "Centrifugal pump",
+  "description": "P-1802B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1802B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1035.5873,
+  "origin": {
+   "E": 888,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1802B-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 888,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18303",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1802B-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 888,
+     "N": 228,
+     "EL": 1234.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18304",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1804A",
+  "type": "Centrifugal pump",
+  "description": "P-1804A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1804A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1035.5873,
+  "origin": {
+   "E": 960,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1804A-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 960,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18020",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1804A-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 960,
+     "N": 228,
+     "EL": 1234.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18021",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1804B",
+  "type": "Centrifugal pump",
+  "description": "P-1804B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1804B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1035.5873,
+  "origin": {
+   "E": 1032,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1804B-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1032,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18307",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1804B-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1032,
+     "N": 228,
+     "EL": 1234.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18308",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1803A",
+  "type": "Centrifugal pump",
+  "description": "P-1803A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1803A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 7729.2264,
+  "origin": {
+   "E": 1110,
+   "N": 254,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 22,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 22,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 40,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 16,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1803A-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1110,
+     "N": 216.4375,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18013",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1803A-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P600",
+    "face": {
+     "E": 1110,
+     "N": 228,
+     "EL": 1248.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-18014",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "P-1803B",
+  "type": "Centrifugal pump",
+  "description": "P-1803B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1803B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 7729.2264,
+  "origin": {
+   "E": 1194,
+   "N": 254,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 36,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 22,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 22,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 40,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 16,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1803B-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1194,
+     "N": 216.4375,
+     "EL": 1230
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18305",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1803B-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P600",
+    "face": {
+     "E": 1194,
+     "N": 228,
+     "EL": 1248.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P600-P-18306",
+    "lineClass": "H600"
+   }
+  ]
+ },
+ {
+  "tag": "P-1810A",
+  "type": "Centrifugal pump",
+  "description": "P-1810A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1810A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1035.5873,
+  "origin": {
+   "E": 1314,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1810A-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1314,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18044",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1810A-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1314,
+     "N": 228,
+     "EL": 1234.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18045",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1810B",
+  "type": "Centrifugal pump",
+  "description": "P-1810B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1810B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1035.5873,
+  "origin": {
+   "E": 1386,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1810B-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1386,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18319",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1810B-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1386,
+     "N": 228,
+     "EL": 1234.875
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18320",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1808A",
+  "type": "Centrifugal pump",
+  "description": "P-1808A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1808A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1099.5762,
+  "origin": {
+   "E": 1542,
+   "N": 243,
+   "EL": 1213.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 11,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1808A-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1542,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18024",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1808A-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1542,
+     "N": 228,
+     "EL": 1235.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18025",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1808B",
+  "type": "Centrifugal pump",
+  "description": "P-1808B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1808B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1099.5762,
+  "origin": {
+   "E": 1614,
+   "N": 243,
+   "EL": 1213.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 11,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1808B-S",
+    "service": "suction",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1614,
+     "N": 219.125,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18309",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1808B-D",
+    "service": "discharge",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 1614,
+     "N": 228,
+     "EL": 1235.375
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "3\"-P150-P-18310",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1809A",
+  "type": "Centrifugal pump",
+  "description": "P-1809A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1809A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1035.5873,
+  "origin": {
+   "E": 1686,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1809A-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1686,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18026",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1809A-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1686,
+     "N": 228,
+     "EL": 1235.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-18027",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1809B",
+  "type": "Centrifugal pump",
+  "description": "P-1809B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1809B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1035.5873,
+  "origin": {
+   "E": 1758,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 8,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 15,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1809B-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1758,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18311",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1809B-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 1758,
+     "N": 228,
+     "EL": 1235.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P150-P-18312",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1805A",
+  "type": "Centrifugal pump",
+  "description": "P-1805A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1805A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1590.9989,
+  "origin": {
+   "E": 1830,
+   "N": 243,
+   "EL": 1213
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 12,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 11,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1805A-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1830,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18028",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1805A-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1830,
+     "N": 228,
+     "EL": 1236.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-18029",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "P-1805B",
+  "type": "Centrifugal pump",
+  "description": "P-1805B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1805B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1590.9989,
+  "origin": {
+   "E": 1902,
+   "N": 243,
+   "EL": 1213
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 12,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 11,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1805B-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1902,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18313",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1805B-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 1902,
+     "N": 228,
+     "EL": 1236.8438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-18314",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "P-1806A",
+  "type": "Centrifugal pump",
+  "description": "P-1806A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1806A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1433.5216,
+  "origin": {
+   "E": 1974,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 11,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1806A-S",
+    "service": "suction",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 1974,
+     "N": 217.2188,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-18031",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1806A-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 1974,
+     "N": 228,
+     "EL": 1236.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-18032",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1806B",
+  "type": "Centrifugal pump",
+  "description": "P-1806B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1806B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 1433.5216,
+  "origin": {
+   "E": 2046,
+   "N": 243,
+   "EL": 1214
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 48,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 10,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 11,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 20,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 10,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1806B-S",
+    "service": "suction",
+    "NPS": 6,
+    "cls": "P150",
+    "face": {
+     "E": 2046,
+     "N": 217.2188,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "8\"-P150-P-18315",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1806B-D",
+    "service": "discharge",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2046,
+     "N": 228,
+     "EL": 1236.5625
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "6\"-P150-P-18316",
+    "lineClass": "H150"
+   }
+  ]
+ },
+ {
+  "tag": "P-1807A",
+  "type": "Centrifugal pump",
+  "description": "P-1807A centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1807A centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2291.5152,
+  "origin": {
+   "E": 2124,
+   "N": 249,
+   "EL": 1212.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1807A-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2124,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18037",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1807A-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2124,
+     "N": 228,
+     "EL": 1237.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-18038",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "P-1807B",
+  "type": "Centrifugal pump",
+  "description": "P-1807B centrifugal pump",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "P-1807B centrifugal pump",
+  "material": "Grade 36",
+  "weight": 2291.5152,
+  "origin": {
+   "E": 2202,
+   "N": 249,
+   "EL": 1212.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 1,
+   "EL": 0
+  },
+  "dims": [
+   {
+    "name": "baseW",
+    "label": "Baseplate width",
+    "value": 30,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseL",
+    "label": "Baseplate length",
+    "value": 60,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "casingD",
+    "label": "Casing diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorD",
+    "label": "Motor diameter",
+    "value": 13,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "motorL",
+    "label": "Motor length",
+    "value": 24,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "baseT",
+    "label": "Baseplate thickness",
+    "value": 1,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   },
+   {
+    "name": "shaftY",
+    "label": "Shaft centreline above the pad",
+    "value": 11.5,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQ-4"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "P-1807B-S",
+    "service": "suction",
+    "NPS": 4,
+    "cls": "P150",
+    "face": {
+     "E": 2202,
+     "N": 217.4375,
+     "EL": 1224
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "6\"-P150-P-18317",
+    "lineClass": "H150"
+   },
+   {
+    "id": "P-1807B-D",
+    "service": "discharge",
+    "NPS": 3,
+    "cls": "P300",
+    "face": {
+     "E": 2202,
+     "N": 228,
+     "EL": 1237.3438
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "4\"-P300-P-18318",
+    "lineClass": "H300"
+   }
+  ]
+ },
+ {
+  "tag": "H-1802",
+  "type": "PROCESS_UNIT",
+  "description": "H-1802 incinerator 72\" × 20' with stack 100'",
+  "area": "U18",
+  "areaName": "Sulfur block",
+  "designation": "H-1802 incinerator 72\" × 20' with stack 100'",
+  "material": "Grade 36",
+  "weight": 35590.2046,
+  "origin": {
+   "E": 4364,
+   "N": 0,
+   "EL": 1211.5
+  },
+  "axis": {
+   "E": 0,
+   "N": 0,
+   "EL": 1
+  },
+  "dims": [
+   {
+    "name": "D",
+    "label": "Chamber inside diameter",
+    "value": 72,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "L",
+    "label": "Chamber length",
+    "value": 240,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "stackH",
+    "label": "Stack height",
+    "value": 1200,
+    "unit": "in",
+    "basis": "stated on drawing"
+   },
+   {
+    "name": "burner",
+    "label": "Burner throat (0.3 D)",
+    "value": 21.6,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-58"
+   },
+   {
+    "name": "stackD",
+    "label": "Stack diameter (0.6 D)",
+    "value": 43.2,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-58"
+   },
+   {
+    "name": "cone",
+    "label": "Rear cone length (30°)",
+    "value": 24.9415,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-58"
+   }
+  ],
+  "nozzles": [
+   {
+    "id": "H-1802-N1",
+    "service": "amine flash gas",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 4398,
+     "N": -43.3438,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18702",
+    "lineClass": "H150"
+   },
+   {
+    "id": "H-1802-N2",
+    "service": "degassing drum gas",
+    "NPS": 3,
+    "cls": "P150",
+    "face": {
+     "E": 4398,
+     "N": 43.3438,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": 1,
+     "EL": 0
+    },
+    "line": "3\"-P150-P-18710",
+    "lineClass": "H150"
+   },
+   {
+    "id": "H-1802-N3",
+    "service": "tail gas",
+    "NPS": 8,
+    "cls": "P150",
+    "face": {
+     "E": 4398,
+     "N": 0,
+     "EL": 1329.9688
+    },
+    "facing": {
+     "E": 0,
+     "N": 0,
+     "EL": 1
+    },
+    "line": "8\"-P150-P-18058",
+    "lineClass": "H150"
+   },
+   {
+    "id": "H-1802-N4",
+    "service": "fuel gas",
+    "NPS": 2,
+    "cls": "P150",
+    "face": {
+     "E": 4350,
+     "N": -27.475,
+     "EL": 1284
+    },
+    "facing": {
+     "E": 0,
+     "N": -1,
+     "EL": 0
+    },
+    "line": "2\"-P150-P-18519",
+    "lineClass": "H150"
+   }
+  ]
+ }
+]

@@ -1,0 +1,791 @@
+{
+ "header": {
+  "line": "12\"-P600-P-14303",
+  "lineClass": "H600",
+  "fluid": "Hydrocarbon process",
+  "service": "P",
+  "NPS": 12,
+  "cls": "P600",
+  "designPressure": 600,
+  "insulated": false,
+  "kind": "routed",
+  "from": "tap 12\"-P600-P-14014",
+  "to": "A-1401B-N1",
+  "flow": "tap 12\"-P600-P-14014 → A-1401B-N1",
+  "joint": "BW"
+ },
+ "items": [
+  {
+   "tag": "12\"-P600-P-14303/el1",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "elbow",
+   "itemNo": 1,
+   "description": "ELBOW 90° R = 5/3 OD 12\" P600",
+   "designation": "EL90-12-P600",
+   "key": "EL|12|P600|90",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 121.1568,
+   "spool": "12\"-P600-P-14303-SP01",
+   "a": {
+    "E": 618,
+    "N": -198,
+    "EL": 1852
+   },
+   "b": {
+    "E": 638,
+    "N": -198,
+    "EL": 1872
+   },
+   "centre": {
+    "E": 628,
+    "N": -198,
+    "EL": 1862
+   },
+   "axis": {
+    "E": 0.7071,
+    "N": 0,
+    "EL": 0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/p2",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 12\" P600 BEVELLED ENDS",
+   "designation": "PIPE12-P600",
+   "key": "PIPE|12|P600|176.000",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 176,
+   "weight": 683.5009,
+   "spool": "12\"-P600-P-14303-SP01",
+   "a": {
+    "E": 638,
+    "N": -198,
+    "EL": 1872
+   },
+   "b": {
+    "E": 814,
+    "N": -198,
+    "EL": 1872
+   },
+   "centre": {
+    "E": 726,
+    "N": -198,
+    "EL": 1872
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/el3",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "elbow",
+   "itemNo": 1,
+   "description": "ELBOW 90° R = 5/3 OD 12\" P600",
+   "designation": "EL90-12-P600",
+   "key": "EL|12|P600|90",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 121.1568,
+   "spool": "12\"-P600-P-14303-SP01",
+   "a": {
+    "E": 814,
+    "N": -198,
+    "EL": 1872
+   },
+   "b": {
+    "E": 834,
+    "N": -198,
+    "EL": 1852
+   },
+   "centre": {
+    "E": 824,
+    "N": -198,
+    "EL": 1862
+   },
+   "axis": {
+    "E": 0.7071,
+    "N": 0,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/p4",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 12\" P600 BEVELLED ENDS",
+   "designation": "PIPE12-P600",
+   "key": "PIPE|12|P600|34.500",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 34.5,
+   "weight": 133.9817,
+   "spool": "12\"-P600-P-14303-SP01",
+   "a": {
+    "E": 834,
+    "N": -198,
+    "EL": 1852
+   },
+   "b": {
+    "E": 834,
+    "N": -198,
+    "EL": 1817.5
+   },
+   "centre": {
+    "E": 834,
+    "N": -198,
+    "EL": 1834.75
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/B6",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 12 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 12\" P600",
+   "designation": "STUDS 12×0.875x5.75 (12-P600)",
+   "key": "STUDS|12|P600|3.500",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 17.0685,
+   "spool": "loose",
+   "a": {
+    "E": 834,
+    "N": -198,
+    "EL": 1809.4375
+   },
+   "b": {
+    "E": 834,
+    "N": -198,
+    "EL": 1815.1875
+   },
+   "centre": {
+    "E": 834,
+    "N": -198,
+    "EL": 1812.3125
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/B5",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 12\" P600 RAISED FACE",
+   "designation": "FLG12-P600",
+   "key": "WNF|12|P600",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 76.6553,
+   "spool": "12\"-P600-P-14303-SP02",
+   "a": {
+    "E": 834,
+    "N": -198,
+    "EL": 1812.375
+   },
+   "b": {
+    "E": 834,
+    "N": -198,
+    "EL": 1817.5
+   },
+   "centre": {
+    "E": 834,
+    "N": -198,
+    "EL": 1814.9375
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/B4",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "gasket",
+   "itemNo": 5,
+   "description": "GASKET 12\" P600 COMPRESSED SHEET",
+   "designation": "GASKET12-P600",
+   "key": "GSK|12|P600",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 834,
+    "N": -198,
+    "EL": 1812.25
+   },
+   "b": {
+    "E": 834,
+    "N": -198,
+    "EL": 1812.375
+   },
+   "centre": {
+    "E": 834,
+    "N": -198,
+    "EL": 1812.3125
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/B3",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 12 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 12\" P600",
+   "designation": "STUDS 12×0.875x5.75 (12-P600)",
+   "key": "STUDS|12|P600|3.500",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 17.0685,
+   "spool": "loose",
+   "a": {
+    "E": 834,
+    "N": -198,
+    "EL": 1786.8125
+   },
+   "b": {
+    "E": 834,
+    "N": -198,
+    "EL": 1792.5625
+   },
+   "centre": {
+    "E": 834,
+    "N": -198,
+    "EL": 1789.6875
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/B2",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "valve",
+   "itemNo": 6,
+   "description": "VALVE, GATE, WEDGE, OS&Y 12\" P600",
+   "designation": "GATE12-P600",
+   "key": "VLV|GATE|12|P600",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 977.3563,
+   "spool": "loose",
+   "a": {
+    "E": 834,
+    "N": -198,
+    "EL": 1789.75
+   },
+   "b": {
+    "E": 834,
+    "N": -198,
+    "EL": 1812.25
+   },
+   "centre": {
+    "E": 834,
+    "N": -198,
+    "EL": 1801
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/B1",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "kind": "gasket",
+   "itemNo": 5,
+   "description": "GASKET 12\" P600 COMPRESSED SHEET",
+   "designation": "GASKET12-P600",
+   "key": "GSK|12|P600",
+   "NPS": 12,
+   "cls": "P600",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 834,
+    "N": -198,
+    "EL": 1789.625
+   },
+   "b": {
+    "E": 834,
+    "N": -198,
+    "EL": 1789.75
+   },
+   "centre": {
+    "E": 834,
+    "N": -198,
+    "EL": 1789.6875
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": 1
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "12\"-P600-P-14303/W1",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P600",
+   "joins": [
+    "12\"-P600-P-14014/T:12\"-P600-P-14303",
+    "12\"-P600-P-14303/el1"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "12\"-P600-P-14014-SP02",
+    "12\"-P600-P-14303-SP01"
+   ],
+   "at": {
+    "E": 618,
+    "N": -198,
+    "EL": 1852
+   },
+   "key": "BW|12|P600",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/W2",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P600",
+   "joins": [
+    "12\"-P600-P-14303/el1",
+    "12\"-P600-P-14303/p2"
+   ],
+   "shopField": "shop",
+   "spool": "12\"-P600-P-14303-SP01",
+   "spools": [
+    "12\"-P600-P-14303-SP01",
+    "12\"-P600-P-14303-SP01"
+   ],
+   "at": {
+    "E": 638,
+    "N": -198,
+    "EL": 1872
+   },
+   "key": "BW|12|P600",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/W3",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P600",
+   "joins": [
+    "12\"-P600-P-14303/p2",
+    "12\"-P600-P-14303/el3"
+   ],
+   "shopField": "shop",
+   "spool": "12\"-P600-P-14303-SP01",
+   "spools": [
+    "12\"-P600-P-14303-SP01",
+    "12\"-P600-P-14303-SP01"
+   ],
+   "at": {
+    "E": 814,
+    "N": -198,
+    "EL": 1872
+   },
+   "key": "BW|12|P600",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/W4",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P600",
+   "joins": [
+    "12\"-P600-P-14303/el3",
+    "12\"-P600-P-14303/p4"
+   ],
+   "shopField": "shop",
+   "spool": "12\"-P600-P-14303-SP01",
+   "spools": [
+    "12\"-P600-P-14303-SP01",
+    "12\"-P600-P-14303-SP01"
+   ],
+   "at": {
+    "E": 834,
+    "N": -198,
+    "EL": 1852
+   },
+   "key": "BW|12|P600",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "12\"-P600-P-14303/W5",
+   "line": "12\"-P600-P-14303",
+   "lineClass": "H600",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P600",
+   "joins": [
+    "12\"-P600-P-14303/p4",
+    "12\"-P600-P-14303/B5"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "12\"-P600-P-14303-SP01",
+    "12\"-P600-P-14303-SP02"
+   ],
+   "at": {
+    "E": 834,
+    "N": -198,
+    "EL": 1817.5
+   },
+   "key": "BW|12|P600",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [],
+ "spools": [
+  {
+   "id": "12\"-P600-P-14303-SP01",
+   "items": [
+    "12\"-P600-P-14303/el1",
+    "12\"-P600-P-14303/p2",
+    "12\"-P600-P-14303/el3",
+    "12\"-P600-P-14303/p4"
+   ],
+   "shopWelds": [
+    "12\"-P600-P-14303/W2",
+    "12\"-P600-P-14303/W3",
+    "12\"-P600-P-14303/W4"
+   ],
+   "weight": 1063.476
+  },
+  {
+   "id": "12\"-P600-P-14303-SP02",
+   "items": [
+    "12\"-P600-P-14303/B5"
+   ],
+   "shopWelds": [],
+   "weight": 76.6553
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "ELBOW 90° R = 5/3 OD 12\" P600",
+   "qty": 2,
+   "weight": 242.3137
+  },
+  {
+   "itemNo": 2,
+   "description": "PIPE 12\" P600 BEVELLED ENDS",
+   "qty": 2,
+   "length": 210.5,
+   "weight": 817.4826
+  },
+  {
+   "itemNo": 3,
+   "description": "STUD SET 12 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 12\" P600",
+   "qty": 2,
+   "weight": 34.137
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 12\" P600 RAISED FACE",
+   "qty": 1,
+   "weight": 76.6553
+  },
+  {
+   "itemNo": 5,
+   "description": "GASKET 12\" P600 COMPRESSED SHEET",
+   "qty": 2,
+   "weight": 0
+  },
+  {
+   "itemNo": 6,
+   "description": "VALVE, GATE, WEDGE, OS&Y 12\" P600",
+   "qty": 1,
+   "weight": 977.3563
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 618,
+    "N": -198,
+    "EL": 1852
+   },
+   "kind": "elbow start",
+   "ref": "12\"-P600-P-14303/el1"
+  },
+  {
+   "at": {
+    "E": 618,
+    "N": -198,
+    "EL": 1872
+   },
+   "kind": "elbow work point",
+   "ref": "12\"-P600-P-14303/el1"
+  },
+  {
+   "at": {
+    "E": 638,
+    "N": -198,
+    "EL": 1872
+   },
+   "kind": "elbow end",
+   "ref": "12\"-P600-P-14303/el1"
+  },
+  {
+   "at": {
+    "E": 814,
+    "N": -198,
+    "EL": 1872
+   },
+   "kind": "pipe end",
+   "ref": "12\"-P600-P-14303/p2"
+  },
+  {
+   "at": {
+    "E": 834,
+    "N": -198,
+    "EL": 1872
+   },
+   "kind": "elbow work point",
+   "ref": "12\"-P600-P-14303/el3"
+  },
+  {
+   "at": {
+    "E": 834,
+    "N": -198,
+    "EL": 1852
+   },
+   "kind": "elbow end",
+   "ref": "12\"-P600-P-14303/el3"
+  },
+  {
+   "at": {
+    "E": 834,
+    "N": -198,
+    "EL": 1817.5
+   },
+   "kind": "pipe end",
+   "ref": "12\"-P600-P-14303/p4"
+  },
+  {
+   "at": {
+    "E": 834,
+    "N": -198,
+    "EL": 1812.375
+   },
+   "kind": "flange end",
+   "ref": "12\"-P600-P-14303/B5"
+  },
+  {
+   "at": {
+    "E": 834,
+    "N": -198,
+    "EL": 1812.25
+   },
+   "kind": "gasket end",
+   "ref": "12\"-P600-P-14303/B4"
+  },
+  {
+   "at": {
+    "E": 834,
+    "N": -198,
+    "EL": 1789.75
+   },
+   "kind": "valve end",
+   "ref": "12\"-P600-P-14303/B2"
+  },
+  {
+   "at": {
+    "E": 834,
+    "N": -198,
+    "EL": 1789.625
+   },
+   "kind": "gasket end",
+   "ref": "12\"-P600-P-14303/B1"
+  }
+ ],
+ "totals": {
+  "items": 10,
+  "welds": 5,
+  "fieldWelds": 2,
+  "supports": 0,
+  "pipeLength": 210.5,
+  "weight": 2147.9449
+ }
+}

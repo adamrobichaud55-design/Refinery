@@ -164,7 +164,11 @@ const EXAMINATION: Record<Category, string> = { D: 'visual', Normal: 'visual, an
 const GROUP: Record<string, string> = { P: 'H', RV: 'H', CWS: 'W', CWR: 'W', W: 'W', LS: 'S', SC: 'C', IA: 'G', PA: 'G', N: 'G', FL: 'F' };
 const fmt = (n: number) => (n === 0.75 ? '3/4' : n === 0.5 ? '1/2' : String(n));   // as SW-LL-1 writes a size: a number's parts are split at its hyphens, so a size carries none
 /** SW-REF-3: a line's number: size, class, the generator's service letter, and unit × 1000 + a running number */
-export const lineNumber = (unit: number, seq: number, NPS: number, cls: string, fluid: string) => `${fmt(NPS)}"-${cls}-${FLUIDS[fluid].svc}-${unit * 1000 + seq}`;
+/** SW-RPI-3: the service a line is numbered and built as: a line of the flowsheet as a process line whatever it carries; a utility header or a connection that taps one by its fluid's letter, but water and plant gases above class P300 as process lines */
+export const serviceOf = (fluid: string, cls: string, utility: boolean): string => { if (!utility) return 'P'; const sv = FLUIDS[fluid].svc; return (GROUP[sv] === 'W' || GROUP[sv] === 'G') && Number(cls.slice(1)) > 300 ? 'P' : sv; };
+/** SW-REF-3: the running numbers 401 to 600 of a unit are its utility headers and the connections that tap them */
+export const utilitySeq = (seq: number) => seq > 400 && seq <= 600;
+export const lineNumber = (unit: number, seq: number, NPS: number, cls: string, fluid: string) => `${fmt(NPS)}"-${cls}-${serviceOf(fluid, cls, utilitySeq(seq))}-${unit * 1000 + seq}`;
 export type MaterialCode = 'CS' | 'C1' | 'C5' | 'SS';
 export const MATERIALS: Record<MaterialCode, { name: string; pipe: string; fittings: string; flanges: string }> = {
   CS: { name: 'carbon steel', pipe: 'A106-B', fittings: 'A234-WPB', flanges: 'A105' }, C1: { name: '1-1/4 Cr alloy steel', pipe: 'A335-P11', fittings: 'A234-WP11', flanges: 'A182-F11' },
@@ -184,6 +188,12 @@ export function severity(cls: string, fluid: string, phase: string, cat: Categor
   const medium = cat === 'M' ? 5 : cat === 'D' ? 1 : flammable ? (phase !== 'liquid' || ['LP', 'HY', 'RX', 'FL'].includes(fluid) ? 4 : 3) : 2;
   return { level: Math.max(pressure, medium), pressure, medium };
 }
+export const BOLTING = 'A193-B7 studs, A194-2H nuts';
+/** SW-REG-4, SW-REG-6, SW-REG-8: what follows from a line's fluid, phase, pipe class, design conditions and material: its fluid service, severity, line class, examination, leak test and piping system number */
+export function classify(unit: number, fluid: string, phase: string, pipeClass: string, designP: number, designT: number, mat: MaterialCode, utility: boolean) {
+  const cat = fluidService(fluid, designP, designT), sv = severity(pipeClass, fluid, phase, cat), lineClass = `${GROUP[serviceOf(fluid, pipeClass, utility)] ?? 'H'}${pipeClass.slice(1)}-${mat}-${cat === 'Normal' ? 'N' : cat}${sv.medium}`;
+  return { fluidService: cat, severity: sv, lineClass, examination: EXAMINATION[cat], leakTest: cat === 'D' ? `hydrostatic at ${Math.ceil(1.5 * designP)} psi, or an initial service test` : `hydrostatic at ${Math.ceil(1.5 * designP)} psi`, registration: designCrn(`piping:${unit}:${lineClass}`) };
+}
 export interface LineRecord {
   demonstration: true; number: string; unit: number; kind: 'process' | 'utility connection'; from: string; to: string; fluid: string; fluidName: string; hazard: string; phase: string;
   lbh: number; operating: { T: number; P: number }; design: Field<{ T: number; P: number; fullVacuum: boolean }>; size: Field<number>; pipeClass: Field<string>;
@@ -198,13 +208,12 @@ export function lineRecords(): LineRecord[] {
   if (lnCache) return lnCache;
   const M = processModel(), Z = sizing(), out: LineRecord[] = [];
   const rec = (sh: UnitSheet, seq: number, kind: LineRecord['kind'], from: string, to: string, fluid: string, phase: string, lbh: number, T: number, P: number, z: { NPS: number; cls: string; designP: number; designT: number; vacuum?: boolean }, overhead: boolean, boilerTag?: string): LineRecord => {
-    const unit = sh.no, cat = fluidService(fluid, z.designP, z.designT), mat = pipeMaterial(unit, fluid, z.designT, overhead), m = MATERIALS[mat];
-    const sv = severity(z.cls, fluid, phase, cat), cls = `${GROUP[FLUIDS[fluid].svc] ?? 'H'}${z.cls.slice(1)}-${mat}-${cat === 'Normal' ? 'N' : cat}${sv.medium}`;
+    const unit = sh.no, mat = pipeMaterial(unit, fluid, z.designT, overhead), m = MATERIALS[mat], c = classify(unit, fluid, phase, z.cls, z.designP, z.designT, mat, utilitySeq(seq)), cat = c.fluidService, sv = c.severity, cls = c.lineClass;
     return {
       demonstration: true, number: lineNumber(unit, seq, z.NPS, z.cls, fluid), unit, kind, from, to, fluid, fluidName: FLUIDS[fluid].name, hazard: FLUIDS[fluid].hazard, phase, lbh: Math.round(lbh), operating: { T: Math.round(T), P: Math.round(P) },
       design: model({ T: z.designT, P: z.designP, fullVacuum: !!z.vacuum }), size: model(z.NPS), pipeClass: model(z.cls), lineClass: model(cls), severity: model(sv), code: recalled('ASME B31.3 Process Piping'),
-      fluidService: recalled(cat), examination: recalled(EXAMINATION[cat]), leakTest: recalled(cat === 'D' ? `hydrostatic at ${Math.ceil(1.5 * z.designP)} psi, or an initial service test` : `hydrostatic at ${Math.ceil(1.5 * z.designP)} psi`), threadedJoints: recalled(cat !== 'M'),
-      materials: recalled({ code: mat, pipe: m.pipe, fittings: m.fittings, flanges: m.flanges, bolting: 'A193-B7 studs, A194-2H nuts' }), pipingSystemRegistration: invented(designCrn(`piping:${unit}:${cls}`)),
+      fluidService: recalled(cat), examination: recalled(c.examination), leakTest: recalled(c.leakTest), threadedJoints: recalled(cat !== 'M'),
+      materials: recalled({ code: mat, pipe: m.pipe, fittings: m.fittings, flanges: m.flanges, bolting: BOLTING }), pipingSystemRegistration: invented(c.registration),
       ...(boilerTag ? { boilerExternalPiping: recalled(`from ${boilerTag} to its first stop valve: ASME Section I / B31.1, report P-4A; B31.3 beyond`) } : {}),
       ...(z.designT >= 800 ? { elevatedTemperature: recalled('elevated-temperature provisions may apply: for the owner to decide') } : {}),
     };

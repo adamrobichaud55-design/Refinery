@@ -154,7 +154,7 @@ export function registryDocument(): string {
   out.push('', '## Not yet in the model', '');
   out.push('- Relief valves are named on the records and set at the working pressure; the valves themselves enter the 3D model with the piping.');
   out.push('- Connections listed on a record are the item\'s process and utility connections; manways, vents, drains and instrument connections are not listed.');
-  out.push('- A registration number for each pipe piece, fitting, flange and valve follows from its line\'s piping system and its fitting category once the piping is generated.');
+  out.push('- A registration number for each pipe piece, fitting, flange and valve follows from its line\'s piping system and its fitting category once a unit\'s piping is generated: the piped units have theirs in `docs/REFINERY-PIPING-REGISTER.md` and `public/refinery/registry/piping/` (SW-REG-9); the others follow as they are piped.');
   if (noWeight.length) out.push(`- No weight yet on ${noWeight.join(', ')}: their bodies are placed with the offsite units.`);
   out.push('', '## Files', '');
   out.push(table(['File', 'Content'], [['`public/refinery/registry/equipment.json`', 'every pressure equipment record, the heater coils and the packaged components'], ['`public/refinery/registry/lines.json`', 'the line classes and every line record'], ['`public/refinery/registry/registration.json`', 'the registration index'],

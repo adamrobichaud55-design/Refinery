@@ -31,7 +31,7 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
   });
   it('bodies stand on the 6 in grid, in rows that do not overlap, each side of the rack', () => {
     for (const { cell: c } of all) {
-      for (const s of c.spots) { expect(Math.abs(s.x % 6), s.tag).toBe(0); expect(Math.abs(s.z % 6), s.tag).toBe(0); expect(s.x, s.tag).toBeGreaterThan(RACK.start); if (s.lane !== 'heater' && s.lane !== 'air') expect(Math.abs(s.z), s.tag).toBeGreaterThan(RACK.half); if (s.lane === 'air') { expect(s.z, s.tag).toBe(0); expect(s.yt!, s.tag).toBe(DECK + 134); expect(s.x + s.lx / 2, s.tag).toBeLessThanOrEqual(c.rack.x1); } }
+      for (const s of c.spots) { expect(Math.abs(s.x % 6), s.tag).toBe(0); expect(Math.abs(s.z % 6), s.tag).toBe(0); expect(s.x, s.tag).toBeGreaterThan(RACK.start); if (s.lane !== 'heater' && s.lane !== 'air') expect(Math.abs(s.z), s.tag).toBeGreaterThan(c.rack.halfWidth); if (s.lane === 'air') { expect(s.z, s.tag).toBe(0); expect(s.yt!, s.tag).toBe(DECK + 134); expect(s.x + s.lx / 2, s.tag).toBeLessThanOrEqual(c.rack.x1); } }
       for (let i = 0; i < c.spots.length; i++) for (let j = i + 1; j < c.spots.length; j++) { const a = c.spots[i], b = c.spots[j]; if (!a.lx || !b.lx || (a.lane === 'air') !== (b.lane === 'air')) continue; /* the air coolers stand over the rack, above the rest */ expect(Math.abs(a.x - b.x) - (a.lx + b.lx) / 2 >= -1 || Math.abs(a.z - b.z) - (a.lz + b.lz) / 2 >= -1, `${a.tag} and ${b.tag}`).toBe(true); }
       expect(c.rack.x0).toBe(RACK.start); expect((c.rack.x1 - c.rack.x0) % RACK.bent).toBe(0); expect(c.rack.tiers).toEqual([192, 264, 336]);
     }
@@ -45,14 +45,27 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
         if (s.lx > 0) { expect(mn[2], s.tag).toBeGreaterThanOrEqual(s.z - s.lz / 2 - 6.01); expect(mx[2], s.tag).toBeLessThanOrEqual(s.z + s.lz / 2 + 6.01); }
         expect(mx[1], s.tag).toBeLessThanOrEqual(s.h + 0.01);
         // nothing that carries a body is below the top of its pad, save what stands in the ground
-        if (s.shape === 'box' && !['pit', 'basin', 'coolingtower'].includes(s.kind) && s.lane !== 'air') expect(Math.min(...bs.filter(b => !/anchor|holding-down|bolts|studs and nuts/i.test(b.name)).map(b => b.mn[1])), s.tag).toBeCloseTo(PAD, 3);
+        if (s.shape === 'box' && !['pit', 'basin', 'coolingtower'].includes(s.kind) && s.lane !== 'air') { const low = Math.min(...bs.filter(b => !/anchor|holding-down|bolts|studs and nuts/i.test(b.name)).map(b => b.mn[1])); expect(low, s.tag).toBeGreaterThanOrEqual(PAD - 1e-3); expect(low, s.tag).toBeLessThan(PAD + 6); }   /* on its pad, which is up to 6 in thicker where the body's axis is brought onto the grid */
       }
     }
   });
+  it('a pit stands in the ground, its roof slab\'s top 1 ft above grade, beyond the outer ends of the condensers that drain into it (SW-CELL-3, SW-CELL-4)', () => {
+    let pits = 0;
+    for (const { cell: c } of all) for (const s of c.spots.filter(q => q.kind === 'pit')) { pits++;
+      const cond = c.spots.filter(q => q.kind === 'condenser'); if (cond.length) { expect(s.side).toBe(cond[0].side); expect(Math.abs(s.x - cond.reduce((a, q) => a + q.x, 0) / cond.length)).toBeLessThanOrEqual(3); expect(s.z - s.lz / 2 - Math.max(...cond.map(q => q.z + q.lz / 2))).toBeGreaterThanOrEqual(96 - 6); expect(s.z - s.lz / 2 - Math.max(...cond.map(q => q.z + q.lz / 2))).toBeLessThan(160); }   /* beyond the outer ends of the condensers that drain into it, across an 8 ft way, its middle at theirs */ const bs = bodySolids(c, s.tag), roof = bs.filter(b => /^roof slab/.test(b.name)); expect(roof.length).toBeGreaterThan(0); expect(Math.max(...roof.map(b => b.mx[1]))).toBeCloseTo(12, 6); expect(Math.min(...bs.map(b => b.mn[1]))).toBeLessThan(-60); }
+    expect(pits).toBeGreaterThan(0);
+  });
   it('pumps face the rack with their suction ends on one line; exchangers are square to it, channel end outward; heaters stand 50 ft beyond it', () => {
     for (const { cell: c } of all) {
-      for (const s of c.spots.filter(q => q.lane === 'pump')) { expect(Math.abs(s.z) - s.lz / 2, s.tag).toBeCloseTo(RACK.half + 60, 0); expect(s.shape).toBe('pump'); expect(s.yc!).toBeGreaterThan(PUMP_PAD); }
-      for (const s of c.spots.filter(q => q.shape === 'hx')) { expect(s.side).toBe(1); expect(s.axis).toBe('z'); expect(s.o![2], s.tag).toBeGreaterThan(RACK.half + 240); }
+      for (const side of [1, -1]) { const row = c.spots.filter(q => q.lane === 'pump' && q.side === side), off = row.length ? Math.abs(row[0].z) - row[0].lz / 2 - c.rack.halfWidth : 60; expect(off).toBeGreaterThanOrEqual(60); for (const s of row) expect(Math.abs(s.z) - s.lz / 2, s.tag).toBeCloseTo(c.rack.halfWidth + off, 0); }   /* one line for the row, 5 ft from the columns or as far as its largest suction valve set needs */
+      for (const s of c.spots.filter(q => q.lane === 'pump')) { expect(s.shape).toBe('pump'); expect(s.yc!).toBeGreaterThan(PUMP_PAD); }
+      // SW-CELL-3: a reboiler stands on the vessels' side, next after the column it boils for and in its row, near enough for its two lines to be laid direct (SW-RT-1)
+      const sheet = M.sheet(c.unit), boils = new Map(sheet.lines.filter(l => l.from.k === 'eq' && l.to.k === 'eq' && l.to.port === 'reboiler return' && sheet.equip.get(l.from.tag)?.kind === 'hx').map(l => [(l.from as { tag: string }).tag, (l.to as { tag: string }).tag]));
+      for (const s of c.spots.filter(q => q.shape === 'hx')) {
+        const col = boils.has(s.item) ? c.spots.find(q => q.item === boils.get(s.item)) : undefined;
+        expect(s.side, s.tag).toBe(col ? -1 : 1); expect(s.axis).toBe('z'); expect(s.side * s.o![2], s.tag).toBeGreaterThan(c.rack.halfWidth + 240);
+        if (col) { expect(s.z, s.tag).toBe(col.z); expect(s.x - col.x, s.tag).toBeGreaterThan(col.R! + 54 + 36 + s.R! - 6.01); expect(s.x - col.x, s.tag).toBeLessThanOrEqual(240); expect(c.spots.filter(q => q.side === -1 && q.z === col.z && q.x > col.x && q.x < s.x).length, s.tag).toBe(0); }
+      }
       const last = Math.max(...c.spots.filter(q => q.lane !== 'heater').map(q => q.x + q.lx / 2));
       for (const s of c.spots.filter(q => q.lane === 'heater')) { expect(s.x - s.lx / 2, s.tag).toBeGreaterThanOrEqual(last + 600 - 6); expect(s.x - s.lx / 2 - c.rack.x1, s.tag).toBeGreaterThanOrEqual(114); expect(s.x - s.lx / 2 - c.rack.x1, s.tag).toBeLessThan(360); }
     }
@@ -61,7 +74,7 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
     for (const { cell: c, plot: p } of all) {
       const tags = (t: string) => c.interior.instances.filter(i => i.tags.includes(t));
       if (c.spots.some(s => s.lane === 'air')) { expect(tags('cooler-deck').length, `unit ${p.unit}`).toBeGreaterThan(6); expect(DECK).toBe(RACK.tiers[2] + 108); }
-      for (const z of [c.yard.neg, c.yard.pos]) if (z !== undefined) { expect(Math.abs(z)).toBeGreaterThanOrEqual(RACK.half + 78); for (const s of c.spots.filter(q => q.lane === 'pump' && Math.sign(q.z) === Math.sign(z))) expect(Math.abs(z), s.tag).toBeGreaterThanOrEqual(Math.abs(s.z) + s.lz / 2 + 12); }
+      for (const z of [c.yard.neg, c.yard.pos]) if (z !== undefined) { expect(Math.abs(z)).toBeGreaterThanOrEqual(c.rack.halfWidth + 78); for (const s of c.spots.filter(q => q.lane === 'pump' && Math.sign(q.z) === Math.sign(z))) expect(Math.abs(z), s.tag).toBeGreaterThanOrEqual(Math.abs(s.z) + s.lz / 2 + 12); }
       if (c.yard.neg !== undefined || c.yard.pos !== undefined) expect(tags('yard-support').length).toBeGreaterThan(4);
       expect(YARD).toBeGreaterThan(RACK.tiers[2]);
     }

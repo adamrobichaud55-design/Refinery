@@ -23,8 +23,10 @@ import { FLUID_GROUPS, classColour, type FluidGroup } from '../generator/linecla
 let cached: Promise<PipingModel> | null = null;
 /** the plant shown (SW-PLANT-2): plant 1's files sit at the root, the others under plants/<id>/ */
 export let BASE = '';
-export function setPlantBase(id: string) { BASE = id === 'P1' ? '' : `plants/${id}/`; cached = null; gtCache.clear(); eqCache = null; impIdx = null; woIdx = null; }
-export const loadPiping = (): Promise<PipingModel> => (cached ??= fetch(BASE + 'plant-piping.json').then((r): Promise<PipingModel> => { if (!r.ok) throw new Error('plant-piping.json not found: run npm run gen:piping'); return r.json(); }));
+/** where the plant's piping model is: beside its other files; a piped unit of plant 3 (id R<unit>) keeps its model in refinery/piping/ and its exports in refinery/units/ */
+let PIPING = 'plant-piping.json';
+export function setPlantBase(id: string) { const r = /^R(\d+)$/.exec(id); BASE = r ? `refinery/units/unit-${r[1]}/` : id === 'P1' ? '' : `plants/${id}/`; PIPING = r ? `refinery/piping/unit-${r[1]}.json` : `${BASE}plant-piping.json`; cached = null; gtCache.clear(); eqCache = null; impIdx = null; woIdx = null; }
+export const loadPiping = (): Promise<PipingModel> => (cached ??= fetch(PIPING).then((r): Promise<PipingModel> => { if (!r.ok) throw new Error(`${PIPING} not found: run npm run gen:piping`); return r.json(); }));
 
 type Placed = { key: string; T: Mat4; scaleZ?: number; tag: string; line: string };
 const NEAR_CELLS = 40, FAR_CELLS = 18, NEAR_DIST = 480;
@@ -208,7 +210,8 @@ export function importedBlock(idx: ImportedIndex, line: string, tag?: string): s
 // ---- work orders (stage 7) -------------------------------------------------------------------------------------------
 export interface WOIndexEntry { number: string; title: string; area: string; areaName: string; type: string; typeName: string; priority: number; equipment: string | null; lines: string[]; pdf: string; pack: string }
 let woIdx: Promise<{ notice: string; workOrders: WOIndexEntry[] }> | null = null;
-export const loadWOIndex = () => (woIdx ??= fetch(BASE + 'workorders/index.json').then(r => (r.ok ? r.json() : { workOrders: [] })).catch(() => ({ workOrders: [] })));
+// a unit of plant 3 has no work orders yet: none are asked for
+export const loadWOIndex = () => (woIdx ??= BASE.startsWith('refinery/') ? Promise.resolve({ notice: '', workOrders: [] }) : fetch(BASE + 'workorders/index.json').then(r => (r.ok ? r.json() : { workOrders: [] })).catch(() => ({ workOrders: [] })));
 export const loadWO = (n: string): Promise<WorkOrder> => fetch(`workorders/${n}.json`).then(r => r.json());
 type Status = 'open' | 'accepted' | 'rejected' | 'n/a';
 export interface Completion { workOrder: string; updated: string; activities: { step: number; status: Status; contractor: string; owner: string; thirdParty: string; date: string; remark: string }[] }

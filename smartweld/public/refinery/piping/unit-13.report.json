@@ -3,20 +3,21 @@
  "unit": 13,
  "name": "Naphtha hydrotreater and splitter",
  "frame": "the unit's own (SW-CELL-1): inches, x from its battery limit along its rack, y up from its bench, z across the rack",
- "runs": 2,
+ "runs": 33,
  "tiers": [
   1,
-  2
+  2,
+  3
  ],
- "tierRoom": 96,
- "seconds": 376,
+ "tierRoom": 72,
+ "seconds": 410,
  "stats": {
   "lines": 84,
   "routed": 84,
   "failed": 0,
-  "comps": 2544,
-  "welds": 1354,
-  "supports": 306,
+  "comps": 2450,
+  "welds": 1284,
+  "supports": 267,
   "penetrations": 0
  },
  "failures": [],
@@ -28,81 +29,50 @@
   "lineClearance": [],
   "staticClearance": [],
   "supports": [
-   "3\"-P150-P-13702: unsupported span 560 in > 180 on run from 504,294,61",
-   "6\"-P600-P-13004: unsupported span 332 in > 240 on run from 564,126,-218",
-   "3\"-P600-P-13005: unsupported span 440 in > 180 on run from 1122,222,-499",
-   "10\"-P600-P-13008: unsupported span 535 in > 240 on run from 456,240,607",
-   "10\"-P600-P-13010: unsupported span 258 in > 240 on run from 456,204,193",
+   "3\"-P150-P-13702: unsupported span 395 in > 180 on run from 570,246,-41",
+   "6\"-P600-P-13004: unsupported span 329 in > 240 on run from 522,126,-224",
+   "3\"-P600-P-13005: unsupported span 518 in > 180 on run from 1122,240,-535",
+   "10\"-P600-P-13008: unsupported span 573 in > 240 on run from 456,240,607",
+   "10\"-P600-P-13010: unsupported span 255 in > 240 on run from 456,186,187",
    "6\"-P600-P-13014: unsupported span 284 in > 240 on run from 912,168,262",
-   "6\"-P300-P-13018: unsupported span 586 in > 240 on run from 1026,234,614",
-   "3\"-P300-P-13021: unsupported span 386 in > 180 on run from 2022,204,-499",
-   "3\"-P300-P-13707: unsupported span 194 in > 180 on run from 2334,240,-103",
-   "3\"-P300-P-13707: unsupported span 199 in > 180 on run from 1290,306,91",
-   "8\"-P300-P-13025: unsupported span 951 in > 240 on run from 1134,234,551",
-   "6\"-P300-P-13026: unsupported span 282 in > 240 on run from 1026,222,16",
-   "3\"-P150-P-13032: unsupported span 297 in > 180 on run from 1236,294,-91",
-   "12\"-P150-P-13035: unsupported span 323 in > 240 on run from 1344,204,532",
-   "6\"-P150-CWS-13501: unsupported span 362 in > 240 on run from 912,204,268",
-   "6\"-P150-CWR-13502: unsupported span 442 in > 240 on run from 912,192,614",
-   "4\"-P1200-LS-13503: unsupported span 326 in > 240 on run from 1134,252,259",
-   "1.5\"-P1200-SC-13504: unsupported span 169 in > 120 on run from 1110,342,616",
-   "1.5\"-P1200-SC-13504: unsupported span 169 in > 120 on run from 1110,342,445",
-   "1.5\"-P1200-SC-13504: unsupported span 139 in > 120 on run from 1110,372,100",
-   "2\"-P150-CWS-13505: unsupported span 232 in > 120 on run from 1236,372,3",
-   "2\"-P150-CWS-13505: unsupported span 358 in > 120 on run from 1236,330,280",
-   "2\"-P150-CWR-13506: unsupported span 623 in > 120 on run from 1236,312,615",
-   "4\"-P300-LS-13507: unsupported span 347 in > 240 on run from 1344,222,271",
-   "1.5\"-P300-SC-13508: unsupported span 187 in > 120 on run from 1374,354,622",
-   "1.5\"-P300-SC-13508: unsupported span 187 in > 120 on run from 1374,354,433",
-   "1.5\"-P300-SC-13508: unsupported span 130 in > 120 on run from 1374,372,91",
+   "6\"-P300-P-13018: unsupported span 658 in > 240 on run from 1026,168,614",
+   "4\"-P300-P-13020: unsupported span 245 in > 240 on run from 1075,342,90",
+   "3\"-P300-P-13021: unsupported span 458 in > 180 on run from 2022,216,-535",
+   "3\"-P300-P-13707: unsupported span 323 in > 180 on run from 1344,144,-41",
+   "6\"-P300-P-13026: unsupported span 287 in > 240 on run from 1026,144,64",
+   "3\"-P150-P-13032: unsupported span 297 in > 180 on run from 1134,234,5",
+   "6\"-P300-P-13711: unsupported span 242 in > 240 on run from 626,204,36",
+   "6\"-P300-P-13039: unsupported span 242 in > 240 on run from 1626,414,-230",
+   "3\"-P600-P-13304: unsupported span 242 in > 180 on run from 769,126,378",
+   "6\"-P150-CWR-13502: unsupported span 592 in > 240 on run from 888,300,614",
+   "4\"-P1200-LS-13503: unsupported span 336 in > 240 on run from 1470,354,-318",
+   "2\"-P1200-SC-13504: unsupported span 425 in > 120 on run from 1446,354,-657",
+   "2\"-P1200-SC-13504: unsupported span 132 in > 120 on run from 1470,372,-225",
+   "2\"-P150-CWS-13505: unsupported span 245 in > 120 on run from 1134,372,3",
+   "2\"-P150-CWS-13505: unsupported span 330 in > 120 on run from 1158,216,255",
+   "2\"-P150-CWR-13506: unsupported span 623 in > 120 on run from 1122,282,615",
+   "4\"-P300-LS-13507: unsupported span 323 in > 240 on run from 1812,384,41",
+   "4\"-P300-LS-13507: unsupported span 332 in > 240 on run from 1788,174,-295",
+   "2\"-P300-SC-13508: unsupported span 605 in > 120 on run from 1836,318,-663",
    "2\"-P150-P-13509: unsupported span 137 in > 120 on run from 3216,372,-57",
    "2\"-P150-P-13509: unsupported span 221 in > 120 on run from 3219,372,84"
   ]
  },
  "spools": [
   {
-   "tag": "BL-1308",
-   "stream": "hydrotreated heavy naphtha",
+   "tag": "BL-1307",
+   "stream": "light naphtha",
    "dir": "out",
-   "line": "6\"-P300-P-13711",
-   "NPS": 6,
-   "cls": "P300",
-   "at": [
-    150,
-    204,
-    -54
-   ],
-   "tier": 0
-  },
-  {
-   "tag": "BL-1303",
-   "stream": "reformer net gas",
-   "dir": "in",
-   "line": "3\"-P600-P-13006",
-   "NPS": 3,
-   "cls": "P600",
-   "at": [
-    150,
-    198,
-    -36
-   ],
-   "tier": 0,
-   "lane": -18
-  },
-  {
-   "tag": "BL-1302",
-   "stream": "wild naphtha",
-   "dir": "in",
-   "line": "3\"-P150-P-13002",
+   "line": "3\"-P150-P-13710",
    "NPS": 3,
    "cls": "P150",
    "at": [
     150,
     198,
-    -18
+    -60
    ],
    "tier": 0,
-   "lane": -12
+   "lane": -54
   },
   {
    "tag": "BL-1301",
@@ -114,10 +84,25 @@
    "at": [
     150,
     204,
-    0
+    -42
    ],
    "tier": 0,
-   "lane": 0
+   "lane": -36
+  },
+  {
+   "tag": "BL-1308",
+   "stream": "hydrotreated heavy naphtha",
+   "dir": "out",
+   "line": "6\"-P300-P-13711",
+   "NPS": 6,
+   "cls": "P300",
+   "at": [
+    150,
+    204,
+    30
+   ],
+   "tier": 0,
+   "lane": 36
   },
   {
    "tag": "BL-1309",
@@ -129,37 +114,51 @@
    "at": [
     150,
     204,
-    18
+    48
    ],
    "tier": 0,
-   "lane": 0
+   "lane": 54
+  },
+  {
+   "tag": "BL-1303",
+   "stream": "reformer net gas",
+   "dir": "in",
+   "line": "3\"-P600-P-13006",
+   "NPS": 3,
+   "cls": "P600",
+   "at": [
+    150,
+    198,
+    72
+   ],
+   "tier": 0,
+   "lane": 78
   },
   {
    "tag": "BL-1304",
    "stream": "stripped water",
    "dir": "in",
-   "line": "3\"-P150-W-13012",
+   "line": "3\"-P150-P-13012",
    "NPS": 3,
    "cls": "P150",
    "at": [
     150,
     198,
-    36
+    90
    ],
-   "tier": 0,
-   "lane": 36
+   "tier": 0
   },
   {
-   "tag": "BL-1307",
-   "stream": "light naphtha",
+   "tag": "BL-1305",
+   "stream": "sour water",
    "dir": "out",
-   "line": "3\"-P150-P-13710",
+   "line": "3\"-P600-P-13704",
    "NPS": 3,
-   "cls": "P150",
+   "cls": "P600",
    "at": [
     150,
     198,
-    54
+    108
    ],
    "tier": 0
   },
@@ -172,26 +171,25 @@
    "cls": "P300",
    "at": [
     150,
+    198,
+    126
+   ],
+   "tier": 0
+  },
+  {
+   "tag": "BL-1302",
+   "stream": "wild naphtha",
+   "dir": "in",
+   "line": "3\"-P150-P-13002",
+   "NPS": 3,
+   "cls": "P150",
+   "at": [
+    150,
     270,
     -12
    ],
    "tier": 1,
-   "lane": -90
-  },
-  {
-   "tag": "BL-1305",
-   "stream": "sour water",
-   "dir": "out",
-   "line": "3\"-P600-P-13704",
-   "NPS": 3,
-   "cls": "P600",
-   "at": [
-    150,
-    270,
-    6
-   ],
-   "tier": 1,
-   "lane": 48
+   "lane": -12
   }
  ],
  "roots": [
@@ -203,7 +201,7 @@
    "at": [
     720,
     198,
-    36
+    78
    ],
    "tier": 0
   },
@@ -215,7 +213,7 @@
    "at": [
     1680,
     270,
-    -54
+    0
    ],
    "tier": 1
   }
@@ -236,9 +234,9 @@
    "line": "3\"-P150-P-13002",
    "after": "3\"-P150-P-13702",
    "at": [
-    804,
+    528,
     36,
-    -108
+    -36
    ]
   },
   {
@@ -256,9 +254,9 @@
    "line": "3\"-P600-P-13016",
    "after": "3\"-P600-P-13704",
    "at": [
-    1404,
+    444,
     36,
-    -108
+    36
    ]
   },
   {
@@ -266,7 +264,7 @@
    "line": "6\"-P300-P-13018",
    "after": "6\"-P300-P-13705",
    "at": [
-    1746,
+    1536,
     36,
     -108
    ]
@@ -276,9 +274,9 @@
    "line": "3\"-P300-P-13021",
    "after": "3\"-P300-P-13706",
    "at": [
-    1884,
+    444,
     36,
-    -108
+    108
    ]
   },
   {
@@ -286,9 +284,9 @@
    "line": "3\"-P300-P-13023",
    "after": "3\"-P300-P-13707",
    "at": [
-    2376,
+    1416,
     36,
-    -108
+    -36
    ]
   },
   {
@@ -296,9 +294,9 @@
    "line": "6\"-P150-P-13027",
    "after": "6\"-P150-P-13708",
    "at": [
-    2712,
+    1776,
     36,
-    -108
+    -36
    ]
   },
   {
@@ -306,9 +304,9 @@
    "line": "4\"-P150-P-13031",
    "after": "4\"-P150-P-13709",
    "at": [
-    1632,
+    1686,
     36,
-    -72
+    -108
    ]
   },
   {
@@ -316,9 +314,9 @@
    "line": "3\"-P150-P-13033",
    "after": "3\"-P150-P-13710",
    "at": [
-    444,
+    654,
     36,
-    108
+    -36
    ]
   },
   {
@@ -326,9 +324,9 @@
    "line": "6\"-P300-P-13037",
    "after": "6\"-P300-P-13711",
    "at": [
-    450,
+    684,
     36,
-    -72
+    36
    ]
   },
   {
@@ -336,9 +334,9 @@
    "line": "6\"-P300-P-13039",
    "after": "6\"-P300-P-13712",
    "at": [
-    714,
+    684,
     36,
-    -72
+    108
    ]
   }
  ],
@@ -355,10 +353,10 @@
    "designP": 135,
    "designT": 150,
    "routed": true,
-   "components": 35,
-   "welds": 16,
-   "supports": 2,
-   "lengthFt": 41,
+   "components": 37,
+   "welds": 18,
+   "supports": 1,
+   "lengthFt": 38,
    "tier": 1,
    "station": "CS-1301",
    "controlValve": "piped"
@@ -375,10 +373,10 @@
    "designP": 135,
    "designT": 150,
    "routed": true,
-   "components": 21,
-   "welds": 12,
-   "supports": 1,
-   "lengthFt": 65,
+   "components": 19,
+   "welds": 10,
+   "supports": 2,
+   "lengthFt": 68,
    "station": "CS-1301"
   },
   {
@@ -393,11 +391,11 @@
    "designP": 105,
    "designT": 160,
    "routed": true,
-   "components": 47,
-   "welds": 28,
-   "supports": 3,
-   "lengthFt": 69,
-   "tier": 1,
+   "components": 33,
+   "welds": 14,
+   "supports": 2,
+   "lengthFt": 38,
+   "tier": 2,
    "station": "CS-1302",
    "controlValve": "piped"
   },
@@ -413,11 +411,10 @@
    "designP": 105,
    "designT": 160,
    "routed": true,
-   "components": 24,
-   "welds": 17,
-   "supports": 4,
-   "lengthFt": 119,
-   "tier": 1,
+   "components": 20,
+   "welds": 13,
+   "supports": 2,
+   "lengthFt": 67,
    "station": "CS-1302"
   },
   {
@@ -435,7 +432,7 @@
    "components": 31,
    "welds": 18,
    "supports": 1,
-   "lengthFt": 46
+   "lengthFt": 49
   },
   {
    "no": "6\"-P600-P-13004",
@@ -452,7 +449,7 @@
    "components": 31,
    "welds": 18,
    "supports": 3,
-   "lengthFt": 87
+   "lengthFt": 88
   },
   {
    "no": "3\"-P600-P-13005",
@@ -466,11 +463,11 @@
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 34,
-   "welds": 27,
-   "supports": 7,
-   "lengthFt": 138,
-   "tier": 1
+   "components": 30,
+   "welds": 23,
+   "supports": 8,
+   "lengthFt": 149,
+   "tier": 2
   },
   {
    "no": "3\"-P600-P-13006",
@@ -484,10 +481,10 @@
    "designP": 395,
    "designT": 160,
    "routed": true,
-   "components": 29,
-   "welds": 22,
-   "supports": 2,
-   "lengthFt": 56,
+   "components": 17,
+   "welds": 10,
+   "supports": 3,
+   "lengthFt": 43,
    "tier": 1
   },
   {
@@ -502,10 +499,10 @@
    "designP": 515,
    "designT": 215,
    "routed": true,
-   "components": 12,
-   "welds": 9,
+   "components": 8,
+   "welds": 5,
    "supports": 0,
-   "lengthFt": 7
+   "lengthFt": 11
   },
   {
    "no": "10\"-P600-P-13008",
@@ -539,10 +536,10 @@
    "designP": 595,
    "designT": 570,
    "routed": true,
-   "components": 19,
-   "welds": 12,
+   "components": 23,
+   "welds": 16,
    "supports": 3,
-   "lengthFt": 71,
+   "lengthFt": 80,
    "tier": 1,
    "station": "CS-1303"
   },
@@ -558,10 +555,10 @@
    "designP": 455,
    "designT": 650,
    "routed": true,
-   "components": 30,
-   "welds": 21,
+   "components": 34,
+   "welds": 25,
    "supports": 4,
-   "lengthFt": 161,
+   "lengthFt": 162,
    "tier": 1
   },
   {
@@ -576,10 +573,10 @@
    "designP": 425,
    "designT": 660,
    "routed": true,
-   "components": 32,
-   "welds": 21,
+   "components": 35,
+   "welds": 24,
    "supports": 11,
-   "lengthFt": 261,
+   "lengthFt": 275,
    "tier": 1
   },
   {
@@ -600,7 +597,7 @@
    "lengthFt": 82
   },
   {
-   "no": "3\"-P150-W-13012",
+   "no": "3\"-P150-P-13012",
    "origin": "process",
    "fluid": "PW",
    "fluidName": "process and wash water",
@@ -611,13 +608,13 @@
    "designP": 125,
    "designT": 160,
    "routed": true,
-   "components": 29,
-   "welds": 21,
-   "supports": 1,
-   "lengthFt": 47
+   "components": 35,
+   "welds": 24,
+   "supports": 2,
+   "lengthFt": 72
   },
   {
-   "no": "3\"-P600-W-13013",
+   "no": "3\"-P600-P-13013",
    "origin": "process",
    "fluid": "PW",
    "fluidName": "process and wash water",
@@ -628,10 +625,10 @@
    "designP": 500,
    "designT": 160,
    "routed": true,
-   "components": 19,
-   "welds": 12,
+   "components": 17,
+   "welds": 10,
    "supports": 0,
-   "lengthFt": 18
+   "lengthFt": 17
   },
   {
    "no": "6\"-P600-P-13014",
@@ -664,8 +661,8 @@
    "routed": true,
    "components": 26,
    "welds": 15,
-   "supports": 6,
-   "lengthFt": 91
+   "supports": 5,
+   "lengthFt": 94
   },
   {
    "no": "3\"-P600-P-13016",
@@ -679,10 +676,10 @@
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 49,
-   "welds": 30,
+   "components": 51,
+   "welds": 32,
    "supports": 8,
-   "lengthFt": 145,
+   "lengthFt": 137,
    "tier": 2,
    "station": "CS-1304",
    "controlValve": "piped"
@@ -699,11 +696,10 @@
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 27,
-   "welds": 20,
-   "supports": 10,
-   "lengthFt": 136,
-   "tier": 2,
+   "components": 19,
+   "welds": 12,
+   "supports": 1,
+   "lengthFt": 37,
    "station": "CS-1304"
   },
   {
@@ -721,7 +717,7 @@
    "components": 24,
    "welds": 15,
    "supports": 4,
-   "lengthFt": 109
+   "lengthFt": 112
   },
   {
    "no": "6\"-P300-P-13018",
@@ -735,11 +731,11 @@
    "designP": 225,
    "designT": 350,
    "routed": true,
-   "components": 47,
-   "welds": 26,
-   "supports": 4,
-   "lengthFt": 140,
-   "tier": 2,
+   "components": 42,
+   "welds": 21,
+   "supports": 3,
+   "lengthFt": 111,
+   "tier": 1,
    "station": "CS-1305",
    "controlValve": "piped"
   },
@@ -755,11 +751,10 @@
    "designP": 225,
    "designT": 350,
    "routed": true,
-   "components": 30,
-   "welds": 21,
-   "supports": 5,
-   "lengthFt": 146,
-   "tier": 2,
+   "components": 31,
+   "welds": 22,
+   "supports": 4,
+   "lengthFt": 122,
    "station": "CS-1305"
   },
   {
@@ -777,8 +772,8 @@
    "components": 34,
    "welds": 25,
    "supports": 3,
-   "lengthFt": 189,
-   "tier": 1
+   "lengthFt": 166,
+   "tier": 3
   },
   {
    "no": "4\"-P300-P-13020",
@@ -792,11 +787,11 @@
    "designP": 200,
    "designT": 170,
    "routed": true,
-   "components": 31,
-   "welds": 22,
+   "components": 29,
+   "welds": 20,
    "supports": 6,
-   "lengthFt": 173,
-   "tier": 2
+   "lengthFt": 184,
+   "tier": 3
   },
   {
    "no": "3\"-P300-P-13021",
@@ -810,10 +805,11 @@
    "designP": 195,
    "designT": 170,
    "routed": true,
-   "components": 35,
-   "welds": 16,
-   "supports": 1,
-   "lengthFt": 52,
+   "components": 45,
+   "welds": 26,
+   "supports": 13,
+   "lengthFt": 190,
+   "tier": 1,
    "station": "CS-1306",
    "controlValve": "piped"
   },
@@ -829,11 +825,10 @@
    "designP": 195,
    "designT": 170,
    "routed": true,
-   "components": 22,
-   "welds": 15,
-   "supports": 14,
-   "lengthFt": 165,
-   "tier": 2,
+   "components": 17,
+   "welds": 10,
+   "supports": 1,
+   "lengthFt": 33,
    "station": "CS-1306"
   },
   {
@@ -851,7 +846,7 @@
    "components": 31,
    "welds": 18,
    "supports": 2,
-   "lengthFt": 41
+   "lengthFt": 43
   },
   {
    "no": "3\"-P300-P-13023",
@@ -865,10 +860,10 @@
    "designP": 270,
    "designT": 170,
    "routed": true,
-   "components": 53,
-   "welds": 30,
-   "supports": 7,
-   "lengthFt": 115,
+   "components": 50,
+   "welds": 27,
+   "supports": 4,
+   "lengthFt": 75,
    "tier": 1,
    "station": "CS-1307",
    "controlValve": "piped"
@@ -885,11 +880,10 @@
    "designP": 270,
    "designT": 170,
    "routed": true,
-   "components": 35,
-   "welds": 26,
-   "supports": 9,
-   "lengthFt": 224,
-   "tier": 2,
+   "components": 22,
+   "welds": 13,
+   "supports": 2,
+   "lengthFt": 113,
    "station": "CS-1307"
   },
   {
@@ -904,10 +898,10 @@
    "designP": 210,
    "designT": 435,
    "routed": true,
-   "components": 24,
-   "welds": 15,
-   "supports": 3,
-   "lengthFt": 103
+   "components": 19,
+   "welds": 10,
+   "supports": 0,
+   "lengthFt": 35
   },
   {
    "no": "8\"-P300-P-13025",
@@ -921,10 +915,10 @@
    "designP": 210,
    "designT": 450,
    "routed": true,
-   "components": 21,
-   "welds": 12,
+   "components": 17,
+   "welds": 8,
    "supports": 0,
-   "lengthFt": 111
+   "lengthFt": 39
   },
   {
    "no": "6\"-P300-P-13026",
@@ -938,11 +932,11 @@
    "designP": 210,
    "designT": 450,
    "routed": true,
-   "components": 34,
-   "welds": 23,
-   "supports": 4,
-   "lengthFt": 129,
-   "tier": 2
+   "components": 32,
+   "welds": 21,
+   "supports": 5,
+   "lengthFt": 133,
+   "tier": 1
   },
   {
    "no": "6\"-P150-P-13027",
@@ -956,10 +950,10 @@
    "designP": 65,
    "designT": 240,
    "routed": true,
-   "components": 48,
-   "welds": 27,
-   "supports": 10,
-   "lengthFt": 199,
+   "components": 46,
+   "welds": 25,
+   "supports": 5,
+   "lengthFt": 120,
    "tier": 1,
    "station": "CS-1308",
    "controlValve": "piped"
@@ -976,11 +970,10 @@
    "designP": 65,
    "designT": 240,
    "routed": true,
-   "components": 32,
-   "welds": 23,
-   "supports": 7,
-   "lengthFt": 195,
-   "tier": 1,
+   "components": 24,
+   "welds": 15,
+   "supports": 3,
+   "lengthFt": 104,
    "station": "CS-1308"
   },
   {
@@ -995,11 +988,11 @@
    "designP": 50,
    "designT": 230,
    "routed": true,
-   "components": 38,
-   "welds": 29,
+   "components": 35,
+   "welds": 26,
    "supports": 3,
-   "lengthFt": 235,
-   "tier": 1
+   "lengthFt": 203,
+   "tier": 3
   },
   {
    "no": "4\"-P150-P-13029",
@@ -1013,11 +1006,11 @@
    "designP": 50,
    "designT": 180,
    "routed": true,
-   "components": 29,
-   "welds": 20,
-   "supports": 7,
-   "lengthFt": 178,
-   "tier": 2
+   "components": 30,
+   "welds": 21,
+   "supports": 5,
+   "lengthFt": 152,
+   "tier": 3
   },
   {
    "no": "6\"-P150-P-13030",
@@ -1034,7 +1027,7 @@
    "components": 31,
    "welds": 18,
    "supports": 1,
-   "lengthFt": 40
+   "lengthFt": 44
   },
   {
    "no": "4\"-P150-P-13031",
@@ -1048,11 +1041,11 @@
    "designP": 145,
    "designT": 180,
    "routed": true,
-   "components": 50,
-   "welds": 27,
-   "supports": 3,
-   "lengthFt": 87,
-   "tier": 2,
+   "components": 52,
+   "welds": 29,
+   "supports": 2,
+   "lengthFt": 77,
+   "tier": 1,
    "station": "CS-1309",
    "controlValve": "piped"
   },
@@ -1068,10 +1061,10 @@
    "designP": 145,
    "designT": 180,
    "routed": true,
-   "components": 25,
-   "welds": 16,
+   "components": 22,
+   "welds": 13,
    "supports": 2,
-   "lengthFt": 126,
+   "lengthFt": 125,
    "station": "CS-1309"
   },
   {
@@ -1086,10 +1079,10 @@
    "designP": 145,
    "designT": 180,
    "routed": true,
-   "components": 26,
-   "welds": 17,
+   "components": 19,
+   "welds": 10,
    "supports": 6,
-   "lengthFt": 112,
+   "lengthFt": 103,
    "tier": 2
   },
   {
@@ -1104,11 +1097,11 @@
    "designP": 145,
    "designT": 150,
    "routed": true,
-   "components": 50,
-   "welds": 29,
-   "supports": 9,
-   "lengthFt": 136,
-   "tier": 1,
+   "components": 49,
+   "welds": 28,
+   "supports": 6,
+   "lengthFt": 106,
+   "tier": 2,
    "station": "CS-1310",
    "controlValve": "piped"
   },
@@ -1124,10 +1117,11 @@
    "designP": 145,
    "designT": 150,
    "routed": true,
-   "components": 17,
-   "welds": 10,
-   "supports": 1,
-   "lengthFt": 36,
+   "components": 25,
+   "welds": 18,
+   "supports": 3,
+   "lengthFt": 55,
+   "tier": 1,
    "station": "CS-1310"
   },
   {
@@ -1142,11 +1136,10 @@
    "designP": 50,
    "designT": 350,
    "routed": true,
-   "components": 33,
-   "welds": 24,
-   "supports": 4,
-   "lengthFt": 120,
-   "tier": 2
+   "components": 19,
+   "welds": 10,
+   "supports": 1,
+   "lengthFt": 34
   },
   {
    "no": "12\"-P150-P-13035",
@@ -1160,11 +1153,10 @@
    "designP": 50,
    "designT": 360,
    "routed": true,
-   "components": 35,
-   "welds": 26,
-   "supports": 2,
-   "lengthFt": 129,
-   "tier": 1
+   "components": 17,
+   "welds": 8,
+   "supports": 0,
+   "lengthFt": 37
   },
   {
    "no": "8\"-P150-P-13036",
@@ -1178,10 +1170,10 @@
    "designP": 50,
    "designT": 360,
    "routed": true,
-   "components": 27,
-   "welds": 14,
-   "supports": 1,
-   "lengthFt": 43
+   "components": 25,
+   "welds": 12,
+   "supports": 2,
+   "lengthFt": 46
   },
   {
    "no": "6\"-P300-P-13037",
@@ -1195,10 +1187,10 @@
    "designP": 160,
    "designT": 360,
    "routed": true,
-   "components": 54,
-   "welds": 31,
+   "components": 53,
+   "welds": 30,
    "supports": 5,
-   "lengthFt": 125,
+   "lengthFt": 112,
    "tier": 1,
    "station": "CS-1311",
    "controlValve": "piped"
@@ -1217,8 +1209,9 @@
    "routed": true,
    "components": 21,
    "welds": 14,
-   "supports": 1,
-   "lengthFt": 37,
+   "supports": 2,
+   "lengthFt": 55,
+   "tier": 1,
    "station": "CS-1311"
   },
   {
@@ -1236,7 +1229,7 @@
    "components": 17,
    "welds": 14,
    "supports": 0,
-   "lengthFt": 55
+   "lengthFt": 56
   },
   {
    "no": "6\"-P300-P-13039",
@@ -1250,11 +1243,11 @@
    "designP": 160,
    "designT": 190,
    "routed": true,
-   "components": 41,
-   "welds": 22,
-   "supports": 5,
-   "lengthFt": 141,
-   "tier": 1,
+   "components": 43,
+   "welds": 24,
+   "supports": 6,
+   "lengthFt": 143,
+   "tier": 3,
    "station": "CS-1312",
    "controlValve": "piped"
   },
@@ -1270,10 +1263,10 @@
    "designP": 160,
    "designT": 190,
    "routed": true,
-   "components": 25,
-   "welds": 18,
+   "components": 27,
+   "welds": 20,
    "supports": 2,
-   "lengthFt": 65,
+   "lengthFt": 64,
    "tier": 1,
    "station": "CS-1312"
   },
@@ -1292,7 +1285,7 @@
    "components": 11,
    "welds": 8,
    "supports": 0,
-   "lengthFt": 10
+   "lengthFt": 13
   },
   {
    "no": "3\"-P150-P-13602",
@@ -1306,10 +1299,10 @@
    "designP": 145,
    "designT": 180,
    "routed": true,
-   "components": 5,
-   "welds": 2,
-   "supports": 0,
-   "lengthFt": 4
+   "components": 11,
+   "welds": 8,
+   "supports": 1,
+   "lengthFt": 19
   },
   {
    "no": "8\"-P150-P-13301",
@@ -1340,10 +1333,10 @@
    "designP": 595,
    "designT": 150,
    "routed": true,
-   "components": 20,
-   "welds": 13,
+   "components": 16,
+   "welds": 9,
    "supports": 0,
-   "lengthFt": 12
+   "lengthFt": 11
   },
   {
    "no": "3\"-P600-P-13303",
@@ -1368,16 +1361,16 @@
    "fluid": "HY",
    "fluidName": "hydrogen-rich gas",
    "from": "K-1301B-N2",
-   "to": "tap 3\"-P600-P-13007",
+   "to": "tap 6\"-P600-P-13004",
    "NPS": 3,
    "cls": "P600",
    "designP": 515,
    "designT": 215,
    "routed": true,
-   "components": 11,
-   "welds": 8,
+   "components": 10,
+   "welds": 7,
    "supports": 0,
-   "lengthFt": 17
+   "lengthFt": 26
   },
   {
    "no": "8\"-P600-P-13305",
@@ -1391,44 +1384,44 @@
    "designP": 500,
    "designT": 355,
    "routed": true,
-   "components": 11,
-   "welds": 8,
+   "components": 9,
+   "welds": 6,
    "supports": 0,
-   "lengthFt": 20
+   "lengthFt": 19
   },
   {
-   "no": "3\"-P150-W-13306",
+   "no": "3\"-P150-P-13306",
    "origin": "spare",
    "fluid": "PW",
    "fluidName": "process and wash water",
-   "from": "tap 3\"-P150-W-13012",
+   "from": "tap 3\"-P150-P-13012",
    "to": "P-1305B-S",
    "NPS": 3,
    "cls": "P150",
    "designP": 125,
    "designT": 160,
    "routed": true,
-   "components": 17,
-   "welds": 13,
+   "components": 13,
+   "welds": 6,
    "supports": 0,
    "lengthFt": 7
   },
   {
-   "no": "3\"-P600-W-13307",
+   "no": "3\"-P600-P-13307",
    "origin": "spare",
    "fluid": "PW",
    "fluidName": "process and wash water",
    "from": "P-1305B-D",
-   "to": "tap 3\"-P600-W-13013",
+   "to": "tap 8\"-P600-P-13011",
    "NPS": 3,
    "cls": "P600",
    "designP": 500,
    "designT": 160,
    "routed": true,
-   "components": 16,
-   "welds": 9,
+   "components": 21,
+   "welds": 14,
    "supports": 0,
-   "lengthFt": 1
+   "lengthFt": 16
   },
   {
    "no": "6\"-P600-P-13308",
@@ -1544,10 +1537,10 @@
    "designP": 145,
    "designT": 180,
    "routed": true,
-   "components": 18,
-   "welds": 11,
+   "components": 14,
+   "welds": 7,
    "supports": 0,
-   "lengthFt": 8
+   "lengthFt": 5
   },
   {
    "no": "8\"-P150-P-13315",
@@ -1561,10 +1554,10 @@
    "designP": 50,
    "designT": 360,
    "routed": true,
-   "components": 21,
-   "welds": 14,
+   "components": 19,
+   "welds": 12,
    "supports": 0,
-   "lengthFt": 15
+   "lengthFt": 12
   },
   {
    "no": "6\"-P300-P-13316",
@@ -1697,8 +1690,8 @@
    "designP": 85,
    "designT": 150,
    "routed": true,
-   "components": 31,
-   "welds": 20,
+   "components": 33,
+   "welds": 22,
    "supports": 2,
    "lengthFt": 86
   },
@@ -1734,24 +1727,24 @@
    "components": 20,
    "welds": 11,
    "supports": 1,
-   "lengthFt": 70
+   "lengthFt": 77
   },
   {
-   "no": "1.5\"-P1200-SC-13504",
+   "no": "2\"-P1200-SC-13504",
    "origin": "utility",
    "fluid": "CO",
    "fluidName": "steam condensate",
    "from": "E-1304-N4",
    "to": "tap 2\"-P1200-SC-13404",
-   "NPS": 1.5,
+   "NPS": 2,
    "cls": "P1200",
    "designP": 650,
    "designT": 660,
    "routed": true,
-   "components": 29,
-   "welds": 2,
+   "components": 26,
+   "welds": 17,
    "supports": 1,
-   "lengthFt": 87
+   "lengthFt": 83
   },
   {
    "no": "2\"-P150-CWS-13505",
@@ -1765,8 +1758,8 @@
    "designP": 85,
    "designT": 150,
    "routed": true,
-   "components": 31,
-   "welds": 18,
+   "components": 33,
+   "welds": 20,
    "supports": 1,
    "lengthFt": 84
   },
@@ -1782,10 +1775,10 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 28,
-   "welds": 15,
+   "components": 32,
+   "welds": 19,
    "supports": 0,
-   "lengthFt": 73
+   "lengthFt": 75
   },
   {
    "no": "4\"-P300-LS-13507",
@@ -1799,27 +1792,27 @@
    "designP": 175,
    "designT": 450,
    "routed": true,
-   "components": 20,
-   "welds": 11,
-   "supports": 0,
-   "lengthFt": 66
+   "components": 24,
+   "welds": 15,
+   "supports": 1,
+   "lengthFt": 81
   },
   {
-   "no": "1.5\"-P300-SC-13508",
+   "no": "2\"-P300-SC-13508",
    "origin": "utility",
    "fluid": "CO",
    "fluidName": "steam condensate",
    "from": "E-1306-N4",
    "to": "tap 2\"-P1200-SC-13404",
-   "NPS": 1.5,
+   "NPS": 2,
    "cls": "P300",
    "designP": 165,
    "designT": 410,
    "routed": true,
-   "components": 29,
-   "welds": 2,
-   "supports": 1,
-   "lengthFt": 87
+   "components": 27,
+   "welds": 18,
+   "supports": 0,
+   "lengthFt": 82
   },
   {
    "no": "2\"-P150-P-13509",
@@ -1842,34 +1835,33 @@
  "counts": {
   "components": {
    "cap": 12,
-   "coupling": 6,
-   "elbow": 458,
-   "flange": 260,
-   "gasket": 423,
-   "nipple": 8,
-   "olet": 4,
-   "pipe": 697,
+   "elbow": 423,
+   "flange": 264,
+   "gasket": 431,
+   "olet": 6,
+   "pipe": 632,
    "reducer": 42,
-   "spade": 32,
+   "spade": 34,
    "spectacle": 17,
-   "tee": 26,
+   "tee": 24,
    "valve": 185
   },
   "welds": {
-   "BW, field": 203,
-   "BW, shop": 1125,
-   "FW, shop": 24,
-   "SW, shop": 2
+   "BW, field": 191,
+   "BW, shop": 1079,
+   "FW, shop": 14
   },
   "supports": {
-   "anchor": 38,
-   "guide": 76,
-   "hanger": 38,
-   "shoe": 99,
-   "stanchion": 9,
-   "trapeze": 9,
-   "trunnion": 37
+   "anchor": 34,
+   "guide": 63,
+   "hanger": 40,
+   "shoe": 85,
+   "stanchion": 8,
+   "trapeze": 3,
+   "trunnion": 34
   }
  },
- "notes": []
+ "notes": [
+  "6\"-P150-P-13001: given the lane at z -36 on tier 1, routed at z -42"
+ ]
 }
