@@ -3,7 +3,7 @@
  *  plot; and the units are set on the site inside their plots at their bench's elevation. No piping yet. */
 import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'node:fs';
-import { buildCell, bare, RACK, TOWER_TAGS, PUMP_PAD } from '../src/refinery/cell';
+import { buildCell, bare, RACK, TOWER_TAGS, PUMP_PAD, DECK, YARD } from '../src/refinery/cell';
 import { cells, cellToSite, plotLength, siteParts } from '../src/refinery/assemble';
 import { processModel } from '../src/refinery/process';
 import { sizing } from '../src/refinery/sizing';
@@ -31,8 +31,8 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
   });
   it('bodies stand on the 6 in grid, in rows that do not overlap, each side of the rack', () => {
     for (const { cell: c } of all) {
-      for (const s of c.spots) { expect(Math.abs(s.x % 6), s.tag).toBe(0); expect(Math.abs(s.z % 6), s.tag).toBe(0); expect(s.x, s.tag).toBeGreaterThan(RACK.start); if (s.lane !== 'heater') expect(Math.abs(s.z), s.tag).toBeGreaterThan(RACK.half); }
-      for (let i = 0; i < c.spots.length; i++) for (let j = i + 1; j < c.spots.length; j++) { const a = c.spots[i], b = c.spots[j]; if (!a.lx || !b.lx) continue; expect(Math.abs(a.x - b.x) - (a.lx + b.lx) / 2 >= -1 || Math.abs(a.z - b.z) - (a.lz + b.lz) / 2 >= -1, `${a.tag} and ${b.tag}`).toBe(true); }
+      for (const s of c.spots) { expect(Math.abs(s.x % 6), s.tag).toBe(0); expect(Math.abs(s.z % 6), s.tag).toBe(0); expect(s.x, s.tag).toBeGreaterThan(RACK.start); if (s.lane !== 'heater' && s.lane !== 'air') expect(Math.abs(s.z), s.tag).toBeGreaterThan(RACK.half); if (s.lane === 'air') { expect(s.z, s.tag).toBe(0); expect(s.yt!, s.tag).toBe(DECK + 134); expect(s.x + s.lx / 2, s.tag).toBeLessThanOrEqual(c.rack.x1); } }
+      for (let i = 0; i < c.spots.length; i++) for (let j = i + 1; j < c.spots.length; j++) { const a = c.spots[i], b = c.spots[j]; if (!a.lx || !b.lx || (a.lane === 'air') !== (b.lane === 'air')) continue; /* the air coolers stand over the rack, above the rest */ expect(Math.abs(a.x - b.x) - (a.lx + b.lx) / 2 >= -1 || Math.abs(a.z - b.z) - (a.lz + b.lz) / 2 >= -1, `${a.tag} and ${b.tag}`).toBe(true); }
       expect(c.rack.x0).toBe(RACK.start); expect((c.rack.x1 - c.rack.x0) % RACK.bent).toBe(0); expect(c.rack.tiers).toEqual([192, 264, 336]);
     }
   });
@@ -40,7 +40,17 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
     for (const { cell: c } of all) {
       for (const s of c.spots.filter(q => q.lane === 'pump')) { expect(Math.abs(s.z) - s.lz / 2, s.tag).toBeCloseTo(RACK.half + 60, 0); expect(s.shape).toBe('pump'); expect(s.yc!).toBeGreaterThan(PUMP_PAD); }
       for (const s of c.spots.filter(q => q.shape === 'hx')) { expect(s.side).toBe(1); expect(s.axis).toBe('z'); expect(s.o![2], s.tag).toBeGreaterThan(RACK.half + 240); }
-      for (const s of c.spots.filter(q => q.lane === 'heater')) expect(s.x - s.lx / 2, s.tag).toBeGreaterThanOrEqual(c.rack.x1 + 600 - 6);
+      const last = Math.max(...c.spots.filter(q => q.lane !== 'heater').map(q => q.x + q.lx / 2));
+      for (const s of c.spots.filter(q => q.lane === 'heater')) { expect(s.x - s.lx / 2, s.tag).toBeGreaterThanOrEqual(last + 600 - 6); expect(s.x - s.lx / 2 - c.rack.x1, s.tag).toBeGreaterThanOrEqual(114); expect(s.x - s.lx / 2 - c.rack.x1, s.tag).toBeLessThan(360); }
+    }
+  });
+  it('carries its crossing lines: a valve bay ahead of the lanes, a deck for the air coolers, support beams along the yard (SW-CELL-2, -4, -6)', () => {
+    for (const { cell: c, plot: p } of all) {
+      const tags = (t: string) => c.interior.instances.filter(i => i.tags.includes(t));
+      if (c.spots.some(s => s.lane === 'air')) { expect(tags('cooler-deck').length, `unit ${p.unit}`).toBeGreaterThan(6); expect(DECK).toBe(RACK.tiers[2] + 108); }
+      for (const z of [c.yard.neg, c.yard.pos]) if (z !== undefined) { expect(Math.abs(z)).toBeGreaterThanOrEqual(RACK.half + 78); for (const s of c.spots.filter(q => q.lane === 'pump' && Math.sign(q.z) === Math.sign(z))) expect(Math.abs(z), s.tag).toBeGreaterThanOrEqual(Math.abs(s.z) + s.lz / 2 + 12); }
+      if (c.yard.neg !== undefined || c.yard.pos !== undefined) expect(tags('yard-support').length).toBeGreaterThan(4);
+      expect(YARD).toBeGreaterThan(RACK.tiers[2]);
     }
   });
   it('sizes are those the process gave: the crude column, a pump, a stacked exchanger', () => {

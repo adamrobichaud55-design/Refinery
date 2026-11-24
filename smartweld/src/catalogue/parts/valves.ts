@@ -459,6 +459,10 @@ const buildNeedle: Build = (b, NPS, cls, dims, notes) => {
 };
 
 // ---- gate (G-*, F-2) --------------------------------------------------------------------------------------
+/** GL-1, SW-VLV-9: a T-pattern globe valve's face-to-face length by its rule, without building the valve */
+export function globeFaceToFace(NPS: number, cls: PipeClass): number { const D0 = pipeDims(NPS, cls).D; return common(NPS, cls, 1.5 * D0, 1.7 * D0).F2F; }
+/** G-2, SW-VLV-9: a gate valve's face-to-face length by its rule, without building the valve */
+export function gateFaceToFace(NPS: number, cls: PipeClass): number { const D0 = pipeDims(NPS, cls).D, c = common(NPS, cls, D0, 1.4 * D0); return 2 * c.f.tf + 2 * c.hHub + D0 + 2 * c.tb; }
 const buildGate: Build = (b, NPS, cls, dims) => {
   const D0 = pipeDims(NPS, cls).D, P = CLASS_PRESSURE[cls];
   const c = common(NPS, cls, D0, 1.4 * D0); c.wBody = D0 + 2 * c.tb; c.F2F = 2 * c.f.tf + 2 * c.hHub + c.wBody;   // G-2

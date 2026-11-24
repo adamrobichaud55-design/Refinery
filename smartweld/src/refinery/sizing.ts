@@ -139,7 +139,7 @@ function blockedIn(sh: UnitSheet): { line: Map<number, { P: number; pump: string
 }
 
 /** the state a utility connection flows at */
-function utilState(u: Util): State {
+export function utilState(u: Pick<Util, 'fluid' | 'w' | 'T' | 'P'>): State {
   const f = u.fluid;
   if (f === 'HS' || f === 'MS' || f === 'LS') return vapour(f, u.w, 18, u.T, u.P);
   if (f === 'FG') return vapour(f, u.w, 16, u.T, u.P);
@@ -153,11 +153,11 @@ export function sizeUnit(sh: UnitSheet): UnitSizing {
   // lines
   const lines: LineSize[] = sh.lines.map(l => {
     const b = shut.line.get(l.id), designP = Math.max(designPressure(l.s.P), b?.P ?? 0), designT = metalT(l.s), cls = classFor(designP, designT);
-    const z = lineSize(l.s, l.slow, cls, FLUIDS[l.s.fluid].svc === 'P' ? 2 : 0.75);
+    const z = lineSize(l.s, l.slow, cls, 3);
     return { id: l.id, unit: sh.no, NPS: z.NPS, cls, designP, designT, vacuum: l.s.P < 0, v: z.v, by: z.by, n: z.n, ...(b && b.P > designPressure(l.s.P) ? { pump: b.pump } : {}) };
   });
   const utils = sh.utils.map(u => {
-    const s = utilState(u), designP = designPressure(u.P), designT = designTemperature(u.T), cls = classFor(designP, designT), z = lineSize(s, false, cls, 0.75);
+    const s = utilState(u), designP = designPressure(u.P), designT = designTemperature(u.T), cls = classFor(designP, designT), z = lineSize(s, false, cls, FLUIDS[u.fluid].svc === 'P' ? 2 : 0.75);   // SW-PRC-4: a process fluid taken as a utility (fuel gas) is butt-welded pipe, 2 in at least
     return { ...u, NPS: z.NPS, cls, designP, designT };
   });
   // equipment
@@ -173,7 +173,7 @@ function sizeEquip(sh: UnitSheet, e: Equip, lines: LineSize[], utils: UnitSizing
   const nozzles: Nozzle[] = [];
   for (const p of e.ports) {
     const l = lineOf(p.name); if (!l) continue;                                                        // open ports have no line
-    const z = lines[l.id]; nozzles.push({ port: p.name, dir: p.dir, NPS: e.kind === 'pump' ? smaller(z.NPS) : z.NPS, cls: z.cls, line: l.id, fluid: p.s.fluid, n: z.n });
+    const z = lines[l.id]; nozzles.push({ port: p.name, dir: p.dir, NPS: e.kind === 'pump' ? Math.max(2, smaller(z.NPS)) : z.NPS, cls: z.cls, line: l.id, fluid: p.s.fluid, n: z.n });
   }
   for (const u of utils.filter(x => x.tag === e.tag)) nozzles.push({ port: u.port, dir: u.dir === 'to' ? 'in' : 'out', NPS: u.NPS, cls: u.cls, util: u.fluid, fluid: u.fluid, n: 1 });
   // design conditions, by side (SW-PRC-2)
@@ -226,6 +226,7 @@ function sizeEquip(sh: UnitSheet, e: Equip, lines: LineSize[], utils: UnitSizing
       } else {
         const byHold = Math.cbrt((8 * vLiq) / (3 * Math.PI)), byGas = qv > 0 ? Math.sqrt((8 * qv) / (6 * u0 * Math.PI)) : 0;
         D = Math.max(36, up(Math.max(byGas, byHold) * 12, 6)); L = 3 * D;
+        if (liqOut.length > 1) L = Math.max(L, 144);                                                    // SW-PRC-6: two liquid outlets must both stand between the saddles
       }
       Object.assign(r.d, { D, L, t: wall(D, designP, designT, vacuum), vertical: vertical ? 1 : 0, ...(num('boot') ? { boot: Math.max(12, up(D / 3, 6)) } : {}) });
       r.type = vertical ? 'vertical' : 'horizontal'; r.text = `${D} in inside diameter × ${ft(L)} between tangents, ${r.type}${num('boot') ? ', with a water boot' : ''}`;
@@ -292,7 +293,8 @@ function sizeEquip(sh: UnitSheet, e: Equip, lines: LineSize[], utils: UnitSizing
       const fire = e.kind === 'fluegascooler', dTube = fire ? 2 : 0.75, ids = fire ? [36, 42, 48, 54, 60, 66, 72, 78, 84, 90, 96, 102, 108, 114, 120, 126, 132, 138, 144] : SHELL_IDS;
       const count = (d: number) => (fire ? fireTubeCount(d) : tubeCount(d)), area = (d: number) => count(d) * Math.PI * (dTube / 12) * 20, enough = (k: number, d: number) => k * area(d) >= A && k * count(d) * tubeBore(dTube) >= bore;
       let n = 1; while (!enough(n, ids[ids.length - 1])) n++;
-      const ID = ids.find(d => enough(n, d))!;
+      const room = Math.min(3 * Math.max(...nozzles.map(q => q.NPS)), ids[ids.length - 1]);                       // SW-PRC-8: a shell at least three times its largest connection
+      const ID = ids.find(d => enough(n, d) && d >= room)!;
       const tShell = Math.max(...Object.entries(sides).filter(([k]) => k !== 'utility').map(([, q]) => wall(ID, q.designP, q.designT, q.vacuum)));
       Object.assign(r, { count: n, running: n }); Object.assign(r.d, { dutyMMBtu: Q / 1e6, lmtd: dT, U, areaFt2: A, shells: n, ID, tubes: count(ID), tubeOD: dTube, tubeLength: 240, tShell, ...(fire ? { drumT: wall(0.6 * ID, (sides['steam side'] ?? sides.process).designP, (sides['steam side'] ?? sides.process).designT) } : {}), ...(bore ? { tubeGasFts: (bore * TUBE_GAS_FTS) / (n * count(ID) * tubeBore(dTube)) } : {}) });
       r.type = key.startsWith('SG-') || e.kind !== 'hx' ? 'steam generator' : key === 'CW' ? 'water cooler' : key ? 'steam heater' : 'process to process';

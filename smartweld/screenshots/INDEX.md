@@ -385,3 +385,7 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/registry-record-of-a-boiler.png` | Plant 3: a printable boiler record with its drums as parts, demonstration data |
 | `refinery/registry-line-register.png` | Plant 3: a unit's line register with fluid service, line class and severity, demonstration data |
 | `refinery/registry-line-classes.png` | Plant 3: the registration index's first page, with the line classes and their severity, demonstration data |
+| `refinery/unit-15-piping-from-the-vessel-side.png` | Plant 3, unit 15 (Kerosene hydrotreater) piped, from the vessel side: lines coloured by line class |
+| `refinery/unit-15-piping-from-the-exchanger-side.png` | Plant 3, unit 15 (Kerosene hydrotreater) piped, from the exchanger side |
+| `refinery/unit-15-piping-valve-bay.png` | Plant 3, unit 15: the valve bay at the battery limit, a block valve and spool on each line |
+| `refinery/unit-15-piping-exchangers.png` | Plant 3, unit 15: piping at the exchangers |

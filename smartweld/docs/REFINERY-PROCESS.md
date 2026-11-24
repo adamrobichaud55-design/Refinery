@@ -110,34 +110,34 @@ Every stream that crosses a unit's battery limit, with the units at each end (SW
 | Light naphtha | naphtha | 13 | 21 | 32,699 | 3,343 bbl/d | 100 | 50 | 3 | P150 | steady |
 | Hydrotreated heavy naphtha | naphtha | 13 | 14 | 102,173 | 9,270 bbl/d | 310 | 60 | 6 | P150 | steady |
 | Heavy naphtha to storage | naphtha | 13 | 21 | 102,173 | 9,270 bbl/d | 140 | 50 | 6 | P150 | alternate: when unit 14 is down |
-| Wild naphtha | naphtha | 15, 16 | 13 | 2,171 | 207 bbl/d | 120 | 80 | 2 | P150 | steady |
-| Reformer net gas | hydrogen-rich gas | 14 | 13, 15 | 610 | 1.54 MMscf/d | 110 | 355 | 2 | P600 | steady |
-| Hydrogen | hydrogen-rich gas | 14 | 16 | 997 | 4.50 MMscf/d | 110 | 495 | 2 | P600 | steady |
+| Wild naphtha | naphtha | 15, 16 | 13 | 2,171 | 207 bbl/d | 120 | 80 | 3 | P150 | steady |
+| Reformer net gas | hydrogen-rich gas | 14 | 13, 15 | 610 | 1.54 MMscf/d | 110 | 355 | 3 | P600 | steady |
+| Hydrogen | hydrogen-rich gas | 14 | 16 | 997 | 4.50 MMscf/d | 110 | 495 | 3 | P600 | steady |
 | Surplus hydrogen | hydrogen-rich gas | 14 | 19 | 592 | 2.67 MMscf/d | 110 | 60 | 3 | P150 | steady |
-| Stabiliser gas | fuel gas | 14 | 19 | 490 | 0.19 MMscf/d | 110 | 70 | 2 | P150 | steady |
-| Reformer liquefied gas | liquefied petroleum gas | 14 | 17 | 7,867 | 998 bbl/d | 110 | 250 | 2 | P300 | steady |
+| Stabiliser gas | fuel gas | 14 | 19 | 490 | 0.19 MMscf/d | 110 | 70 | 3 | P150 | steady |
+| Reformer liquefied gas | liquefied petroleum gas | 14 | 17 | 7,867 | 998 bbl/d | 110 | 250 | 3 | P300 | steady |
 | Reformate | reformate | 14 | 21 | 89,708 | 7,730 bbl/d | 100 | 50 | 4 | P150 | steady |
 | Heavy naphtha from storage | naphtha | 21 | 14 | 102,173 | 9,270 bbl/d | 140 | 60 | 6 | P150 | alternate: when unit 13 is down |
 | Treated kerosene | kerosene | 15 | 21 | 72,742 | 6,190 bbl/d | 100 | 50 | 4 | P150 | steady |
 | Rich amine | amine solution | 16, 17 | 18 | 124,523 | 8,202 bbl/d | 140 | 70 | 4 | P150 | steady |
 | Treated diesel | diesel | 16 | 21 | 150,229 | 12,179 bbl/d | 110 | 50 | 6 | P150 | steady |
-| Light cycle oil to hydrotreating | diesel | 17 | 16 | 14,976 | 1,080 bbl/d | 140 | 80 | 2 | P150 | steady |
+| Light cycle oil to hydrotreating | diesel | 17 | 16 | 14,976 | 1,080 bbl/d | 140 | 80 | 3 | P150 | steady |
 | Lean amine | amine solution | 18 | 16, 17 | 120,000 | 7,981 bbl/d | 120 | 300 | 4 | P600 | steady |
-| Slurry oil | slurry oil | 17 | 21 | 20,808 | 1,332 bbl/d | 200 | 60 | 2 | P150 | steady |
+| Slurry oil | slurry oil | 17 | 21 | 20,808 | 1,332 bbl/d | 200 | 60 | 3 | P150 | steady |
 | Light cycle oil to fuel oil | diesel | 17 | 21 | 29,952 | 2,160 bbl/d | 140 | 60 | 3 | P150 | steady |
 | Fuel gas | fuel gas | 17 | 19 | 10,925 | 4.98 MMscf/d | 115 | 70 | 6 | P150 | steady |
 | Cracked gasoline | gasoline | 17 | 21 | 112,555 | 10,280 bbl/d | 100 | 50 | 6 | P150 | steady |
 | Three-carbon liquefied gas | liquefied petroleum gas | 17 | 21 | 18,553 | 2,492 bbl/d | 110 | 240 | 3 | P300 | steady |
 | Four-carbon liquefied gas | liquefied petroleum gas | 17 | 21 | 32,320 | 3,785 bbl/d | 100 | 200 | 3 | P300 | steady |
-| Stripped water to wastewater | oily water | 18 | 24 | 28,100 | 1,925 bbl/d | 120 | 30 | 2 | P150 | steady |
+| Stripped water to wastewater | oily water | 18 | 24 | 28,100 | 1,925 bbl/d | 120 | 30 | 3 | P150 | steady |
 | Fire water make-up | raw and service water | 19 | 26 | 250,000 | 17,126 bbl/d | 50 | 90 | 6 | P300 | intermittent: refilling the fire water tanks |
-| Boiler blowdown | oily water | 19 | 24 | 5,000 | 343 bbl/d | 212 | 30 | 2 | P150 | steady |
+| Boiler blowdown | oily water | 19 | 24 | 5,000 | 343 bbl/d | 212 | 30 | 3 | P150 | steady |
 | Cooling tower blowdown | oily water | 19 | 24 | 40,000 | 2,740 bbl/d | 85 | 30 | 3 | P150 | steady |
 | Raw water | raw and service water | the intake | 19 | 455,000 | 31,169 bbl/d | 50 | 40 | 8 | P150 | steady: from the intake at the site boundary |
 | Purchased gas | fuel gas | the gas main | 19 | 8,500 | 4.55 MMscf/d | 60 | 70 | 6 | P150 | steady: from the gas main at the site boundary |
-| Tank farm oily water | oily water | 20 | 24 | 6,000 | 411 bbl/d | 60 | 50 | 2 | P150 | steady |
+| Tank farm oily water | oily water | 20 | 24 | 6,000 | 411 bbl/d | 60 | 50 | 3 | P150 | steady |
 | Crude from the marine terminal | crude oil | 22 | 20 | 7,588,844 | 600,000 bbl/d | 60 | 120 | 36 | P150 | intermittent: while a tanker discharges |
-| Slop oil to crude | oily water | 21 | 20 | 4,000 | 322 bbl/d | 80 | 80 | 2 | P150 | intermittent: recovered oil worked off into the crude charge |
+| Slop oil to crude | oily water | 21 | 20 | 4,000 | 322 bbl/d | 80 | 80 | 3 | P150 | intermittent: recovered oil worked off into the crude charge |
 | Three-carbon liquefied gas to loading | liquefied petroleum gas | 21 | 23 | 44,670 | 6,000 bbl/d | 90 | 240 | 4 | P300 | intermittent: while trucks load |
 | Four-carbon liquefied gas to loading | liquefied petroleum gas | 21 | 23 | 51,239 | 6,000 bbl/d | 90 | 200 | 4 | P300 | intermittent: while trucks load |
 | Gasoline to the marine terminal | gasoline | 21 | 22 | 2,610,964 | 240,000 bbl/d | 90 | 150 | 24 | P300 | intermittent: while a cargo loads |
@@ -215,15 +215,15 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | D-1102 | Preflash drum | horizontal | 70 psi, 450 °F | P150 | 126 in inside diameter × 31.5 ft between tangents, horizontal |
 | D-1103 | Overhead accumulator | horizontal | 50 psi, 150 °F | P150 | 96 in inside diameter × 24 ft between tangents, horizontal, with a water boot |
 | P-1101 | Crude charge pump | motor driven | 390 psi, 150 °F | P600 | 1925 gpm each × 666 ft, 500 hp at 3560 rpm; 2 installed, 1 running |
-| E-1101 | Crude / top pumparound exchanger | process to process | 390 psi, 380 °F | P600 | 17.8 million Btu/h, 1,616 ft²: 24 in × 20 ft, 499 tubes |
-| E-1102 | Crude / kerosene exchanger | process to process | 390 psi, 440 °F | P600 | 7.9 million Btu/h, 903 ft²: 18 in × 20 ft, 253 tubes |
-| E-1103 | Crude / diesel exchanger | process to process | 390 psi, 580 °F | P600 | 23.7 million Btu/h, 2,155 ft²: 30 in × 20 ft, 805 tubes |
-| E-1104 | Crude / diesel pumparound exchanger | process to process | 390 psi, 550 °F | P600 | 33.5 million Btu/h, 3,041 ft²: 30 in × 20 ft, 805 tubes |
+| E-1101 | Crude / top pumparound exchanger | process to process | 390 psi, 380 °F | P600 | 17.8 million Btu/h, 1,616 ft²: 36 in × 20 ft, 1,165 tubes |
+| E-1102 | Crude / kerosene exchanger | process to process | 390 psi, 440 °F | P600 | 7.9 million Btu/h, 903 ft²: 36 in × 20 ft, 1,165 tubes |
+| E-1103 | Crude / diesel exchanger | process to process | 390 psi, 580 °F | P600 | 23.7 million Btu/h, 2,155 ft²: 36 in × 20 ft, 1,165 tubes |
+| E-1104 | Crude / diesel pumparound exchanger | process to process | 390 psi, 550 °F | P600 | 33.5 million Btu/h, 3,041 ft²: 36 in × 20 ft, 1,165 tubes |
 | P-1102 | Desalter wash water pump | motor driven | 285 psi, 160 °F | P300 | 97 gpm each × 373 ft, 20 hp at 3560 rpm; 2 installed, 1 running |
 | E-1105 | Wash water / brine exchanger | process to process | 285 psi, 320 °F | P300 | 4.8 million Btu/h, 744 ft²: 18 in × 20 ft, 253 tubes |
 | E-1112 | Brine cooler | water cooler | 165 psi, 210 °F | P300 | 2.1 million Btu/h, 418 ft²: 18 in × 20 ft, 253 tubes |
 | P-1103 | Desalted crude booster pump | motor driven | 400 psi, 320 °F | P600 | 2148 gpm each × 535 ft, 500 hp at 3560 rpm; 2 installed, 1 running |
-| E-1106 | Crude / gas oil exchanger | process to process | 400 psi, 660 °F | P600 | 6.7 million Btu/h, 952 ft²: 18 in × 20 ft, 253 tubes |
+| E-1106 | Crude / gas oil exchanger | process to process | 400 psi, 660 °F | P600 | 6.7 million Btu/h, 952 ft²: 36 in × 20 ft, 1,165 tubes |
 | E-1107 | Crude / gas oil pumparound exchanger | process to process | 400 psi, 660 °F | P600 | 45.4 million Btu/h, 7,053 ft²: 48 in × 20 ft, 2,161 tubes |
 | P-1104 | Flashed crude pump | motor driven | 455 psi, 450 °F | P600 | 2206 gpm each × 970 ft, 750 hp at 3560 rpm, 2 stages; 2 installed, 1 running |
 | E-1108 | Crude / vacuum gas oil pumparound exchanger | process to process | 455 psi, 600 °F | P600 | 20.8 million Btu/h, 8,597 ft²: 54 in × 20 ft, 2,749 tubes |
@@ -251,7 +251,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | Tag | Service | Type | Design | Class | Size |
 |---|---|---|---|---|---|
 | C-1201 | Vacuum column | swaged, packed | 50 psi and full vacuum, 800 °F | P300 | 108 / 228 / 198 in inside diameter (stripping / flash / top) × 101.5 ft between tangents, on a 20 ft skirt |
-| D-1201 | Ejector hotwell | horizontal | 50 psi, 160 °F | P150 | 36 in inside diameter × 9 ft between tangents, horizontal |
+| D-1201 | Ejector hotwell | horizontal | 50 psi, 160 °F | P150 | 36 in inside diameter × 12 ft between tangents, horizontal |
 | H-1201 | Vacuum heater | cabin | 175 psi and full vacuum, 800 °F | P600 | 36.2 million Btu/h absorbed, 42.6 fired: cabin 16 ft wide × 26 ft long, radiant section 32 ft high |
 | J-1201 | Vacuum ejector set, three stages with condensers | ejector | 50 psi and full vacuum, 200 °F | P150 |  |
 | P-1204 | Hotwell slop oil pump | motor driven | 150 psi, 160 °F | P150 | 4 gpm each × 212 ft, 1 hp at 3560 rpm; 2 installed, 1 running |
@@ -284,11 +284,11 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | E-1303 | Stripper feed / bottoms exchanger | process to process | 235 psi, 450 °F | P300 | 15.4 million Btu/h, 3,030 ft²: 30 in × 20 ft, 805 tubes |
 | A-1302 | Stripper overhead condenser | forced draught | 205 psi, 250 °F | P300 | 3.5 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | P-1302 | Stripper reflux pump | motor driven | 270 psi, 170 °F | P300 | 60 gpm each × 238 ft, 5 hp at 3560 rpm; 2 installed, 1 running |
-| E-1304 | Stripper reboiler | steam heater | 660 psi, 700 °F | P1200 | 7.1 million Btu/h, 805 ft²: 18 in × 20 ft, 253 tubes |
+| E-1304 | Stripper reboiler | steam heater | 660 psi, 700 °F | P1200 | 7.1 million Btu/h, 805 ft²: 24 in × 20 ft, 499 tubes |
 | A-1303 | Splitter overhead condenser | forced draught | 50 psi, 230 °F | P150 | 12.8 million Btu/h: 2 bays of 14 ft × 32 ft, 4 fans |
 | P-1303 | Splitter reflux and product pump | motor driven | 145 psi, 180 °F | P150 | 278 gpm each × 268 ft, 20 hp at 3560 rpm; 2 installed, 1 running |
 | E-1305 | Light naphtha cooler | water cooler | 145 psi, 180 °F | P150 | 0.5 million Btu/h, 430 ft²: 18 in × 20 ft, 253 tubes |
-| E-1306 | Splitter reboiler | steam heater | 175 psi, 450 °F | P300 | 7.6 million Btu/h, 1,405 ft²: 24 in × 20 ft, 499 tubes |
+| E-1306 | Splitter reboiler | steam heater | 175 psi, 450 °F | P300 | 7.6 million Btu/h, 1,405 ft²: 36 in × 20 ft, 1,165 tubes |
 | P-1304 | Heavy naphtha pump | motor driven | 160 psi, 360 °F | P300 | 340 gpm each × 297 ft, 30 hp at 3560 rpm; 2 installed, 1 running |
 | A-1304 | Heavy naphtha rundown cooler | forced draught | 160 psi, 360 °F | P300 | 9.4 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 
@@ -305,7 +305,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | D-1405 | Stabiliser receiver | horizontal | 235 psi, 160 °F | P300 | 48 in inside diameter × 12 ft between tangents, horizontal |
 | D-1406 | Convection section steam drum | horizontal | 660 psi, 540 °F | P1200 | 36 in inside diameter × 9 ft between tangents, horizontal |
 | P-1401 | Charge pump | motor driven | 540 psi, 340 °F | P600 | 336 gpm each × 1312 ft, 150 hp at 3560 rpm, 2 stages; 2 installed, 1 running |
-| E-1401 | Combined feed exchanger | process to process | 540 psi, 970 °F | P1200 | 40.4 million Btu/h, 4,330 ft²: 36 in × 20 ft, 1,165 tubes |
+| E-1401 | Combined feed exchanger | process to process | 540 psi, 970 °F | P1200 | 40.4 million Btu/h, 4,330 ft²: 42 in × 20 ft, 1,639 tubes |
 | K-1401 | Recycle gas compressor, turbine driven | steam turbine driven | 470 psi, 225 °F | P600 | 2,066 ft³/min at suction, ratio 1.66, 1 stage, 1,737 hp of gas power; 1,750 hp turbine |
 | H-1401 | Charge heater | vertical cylindrical | 455 psi, 1,000 °F | P1200 | 15.5 million Btu/h absorbed, 18.2 fired: vertical cylinder 9.5 ft diameter × 23.8 ft high |
 | R-1401 | First reforming reactor | vertical, fixed bed | 410 psi, 1,000 °F | P1200 | 271 ft³ of catalyst in one bed: 72 in inside diameter × 16 ft between tangents |
@@ -331,13 +331,13 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | D-1501 | Feed surge drum | horizontal | 55 psi, 150 °F | P150 | 84 in inside diameter × 21 ft between tangents, horizontal |
 | D-1502 | Product separator | horizontal | 375 psi, 160 °F | P600 | 60 in inside diameter × 15 ft between tangents, horizontal, with a water boot |
 | C-1501 | Stripper | trayed | 70 psi, 435 °F | P150 | 42 in inside diameter × 50 ft between tangents, 15 trays, on a 15 ft skirt |
-| D-1503 | Stripper overhead drum | horizontal | 55 psi, 170 °F | P150 | 36 in inside diameter × 9 ft between tangents, horizontal, with a water boot |
+| D-1503 | Stripper overhead drum | horizontal | 55 psi, 170 °F | P150 | 36 in inside diameter × 12 ft between tangents, horizontal, with a water boot |
 | P-1501 | Charge pump | motor driven | 595 psi, 150 °F | P600 | 204 gpm each × 1258 ft, 75 hp at 3560 rpm, 2 stages; 2 installed, 1 running |
 | E-1501 | Feed / effluent exchanger | process to process | 595 psi, 615 °F | P600 | 19.6 million Btu/h, 3,952 ft²: 36 in × 20 ft, 1,165 tubes |
 | K-1501 | Recycle gas compressor | motor driven | 515 psi, 220 °F | P600 | 134 ft³/min at suction, ratio 1.35, 1 stage, 87 hp of gas power; 100 hp motor; 2 installed, 1 running |
 | H-1501 | Charge heater | vertical cylindrical | 495 psi, 650 °F | P600 | 6.8 million Btu/h absorbed, 8.0 fired: vertical cylinder 6.5 ft diameter × 16.3 ft high |
 | R-1501 | Hydrotreating reactor | vertical, fixed bed | 455 psi, 665 °F | P600 | 487 ft³ of catalyst in one bed: 72 in inside diameter × 23.5 ft between tangents |
-| E-1505 | Reactor effluent / stripper feed exchanger | process to process | 420 psi, 665 °F | P600 | 2.6 million Btu/h, 205 ft²: 12 in × 20 ft, 97 tubes |
+| E-1505 | Reactor effluent / stripper feed exchanger | process to process | 420 psi, 665 °F | P600 | 2.6 million Btu/h, 205 ft²: 24 in × 20 ft, 499 tubes |
 | A-1501 | Reactor effluent air cooler | forced draught | 500 psi, 315 °F | P600 | 6.3 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | P-1505 | Wash water pump | motor driven | 500 psi, 160 °F | P600 | 2 gpm each × 699 ft, 1 hp at 3560 rpm; 2 installed, 1 running |
 | E-1502 | Effluent trim cooler | water cooler | 500 psi, 190 °F | P600 | 1.4 million Btu/h, 752 ft²: 18 in × 20 ft, 253 tubes |
@@ -359,7 +359,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | D-1603 | Recycle compressor knock-out drum | vertical | 835 psi, 180 °F | P1200 | 36 in inside diameter × 9 ft between tangents, vertical |
 | D-1604 | Low-pressure flash drum | horizontal | 165 psi, 190 °F | P300 | 72 in inside diameter × 18 ft between tangents, horizontal, with a water boot |
 | C-1602 | Product stripper | trayed | 130 psi, 485 °F | P150 | 60 in inside diameter × 60 ft between tangents, 20 trays, on a 15 ft skirt |
-| D-1605 | Stripper overhead drum | horizontal | 115 psi, 170 °F | P150 | 36 in inside diameter × 9 ft between tangents, horizontal, with a water boot |
+| D-1605 | Stripper overhead drum | horizontal | 115 psi, 170 °F | P150 | 36 in inside diameter × 12 ft between tangents, horizontal, with a water boot |
 | R-1601 | Hydrotreating reactor, two beds | vertical, fixed bed | 1,000 psi, 700 °F | P1200 | 2,386 ft³ of catalyst in 2 beds: 126 in inside diameter × 42.5 ft between tangents |
 | F-1601 | Feed filter | vertical | 55 psi, 190 °F | P150 | 42 in inside diameter × 7 ft between tangents, vertical |
 | P-1601 | Charge pump | motor driven | 1,145 psi, 190 °F | P1200 | 409 gpm each × 2449 ft, 300 hp at 3560 rpm, 3 stages; 2 installed, 1 running |
@@ -368,7 +368,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | K-1601 | Recycle gas compressor | motor driven | 1,000 psi, 230 °F | P1200 | 459 ft³/min at suction, ratio 1.19, 1 stage, 368 hp of gas power; 500 hp motor; 2 installed, 1 running |
 | K-1602 | Make-up hydrogen compressor | motor driven | 1,000 psi, 300 °F | P1200 | 99 ft³/min at suction, ratio 1.80, 1 stage, 188 hp of gas power; 200 hp motor; 2 installed, 1 running |
 | H-1601 | Charge heater | vertical cylindrical | 980 psi, 660 °F | P1200 | 10.5 million Btu/h absorbed, 12.4 fired: vertical cylinder 8 ft diameter × 20 ft high |
-| E-1604 | Reactor effluent / stripper feed exchanger | process to process | 880 psi, 700 °F | P1200 | 5.7 million Btu/h, 469 ft²: 18 in × 20 ft, 253 tubes |
+| E-1604 | Reactor effluent / stripper feed exchanger | process to process | 880 psi, 700 °F | P1200 | 5.7 million Btu/h, 469 ft²: 30 in × 20 ft, 805 tubes |
 | A-1601 | Reactor effluent air cooler | forced draught | 1,015 psi, 340 °F | P1200 | 16.1 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | P-1605 | Wash water pump | motor driven | 1,015 psi, 160 °F | P1200 | 13 gpm each × 1655 ft, 15 hp at 3560 rpm, 2 stages; 2 installed, 1 running |
 | E-1602 | Stripper feed / bottoms exchanger | process to process | 225 psi, 470 °F | P300 | 20.5 million Btu/h, 7,982 ft²: 48 in × 20 ft, 2,161 tubes |
@@ -409,21 +409,21 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | D-1707 | Depropaniser receiver | horizontal | 235 psi, 160 °F | P300 | 72 in inside diameter × 18 ft between tangents, horizontal |
 | P-1701 | Fresh feed pump | motor driven | 330 psi, 390 °F | P600 | 658 gpm each × 643 ft, 150 hp at 3560 rpm; 2 installed, 1 running |
 | E-1701 | Feed / light cycle oil pumparound exchanger | process to process | 330 psi, 500 °F | P600 | 8.8 million Btu/h, 3,280 ft²: 36 in × 20 ft, 1,165 tubes |
-| E-1702 | Feed / slurry exchanger | process to process | 330 psi, 730 °F | P1200 | 7.3 million Btu/h, 838 ft²: 18 in × 20 ft, 253 tubes |
-| E-1703 | Flue gas cooler (steam generator) | steam generator | 50 psi, 650 °F | P150 | 36.2 million Btu/h, 6,979 ft²: 90 in × 20 ft, 1,027 tubes of 2 in, the gas at 97 ft/s in them |
+| E-1702 | Feed / slurry exchanger | process to process | 330 psi, 730 °F | P1200 | 7.3 million Btu/h, 838 ft²: 30 in × 20 ft, 805 tubes |
+| E-1703 | Flue gas cooler (steam generator) | steam generator | 50 psi, 650 °F | P150 | 36.2 million Btu/h, 6,979 ft²: 126 in × 20 ft, 2,083 tubes of 2 in, the gas at 48 ft/s in them |
 | P-1702 | Slurry pump | motor driven | 210 psi, 730 °F | P600 | 1550 gpm each × 381 ft, 200 hp at 3560 rpm; 2 installed, 1 running |
 | E-1704 | Slurry steam generator | steam generator | 275 psi, 710 °F | P600 | 55.2 million Btu/h, 6,460 ft²: 48 in × 20 ft, 2,161 tubes |
-| E-1705 | Slurry product cooler | water cooler | 210 psi, 530 °F | P300 | 3.5 million Btu/h, 353 ft²: 12 in × 20 ft, 97 tubes |
+| E-1705 | Slurry product cooler | water cooler | 210 psi, 530 °F | P300 | 3.5 million Btu/h, 353 ft²: 18 in × 20 ft, 253 tubes |
 | F-1701 | Slurry filter | vertical | 210 psi, 250 °F | P300 | 24 in inside diameter × 4 ft between tangents, vertical |
 | P-1703 | Heavy cycle oil pumparound pump | motor driven | 210 psi, 650 °F | P300 | 754 gpm each × 327 ft, 100 hp at 3560 rpm; 2 installed, 1 running |
-| E-1715 | Debutaniser reboiler | process to process | 210 psi, 650 °F | P300 | 18.6 million Btu/h, 1,845 ft²: 24 in × 20 ft, 499 tubes |
+| E-1715 | Debutaniser reboiler | process to process | 210 psi, 650 °F | P300 | 18.6 million Btu/h, 1,845 ft²: 36 in × 20 ft, 1,165 tubes |
 | P-1704 | Light cycle oil pumparound pump | motor driven | 210 psi, 500 °F | P300 | 718 gpm each × 380 ft, 100 hp at 3560 rpm; 2 installed, 1 running |
 | E-1707 | Stripper reboiler | process to process | 240 psi, 440 °F | P300 | 8.6 million Btu/h, 2,141 ft²: 30 in × 20 ft, 805 tubes |
 | P-1705 | Light cycle oil product pump | motor driven | 345 psi, 485 °F | P600 | 213 gpm each × 706 ft, 50 hp at 3560 rpm; 2 installed, 1 running |
 | A-1702 | Light cycle oil air cooler | forced draught | 345 psi, 485 °F | P600 | 12.8 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | E-1708 | Sponge oil cooler | water cooler | 345 psi, 190 °F | P600 | 0.7 million Btu/h, 468 ft²: 18 in × 20 ft, 253 tubes |
 | A-1701 | Main column overhead condenser | forced draught | 50 psi, 320 °F | P150 | 45.5 million Btu/h: 3 bays of 14 ft × 32 ft, 6 fans |
-| E-1709 | Overhead trim condenser | water cooler | 85 psi, 190 °F | P150 | 6.9 million Btu/h, 3,593 ft²: 36 in × 20 ft, 1,165 tubes |
+| E-1709 | Overhead trim condenser | water cooler | 85 psi, 190 °F | P150 | 6.9 million Btu/h, 3,593 ft²: 48 in × 20 ft, 2,161 tubes |
 | P-1706 | Main column reflux pump | motor driven | 145 psi, 150 °F | P150 | 205 gpm each × 232 ft, 15 hp at 3560 rpm; 2 installed, 1 running |
 | P-1707 | Unstabilised gasoline pump | motor driven | 370 psi, 150 °F | P600 | 290 gpm each × 805 ft, 75 hp at 3560 rpm; 2 installed, 1 running |
 | P-1708 | Overhead sour water pump | motor driven | 155 psi, 150 °F | P300 | 60 gpm each × 193 ft, 7.5 hp at 3560 rpm; 2 installed, 1 running |
@@ -443,7 +443,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | V-1703 | Liquefied gas caustic wash drum | vertical | 260 psi, 160 °F | P300 | 66 in inside diameter × 13.8 ft between tangents, vertical |
 | E-1713 | Depropaniser condenser | water cooler | 240 psi, 170 °F | P300 | 11.5 million Btu/h, 7,271 ft²: 48 in × 20 ft, 2,161 tubes |
 | P-1713 | Depropaniser reflux and product pump | motor driven | 305 psi, 160 °F | P600 | 328 gpm each × 246 ft, 15 hp at 3560 rpm; 2 installed, 1 running |
-| E-1714 | Depropaniser reboiler | steam heater | 250 psi, 450 °F | P300 | 7.4 million Btu/h, 600 ft²: 18 in × 20 ft, 253 tubes |
+| E-1714 | Depropaniser reboiler | steam heater | 250 psi, 450 °F | P300 | 7.4 million Btu/h, 600 ft²: 24 in × 20 ft, 499 tubes |
 | E-1716 | Four-carbon cooler | water cooler | 250 psi, 285 °F | P300 | 2.6 million Btu/h, 801 ft²: 18 in × 20 ft, 253 tubes |
 
 ### Unit 18: Sulfur block
@@ -468,10 +468,10 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | E-1801 | Lean / rich amine exchanger | process to process | 445 psi, 305 °F | P600 | 9.4 million Btu/h, 2,385 ft²: 30 in × 20 ft, 805 tubes |
 | A-1801 | Regenerator overhead condenser | forced draught | 50 psi, 275 °F | P150 | 2.0 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | P-1802 | Regenerator reflux pump | motor driven | 115 psi, 170 °F | P150 | 18 gpm each × 119 ft, 1 hp at 3560 rpm; 2 installed, 1 running |
-| E-1802 | Regenerator reboiler | steam heater | 75 psi, 350 °F | P150 | 15.3 million Btu/h, 1,433 ft²: 24 in × 20 ft, 499 tubes |
+| E-1802 | Regenerator reboiler | steam heater | 75 psi, 350 °F | P150 | 15.3 million Btu/h, 1,433 ft²: 48 in × 20 ft, 2,161 tubes |
 | P-1803 | Lean amine pump | motor driven | 445 psi, 305 °F | P600 | 312 gpm each × 784 ft, 100 hp at 3560 rpm; 2 installed, 1 running |
 | A-1802 | Lean amine air cooler | forced draught | 445 psi, 230 °F | P600 | 5.8 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
-| E-1803 | Lean amine trim cooler | water cooler | 445 psi, 180 °F | P600 | 1.2 million Btu/h, 303 ft²: 12 in × 20 ft, 97 tubes |
+| E-1803 | Lean amine trim cooler | water cooler | 445 psi, 180 °F | P600 | 1.2 million Btu/h, 303 ft²: 18 in × 20 ft, 253 tubes |
 | F-1801 | Lean amine filter | vertical | 445 psi, 170 °F | P600 | 24 in inside diameter × 4 ft between tangents, vertical |
 | P-1804 | Amine make-up pump | motor driven | 85 psi, 165 °F | P150 | 26 gpm each × 65 ft, 1 hp at 3560 rpm; 2 installed, 1 running |
 | P-1808 | Skimmed oil pump | motor driven | 130 psi, 155 °F | P150 | 7 gpm each × 172 ft, 1 hp at 3560 rpm; 2 installed, 1 running |
@@ -480,15 +480,15 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | E-1804 | Stripper feed / bottoms exchanger | process to process | 185 psi, 315 °F | P300 | 8.2 million Btu/h, 980 ft²: 18 in × 20 ft, 253 tubes |
 | P-1806 | Stripper pumparound pump | motor driven | 110 psi, 240 °F | P150 | 338 gpm each × 114 ft, 15 hp at 3560 rpm; 2 installed, 1 running |
 | A-1803 | Stripper pumparound cooler | forced draught | 110 psi, 240 °F | P150 | 6.0 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
-| E-1805 | Stripper reboiler | steam heater | 75 psi, 350 °F | P150 | 14.4 million Btu/h, 1,600 ft²: 24 in × 20 ft, 499 tubes |
+| E-1805 | Stripper reboiler | steam heater | 75 psi, 350 °F | P150 | 14.4 million Btu/h, 1,600 ft²: 42 in × 20 ft, 1,639 tubes |
 | P-1807 | Stripped water pump | motor driven | 185 psi, 315 °F | P300 | 185 gpm each × 250 ft, 20 hp at 3560 rpm; 2 installed, 1 running |
 | A-1804 | Stripped water cooler | forced draught | 185 psi, 215 °F | P300 | 3.3 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | P-1810 | Acid gas drum water pump | motor driven | 115 psi, 170 °F | P150 | 11 gpm each × 121 ft, 1 hp at 3560 rpm; 2 installed, 1 running |
-| E-1806 | First sulfur condenser | steam generator | 50 psi, 650 °F | P150 | 0.9 million Btu/h, 406 ft²: 24 in × 20 ft, 499 tubes, the gas at 67 ft/s in them |
+| E-1806 | First sulfur condenser | steam generator | 50 psi, 650 °F | P150 | 0.9 million Btu/h, 406 ft²: 30 in × 20 ft, 805 tubes, the gas at 41 ft/s in them |
 | E-1807 | First reheater | steam heater | 660 psi, 700 °F | P1200 | 0.3 million Btu/h, 45 ft²: 24 in × 20 ft, 499 tubes, the gas at 53 ft/s in them |
 | R-1801 | First converter | horizontal, one bed | 50 psi, 630 °F | P150 | 54 in inside diameter × 13.5 ft between tangents, horizontal, bed 3 ft deep |
-| E-1808 | Second sulfur condenser | steam generator | 50 psi, 630 °F | P150 | 0.8 million Btu/h, 377 ft²: 24 in × 20 ft, 499 tubes, the gas at 58 ft/s in them |
-| E-1809 | Second reheater | steam heater | 660 psi, 700 °F | P1200 | 0.2 million Btu/h, 25 ft²: 18 in × 20 ft, 253 tubes, the gas at 98 ft/s in them |
+| E-1808 | Second sulfur condenser | steam generator | 50 psi, 630 °F | P150 | 0.8 million Btu/h, 377 ft²: 30 in × 20 ft, 805 tubes, the gas at 36 ft/s in them |
+| E-1809 | Second reheater | steam heater | 660 psi, 700 °F | P1200 | 0.2 million Btu/h, 25 ft²: 24 in × 20 ft, 499 tubes, the gas at 50 ft/s in them |
 | R-1802 | Second converter | horizontal, one bed | 50 psi, 495 °F | P150 | 54 in inside diameter × 13.5 ft between tangents, horizontal, bed 3 ft deep |
 | E-1810 | Final sulfur condenser | steam generator | 50 psi, 495 °F | P150 | 0.5 million Btu/h, 647 ft²: 24 in × 20 ft, 499 tubes, the gas at 51 ft/s in them |
 
@@ -663,25 +663,25 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 
 Process lines of each unit by size (inches) and by class. The full list, with what each line carries, its conditions, its velocity and what sized it, is in `public/refinery/process/lines.json`.
 
-| Unit | 3/4 | 1 | 1-1/2 | 2 | 3 | 4 | 6 | 8 | 10 | 12 | 14 | 16 | 18 | 20 | 24 | 30 | 36 | 42 | 48 | Total |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| 11 |  |  |  | 2 | 7 | 6 | 14 | 9 | 8 | 13 | 2 | 3 |  |  | 2 |  |  |  |  | 66 |
-| 12 |  |  |  | 4 | 4 | 1 | 4 | 5 | 1 |  | 1 |  |  |  |  |  | 1 |  | 1 | 22 |
-| 13 | 1 | 1 |  | 4 | 6 | 3 | 15 | 4 | 3 | 2 |  |  |  |  |  |  |  |  |  | 39 |
-| 14 |  |  |  | 4 | 6 | 8 | 7 | 7 | 1 | 2 | 6 |  |  |  |  |  |  |  |  | 41 |
-| 15 | 2 |  |  | 9 | 2 | 12 | 4 | 3 |  |  |  |  |  |  |  |  |  |  |  | 32 |
-| 16 |  |  | 2 | 12 | 3 | 3 | 15 | 5 | 3 |  |  |  |  |  |  |  |  |  |  | 43 |
-| 17 |  |  |  | 10 | 16 | 11 | 23 | 16 | 13 | 3 | 2 | 2 |  | 1 | 2 |  | 1 | 1 |  | 101 |
-| 18 |  |  |  | 20 | 1 | 10 | 16 | 8 | 2 |  | 1 | 1 |  |  |  |  |  |  |  | 59 |
-| 19 | 1 | 2 |  | 7 | 6 | 12 | 19 | 1 | 3 | 1 |  |  |  |  |  | 2 |  |  | 1 | 55 |
-| 20 |  |  |  | 7 |  |  |  |  |  | 1 |  | 5 |  |  |  |  | 5 |  |  | 18 |
-| 21 |  |  |  | 5 | 15 | 11 | 23 | 8 | 7 |  |  | 1 | 1 |  | 4 | 7 |  |  |  | 82 |
-| 22 |  |  |  | 6 |  |  |  |  |  |  |  | 1 | 1 | 2 | 2 |  | 1 |  |  | 13 |
-| 23 |  |  |  | 5 |  | 2 | 4 |  |  |  |  |  |  |  |  |  |  |  |  | 11 |
-| 24 |  |  |  | 7 | 3 | 1 | 5 | 4 |  |  |  |  |  |  |  |  |  |  |  | 20 |
-| 25 |  |  |  |  | 1 | 1 |  |  |  |  |  |  |  |  |  |  | 3 |  |  | 5 |
-| 26 |  |  |  | 1 | 2 |  | 2 |  |  |  |  |  |  | 1 |  | 2 |  |  |  | 8 |
-| All | 4 | 3 | 2 | 103 | 72 | 81 | 151 | 70 | 41 | 22 | 12 | 13 | 2 | 4 | 10 | 11 | 11 | 1 | 2 | 615 |
+| Unit | 3 | 4 | 6 | 8 | 10 | 12 | 14 | 16 | 18 | 20 | 24 | 30 | 36 | 42 | 48 | Total |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| 11 | 9 | 6 | 14 | 9 | 8 | 13 | 2 | 3 |  |  | 2 |  |  |  |  | 66 |
+| 12 | 8 | 1 | 4 | 5 | 1 |  | 1 |  |  |  |  |  | 1 |  | 1 | 22 |
+| 13 | 12 | 3 | 15 | 4 | 3 | 2 |  |  |  |  |  |  |  |  |  | 39 |
+| 14 | 10 | 8 | 7 | 7 | 1 | 2 | 6 |  |  |  |  |  |  |  |  | 41 |
+| 15 | 13 | 12 | 4 | 3 |  |  |  |  |  |  |  |  |  |  |  | 32 |
+| 16 | 17 | 3 | 15 | 5 | 3 |  |  |  |  |  |  |  |  |  |  | 43 |
+| 17 | 26 | 11 | 23 | 16 | 13 | 3 | 2 | 2 |  | 1 | 2 |  | 1 | 1 |  | 101 |
+| 18 | 21 | 10 | 16 | 8 | 2 |  | 1 | 1 |  |  |  |  |  |  |  | 59 |
+| 19 | 16 | 12 | 19 | 1 | 3 | 1 |  |  |  |  |  | 2 |  |  | 1 | 55 |
+| 20 | 7 |  |  |  |  | 1 |  | 5 |  |  |  |  | 5 |  |  | 18 |
+| 21 | 20 | 11 | 23 | 8 | 7 |  |  | 1 | 1 |  | 4 | 7 |  |  |  | 82 |
+| 22 | 6 |  |  |  |  |  |  | 1 | 1 | 2 | 2 |  | 1 |  |  | 13 |
+| 23 | 5 | 2 | 4 |  |  |  |  |  |  |  |  |  |  |  |  | 11 |
+| 24 | 10 | 1 | 5 | 4 |  |  |  |  |  |  |  |  |  |  |  | 20 |
+| 25 | 1 | 1 |  |  |  |  |  |  |  |  |  |  | 3 |  |  | 5 |
+| 26 | 3 |  | 2 |  |  |  |  |  |  | 1 |  | 2 |  |  |  | 8 |
+| All | 184 | 81 | 151 | 70 | 41 | 22 | 12 | 13 | 2 | 4 | 10 | 11 | 11 | 1 | 2 | 615 |
 
 | Unit | P150 | P300 | P600 | P1200 |
 |---|---|---|---|---|

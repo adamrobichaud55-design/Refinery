@@ -1006,7 +1006,7 @@
      {
       "port": "water",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 30,
       "fluid": "SW",
@@ -1126,13 +1126,13 @@
      "U": 60,
      "areaFt2": 1615.777,
      "shells": 1,
-     "ID": 24,
-     "tubes": 499,
+     "ID": 36,
+     "tubes": 1165,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.5
+     "tShell": 0.625
     },
-    "description": "17.8 million Btu/h, 1,616 ft²: 24 in × 20 ft, 499 tubes",
+    "description": "17.8 million Btu/h, 1,616 ft²: 36 in × 20 ft, 1,165 tubes",
     "dutyBtuh": {
      "tube": 17757890,
      "shell": -17757890
@@ -1258,13 +1258,13 @@
      "U": 60,
      "areaFt2": 902.6389,
      "shells": 1,
-     "ID": 18,
-     "tubes": 253,
+     "ID": 36,
+     "tubes": 1165,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.375
+     "tShell": 0.625
     },
-    "description": "7.9 million Btu/h, 903 ft²: 18 in × 20 ft, 253 tubes",
+    "description": "7.9 million Btu/h, 903 ft²: 36 in × 20 ft, 1,165 tubes",
     "dutyBtuh": {
      "tube": 7892398,
      "shell": -7892398
@@ -1390,13 +1390,13 @@
      "U": 60,
      "areaFt2": 2154.52,
      "shells": 1,
-     "ID": 30,
-     "tubes": 805,
+     "ID": 36,
+     "tubes": 1165,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.5
+     "tShell": 0.625
     },
-    "description": "23.7 million Btu/h, 2,155 ft²: 30 in × 20 ft, 805 tubes",
+    "description": "23.7 million Btu/h, 2,155 ft²: 36 in × 20 ft, 1,165 tubes",
     "dutyBtuh": {
      "tube": 23677190,
      "shell": -23677190
@@ -1522,13 +1522,13 @@
      "U": 60,
      "areaFt2": 3041.108,
      "shells": 1,
-     "ID": 30,
-     "tubes": 805,
+     "ID": 36,
+     "tubes": 1165,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.5
+     "tShell": 0.625
     },
-    "description": "33.5 million Btu/h, 3,041 ft²: 30 in × 20 ft, 805 tubes",
+    "description": "33.5 million Btu/h, 3,041 ft²: 36 in × 20 ft, 1,165 tubes",
     "dutyBtuh": {
      "tube": 33542690,
      "shell": -33542690
@@ -2057,13 +2057,13 @@
      "U": 40,
      "areaFt2": 951.8753,
      "shells": 1,
-     "ID": 18,
-     "tubes": 253,
+     "ID": 36,
+     "tubes": 1165,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.375
+     "tShell": 0.625
     },
-    "description": "6.7 million Btu/h, 952 ft²: 18 in × 20 ft, 253 tubes",
+    "description": "6.7 million Btu/h, 952 ft²: 36 in × 20 ft, 1,165 tubes",
     "dutyBtuh": {
      "tube": 6708538,
      "shell": -6708538
@@ -3144,7 +3144,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 30,
       "fluid": "SW",
@@ -3153,7 +3153,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 31,
       "fluid": "SW",
@@ -4372,11 +4372,11 @@
     },
     "size": {
      "D": 36,
-     "L": 108,
+     "L": 144,
      "t": 0.375,
      "vertical": 0
     },
-    "description": "36 in inside diameter × 9 ft between tangents, horizontal",
+    "description": "36 in inside diameter × 12 ft between tangents, horizontal",
     "dutyBtuh": {},
     "given": {},
     "ports": [
@@ -4442,7 +4442,7 @@
      {
       "port": "gas",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 4,
       "fluid": "HG",
@@ -4451,7 +4451,7 @@
      {
       "port": "oil",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 5,
       "fluid": "OW",
@@ -4566,7 +4566,7 @@
      {
       "port": "off-gas",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 4,
       "fluid": "HG",
@@ -4752,7 +4752,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 5,
       "fluid": "OW",
@@ -4761,7 +4761,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 6,
       "fluid": "OW",
@@ -4842,7 +4842,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "line": 8,
       "fluid": "SW",
@@ -5478,7 +5478,7 @@
      {
       "port": "inlet 2",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 1,
       "fluid": "NA",
@@ -5598,7 +5598,7 @@
      {
       "port": "water",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P600",
       "line": 15,
       "fluid": "SW",
@@ -5748,7 +5748,7 @@
      {
       "port": "reflux",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 22,
       "fluid": "NA",
@@ -6732,7 +6732,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "line": 11,
       "fluid": "PW",
@@ -6741,7 +6741,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P600",
       "line": 12,
       "fluid": "PW",
@@ -7143,7 +7143,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "line": 22,
       "fluid": "NA",
@@ -7182,13 +7182,13 @@
      "U": 100,
      "areaFt2": 805.1804,
      "shells": 1,
-     "ID": 18,
-     "tubes": 253,
+     "ID": 24,
+     "tubes": 499,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.5
+     "tShell": 0.625
     },
-    "description": "7.1 million Btu/h, 805 ft²: 18 in × 20 ft, 253 tubes",
+    "description": "7.1 million Btu/h, 805 ft²: 24 in × 20 ft, 499 tubes",
     "dutyBtuh": {
      "shell": 7051500
     },
@@ -7561,13 +7561,13 @@
      "U": 100,
      "areaFt2": 1405.11,
      "shells": 1,
-     "ID": 24,
-     "tubes": 499,
+     "ID": 36,
+     "tubes": 1165,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375
     },
-    "description": "7.6 million Btu/h, 1,405 ft²: 24 in × 20 ft, 499 tubes",
+    "description": "7.6 million Btu/h, 1,405 ft²: 36 in × 20 ft, 1,165 tubes",
     "dutyBtuh": {
      "shell": 7570000
     },
@@ -8256,7 +8256,7 @@
      {
       "port": "hydrogen",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P600",
       "line": 21,
       "fluid": "HY",
@@ -8520,7 +8520,7 @@
      {
       "port": "gas",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 29,
       "fluid": "FG",
@@ -8750,13 +8750,13 @@
      "U": 60,
      "areaFt2": 4329.883,
      "shells": 1,
-     "ID": 36,
-     "tubes": 1165,
+     "ID": 42,
+     "tubes": 1639,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 1
+     "tShell": 1.125
     },
-    "description": "40.4 million Btu/h, 4,330 ft²: 36 in × 20 ft, 1,165 tubes",
+    "description": "40.4 million Btu/h, 4,330 ft²: 42 in × 20 ft, 1,639 tubes",
     "dutyBtuh": {
      "tube": 40378920,
      "shell": -40378920
@@ -9278,7 +9278,7 @@
      {
       "port": "fuel gas",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "util": "FG",
       "fluid": "FG",
@@ -9449,7 +9449,7 @@
      {
       "port": "fuel gas",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "util": "FG",
       "fluid": "FG",
@@ -10719,7 +10719,7 @@
      {
       "port": "water",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P600",
       "line": 15,
       "fluid": "SW",
@@ -10851,7 +10851,7 @@
      {
       "port": "reflux",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 23,
       "fluid": "NA",
@@ -10898,12 +10898,12 @@
     },
     "size": {
      "D": 36,
-     "L": 108,
+     "L": 144,
      "t": 0.375,
      "vertical": 0,
      "boot": 12
     },
-    "description": "36 in inside diameter × 9 ft between tangents, horizontal, with a water boot",
+    "description": "36 in inside diameter × 12 ft between tangents, horizontal, with a water boot",
     "dutyBtuh": {},
     "given": {
      "boot": 1
@@ -10962,7 +10962,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 20,
       "fluid": "HG",
@@ -10971,7 +10971,7 @@
      {
       "port": "gas",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 21,
       "fluid": "HG",
@@ -10980,7 +10980,7 @@
      {
       "port": "liquid",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 22,
       "fluid": "NA",
@@ -10989,7 +10989,7 @@
      {
       "port": "water",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 25,
       "fluid": "SW",
@@ -11373,7 +11373,7 @@
      {
       "port": "fuel gas",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "util": "FG",
       "fluid": "FG",
@@ -11491,13 +11491,13 @@
      "U": 60,
      "areaFt2": 205.4726,
      "shells": 1,
-     "ID": 12,
-     "tubes": 97,
+     "ID": 24,
+     "tubes": 499,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.375
+     "tShell": 0.5
     },
-    "description": "2.6 million Btu/h, 205 ft²: 12 in × 20 ft, 97 tubes",
+    "description": "2.6 million Btu/h, 205 ft²: 24 in × 20 ft, 499 tubes",
     "dutyBtuh": {
      "shell": -2638532,
      "tube": 2638532
@@ -11736,7 +11736,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "line": 11,
       "fluid": "PW",
@@ -11745,7 +11745,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P600",
       "line": 12,
       "fluid": "PW",
@@ -12066,7 +12066,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 20,
       "fluid": "HG",
@@ -12138,7 +12138,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 22,
       "fluid": "NA",
@@ -12147,7 +12147,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "line": 23,
       "fluid": "NA",
@@ -12219,7 +12219,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 25,
       "fluid": "SW",
@@ -12228,7 +12228,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P600",
       "line": 26,
       "fluid": "SW",
@@ -12589,7 +12589,7 @@
      {
       "port": "inlet 2",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 1,
       "fluid": "DI",
@@ -12709,7 +12709,7 @@
      {
       "port": "water",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P1200",
       "line": 23,
       "fluid": "SW",
@@ -13011,7 +13011,7 @@
      {
       "port": "gas",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 25,
       "fluid": "HG",
@@ -13143,7 +13143,7 @@
      {
       "port": "reflux",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 33,
       "fluid": "NA",
@@ -13190,12 +13190,12 @@
     },
     "size": {
      "D": 36,
-     "L": 108,
+     "L": 144,
      "t": 0.375,
      "vertical": 0,
      "boot": 12
     },
-    "description": "36 in inside diameter × 9 ft between tangents, horizontal, with a water boot",
+    "description": "36 in inside diameter × 12 ft between tangents, horizontal, with a water boot",
     "dutyBtuh": {},
     "given": {
      "boot": 1
@@ -13254,7 +13254,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 30,
       "fluid": "HG",
@@ -13263,7 +13263,7 @@
      {
       "port": "gas",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 31,
       "fluid": "HG",
@@ -13272,7 +13272,7 @@
      {
       "port": "liquid",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 32,
       "fluid": "NA",
@@ -13281,7 +13281,7 @@
      {
       "port": "water",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 35,
       "fluid": "SW",
@@ -13902,7 +13902,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P600",
       "line": 13,
       "fluid": "HY",
@@ -13911,7 +13911,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P1200",
       "line": 14,
       "fluid": "HY",
@@ -14003,7 +14003,7 @@
      {
       "port": "fuel gas",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "util": "FG",
       "fluid": "FG",
@@ -14042,13 +14042,13 @@
      "U": 60,
      "areaFt2": 468.905,
      "shells": 1,
-     "ID": 18,
-     "tubes": 253,
+     "ID": 30,
+     "tubes": 805,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.625
+     "tShell": 1
     },
-    "description": "5.7 million Btu/h, 469 ft²: 18 in × 20 ft, 253 tubes",
+    "description": "5.7 million Btu/h, 469 ft²: 30 in × 20 ft, 805 tubes",
     "dutyBtuh": {
      "shell": -5651219,
      "tube": 5651219
@@ -14287,7 +14287,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1,
+      "NPS": 2,
       "cls": "P150",
       "line": 20,
       "fluid": "PW",
@@ -14296,7 +14296,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1,
+      "NPS": 2,
       "cls": "P1200",
       "line": 21,
       "fluid": "PW",
@@ -14508,7 +14508,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 30,
       "fluid": "HG",
@@ -14580,7 +14580,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 32,
       "fluid": "NA",
@@ -14589,7 +14589,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "line": 33,
       "fluid": "NA",
@@ -14661,7 +14661,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 35,
       "fluid": "SW",
@@ -14670,7 +14670,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P1200",
       "line": 36,
       "fluid": "SW",
@@ -15276,7 +15276,7 @@
      {
       "port": "fresh catalyst",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 8,
       "fluid": "AIR",
@@ -15620,7 +15620,7 @@
      {
       "port": "catalyst out",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 8,
       "fluid": "AIR",
@@ -15763,7 +15763,7 @@
      {
       "port": "caustic",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "CA",
       "fluid": "CA",
@@ -16585,7 +16585,7 @@
      {
       "port": "water",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 65,
       "fluid": "SW",
@@ -17569,7 +17569,7 @@
      {
       "port": "lean amine",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P600",
       "line": 88,
       "fluid": "AM",
@@ -17578,7 +17578,7 @@
      {
       "port": "rich amine",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 89,
       "fluid": "AM",
@@ -18082,13 +18082,13 @@
      "U": 40,
      "areaFt2": 837.8337,
      "shells": 1,
-     "ID": 18,
-     "tubes": 253,
+     "ID": 30,
+     "tubes": 805,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.375
+     "tShell": 0.5
     },
-    "description": "7.3 million Btu/h, 838 ft²: 18 in × 20 ft, 253 tubes",
+    "description": "7.3 million Btu/h, 838 ft²: 30 in × 20 ft, 805 tubes",
     "dutyBtuh": {
      "tube": 7330259,
      "shell": -7330259
@@ -18214,15 +18214,15 @@
      "U": 20,
      "areaFt2": 6978.998,
      "shells": 1,
-     "ID": 90,
-     "tubes": 1027,
+     "ID": 126,
+     "tubes": 2083,
      "tubeOD": 2,
      "tubeLength": 240,
-     "tShell": 2.125,
-     "drumT": 1.375,
-     "tubeGasFts": 97.06553
+     "tShell": 2.875,
+     "drumT": 1.75,
+     "tubeGasFts": 47.85708
     },
-    "description": "36.2 million Btu/h, 6,979 ft²: 90 in × 20 ft, 1,027 tubes of 2 in, the gas at 97 ft/s in them",
+    "description": "36.2 million Btu/h, 6,979 ft²: 126 in × 20 ft, 2,083 tubes of 2 in, the gas at 48 ft/s in them",
     "dutyBtuh": {
      "process": -36199660
     },
@@ -18515,13 +18515,13 @@
      "U": 50,
      "areaFt2": 353.1661,
      "shells": 1,
-     "ID": 12,
-     "tubes": 97,
+     "ID": 18,
+     "tubes": 253,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375
     },
-    "description": "3.5 million Btu/h, 353 ft²: 12 in × 20 ft, 97 tubes",
+    "description": "3.5 million Btu/h, 353 ft²: 18 in × 20 ft, 253 tubes",
     "dutyBtuh": {
      "shell": -3495824
     },
@@ -18558,7 +18558,7 @@
      {
       "port": "shell in",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 17,
       "fluid": "SL",
@@ -18567,7 +18567,7 @@
      {
       "port": "shell out",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 18,
       "fluid": "SL",
@@ -18652,7 +18652,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 18,
       "fluid": "SL",
@@ -18661,7 +18661,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 19,
       "fluid": "SL",
@@ -18781,13 +18781,13 @@
      "U": 60,
      "areaFt2": 1844.841,
      "shells": 1,
-     "ID": 24,
-     "tubes": 499,
+     "ID": 36,
+     "tubes": 1165,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375
     },
-    "description": "18.6 million Btu/h, 1,845 ft²: 24 in × 20 ft, 499 tubes",
+    "description": "18.6 million Btu/h, 1,845 ft²: 36 in × 20 ft, 1,165 tubes",
     "dutyBtuh": {
      "shell": -18600000,
      "tube": 18600000
@@ -19476,13 +19476,13 @@
      "U": 90,
      "areaFt2": 3592.675,
      "shells": 1,
-     "ID": 36,
-     "tubes": 1165,
+     "ID": 48,
+     "tubes": 2161,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375
     },
-    "description": "6.9 million Btu/h, 3,593 ft²: 36 in × 20 ft, 1,165 tubes",
+    "description": "6.9 million Btu/h, 3,593 ft²: 48 in × 20 ft, 2,161 tubes",
     "dutyBtuh": {
      "shell": -6869053
     },
@@ -20139,7 +20139,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "line": 55,
       "fluid": "GS",
@@ -20903,7 +20903,7 @@
      {
       "port": "caustic",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P150",
       "util": "CA",
       "fluid": "CA",
@@ -21075,7 +21075,7 @@
      {
       "port": "caustic",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 2,
       "cls": "P300",
       "util": "CA",
       "fluid": "CA",
@@ -21304,13 +21304,13 @@
      "U": 100,
      "areaFt2": 600.3941,
      "shells": 1,
-     "ID": 18,
-     "tubes": 253,
+     "ID": 24,
+     "tubes": 499,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375
     },
-    "description": "7.4 million Btu/h, 600 ft²: 18 in × 20 ft, 253 tubes",
+    "description": "7.4 million Btu/h, 600 ft²: 24 in × 20 ft, 499 tubes",
     "dutyBtuh": {
      "shell": 7374225
     },
@@ -21590,7 +21590,7 @@
      {
       "port": "gas",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 1,
       "fluid": "HG",
@@ -21608,7 +21608,7 @@
      {
       "port": "make-up",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 20,
       "fluid": "AM",
@@ -21695,7 +21695,7 @@
      {
       "port": "reflux",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 7,
       "fluid": "SW",
@@ -21845,7 +21845,7 @@
      {
       "port": "reflux",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 8,
       "fluid": "SW",
@@ -21941,7 +21941,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P600",
       "line": 18,
       "fluid": "AM",
@@ -21950,7 +21950,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 19,
       "fluid": "AM",
@@ -22048,7 +22048,7 @@
      {
       "port": "liquid",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 43,
       "fluid": "SW",
@@ -22173,7 +22173,7 @@
      {
       "port": "gas",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 22,
       "fluid": "AG",
@@ -22182,7 +22182,7 @@
      {
       "port": "oil",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 23,
       "fluid": "OW",
@@ -22200,7 +22200,7 @@
      {
       "port": "inlet 2",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 44,
       "fluid": "SW",
@@ -22209,7 +22209,7 @@
      {
       "port": "inlet 3",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 45,
       "fluid": "SW",
@@ -22289,7 +22289,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 33,
       "fluid": "AG",
@@ -22298,7 +22298,7 @@
      {
       "port": "gas",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 42,
       "fluid": "AG",
@@ -22307,7 +22307,7 @@
      {
       "port": "liquid",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 45,
       "fluid": "SW",
@@ -22547,7 +22547,7 @@
      {
       "port": "overhead",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 33,
       "fluid": "AG",
@@ -22681,7 +22681,7 @@
      {
       "port": "stripper gas",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 42,
       "fluid": "AG",
@@ -22808,7 +22808,7 @@
      {
       "port": "amine flash gas",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 1,
       "fluid": "HG",
@@ -22817,7 +22817,7 @@
      {
       "port": "degassing drum gas",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 22,
       "fluid": "AG",
@@ -22835,7 +22835,7 @@
      {
       "port": "fuel gas",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "util": "FG",
       "fluid": "FG",
@@ -22926,7 +22926,7 @@
      {
       "port": "sulfur in 1",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 48,
       "fluid": "SU",
@@ -22935,7 +22935,7 @@
      {
       "port": "sulfur in 2",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 52,
       "fluid": "SU",
@@ -22944,7 +22944,7 @@
      {
       "port": "sulfur in 3",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 56,
       "fluid": "SU",
@@ -22953,7 +22953,7 @@
      {
       "port": "sulfur out",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 58,
       "fluid": "SU",
@@ -23020,7 +23020,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 58,
       "fluid": "SU",
@@ -23455,7 +23455,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 7,
       "fluid": "SW",
@@ -23464,7 +23464,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 8,
       "fluid": "SW",
@@ -23503,13 +23503,13 @@
      "U": 250,
      "areaFt2": 1433.015,
      "shells": 1,
-     "ID": 24,
-     "tubes": 499,
+     "ID": 48,
+     "tubes": 2161,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375
     },
-    "description": "15.3 million Btu/h, 1,433 ft²: 24 in × 20 ft, 499 tubes",
+    "description": "15.3 million Btu/h, 1,433 ft²: 48 in × 20 ft, 2,161 tubes",
     "dutyBtuh": {
      "shell": 15301200
     },
@@ -23773,13 +23773,13 @@
      "U": 150,
      "areaFt2": 302.6755,
      "shells": 1,
-     "ID": 12,
-     "tubes": 97,
+     "ID": 18,
+     "tubes": 253,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375
     },
-    "description": "1.2 million Btu/h, 303 ft²: 12 in × 20 ft, 97 tubes",
+    "description": "1.2 million Btu/h, 303 ft²: 18 in × 20 ft, 253 tubes",
     "dutyBtuh": {
      "shell": -1214400
     },
@@ -23910,7 +23910,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P600",
       "line": 17,
       "fluid": "AM",
@@ -23919,7 +23919,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P600",
       "line": 18,
       "fluid": "AM",
@@ -23991,7 +23991,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 19,
       "fluid": "AM",
@@ -24000,7 +24000,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 20,
       "fluid": "AM",
@@ -24072,7 +24072,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 23,
       "fluid": "OW",
@@ -24081,7 +24081,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 24,
       "fluid": "OW",
@@ -24575,13 +24575,13 @@
      "U": 250,
      "areaFt2": 1599.574,
      "shells": 1,
-     "ID": 24,
-     "tubes": 499,
+     "ID": 42,
+     "tubes": 1639,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375
     },
-    "description": "14.4 million Btu/h, 1,600 ft²: 24 in × 20 ft, 499 tubes",
+    "description": "14.4 million Btu/h, 1,600 ft²: 42 in × 20 ft, 1,639 tubes",
     "dutyBtuh": {
      "shell": 14384160
     },
@@ -24878,7 +24878,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 43,
       "fluid": "SW",
@@ -24887,7 +24887,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 44,
       "fluid": "SW",
@@ -24926,14 +24926,14 @@
      "U": 20,
      "areaFt2": 405.854,
      "shells": 1,
-     "ID": 24,
-     "tubes": 499,
+     "ID": 30,
+     "tubes": 805,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375,
-     "tubeGasFts": 66.67955
+     "tubeGasFts": 41.33304
     },
-    "description": "0.9 million Btu/h, 406 ft²: 24 in × 20 ft, 499 tubes, the gas at 67 ft/s in them",
+    "description": "0.9 million Btu/h, 406 ft²: 30 in × 20 ft, 805 tubes, the gas at 41 ft/s in them",
     "dutyBtuh": {
      "process": -942673.9
     },
@@ -24998,7 +24998,7 @@
      {
       "port": "sulfur out",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 48,
       "fluid": "SU",
@@ -25242,14 +25242,14 @@
      "U": 20,
      "areaFt2": 377.1352,
      "shells": 1,
-     "ID": 24,
-     "tubes": 499,
+     "ID": 30,
+     "tubes": 805,
      "tubeOD": 0.75,
      "tubeLength": 240,
      "tShell": 0.375,
-     "tubeGasFts": 58.49793
+     "tubeGasFts": 36.26145
     },
-    "description": "0.8 million Btu/h, 377 ft²: 24 in × 20 ft, 499 tubes, the gas at 58 ft/s in them",
+    "description": "0.8 million Btu/h, 377 ft²: 30 in × 20 ft, 805 tubes, the gas at 36 ft/s in them",
     "dutyBtuh": {
      "process": -759811.3
     },
@@ -25314,7 +25314,7 @@
      {
       "port": "sulfur out",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 52,
       "fluid": "SU",
@@ -25371,14 +25371,14 @@
      "U": 100,
      "areaFt2": 25.40274,
      "shells": 1,
-     "ID": 18,
-     "tubes": 253,
+     "ID": 24,
+     "tubes": 499,
      "tubeOD": 0.75,
      "tubeLength": 240,
-     "tShell": 0.5,
-     "tubeGasFts": 98.2134
+     "tShell": 0.625,
+     "tubeGasFts": 49.79557
     },
-    "description": "0.2 million Btu/h, 25 ft²: 18 in × 20 ft, 253 tubes, the gas at 98 ft/s in them",
+    "description": "0.2 million Btu/h, 25 ft²: 24 in × 20 ft, 499 tubes, the gas at 50 ft/s in them",
     "dutyBtuh": {
      "tube": 248902.3
     },
@@ -25630,7 +25630,7 @@
      {
       "port": "sulfur out",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 56,
       "fluid": "SU",
@@ -26123,7 +26123,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 1,
+      "NPS": 3,
       "cls": "P1200",
       "line": 26,
       "fluid": "BW",
@@ -26132,7 +26132,7 @@
      {
       "port": "water",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 28,
       "fluid": "OW",
@@ -26243,7 +26243,7 @@
      {
       "port": "blowdown",
       "dir": "out",
-      "NPS": 1,
+      "NPS": 3,
       "cls": "P1200",
       "line": 26,
       "fluid": "BW",
@@ -26363,7 +26363,7 @@
      {
       "port": "blowdown",
       "dir": "out",
-      "NPS": 1,
+      "NPS": 3,
       "cls": "P1200",
       "line": 27,
       "fluid": "BW",
@@ -26923,7 +26923,7 @@
      {
       "port": "liquid",
       "dir": "out",
-      "NPS": 0.75,
+      "NPS": 3,
       "cls": "P300",
       "line": 43,
       "fluid": "NI",
@@ -27057,7 +27057,7 @@
      {
       "port": "inlet 3",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 49,
       "fluid": "FG",
@@ -27084,7 +27084,7 @@
      {
       "port": "liquid",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 54,
       "fluid": "OW",
@@ -27142,7 +27142,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 45,
       "fluid": "CA",
@@ -27996,7 +27996,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 28,
       "fluid": "OW",
@@ -28005,7 +28005,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 29,
       "fluid": "OW",
@@ -28462,7 +28462,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 0.75,
+      "NPS": 3,
       "cls": "P300",
       "line": 43,
       "fluid": "NI",
@@ -28471,7 +28471,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P300",
       "line": 44,
       "fluid": "NI",
@@ -28543,7 +28543,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 45,
       "fluid": "CA",
@@ -28552,7 +28552,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P600",
       "line": 46,
       "fluid": "CA",
@@ -28659,7 +28659,7 @@
      {
       "port": "water draw",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 12,
       "fluid": "OW",
@@ -28760,7 +28760,7 @@
      {
       "port": "water draw",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 13,
       "fluid": "OW",
@@ -28861,7 +28861,7 @@
      {
       "port": "water draw",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 14,
       "fluid": "OW",
@@ -28962,7 +28962,7 @@
      {
       "port": "water draw",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 15,
       "fluid": "OW",
@@ -29063,7 +29063,7 @@
      {
       "port": "water draw",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 16,
       "fluid": "OW",
@@ -29218,7 +29218,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 12,
       "fluid": "OW",
@@ -29227,7 +29227,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 17,
       "fluid": "OW",
@@ -31130,7 +31130,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 79,
       "fluid": "OW",
@@ -31210,7 +31210,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 80,
       "fluid": "OW",
@@ -32290,7 +32290,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "line": 28,
       "fluid": "LP",
@@ -33495,7 +33495,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 79,
       "fluid": "OW",
@@ -33504,7 +33504,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "line": 81,
       "fluid": "OW",
@@ -33582,7 +33582,7 @@
      {
       "port": "drain",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 7,
       "fluid": "OW",
@@ -33756,7 +33756,7 @@
      {
       "port": "drain",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 8,
       "fluid": "OW",
@@ -33828,7 +33828,7 @@
      {
       "port": "drain",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 9,
       "fluid": "OW",
@@ -33900,7 +33900,7 @@
      {
       "port": "drain",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 10,
       "fluid": "OW",
@@ -34004,7 +34004,7 @@
      {
       "port": "inlet 1",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 7,
       "fluid": "OW",
@@ -34013,7 +34013,7 @@
      {
       "port": "inlet 2",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 8,
       "fluid": "OW",
@@ -34022,7 +34022,7 @@
      {
       "port": "inlet 3",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 9,
       "fluid": "OW",
@@ -34031,7 +34031,7 @@
      {
       "port": "inlet 4",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 10,
       "fluid": "OW",
@@ -34040,7 +34040,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 11,
       "fluid": "OW",
@@ -34112,7 +34112,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 11,
       "fluid": "OW",
@@ -34121,7 +34121,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "line": 12,
       "fluid": "OW",
@@ -34197,7 +34197,7 @@
      {
       "port": "drain",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 6,
       "fluid": "OW",
@@ -34267,7 +34267,7 @@
      {
       "port": "drain",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 7,
       "fluid": "OW",
@@ -34337,7 +34337,7 @@
      {
       "port": "drain",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 8,
       "fluid": "OW",
@@ -34576,7 +34576,7 @@
      {
       "port": "inlet 1",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 6,
       "fluid": "OW",
@@ -34585,7 +34585,7 @@
      {
       "port": "inlet 2",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 7,
       "fluid": "OW",
@@ -34594,7 +34594,7 @@
      {
       "port": "inlet 3",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 8,
       "fluid": "OW",
@@ -34603,7 +34603,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 9,
       "fluid": "OW",
@@ -34675,7 +34675,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 9,
       "fluid": "OW",
@@ -34684,7 +34684,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 10,
       "fluid": "OW",
@@ -34784,7 +34784,7 @@
      {
       "port": "skimmed oil",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 5,
       "fluid": "OW",
@@ -34863,7 +34863,7 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 6,
       "fluid": "OW",
@@ -34872,7 +34872,7 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 2,
+      "NPS": 3,
       "cls": "P150",
       "line": 7,
       "fluid": "OW",
@@ -35294,7 +35294,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 5,
       "fluid": "OW",
@@ -35303,7 +35303,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 6,
       "fluid": "OW",
@@ -35375,7 +35375,7 @@
      {
       "port": "S",
       "dir": "in",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 7,
       "fluid": "OW",
@@ -35384,7 +35384,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P150",
       "line": 8,
       "fluid": "OW",
@@ -36040,7 +36040,7 @@
      {
       "port": "pilot gas",
       "dir": "in",
-      "NPS": 1,
+      "NPS": 2,
       "cls": "P150",
       "util": "FG",
       "fluid": "FG",
@@ -36500,7 +36500,7 @@
      {
       "port": "D",
       "dir": "out",
-      "NPS": 1.5,
+      "NPS": 2,
       "cls": "P300",
       "line": 7,
       "fluid": "FW",

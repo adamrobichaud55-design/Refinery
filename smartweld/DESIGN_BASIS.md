@@ -3709,7 +3709,10 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   20, 24, 30, 36, 42 and 48 in of SW-PIPE-6, whose bore keeps the flowing velocity within:
   liquid to a pump suction or flowing by gravity, 4 ft/s; other liquid, 8 ft/s; gas, vapour,
   steam and mixed phase, ρ v² ≤ 4,000 lb/ft·s² on the flowing density and v ≤ 200 ft/s.
-  Process lines are 2 in at least. Reason: liquid velocity sets friction loss and wear, and a
+  Lines of the flowsheet, which run between equipment and on the racks, are 3 in at least
+  whatever they carry (a smaller pipe cannot span the 15 to 20 ft between the supports of a rack
+  or of a yard crossing, SW-PS-7); utility take-offs to a single item may be smaller, except of a process fluid (fuel gas), which
+  is 2 in butt-welded pipe as the process lines are. Reason: liquid velocity sets friction loss and wear, and a
   slow suction keeps a pump from cavitating; in gas the momentum ρ v² is what shakes and
   erodes a line, whatever the pressure.
 - `SW-PRC-5` Pumps. Rated flow 1.1 × normal; head = pressure rise × 144 / (SG × K-5); hydraulic
@@ -3720,12 +3723,13 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   D = 60 u / (π N); stages of equal head so that no impeller passes 16 in at two-pole speed or
   24 in at four-pole. Motor frame diameter = 10 in × (horsepower /
   10)^(1/3). Every process pump has an installed spare. Suction and discharge nozzles are one
-  size below their lines (SW-LL-7). Reason: an impeller's head is about half its tip speed
+  size below their lines (SW-LL-7), 2 in at least (the smallest check valve). Reason: an impeller's head is about half its tip speed
   squared over g; torque sets a motor's size and grows with its volume.
 - `SW-PRC-6` Drums. Liquid hold-up at half full: feed surge drums 15 minutes of feed; reflux
   accumulators 5 minutes of reflux plus product; separators and flash drums 5 minutes of liquid.
   Horizontal, length three diameters, diameter in 6 in steps and 36 in at least, unless the
-  vapour sets it. A drop settles at u = 0.18 √((ρ_L − ρ_V) / ρ_V) ft/s. In a horizontal drum the
+  vapour sets it; 12 ft long at least where two liquids leave it underneath, so that both
+  outlets stand between its saddles. A drop settles at u = 0.18 √((ρ_L − ρ_V) / ρ_V) ft/s. In a horizontal drum the
   gas crosses lengthwise over the liquid, and a drop need only fall the half diameter while the
   gas travels the length, so the gas may move at u × length / half diameter = 6 u through the
   upper half of the cross-section. In a vertical drum the gas rises against the drop, so it
@@ -3760,7 +3764,9 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   (properties of water, round figures); the steam a generator raises leaves it saturated, at
   that temperature. Tubes 3/4 in on the bundle rule of SW-EQC-30, 20 ft
   long; shells from 12 to 60 in inside diameter in 6 in steps; the fewest shells, then the
-  smallest diameter, that give the surface. Reason: heat flows in proportion to surface, temperature difference and how
+  smallest diameter, that give the surface, and no shell smaller than three times its largest
+  connection (a nozzle that is most of a shell's width leaves the flow no room to turn into
+  the bundle). Reason: heat flows in proportion to surface, temperature difference and how
   readily the two films pass it, which thick oils do poorly and condensing steam does well.
   A gas at less than 50 psi that flows inside the tubes (the sulfur unit's condensers and
   reheaters, the cracker's flue gas cooler) passes through them no faster than 100 ft/s at its
@@ -4131,18 +4137,23 @@ their own geometry rules, which are unchanged.
   is z = 0. It is set on the site by a quarter turn about the vertical, a shift to its plot and its
   bench's elevation (SW-SITE-1). Equipment centres and rack bents stand on a 6 in grid (SW-LAY-2).
 - `SW-CELL-2` The unit's rack: bents at 20 ft, 24 ft wide, tiers at 16, 22 and 28 ft (as SW-RK-*,
-  the rack of plants 1 and 2), beginning 30 ft from the battery limit, where the unit's isolation
-  valves stand, and running as far as its longest row of equipment. Reason: the rack is the
+  the rack of plants 1 and 2). Its lanes begin 30 ft from the battery limit and run as far as
+  the unit's longest row of equipment, and where heaters stand beyond it, on to 10 ft short of
+  their pads, so that their lines have steel under them; one bay more of the same steel stands ahead of them,
+  from 10 ft to 30 ft from the battery limit: the valve bay, where the unit's isolation valves
+  stand (SW-RPI-4). Reason: the rack is the
   unit's spine; every line between items runs on it.
 - `SW-CELL-3` Rows. From the rack outward on each side: pumps in a row, shafts square to the rack
   and suction ends 5 ft from its column line; an access way 8 ft wide; then, on one side,
-  shell-and-tube exchangers square to the rack with their channel ends outward, and beyond them
-  the air coolers; on the other side the vessels: drums parallel to the rack, columns, reactors
+  shell-and-tube exchangers square to the rack with their channel ends outward; on the other side the vessels: drums parallel to the rack, columns, reactors
   and other vertical vessels, their centres on one line. Compressors stand in the exchanger row
   beyond the last exchanger. Fired heaters stand beyond the outer end of the rack, 50 ft from the
   nearest equipment. Items follow one another along the rack in the order the process meets
   them, 4 ft apart (8 ft between vessels with platforms). Pumps stand on the side of the vessels
-  they draw from where they draw from one, otherwise on the exchanger side. Reason: pumps under
+  they draw from where they draw from one, otherwise on the exchanger side; on the vessel side
+  each pump with its spare stands opposite the vessel it draws from, as near that vessel's
+  centre along the rack as the pumps already placed allow, so that its suction line runs
+  straight down to it and never over the rack. Reason: pumps under
   the edge of the rack have the shortest suction and discharge; a channel end facing the access
   way lets a tube bundle be pulled; heaters away from equipment that can leak keep a leak from
   its flame.
@@ -4160,10 +4171,16 @@ their own geometry rules, which are unchanged.
     SW-PRC-7, 8 ft for reactors, 5 ft for others), with platforms every 15 ft and ladders
     (SW-EQC-32) where the vessel stands more than 30 ft high. The swaged vacuum column is
     SW-EQC-65. Walls by SW-PRC-14.
-  - Air coolers (SW-EQC-11): each bay 14 ft by 32 ft with two fans, on its own columns 12 ft
-    clear of grade, bays side by side with the tubes square to the rack. (SW-PRC-9 is amended:
-    the bays stand beside the rack, not over it, since the catalogue cooler's columns and
-    bracing are its own.)
+  - Air coolers (SW-EQC-11): each bay 14 ft by 32 ft with two fans. The bays stand side by
+    side over the rack from its second bay on, their tubes across it, on a deck 9 ft above the
+    top tier: posts `W8x31` on the rack's columns at each bent under the bays, a beam `W14x48`
+    32 ft long across the rack on each pair of posts, and two girders `W12x40` along the rack
+    15 ft either side of its centre line, on which the catalogue cooler stands on legs of 2 ft.
+    Reason: over the rack a cooler's lines rise beside the rack's columns from the lanes below
+    and are carried all the way; beside the unit, beyond the exchangers, they had no supported
+    way to it. The 9 ft clears the take-offs that rise from the headers on the top tier and
+    lets the fans draw air. Sizes by span / 20 for the beams' depth, as the rack's own steel
+    (SW-RK-2). (SW-PRC-9's "over the rack" stands again.)
   - Fired heaters: vertical cylinders (SW-EQC-15) with a stack 0.6 of the firebox height, and
     cabins (SW-EQC-53), at the sizes of SW-PRC-10.
   - Compressors and blowers (SW-EQC-12, -14): casing diameter 14 in × (gas horsepower / 100)^(1/3),
@@ -4184,5 +4201,118 @@ their own geometry rules, which are unchanged.
   - Every body stands on an equipment pad 6 in high and 12 in larger all round, as in plants 1
     and 2 (SW-LAY-*). Nozzles are not part of a body: the piping stage adds each one from the
     nozzle schedule, so that the nozzle and the line that meets it are of one size and class.
+    A compressor's lube oil piping is left out with its nozzles: the generator holds every
+    solid by its bounding box, and that pipe's box spans the casing.
 - `SW-CELL-5` A unit's equipment lies within its plot (SW-SITE-7), which a test checks.
+- `SW-CELL-6` Yard supports. Along each side of the rack that has equipment beyond its pumps
+  runs a line of support steel, 18 in outside the pumps' row (6 ft 6 in from the rack's columns
+  where there are no pumps): a post `W8x31` on a pedestal at each bent of the rack and a beam
+  `W12x40` along the rack on the posts, its underside 30 ft 6 in above grade. Reason: a line
+  crossing between a vessel or an exchanger and the rack is 25 to 40 ft long and needs carrying
+  on the way; it hangs from this beam where it passes under it (SW-PS-9), which halves the
+  span, and the posts stand at the edge of the access way, in line with the rack's own. Under
+  the rack's lowest tier a stringer `W8x18` runs along its centre line from bent to bent, its
+  top level with the tier's steel: a line crossing under the rack, 24 ft from column line to
+  column line, hangs from it midway.
+
+## 79. Plant 3: piping of a unit (`SW-RPI-*`)
+
+How a unit of §78 is piped. SmartWeld's own arrangement from general piping understanding, with
+the reason for each choice; no piping standard, company practice or existing plant was consulted
+(PROVENANCE P-84). The routing, the fittings and valves at each end, the welds and the supports
+are those of plants 1 and 2 (§35–§47, §59–§61): the same generator pipes the unit, unchanged.
+What this section adds is what that generator is given.
+
+- `SW-RPI-1` A unit is a plant to the generator: its cell (SW-CELL-1) with no building, its rack,
+  its bodies as obstacles, a nozzle schedule and a line list. Each unit is piped in its own
+  frame and set on the site with its equipment. The rules of plant 2 apply (SW-SPEC-*,
+  SW-FLG-10, SW-PEN-4, SW-LL-6..8): butt welds from 2 in up; small bore socket-welded in process,
+  steam and flare lines and threaded in water, air and condensate lines.
+- `SW-RPI-2` Nozzle schedule. Every connection of an item (SW-PRC-15) is a nozzle of its line's
+  size and class, its axis on the 6 in grid (SW-LAY-2), standing out from the shell by SW-NOZ-1.
+  Where it stands, by the kind of body:
+  - Pump: suction on the shaft's line at the casing's end, facing the rack; discharge on top of
+    the casing in its centre plane. To put both on the grid the pump's pad is raised above 9 in
+    until the shaft is on it, and the pump is set along its shaft until the casing's centre
+    plane is (so suction ends stand within 6 in of the line of SW-CELL-3).
+  - Compressor: as a pump: suction on the shaft's line at the casing's free end, facing the
+    rack; discharge on top of the casing in its centre plane; pad and position adjusted as a
+    pump's. Reason: a machine and its spare side by side are then fed from the rack by one line
+    and a tee, as pumps are.
+  - Shell-and-tube exchanger: tube-side connections on the channel, in its centre plane, which
+    stands on the grid. Of the two shell-side connections the one on top stands at the channel
+    end, inside the tubesheet by 1 ft at least and far enough from the tube-side connection
+    beside it for a gate valve's handwheel to lie between them; the one underneath stands 1 ft
+    inside the rear end, clear of the saddles' piers. On either side, what is heated enters
+    below and leaves on top, and what is cooled enters on top and leaves below. Reason: a
+    warming fluid rises and a cooling one falls, so the flow helps the exchange and vapour or
+    condensate leaves by itself.
+  - Horizontal drum: what enters, on top from the end nearer the battery limit; gas on top at
+    the far end; liquids below at the far end; neighbours apart by half the sum of their
+    flanges plus 12 in. Reason: the length between inlet and outlets is the settling path.
+  - Vertical vessel or column: every shell connection faces the rack, where a column's
+    platforms are open (SW-EQC-32). The one vapour outlet (a reactor's inlet) is on the top
+    head, standing out far enough that its flange is 54 in above the top platform's floor,
+    over the handrail. Liquid outlets stand 12 in above the bottom tangent; then reboiler draw, stripping
+    steam and gas inlets, reboiler return; reflux and lean liquids 12 in below the top tangent;
+    feeds at mid-height; the remaining draws and returns between 25 % and 85 % of the height
+    in the order the flowsheet meets them. Connections are 36 in apart at least, and far enough for the handwheel of the valve below to
+    clear the flange above (a gate valve's handwheel stands 4 sizes and 8 in from its pipe's
+    axis at most, a bound on SW-VLV-* that a test checks), on the grid, and none stands within the band from 18 in below to 54 in above a platform floor. Reason:
+    the open side lets every line drop to the rack without passing through a platform; the
+    band keeps flanges and valves clear of a floor and its handrail.
+  - Vertical cylindrical heater: the coil enters the convection box and leaves the radiant
+    shell 2 ft above its floor, the fuel gas enters under the floor.
+  - Air cooler bay: both connections on top of one header, 3 ft either side of the bay's
+    centre, the inlet over one half of the bundle and the outlet over the other (two passes
+    side by side); the header on the side of the rack its inlet line comes from. Reason: under
+    the header the bay's plenum and legs leave a valve no room.
+- `SW-RPI-3` Line list. Each line of the flowsheet is one line of the generator with its size
+  and class of SW-PRC-3 and -4, its service letter by its fluid's group (SW-PRC-1), and its
+  number by SW-REF-3. An end at an item is that item's nozzle; a branch is a tap on its run; an
+  end at the battery limit is a spool of SW-RPI-4. A control valve asked for by the flowsheet
+  is a station (SW-LL-3) where the catalogue offers the valve (to 12 in). The generator stands
+  a station at a line's destination; so that it stands near grade and not at a battery limit
+  spool or high on a column, the line is given to the generator with, as its destination, the
+  lower of its ends that can take a station: an item's nozzle that does not point down (under
+  a drum or an exchanger there is no room) and is not a pump's. Failing that, on a 2 in line the
+  station stands at the battery limit spool (SW-RPI-4). The flowsheet's direction of flow is
+  kept in the unit's own record. Where the valve is not offered, or neither end can take a
+  station, the line is piped without it and the omission recorded. An installed
+  spare, and each further body of an item in parallel, joins the first body's line with a tee
+  (SW-LL-3), numbered from unit × 1000 + 301. Each line carries beside the generator's record
+  the fluid, design conditions and origin that the code layer needs (§76).
+- `SW-RPI-4` Battery limit. Each stream entering or leaving the unit ends at a spool in the valve
+  bay, the rack's bay nearest the battery limit (SW-CELL-2): two nozzles back to back, 24 in face
+  to face, 30 in inside the bay's first bent, at the elevation its line runs at on the lowest
+  tier; a 2 in line's spool stands 54 in further in, so that its pipe reaches the rack's first
+  bent within its span (SW-PS-7) and the spacer pipe of a control valve station, and no flange,
+  lies over the bay's mid beam. The unit's line bolts to the spool's inner face behind a block valve; the pipeway's line
+  will bolt to the outer face. Tag `BL-{unit}{sequence}`. The spools stand side by side across
+  the rack a flange and 6 in apart, in the order of the lanes their lines run in, so that the
+  lines fan from the valves into their lanes without crossing; a line that takes no lane of
+  its own (one that taps another, or ends within 20 ft) stands outside the others. The lanes
+  are the generator's (SW-RT-1, -2): they are worked out beforehand by its own rule, and where a
+  run shows a line in another lane the spools are set again from the lanes it gave. Reason: a
+  valve and a removable spool at the limit let a unit be cut off from the pipeway for a
+  turnaround; valves need a flange's width each, which the lanes of a rack, a pipe's width
+  apart, do not give, so they stand together in a bay of their own and the lines close up
+  beyond it.
+- `SW-RPI-5` Utilities in a unit. Each utility the unit's items use (SW-PRC-15) has a header on
+  the rack's top tier, sized for the sum of what they take and not smaller than its largest
+  take-off, of the class of its most demanding take-off; each item's connection taps it through
+  a valve, numbered from unit × 1000 + 501; headers are numbered from unit × 1000 + 401.
+- `SW-RPI-6` Where lines may travel. The generator's routing takes the shortest way with the
+  fewest turns, which from a column's top is as readily straight out over the unit as down the
+  column. A pipe is carried by steel, so the generator is shown solid blocks that leave open
+  only where there is some:
+  - from 9 ft above the rack's top tier upward, everywhere except within 12 ft of a body that
+    has a connection up there: a line leaving a column's top comes down beside the column
+    before it turns away (the 9 ft leaves room for the valved take-offs that rise from the
+    headers on the top tier);
+  - beyond the yard's support beams (SW-CELL-6), from 18 in above their underside up to that
+    level, with the same exception: every line crossing between equipment and rack passes
+    under a beam, from which it hangs.
+  The blocks are not part of the model and are in no drawing, count or check; no hanger hangs
+  from one.
 
