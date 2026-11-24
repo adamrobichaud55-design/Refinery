@@ -162,7 +162,7 @@ export function fluidService(fluid: string, designP: number, designT: number): C
 }
 const EXAMINATION: Record<Category, string> = { D: 'visual', Normal: 'visual, and 5 % random radiography of girth butt welds', M: 'visual, 20 % random radiography of girth butt welds, and a sensitive leak test' };
 const GROUP: Record<string, string> = { P: 'H', RV: 'H', CWS: 'W', CWR: 'W', W: 'W', LS: 'S', SC: 'C', IA: 'G', PA: 'G', N: 'G', FL: 'F' };
-const fmt = (n: number) => (n === 0.75 ? '3/4' : n === 1.5 ? '1-1/2' : String(n));
+const fmt = (n: number) => (n === 0.75 ? '3/4' : n === 0.5 ? '1/2' : String(n));   // as SW-LL-1 writes a size: a number's parts are split at its hyphens, so a size carries none
 /** SW-REF-3: a line's number: size, class, the generator's service letter, and unit × 1000 + a running number */
 export const lineNumber = (unit: number, seq: number, NPS: number, cls: string, fluid: string) => `${fmt(NPS)}"-${cls}-${FLUIDS[fluid].svc}-${unit * 1000 + seq}`;
 export type MaterialCode = 'CS' | 'C1' | 'C5' | 'SS';

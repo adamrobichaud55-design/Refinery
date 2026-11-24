@@ -33,11 +33,14 @@ interface Thru { service?: string; /** pressure drop, psi */ dP?: number; P?: nu
 export class Flow {
   lastLine = -1;
   private waiting: ((id: number) => void)[] = [];
+  /** what the branches waiting to leave this stream's next line take with them, lb/h */
+  private leaving = 0;
   constructor(readonly u: UnitBuilder, public s: State, public at: End) {}
   private line(to: End, slow = false, cv = false, note = ''): number {
     if (this.at.k === 'tap' && this.at.line < 0) throw new Error(`unit ${this.u.sheet.no}: a branch is used before the run it leaves (${note || JSON.stringify(to)})`);
-    const id = this.u.sheet.lines.length; this.u.sheet.lines.push({ id, unit: this.u.sheet.no, from: this.at, to, s: { ...this.s }, slow, cv, note });
-    this.lastLine = id; for (const w of this.waiting.splice(0)) w(id);
+    // a line that branches leave carries their flow too as far as the tee, and is sized for it (SW-PRC-4)
+    const id = this.u.sheet.lines.length; this.u.sheet.lines.push({ id, unit: this.u.sheet.no, from: this.at, to, s: { ...this.s, w: this.s.w + this.leaving }, slow, cv, note });
+    this.lastLine = id; this.leaving = 0; for (const w of this.waiting.splice(0)) w(id);
     return id;
   }
   /** change the stream's condition without equipment (a valve's pressure drop, a named phase) */
@@ -85,7 +88,7 @@ export class Flow {
   split(w: number, c: Partial<State> = {}): Flow {
     if (w >= this.s.w) throw new Error(`unit ${this.u.sheet.no}: a branch of ${w} from a stream of ${this.s.w}`);
     const at: End = { k: 'tap', line: -1 }, b = new Flow(this.u, { ...this.s, ...c, w }, at); this.s = { ...this.s, w: this.s.w - w };
-    this.waiting.push(id => { at.line = id; });
+    this.waiting.push(id => { at.line = id; }); this.leaving += w;
     return b;
   }
   /** an alternative route for the whole stream, one route flowing at a time (the tanks on one rundown): it leaves the next line this stream runs, and this stream goes on undiminished */

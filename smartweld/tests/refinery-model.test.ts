@@ -3,7 +3,7 @@
  *  plot; and the units are set on the site inside their plots at their bench's elevation. No piping yet. */
 import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'node:fs';
-import { buildCell, bare, RACK, TOWER_TAGS, PUMP_PAD, DECK, YARD } from '../src/refinery/cell';
+import { buildCell, bare, bodySolids, RACK, TOWER_TAGS, PUMP_PAD, DECK, YARD, PAD } from '../src/refinery/cell';
 import { cells, cellToSite, plotLength, siteParts } from '../src/refinery/assemble';
 import { processModel } from '../src/refinery/process';
 import { sizing } from '../src/refinery/sizing';
@@ -34,6 +34,19 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
       for (const s of c.spots) { expect(Math.abs(s.x % 6), s.tag).toBe(0); expect(Math.abs(s.z % 6), s.tag).toBe(0); expect(s.x, s.tag).toBeGreaterThan(RACK.start); if (s.lane !== 'heater' && s.lane !== 'air') expect(Math.abs(s.z), s.tag).toBeGreaterThan(RACK.half); if (s.lane === 'air') { expect(s.z, s.tag).toBe(0); expect(s.yt!, s.tag).toBe(DECK + 134); expect(s.x + s.lx / 2, s.tag).toBeLessThanOrEqual(c.rack.x1); } }
       for (let i = 0; i < c.spots.length; i++) for (let j = i + 1; j < c.spots.length; j++) { const a = c.spots[i], b = c.spots[j]; if (!a.lx || !b.lx || (a.lane === 'air') !== (b.lane === 'air')) continue; /* the air coolers stand over the rack, above the rest */ expect(Math.abs(a.x - b.x) - (a.lx + b.lx) / 2 >= -1 || Math.abs(a.z - b.z) - (a.lz + b.lz) / 2 >= -1, `${a.tag} and ${b.tag}`).toBe(true); }
       expect(c.rack.x0).toBe(RACK.start); expect((c.rack.x1 - c.rack.x0) % RACK.bent).toBe(0); expect(c.rack.tiers).toEqual([192, 264, 336]);
+    }
+  });
+  it('every body lies within its own footprint and on its pad, measured from its solids (SW-CELL-7)', () => {
+    for (const { cell: c } of all) {
+      for (const s of c.spots) {
+        const bs = bodySolids(c, s.tag); expect(bs.length, s.tag).toBeGreaterThan(0);
+        const mn = [0, 1, 2].map(a => Math.min(...bs.map(b => b.mn[a]))), mx = [0, 1, 2].map(a => Math.max(...bs.map(b => b.mx[a])));
+        if (s.lx > 0) { expect(mn[0], s.tag).toBeGreaterThanOrEqual(s.x - s.lx / 2 - 6.01); expect(mx[0], s.tag).toBeLessThanOrEqual(s.x + s.lx / 2 + 6.01); }
+        if (s.lx > 0) { expect(mn[2], s.tag).toBeGreaterThanOrEqual(s.z - s.lz / 2 - 6.01); expect(mx[2], s.tag).toBeLessThanOrEqual(s.z + s.lz / 2 + 6.01); }
+        expect(mx[1], s.tag).toBeLessThanOrEqual(s.h + 0.01);
+        // nothing that carries a body is below the top of its pad, save what stands in the ground
+        if (s.shape === 'box' && !['pit', 'basin', 'coolingtower'].includes(s.kind) && s.lane !== 'air') expect(Math.min(...bs.filter(b => !/anchor|holding-down|bolts|studs and nuts/i.test(b.name)).map(b => b.mn[1])), s.tag).toBeCloseTo(PAD, 3);
+      }
     }
   });
   it('pumps face the rack with their suction ends on one line; exchangers are square to it, channel end outward; heaters stand 50 ft beyond it', () => {

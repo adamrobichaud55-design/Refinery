@@ -249,12 +249,13 @@ const motorAt = (D: number, tr: number[]): Solid[] => motorSolids(D).solids.map(
 /** orientations for a motor (column-major: the images of local x, y, z): shaft along +x with up = +z; shaft along +y with up = +z; shaft down (−z) */
 export const SHAFT_X_UP_Z = [0, 1, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 1], SHAFT_Y_UP_Z = [-1, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1], SHAFT_DOWN = [0, 1, 0, 0, 1, 0, 0, 0, 0, 0, -1, 0, 0, 0, 0, 1];
 
-export interface ColumnInput extends VesselVInput { trays: number; traySpacing?: number; insulated?: boolean }
+export interface ColumnInput extends VesselVInput { trays: number; traySpacing?: number; insulated?: boolean; /** SW-EQC-9: the davit's post at this angle about the axis (radians), its arm swung outward; across the head from the −x side where not stated */ davitAngle?: number }
 /** SW-EQC-9: column = vertical vessel + davit + lugs + insulation rings; trays as data */
 export function makeColumn(inp: ColumnInput): PartSpec {
   const v = makeVerticalVessel(inp), R = inp.ID / 2 + inp.t, h = R / 2, top = inp.skirtH + h + inp.TT, spacing = inp.traySpacing ?? 24;
   const solids = [...(v.extra!.solids as Solid[]), ...dressVessel(inp.tag, { ...inp, emptyKips: v.weight.value / 1000 })];
-  for (const s of makeDavit(`${inp.tag}-davit`).extra!.solids as Solid[]) solids.push({ ...s, mesh: at(s.mesh, -R * 0.5, 0, top + h * Math.sqrt(0.75) - 1) });
+  const zd = top + h * Math.sqrt(0.75) - 1, davitAt = inp.davitAngle === undefined ? undefined : multiply(rotateZ(inp.davitAngle), translate(R * 0.5, 0, zd));
+  for (const s of makeDavit(`${inp.tag}-davit`).extra!.solids as Solid[]) solids.push({ ...s, mesh: davitAt ? transformMesh(s.mesh, davitAt) : at(s.mesh, -R * 0.5, 0, zd) });
   if (inp.insulated) for (const s of makeInsulationRings(`${inp.tag}-ir`, R, inp.TT).extra!.solids as Solid[]) solids.push({ ...s, mesh: at(s.mesh, 0, 0, inp.skirtH + h) });
   return done(inp.tag, 'COLUMN', `${inp.tag} column ${inp.ID}" ID × ${inp.TT}" T/T, ${inp.trays} trays`, {
     ...v.dims, trays: drawing(inp.trays, 'Tray count', 'count'), traySpacing: inp.traySpacing !== undefined ? drawing(spacing, 'Tray spacing') : rule(spacing, 'SW-EQC-9', 'Tray spacing'),

@@ -389,3 +389,11 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/unit-15-piping-from-the-exchanger-side.png` | Plant 3, unit 15 (Kerosene hydrotreater) piped, from the exchanger side |
 | `refinery/unit-15-piping-valve-bay.png` | Plant 3, unit 15: the valve bay at the battery limit, a block valve and spool on each line |
 | `refinery/unit-15-piping-exchangers.png` | Plant 3, unit 15: piping at the exchangers |
+| `refinery/unit-13-piping-from-the-vessel-side.png` | Plant 3, unit 13 (Naphtha hydrotreater and splitter) piped, from the vessel side: lines coloured by line class |
+| `refinery/unit-13-piping-from-the-exchanger-side.png` | Plant 3, unit 13 (Naphtha hydrotreater and splitter) piped, from the exchanger side |
+| `refinery/unit-13-piping-valve-bay.png` | Plant 3, unit 13: the valve bay at the battery limit, a block valve and spool on each line |
+| `refinery/unit-13-piping-exchangers.png` | Plant 3, unit 13: piping at the exchangers |
+| `refinery/unit-16-piping-from-the-vessel-side.png` | Plant 3, unit 16 (Diesel hydrotreater) piped, from the vessel side: lines coloured by line class |
+| `refinery/unit-16-piping-from-the-exchanger-side.png` | Plant 3, unit 16 (Diesel hydrotreater) piped, from the exchanger side |
+| `refinery/unit-16-piping-valve-bay.png` | Plant 3, unit 16: the valve bay at the battery limit, a block valve and spool on each line |
+| `refinery/unit-16-piping-exchangers.png` | Plant 3, unit 16: piping at the exchangers |

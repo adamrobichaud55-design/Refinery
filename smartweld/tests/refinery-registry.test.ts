@@ -133,7 +133,7 @@ describe('plant 3: lines, their fluid service, line class and severity (SW-REG-4
   it('has a record for every process line and utility connection, each numbered once', () => {
     expect(L.length).toBe(M.sheets.reduce((a, s) => a + s.lines.length, 0) + [...Z.values()].reduce((a, z) => a + z.utils.length, 0));
     expect(new Set(L.map(l => l.number)).size).toBe(L.length);
-    for (const l of L) { expect(l.number).toMatch(/^[\d/-]+"-P\d+-[A-Z]+-\d{5}$/); expect(Math.floor(Number(l.number.slice(-5)) / 1000)).toBe(l.unit); expect(l.code.value).toBe('ASME B31.3 Process Piping'); expect(l.demonstration).toBe(true); }
+    for (const l of L) { expect(l.number).toMatch(/^(\d+(\.\d+)?|1\/2|3\/4)"-P\d+-[A-Z]+-\d{5}$/); /* a size as SW-LL-1 writes it, with no hyphen of its own */ expect(Math.floor(Number(l.number.slice(-5)) / 1000)).toBe(l.unit); expect(l.code.value).toBe('ASME B31.3 Process Piping'); expect(l.demonstration).toBe(true); }
   });
   it('designates the fluid service by the fluid and the design conditions', () => {
     expect(fluidService('CWS', 100, 150)).toBe('D'); expect(fluidService('CWS', 155, 150)).toBe('Normal'); expect(fluidService('LS', 80, 350)).toBe('D'); expect(fluidService('LS', 80, 370)).toBe('Normal');

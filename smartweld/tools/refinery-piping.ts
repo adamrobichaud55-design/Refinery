@@ -1,7 +1,7 @@
 // Plant 3: pipes units with the generator of plants 1 and 2 (DESIGN_BASIS.md §79), checks and saves them, and draws them.
 //   vite-node tools/refinery-piping.ts <unit> [<unit> ...]      writes public/refinery/piping/unit-NN.json (the model) and unit-NN.report.json,
 //                                                               screenshots/refinery/unit-NN-piping-*.png, and docs/REFINERY-PIPING.md from every report on disk
-import { writeFileSync, mkdirSync, readFileSync, existsSync, readdirSync } from 'node:fs';
+import { writeFileSync, mkdirSync, readFileSync, existsSync, readdirSync, appendFileSync } from 'node:fs';
 import { serializePiping } from '../src/generator/piping';
 import { render3d, type Camera } from '../src/render/view3d';
 import { partDrawables, pipingDrawables, byLineClass, type Drawable } from '../src/render/scene';
@@ -11,7 +11,10 @@ import { pipeUnit, pipingDocument, PIPING_IMAGES, type PipedUnit } from '../src/
 const dir = 'public/refinery/piping', shots = 'screenshots/refinery'; mkdirSync(dir, { recursive: true }); mkdirSync(shots, { recursive: true });
 const C = (h: number): RGB => [(h >> 16) & 255, (h >> 8) & 255, h & 255], I = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
 for (const unit of process.argv.slice(2).map(Number)) {
-  const { up, model, result } = pipeUnit(unit, s => console.log(s)), cell = up.cell;
+  // REFINERY_TRACE=<file>: which line the generator is on (it asks the plant for a line's joint whenever it works on that line), for finding a line that holds a run up
+  const trace = process.env.REFINERY_TRACE, t0 = Date.now(); if (trace) writeFileSync(trace, '');
+  const watch = trace ? (plant: { joint: (l: never, m: never) => unknown }) => { let cur = ''; const j = plant.joint; plant.joint = ((l: { no: string }, m: never) => { if (l.no !== cur) { cur = l.no; appendFileSync(trace, `${((Date.now() - t0) / 1000).toFixed(1)} s: ${l.no}\n`); } return j(l as never, m); }) as never; } : undefined;
+  const { up, model, result } = pipeUnit(unit, s => console.log(s), watch as never), cell = up.cell;
   writeFileSync(`${dir}/unit-${unit}.json`, serializePiping(model) + '\n'); writeFileSync(`${dir}/unit-${unit}.report.json`, JSON.stringify(result, null, 1) + '\n');
   console.log(`unit ${unit}: ${result.lines.filter(l => l.routed).length} of ${result.lines.length} lines routed in ${result.seconds} s; failures ${result.failures.length}; checks ${Object.entries(result.checks).map(([k, v]) => `${k} ${v.length}`).join(', ')}`);
   const ds: Drawable[] = [...partDrawables(cell.interior.instances.map(i => ({ part: i.part, transform: i.transform }))), ...pipingDrawables(model, { lineColour: byLineClass, valveCells: 40 })];

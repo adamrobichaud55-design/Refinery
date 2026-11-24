@@ -117,8 +117,8 @@ Separates the crude by boiling range into gas, naphtha, kerosene, diesel, gas oi
 
 | Tag | Service | Report | Registration | Working pressure and temperature | Size | Wall, in | Material | Radiography | Heat treatment | Minimum metal temperature, °F | Weight, lb |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| C-1101 | Atmospheric column | U-1 | Y5288.7 | vessel: 50 psi at 730 °F | 138 in × 104 ft | 0.625 | SA-516-70 | spot | none | -20 | 141,022 |
-| C-1102 | Side stripper (kerosene, diesel and gas oil sections) | U-1 | V1145.7 | vessel: 50 psi at 670 °F | 60 in × 56 ft | 0.375 | SA-516-70 | spot | none | -20 | 32,919 |
+| C-1101 | Atmospheric column | U-1 | Y5288.7 | vessel: 50 psi at 730 °F | 138 in × 104 ft | 0.625 | SA-516-70 | spot | none | -20 | 135,165 |
+| C-1102 | Side stripper (kerosene, diesel and gas oil sections) | U-1 | V1145.7 | vessel: 50 psi at 670 °F | 60 in × 56 ft | 0.375 | SA-516-70 | spot | none | -20 | 30,586 |
 | D-1101 | Desalter | U-1A | A9559.7 | vessel: 175 psi at 320 °F | 144 in × 48 ft | 0.875 | SA-516-70 | spot | none | -20 | 80,694 |
 | D-1102 | Preflash drum | U-1A | Y2178.7 | vessel: 70 psi at 450 °F | 126 in × 31.5 ft | 0.625 | SA-516-70 | spot | none | -20 | 36,384 |
 | D-1103 | Overhead accumulator | U-1A | X3797.7 | vessel: 50 psi at 150 °F | 96 in × 24 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 17,503 |
@@ -165,12 +165,12 @@ Removes sulfur and nitrogen from the naphtha with hydrogen over a catalyst, beca
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | D-1301 | Feed surge drum | U-1A | A1773.7 | vessel: 55 psi at 160 °F | 108 in × 27 ft | 0.5 | SA-516-70 | spot | none | -20 | 22,047 |
 | D-1302 | Product separator | U-1A | D5916.7 | vessel: 385 psi at 150 °F | 78 in × 19.5 ft | 1 | SA-516-70 | spot | post-weld heat treated | -20 | 21,815 |
-| C-1301 | Stripper | U-1 | P7094.7 | vessel: 210 psi at 450 °F | 72 in × 60 ft | 0.625 | SA-516-70 | spot | none | -20 | 50,069 |
-| C-1302 | Naphtha splitter | U-1 | R5475.7 | vessel: 50 psi at 360 °F | 78 in × 80 ft | 0.375 | SA-516-70 | spot | none | -20 | 51,252 |
+| C-1301 | Stripper | U-1 | P7094.7 | vessel: 210 psi at 450 °F | 72 in × 60 ft | 0.625 | SA-516-70 | spot | none | -20 | 47,550 |
+| C-1302 | Naphtha splitter | U-1 | R5475.7 | vessel: 50 psi at 360 °F | 78 in × 80 ft | 0.375 | SA-516-70 | spot | none | -20 | 47,614 |
 | D-1303 | Stripper reflux drum | U-1A | C7535.7 | vessel: 195 psi at 170 °F | 42 in × 10.5 ft | 0.375 | SA-516-70 | spot | none | -20 | 2,798 |
 | D-1304 | Splitter reflux drum | U-1A | W2678.7 | vessel: 50 psi at 180 °F | 66 in × 16.5 ft | 0.375 | SA-516-70 | spot | none | -20 | 6,630 |
 | E-1301 | Feed / effluent exchanger | U-1 | Y7108.7 | shell side: 425 psi at 660 °F; tube side: 595 psi at 570 °F | 42 in × 20 ft | 0.875 | SA-387-11 | spot | none | -20 | 31,060 |
-| R-1301 | Hydrotreating reactor | U-1 | V7215.7 | vessel: 455 psi at 660 °F | 78 in × 22.5 ft | 1.25 | SA-387-11 | spot | none | -20 | 40,277 |
+| R-1301 | Hydrotreating reactor | U-1 | V7215.7 | vessel: 455 psi at 660 °F | 78 in × 22.5 ft | 1.25 | SA-387-11 | spot | none | -20 | 38,703 |
 | A-1301A | Reactor effluent air cooler | U-1A | N7395.7 | headers and tubes: 500 psi at 355 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1301B | Reactor effluent air cooler | U-1A | S9014.7 | headers and tubes: 500 psi at 355 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | E-1302 | Effluent trim cooler | U-1 | V2965.7 | shell side: 500 psi at 190 °F; tube side: 85 psi at 155 °F | 30 in × 20 ft | 0.625 | SA-516-70 | spot | none | -20 | 15,149 |
@@ -197,7 +197,7 @@ Rearranges heavy naphtha into high-octane reformate for gasoline, and in doing s
 | X-1401B | Pressure swing adsorption unit, four beds: adsorber 2 | U-1A | F7714.7 | vessel: 560 psi at 160 °F | 72 in × 20 ft | 1.25 | SA-516-70 | spot | none | -20 | 25,210 |
 | X-1401C | Pressure swing adsorption unit, four beds: adsorber 3 | U-1A | J9333.7 | vessel: 560 psi at 160 °F | 72 in × 20 ft | 1.25 | SA-516-70 | spot | none | -20 | 25,210 |
 | X-1401D | Pressure swing adsorption unit, four beds: adsorber 4 | U-1A | D7000.7 | vessel: 560 psi at 160 °F | 72 in × 20 ft | 1.25 | SA-516-70 | spot | none | -20 | 25,210 |
-| C-1401 | Stabiliser | U-1 | N9887.7 | vessel: 250 psi at 495 °F | 66 in × 80 ft | 0.625 | SA-516-70 | spot | none | -20 | 61,444 |
+| C-1401 | Stabiliser | U-1 | N9887.7 | vessel: 250 psi at 495 °F | 66 in × 80 ft | 0.625 | SA-516-70 | spot | none | -20 | 58,035 |
 | D-1405 | Stabiliser receiver | U-1A | M7500.7 | vessel: 235 psi at 160 °F | 48 in × 12 ft | 0.5 | SA-516-70 | spot | none | -20 | 4,565 |
 | D-1406 | Convection section steam drum | U-1A | J3357.7 | vessel: 660 psi at 540 °F | 36 in × 9 ft | 0.875 | SA-516-70 | spot | none | -20 | 4,300 |
 | E-1401 | Combined feed exchanger | U-1 | T7473.7 | shell side: 350 psi at 970 °F; tube side: 540 psi at 850 °F | 42 in × 20 ft | 1.125 | SA-387-11 | spot | none | -20 | 33,798 |
@@ -222,10 +222,10 @@ Removes sulfur from kerosene with hydrogen so that it meets jet fuel quality.
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | D-1501 | Feed surge drum | U-1A | V5251.7 | vessel: 55 psi at 150 °F | 84 in × 21 ft | 0.375 | SA-516-70 | spot | none | -20 | 10,570 |
 | D-1502 | Product separator | U-1A | U6870.7 | vessel: 375 psi at 160 °F | 60 in × 15 ft | 0.75 | SA-516-70 | spot | post-weld heat treated | -20 | 10,023 |
-| C-1501 | Stripper | U-1 | U1956.7 | vessel: 70 psi at 435 °F | 42 in × 50 ft | 0.375 | SA-516-70 | spot | none | -20 | 22,873 |
+| C-1501 | Stripper | U-1 | U1956.7 | vessel: 70 psi at 435 °F | 42 in × 50 ft | 0.375 | SA-516-70 | spot | none | -20 | 20,806 |
 | D-1503 | Stripper overhead drum | U-1A | T8489.7 | vessel: 55 psi at 170 °F | 36 in × 12 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 2,531 |
 | E-1501 | Feed / effluent exchanger | U-1 | F3246.7 | shell side: 415 psi at 615 °F; tube side: 595 psi at 570 °F | 36 in × 20 ft | 0.75 | SA-387-11 | spot | none | -20 | 22,112 |
-| R-1501 | Hydrotreating reactor | U-1 | V7057.7 | vessel: 455 psi at 665 °F | 72 in × 23.5 ft | 1.125 | SA-387-11 | spot | none | -20 | 35,576 |
+| R-1501 | Hydrotreating reactor | U-1 | V7057.7 | vessel: 455 psi at 665 °F | 72 in × 23.5 ft | 1.125 | SA-387-11 | spot | none | -20 | 34,052 |
 | E-1505 | Reactor effluent / stripper feed exchanger | U-1 | K9722.7 | shell side: 420 psi at 665 °F; tube side: 85 psi at 435 °F | 24 in × 20 ft | 0.5 | SA-387-11 | spot | none | -20 | 9,414 |
 | A-1501 | Reactor effluent air cooler | U-1A | B2866.7 | headers and tubes: 500 psi at 315 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | E-1502 | Effluent trim cooler | U-1 | G1627.7 | shell side: 500 psi at 190 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
@@ -242,12 +242,12 @@ Removes sulfur from diesel and light cycle oil with hydrogen at high pressure to
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | D-1601 | Feed surge drum | U-1A | K5118.7 | vessel: 55 psi at 190 °F | 108 in × 27 ft | 0.5 | SA-516-70 | spot | none | -20 | 22,047 |
 | D-1602 | Cold separator | U-1A | L3499.7 | vessel: 850 psi at 190 °F | 78 in × 19.5 ft | 2 | SA-516-70 | full | post-weld heat treated | -20 | 42,525 |
-| C-1601 | Recycle gas amine absorber | U-1 | N3749.7 | vessel: 845 psi at 190 °F | 36 in × 60 ft | 1 | SA-516-70 | full | post-weld heat treated | -20 | 37,713 |
+| C-1601 | Recycle gas amine absorber | U-1 | N3749.7 | vessel: 845 psi at 190 °F | 36 in × 60 ft | 1 | SA-516-70 | full | post-weld heat treated | -20 | 35,723 |
 | D-1603 | Recycle compressor knock-out drum | U-1A | M1880.7 | vessel: 835 psi at 180 °F | 36 in × 9 ft | 1 | SA-516-70 | full | none | -20 | 5,194 |
 | D-1604 | Low-pressure flash drum | U-1A | N4213.7 | vessel: 165 psi at 190 °F | 72 in × 18 ft | 0.5 | SA-516-70 | spot | none | -20 | 9,987 |
-| C-1602 | Product stripper | U-1 | S7892.7 | vessel: 130 psi at 485 °F | 60 in × 60 ft | 0.375 | SA-516-70 | spot | none | -20 | 32,665 |
+| C-1602 | Product stripper | U-1 | S7892.7 | vessel: 130 psi at 485 °F | 60 in × 60 ft | 0.375 | SA-516-70 | spot | none | -20 | 30,331 |
 | D-1605 | Stripper overhead drum | U-1A | P2594.7 | vessel: 115 psi at 170 °F | 36 in × 12 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 2,531 |
-| R-1601 | Hydrotreating reactor, two beds | U-1 | F2616.7 | vessel: 1,000 psi at 700 °F | 126 in × 42.5 ft | 4 | SA-387-11 | full | post-weld heat treated | -20 | 301,495 |
+| R-1601 | Hydrotreating reactor, two beds | U-1 | F2616.7 | vessel: 1,000 psi at 700 °F | 126 in × 42.5 ft | 4 | SA-387-11 | full | post-weld heat treated | -20 | 298,636 |
 | F-1601 | Feed filter | U-1A | D8532.7 | vessel: 55 psi at 190 °F | 42 in × 7 ft | 0.375 | SA-516-70 | spot | none | -20 | 2,541 |
 | E-1601 | Feed / effluent exchanger | U-1 | N5667.7 | shell side: 870 psi at 650 °F; tube side: 1,145 psi at 590 °F | 48 in × 20 ft | 1.75 | SA-387-11 | full | post-weld heat treated | -20 | 50,918 |
 | E-1604 | Reactor effluent / stripper feed exchanger | U-1 | U1524.7 | shell side: 880 psi at 700 °F; tube side: 155 psi at 485 °F | 30 in × 20 ft | 1 | SA-387-11 | full | none | -20 | 17,986 |
@@ -267,20 +267,20 @@ Cracks gas oil on hot fluidised catalyst into gasoline and liquefied gas, burnin
 | D-1701 | Fresh feed surge drum | U-1A | X4049.7 | vessel: 55 psi at 450 °F | 126 in × 31.5 ft | 0.625 | SA-516-70 | spot | none | -20 | 36,384 |
 | R-1701-RX | Reactor and regenerator: reactor vessel and stripper | U-1 | F1008.7 | vessel: 55 psi at 650 °F | 132 in × 32.4 ft | 1 | SA-516-70 | spot | none | -20 | — |
 | R-1701-RG | Reactor and regenerator: regenerator | U-1 | L6197.7 | vessel: 55 psi at 650 °F | 216 in × 27 ft | 1 | SA-516-70 | spot | none | -20 | — |
-| C-1701 | Main fractionator | U-1 | W6874.7 | vessel: 55 psi at 1,030 °F | 144 in × 84 ft | 0.625 | SA-516-70 | spot | none | -20 | 126,551 |
-| C-1702 | Light cycle oil stripper | U-1 | X5255.7 | vessel: 50 psi at 500 °F | 42 in × 32 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,305 |
+| C-1701 | Main fractionator | U-1 | W6874.7 | vessel: 55 psi at 1,030 °F | 144 in × 84 ft | 0.625 | SA-516-70 | spot | none | -20 | 121,305 |
+| C-1702 | Light cycle oil stripper | U-1 | X5255.7 | vessel: 50 psi at 500 °F | 42 in × 32 ft | 0.375 | SA-516-70 | spot | none | -20 | 16,652 |
 | D-1702 | Main column overhead receiver | U-1A | B8192.7 | vessel: 50 psi at 160 °F | 84 in × 21 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 10,570 |
 | D-1703 | Compressor interstage drum | U-1A | A9811.7 | vessel: 80 psi at 170 °F | 42 in × 10.5 ft | 0.375 | SA-516-70 | spot | none | -20 | 2,798 |
 | D-1704 | High-pressure separator | U-1A | D8906.7 | vessel: 225 psi at 150 °F | 90 in × 22.5 ft | 0.75 | SA-516-70 | spot | post-weld heat treated | -20 | 22,140 |
-| C-1703 | Primary absorber | U-1 | Y3636.7 | vessel: 225 psi at 165 °F | 66 in × 80 ft | 0.625 | SA-516-70 | spot | none | -20 | 60,027 |
-| C-1704 | Sponge absorber | U-1 | A2017.7 | vessel: 215 psi at 165 °F | 36 in × 60 ft | 0.375 | SA-516-70 | spot | none | -20 | 21,321 |
-| C-1706 | Fuel gas amine absorber | U-1 | C7779.7 | vessel: 210 psi at 185 °F | 36 in × 60 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 21,321 |
+| C-1703 | Primary absorber | U-1 | Y3636.7 | vessel: 225 psi at 165 °F | 66 in × 80 ft | 0.625 | SA-516-70 | spot | none | -20 | 56,617 |
+| C-1704 | Sponge absorber | U-1 | A2017.7 | vessel: 215 psi at 165 °F | 36 in × 60 ft | 0.375 | SA-516-70 | spot | none | -20 | 19,345 |
+| C-1706 | Fuel gas amine absorber | U-1 | C7779.7 | vessel: 210 psi at 185 °F | 36 in × 60 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 19,345 |
 | D-1706 | Fuel gas knock-out drum | U-1A | F5668.7 | vessel: 205 psi at 165 °F | 36 in × 9 ft | 0.375 | SA-516-70 | spot | none | -20 | 2,412 |
-| C-1707 | Stripper | U-1 | D6160.7 | vessel: 240 psi at 340 °F | 84 in × 80 ft | 0.75 | SA-516-70 | spot | none | -20 | 84,425 |
-| C-1708 | Debutaniser | U-1 | E4541.7 | vessel: 185 psi at 435 °F | 84 in × 92 ft | 0.625 | SA-516-70 | spot | none | -20 | 84,233 |
+| C-1707 | Stripper | U-1 | D6160.7 | vessel: 240 psi at 340 °F | 84 in × 80 ft | 0.75 | SA-516-70 | spot | none | -20 | 80,644 |
+| C-1708 | Debutaniser | U-1 | E4541.7 | vessel: 185 psi at 435 °F | 84 in × 92 ft | 0.625 | SA-516-70 | spot | none | -20 | 79,910 |
 | D-1705 | Debutaniser receiver | U-1A | C1525.7 | vessel: 165 psi at 160 °F | 84 in × 21 ft | 0.625 | SA-516-70 | spot | none | -20 | 16,406 |
-| C-1709 | Liquefied gas amine contactor | U-1 | F2922.7 | vessel: 265 psi at 170 °F | 42 in × 40 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 20,522 |
-| C-1710 | Depropaniser | U-1 | F4684.7 | vessel: 250 psi at 285 °F | 54 in × 100 ft | 0.5 | SA-516-70 | spot | none | -20 | 55,460 |
+| C-1709 | Liquefied gas amine contactor | U-1 | F2922.7 | vessel: 265 psi at 170 °F | 42 in × 40 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 18,869 |
+| C-1710 | Depropaniser | U-1 | F4684.7 | vessel: 250 psi at 285 °F | 54 in × 100 ft | 0.5 | SA-516-70 | spot | none | -20 | 52,125 |
 | D-1707 | Depropaniser receiver | U-1A | E7287.7 | vessel: 235 psi at 160 °F | 72 in × 18 ft | 0.625 | SA-516-70 | spot | none | -20 | 12,140 |
 | E-1701 | Feed / light cycle oil pumparound exchanger | U-1 | W6736.7 | shell side: 210 psi at 500 °F; tube side: 330 psi at 450 °F | 36 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 19,840 |
 | E-1702 | Feed / slurry exchanger | U-1 | X2593.7 | shell side: 210 psi at 730 °F; tube side: 330 psi at 500 °F | 30 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 14,219 |
@@ -317,11 +317,11 @@ Takes the hydrogen sulfide out of circulation: regenerates the amine that washes
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | D-1801 | Rich amine flash drum | U-1A | D1324.7 | vessel: 50 psi at 185 °F | 84 in × 21 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 10,570 |
 | D-1802 | Regenerator reflux drum | U-1A | A6181.7 | vessel: 50 psi at 170 °F | 36 in × 9 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 2,095 |
-| C-1801 | Amine regenerator | U-1 | V7611.7 | vessel: 50 psi at 305 °F | 54 in × 64 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 33,967 |
+| C-1801 | Amine regenerator | U-1 | V7611.7 | vessel: 50 psi at 305 °F | 54 in × 64 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 31,465 |
 | D-1803 | Acid gas knock-out drum | U-1A | B4562.7 | vessel: 50 psi at 170 °F | 36 in × 9 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 2,412 |
 | D-1804 | Sour water degassing drum | U-1A | X1763.7 | vessel: 50 psi at 230 °F | 72 in × 18 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 7,841 |
 | D-1805 | Stripper gas knock-out drum | U-1A | Y9144.7 | vessel: 50 psi at 230 °F | 36 in × 9 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 2,412 |
-| C-1802 | Sour water stripper | U-1 | U9230.7 | vessel: 55 psi at 315 °F | 54 in × 80 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 40,256 |
+| C-1802 | Sour water stripper | U-1 | U9230.7 | vessel: 55 psi at 315 °F | 54 in × 80 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 37,336 |
 | H-1801 | Reaction furnace with waste heat boiler | U-1 | M6152.7 | furnace chamber and boiler tubes: 50 psi at 650 °F; waste heat boiler shell: 770 psi at 540 °F | 72 in × 30 ft | 0.75 | SA-516-70 | full | post-weld heat treated | -20 | 113,158 |
 | E-1801 | Lean / rich amine exchanger | U-1 | G5581.7 | shell side: 445 psi at 305 °F; tube side: 150 psi at 260 °F | 30 in × 20 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 14,219 |
 | A-1801 | Regenerator overhead condenser | U-1A | J2169.7 | headers and tubes: 50 psi at 275 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | full | post-weld heat treated | -20 | 16,243 |
@@ -442,7 +442,7 @@ Boiler external piping (8 lines): from a Section I boiler to its first stop valv
 | --- | --- | --- | --- |
 | 3"-P1200-SC-17502 | boiler feed water header | E-1703 feed water in | boiler feed water |
 | 8"-P1200-LS-17503 | E-1703 steam out | steam, 600 psi header | steam, 600 psi |
-| 4"-P1200-SC-19019 | line 6"-P1200-SC-19018 | B-1901 feed water | boiler feed water |
+| 4"-P1200-SC-19019 | line 8"-P1200-SC-19018 | B-1901 feed water | boiler feed water |
 | 4"-P1200-SC-19020 | line 4"-P1200-SC-19019 | B-1902 feed water | boiler feed water |
 | 10"-P1200-LS-19021 | B-1901 steam | battery limit (high-pressure steam) | steam, 600 psi |
 | 10"-P1200-LS-19022 | B-1902 steam | line 10"-P1200-LS-19021 | steam, 600 psi |

@@ -154,6 +154,24 @@ export function makeSteamTurbine(id: string, d: number): PartSpec {
   s.push({ name: 'pedestals', role: 'steel', mesh: mergeMeshes([boxMesh(-0.2 * d, yb, -0.38 * d, 0.2 * d, -0.2 * d, -0.07 * d), boxMesh(-0.2 * d, yb, 0.87 * d, 0.2 * d, -0.2 * d, 1.18 * d), boxMesh(0.5 * d, yb, 0.1 * d, 0.75 * d + 3, -1, 0.7 * d), boxMesh(-0.75 * d - 3, yb, 0.1 * d, -0.5 * d, -1, 0.7 * d)]) }, { name: 'baseplate', role: 'steel', mesh: boxMesh(-0.65 * d, yb - 4, -0.75 * d, 0.65 * d, yb, 1.85 * d) });
   return equip(id, 'PROCESS_UNIT', `Steam turbine driver, ${d}" wheel`, { d: drawing(d, 'Wheel diameter'), casingD: rule(1.5 * d, 'SW-EQC-51', 'Casing diameter (1.5 d)'), casingL: rule(0.8 * d, 'SW-EQC-51', 'Casing length (0.8 d)'), inlet: rule(nI, 'SW-EQC-51', 'Inlet (d / 6, to the series)'), exhaust: rule(nE, 'SW-EQC-51', 'Exhaust (d / 3, to the series)'), shaftH: rule(0.9 * d, 'SW-EQC-51', 'Shaft above the baseplate (0.9 d)'), baseL: rule(2.6 * d, 'SW-EQC-51', 'Baseplate length (2.6 d)') }, 2.6 * d, s);
 }
+// ---- SW-EQC-66: turbine-driven centrifugal compressor package ----------------------------------------------------------------------------
+/** the compressor of SW-EQC-12 with a steam turbine (SW-EQC-51) in the motor's place; z along the shaft, y up from the skid's underside */
+export function makeTurbineCompressor(inp: { tag: string; skidW: number; skidL: number; casingD: number; wheelD: number }): PartSpec {
+  const { tag, skidW, skidL, casingD: D, wheelD: d } = inp, cy = 1 + 0.9 * d + 4, zc = -skidL / 2 + 6, nN = seriesUp(Math.max(3, 0.3 * D)), zg = zc + 1.2 * D + 4, zT = zg + 0.8 * D + 4 + 0.7 * d, gt = Math.max(1 + 0.8 * D, cy + 0.4 * D), s: Solid[] = [];
+  s.push({ name: 'skid PL1', role: 'steel', mesh: boxMesh(-skidW / 2, 0, -skidL / 2, skidW / 2, 1, skidL / 2) });
+  s.push({ name: 'compressor casing', role: 'machine', mesh: cylZ(0, cy, D / 2, zc + 0.15 * D, zc + 1.05 * D, 64) }, { name: 'casing end covers', role: 'machine', mesh: mergeMeshes([cylZ(0, cy, D / 2 + 1.5, zc + 0.1 * D, zc + 0.15 * D, 64), cylZ(0, cy, D / 2 + 1.5, zc + 1.05 * D, zc + 1.1 * D, 64)]) },
+    { name: 'bearing housings', role: 'machine', mesh: mergeMeshes([cylZ(0, cy, 0.25 * D, zc, zc + 0.1 * D, 32), cylZ(0, cy, 0.25 * D, zc + 1.1 * D, zc + 1.2 * D, 32)]) }, { name: 'casing pedestal', role: 'machine', mesh: boxMesh(-0.4 * D, 1, zc + 0.2 * D, 0.4 * D, cy - 0.3 * D, zc + D) });
+  for (const [label, z] of [['suction', zc + 0.4 * D], ['discharge', zc + 0.8 * D]] as const) s.push(...named(makeNozzle(`${tag}-${label}`, { NPS: nN, cls: 'P300', shellT: 1, shellR: D / 2 }), `${label} nozzle`, m => transformMesh(m, multiply(translate(0, cy + D / 2, z), NOZZLE_UP))).map(q => ({ ...q, role: q.role ?? ('machine' as const) })));
+  s.push({ name: 'gearbox', role: 'machine', mesh: boxMesh(-0.4 * D, 1, zg, 0.4 * D, gt, zg + 0.8 * D) }, { name: 'gearbox feet', role: 'machine', mesh: boxMesh(-0.5 * D, 1, zg + 2, 0.5 * D, 2.5, zg + 0.8 * D - 2) });
+  s.push({ name: 'shafts', role: 'stem', mesh: mergeMeshes([cylZ(0, cy, 0.06 * D, zc + 1.2 * D, zg, 16), cylZ(0, cy, 0.06 * D, zg + 0.8 * D, zg + 0.8 * D + 4, 16)]) });
+  s.push(...partSolids(makeSteamTurbine(`${tag}-T`, d)).map(q => ({ ...q, name: `turbine: ${q.name}`, mesh: at(q.mesh, 0, cy, zT) })));
+  s.push({ name: 'lube console', role: 'steel', mesh: boxMesh(skidW / 2 + 6, 0, -24, skidW / 2 + 30, 48, 12) }, { name: 'lube oil piping', role: 'closure', mesh: sweep([[skidW / 2 + 18, 48, -6], [skidW / 2 + 18, cy + 0.3 * D, -6], [0.3 * D, cy + 0.3 * D, -6], [0.3 * D, cy + 0.3 * D, zc + 0.05 * D], [0, cy + 0.25 * D, zc + 0.05 * D]], 0.66, 10) });
+  return equip(tag, 'COMPRESSOR', `${tag} centrifugal compressor package, turbine driven, ${skidW}" × ${skidL}" skid`, {
+    skidW: drawing(skidW, 'Skid width'), skidL: drawing(skidL, 'Skid length'), casingD: drawing(D, 'Casing diameter'), wheelD: drawing(d, 'Turbine wheel diameter'),
+    casingL: rule(1.2 * D, 'SW-EQC-12', 'Casing length (1.2 D)'), gearbox: rule(0.8 * D, 'SW-EQC-12', 'Gearbox length and width (0.8 D)'), shaftY: rule(cy, 'SW-EQC-66', 'Shaft centreline above the skid (the turbine\'s 0.9 d over its 4 in baseplate)'),
+    least: rule(2 * D + 2.55 * d + 20, 'SW-EQC-66', 'Least skid length for casing, gearbox and turbine'),
+  }, skidL, s, ['On a 12 in pad (SW-CIV-5).']);
+}
 // ---- SW-EQC-64: vertical in-line pump -------------------------------------------------------------------------------------------------
 export function makeInlinePump(inp: { tag: string; NPS: number; motorD: number }): PartSpec {
   const { NPS, motorD: Dm, tag } = inp, pd = pipeDims(NPS, 'P150'), OD = pd.OD, f = designFlange(NPS, 'P150'), Lf = flangeLen(f), rc = 1.2 * OD, FF = 2 * rc + 2 * (Lf + 3), zc = FF / 2, yt = 0.5 * OD + Dm, s: Solid[] = [];

@@ -134,10 +134,10 @@ export function makeBundleExchanger(inp: ShellTubeInput): PartSpec {
     e.length!.value, solids, ['Bundle by SW-EQC-30; catalogue images cut the shell and channel (SW-REN-10).'], { R: inp.ID / 2 + inp.t });
 }
 
-export interface PlatformedColumnInput extends ColumnInput { platformSpacing?: number }
-/** the platforms and ladders of a vertical vessel (SW-EQC-27/-28): floors at the listed elevations over 270° about angle 0, ladders alternating ends */
-export function accessSolids(R: number, floors: number[], grade = 0): Solid[] {
-  const out: Solid[] = [], half = (135 * Math.PI) / 180, off = half + 16 / (R + 7);
+export interface PlatformedColumnInput extends ColumnInput { platformSpacing?: number; /** SW-EQC-32: the arc the platforms cover about the manways, in degrees (270 where not stated) */ platformArc?: number }
+/** the platforms and ladders of a vertical vessel (SW-EQC-27/-28): floors at the listed elevations over 270° about angle 0 (or twice the stated half arc, radians), ladders alternating ends */
+export function accessSolids(R: number, floors: number[], grade = 0, half = (135 * Math.PI) / 180): Solid[] {
+  const out: Solid[] = [], off = half + 16 / (R + 7);
   floors.forEach((z, k) => {
     const side = k % 2 ? -1 : 1;   // the ladder up to this floor arrives at this end; the one above leaves from the other
     out.push(...ringPlatform(R, z, -half, half, 36, [side < 0, side > 0]).map(s => ({ ...s, name: `platform ${k + 1}: ${s.name}` })));
@@ -151,11 +151,11 @@ export function makePlatformedColumn(inp: PlatformedColumnInput): PartSpec {
   // the first floor serves the lowest manway; above it, floors at equal steps of no more than the spacing up to the top platform
   const first = zTL + 30 - 36, n = Math.max(1, Math.ceil((zTop - 6 - first) / sp)); floors.push(first);
   for (let i = 1; i <= n; i++) floors.push(first + ((zTop - 6 - first) * i) / n);
-  const solids = [...partSolids(c), ...accessSolids(R, floors)];
+  const solids = [...partSolids(c), ...accessSolids(R, floors, 0, inp.platformArc === undefined ? undefined : (inp.platformArc * Math.PI) / 360)];
   floors.slice(1, -1).forEach((z, k) => { for (const s of partSolids(makeManway(`${inp.tag}-M${k + 2}`, { D: inp.ID < 48 ? 20 : 24, cls: 'P150', shellT: inp.t, shellR: R }))) solids.push({ ...s, name: `manway ${k + 2}: ${s.name}`, mesh: transformMesh(s.mesh, multiply(translate(R, 0, z + 36), RADIAL)) }); });
   return done(inp.tag, 'COLUMN', `${inp.tag} column ${inp.ID}" ID × ${inp.TT}" T/T with ${floors.length} platforms and ladders`, {
     ...c.dims, platforms: rule(floors.length, 'SW-EQC-32', 'Platforms (first manway level, then every 15 ft, and the top)', 'count'), spacing: inp.platformSpacing !== undefined ? drawing(sp, 'Platform spacing') : rule(sp, 'SW-EQC-28', 'Platform spacing (15 ft)'),
-    platformW: rule(36, 'SW-EQC-27', 'Platform width'), handrail: rule(42, 'SW-EQC-27', 'Handrail height'),
+    platformW: rule(36, 'SW-EQC-27', 'Platform width'), handrail: rule(42, 'SW-EQC-27', 'Handrail height'), ...(inp.platformArc === undefined ? {} : { platformArc: drawing(inp.platformArc, 'Arc the platforms cover about the manways', 'deg') }),
   }, c.length!.value + 42, solids, ['Platforms by SW-EQC-27, ladders by SW-EQC-28; trays are data.'], { ...(c.extra ?? {}), floors });
 }
 

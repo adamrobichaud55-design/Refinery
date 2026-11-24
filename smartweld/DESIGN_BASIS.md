@@ -2661,7 +2661,9 @@ Parts a pressure vessel carries:
   Reason: insulation on a vertical shell slides unless it rests on something every storey.
 - `SW-EQC-7` Davit for a tall vessel's top head: a 4 in pipe post 60 in high with a 48 in arm,
   on the top head beside the top manway or nozzle. Reason: lifts relief valves and internals
-  without a crane.
+  without a crane. The arm swivels on its post: where a column states an angle (SW-EQC-9) the
+  post stands at that angle about the column's axis and the arm is swung radially outward
+  (added 2026-11-24).
 
 Equipment items (each `make…` takes the stated dimensions; what is not stated follows the rule):
 
@@ -2673,6 +2675,10 @@ Equipment items (each `make…` takes the stated dimensions; what is not stated 
   third of a diameter to the stator's length and the feet lift the frame clear of its base.
 - `SW-EQC-9` Column: SW-EQ-1 with stated tray count and spacing (trays are data, not solids), a
   top davit (SW-EQC-7), lifting lugs (SW-EQC-3) and insulation rings (SW-EQC-6) where insulated.
+  The davit's post stands at half the radius: on the −x side with the arm across the head, or,
+  where an angle is stated, at that angle with the arm swung outward (added 2026-11-24). Reason:
+  a column piped from the centre of its top head needs the arm clear of the overhead line; it
+  is the same davit turned on its post.
 - `SW-EQC-10` Reactor: SW-EQ-1 with a shell thickness of max(stated, ID/48) and a bottom
   catalyst-dump nozzle (SW-EQC-1) on the bottom head. Reason: a reactor runs at the highest
   pressure in the plant; ID/48 is the thickness at which the shell's own weight starts to matter.
@@ -2899,7 +2905,8 @@ Items:
   the bundle of SW-EQC-30 in place; catalogue images cut the shell and channel (SW-REN-10).
 - `SW-EQC-32` Platformed column: SW-EQC-9 with platforms (SW-EQC-27) from the first manway level
   every 15 ft to the top tangent line, a top platform at the top head, ladders (SW-EQC-28), a
-  manway at each platform and the davit at the top.
+  manway at each platform and the davit at the top. The platforms cover 270° about the manways,
+  or a smaller stated arc, with the ladders at its ends either way (added 2026-11-24).
 - `SW-EQC-33` Cat cracker reactor and regenerator (side by side): the regenerator a vertical
   vessel of stated diameter Dg and tangent length on a skirt, its top a cone to a flue gas outlet
   of 0.25 Dg, an air inlet of 0.2 Dg in the bottom head; the reactor (disengager) of stated
@@ -3300,6 +3307,12 @@ catalogue's own entries are unchanged. Plant 3 states the wall of SW-PRC-14.
   ladders as SW-EQC-32 at 15 ft at most, each platform ringing the shell at its own height,
   with a manway at each. Reason: under vacuum the vapour volume is greatest where the feed
   flashes, so the tower is widest there and necks in where the traffic is less.
+- `SW-EQC-66` Turbine-driven compressor package (added 2026-11-24): the skid, casing, gearbox
+  and lube console of SW-EQC-12 with a steam turbine of SW-EQC-51, of stated wheel diameter
+  d, in the motor's place, coupled to the gearbox. The shaft stands 0.9 d and the turbine's
+  4 in baseplate above the skid, and the gearbox is as tall as that needs; the skid is at
+  least 2 D + 2.55 d + 20 in long. Reason: a recycle or wet gas compressor of some thousand
+  horsepower is driven by steam the plant makes; the driver sets the shaft's height.
 
 ## 73. Further civil and concrete items (`SW-CIV-17..28`) — catalogue items only
 
@@ -4170,7 +4183,14 @@ their own geometry rules, which are unchanged.
   - Columns, reactors and other vertical vessels (SW-EQ-1): on skirts (15 ft for columns as
     SW-PRC-7, 8 ft for reactors, 5 ft for others), with platforms every 15 ft and ladders
     (SW-EQC-32) where the vessel stands more than 30 ft high. The swaged vacuum column is
-    SW-EQC-65. Walls by SW-PRC-14.
+    SW-EQC-65. Walls by SW-PRC-14. The platforms cover the half of the shell away from the
+    rack (180° about the manways), the ladders stand at their ends, and the davit stands on
+    that half with its arm swung outward (amended 2026-11-24 from the catalogue's 270° and its
+    arm across the head). Reason: the half that faces the rack is the piping's: every
+    connection stands there and every line rises or falls there, and the manways, platforms
+    and ladders are reached from the other side. With 270° the ladders stood within 25° of the
+    rack's direction, and on a 6 ft column a ladder's cage came within 4 in of the centre line
+    the connections stand on; the davit's arm lay over the top nozzle.
   - Air coolers (SW-EQC-11): each bay 14 ft by 32 ft with two fans. The bays stand side by
     side over the rack from its second bay on, their tubes across it, on a deck 9 ft above the
     top tier: posts `W8x31` on the rack's columns at each bent under the bays, a beam `W14x48`
@@ -4197,12 +4217,17 @@ their own geometry rules, which are unchanged.
     gives; packages with no body of their own are shown as a vessel of their volume. The
     adsorbers are four vessels of 72 in × 20 ft between tangents; the sulfur furnace is 72 in
     with 15 ft of chamber and 15 ft of waste heat boiler; a boiler's steam drum is 54 in × 25 ft.
+    Each adsorber is a vessel of its own (amended 2026-11-24 from the catalogue's package,
+    SW-EQC-55, whose headers are part of the item: the plant's lines could not meet them on
+    the grid, and the headers are piping, which the generator makes with its welds and valves).
     Each takes the wall of SW-PRC-14 where the catalogue lets a wall be stated (§72).
   - Every body stands on an equipment pad 6 in high and 12 in larger all round, as in plants 1
     and 2 (SW-LAY-*). Nozzles are not part of a body: the piping stage adds each one from the
     nozzle schedule, so that the nozzle and the line that meets it are of one size and class.
     A compressor's lube oil piping is left out with its nozzles: the generator holds every
-    solid by its bounding box, and that pipe's box spans the casing.
+    solid by its bounding box, and that pipe's box spans the casing. A vessel's level
+    connections are left out too: they carry instruments, which are outside this model's
+    scope (the owner, 2026-11-23), and a flange with nothing on it would stand open.
 - `SW-CELL-5` A unit's equipment lies within its plot (SW-SITE-7), which a test checks.
 - `SW-CELL-6` Yard supports. Along each side of the rack that has equipment beyond its pumps
   runs a line of support steel, 18 in outside the pumps' row (6 ft 6 in from the rack's columns
@@ -4214,6 +4239,18 @@ their own geometry rules, which are unchanged.
   the rack's lowest tier a stringer `W8x18` runs along its centre line from bent to bent, its
   top level with the tier's steel: a line crossing under the rack, 24 ft from column line to
   column line, hangs from it midway.
+- `SW-CELL-7` Footprints (added 2026-11-24). A body's footprint in its row is not a figure
+  given beforehand but what its solids and pads cover: every body is built once at the origin
+  and measured there, and its row keeps that width and depth about the body's datum (a
+  shell's axis, a shaft's line). A body with no datum that connections are set from — a
+  package, a furnace, a boiler, a scrubber, the cracker — stands by its measured extent
+  instead: its lowest solid (anchor rods and bolts apart) on the top of a pad that reaches
+  6 in beyond everything standing on it, and the whole centred on its spot. Pits and basins
+  stand in the ground with no pad. Reason: figures given by hand had left bodies off their
+  pads and over their neighbours' ground (the sulfur furnace by 25 ft, the adsorbers by
+  6 ft, a compressor's lube console by 18 in); a test now holds every body within its
+  footprint. The connections of such a body are set on its own solids, taken as boxes in
+  the unit's frame (SW-RPI-2).
 
 ## 79. Plant 3: piping of a unit (`SW-RPI-*`)
 
@@ -4237,7 +4274,8 @@ What this section adds is what that generator is given.
     plane is (so suction ends stand within 6 in of the line of SW-CELL-3).
   - Compressor: as a pump: suction on the shaft's line at the casing's free end, facing the
     rack; discharge on top of the casing in its centre plane; pad and position adjusted as a
-    pump's. Reason: a machine and its spare side by side are then fed from the rack by one line
+    pump's. A turbine driver (SW-EQC-66) takes its steam on top of the steam chest and
+    exhausts from the side of its casing away from the lube console, below the joint. Reason: a machine and its spare side by side are then fed from the rack by one line
     and a tee, as pumps are.
   - Shell-and-tube exchanger: tube-side connections on the channel, in its centre plane, which
     stands on the grid. Of the two shell-side connections the one on top stands at the channel
@@ -4250,47 +4288,86 @@ What this section adds is what that generator is given.
   - Horizontal drum: what enters, on top from the end nearer the battery limit; gas on top at
     the far end; liquids below at the far end; neighbours apart by half the sum of their
     flanges plus 12 in. Reason: the length between inlet and outlets is the settling path.
-  - Vertical vessel or column: every shell connection faces the rack, where a column's
-    platforms are open (SW-EQC-32). The one vapour outlet (a reactor's inlet) is on the top
-    head, standing out far enough that its flange is 54 in above the top platform's floor,
-    over the handrail. Liquid outlets stand 12 in above the bottom tangent; then reboiler draw, stripping
-    steam and gas inlets, reboiler return; reflux and lean liquids 12 in below the top tangent;
-    feeds at mid-height; the remaining draws and returns between 25 % and 85 % of the height
-    in the order the flowsheet meets them. Connections are 36 in apart at least, and far enough for the handwheel of the valve below to
-    clear the flange above (a gate valve's handwheel stands 4 sizes and 8 in from its pipe's
-    axis at most, a bound on SW-VLV-* that a test checks), on the grid, and none stands within the band from 18 in below to 54 in above a platform floor. Reason:
-    the open side lets every line drop to the rack without passing through a platform; the
-    band keeps flanges and valves clear of a floor and its handrail.
+  - Vertical vessel or column: every shell connection faces the rack, on the shell's centre
+    line; a column's platforms and ladders are on the other half (SW-CELL-4). The one vapour
+    outlet (a reactor's inlet) is on the top head, standing out far enough that its flange is
+    54 in above the top platform's floor, over the handrail. On the shell, from the bottom
+    upward: liquid outlets 12 in above the bottom tangent; the reboiler draw; stripping steam
+    and gas inlets; the reboiler return; then the feeds, draws and returns of the middle in
+    the order of their streams' temperatures, the hottest lowest, a return directly above the
+    draw it belongs to (a pumparound's return; the vapour return of a side stripper), spread
+    evenly from 20 % to 90 % of the height, a single one at mid-height; reflux and lean
+    liquids 12 in below the top tangent. A vessel whose connections are named for two or more
+    sections (a stacked side stripper) is divided into that many equal sections, the hottest
+    lowest; in each the liquid leaves at 8 % of the section's height, the steam enters at
+    20 %, the liquid enters at 80 % and the vapour leaves at 92 %. Connections are 36 in apart
+    at least and 12 in from the tangent lines where the shell is long enough for that (on a
+    short one, a small filter's, they close up to the handwheel's clearance and to 6 in from
+    the tangent lines), and far enough for the handwheel of the valve below to clear the
+    flange above
+    (a gate valve's handwheel stands 4 sizes and 8 in from its pipe's axis at most, a bound on
+    SW-VLV-* that a test checks), on the grid: where the wanted elevations stand closer than
+    that they are moved apart upward from the bottom, and then downward from the top if the
+    highest would pass the top tangent; a shell too short for all of them stops the unit with
+    an error. Reason: a column is hottest at its base and coolest at its top, so its streams
+    leave and enter in the order of their temperatures; a pumparound cools the liquid it draws
+    and returns it a few trays higher; a stripper's vapour re-enters above the tray its liquid
+    left. (Amended 2026-11-24. Before, the middle connections stood in the order the
+    flowsheet met them, which put every pumparound above the product draws; and none could
+    stand within a band about each platform floor, because the generator holds a 270° ring by
+    its bounding box, which covers the open quarter too. On the crude column the 17 shell
+    connections did not fit between the bands and four were set below the shell, one below
+    grade; nothing checked for it. A test now holds every shell connection between its
+    vessel's tangent lines.)
+  - Adsorber (one of the four of the hydrogen purification unit): as a vertical vessel, the
+    feed and the tail gas low on the shell and the hydrogen from the top head. The first
+    vessel takes the unit's three lines and the others join them with tees, as parallel
+    bodies do (SW-LL-3), each connection behind its own valve. Reason: a bed is fed from
+    below and gives its product from above; the valves at each bed are the ones that switch
+    it.
+  - Storage tank: every connection low on the shell where it faces the rack, its axis 2 ft
+    above the bottom or a flange's radius and 1 ft where that is more, side by side a flange
+    and 18 in apart (to the foot), each parallel to the one at the middle. Reason: a tank is
+    filled and emptied near its floor; the stair and the manways stand elsewhere on the
+    shell (SW-EQC-44).
   - Vertical cylindrical heater: the coil enters the convection box and leaves the radiant
-    shell 2 ft above its floor, the fuel gas enters under the floor.
-  - Air cooler bay: both connections on top of one header, 3 ft either side of the bay's
-    centre, the inlet over one half of the bundle and the outlet over the other (two passes
-    side by side); the header on the side of the rack its inlet line comes from. Reason: under
-    the header the bay's plenum and legs leave a valve no room.
+    shell 2 ft above its floor, the fuel gas enters under the floor; a waste gas it burns
+    enters beside the fuel gas, 3 ft along; a steam coil's two ends stand in the convection
+    box's two side faces.
+  - Cabin heater: every connection on the wall that faces the rack: the coil enters the
+    convection section at mid-height, a quarter of the heater's length to one side of its
+    centre, and leaves the radiant box 2 ft above its floor a quarter to the other side; fuel
+    gas and the waste gases it burns enter 2 ft below the floor, 4 ft apart about the centre; a
+    steam coil's two ends stand in the convection section beside the outlet's side.
+  - Air cooler bay: two passes side by side in one header, the header on the side of the
+    rack its inlet line comes from. The inlet stands on top of the header, 3 ft to one side
+    of the bay's centre, over one pass; the outlet stands in the header's outer face at
+    mid-height, 3 ft to the other side, at the other pass. Reason: what condenses leaves
+    low and sideways while the vapour enters on top; under the header the bay's plenum and
+    legs leave a valve no room. (Amended 2026-11-24 from both on top: four upright valve
+    stacks in a row on two bays' headers left a second bay's outlet no way to the first's
+    line.)
 - `SW-RPI-3` Line list. Each line of the flowsheet is one line of the generator with its size
   and class of SW-PRC-3 and -4, its service letter by its fluid's group (SW-PRC-1), and its
   number by SW-REF-3. An end at an item is that item's nozzle; a branch is a tap on its run; an
   end at the battery limit is a spool of SW-RPI-4. A control valve asked for by the flowsheet
-  is a station (SW-LL-3) where the catalogue offers the valve (to 12 in). The generator stands
-  a station at a line's destination; so that it stands near grade and not at a battery limit
-  spool or high on a column, the line is given to the generator with, as its destination, the
-  lower of its ends that can take a station: an item's nozzle that does not point down (under
-  a drum or an exchanger there is no room) and is not a pump's. Failing that, on a 2 in line the
-  station stands at the battery limit spool (SW-RPI-4). The flowsheet's direction of flow is
-  kept in the unit's own record. Where the valve is not offered, or neither end can take a
-  station, the line is piped without it and the omission recorded. An installed
-  spare, and each further body of an item in parallel, joins the first body's line with a tee
-  (SW-LL-3), numbered from unit × 1000 + 301. Each line carries beside the generator's record
-  the fluid, design conditions and origin that the code layer needs (§76).
+  is a station (SW-LL-3) where the catalogue offers the valve (to 12 in), standing at grade
+  under the rack (SW-RPI-9); where the valve is not offered the line is piped without it and
+  the omission recorded. An installed spare, and each further body of an item in parallel,
+  joins the first body's line with a tee (SW-LL-3), numbered from unit × 1000 + 301. Each line
+  carries beside the generator's record the fluid, design conditions and origin that the code
+  layer needs (§76).
 - `SW-RPI-4` Battery limit. Each stream entering or leaving the unit ends at a spool in the valve
   bay, the rack's bay nearest the battery limit (SW-CELL-2): two nozzles back to back, 24 in face
-  to face, 30 in inside the bay's first bent, at the elevation its line runs at on the lowest
-  tier; a 2 in line's spool stands 54 in further in, so that its pipe reaches the rack's first
-  bent within its span (SW-PS-7) and the spacer pipe of a control valve station, and no flange,
-  lies over the bay's mid beam. The unit's line bolts to the spool's inner face behind a block valve; the pipeway's line
-  will bolt to the outer face. Tag `BL-{unit}{sequence}`. The spools stand side by side across
-  the rack a flange and 6 in apart, in the order of the lanes their lines run in, so that the
-  lines fan from the valves into their lanes without crossing; a line that takes no lane of
+  to face, 30 in inside the bay's first bent, at the elevation its line runs at on its tier
+  (SW-RPI-7; the lowest for a line that does not run the rack). The unit's line bolts to the
+  spool's inner face behind a block valve; the pipeway's line will bolt to the outer face. Tag
+  `BL-{unit}{sequence}`. The spools of a tier stand side by side across the rack a flange and
+  6 in apart, in the order of the lanes their lines run in, so that the lines fan from the
+  valves into their lanes without crossing; each tier's row stands above the one below. Where one row is wider than the
+  rack they stand in two rows taken in turn, the second just beyond the bay's mid beam, each
+  line of the first row passing between two valves of the second, a pipe's width and 4 in from
+  their flanges. A line that takes no lane of
   its own (one that taps another, or ends within 20 ft) stands outside the others. The lanes
   are the generator's (SW-RT-1, -2): they are worked out beforehand by its own rule, and where a
   run shows a line in another lane the spools are set again from the lanes it gave. Reason: a
@@ -4306,13 +4383,95 @@ What this section adds is what that generator is given.
   fewest turns, which from a column's top is as readily straight out over the unit as down the
   column. A pipe is carried by steel, so the generator is shown solid blocks that leave open
   only where there is some:
-  - from 9 ft above the rack's top tier upward, everywhere except within 12 ft of a body that
-    has a connection up there: a line leaving a column's top comes down beside the column
-    before it turns away (the 9 ft leaves room for the valved take-offs that rise from the
-    headers on the top tier);
+  - from 9 ft above the rack's top tier upward, everywhere except in the room a body with a
+    connection up there needs for its lines: for a vertical vessel a chase on the side that
+    faces the rack, 2 ft wider than the shell on either hand and reaching 10 ft beyond it;
+    for any other body, 6 ft all round; each as high as that body's highest connection
+    needs for its valve and the turn after it, with 6 ft over, and closed again above. A
+    line leaving a column's top comes down in the chase, beside the column's other lines,
+    before it turns away (the 9 ft leaves room for
+    the valved take-offs that rise from the headers on the top tier). (Amended 2026-11-24
+    from 12 ft all round any such body: the generator's search for a line is bounded, at 2.5
+    million steps, and an open space 24 ft square the height of a column exhausted it before
+    a way down past the column's other lines was found.)
   - beyond the yard's support beams (SW-CELL-6), from 18 in above their underside up to that
     level, with the same exception: every line crossing between equipment and rack passes
     under a beam, from which it hangs.
   The blocks are not part of the model and are in no drawing, count or check; no hanger hangs
   from one.
+- `SW-RPI-7` The rack's tiers (added 2026-11-24). The generator runs every process line that
+  travels more than 20 ft along the rack in a lane of the lowest tier it is given (SW-RT-1),
+  and one tier of a 24 ft rack holds 20 ft of lanes. The crude unit's lines need 31 ft of
+  width at their busiest section; a unit of 39 lines that fitted one tier stopped fitting it
+  when its column's connections moved. So the lines that run the rack are shared among its
+  tiers, and the generator is run once for each tier in use, lowest first:
+  - The lines are taken largest first (of one size, the longer run first), and each goes on
+    the lowest tier where, with it, the lines at the busiest section along its run take no
+    more than 6 ft of width, a pipe's width and 3 in each (the lane spacing of SW-RT-2). The
+    top tier's count starts with the utility headers (SW-RPI-5). Where three tiers of 6 ft do
+    not take all a unit's lines the width is raised a foot at a time until they do, to 17 ft
+    at most; beyond that the unit is not piped and the error says so. Reason: the largest
+    lines are the heaviest and their branches the stiffest, so they go lowest, where the
+    columns carry them with the least moment and the drops to equipment are shortest. The
+    6 ft is far less than the 20 ft a tier holds because of how the generator brings a line
+    to its lane: within 6 ft of the lane it may cross the tier at the lanes' own elevation
+    (SW-RT-7), and so closes the lanes it crosses to every later line at that place. A tier
+    loaded to 12 ft or more left small lines, which come last, with no lane clear along
+    their whole run (the diesel hydrotreater: four lines); lines at the middle of the rack
+    leave its outer lanes clear from end to end.
+  - Each run is given the rack from its tier upward, so that the tier is its lowest, and that
+    tier's lines with the branches that tap them (a spare's connection). The last run also
+    has the utility headers, their take-offs and every line that does not run the rack. A
+    unit whose lines fit one tier has one run, as plants 1 and 2 have.
+  - In each run the pipes, fittings, valves and supports of the runs before it stand as
+    solids, each component by the shape the generator's own checks hold it by (§40); and so
+    does the room each later line's first valves will need at its nozzles: along the nozzle's
+    axis from the shell, a flange wide, to a gate valve's length, two sizes and 24 in beyond
+    the face (twice that at a pump's discharge, for the check valve; 12 sizes and 8 ft where
+    a control valve station will stand). Reason: within one run the generator sets every
+    line's first valves at its nozzles before it routes any line; across runs it cannot know
+    of the later ones.
+  - The utility headers are routed in the last run, in lanes the generator gives them by
+    width alone, before it looks at anything else. So those lanes are worked out beforehand
+    by its rule (SW-RT-2, SW-RK-7) and held clear in the runs before, with 4 ft above for
+    the valved take-offs; a header found in another lane is reported.
+  - The runs' results are one model. The checks (§40) are run on all of it at once against
+    the real steel and equipment, so a clash between lines of different runs is found as any
+    other would be.
+- `SW-RPI-8` Branch roots (added 2026-11-24). The generator runs a line in a lane of the rack
+  only if both its ends are nozzles (SW-RT-1); a line that leaves or joins another at a tee
+  it routes as it finds its way, which serves the short connections of plants 1 and 2 and
+  fails for one that must travel the rack (the quench gas of the diesel hydrotreater, 140 ft
+  from the recycle gas line to the reactor: the search gave out). So a branch whose far end
+  stands more than 20 ft along the rack beyond its parent's run starts, or ends, at a root
+  spool on the rack: two nozzles back to back, 24 in face to face, tag `RS-{unit}{sequence}`,
+  at the middle of the bay where the parent's run ends nearest the far end (clear of the
+  bents' beams), in the branch's lane on its tier. The
+  branch runs from the spool's far face as a line between nozzles, and a connection of the
+  branch's size, numbered from unit × 1000 + 601, joins the spool's near face to the tee on
+  the parent. Each face carries the block valve the generator sets at a nozzle, so the
+  branch can be shut at its root on either side of a spool that can be taken out. Reason:
+  the branch keeps its own size and number (making the long leg the run instead would carry
+  the parent's size all the way); a block valve at the root of a long branch is common
+  practice in any case. The parent's run is taken as the stretch of rack between its
+  nozzles, or, where it ends at a tee itself, from its nozzle to the nearest point of the
+  line it taps.
+- `SW-RPI-9` Control stations (added 2026-11-24). The generator stands a control valve station
+  at a line's destination nozzle, along that nozzle's axis. Given an item's own nozzle, that
+  put stations upright on top of drums and exchangers and straight out from columns 50 ft
+  up, carried by nothing and reached by no one. So each line with a station is divided at a
+  station spool: two nozzles back to back, 24 in face to face, tag `CS-{unit}{sequence}`,
+  lying along the rack at grade, its axis 36 in above it, under the rack 3 ft inside the
+  line of its columns on the side of the line's destination (6 ft and then 9 ft inside
+  where that file is full, or where the valves' handwheels, half a gate valve's reach wide,
+  would not clear the columns by 6 in), as near along the rack to the destination as the stations
+  already set allow, and clear of the rack's braced bays, whose rods come down to the
+  column bases. The line as the flowsheet numbers it runs from its source to the
+  spool's near face, which looks toward the source, and carries the station there; the rest
+  runs from the far face to the destination under a number from unit × 1000 + 701. A branch
+  joins or leaves such a line ahead of its station; a spare at the line's destination joins
+  the part after it. Reason: a control valve is watched and worked on from grade; under the
+  edge of the rack it is clear of the access ways and beside the columns that carry its line
+  down to it and up again. (This replaces the earlier choice of the lower of a line's ends
+  as the station's seat, and with it the lines given to the generator end for end.)
 

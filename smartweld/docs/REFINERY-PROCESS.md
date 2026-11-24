@@ -101,7 +101,7 @@ Every stream that crosses a unit's battery limit, with the units at each end (SW
 | Vacuum residue rundown | residue | 11 | 21 | 168,413 | 11,400 bbl/d | 350 | 110 | 6 | P300 | steady |
 | Crude | crude oil | 20 | 11 | 758,884 | 60,000 bbl/d | 60 | 60 | 16 | P150 | steady |
 | Stripped water | process and wash water | 18 | 11, 13, 15, 16 | 52,800 | 3,617 bbl/d | 120 | 100 | 4 | P150 | steady |
-| Vacuum gas oil pumparound supply | gas oil | 12 | 11 | 322,000 | 23,591 bbl/d | 550 | 150 | 8 | P300 | steady |
+| Vacuum gas oil pumparound supply | gas oil | 12 | 11 | 322,000 | 23,591 bbl/d | 550 | 150 | 10 | P300 | steady |
 | Vacuum residue hot | residue | 12 | 11 | 168,413 | 11,400 bbl/d | 690 | 130 | 6 | P600 | steady |
 | Slop oil | oily water | 12, 18, 19, 22, 23, 24, 25 | 21 | 30,000 | 2,390 bbl/d | 110 | 40 | 3 | P150 | collected: pumped out of drums and sumps as they fill; the header is sized for the largest of them |
 | Light vacuum gas oil | gas oil | 12, 21 (tank) | 17, 21 (tank) | 50,731 | 3,840 bbl/d | 150 | 80 | 3 | P150 | steady |
@@ -122,9 +122,9 @@ Every stream that crosses a unit's battery limit, with the units at each end (SW
 | Rich amine | amine solution | 16, 17 | 18 | 124,523 | 8,202 bbl/d | 140 | 70 | 4 | P150 | steady |
 | Treated diesel | diesel | 16 | 21 | 150,229 | 12,179 bbl/d | 110 | 50 | 6 | P150 | steady |
 | Light cycle oil to hydrotreating | diesel | 17 | 16 | 14,976 | 1,080 bbl/d | 140 | 80 | 3 | P150 | steady |
-| Lean amine | amine solution | 18 | 16, 17 | 120,000 | 7,981 bbl/d | 120 | 300 | 4 | P600 | steady |
+| Lean amine | amine solution | 18 | 16, 17 | 120,000 | 7,981 bbl/d | 120 | 300 | 6 | P600 | steady |
 | Slurry oil | slurry oil | 17 | 21 | 20,808 | 1,332 bbl/d | 200 | 60 | 3 | P150 | steady |
-| Light cycle oil to fuel oil | diesel | 17 | 21 | 29,952 | 2,160 bbl/d | 140 | 60 | 3 | P150 | steady |
+| Light cycle oil to fuel oil | diesel | 17 | 21 | 29,952 | 2,160 bbl/d | 140 | 60 | 4 | P150 | steady |
 | Fuel gas | fuel gas | 17 | 19 | 10,925 | 4.98 MMscf/d | 115 | 70 | 6 | P150 | steady |
 | Cracked gasoline | gasoline | 17 | 21 | 112,555 | 10,280 bbl/d | 100 | 50 | 6 | P150 | steady |
 | Three-carbon liquefied gas | liquefied petroleum gas | 17 | 21 | 18,553 | 2,492 bbl/d | 110 | 240 | 3 | P300 | steady |
@@ -666,14 +666,14 @@ Process lines of each unit by size (inches) and by class. The full list, with wh
 | Unit | 3 | 4 | 6 | 8 | 10 | 12 | 14 | 16 | 18 | 20 | 24 | 30 | 36 | 42 | 48 | Total |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
 | 11 | 9 | 6 | 14 | 9 | 8 | 13 | 2 | 3 |  |  | 2 |  |  |  |  | 66 |
-| 12 | 8 | 1 | 4 | 5 | 1 |  | 1 |  |  |  |  |  | 1 |  | 1 | 22 |
+| 12 | 8 | 1 | 3 | 5 | 2 |  | 1 |  |  |  |  |  | 1 |  | 1 | 22 |
 | 13 | 12 | 3 | 15 | 4 | 3 | 2 |  |  |  |  |  |  |  |  |  | 39 |
 | 14 | 10 | 8 | 7 | 7 | 1 | 2 | 6 |  |  |  |  |  |  |  |  | 41 |
 | 15 | 13 | 12 | 4 | 3 |  |  |  |  |  |  |  |  |  |  |  | 32 |
-| 16 | 17 | 3 | 15 | 5 | 3 |  |  |  |  |  |  |  |  |  |  | 43 |
-| 17 | 26 | 11 | 23 | 16 | 13 | 3 | 2 | 2 |  | 1 | 2 |  | 1 | 1 |  | 101 |
-| 18 | 21 | 10 | 16 | 8 | 2 |  | 1 | 1 |  |  |  |  |  |  |  | 59 |
-| 19 | 16 | 12 | 19 | 1 | 3 | 1 |  |  |  |  |  | 2 |  |  | 1 | 55 |
+| 16 | 17 | 2 | 16 | 5 | 3 |  |  |  |  |  |  |  |  |  |  | 43 |
+| 17 | 24 | 12 | 24 | 16 | 13 | 3 | 2 | 2 |  | 1 | 2 |  | 1 | 1 |  | 101 |
+| 18 | 20 | 10 | 17 | 8 | 2 |  | 1 | 1 |  |  |  |  |  |  |  | 59 |
+| 19 | 15 | 13 | 15 | 5 | 3 | 1 |  |  |  |  |  | 2 |  |  | 1 | 55 |
 | 20 | 7 |  |  |  |  | 1 |  | 5 |  |  |  |  | 5 |  |  | 18 |
 | 21 | 20 | 11 | 23 | 8 | 7 |  |  | 1 | 1 |  | 4 | 7 |  |  |  | 82 |
 | 22 | 6 |  |  |  |  |  |  | 1 | 1 | 2 | 2 |  | 1 |  |  | 13 |
@@ -681,7 +681,7 @@ Process lines of each unit by size (inches) and by class. The full list, with wh
 | 24 | 10 | 1 | 5 | 4 |  |  |  |  |  |  |  |  |  |  |  | 20 |
 | 25 | 1 | 1 |  |  |  |  |  |  |  |  |  |  | 3 |  |  | 5 |
 | 26 | 3 |  | 2 |  |  |  |  |  |  | 1 |  | 2 |  |  |  | 8 |
-| All | 184 | 81 | 151 | 70 | 41 | 22 | 12 | 13 | 2 | 4 | 10 | 11 | 11 | 1 | 2 | 615 |
+| All | 180 | 82 | 149 | 74 | 42 | 22 | 12 | 13 | 2 | 4 | 10 | 11 | 11 | 1 | 2 | 615 |
 
 | Unit | P150 | P300 | P600 | P1200 |
 |---|---|---|---|---|
@@ -720,8 +720,8 @@ The largest lines:
 | 25 | D-2502 gas | X-2501 inlet | flare gas | 400,000 | 36 | P150 | 166.9 |
 | 12 | H-1201 outlet | C-1201 feed | residue | 358,364 | 36 | P300 | 124.2 |
 | 17 | E-1703 outlet | C-1705 flue gas in | flue gas | 178,764 | 36 | P150 | 160.2 |
+| 19 | P-1905 D | battery limit: cooling water supply | cooling water supply | 7,725,000 | 30 | P150 | 7.9 |
 | 19 | battery limit: cooling water return | X-1903 return | cooling water return | 7,500,000 | 30 | P150 | 7.7 |
-| 19 | P-1905 D | battery limit: cooling water supply | cooling water supply | 7,500,000 | 30 | P150 | 7.6 |
 | 26 | T-2601 outlet | P-2601 S | fire water | 3,004,200 | 30 | P150 | 3.0 |
 | 26 | T-2602 outlet | line 2 | fire water | 3,004,200 | 30 | P150 | 3.0 |
 | 21 | T-2113 outlet | P-2123 S | diesel | 2,960,457 | 30 | P150 | 3.6 |

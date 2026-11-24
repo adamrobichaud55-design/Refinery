@@ -3,15 +3,20 @@
  "unit": 15,
  "name": "Kerosene hydrotreater",
  "frame": "the unit's own (SW-CELL-1): inches, x from its battery limit along its rack, y up from its bench, z across the rack",
- "runs": 1,
- "seconds": 121,
+ "runs": 2,
+ "tiers": [
+  1,
+  2
+ ],
+ "tierRoom": 72,
+ "seconds": 235,
  "stats": {
-  "lines": 54,
-  "routed": 54,
+  "lines": 65,
+  "routed": 65,
   "failed": 0,
-  "comps": 1580,
-  "welds": 838,
-  "supports": 158,
+  "comps": 1941,
+  "welds": 1042,
+  "supports": 201,
   "penetrations": 0
  },
  "failures": [],
@@ -23,90 +28,64 @@
   "lineClearance": [],
   "staticClearance": [],
   "supports": [
-   "6\"-P600-P-15007: unsupported span 332 in > 240 on run from 492,234,46",
-   "8\"-P600-P-15009: unsupported span 262 in > 240 on run from 810,162,37",
-   "4\"-P150-P-15019: unsupported span 323 in > 240 on run from 870,246,19",
-   "3\"-P300-P-15025: unsupported span 1049 in > 180 on run from 1246,198,-336",
-   "3\"-P300-P-15025: unsupported span 272 in > 180 on run from 192,198,-331",
-   "3\"-P600-P-15027: unsupported span 626 in > 180 on run from 1555,192,-222",
-   "4\"-P300-P-15029: unsupported span 299 in > 240 on run from 1050,144,-215",
-   "3\"-P150-CWS-15501: unsupported span 317 in > 180 on run from 930,342,284",
-   "4\"-P150-CWR-15502: unsupported span 417 in > 240 on run from 942,354,599",
-   "4\"-P150-CWS-15503: unsupported span 350 in > 240 on run from 1164,198,259",
-   "4\"-P150-CWR-15504: unsupported span 449 in > 240 on run from 1146,186,605",
-   "3\"-P300-LS-15505: unsupported span 434 in > 180 on run from 1188,390,13",
+   "6\"-P600-P-15007: unsupported span 506 in > 240 on run from 456,228,614",
+   "8\"-P600-P-15009: unsupported span 269 in > 240 on run from 912,162,73",
+   "4\"-P600-P-15014: unsupported span 291 in > 240 on run from 1014,150,-17",
+   "4\"-P150-P-15019: unsupported span 593 in > 240 on run from 942,156,611",
+   "3\"-P150-P-15705: unsupported span 183 in > 180 on run from 364,198,36",
+   "4\"-P300-P-15029: unsupported span 299 in > 240 on run from 1098,144,-215",
+   "4\"-P150-CWR-15502: unsupported span 575 in > 240 on run from 1032,318,611",
+   "4\"-P150-CWS-15503: unsupported span 359 in > 240 on run from 1236,270,259",
+   "4\"-P150-CWR-15504: unsupported span 359 in > 240 on run from 1236,258,611",
+   "4\"-P150-CWR-15504: unsupported span 257 in > 240 on run from 1254,378,239",
+   "3\"-P300-LS-15505: unsupported span 272 in > 180 on run from 1170,378,13",
    "2\"-P150-P-15506: unsupported span 203 in > 120 on run from 2499,372,36"
   ]
  },
  "spools": [
   {
-   "tag": "BL-1506",
-   "stream": "wild naphtha",
+   "tag": "BL-1507",
+   "stream": "treated kerosene",
    "dir": "out",
-   "line": "3\"-P300-P-15025",
-   "NPS": 3,
+   "line": "4\"-P300-P-15708",
+   "NPS": 4,
    "cls": "P300",
    "at": [
     150,
     198,
     -54
    ],
-   "lane": -336
+   "tier": 0
   },
   {
-   "tag": "BL-1502",
-   "stream": "reformer net gas",
-   "dir": "in",
-   "line": "3\"-P600-P-15005",
+   "tag": "BL-1506",
+   "stream": "wild naphtha",
+   "dir": "out",
+   "line": "3\"-P300-P-15707",
    "NPS": 3,
-   "cls": "P600",
+   "cls": "P300",
    "at": [
     150,
     198,
     -36
-   ]
-  },
-  {
-   "tag": "BL-1505",
-   "stream": "stripper gas",
-   "dir": "out",
-   "line": "3\"-P150-P-15022",
-   "NPS": 3,
-   "cls": "P150",
-   "at": [
-    150,
-    198,
-    -18
    ],
-   "lane": -48
+   "tier": 0,
+   "lane": -24
   },
   {
    "tag": "BL-1504",
    "stream": "sour water",
    "dir": "out",
-   "line": "3\"-P600-P-15016",
+   "line": "3\"-P600-P-15703",
    "NPS": 3,
    "cls": "P600",
    "at": [
     150,
     198,
-    0
+    -18
    ],
-   "lane": -42
-  },
-  {
-   "tag": "BL-1507",
-   "stream": "treated kerosene",
-   "dir": "out",
-   "line": "4\"-P300-P-15032",
-   "NPS": 4,
-   "cls": "P300",
-   "at": [
-    150,
-    198,
-    18
-   ],
-   "lane": 48
+   "tier": 0,
+   "lane": -18
   },
   {
    "tag": "BL-1501",
@@ -118,8 +97,40 @@
    "at": [
     150,
     198,
+    0
+   ],
+   "tier": 0,
+   "lane": -12
+  },
+  {
+   "tag": "BL-1502",
+   "stream": "reformer net gas",
+   "dir": "in",
+   "line": "3\"-P600-P-15005",
+   "NPS": 3,
+   "cls": "P600",
+   "at": [
+    150,
+    198,
+    18
+   ],
+   "tier": 0,
+   "lane": -12
+  },
+  {
+   "tag": "BL-1505",
+   "stream": "stripper gas",
+   "dir": "out",
+   "line": "3\"-P150-P-15705",
+   "NPS": 3,
+   "cls": "P150",
+   "at": [
+    150,
+    198,
     36
-   ]
+   ],
+   "tier": 0,
+   "lane": 48
   },
   {
    "tag": "BL-1503",
@@ -132,6 +143,127 @@
     150,
     198,
     54
+   ],
+   "tier": 0
+  }
+ ],
+ "roots": [
+  {
+   "tag": "RS-1501",
+   "line": "3\"-P600-P-15005",
+   "connection": "3\"-P600-P-15601",
+   "parent": "3\"-P600-P-15004",
+   "at": [
+    720,
+    198,
+    24
+   ],
+   "tier": 0
+  },
+  {
+   "tag": "RS-1502",
+   "line": "3\"-P300-P-15025",
+   "connection": "3\"-P300-P-15602",
+   "parent": "3\"-P300-P-15024",
+   "at": [
+    1440,
+    198,
+    48
+   ],
+   "tier": 0
+  },
+  {
+   "tag": "RS-1503",
+   "line": "3\"-P600-P-15027",
+   "connection": "3\"-P600-P-15603",
+   "parent": "3\"-P600-P-15016",
+   "at": [
+    960,
+    270,
+    -12
+   ],
+   "tier": 1
+  }
+ ],
+ "stations": [
+  {
+   "tag": "CS-1501",
+   "line": "4\"-P150-P-15001",
+   "after": "4\"-P150-P-15701",
+   "at": [
+    540,
+    36,
+    -108
+   ]
+  },
+  {
+   "tag": "CS-1502",
+   "line": "6\"-P600-P-15007",
+   "after": "6\"-P600-P-15702",
+   "at": [
+    1956,
+    36,
+    108
+   ]
+  },
+  {
+   "tag": "CS-1503",
+   "line": "3\"-P600-P-15016",
+   "after": "3\"-P600-P-15703",
+   "at": [
+    684,
+    36,
+    -108
+   ]
+  },
+  {
+   "tag": "CS-1504",
+   "line": "4\"-P150-P-15019",
+   "after": "4\"-P150-P-15704",
+   "at": [
+    1500,
+    36,
+    -108
+   ]
+  },
+  {
+   "tag": "CS-1505",
+   "line": "3\"-P150-P-15022",
+   "after": "3\"-P150-P-15705",
+   "at": [
+    924,
+    36,
+    -108
+   ]
+  },
+  {
+   "tag": "CS-1506",
+   "line": "3\"-P300-P-15024",
+   "after": "3\"-P300-P-15706",
+   "at": [
+    1650,
+    36,
+    -108
+   ]
+  },
+  {
+   "tag": "CS-1507",
+   "line": "3\"-P300-P-15025",
+   "after": "3\"-P300-P-15707",
+   "at": [
+    528,
+    36,
+    108
+   ]
+  },
+  {
+   "tag": "CS-1508",
+   "line": "4\"-P300-P-15032",
+   "after": "4\"-P300-P-15708",
+   "at": [
+    444,
+    36,
+    -72
    ]
   }
  ],
@@ -142,17 +274,37 @@
    "fluid": "KE",
    "fluidName": "kerosene",
    "from": "BL-1501-U",
+   "to": "CS-1501-A",
+   "NPS": 4,
+   "cls": "P150",
+   "designP": 105,
+   "designT": 150,
+   "routed": true,
+   "components": 33,
+   "welds": 14,
+   "supports": 1,
+   "lengthFt": 39,
+   "tier": 1,
+   "station": "CS-1501",
+   "controlValve": "piped"
+  },
+  {
+   "no": "4\"-P150-P-15701",
+   "origin": "control",
+   "fluid": "KE",
+   "fluidName": "kerosene",
+   "from": "CS-1501-B",
    "to": "D-1501-N1",
    "NPS": 4,
    "cls": "P150",
    "designP": 105,
    "designT": 150,
    "routed": true,
-   "components": 43,
-   "welds": 22,
-   "supports": 1,
-   "lengthFt": 80,
-   "controlValve": "piped"
+   "components": 21,
+   "welds": 12,
+   "supports": 2,
+   "lengthFt": 59,
+   "station": "CS-1501"
   },
   {
    "no": "6\"-P150-P-15002",
@@ -202,8 +354,9 @@
    "routed": true,
    "components": 30,
    "welds": 23,
-   "supports": 7,
-   "lengthFt": 122
+   "supports": 8,
+   "lengthFt": 134,
+   "tier": 2
   },
   {
    "no": "3\"-P600-P-15005",
@@ -211,16 +364,17 @@
    "fluid": "HY",
    "fluidName": "hydrogen-rich gas",
    "from": "BL-1502-U",
-   "to": "tap 3\"-P600-P-15004",
+   "to": "RS-1501-B",
    "NPS": 3,
    "cls": "P600",
    "designP": 380,
    "designT": 160,
    "routed": true,
-   "components": 13,
-   "welds": 10,
-   "supports": 1,
-   "lengthFt": 35
+   "components": 21,
+   "welds": 14,
+   "supports": 3,
+   "lengthFt": 49,
+   "tier": 1
   },
   {
    "no": "3\"-P600-P-15006",
@@ -237,7 +391,7 @@
    "components": 15,
    "welds": 12,
    "supports": 0,
-   "lengthFt": 12
+   "lengthFt": 14
   },
   {
    "no": "6\"-P600-P-15007",
@@ -245,18 +399,38 @@
    "fluid": "RX",
    "fluidName": "reactor effluent (oil and hydrogen)",
    "from": "E-1501-N2",
+   "to": "CS-1502-A",
+   "NPS": 6,
+   "cls": "P600",
+   "designP": 595,
+   "designT": 570,
+   "routed": true,
+   "components": 50,
+   "welds": 29,
+   "supports": 6,
+   "lengthFt": 209,
+   "tier": 1,
+   "station": "CS-1502",
+   "controlValve": "piped"
+  },
+  {
+   "no": "6\"-P600-P-15702",
+   "origin": "control",
+   "fluid": "RX",
+   "fluidName": "reactor effluent (oil and hydrogen)",
+   "from": "CS-1502-B",
    "to": "H-1501-N1",
    "NPS": 6,
    "cls": "P600",
    "designP": 595,
    "designT": 570,
    "routed": true,
-   "components": 52,
-   "welds": 31,
-   "supports": 10,
-   "lengthFt": 252,
-   "reversed": true,
-   "controlValve": "piped"
+   "components": 28,
+   "welds": 21,
+   "supports": 3,
+   "lengthFt": 92,
+   "tier": 1,
+   "station": "CS-1502"
   },
   {
    "no": "8\"-P600-P-15008",
@@ -273,7 +447,8 @@
    "components": 32,
    "welds": 23,
    "supports": 4,
-   "lengthFt": 163
+   "lengthFt": 163,
+   "tier": 1
   },
   {
    "no": "8\"-P600-P-15009",
@@ -287,10 +462,11 @@
    "designP": 420,
    "designT": 665,
    "routed": true,
-   "components": 37,
-   "welds": 26,
-   "supports": 5,
-   "lengthFt": 168
+   "components": 29,
+   "welds": 18,
+   "supports": 6,
+   "lengthFt": 155,
+   "tier": 1
   },
   {
    "no": "8\"-P600-P-15010",
@@ -304,10 +480,11 @@
    "designP": 415,
    "designT": 615,
    "routed": true,
-   "components": 34,
-   "welds": 23,
-   "supports": 4,
-   "lengthFt": 139
+   "components": 36,
+   "welds": 25,
+   "supports": 6,
+   "lengthFt": 141,
+   "tier": 1
   },
   {
    "no": "6\"-P600-P-15011",
@@ -321,8 +498,8 @@
    "designP": 500,
    "designT": 315,
    "routed": true,
-   "components": 23,
-   "welds": 14,
+   "components": 25,
+   "welds": 16,
    "supports": 1,
    "lengthFt": 81
   },
@@ -338,8 +515,8 @@
    "designP": 125,
    "designT": 160,
    "routed": true,
-   "components": 27,
-   "welds": 19,
+   "components": 29,
+   "welds": 21,
    "supports": 1,
    "lengthFt": 45
   },
@@ -372,10 +549,11 @@
    "designP": 500,
    "designT": 190,
    "routed": true,
-   "components": 22,
-   "welds": 13,
-   "supports": 0,
-   "lengthFt": 88
+   "components": 26,
+   "welds": 17,
+   "supports": 4,
+   "lengthFt": 132,
+   "tier": 1
   },
   {
    "no": "4\"-P600-P-15015",
@@ -391,8 +569,8 @@
    "routed": true,
    "components": 24,
    "welds": 13,
-   "supports": 5,
-   "lengthFt": 90
+   "supports": 4,
+   "lengthFt": 97
   },
   {
    "no": "3\"-P600-P-15016",
@@ -400,17 +578,37 @@
    "fluid": "SW",
    "fluidName": "sour water",
    "from": "D-1502-N3",
+   "to": "CS-1503-A",
+   "NPS": 3,
+   "cls": "P600",
+   "designP": 470,
+   "designT": 160,
+   "routed": true,
+   "components": 41,
+   "welds": 22,
+   "supports": 1,
+   "lengthFt": 50,
+   "station": "CS-1503",
+   "controlValve": "piped"
+  },
+  {
+   "no": "3\"-P600-P-15703",
+   "origin": "control",
+   "fluid": "SW",
+   "fluidName": "sour water",
+   "from": "CS-1503-B",
    "to": "BL-1504-U",
    "NPS": 3,
    "cls": "P600",
    "designP": 470,
    "designT": 160,
    "routed": true,
-   "components": 26,
-   "welds": 19,
-   "supports": 7,
-   "lengthFt": 115,
-   "controlValve": "omitted"
+   "components": 23,
+   "welds": 16,
+   "supports": 3,
+   "lengthFt": 61,
+   "tier": 1,
+   "station": "CS-1503"
   },
   {
    "no": "4\"-P150-P-15017",
@@ -427,7 +625,7 @@
    "components": 27,
    "welds": 18,
    "supports": 4,
-   "lengthFt": 114
+   "lengthFt": 120
   },
   {
    "no": "4\"-P150-P-15018",
@@ -452,18 +650,38 @@
    "fluid": "KE",
    "fluidName": "kerosene",
    "from": "E-1505-N4",
+   "to": "CS-1504-A",
+   "NPS": 4,
+   "cls": "P150",
+   "designP": 75,
+   "designT": 435,
+   "routed": true,
+   "components": 46,
+   "welds": 25,
+   "supports": 3,
+   "lengthFt": 118,
+   "tier": 1,
+   "station": "CS-1504",
+   "controlValve": "piped"
+  },
+  {
+   "no": "4\"-P150-P-15704",
+   "origin": "control",
+   "fluid": "KE",
+   "fluidName": "kerosene",
+   "from": "CS-1504-B",
    "to": "C-1501-N1",
    "NPS": 4,
    "cls": "P150",
    "designP": 75,
    "designT": 435,
    "routed": true,
-   "components": 50,
-   "welds": 27,
-   "supports": 4,
-   "lengthFt": 151,
-   "reversed": true,
-   "controlValve": "piped"
+   "components": 27,
+   "welds": 18,
+   "supports": 3,
+   "lengthFt": 118,
+   "tier": 1,
+   "station": "CS-1504"
   },
   {
    "no": "4\"-P150-P-15020",
@@ -480,7 +698,8 @@
    "components": 38,
    "welds": 29,
    "supports": 3,
-   "lengthFt": 182
+   "lengthFt": 180,
+   "tier": 1
   },
   {
    "no": "3\"-P150-P-15021",
@@ -494,10 +713,11 @@
    "designP": 60,
    "designT": 170,
    "routed": true,
-   "components": 29,
-   "welds": 20,
+   "components": 27,
+   "welds": 18,
    "supports": 7,
-   "lengthFt": 140
+   "lengthFt": 134,
+   "tier": 2
   },
   {
    "no": "3\"-P150-P-15022",
@@ -505,18 +725,38 @@
    "fluid": "HG",
    "fluidName": "hydrocarbon gas",
    "from": "D-1503-N2",
+   "to": "CS-1505-A",
+   "NPS": 3,
+   "cls": "P150",
+   "designP": 55,
+   "designT": 170,
+   "routed": true,
+   "components": 45,
+   "welds": 26,
+   "supports": 7,
+   "lengthFt": 114,
+   "tier": 2,
+   "station": "CS-1505",
+   "controlValve": "piped"
+  },
+  {
+   "no": "3\"-P150-P-15705",
+   "origin": "control",
+   "fluid": "HG",
+   "fluidName": "hydrocarbon gas",
+   "from": "CS-1505-B",
    "to": "BL-1505-U",
    "NPS": 3,
    "cls": "P150",
    "designP": 55,
    "designT": 170,
    "routed": true,
-   "components": 39,
-   "welds": 20,
-   "supports": 12,
-   "lengthFt": 157,
-   "reversed": true,
-   "controlValve": "piped"
+   "components": 22,
+   "welds": 15,
+   "supports": 5,
+   "lengthFt": 85,
+   "tier": 1,
+   "station": "CS-1505"
   },
   {
    "no": "3\"-P150-P-15023",
@@ -532,8 +772,8 @@
    "routed": true,
    "components": 29,
    "welds": 18,
-   "supports": 1,
-   "lengthFt": 37
+   "supports": 2,
+   "lengthFt": 38
   },
   {
    "no": "3\"-P300-P-15024",
@@ -541,35 +781,77 @@
    "fluid": "NA",
    "fluidName": "naphtha",
    "from": "P-1502A-D",
+   "to": "CS-1506-A",
+   "NPS": 3,
+   "cls": "P300",
+   "designP": 155,
+   "designT": 170,
+   "routed": true,
+   "components": 52,
+   "welds": 29,
+   "supports": 7,
+   "lengthFt": 99,
+   "tier": 1,
+   "station": "CS-1506",
+   "controlValve": "piped"
+  },
+  {
+   "no": "3\"-P300-P-15706",
+   "origin": "control",
+   "fluid": "NA",
+   "fluidName": "naphtha",
+   "from": "CS-1506-B",
    "to": "C-1501-N3",
    "NPS": 3,
    "cls": "P300",
    "designP": 155,
    "designT": 170,
    "routed": true,
-   "components": 51,
-   "welds": 26,
-   "supports": 0,
-   "lengthFt": 86,
-   "controlValve": "piped"
+   "components": 30,
+   "welds": 21,
+   "supports": 7,
+   "lengthFt": 142,
+   "tier": 1,
+   "station": "CS-1506"
   },
   {
    "no": "3\"-P300-P-15025",
    "origin": "process",
    "fluid": "NA",
    "fluidName": "naphtha",
-   "from": "tap 3\"-P300-P-15024",
+   "from": "RS-1502-B",
+   "to": "CS-1507-A",
+   "NPS": 3,
+   "cls": "P300",
+   "designP": 155,
+   "designT": 170,
+   "routed": true,
+   "components": 43,
+   "welds": 24,
+   "supports": 9,
+   "lengthFt": 105,
+   "tier": 1,
+   "station": "CS-1507",
+   "controlValve": "piped"
+  },
+  {
+   "no": "3\"-P300-P-15707",
+   "origin": "control",
+   "fluid": "NA",
+   "fluidName": "naphtha",
+   "from": "CS-1507-B",
    "to": "BL-1506-U",
    "NPS": 3,
    "cls": "P300",
    "designP": 155,
    "designT": 170,
    "routed": true,
-   "components": 11,
-   "welds": 8,
-   "supports": 0,
-   "lengthFt": 111,
-   "controlValve": "omitted"
+   "components": 25,
+   "welds": 18,
+   "supports": 2,
+   "lengthFt": 59,
+   "tier": 1,
+   "station": "CS-1507"
   },
   {
    "no": "3\"-P150-P-15026",
@@ -586,7 +868,7 @@
    "components": 28,
    "welds": 17,
    "supports": 1,
-   "lengthFt": 41
+   "lengthFt": 42
   },
   {
    "no": "3\"-P600-P-15027",
@@ -594,16 +876,17 @@
    "fluid": "SW",
    "fluidName": "sour water",
    "from": "P-1504A-D",
-   "to": "tap 3\"-P600-P-15016",
+   "to": "RS-1503-B",
    "NPS": 3,
    "cls": "P600",
    "designP": 470,
    "designT": 170,
    "routed": true,
-   "components": 21,
-   "welds": 14,
-   "supports": 0,
-   "lengthFt": 63
+   "components": 35,
+   "welds": 24,
+   "supports": 6,
+   "lengthFt": 88,
+   "tier": 2
   },
   {
    "no": "6\"-P150-P-15028",
@@ -620,7 +903,7 @@
    "components": 25,
    "welds": 12,
    "supports": 2,
-   "lengthFt": 46
+   "lengthFt": 43
   },
   {
    "no": "4\"-P300-P-15029",
@@ -634,10 +917,10 @@
    "designP": 180,
    "designT": 420,
    "routed": true,
-   "components": 27,
-   "welds": 14,
+   "components": 29,
+   "welds": 16,
    "supports": 3,
-   "lengthFt": 77
+   "lengthFt": 75
   },
   {
    "no": "4\"-P300-P-15030",
@@ -654,7 +937,7 @@
    "components": 23,
    "welds": 12,
    "supports": 1,
-   "lengthFt": 37
+   "lengthFt": 38
   },
   {
    "no": "4\"-P300-P-15031",
@@ -668,10 +951,11 @@
    "designP": 180,
    "designT": 150,
    "routed": true,
-   "components": 29,
-   "welds": 20,
+   "components": 27,
+   "welds": 18,
    "supports": 7,
-   "lengthFt": 152
+   "lengthFt": 144,
+   "tier": 1
   },
   {
    "no": "4\"-P300-P-15032",
@@ -679,18 +963,88 @@
    "fluid": "KE",
    "fluidName": "kerosene",
    "from": "F-1501-N2",
+   "to": "CS-1508-A",
+   "NPS": 4,
+   "cls": "P300",
+   "designP": 180,
+   "designT": 150,
+   "routed": true,
+   "components": 51,
+   "welds": 32,
+   "supports": 7,
+   "lengthFt": 176,
+   "tier": 1,
+   "station": "CS-1508",
+   "controlValve": "piped"
+  },
+  {
+   "no": "4\"-P300-P-15708",
+   "origin": "control",
+   "fluid": "KE",
+   "fluidName": "kerosene",
+   "from": "CS-1508-B",
    "to": "BL-1507-U",
    "NPS": 4,
    "cls": "P300",
    "designP": 180,
    "designT": 150,
    "routed": true,
-   "components": 48,
-   "welds": 29,
-   "supports": 9,
-   "lengthFt": 193,
-   "reversed": true,
-   "controlValve": "piped"
+   "components": 19,
+   "welds": 12,
+   "supports": 1,
+   "lengthFt": 33,
+   "station": "CS-1508"
+  },
+  {
+   "no": "3\"-P600-P-15601",
+   "origin": "root",
+   "fluid": "HY",
+   "fluidName": "hydrogen-rich gas",
+   "from": "RS-1501-A",
+   "to": "tap 3\"-P600-P-15004",
+   "NPS": 3,
+   "cls": "P600",
+   "designP": 380,
+   "designT": 160,
+   "routed": true,
+   "components": 11,
+   "welds": 8,
+   "supports": 0,
+   "lengthFt": 7
+  },
+  {
+   "no": "3\"-P300-P-15602",
+   "origin": "root",
+   "fluid": "NA",
+   "fluidName": "naphtha",
+   "from": "tap 3\"-P300-P-15024",
+   "to": "RS-1502-A",
+   "NPS": 3,
+   "cls": "P300",
+   "designP": 155,
+   "designT": 170,
+   "routed": true,
+   "components": 7,
+   "welds": 4,
+   "supports": 0,
+   "lengthFt": 1
+  },
+  {
+   "no": "3\"-P600-P-15603",
+   "origin": "root",
+   "fluid": "SW",
+   "fluidName": "sour water",
+   "from": "RS-1503-A",
+   "to": "tap 3\"-P600-P-15016",
+   "NPS": 3,
+   "cls": "P600",
+   "designP": 470,
+   "designT": 170,
+   "routed": true,
+   "components": 15,
+   "welds": 12,
+   "supports": 1,
+   "lengthFt": 31
   },
   {
    "no": "6\"-P150-P-15301",
@@ -738,10 +1092,10 @@
    "designP": 375,
    "designT": 160,
    "routed": true,
-   "components": 7,
-   "welds": 4,
+   "components": 13,
+   "welds": 10,
    "supports": 0,
-   "lengthFt": 11
+   "lengthFt": 25
   },
   {
    "no": "3\"-P600-P-15304",
@@ -755,10 +1109,10 @@
    "designP": 515,
    "designT": 220,
    "routed": true,
-   "components": 7,
-   "welds": 4,
+   "components": 11,
+   "welds": 8,
    "supports": 0,
-   "lengthFt": 11
+   "lengthFt": 17
   },
   {
    "no": "3\"-P150-W-15305",
@@ -772,10 +1126,10 @@
    "designP": 125,
    "designT": 160,
    "routed": true,
-   "components": 17,
-   "welds": 13,
+   "components": 19,
+   "welds": 15,
    "supports": 0,
-   "lengthFt": 7
+   "lengthFt": 9
   },
   {
    "no": "3\"-P600-W-15306",
@@ -809,7 +1163,7 @@
    "components": 15,
    "welds": 8,
    "supports": 0,
-   "lengthFt": 4
+   "lengthFt": 7
   },
   {
    "no": "3\"-P300-P-15308",
@@ -823,10 +1177,10 @@
    "designP": 155,
    "designT": 170,
    "routed": true,
-   "components": 18,
-   "welds": 11,
+   "components": 14,
+   "welds": 7,
    "supports": 0,
-   "lengthFt": 8
+   "lengthFt": 6
   },
   {
    "no": "3\"-P150-P-15309",
@@ -976,10 +1330,10 @@
    "designP": 85,
    "designT": 150,
    "routed": true,
-   "components": 33,
-   "welds": 20,
-   "supports": 1,
-   "lengthFt": 82
+   "components": 34,
+   "welds": 21,
+   "supports": 3,
+   "lengthFt": 83
   },
   {
    "no": "4\"-P150-CWR-15502",
@@ -993,10 +1347,10 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 27,
-   "welds": 16,
+   "components": 32,
+   "welds": 21,
    "supports": 0,
-   "lengthFt": 70
+   "lengthFt": 74
   },
   {
    "no": "4\"-P150-CWS-15503",
@@ -1013,7 +1367,7 @@
    "components": 31,
    "welds": 20,
    "supports": 2,
-   "lengthFt": 84
+   "lengthFt": 85
   },
   {
    "no": "4\"-P150-CWR-15504",
@@ -1027,10 +1381,10 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 32,
-   "welds": 21,
+   "components": 31,
+   "welds": 20,
    "supports": 0,
-   "lengthFt": 72
+   "lengthFt": 73
   },
   {
    "no": "3\"-P300-LS-15505",
@@ -1044,10 +1398,10 @@
    "designP": 175,
    "designT": 450,
    "routed": true,
-   "components": 21,
-   "welds": 14,
+   "components": 22,
+   "welds": 15,
    "supports": 0,
-   "lengthFt": 49
+   "lengthFt": 51
   },
   {
    "no": "2\"-P150-P-15506",
@@ -1070,30 +1424,30 @@
  "counts": {
   "components": {
    "cap": 8,
-   "elbow": 261,
-   "flange": 173,
-   "gasket": 280,
+   "elbow": 347,
+   "flange": 207,
+   "gasket": 336,
    "olet": 2,
-   "pipe": 408,
-   "reducer": 32,
+   "pipe": 505,
+   "reducer": 36,
    "spade": 30,
    "spectacle": 10,
    "tee": 21,
-   "valve": 115
+   "valve": 143
   },
   "welds": {
-   "BW, field": 115,
-   "BW, shop": 697,
+   "BW, field": 159,
+   "BW, shop": 857,
    "FW, shop": 26
   },
   "supports": {
-   "anchor": 16,
-   "guide": 38,
+   "anchor": 26,
+   "guide": 45,
    "hanger": 33,
-   "shoe": 47,
-   "stanchion": 10,
-   "trapeze": 2,
-   "trunnion": 12
+   "shoe": 51,
+   "stanchion": 12,
+   "trapeze": 5,
+   "trunnion": 29
   }
  },
  "notes": []
