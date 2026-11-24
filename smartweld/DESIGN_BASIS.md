@@ -71,6 +71,9 @@ and no copyright infringement anywhere in the process (PROVENANCE P-57, P-58).
 | `K-5`    | Density of water                 | 62.4 lb/ft³                 | Physical property (at ordinary temperature). Later stages.    |
 | `K-6`    | Geometry                         | π, √2, √3, cos 30° = √3/2   | Mathematics.                                                  |
 | `K-7`    | Density of normal-weight concrete| 150 lb/ft³ (0.08681 lb/in³) | Physical property of stone-aggregate concrete, bars included (≈2.4 g/cm³). Civil catalogue (§65). |
+| `K-8`    | Barrel (petroleum)               | 42 gallons of 231 in³ = 9,702 in³ = 5.6146 ft³ | Unit definition. Plant 3 (§74). |
+| `K-9`    | Molar volume of an ideal gas     | 379.5 ft³ per lb-mol at 60 °F and 14.696 psi | Ideal gas law (R = 10.732 psi·ft³/lb-mol·°R). "Standard cubic feet" in §74–75 are at these conditions. |
+| `K-10`   | Standard atmosphere              | 14.696 psi (760 mm of mercury) | Physical constant. Gauge pressures in §74–75 are above it. |
 
 ## 2. Units, precision and frames
 
@@ -3377,3 +3380,500 @@ no code, table or published detail, for the owner to tune (PROVENANCE P-78).
   centres (3 in of concrete between), 3 in of concrete outside the outer conduits; class A;
   four `#4` longitudinals at the corners with `#3` ties at 24 in; the conduits 6 in proud at
   each end. Reason: encasing cables' conduits protects them under paving and traffic.
+
+## 74. Plant 3, the coastal refinery: scope, sources and process configuration (`SW-REF-*`)
+
+Written 2026-11-24 at the owner's instruction: a full-scale refinery model about ten times plant 2,
+"based on real life petroleum engineering expertise and common industry knowledge", at real scale
+on real-life topography, in which every component contributes to the refining process and each
+section is distinguished by its process; pressure-boundary vessels and piping carry their code
+records; "never use any external references or infringe on anyone else's existing design"; "the
+model you design should exist nowhere in real life". Three decisions were put to the owner before
+anything was written (PROVENANCE P-79): the code layer is applied from the assistant's own
+knowledge and flagged (§76); the refinery is of 60,000 barrels a day without a coker; it is set on
+the Atlantic coast of New Brunswick.
+
+What does not change: section 0 governs every dimension of every part. No published dimension
+table, standard or catalogue shapes any geometry, and nothing was looked up for this plant.
+
+What is new, and is kept apart from geometry:
+
+- **Process knowledge** (this section and §75). How a refinery is configured, what each unit does,
+  what conditions it runs at and how equipment is sized for a duty is general petroleum-refining
+  engineering knowledge. It is used here from the assistant's own understanding, as the owner
+  asked. The crude, the yields, the operating conditions and the sizing figures are round
+  demonstration values chosen by SmartWeld with the reasoning given; no handbook, licensor's
+  design, published flow scheme, assay or correlation was opened, and none is reproduced. They
+  size a demonstration model and are for the owner to tune; they are not a process design to
+  build from.
+- **The code layer** (§76). Names of codes, report designations, fluid service categories and
+  registration numbers on pressure equipment and piping, recalled from general knowledge at the
+  owner's instruction and flagged as such on every record.
+
+- `SW-REF-1` Identity. Plant 3, id `R3`, "SmartWeld coastal refinery". It is invented: its crude,
+  yields, equipment list, plot and ground exist nowhere. It is not a model, copy or adaptation of
+  any existing refinery, licensed process or published flow scheme. Process steps are named by
+  what they do, never by a licensor's or product's name. Its site is not a real place and takes
+  no real place's name, map or survey; New Brunswick is the jurisdiction its code-layer labels
+  are written for, and the kind of coast its terrain is drawn after.
+- `SW-REF-2` Separation from plants 1 and 2. Plant 3's code is under `src/refinery/`, its tools
+  are `tools/refinery-*.ts` and its files are written under `public/refinery/`, `docs/` and
+  `screenshots/refinery/`. It is not in the plant list (`PLANTS`), in `public/plants/index.json`
+  or in any designer package. It uses the catalogue, the router and the piping generator as they
+  are; no file under `src/generator/` or `src/exchange/` is changed for it, and plants 1 and 2
+  regenerate byte for byte. Reason: the owner's instruction that nothing done here may affect
+  the isometric generator or plant 2.
+- `SW-REF-3` Tags. Equipment: `{letter}-{unit, two digits}{sequence, two digits}` with a letter
+  suffix for installed spares, e.g. `P-1104B`. Letters: `C` column, `V` vertical vessel, `D`
+  horizontal drum, `R` reactor, `E` shell-and-tube exchanger, `A` air cooler, `H` fired heater,
+  `B` boiler, `P` pump, `K` compressor or blower, `T` storage tank, `S` sphere or bullet, `F`
+  filter, `J` ejector, `X` package or special item. Line numbers by SW-LL-1 with the sequence
+  = unit × 1000 + a running number, e.g. `8"-P300-P-11017`. Reason: four-digit tags and
+  five-digit sequences cannot be mistaken for those of plants 1 and 2 (SW-PLANT-3).
+- `SW-REF-4` Units and design rates (barrels per stream day unless stated):
+
+  | Unit | Section | Design rate |
+  |---|---|---|
+  | 11 | Crude distillation (atmospheric) | 60,000 |
+  | 12 | Vacuum distillation | 25,500 |
+  | 13 | Naphtha hydrotreater and splitter | 12,500 |
+  | 14 | Catalytic reformer, fixed bed, with hydrogen purification | 9,100 |
+  | 15 | Kerosene hydrotreater | 6,300 |
+  | 16 | Diesel hydrotreater | 12,300 |
+  | 17 | Fluid catalytic cracker with gas concentration | 17,700 |
+  | 18 | Sulfur block: amine regeneration, sour water stripping, sulfur recovery | 45 long tons of sulfur a day |
+  | 19 | Utilities: steam, boiler feed water, cooling water, air, nitrogen, fuel gas | |
+  | 20, 21 | Tank farm: crude; intermediates, components and products; liquefied gas | |
+  | 22 | Marine terminal | |
+  | 23 | Truck loading | |
+  | 24 | Wastewater treatment | |
+  | 25 | Flare | |
+  | 26 | Fire water | |
+  | 27 | Buildings, substations and site works | |
+
+  Reason: this is the smallest set that turns a medium sour crude into finished gasoline, jet,
+  diesel, liquefied gas, fuel oil, asphalt and sulfur: distillation separates, hydrotreating
+  removes sulfur, reforming and cracking make gasoline from naphtha and gas oil, and the sulfur
+  block turns the removed sulfur into a product. With no coker the vacuum residue leaves as
+  heavy fuel oil and asphalt, which a coastal plant ships by sea.
+- `SW-REF-5` Design crude: 60,000 barrels a day of an invented medium sour crude given as nine
+  cuts. The crude's own gravity and sulfur follow from the cuts (about 31.8 °API, 1.6 % sulfur by
+  weight). Mass = volume × specific gravity × K-5; API gravity = 141.5 / SG − 131.5 is a unit
+  definition.
+
+  | Cut | Boiling range, °F | Volume % | Specific gravity | Sulfur, weight % |
+  |---|---|---|---|---|
+  | Light ends (four carbons and lighter) | below 90 | 1.8 | 0.560 | 0 |
+  | Light naphtha | 90–180 | 5.6 | 0.670 | 0.02 |
+  | Heavy naphtha | 180–360 | 15.2 | 0.755 | 0.05 |
+  | Kerosene | 360–480 | 10.4 | 0.805 | 0.25 |
+  | Diesel | 480–650 | 18.6 | 0.850 | 1.05 |
+  | Atmospheric gas oil | 650–720 | 6.0 | 0.885 | 1.60 |
+  | Light vacuum gas oil | 720–850 | 6.4 | 0.905 | 1.90 |
+  | Heavy vacuum gas oil | 850–1,020 | 17.0 | 0.935 | 2.20 |
+  | Vacuum residue | above 1,020 | 19.0 | 1.012 | 3.40 |
+
+  The light ends are taken as 20 % two carbons and lighter, 30 % three carbons and 50 % four
+  carbons by mass.
+- `SW-REF-6` Unit yields, as mass per cent of each unit's fresh feed, so that every balance closes
+  by construction; volumes follow from the specific gravities given.
+  - Crude and vacuum units: the cuts of SW-REF-5. The atmospheric residue is the three heaviest.
+  - Naphtha hydrotreater (feed: light and heavy naphtha, and the wild naphtha of units 15 and
+    16): hydrogen taken up 0.10; sour gas 0.60; the rest leaves as light and heavy naphtha in the
+    proportion they entered, split by the splitter.
+  - Reformer (feed: hydrotreated heavy naphtha): hydrogen 2.1, two carbons and lighter 2.4, three
+    carbons 3.3, four carbons 4.4, reformate 87.8 at SG 0.795.
+  - Kerosene hydrotreater: hydrogen taken up 0.25; treated kerosene 99.20, wild naphtha 0.45,
+    sour gas 0.60.
+  - Diesel hydrotreater (feed: diesel and a third of the light cycle oil): hydrogen taken up
+    0.65; diesel 97.90, wild naphtha 1.20, sour gas 1.55.
+  - Fluid catalytic cracker (feed: atmospheric and vacuum gas oils): dry gas 4.0, three carbons
+    5.3 (SG 0.515), four carbons 9.9 (SG 0.585), gasoline 47.6 (SG 0.750), light cycle oil 19.0
+    (SG 0.950), slurry oil 8.8 (SG 1.070), coke 5.4, burned in the regenerator.
+  - Sulfur recovery: 96 % of the hydrogen sulfide fed leaves as liquid sulfur.
+  Reason: these are ordinary yields for such units on such feeds, rounded; fixing them by mass
+  makes the balance exact and leaves volumes to follow.
+- `SW-REF-7` Hydrogen and sulfur. Hydrogen made by the reformer is the plant's only supply: the
+  naphtha and kerosene hydrotreaters take reformer net gas as it comes, the diesel hydrotreater
+  takes hydrogen purified by pressure swing adsorption (87 % recovered), and the balance must
+  show a surplus, which goes to fuel gas. Two thirds of the light cycle oil is not hydrotreated
+  but cuts the vacuum residue to fuel oil viscosity. Sulfur removed as hydrogen sulfide: all of
+  the naphtha's, 95 % of the kerosene's, 99 % of the diesel hydrotreater feed's and 40 % of the
+  cracker feed's (the rest of the cracker's leaves in its liquid products and, as oxides, in the
+  regenerator flue gas, which is scrubbed); sour water stripper gas adds 100 lb/h. Reason: a
+  plant of this size without a cracked-stock hydrotreater can live on its reformer's hydrogen;
+  the model checks that it does rather than assuming it.
+- `SW-REF-8` Product routes. Liquefied gas: three-carbon and four-carbon streams to pressure
+  storage. Gasoline: light naphtha, reformate, cracked gasoline and butane, blended. Jet:
+  treated kerosene. Diesel: hydrotreated diesel. Heavy fuel oil and asphalt: vacuum residue,
+  with slurry oil and light cycle oil as cutter for the fuel oil. Fuel gas: the dry gases,
+  amine-treated, burned in the plant's heaters and boilers, with purchased gas making up the
+  balance at the boilers. Coke on the cracking catalyst is burned in the regenerator and
+  raises steam in the flue gas cooler.
+- `SW-REF-9` Storage (days of the stream's rate; SmartWeld's own figures): crude 14 (a tanker's
+  parcel and more); unit feeds held between units 3; gasoline components 4; finished products
+  10; heavy fuel oil 12 and asphalt 20 (seasonal lifting); liquefied gas 5; slop 2 % of crude
+  for 5 days. Tank count and sizes follow by SW-PRC-13.
+- `SW-REF-10` Process scheme of each unit. Every equipment item in the model has a duty in one
+  of these schemes; the list, with tags, duties and conditions, is drawing data in
+  `src/refinery/` and is printed in `docs/REFINERY-PROCESS.md`. Pressures are gauge.
+  - **11 Crude distillation.** Crude at 60 °F is pumped to 300 psi through a cold exchanger
+    train (against top pumparound, kerosene, diesel and diesel pumparound) to 270 °F, washed in
+    a desalter at 150 psi, boosted, heated in a first hot train (against gas oil and the bottom
+    pumparound) to 400 °F, flashed in a preflash drum whose vapour goes straight to the column,
+    pumped through a second hot train (against vacuum gas oil pumparound and vacuum residue
+    from unit 12) to 520 °F and through the crude heater to 680 °F. The atmospheric column
+    (flash zone 670 °F and 22 psi; top 250 °F and 15 psi) has three pumparounds and three side
+    draws, each steam-stripped in a section of a stacked side stripper. Overhead is condensed
+    by air and trim coolers to 100 °F in an accumulator with a water boot: reflux returns,
+    naphtha goes to unit 13, sour water to unit 18, gas to the unit 17 wet gas compressor.
+    Kerosene and diesel are cooled and sent to units 15 and 16; gas oil goes hot to unit 17;
+    residue goes hot, at 660 °F, to the vacuum heater.
+  - **12 Vacuum distillation.** Residue is heated to 750 °F and flashed at 30 mm of mercury in
+    a swaged column (stripping section, wide flash and wash zone, narrower top). Light and heavy
+    vacuum gas oil pumparounds give their heat to crude preheat and steam generation; the gas
+    oils go to unit 17. Vacuum residue is quenched, pumped through crude preheat and coolers and
+    sent hot to fuel oil and asphalt tanks. A three-stage steam ejector set with surface
+    condensers holds the vacuum; its hotwell separates slop oil and sour water, and its gas is
+    burned in the vacuum heater.
+  - **13 Naphtha hydrotreater and splitter.** Naphtha from a surge drum is pumped to 500 psi,
+    joined by hydrogen-rich gas, heated against reactor effluent and in a charge heater to
+    600 °F, and passed through one reactor bed. Effluent is cooled to 100 °F; a separator at
+    420 psi returns gas through a recycle compressor; the liquid is stripped in a reboiled
+    stripper (sour gas to amine treating) and split into light naphtha (to gasoline blending)
+    and heavy naphtha (to unit 14).
+  - **14 Catalytic reformer.** Heavy naphtha and recycle gas are heated against effluent and
+    passed through three reactors at 950 °F and 300 psi with a fired heater ahead of each (the
+    reactions absorb heat). Effluent is cooled to 100 °F; a separator at 250 psi returns recycle
+    gas through a turbine-driven compressor; net gas is boosted to 550 psi for the
+    hydrotreaters and a four-bed pressure swing adsorption unit; the liquid is stabilised in a
+    debutaniser (liquefied gas and fuel gas overhead, reformate bottoms). The heaters' flue gas
+    raises steam in a convection section with a steam drum.
+  - **15 Kerosene hydrotreater.** As unit 13 at 500 psi and 600 °F with one reactor, a steam
+    stripper and a product coalescer; treated kerosene to jet storage.
+  - **16 Diesel hydrotreater.** Feed is filtered, pumped to 1,000 psi, heated against effluent
+    and in a charge heater to 650 °F and passed through a two-bed reactor with hydrogen quench
+    between the beds, at 900 psi. Effluent is cooled, washed and separated at 850 psi; recycle
+    gas is scrubbed with amine in a high-pressure absorber and recompressed; the liquid is
+    flashed, steam-stripped, dried and cooled to storage.
+  - **17 Fluid catalytic cracker.** Gas oil from a surge drum is preheated to 450 °F against
+    the main column's pumparounds and cracked on hot catalyst in a riser at 980 °F and 30 psi.
+    Spent catalyst is steam-stripped and regenerated by burning its coke with air from a main
+    air blower at 1,300 °F; fresh and equilibrium catalyst stand in hoppers. Regenerator flue
+    gas raises steam in a flue gas cooler and is washed in a wet scrubber before its stack.
+    Reactor vapour is quenched and fractionated in the main column into slurry oil, light cycle
+    oil (steam-stripped), and an overhead of gasoline and gas. A two-stage turbine-driven wet
+    gas compressor lifts the gas to 200 psi; a primary absorber, a sponge absorber, a stripper,
+    a debutaniser and a depropaniser separate fuel gas, three-carbon and four-carbon liquefied
+    gas and stabilised gasoline; fuel gas and liquefied gas are amine-treated and the gasoline
+    and liquefied gas caustic-washed.
+  - **18 Sulfur block.** Rich amine from the absorbers of units 13, 16 and 17 is flashed,
+    heated against lean amine and regenerated in a steam-reboiled column; lean amine is cooled,
+    filtered and returned. Sour water from every unit is collected, heated and steam-stripped;
+    stripped water returns to the desalter. Acid gas from both goes to a sulfur recovery train:
+    a reaction furnace with waste heat boiler, then two catalytic stages, each of reheater,
+    converter and sulfur condenser, with a final condenser; liquid sulfur drains through seal
+    pots to a heated pit and is loaded to trucks; tail gas is burned in an incinerator with a
+    stack. A tail gas treating unit is not modeled (stated).
+  - **19 Utilities.** Two water-tube boilers raise 600 psi steam; let-down gives 150 psi and
+    50 psi steam. Condensate and demineralised make-up are deaerated and pumped as boiler feed
+    water. A four-cell cooling tower and its circulating pumps serve every water cooler.
+    Three air compressors with dryers and receivers give instrument and plant air; nitrogen is
+    held as liquid and vaporised. A fuel gas drum mixes the plant's gases with purchased gas.
+  - **20, 21 Tank farm.** Floating-roof tanks for crude, naphthas and gasolines; cone-roof
+    tanks for kerosene, diesel, gas oils and fuel oils, the black oils heated; spheres and
+    bullets for liquefied gas; transfer, blending and shipping pumps on slabs outside the dikes.
+  - **22 Marine terminal.** A trestle carries the lines to a berth in deep water with loading
+    arms for crude discharge and product loading, dolphins and walkways.
+  - **23–27.** Truck loading racks; a wastewater plant (separator basin, equalisation, flotation,
+    biological treatment and clarifier) at the low point of the site; a derrick-supported flare
+    with knock-out and seal drums, remote; fire water tanks and pumps with a ring main; control
+    building, substations, workshops, stores, laboratory and offices.
+- `SW-REF-11` Out of scope, stated: instrumentation and control (the owner's instruction: it is
+  shown on other drawings); electrical cable and trays; catalyst and chemical handling beyond
+  the hoppers and tanks named; tail gas treating; small-bore piping beyond the vent, drain,
+  instrument-connection and sample stubs of SW-LL-*; underground sewers (the ring main and
+  sewers are noted, not drawn).
+
+## 75. Plant 3: process conditions and sizing for duty (`SW-PRC-*`)
+
+These rules turn the process of §74 into sizes: of lines, vessels, exchangers, heaters, pumps,
+compressors and tanks. They are engineering heuristics written from general process-engineering
+understanding, each with the physical reason it rests on, as round demonstration figures. No
+handbook, standard, vendor table or correlation was opened for them and none was reproduced; where
+a figure coincides with common practice it was not checked against anything. They are for the
+owner to tune from experience (PROVENANCE P-79). Once a size is fixed, the part itself is built by
+the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which are unchanged.
+
+- `SW-PRC-1` Fluids. Every stream is one of the plant's fluids, each with a name, a phase at its
+  conditions, a density (liquids by specific gravity, gases by molecular weight through the ideal
+  gas law, K-9), a specific heat, and a hazard: flammable; toxic (bearing hydrogen sulfide in
+  quantity); harmful on contact (amine, caustic, liquid sulfur, steam and hot condensate); or
+  benign (water, air, nitrogen). The list is drawing data in `src/refinery/fluids.ts`. Reason:
+  density sizes the line, specific heat the exchanger, and the hazard sets the line class and
+  the code layer's fluid service (§76).
+- `SW-PRC-2` Design conditions. Design pressure = the larger of 1.1 × the highest operating
+  pressure and that pressure + 25 psi, rounded up to 5 psi, and never below 50 psi; a pump's
+  discharge system is designed for the pump blocked in: its suction design pressure plus 1.25 ×
+  its differential. Equipment that runs under vacuum is designed for full vacuum as well.
+  Design temperature = the highest operating temperature + 50 °F, never below 150 °F. Reason: a
+  relief valve set at the design pressure must stay shut in normal running, which wants a
+  margin above the highest operating pressure, a tenth of it or 25 psi when the pressure is
+  low; a centrifugal pump blocked in makes about a quarter more head than at its rating; metal
+  runs hotter than the fluid in upsets.
+- `SW-PRC-3` Pressure class of equipment nozzles and lines: the smallest SmartWeld class
+  (SW-PIPE-1) whose pressure is at least the design pressure, and one class higher where the
+  design temperature is above 700 °F. Reason: SmartWeld's wall and flange rules carry no
+  temperature term; steel has lost a good part of its strength by then, and a class step
+  restores the margin.
+- `SW-PRC-4` Line size: the smallest size, from 3/4, 1, 1-1/2, 2, 3, 4, 6, 8, 10, 12, 14, 16, 18,
+  20, 24, 30, 36, 42 and 48 in of SW-PIPE-6, whose bore keeps the flowing velocity within:
+  liquid to a pump suction or flowing by gravity, 4 ft/s; other liquid, 8 ft/s; gas, vapour,
+  steam and mixed phase, ρ v² ≤ 4,000 lb/ft·s² on the flowing density and v ≤ 200 ft/s.
+  Process lines are 2 in at least. Reason: liquid velocity sets friction loss and wear, and a
+  slow suction keeps a pump from cavitating; in gas the momentum ρ v² is what shakes and
+  erodes a line, whatever the pressure.
+- `SW-PRC-5` Pumps. Rated flow 1.1 × normal; head = pressure rise × 144 / (SG × K-5); hydraulic
+  power = flow × head × density; shaft power = hydraulic / 0.70 (0.55 below 100 gallons a
+  minute); motor the next rating in the series 1, 1.5, 2, 3, 5, 7.5 × a power of ten
+  horsepower. Impeller diameter from the head at two-pole speed (3,560 rpm at 60 hertz): tip
+  speed u = √(g H / 0.5), D = 60 u / (π N); four-pole speed where that passes 16 in; stages of
+  equal head where it would still pass 24 in. Motor frame diameter = 10 in × (horsepower /
+  10)^(1/3). Every process pump has an installed spare. Suction and discharge nozzles are one
+  size below their lines (SW-LL-7). Reason: an impeller's head is about half its tip speed
+  squared over g; torque sets a motor's size and grows with its volume.
+- `SW-PRC-6` Drums. Liquid hold-up at half full: feed surge drums 15 minutes of feed; reflux
+  accumulators 5 minutes of reflux plus product; separators and flash drums 5 minutes of liquid.
+  Horizontal, length three diameters, diameter in 6 in steps and 36 in at least, unless the
+  vapour sets it: vapour space velocity at most u = 0.18 √((ρ_L − ρ_V) / ρ_V) ft/s over half the
+  cross-section. Knock-out drums are sized on that velocity alone. Reason: hold-up gives the
+  operator time; the velocity is the settling speed of a 0.2 mm drop in turbulent drag
+  (drag coefficient 0.44) taken at 70 %.
+- `SW-PRC-7` Columns. Diameter from the largest vapour load in each section at
+  u = 0.25 √((ρ_L − ρ_V) / ρ_V) ft/s over 85 % of the cross-section (the rest is downcomers), in
+  6 in steps. Height: the stated number of trays at 24 in, plus 12 ft for the sump and feed
+  zone and 8 ft above the top tray; skirt 15 ft where the bottoms feed a pump. Tray counts are
+  stated per column. Platforms, ladders and manways by SW-EQC-32. Reason: the velocity is that
+  of a 0.5 mm spray drop at about 60 % of its settling speed, which keeps liquid from being
+  carried up to the tray above; the skirt gives the bottoms pump its suction head.
+- `SW-PRC-8` Shell-and-tube exchangers. Duty Q = flow × specific heat × temperature change (plus
+  latent heat where stated); surface A = Q / (0.9 U ΔT_lm), with U in Btu/h·ft²·°F by the pair of
+  fluids: heavy oil both sides 40; light oil to oil, and gas to gas at pressure, 60; oil to
+  cooling water 70; condensing vapour to water 90; steam to oil 100; amine to amine 100; steam
+  to water 250. Tubes 3/4 in on the bundle rule of SW-EQC-30, 20 ft long; shells from 24 to
+  60 in inside diameter in 6 in steps; the fewest shells, then the smallest diameter, that give
+  the surface. Reason: heat flows in proportion to surface, temperature difference and how
+  readily the two films pass it, which thick oils do poorly and condensing steam does well.
+- `SW-PRC-9` Air coolers. A bay is 14 ft wide with tubes 32 ft long and two fans, four rows of
+  1 in tubes at 2.5 in centres; duty per bay = 80 Btu/h·ft²·°F × its bare tube surface × ΔT_lm
+  against air rising from 90 °F to 130 °F; bays = duty / that, rounded up. Process is cooled
+  by air to 140 °F and by water below that. Bays stand over the unit's pipe rack. Reason:
+  air is free but cannot cool below its own temperature plus an approach; fins raise the
+  outside surface so the bare-tube coefficient is as good as a water cooler's.
+- `SW-PRC-10` Fired heaters. Fired duty = absorbed duty / 0.85. The radiant section absorbs 70 %
+  of the duty at 10,000 Btu/h per ft² of tube surface, on 6 in tubes at 12 in centres in one
+  row along each long wall (π/2 ft² of tube per ft² of wall). Above 15 million Btu/h absorbed
+  the heater is a cabin (SW-EQC-53): width 16 ft to 50 million Btu/h and 20 ft above, radiant
+  height twice the width, length = wall surface needed / (2 × height), 20 ft at least; at or
+  below 15 million it is a vertical cylinder (SW-EQC-14) of height 2.5 diameters whose shell
+  gives that wall surface. Reason: tube metal sets how much heat a square foot may take, and
+  the firebox is as big as the tube surface it must hold.
+- `SW-PRC-11` Reactors. Catalyst volume = liquid feed volume an hour / space velocity: naphtha
+  hydrotreater 6, kerosene 3, diesel 1.2 (two beds), reformer 1.6 over three reactors in the
+  ratio 2 : 3 : 5. A vessel's inside diameter is the 6 in step at which its beds stand three
+  diameters high in all (reformer reactors two); tangent length = bed height + one diameter
+  for distribution and collection. Reason: the harder the sulfur is to remove, the longer the
+  oil must stay on the catalyst; reforming's first reactions are fast, so the catalyst is
+  weighted to the last reactor.
+- `SW-PRC-12` Compressors and blowers. Gas power = moles × R × T₁ × k/(k − 1) × (r^((k−1)/k) − 1)
+  / 0.75, k = 1.3 for hydrocarbon gas and 1.4 for hydrogen-rich gas and air; one stage up to a
+  pressure ratio of 3.5, more of equal ratio beyond. Driver by SW-PRC-5's motor series, or a
+  steam turbine where stated (wheel diameter 12 in × (horsepower / 100)^(1/3)). Reason: the
+  work of compression from the gas law; a stage's temperature rise limits its ratio.
+- `SW-PRC-13` Storage. Working volume = days of SW-REF-9 × the stream's rate / 0.85 (heel and
+  freeboard), shared by the stated number of tanks. Shell height 48 ft (six courses of 8 ft,
+  SW-EQC-44), less where the diameter would fall below the height, when tank is as tall as it
+  is wide; diameter in 5 ft steps, 180 ft at most. Floating roof for stocks that boil below
+  350 °F; cone roof for the rest; black oils heated. Liquefied gas in spheres of 60 ft at most
+  (SW-EQC-48). Dikes by SW-CIV-14.
+- `SW-PRC-14` Wall of a pressure vessel: t = P R / S + corrosion allowance, in 1/8 in steps, not
+  below the larger of 3/8 in and inside diameter / 250; S = 18,000 psi (half the yield of
+  Grade 36 plate) up to 650 °F design temperature, falling in a straight line to half that at
+  1,000 °F; corrosion allowance 1/8 in. Vessels designed for vacuum are at least inside
+  diameter / 150 thick. Heads take the shell's thickness. Reason: thin-wall hoop stress with
+  a factor of two on yield, as SW-PIPE-3; steel keeps most of its strength to about 650 °F and
+  about half near 1,000 °F; a thin large shell must still hold its shape when lifted and under
+  external pressure.
+- `SW-PRC-15` Utility and safety connections on equipment: water coolers take cooling water
+  supply and return; steam heaters and reboilers take steam and return condensate; every pump
+  has a seal flush connection; every pressure vessel has a relief valve to the flare header, a
+  vent, a drain and two instrument connections (SW-LL-3, SW-LL-6); hose stations for steam,
+  air, water and nitrogen stand along each unit's rack. Reason: as plants 1 and 2.
+
+## 76. Plant 3: the code layer (`SW-REG-*`) — recalled from general knowledge, flagged, for the owner to verify
+
+The owner's instruction of 2026-11-24: pressure vessels carry a manufacturer's data report under
+ASME Section VIII and Section I; pressure piping carries its registration (CRN) and its fluid
+service under ASME B31.3 (Category D, Normal, Category M). This is the content of published codes
+and of a regulator's practice, which section 0 excludes from every dimension. The owner chose,
+when asked (PROVENANCE P-79), to have it applied from the assistant's own knowledge and flagged.
+
+So this section is different in kind from every other in this document, and is kept apart:
+
+- Everything in it is the assistant's recollection of general industry practice, written in its
+  own words. No code, form, interpretation, regulation, regulator's publication or registry was
+  opened, quoted or checked. It may be wrong, incomplete or out of date.
+- It sets labels, classifications and record fields on demonstration data. It shapes no
+  geometry: no dimension, thickness, weight or position anywhere in the model comes from it.
+  Sizes remain SmartWeld's (§75), so a record may name a code while its thickness is SmartWeld's
+  own figure; the record says so.
+- Every record it produces is marked DEMONSTRATION, carries `"source": "recalled"` on each
+  code-derived field, and is not a manufacturer's data report, a registration, a certificate
+  or an engineering document. No form of any code body is reproduced: the records are in
+  SmartWeld's own layout and words.
+- The owner, who holds the codes, verifies each item below before relying on it (`SW-REG-0`).
+
+- `SW-REG-1` Which code an item is labelled with.
+  - Pressure vessels — columns, drums, reactors, the shells and channels of exchangers, air
+    cooler headers, filters, adsorber beds, spheres and bullets, the waste heat boiler and
+    condensers of the sulfur unit — "ASME Boiler and Pressure Vessel Code, Section VIII,
+    Division 1".
+  - Power boilers and their pressure parts — the two water-tube boilers with their steam and
+    mud drums and economizers, and the cracker's flue gas cooler with its steam drum —
+    "ASME Boiler and Pressure Vessel Code, Section I".
+  - Piping — all process and utility piping — "ASME B31.3 Process Piping"; the steam and
+    feed water piping from a Section I boiler out to its first stop valves is boiler external
+    piping, labelled "ASME Section I / B31.1".
+  - Storage tanks at atmospheric pressure, fired heater coils, pumps, compressors and
+    structures are outside this layer: they are not labelled and get no record.
+- `SW-REG-2` Report designation named on a record. Section VIII Division 1: `U-1` for a vessel of
+  more than one chamber or one assembled in the field (exchangers, columns, reactors, the
+  cracker's vessels, spheres); `U-1A` for a single-chamber vessel finished in the shop (drums,
+  filters, small vessels). Section I: `P-3` for a water-tube boiler unit, its drums listed on
+  it and carrying `P-4` as parts; `P-4A` for the boiler external piping.
+- `SW-REG-3` A pressure equipment record carries the content such a report carries, in
+  SmartWeld's layout: tag and service; a fictional fabricator ("Demonstration Fabricator A"
+  to "F", no real company), serial number and year; code and report designation; registration
+  number (SW-REG-6); maximum allowable working pressure at its temperature (the design pressure
+  and temperature of SW-PRC-2); minimum design metal temperature, −20 °F unless the service is
+  colder; test pressure; corrosion allowance; shell and head material, thickness, diameter and
+  length; radiography and joint efficiency; heat treatment after welding; each nozzle with its
+  service, size and class; supports; relief valve tag and set pressure; empty weight and
+  volume; lethal-service flag; and, where a certified report has a manufacturer's and an
+  inspector's signature, the words "demonstration record: not certified, not signed". Values
+  that are the model's own (dimensions, thickness, weight, nozzles, design conditions) are
+  taken from the model; the rest are recalled, by these rules:
+  - test pressure: 1.3 × the working pressure for Section VIII Division 1; 1.5 × for Section I;
+  - radiography: full, joint efficiency 1.0, where the wall is over 1-1/4 in, the service is
+    hydrogen above 600 psi or the vessel is in lethal service; otherwise spot, efficiency 0.85;
+  - heat treatment after welding: where the wall is over 1-1/4 in, or the service is amine,
+    caustic or wet hydrogen sulfide;
+  - lethal service: vessels whose contents are Category M by SW-REG-4.
+- `SW-REG-4` Fluid service of a line, the categories of B31.3 as recalled:
+  - **Category D**: the fluid is not flammable, not toxic and not damaging to human tissue; the
+    design pressure is 150 psi or less; the design temperature is from −20 °F to 366 °F.
+  - **Category M**: a toxic fluid of which a single exposure to a very small quantity, by
+    leakage, can do serious irreversible harm; it is the owner who designates it.
+  - **Normal**: everything else that is not under the high-pressure, high-purity or
+    elevated-temperature provisions, none of which is used in this plant.
+  Designation in this model, by SmartWeld standing in for the owner: Category D for cooling,
+  service, raw, potable and fire water, plant and instrument air, nitrogen, and steam and
+  condensate within the limits above; Category M for acid gas and sour water stripper gas
+  (hydrogen sulfide-rich streams to the sulfur unit); Normal for every hydrocarbon, hydrogen,
+  amine, sour water, caustic, liquid sulfur, boiler feed water, flare, and steam or condensate
+  beyond the Category D limits. Recorded with each category, as recalled: examination of
+  welds (D: visual; Normal: visual and 5 % random radiography of girth butt welds; M: visual and
+  20 % random radiography, with a sensitive leak test); leak test (hydrostatic at 1.5 × design
+  pressure; D may take an initial service test); and for M, no threaded joints (its small bore
+  is socket-welded or butt-welded in this model).
+- `SW-REG-5` Material designations on records are labels, recalled, and change no geometry
+  (SmartWeld's own grades remain the basis of every wall): carbon steel plate `SA-516-70`,
+  pipe `A106-B`, fittings `A234-WPB`, forgings and flanges `A105`, studs `A193-B7` with
+  `A194-2H` nuts, exchanger tubes `SA-179`; for hot hydrogen service (reactor circuits of units
+  13 to 16) plate `SA-387-11` and pipe `A335-P11`; for hot sulfur-bearing oil above 550 °F
+  (heater outlets and transfer lines of units 11, 12 and 17) pipe `A335-P5`; for amine
+  regenerator and sour water overheads `A312-TP316L`.
+- `SW-REG-6` Registration numbers. As recalled: in Canada a pressure vessel, boiler or
+  exchanger design, a pressure piping system's design, and each type of fitting are registered
+  with the province's boiler and pressure vessel regulator and given a Canadian Registration
+  Number: for vessels and piping, a letter and four digits; for fittings, a zero, a category
+  letter and five digits (A pipe fittings; B flanges; C line valves; D expansion joints and
+  flexible connections; E strainers, filters, separators and steam traps; F measuring devices;
+  G relief devices; H other pressure-retaining components); then a decimal point and a digit
+  for each province of registration, the first being the province of first registration —
+  7 for New Brunswick. In this model: every vessel record has a design number; every piping
+  line class in every unit has a piping system number, carried by each of its lines and pipe
+  pieces; every fitting, flange and valve carries the number of its fitting category for its
+  class and fictional maker. **Every number is invented** by a rule from the item's own tag,
+  issued by no regulator and looked up nowhere; it may by accident equal a real number and
+  means nothing if it does. Each is stored with `"demonstration": true`.
+- `SW-REG-7` Files: `public/refinery/registry/` holds the equipment records, the line records
+  and the registration index as JSON; printable records are written by SmartWeld's own PDF
+  writer (SW-PDF-*) with the band "DEMONSTRATION DATA — not a manufacturer's data report, not a
+  registration" on every page.
+
+## 77. Plant 3: site, terrain and plot plan (`SW-SITE-*`)
+
+The site is invented. It is drawn after the kind of coast the owner chose — rock headlands, coves,
+a large tide, ground rising inland — and after no real place: no map, chart, survey, satellite
+image or elevation data was used, and its shoreline and contours are a formula written here. The
+spacings are SmartWeld's own, from the reasoning given; no spacing standard, insurer's table or
+company practice was consulted, and they are for the owner to tune (PROVENANCE P-79).
+
+- `SW-SITE-1` Frame and datum. Site x is east, z is south, y is up (SW-U-4); the origin is the
+  north-west corner of the property; elevations are feet above the model's mean sea level.
+  Plant coordinates in every export: E = x, N = −z, EL = y. A unit or pipeway is built in its own
+  level local frame and set on the site by a turn about the vertical in quarter turns, a shift
+  and its bench elevation (SW-CELL-*, to follow).
+- `SW-SITE-2` Natural ground, a formula in `src/refinery/terrain.ts`. A shoreline z = s(x) that
+  runs east–west with a headland pushed 420 ft seaward in the south-west and a cove drawn
+  300 ft inland in the south-east; behind it a rock bank rising 38 ft in the first 60 ft (about
+  10 ft at the cove, where there is a beach), then a plateau climbing inland at 3 %, a hill of
+  60 ft in the north-west corner, a ravine along the east boundary falling to the cove, and
+  undulations of a few feet. Seaward the bed falls at 9 % off the headland and 2 % in the cove.
+  The tide ranges 11 ft either side of mean sea level. Reason: deep water close to a headland
+  is where a berth goes; a plateau above a rock bank keeps the plant above the sea; ground that
+  falls to one side gives the drainage a way out.
+- `SW-SITE-3` Benches. Each area stands on a level bench cut and filled into the natural ground,
+  with slopes of 2 horizontal to 1 vertical running out to meet it. A bench's elevation is near
+  the natural ground at its middle, so cut about balances fill. Benches are drawn level: the
+  falls for drainage within a bench (a few inches) are not modeled. Reason: equipment and
+  racks want level ground; a 2 : 1 slope stands in soil and weathered rock without a wall.
+- `SW-SITE-4` Where each area goes, and why.
+  - Process units, on one bench at mid-height: on both sides of a main pipeway that runs
+    east–west, each unit's own rack at right angles to it, the unit's battery limit at the
+    pipeway. Fired heaters stand at the outer end of their unit, away from the pipeway and
+    from equipment that can leak.
+  - Utilities at the west end of the process bench, upwind in the prevailing west-south-west
+    wind, so their fired boilers and air intakes stand in clean air.
+  - The cooling tower at the east end, downwind, its length across the wind, so its plume and
+    winter ice fall clear of the units and roads.
+  - Tank farm on terraces above the process bench to the north, each tank or group in a dike
+    (SW-CIV-14), an intercepting ditch and a road between the terraces and the process bench.
+    Crude tanks to the west of the terraces, toward the marine terminal.
+  - Liquefied gas spheres at the north-east, beside the ravine and lower than the tank
+    terraces, so that a heavy vapour release drains away from the plant and down the ravine.
+  - The flare on the north-west hill, at least 500 ft from every tank, unit, building and
+    boundary, with a sterile circle of 300 ft radius kept bare.
+  - The marine terminal off the south-west headland, where the bed reaches 60 ft at low water
+    within 900 ft of the shore.
+  - Wastewater treatment at the low south-east, where every drain reaches it by gravity, with a
+    storm pond beside it above the cove.
+  - Offices, laboratory, workshops, stores, fire station and the main gate at the west
+    boundary, upwind and at least 500 ft from the nearest unit; the control building between
+    them and the units, 250 ft from the nearest unit; truck loading at the north-west with its
+    own gate, so road tankers do not pass through the plant.
+- `SW-SITE-5` Spacing kept on the plot (clear distances): unit to unit 100 ft, with a road
+  between; equipment to a fired heater 50 ft; tank shell to tank shell half the larger
+  diameter, 50 ft at least; tank shell to its dike's inner toe half its height, 15 ft at least;
+  tanks to a process unit 250 ft; spheres to anything else 200 ft; units and tanks to the
+  property line 200 ft. Reason: a fire in one unit, tank or dike should not carry to the next
+  before it is fought, and fire-fighters need a road and room between.
+- `SW-SITE-6` Roads: primary roads 24 ft wide and secondary 20 ft, on their own graded benches
+  at 6 % at most, with a road round the process bench, round each tank terrace and to every
+  area; pipeways cross roads on bridges with 20 ft clear (SW-STA-8). A chain-link fence on
+  posts runs 50 ft inside the property line. Reason: every unit and tank must be reachable by
+  a fire engine from two directions.
+- `SW-SITE-7` The plot plan — the rectangle, bench elevation and orientation of every area — is
+  drawing data in `src/refinery/site.ts`, checked against SW-SITE-5 by test, and printed in
+  `docs/REFINERY-PLOT.md`.
