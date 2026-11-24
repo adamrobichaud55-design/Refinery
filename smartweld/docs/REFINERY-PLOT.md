@@ -59,7 +59,7 @@ Where each unit and building stands, and why there (SW-SITE-4): process units on
 | Naphtha hydrotreater (battery limit on its north side) | 13 | Process bench | 1,000 to 1,240 | −3,070 to −2,750 | 240 × 320 | 58 |
 | Catalytic reformer (battery limit on its north side) | 14 | Process bench | 1,340 to 1,600 | −3,110 to −2,750 | 260 × 360 | 58 |
 | Kerosene hydrotreater (battery limit on its north side) | 15 | Process bench | 1,700 to 1,920 | −3,010 to −2,750 | 220 × 260 | 58 |
-| Diesel hydrotreater (battery limit on its north side) | 16 | Process bench | 2,020 to 2,260 | −3,070 to −2,750 | 240 × 320 | 58 |
+| Diesel hydrotreater (battery limit on its north side) | 16 | Process bench | 2,020 to 2,260 | −3,090 to −2,750 | 240 × 340 | 58 |
 | Sulfur block (battery limit on its north side) | 18 | Process bench | 2,360 to 2,620 | −3,150 to −2,750 | 260 × 400 | 58 |
 | Space for a future unit |  | Process bench | 2,720 to 2,940 | −3,150 to −2,750 | 220 × 400 | 58 |
 | Truck loading | 23 | Truck loading bench | 260 to 720 | −1,990 to −1,560 | 460 × 430 | 77 |

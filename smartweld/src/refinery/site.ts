@@ -43,7 +43,7 @@ export const PLOTS: Plot[] = [
   P('U13', 'Naphtha hydrotreater', 13, 'process', 'unit', R(1000, 1240, S0, 3070), { faces: 'N' }),
   P('U14', 'Catalytic reformer', 14, 'process', 'unit', R(1340, 1600, S0, 3110), { faces: 'N' }),
   P('U15', 'Kerosene hydrotreater', 15, 'process', 'unit', R(1700, 1920, S0, 3010), { faces: 'N' }),
-  P('U16', 'Diesel hydrotreater', 16, 'process', 'unit', R(2020, 2260, S0, 3070), { faces: 'N' }),
+  P('U16', 'Diesel hydrotreater', 16, 'process', 'unit', R(2020, 2260, S0, 3090), { faces: 'N' }),
   P('U18', 'Sulfur block', 18, 'process', 'unit', R(2360, 2620, S0, 3150), { faces: 'N' }),
   P('FUT', 'Space for a future unit', 0, 'process', 'spare', R(2720, 2940, S0, 3150)),
   // offsites

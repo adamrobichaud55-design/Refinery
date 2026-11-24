@@ -355,3 +355,28 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/site-from-the-north.png` | Plant 3: the graded site from the north, over the flare hill and the tank terraces |
 | `refinery/site-process-bench-and-terraces.png` | Plant 3: the process bench with the tank terraces rising behind it |
 | `refinery/site-jetty-and-headland.png` | Plant 3: the jetty trestle, berth and dolphins off the headland |
+| `refinery/unit-15-from-the-vessel-side.png` | Plant 3, unit 15 (Kerosene hydrotreater): equipment and rack, from the vessel side; no piping yet |
+| `refinery/unit-15-from-the-exchanger-side.png` | Plant 3, unit 15 (Kerosene hydrotreater): equipment and rack, from the exchanger side; no piping yet |
+| `refinery/unit-11-from-the-vessel-side.png` | Plant 3, unit 11 (Crude distillation): equipment and rack, from the vessel side; no piping yet |
+| `refinery/unit-11-from-the-exchanger-side.png` | Plant 3, unit 11 (Crude distillation): equipment and rack, from the exchanger side; no piping yet |
+| `refinery/unit-12-from-the-vessel-side.png` | Plant 3, unit 12 (Vacuum distillation): equipment and rack, from the vessel side; no piping yet |
+| `refinery/unit-12-from-the-exchanger-side.png` | Plant 3, unit 12 (Vacuum distillation): equipment and rack, from the exchanger side; no piping yet |
+| `refinery/unit-13-from-the-vessel-side.png` | Plant 3, unit 13 (Naphtha hydrotreater and splitter): equipment and rack, from the vessel side; no piping yet |
+| `refinery/unit-13-from-the-exchanger-side.png` | Plant 3, unit 13 (Naphtha hydrotreater and splitter): equipment and rack, from the exchanger side; no piping yet |
+| `refinery/unit-14-from-the-vessel-side.png` | Plant 3, unit 14 (Catalytic reformer and hydrogen purification): equipment and rack, from the vessel side; no piping yet |
+| `refinery/unit-14-from-the-exchanger-side.png` | Plant 3, unit 14 (Catalytic reformer and hydrogen purification): equipment and rack, from the exchanger side; no piping yet |
+| `refinery/unit-16-from-the-vessel-side.png` | Plant 3, unit 16 (Diesel hydrotreater): equipment and rack, from the vessel side; no piping yet |
+| `refinery/unit-16-from-the-exchanger-side.png` | Plant 3, unit 16 (Diesel hydrotreater): equipment and rack, from the exchanger side; no piping yet |
+| `refinery/unit-17-from-the-vessel-side.png` | Plant 3, unit 17 (Fluid catalytic cracker and gas concentration): equipment and rack, from the vessel side; no piping yet |
+| `refinery/unit-17-from-the-exchanger-side.png` | Plant 3, unit 17 (Fluid catalytic cracker and gas concentration): equipment and rack, from the exchanger side; no piping yet |
+| `refinery/unit-18-from-the-vessel-side.png` | Plant 3, unit 18 (Sulfur block): equipment and rack, from the vessel side; no piping yet |
+| `refinery/unit-18-from-the-exchanger-side.png` | Plant 3, unit 18 (Sulfur block): equipment and rack, from the exchanger side; no piping yet |
+| `refinery/unit-19-from-the-vessel-side.png` | Plant 3, unit 19 (Utilities): equipment and rack, from the vessel side; no piping yet |
+| `refinery/unit-19-from-the-exchanger-side.png` | Plant 3, unit 19 (Utilities): equipment and rack, from the exchanger side; no piping yet |
+| `refinery/cooling-tower-from-the-vessel-side.png` | Plant 3, unit 19: the cooling tower with its circulating pumps |
+| `refinery/cooling-tower-from-the-exchanger-side.png` | Plant 3, unit 19: the cooling tower, from the other side |
+| `refinery/plant-from-the-south-west.png` | Plant 3: the plant on its site from the south-west; equipment, racks and tanks, no piping yet |
+| `refinery/plant-from-the-south-east.png` | Plant 3: the plant from the south-east |
+| `refinery/plant-process-units-from-the-south.png` | Plant 3: the process units on both sides of the main pipeway, from the south |
+| `refinery/plant-crude-and-vacuum-units.png` | Plant 3: the crude and vacuum units |
+| `refinery/plant-tank-farm-from-the-north-east.png` | Plant 3: the tank terraces from the north-east |

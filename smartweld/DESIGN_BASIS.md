@@ -3756,7 +3756,8 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
 - `SW-PRC-9` Air coolers. A bay is 14 ft wide with tubes 32 ft long and two fans, four rows of
   1 in tubes at 2.5 in centres; duty per bay = 80 Btu/h·ft²·°F × its bare tube surface × ΔT_lm
   against air rising from 90 °F to 130 °F; bays = duty / that, rounded up. Process is cooled
-  by air to 140 °F and by water below that. Bays stand over the unit's pipe rack. Reason:
+  by air to 140 °F and by water below that. Bays stand beside the unit's pipe rack on their own
+  columns (SW-CELL-4). Reason:
   air is free but cannot cool below its own temperature plus an approach; fins raise the
   outside surface so the bare-tube coefficient is as good as a water cooler's.
 - `SW-PRC-10` Fired heaters. Fired duty = absorbed duty / 0.85. The radiant section absorbs 70 %
@@ -4013,3 +4014,69 @@ company practice was consulted, and they are for the owner to tune (PROVENANCE P
 - `SW-SITE-7` The plot plan — the rectangle, bench elevation and orientation of every area — is
   drawing data in `src/refinery/site.ts`, checked against SW-SITE-5 by test, and printed in
   `docs/REFINERY-PLOT.md`.
+
+## 78. Plant 3: equipment bodies and the arrangement of a unit (`SW-CELL-*`)
+
+How each sized item of §75 becomes a body in the model, and how the items of one unit are arranged
+on its plot. SmartWeld's own arrangement, from general plant-layout understanding with the reason
+for each choice; no layout standard, company practice or existing plant was consulted
+(PROVENANCE P-82). The bodies are the catalogue's (§25, §66, §69, §72), built at the sizes of §75 by
+their own geometry rules, which are unchanged.
+
+- `SW-CELL-1` A unit's frame. A unit is built level in its own frame, in inches: x from its battery
+  limit outward along its pipe rack, z across the rack, y up from its bench; the rack's centre line
+  is z = 0. It is set on the site by a quarter turn about the vertical, a shift to its plot and its
+  bench's elevation (SW-SITE-1). Equipment centres and rack bents stand on a 6 in grid (SW-LAY-2).
+- `SW-CELL-2` The unit's rack: bents at 20 ft, 24 ft wide, tiers at 16, 22 and 28 ft (as SW-RK-*,
+  the rack of plants 1 and 2), beginning 30 ft from the battery limit, where the unit's isolation
+  valves stand, and running as far as its longest row of equipment. Reason: the rack is the
+  unit's spine; every line between items runs on it.
+- `SW-CELL-3` Rows. From the rack outward on each side: pumps in a row, shafts square to the rack
+  and suction ends 5 ft from its column line; an access way 8 ft wide; then, on one side,
+  shell-and-tube exchangers square to the rack with their channel ends outward, and beyond them
+  the air coolers; on the other side the vessels: drums parallel to the rack, columns, reactors
+  and other vertical vessels, their centres on one line. Compressors stand in the exchanger row
+  beyond the last exchanger. Fired heaters stand beyond the outer end of the rack, 50 ft from the
+  nearest equipment. Items follow one another along the rack in the order the process meets
+  them, 4 ft apart (8 ft between vessels with platforms). Pumps stand on the side of the vessels
+  they draw from where they draw from one, otherwise on the exchanger side. Reason: pumps under
+  the edge of the rack have the shortest suction and discharge; a channel end facing the access
+  way lets a tube bundle be pulled; heaters away from equipment that can leak keep a leak from
+  its flame.
+- `SW-CELL-4` Bodies.
+  - Pumps (SW-EQ-4): casing diameter 1.5 × the impeller of SW-PRC-5, 10 in least; casing width
+    half the impeller for each stage, 6 in least; motor of SW-PRC-5's frame diameter, 1.8
+    diameters long; a baseplate 12 in wider than the larger of them and long enough for both and
+    the coupling; a concrete pad 9 in high, 6 in larger all round.
+  - Horizontal drums (SW-EQ-2) and the desalter and deaerator (SW-EQC-47, -50): the shell's
+    underside 4 ft above grade, and 10 ft where a pump draws from the drum, on concrete piers
+    under the saddles. Reason: the height is the pump's suction head.
+  - Shell-and-tube exchangers (SW-EQ-3): centre line 4 ft above grade plus the shell radius; a
+    second shell stands on the first.
+  - Columns, reactors and other vertical vessels (SW-EQ-1): on skirts (15 ft for columns as
+    SW-PRC-7, 8 ft for reactors, 5 ft for others), with platforms every 15 ft and ladders
+    (SW-EQC-32) where the vessel stands more than 30 ft high. The swaged vacuum column is
+    SW-EQC-65. Walls by SW-PRC-14.
+  - Air coolers (SW-EQC-11): each bay 14 ft by 32 ft with two fans, on its own columns 12 ft
+    clear of grade, bays side by side with the tubes square to the rack. (SW-PRC-9 is amended:
+    the bays stand beside the rack, not over it, since the catalogue cooler's columns and
+    bracing are its own.)
+  - Fired heaters: vertical cylinders (SW-EQC-15) with a stack 0.6 of the firebox height, and
+    cabins (SW-EQC-53), at the sizes of SW-PRC-10.
+  - Compressors and blowers (SW-EQC-12, -14): casing diameter 14 in × (gas horsepower / 100)^(1/3),
+    10 in least; driver of SW-PRC-5's frame diameter or SW-PRC-12's turbine wheel; a skid under
+    both.
+  - Storage tanks (SW-EQC-44), spheres (SW-EQC-48) and bullets (SW-EQC-46) at the sizes of
+    SW-PRC-13.
+  - The cracker (SW-EQC-33): regenerator diameter for its flue gas rising at 3 ft/s, to 6 in,
+    and 1.5 diameters between tangents; reactor vessel 0.6 of the regenerator's diameter and
+    1.2 of its height. The wet scrubber (SW-EQC-36): diameter for the flue gas at 10 ft/s, eight
+    diameters high. The flue gas cooler (SW-EQC-37), sulfur furnace and condensers (SW-EQC-56,
+    -57), incinerator (SW-EQC-58), adsorbers (SW-EQC-55), boilers (SW-EQC-40), cooling tower
+    (SW-EQC-49) and flare (SW-EQC-35) are the catalogue's items at the size their flow or duty
+    gives; packages with no body of their own are shown as a vessel of their volume.
+  - Every body stands on an equipment pad 6 in high and 12 in larger all round, as in plants 1
+    and 2 (SW-LAY-*). Nozzles are not part of a body: the piping stage adds each one from the
+    nozzle schedule, so that the nozzle and the line that meets it are of one size and class.
+- `SW-CELL-5` A unit's equipment lies within its plot (SW-SITE-7), which a test checks.
+
