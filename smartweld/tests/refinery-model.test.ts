@@ -45,9 +45,45 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
         if (s.lx > 0) { expect(mn[2], s.tag).toBeGreaterThanOrEqual(s.z - s.lz / 2 - 6.01); expect(mx[2], s.tag).toBeLessThanOrEqual(s.z + s.lz / 2 + 6.01); }
         expect(mx[1], s.tag).toBeLessThanOrEqual(s.h + 0.01);
         // nothing that carries a body is below the top of its pad, save what stands in the ground
-        if (s.shape === 'box' && !['pit', 'basin', 'coolingtower'].includes(s.kind) && s.lane !== 'air') { const low = Math.min(...bs.filter(b => !/anchor|holding-down|bolts|studs and nuts/i.test(b.name)).map(b => b.mn[1])); expect(low, s.tag).toBeGreaterThanOrEqual(PAD - 1e-3); expect(low, s.tag).toBeLessThan(PAD + 6); }   /* on its pad, which is up to 6 in thicker where the body's axis is brought onto the grid */
+        if (s.shape === 'box' && !['pit', 'basin', 'coolingtower', 'ejector'].includes(s.kind) && s.lane !== 'air') {   /* an ejector set stands on a deck of its own (below) */ const low = Math.min(...bs.filter(b => !/anchor|holding-down|bolts|studs and nuts/i.test(b.name)).map(b => b.mn[1])); expect(low, s.tag).toBeGreaterThanOrEqual(PAD - 1e-3); expect(low, s.tag).toBeLessThan(PAD + 6); }   /* on its pad, which is up to 6 in thicker where the body's axis is brought onto the grid */
       }
     }
+  });
+  it('the vacuum ejector set stands on a deck of its own behind its column, a tail pipe\'s height above the hotwell under it (SW-CELL-3, SW-CELL-4, SW-PRC-18)', () => {
+    const c = all.find(a => a.plot.unit === 12)!.cell, J = c.spots.find(s => s.item === 'J-1201')!, D = c.spots.find(s => s.item === 'D-1201')!, col = c.spots.find(s => s.item === 'C-1201')!, z = Z.get(12)!.equip.get('J-1201')!;
+    const bs = bodySolids(c, 'J-1201'), box = (re: RegExp) => { const b = bs.filter(q => re.test(q.name)); expect(b.length, String(re)).toBeGreaterThan(0); return { mn: [0, 1, 2].map(a => Math.min(...b.map(q => q.mn[a]))), mx: [0, 1, 2].map(a => Math.max(...b.map(q => q.mx[a]))) }; }, mid = (b: { mn: number[]; mx: number[] }, a: number) => (b.mn[a] + b.mx[a]) / 2;
+    const tagged = (...t: string[]) => c.interior.instances.filter(i => t.every(x => i.tags.includes(x))), at = (i: { transform: number[] }) => i.transform.slice(12, 15);
+    // behind the column, 10 ft beyond its footprint, the first ejector's suction at the column's station along the rack; the later condensers toward the rack
+    const ch = box(/^stage 1 ejector: suction chamber$/); expect(Math.abs(mid(ch, 0) - col.x)).toBeLessThan(1); expect(Math.abs(J.z)).toBeGreaterThan(Math.abs(col.z)); expect(Math.abs(J.z - col.z) - (J.lz + col.lz) / 2).toBeCloseTo(120, -1);
+    const boots = [1, 2, 3].map(k => box(new RegExp(`^condenser ${k}: condensate boot$`))); expect(Math.abs(mid(boots[2], 2))).toBeLessThan(Math.abs(mid(boots[0], 2)));
+    // every connection of the set on the 6 in grid: the suction, the three boots, the three pipes under the deck
+    for (const b of [ch, ...boots, box(/^motive steam leg$/), box(/^cooling water supply leg$/), box(/^cooling water return leg$/)]) for (const a of [0, 2]) if (b !== ch || a === 2) expect(Math.abs(mid(b, a) / 6 - Math.round(mid(b, a) / 6)), `${a}`).toBeLessThan(1e-6);
+    expect(Math.abs(Math.round(mid(ch, 0) / 6) * 6 - mid(ch, 0))).toBeLessThan(1);                                // the chamber's box is its back plate longer than the chamber
+    // the hotwell: square to the rack, its axis under the row of boots, each boot over its shell 18 in inside a tangent at least, and 4 ft longer than the boots are apart
+    expect(D.axis).toBe('z'); expect(D.lane).toBe('under'); for (const b of boots) { expect(mid(b, 0)).toBeCloseTo(D.x, 6); expect(Math.abs(mid(b, 2) - D.z)).toBeLessThanOrEqual(D.len! / 2 - 18); }
+    expect(D.len!).toBeGreaterThanOrEqual(Math.abs(mid(boots[2], 2) - mid(boots[0], 2)) + 48); expect(D.len!).toBe(Z.get(12)!.equip.get('D-1201')!.d.L);
+    // height: the first boot the tail pipe's height above the hotwell's centre line, and no more than a stair flight above that
+    const lift = boots[0].mn[1] - D.yc!; expect(lift).toBeGreaterThanOrEqual(z.d.c1LegIn); expect(lift).toBeLessThan(z.d.c1LegIn + 144); expect(z.d.c1LegIn).toBeGreaterThan(z.d.c2LegIn);
+    // the floor a whole number of equal flights of 7.5 in risers, 12 ft at most each: treads count one less than risers a flight
+    const E = J.yt!, treads = tagged('J-1201-stair', 'tread').length, flights = tagged('J-1201-stair', 'stringer').length / 2, risers = treads / flights + 1;
+    expect(Number.isInteger(flights)).toBe(true); expect(Number.isInteger(risers)).toBe(true); expect(flights * risers * 7.5).toBeCloseTo(E, 6); expect(risers * 7.5).toBeLessThanOrEqual(144);
+    // the saddles stand on the deck's steel, on beams that carry them; grating at the floor, none where a saddle, a post or a pipe passes
+    const sad = bs.filter(q => /saddle base/.test(q.name)), steel = Math.min(...sad.map(q => q.mn[1])), carry = tagged('J-1201-deck', 'carrying-beam'), grat = tagged('J-1201-deck', 'grating');
+    expect(E - steel).toBeGreaterThan(1); expect(E - steel).toBeLessThan(2); expect(carry.length).toBe(4); expect(grat.length).toBeGreaterThan(100); for (const g of grat) expect(at(g)[1]).toBeCloseTo(E, 6);
+    for (const q of sad) expect(carry.some(b => Math.abs(at(b)[0] - (q.mn[0] + q.mx[0]) / 2) < 1 && at(b)[1] < steel), q.name).toBe(true);
+    // columns at 20 ft at most under two lines; a strut level at each landing; rods in every storey
+    const cols = tagged('J-1201-deck', 'column'), xs = [...new Set(cols.map(i => Math.round(at(i)[0])))].sort((a, b) => a - b), zs = [...new Set(cols.map(i => Math.round(at(i)[2])))];
+    expect(zs.length).toBe(2); expect(cols.length).toBe(2 * xs.length); for (let i = 1; i < xs.length; i++) expect(xs[i] - xs[i - 1]).toBeLessThanOrEqual(241);
+    expect(new Set(tagged('J-1201-deck', 'strut').map(i => Math.round(at(i)[1]))).size).toBeGreaterThanOrEqual(flights - 1); expect(tagged('J-1201-deck', 'bolted-rod').length).toBe(8 * flights);
+    // the floor is cut round each pipe of the set and under each boot; support steel leads from the yard's line to the deck at 20 ft at most
+    expect(J.holes!.length).toBe(6); for (const b of boots) expect(J.holes!.some(hh => Math.abs(hh.x - mid(b, 0)) < 1e-6 && Math.abs(hh.z - mid(b, 2)) < 1e-6)).toBe(true);
+    const way = c.interior.instances.filter(i => i.tags.includes('yard-support') && i.tags.includes('way')).map(i => at(i)), edge = J.z + J.lz / 2, zsW = [c.yard.neg!, ...way.map(p => p[2]).sort((a, b) => b - a), edge];
+    expect(way.length).toBeGreaterThanOrEqual(3); for (let i = 1; i < zsW.length; i++) { expect(zsW[i - 1] - zsW[i]).toBeGreaterThan(0); expect(zsW[i - 1] - zsW[i]).toBeLessThanOrEqual(186); }   /* 15 ft, to the grid */
+    for (const p of way) { expect(p[1]).toBeCloseTo(YARD + 6, 6); expect(p[0]).toBeLessThanOrEqual(D.x - 72); }
+    // the set's own flanges at its seven connections are left off: the piping stage adds the plant's
+    expect(bs.some(q => /nozzle/.test(q.name))).toBe(false); expect(bs.some(q => /^vent 1: run 1$/.test(q.name))).toBe(true);
+    // the deck's rules are written down
+    for (const t of ['a tail pipe\'s height above its hotwell', 'stands behind the column it draws from', 'SW-EQC-68', 'SW-PRC-18']) expect(basisDoc).toContain(t);
   });
   it('a pit stands in the ground, its roof slab\'s top 1 ft above grade, beyond the outer ends of the condensers that drain into it (SW-CELL-3, SW-CELL-4)', () => {
     let pits = 0;
@@ -99,7 +135,13 @@ describe('plant 3: the units on the site (SW-CELL-1, SW-CELL-5, SW-SITE-1)', () 
       const T = cellToSite(p, c), at = (x: number, y: number, z: number) => [T[0] * x + T[4] * y + T[8] * z + T[12], T[1] * x + T[5] * y + T[9] * z + T[13], T[2] * x + T[6] * y + T[10] * z + T[14]];
       for (const [x, z] of [[0, c.z0], [c.x1, c.z0], [c.x1, c.z1], [0, c.z1]]) { const q = at(x, 0, z); expect(q[0] / 12, p.id).toBeGreaterThanOrEqual(p.x0 - 0.01); expect(q[0] / 12, p.id).toBeLessThanOrEqual(p.x1 + 0.01); expect(q[2] / 12, p.id).toBeGreaterThanOrEqual(p.z0 - 0.01); expect(q[2] / 12, p.id).toBeLessThanOrEqual(p.z1 + 0.01); expect(q[1]).toBeCloseTo(bench(p.bench).el * 12, 6); }
       expect(at(0, 0, 0)[2] / 12, p.id).toBeCloseTo(p.faces === 'N' ? p.z0 : p.z1, 6);                    // the battery limit on the pipeway edge
+      // SW-SITE-5: a unit's plot is no wider than its unit, to the next 10 ft: neighbours stand a road's width apart, not a spare plot's
+      if (p.kind === 'unit') { const slack = (p.x1 - p.x0) - (c.z1 - c.z0) / 12; expect(slack, p.id).toBeGreaterThanOrEqual(0); expect(slack, p.id).toBeLessThan(10); }
     }
+    // the units along the pipeway stand side by side 50 ft apart in each row, and face each other across a corridor 60 ft wide
+    for (const faces of ['S', 'N'] as const) { const row = all.map(a => a.plot).filter(p => p.kind === 'unit' && p.faces === faces).sort((a, b) => a.x0 - b.x0); expect(row.length).toBeGreaterThanOrEqual(4); for (let i = 1; i < row.length; i++) expect(row[i].x0 - row[i - 1].x1, row[i].id).toBe(50); }
+    const north = all.map(a => a.plot).filter(p => p.kind === 'unit' && p.faces === 'S'), south = all.map(a => a.plot).filter(p => p.kind === 'unit' && p.faces === 'N');
+    expect(Math.min(...south.map(p => p.z0)) - Math.max(...north.map(p => p.z1))).toBe(60);
   });
   it('the whole plant: every unit, every tank in its dike, the spheres and the flare', () => {
     const parts = siteParts(), tags = new Set(parts.flatMap(p => p.tags));

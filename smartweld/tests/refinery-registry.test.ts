@@ -32,7 +32,8 @@ describe('plant 3: which items have a pressure equipment record (SW-REG-1, SW-RE
         case 'aircooler': expect(n, e.tag).toBe(z.d.bays); break;
         case 'filter': case 'vessel': expect(n, e.tag).toBe(z.count); break;
         case 'psa': expect(n, e.tag).toBe(4); break;
-        case 'cracker': case 'ejector': expect(n, e.tag).toBe(2); break;
+        case 'cracker': expect(n, e.tag).toBe(2); break;
+        case 'ejector': expect(n, e.tag).toBe(z.d.stages); break;                                              // one surface condenser a stage (SW-PRC-18)
         case 'tank': expect(n, e.tag).toBe(e.p.vertical ? 1 : 0); break;
         default: expect(n, `${e.tag} (${e.kind})`).toBe(0);                                                  // pumps, compressors, heaters, hoppers, basins, pits, packages, the cooling tower, loading, the flare
       }
@@ -56,7 +57,7 @@ describe('plant 3: which items have a pressure equipment record (SW-REG-1, SW-RE
     for (const h of heaters) expect(coils.some(c => c.heater === h && c.coil === 'process coil'), h).toBe(true);
     for (const c of coils) { expect(c.code.source).toBe('recalled'); expect(c.registration.value).toMatch(/^[A-Z]\d{4}\.7$/); expect(c.design.value.P).toBeGreaterThan(0); }
     const comps = componentRecords();
-    expect(comps.map(c => c.tag).sort()).toEqual(['J-1201-1', 'J-1201-2', 'J-1201-3', 'X-1901', 'X-1902', 'X-1904']);
+    expect(comps.map(c => c.tag).sort()).toEqual(['J-1201-J1', 'J-1201-J2', 'J-1201-J3', 'X-1901', 'X-1902', 'X-1904']);
     for (const c of comps) { expect(c.category).toBe('H'); expect(c.registration.value).toMatch(/^0H\d{5}\.7$/); expect(MAKERS).toContain(c.maker.value); }
   });
 });

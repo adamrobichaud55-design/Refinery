@@ -10,7 +10,7 @@ import { BBL_FT3 } from './fluids';
 const R = (x0: number, x1: number, z0: number, z1: number): Rect => ({ x0, x1, z0, z1 });
 /** SW-SITE-3, SW-SITE-4: the benches; each one's elevation is the mean of the natural ground over it */
 const BENCH_RECTS: [string, string, Rect][] = [
-  ['process', 'Process bench', R(850, 3050, 2110, 3260)],
+  ['process', 'Process bench', R(850, 2200, 2110, 3260)],
   ['south', 'South tank terrace', R(940, 3560, 1390, 1860)],
   ['north', 'North tank terrace', R(1000, 3160, 740, 1200)],
   ['lpg', 'Liquefied gas bench', R(3760, 4260, 1480, 1880)],
@@ -29,23 +29,26 @@ export type PlotKind = 'unit' | 'tower' | 'building' | 'pad' | 'spare' | 'pond';
 /** a plot: the ground a unit, a building or an item stands on. A unit's battery limit is on the side it faces. */
 export interface Plot extends Rect { id: string; name: string; unit: number; bench: string; kind: PlotKind; faces?: 'N' | 'S'; /** a building's height, ft */ height?: number }
 const P = (id: string, name: string, unit: number, b: string, kind: PlotKind, r: Rect, o: Partial<Plot> = {}): Plot => ({ id, name, unit, bench: b, kind, ...r, ...o });
-/** SW-SITE-4: the main pipeway runs east–west at z = 2,700 in a corridor 100 ft wide (the rack, and an access way each side), with the units on both sides of it */
-export const PIPEWAY_Z = 2700, PIPEWAY_HALF = 50;
+/** SW-SITE-4: the main pipeway runs east–west at z = 2,700 in a corridor 60 ft wide (the rack, 40 ft, and 10 ft either side), with the units on both sides of it */
+export const PIPEWAY_Z = 2700, PIPEWAY_HALF = 30;
+/** SW-SITE-5: the clear distance between neighbouring units along the pipeway, ft */
+export const UNIT_GAP = 50;
 const N0 = PIPEWAY_Z - PIPEWAY_HALF, S0 = PIPEWAY_Z + PIPEWAY_HALF;
 export const PLOTS: Plot[] = [
   // north of the main pipeway, west to east: utilities upwind, then the crude and vacuum units, the cracker, the cooling tower downwind
-  P('U19', 'Utilities', 19, 'process', 'unit', R(1000, 1420, 2170, N0), { faces: 'S' }),
-  P('U11', 'Crude distillation', 11, 'process', 'unit', R(1520, 1820, 2230, N0), { faces: 'S' }),
-  P('U12', 'Vacuum distillation', 12, 'process', 'unit', R(1920, 2180, 2350, N0), { faces: 'S' }),
-  P('U17', 'Fluid catalytic cracker', 17, 'process', 'unit', R(2280, 2620, 2170, N0), { faces: 'S' }),
-  P('CT', 'Cooling tower', 19, 'process', 'tower', R(2720, 2920, 2190, 2590)),
+  // (each plot as wide as its unit, to the next 10 ft, and 50 ft from its neighbour: SW-SITE-5; its length along its rack is the room the unit was arranged in)
+  P('U19', 'Utilities', 19, 'process', 'unit', R(1010, 1220, N0 - 480, N0), { faces: 'S' }),
+  P('U11', 'Crude distillation', 11, 'process', 'unit', R(1270, 1410, N0 - 420, N0), { faces: 'S' }),
+  P('U12', 'Vacuum distillation', 12, 'process', 'unit', R(1460, 1630, N0 - 300, N0), { faces: 'S' }),
+  P('U17', 'Fluid catalytic cracker', 17, 'process', 'unit', R(1680, 1840, N0 - 480, N0), { faces: 'S' }),
+  P('CT', 'Cooling tower', 19, 'process', 'tower', R(1980, 2090, N0 - 480, N0 - 80)),   // 100 ft east of the last unit of either row (SW-SITE-4)
   // south of it: the hydrogen users beside the reformer that feeds them, the sulfur block downwind
-  P('U13', 'Naphtha hydrotreater', 13, 'process', 'unit', R(1000, 1240, S0, 3070), { faces: 'N' }),
-  P('U14', 'Catalytic reformer', 14, 'process', 'unit', R(1340, 1600, S0, 3110), { faces: 'N' }),
-  P('U15', 'Kerosene hydrotreater', 15, 'process', 'unit', R(1700, 1920, S0, 3010), { faces: 'N' }),
-  P('U16', 'Diesel hydrotreater', 16, 'process', 'unit', R(2020, 2260, S0, 3090), { faces: 'N' }),
-  P('U18', 'Sulfur block', 18, 'process', 'unit', R(2360, 2620, S0, 3150), { faces: 'N' }),
-  P('FUT', 'Space for a future unit', 0, 'process', 'spare', R(2720, 2940, S0, 3150)),
+  P('U13', 'Naphtha hydrotreater', 13, 'process', 'unit', R(1000, 1120, S0, S0 + 320), { faces: 'N' }),
+  P('U14', 'Catalytic reformer', 14, 'process', 'unit', R(1170, 1300, S0, S0 + 360), { faces: 'N' }),
+  P('U15', 'Kerosene hydrotreater', 15, 'process', 'unit', R(1350, 1460, S0, S0 + 260), { faces: 'N' }),
+  P('U16', 'Diesel hydrotreater', 16, 'process', 'unit', R(1510, 1630, S0, S0 + 340), { faces: 'N' }),
+  P('U18', 'Sulfur block', 18, 'process', 'unit', R(1680, 1880, S0, S0 + 400), { faces: 'N' }),
+  P('FUT', 'Space for a future unit', 0, 'process', 'spare', R(1930, 2150, S0, S0 + 400)),
   // offsites
   P('U23', 'Truck loading', 23, 'truck', 'unit', R(260, 720, 1560, 1990)),
   P('U24', 'Wastewater treatment', 24, 'waste', 'unit', R(3660, 4240, 2810, 3190)),
@@ -107,18 +110,18 @@ export function spheres(): PressureSpot[] {
 /** SW-SITE-6: roads. A ramp runs at one grade between its two ends; any other road takes the level of the bench it is on, or the natural ground. */
 const ROAD_LINES: [string, string, number, [number, number][], boolean?][] = [
   ['main', 'Main road from the gate', 24, [[0, 2700], [140, 2700], [760, 2700], [975, 2700]]],
-  ['ring', 'Process ring road', 24, [[975, 2135], [3025, 2135], [3025, 3235], [975, 3235], [975, 2135]]],
-  ...[1470, 1870, 2230].map((x, i): [string, string, number, [number, number][]] => [`n${i + 1}`, 'Road between units', 20, [[x, 2135], [x, N0]]]),
-  ...[1290, 1650, 1970, 2310].map((x, i): [string, string, number, [number, number][]] => [`s${i + 1}`, 'Road between units', 20, [[x, S0], [x, 3235]]]),
-  ['cross', 'Road across the pipeway', 20, [[2670, 2135], [2670, 3235]]],
+  ['ring', 'Process ring road', 24, [[975, 2135], [2175, 2135], [2175, 3235], [975, 3235], [975, 2135]]],
+  ...[1245, 1435, 1930].map((x, i): [string, string, number, [number, number][]] => [`n${i + 1}`, 'Road between units', 20, [[x, 2135], [x, N0]]]),
+  ...[1145, 1325, 1485, 1905].map((x, i): [string, string, number, [number, number][]] => [`s${i + 1}`, 'Road between units', 20, [[x, S0], [x, 3235]]]),
+  ['cross', 'Road across the pipeway', 20, [[1655, 2135], [1655, 3235]]],
   ['rampSouth', 'Ramp to the south terrace', 24, [[1470, 2135], [1100, 1840]], true],
   ['south', 'South terrace road', 24, [[965, 1840], [3535, 1840], [3535, 1410], [965, 1410], [965, 1840]]],
   ['southMid', 'Road between the dikes', 20, [[2353, 1410], [2353, 1840]]],
   ['rampNorth', 'Ramp to the north terrace', 24, [[2353, 1410], [2880, 1180]], true],
   ['north', 'North terrace road', 24, [[1020, 1180], [3140, 1180], [3140, 760], [1020, 760], [1020, 1180]]],
-  ['lpg', 'Road to the liquefied gas bench', 20, [[3025, 2135], [3780, 1860]], true],
+  ['lpg', 'Road to the liquefied gas bench', 20, [[2175, 2135], [3025, 2135], [3780, 1860]], true],
   ['lpgRing', 'Liquefied gas bench road', 20, [[3780, 1860], [4240, 1860], [4240, 1500], [3780, 1500], [3780, 1860]]],
-  ['waste', 'Road to the wastewater bench', 20, [[3025, 2700], [3620, 3000]], true],
+  ['waste', 'Road to the wastewater bench', 20, [[2175, 2700], [3025, 2700], [3620, 3000]], true],
   ['east', 'East road', 20, [[3900, 1880], [3900, 2750]], true],
   ['wasteRing', 'Wastewater bench road', 20, [[3620, 3000], [3620, 2770], [4280, 2770], [4280, 3230], [3620, 3230], [3620, 3000]]],
   ['jetty', 'Road to the jetty', 20, [[975, 3235], [1100, 4100]], true],
@@ -141,15 +144,15 @@ export const ROADS: Road[] = ROAD_LINES.map(([id, name, width, pts, ramp]) => ({
 /** pipeways: where lines run between units and areas (SW-SITE-4); built in the piping stage */
 export interface Pipeway { id: string; name: string; kind: 'rack' | 'sleepers' | 'trestle'; width: number; pts: [number, number][] }
 export const PIPEWAYS: Pipeway[] = [
-  { id: 'main', name: 'Main pipeway', kind: 'rack', width: 40, pts: [[990, PIPEWAY_Z], [2990, PIPEWAY_Z]] },
-  { id: 'tanks', name: 'Tank farm pipeway', kind: 'sleepers', width: 30, pts: [[2200, N0], [2200, 2135], [2200, 1805], [2390, 1805], [2390, 1150]] },
+  { id: 'main', name: 'Main pipeway', kind: 'rack', width: 40, pts: [[990, PIPEWAY_Z], [2160, PIPEWAY_Z]] },
+  { id: 'tanks', name: 'Tank farm pipeway', kind: 'sleepers', width: 30, pts: [[2130, N0], [2130, 2135], [2200, 1805], [2390, 1805], [2390, 1150]] },
   { id: 'southTrack', name: 'South terrace pipe track', kind: 'sleepers', width: 24, pts: [[990, 1805], [3500, 1805]] },
   { id: 'northTrack', name: 'North terrace pipe track', kind: 'sleepers', width: 24, pts: [[1050, 1150], [3110, 1150]] },
   { id: 'jetty', name: 'Jetty pipeway', kind: 'sleepers', width: 30, pts: [[990, 1805], [900, 1900], [900, 3300], [1200, 4100], [1200, 4260]] },
   { id: 'trestle', name: 'Jetty trestle', kind: 'trestle', width: 40, pts: [[1200, 4260], [1200, 5060]] },
   { id: 'flare', name: 'Flare line', kind: 'sleepers', width: 12, pts: [[990, PIPEWAY_Z], [905, PIPEWAY_Z], [905, 2290], [905, 2170], [900, 1900], [900, 1250], [900, 850], [560, 550]] },
-  { id: 'lpg', name: 'Liquefied gas lines', kind: 'sleepers', width: 16, pts: [[2990, PIPEWAY_Z], [3000, 2200], [3760, 1820]] },
-  { id: 'waste', name: 'Wastewater lines', kind: 'sleepers', width: 16, pts: [[2990, PIPEWAY_Z], [3040, 2730], [3620, 3030]] },
+  { id: 'lpg', name: 'Liquefied gas lines', kind: 'sleepers', width: 16, pts: [[2160, PIPEWAY_Z], [2190, 2200], [3760, 1820]] },
+  { id: 'waste', name: 'Wastewater lines', kind: 'sleepers', width: 16, pts: [[2160, PIPEWAY_Z], [2210, 2730], [3620, 3030]] },
   { id: 'truck', name: 'Truck loading lines', kind: 'sleepers', width: 16, pts: [[990, 1805], [780, 1830], [740, 1830]] },
 ];
 /** the berth: its loading platform, the deck level of the trestle, and the dolphins a tanker lies against and moors to */

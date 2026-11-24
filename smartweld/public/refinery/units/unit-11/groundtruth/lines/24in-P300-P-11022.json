@@ -55,32 +55,33 @@
    ]
   },
   {
-   "tag": "24\"-P300-P-11022/A2",
+   "tag": "24\"-P300-P-11022/A5",
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
-   "kind": "valve",
+   "kind": "flange",
    "itemNo": 2,
-   "description": "VALVE, GATE, WEDGE, OS&Y 24\" P300",
-   "designation": "GATE24-P300",
-   "key": "VLV|GATE|24|P300",
+   "description": "FLANGE WELD-NECK 24\" P300 RAISED FACE",
+   "designation": "FLG24-P300",
+   "key": "WNF|24|P300",
    "NPS": 24,
    "cls": "P300",
-   "material": "Grade 36 casting",
-   "ends": "RF×RF",
-   "weight": 4789.5778,
-   "spool": "loose",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 221.3776,
+   "spool": "24\"-P300-P-11022-SP01",
    "a": {
     "E": 3623.8125,
     "N": -180,
     "EL": 1314
    },
    "b": {
-    "E": 3588.8125,
+    "E": 3618.375,
     "N": -180,
     "EL": 1314
    },
    "centre": {
-    "E": 3606.3125,
+    "E": 3621.0938,
     "N": -180,
     "EL": 1314
    },
@@ -90,23 +91,18 @@
     "EL": 0
    },
    "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
     "SW-FLG-4",
     "SW-FLG-5",
     "SW-FLG-6",
-    "SW-VLV-1",
-    "SW-VLV-10",
-    "SW-VLV-2",
-    "SW-VLV-4",
-    "SW-VLV-5",
-    "SW-VLV-9",
-    "SW-VLV-F-2",
-    "SW-VLV-G-1",
-    "SW-VLV-G-2",
-    "SW-VLV-G-3"
+    "SW-FLG-7",
+    "SW-FLG-9"
    ]
   },
   {
-   "tag": "24\"-P300-P-11022/A3",
+   "tag": "24\"-P300-P-11022/A6",
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "studs",
@@ -146,149 +142,23 @@
    ]
   },
   {
-   "tag": "24\"-P300-P-11022/A4",
-   "line": "24\"-P300-P-11022",
-   "lineClass": "H300",
-   "kind": "gasket",
-   "itemNo": 1,
-   "description": "GASKET 24\" P300 COMPRESSED SHEET",
-   "designation": "GASKET24-P300",
-   "key": "GSK|24|P300",
-   "NPS": 24,
-   "cls": "P300",
-   "material": "compressed sheet (non-steel)",
-   "ends": "—",
-   "weight": 0,
-   "spool": "loose",
-   "a": {
-    "E": 3588.8125,
-    "N": -180,
-    "EL": 1314
-   },
-   "b": {
-    "E": 3588.6875,
-    "N": -180,
-    "EL": 1314
-   },
-   "centre": {
-    "E": 3588.75,
-    "N": -180,
-    "EL": 1314
-   },
-   "axis": {
-    "E": -1,
-    "N": 0,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-2"
-   ]
-  },
-  {
-   "tag": "24\"-P300-P-11022/A5",
-   "line": "24\"-P300-P-11022",
-   "lineClass": "H300",
-   "kind": "flange",
-   "itemNo": 4,
-   "description": "FLANGE WELD-NECK 24\" P300 RAISED FACE",
-   "designation": "FLG24-P300",
-   "key": "WNF|24|P300",
-   "NPS": 24,
-   "cls": "P300",
-   "material": "Grade 36 forging",
-   "ends": "BW×RF",
-   "flangeType": "WN",
-   "weight": 221.3776,
-   "spool": "24\"-P300-P-11022-SP01",
-   "a": {
-    "E": 3588.6875,
-    "N": -180,
-    "EL": 1314
-   },
-   "b": {
-    "E": 3583.25,
-    "N": -180,
-    "EL": 1314
-   },
-   "centre": {
-    "E": 3585.9688,
-    "N": -180,
-    "EL": 1314
-   },
-   "axis": {
-    "E": -1,
-    "N": 0,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-1",
-    "SW-FLG-2",
-    "SW-FLG-3",
-    "SW-FLG-4",
-    "SW-FLG-5",
-    "SW-FLG-6",
-    "SW-FLG-7",
-    "SW-FLG-9"
-   ]
-  },
-  {
-   "tag": "24\"-P300-P-11022/A6",
-   "line": "24\"-P300-P-11022",
-   "lineClass": "H300",
-   "kind": "studs",
-   "itemNo": 3,
-   "description": "STUD SET 24 × 0.75\" × 5-1/2\" WITH 2 NUTS, FOR 24\" P300",
-   "designation": "STUDS 24×0.75x5.5 (24-P300)",
-   "key": "STUDS|24|P300|3.750",
-   "NPS": 24,
-   "cls": "P300",
-   "material": "Grade 90 stud",
-   "ends": "—",
-   "weight": 23.2154,
-   "spool": "loose",
-   "a": {
-    "E": 3591.5,
-    "N": -180,
-    "EL": 1314
-   },
-   "b": {
-    "E": 3586,
-    "N": -180,
-    "EL": 1314
-   },
-   "centre": {
-    "E": 3588.75,
-    "N": -180,
-    "EL": 1314
-   },
-   "axis": {
-    "E": -1,
-    "N": 0,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-4",
-    "SW-FLG-7"
-   ]
-  },
-  {
    "tag": "24\"-P300-P-11022/p7",
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
-   "key": "PIPE|24|P300|9.250",
+   "key": "PIPE|24|P300|44.375",
    "NPS": 24,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 9.25,
-   "weight": 132.0704,
+   "cutLength": 44.375,
+   "weight": 633.581,
    "spool": "24\"-P300-P-11022-SP02",
    "a": {
-    "E": 3583.25,
+    "E": 3618.375,
     "N": -180,
     "EL": 1314
    },
@@ -298,7 +168,7 @@
     "EL": 1314
    },
    "centre": {
-    "E": 3578.625,
+    "E": 3596.1875,
     "N": -180,
     "EL": 1314
    },
@@ -319,7 +189,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 24\" P300",
    "designation": "EL90-24-P300",
    "key": "EL|24|P300|90",
@@ -361,7 +231,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|28.000",
@@ -404,7 +274,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 24\" P300",
    "designation": "EL90-24-P300",
    "key": "EL|24|P300|90",
@@ -446,7 +316,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|160.000",
@@ -489,7 +359,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 24\" P300",
    "designation": "EL90-24-P300",
    "key": "EL|24|P300|90",
@@ -531,7 +401,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|413.714",
@@ -574,7 +444,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|413.714",
@@ -617,7 +487,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|413.714",
@@ -660,7 +530,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|413.714",
@@ -703,7 +573,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|413.714",
@@ -746,7 +616,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|413.714",
@@ -789,7 +659,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|413.714",
@@ -832,7 +702,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 24\" P300",
    "designation": "EL90-24-P300",
    "key": "EL|24|P300|90",
@@ -874,7 +744,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|52.000",
@@ -917,7 +787,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 24\" P300",
    "designation": "EL90-24-P300",
    "key": "EL|24|P300|90",
@@ -959,7 +829,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
    "key": "PIPE|24|P300|268.938",
@@ -1002,16 +872,16 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 24\" P300 BEVELLED ENDS",
    "designation": "PIPE24-P300",
-   "key": "PIPE|24|P300|268.938",
+   "key": "PIPE|24|P300|305.813",
    "NPS": 24,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 268.9375,
-   "weight": 3839.8648,
+   "cutLength": 305.8125,
+   "weight": 4366.3617,
    "spool": "24\"-P300-P-11022-SP03",
    "a": {
     "E": 558,
@@ -1020,12 +890,12 @@
    },
    "b": {
     "E": 558,
-    "N": 505.875,
+    "N": 542.75,
     "EL": 1686
    },
    "centre": {
     "E": 558,
-    "N": 371.4063,
+    "N": 389.8438,
     "EL": 1686
    },
    "axis": {
@@ -1057,17 +927,17 @@
    "spool": "loose",
    "a": {
     "E": 558,
-    "N": 514.125,
+    "N": 551,
     "EL": 1686
    },
    "b": {
     "E": 558,
-    "N": 508.625,
+    "N": 545.5,
     "EL": 1686
    },
    "centre": {
     "E": 558,
-    "N": 511.375,
+    "N": 548.25,
     "EL": 1686
    },
    "axis": {
@@ -1085,7 +955,7 @@
    "line": "24\"-P300-P-11022",
    "lineClass": "H300",
    "kind": "flange",
-   "itemNo": 4,
+   "itemNo": 2,
    "description": "FLANGE WELD-NECK 24\" P300 RAISED FACE",
    "designation": "FLG24-P300",
    "key": "WNF|24|P300",
@@ -1098,17 +968,17 @@
    "spool": "24\"-P300-P-11022-SP04",
    "a": {
     "E": 558,
-    "N": 511.3125,
+    "N": 548.1875,
     "EL": 1686
    },
    "b": {
     "E": 558,
-    "N": 505.875,
+    "N": 542.75,
     "EL": 1686
    },
    "centre": {
     "E": 558,
-    "N": 508.5938,
+    "N": 545.4688,
     "EL": 1686
    },
    "axis": {
@@ -1124,215 +994,6 @@
     "SW-FLG-5",
     "SW-FLG-6",
     "SW-FLG-7",
-    "SW-FLG-9"
-   ]
-  },
-  {
-   "tag": "24\"-P300-P-11022/B6",
-   "line": "24\"-P300-P-11022",
-   "lineClass": "H300",
-   "kind": "gasket",
-   "itemNo": 1,
-   "description": "GASKET 24\" P300 COMPRESSED SHEET",
-   "designation": "GASKET24-P300",
-   "key": "GSK|24|P300",
-   "NPS": 24,
-   "cls": "P300",
-   "material": "compressed sheet (non-steel)",
-   "ends": "—",
-   "weight": 0,
-   "spool": "loose",
-   "a": {
-    "E": 558,
-    "N": 511.4375,
-    "EL": 1686
-   },
-   "b": {
-    "E": 558,
-    "N": 511.3125,
-    "EL": 1686
-   },
-   "centre": {
-    "E": 558,
-    "N": 511.375,
-    "EL": 1686
-   },
-   "axis": {
-    "E": 0,
-    "N": -1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-2"
-   ]
-  },
-  {
-   "tag": "24\"-P300-P-11022/B5",
-   "line": "24\"-P300-P-11022",
-   "lineClass": "H300",
-   "kind": "studs",
-   "itemNo": 7,
-   "description": "STUD SET 24 × 0.75\" × 7-1/4\" WITH 2 NUTS, FOR 24\" P300",
-   "designation": "STUDS 24×0.75x7.25 (24-P300)",
-   "key": "STUDS|24|P300|5.500",
-   "NPS": 24,
-   "cls": "P300",
-   "material": "Grade 90 stud",
-   "ends": "—",
-   "weight": 28.4769,
-   "spool": "loose",
-   "a": {
-    "E": 558,
-    "N": 550.125,
-    "EL": 1686
-   },
-   "b": {
-    "E": 558,
-    "N": 544.625,
-    "EL": 1686
-   },
-   "centre": {
-    "E": 558,
-    "N": 547.375,
-    "EL": 1686
-   },
-   "axis": {
-    "E": 0,
-    "N": -1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-4",
-    "SW-FLG-7"
-   ]
-  },
-  {
-   "tag": "24\"-P300-P-11022/B4",
-   "line": "24\"-P300-P-11022",
-   "lineClass": "H300",
-   "kind": "valve",
-   "itemNo": 2,
-   "description": "VALVE, GATE, WEDGE, OS&Y 24\" P300",
-   "designation": "GATE24-P300",
-   "key": "VLV|GATE|24|P300",
-   "NPS": 24,
-   "cls": "P300",
-   "material": "Grade 36 casting",
-   "ends": "RF×RF",
-   "weight": 4789.5778,
-   "spool": "loose",
-   "a": {
-    "E": 558,
-    "N": 546.4375,
-    "EL": 1686
-   },
-   "b": {
-    "E": 558,
-    "N": 511.4375,
-    "EL": 1686
-   },
-   "centre": {
-    "E": 558,
-    "N": 528.9375,
-    "EL": 1686
-   },
-   "axis": {
-    "E": 0,
-    "N": -1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-4",
-    "SW-FLG-5",
-    "SW-FLG-6",
-    "SW-VLV-1",
-    "SW-VLV-10",
-    "SW-VLV-2",
-    "SW-VLV-4",
-    "SW-VLV-5",
-    "SW-VLV-9",
-    "SW-VLV-F-2",
-    "SW-VLV-G-1",
-    "SW-VLV-G-2",
-    "SW-VLV-G-3"
-   ]
-  },
-  {
-   "tag": "24\"-P300-P-11022/B3",
-   "line": "24\"-P300-P-11022",
-   "lineClass": "H300",
-   "kind": "gasket",
-   "itemNo": 1,
-   "description": "GASKET 24\" P300 COMPRESSED SHEET",
-   "designation": "GASKET24-P300",
-   "key": "GSK|24|P300",
-   "NPS": 24,
-   "cls": "P300",
-   "material": "compressed sheet (non-steel)",
-   "ends": "—",
-   "weight": 0,
-   "spool": "loose",
-   "a": {
-    "E": 558,
-    "N": 546.5625,
-    "EL": 1686
-   },
-   "b": {
-    "E": 558,
-    "N": 546.4375,
-    "EL": 1686
-   },
-   "centre": {
-    "E": 558,
-    "N": 546.5,
-    "EL": 1686
-   },
-   "axis": {
-    "E": 0,
-    "N": -1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-2"
-   ]
-  },
-  {
-   "tag": "24\"-P300-P-11022/B2",
-   "line": "24\"-P300-P-11022",
-   "lineClass": "H300",
-   "kind": "spectacle",
-   "itemNo": 8,
-   "description": "SPECTACLE BLIND 24\" P300 1.625\" THICK",
-   "designation": "SPEC24-P300",
-   "key": "SPEC|24|P300",
-   "NPS": 24,
-   "cls": "P300",
-   "material": "Grade 36 forging",
-   "ends": "RF×RF",
-   "weight": 347.7163,
-   "spool": "loose",
-   "a": {
-    "E": 558,
-    "N": 548.1875,
-    "EL": 1686
-   },
-   "b": {
-    "E": 558,
-    "N": 546.5625,
-    "EL": 1686
-   },
-   "centre": {
-    "E": 558,
-    "N": 547.375,
-    "EL": 1686
-   },
-   "axis": {
-    "E": 0,
-    "N": -1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-13",
     "SW-FLG-9"
    ]
   },
@@ -1396,7 +1057,7 @@
     "24\"-P300-P-11022-SP02"
    ],
    "at": {
-    "E": 3583.25,
+    "E": 3618.375,
     "N": -180,
     "EL": 1314
    },
@@ -2009,7 +1670,7 @@
    ],
    "at": {
     "E": 558,
-    "N": 505.875,
+    "N": 542.75,
     "EL": 1686
    },
    "key": "BW|24|P300",
@@ -2328,7 +1989,7 @@
     "24\"-P300-P-11022/W12",
     "24\"-P300-P-11022/W13"
    ],
-   "weight": 46921.8586
+   "weight": 47423.3692
   },
   {
    "id": "24\"-P300-P-11022-SP03",
@@ -2345,7 +2006,7 @@
     "24\"-P300-P-11022/W17",
     "24\"-P300-P-11022/W18"
    ],
-   "weight": 10231.995
+   "weight": 10758.4919
   },
   {
    "id": "24\"-P300-P-11022-SP04",
@@ -2360,51 +2021,33 @@
   {
    "itemNo": 1,
    "description": "GASKET 24\" P300 COMPRESSED SHEET",
-   "qty": 5,
+   "qty": 2,
    "weight": 0
   },
   {
    "itemNo": 2,
-   "description": "VALVE, GATE, WEDGE, OS&Y 24\" P300",
-   "qty": 2,
-   "weight": 9579.1555
-  },
-  {
-   "itemNo": 3,
-   "description": "STUD SET 24 × 0.75\" × 5-1/2\" WITH 2 NUTS, FOR 24\" P300",
-   "qty": 3,
-   "weight": 69.6462
-  },
-  {
-   "itemNo": 4,
    "description": "FLANGE WELD-NECK 24\" P300 RAISED FACE",
    "qty": 2,
    "weight": 442.7553
   },
   {
-   "itemNo": 5,
-   "description": "PIPE 24\" P300 BEVELLED ENDS",
-   "qty": 13,
-   "length": 3683.125,
-   "weight": 52587.2072
+   "itemNo": 3,
+   "description": "STUD SET 24 × 0.75\" × 5-1/2\" WITH 2 NUTS, FOR 24\" P300",
+   "qty": 2,
+   "weight": 46.4308
   },
   {
-   "itemNo": 6,
+   "itemNo": 4,
+   "description": "PIPE 24\" P300 BEVELLED ENDS",
+   "qty": 13,
+   "length": 3755.125,
+   "weight": 53615.2146
+  },
+  {
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 24\" P300",
    "qty": 5,
    "weight": 4454.3593
-  },
-  {
-   "itemNo": 7,
-   "description": "STUD SET 24 × 0.75\" × 7-1/4\" WITH 2 NUTS, FOR 24\" P300",
-   "qty": 1,
-   "weight": 28.4769
-  },
-  {
-   "itemNo": 8,
-   "description": "SPECTACLE BLIND 24\" P300 1.625\" THICK",
-   "qty": 1,
-   "weight": 347.7163
   }
  ],
  "nodes": [
@@ -2428,25 +2071,7 @@
   },
   {
    "at": {
-    "E": 3588.8125,
-    "N": -180,
-    "EL": 1314
-   },
-   "kind": "valve end",
-   "ref": "24\"-P300-P-11022/A2"
-  },
-  {
-   "at": {
-    "E": 3588.6875,
-    "N": -180,
-    "EL": 1314
-   },
-   "kind": "gasket end",
-   "ref": "24\"-P300-P-11022/A4"
-  },
-  {
-   "at": {
-    "E": 3583.25,
+    "E": 3618.375,
     "N": -180,
     "EL": 1314
    },
@@ -2654,7 +2279,7 @@
   {
    "at": {
     "E": 558,
-    "N": 505.875,
+    "N": 542.75,
     "EL": 1686
    },
    "kind": "pipe end",
@@ -2663,47 +2288,11 @@
   {
    "at": {
     "E": 558,
-    "N": 511.3125,
+    "N": 548.1875,
     "EL": 1686
    },
    "kind": "flange end",
    "ref": "24\"-P300-P-11022/B7"
-  },
-  {
-   "at": {
-    "E": 558,
-    "N": 511.4375,
-    "EL": 1686
-   },
-   "kind": "gasket end",
-   "ref": "24\"-P300-P-11022/B6"
-  },
-  {
-   "at": {
-    "E": 558,
-    "N": 546.4375,
-    "EL": 1686
-   },
-   "kind": "valve end",
-   "ref": "24\"-P300-P-11022/B4"
-  },
-  {
-   "at": {
-    "E": 558,
-    "N": 546.5625,
-    "EL": 1686
-   },
-   "kind": "gasket end",
-   "ref": "24\"-P300-P-11022/B3"
-  },
-  {
-   "at": {
-    "E": 558,
-    "N": 548.1875,
-    "EL": 1686
-   },
-   "kind": "spectacle end",
-   "ref": "24\"-P300-P-11022/B2"
   },
   {
    "at": {
@@ -2716,11 +2305,11 @@
   }
  ],
  "totals": {
-  "items": 32,
+  "items": 24,
   "welds": 19,
   "fieldWelds": 3,
   "supports": 13,
-  "pipeLength": 3683.125,
-  "weight": 67509.3166
+  "pipeLength": 3755.125,
+  "weight": 58558.7599
  }
 }

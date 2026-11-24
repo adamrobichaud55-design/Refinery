@@ -3222,6 +3222,9 @@ catalogue's own entries are unchanged. Plant 3 states the wall of SW-PRC-14.
   long and a diverging cone 5 OD long to a discharge flange of the suction size. Reason: the
   jet entrains the suction gas; the diverging cone is long so the flow stays attached while
   it slows and regains pressure.
+  Where a duty states them (SW-PRC-18; added 2026-11-24), the discharge flange and the
+  motive steam nozzle are of the stated sizes, and the diverging cone ends at the discharge's
+  diameter; an item with neither stated is as before.
 - `SW-EQC-53` Cabin heater: a radiant box of stated length, width and height standing 84 in
   above grade on `W8` columns at its corners and at 20 ft at most; floor burners in one row on
   the centreline at a spacing of half the width, each by SW-EQC-42 with a throat of 0.12 of
@@ -3326,6 +3329,59 @@ catalogue's own entries are unchanged. Plant 3 states the wall of SW-PRC-14.
   through its top hatch from a platform level with it; the arm swings and drops to reach
   the hatch. The riser's inlet is the plant's to place; heating of a sulfur arm is not
   drawn.
+- `SW-EQC-68` Vacuum ejector set (added 2026-11-24): the ejectors and surface condensers of
+  SW-PRC-18 as one assembly with the pipework between them, from each stage's stated sizes
+  (the ejector's suction, discharge and steam connection; the condenser's shell diameter and
+  wall, its vent, water connections and drain) and the sizes of the set's steam and water
+  connections. Heights are above the steel the saddles stand on.
+  - Condensers (SW-DET-11, tubes 20 ft): side by side on their saddles, tubesheets in one
+    line, shell undersides 4 ft up; the first stage's at one side and the later stages' in
+    order beside it, 30 in between the body flanges of the first and second (a way through)
+    and 18 in between later ones, each spacing to the next 6 in. Reason: saddles in one line
+    stand on two beams; 4 ft leaves room under a channel for its water connection and the
+    turn into it.
+  - On each shell: the vapour inlet on top near the tubesheet (the inlet's own diameter and
+    6 in from the body flange, to the next 6 in; later stages 18 in further along for each
+    stage, so that their steam branches lie apart); the vent on top at 0.9 of the tube
+    length; under the shell at the same station a condensate boot, a pipe of twice the
+    drain's size (6 in least) and 12 in long, closed at the bottom, on which the drain
+    stands; water in under the channel and out on top of it, at the channel's mid-length
+    (the first stage's to the nearest 6 in). Reason: vapour enters at one end and what will
+    not condense leaves at the other, having passed the whole bundle; condensate collects in
+    the boot clear of the tubes; water enters low and leaves high so the channel stays full.
+  - The first ejector (SW-EQC-52) lies above its condenser, pointing at the tubesheet end,
+    its suction on top, and turns down into the vapour inlet through a flanged bend of
+    radius 1.5 diameters; a straight piece of up to 6 in in that bend sets the suction on
+    the 6 in module from the tubesheet line. Beyond the condenser's rear head it rests on
+    two frames of `W8x24`, posts either side and a beam under it: one under the suction
+    chamber, one under the middle of the throat. Reason: at ten diameters it is longer than its
+    condenser, and a horizontal ejector is reached along its length from one floor.
+  - Each later ejector stands on its condenser's vapour inlet, discharging straight down,
+    its suction facing the stage before. Reason: a small ejector stands on its own flange;
+    upright, it needs no bend and no floor of its own.
+  - Vents: from the top of each condenser a pipe of the next ejector's suction size rises
+    to that suction's height, turns toward the next condenser, runs back along the gap
+    beside it and turns in to the suction; bends of 1.5 diameters, a flange at each end.
+  - Steam: one pipe of the set's steam size rises through the floor between the first and
+    second condensers at the tubesheet line, turns along the set at the first ejector's
+    height, and turns in to that ejector's steam connection behind it; a branch runs across
+    from it and down to the top of each later ejector.
+  - Cooling water: a supply pipe of the set's water size runs under the channels and turns
+    up into the first condenser's water inlet, with a branch up to each later one; a return
+    pipe leaves the first condenser's outlet, runs over the channels and takes a branch
+    from each later one. Both turn down beyond the last condenser, 42 in apart, and pass
+    through the floor.
+  - The steam and water pipes end 24 in below the steel, each with a flange; the drains
+    and the first ejector's suction are flanged nozzles. In a plant these seven connections
+    are the plant's to make (SW-CELL-4), and the item is used without them.
+  - Each straight piece and each bend of the pipework is a solid of its own, so that a plant
+    holds each by its own box. A flanged end stands a gasket's thickness off the face it
+    meets; gaskets and bolts of these joints, and the set's valves and instruments, are not
+    drawn; the tubes are inside and not drawn.
+  Reason for the whole: the condensers are the heavy items and fix the plan; each ejector is
+  as near its condenser's inlet as its shape allows; every connection a plant must meet is
+  either on top (the suction) or under the floor (drains, steam and water), where a line
+  can come to it without crossing the set.
 
 ## 73. Further civil and concrete items (`SW-CIV-17..28`) — catalogue items only
 
@@ -3895,6 +3951,55 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   holds the dissolved solids at about five times the make-up's. Circulating pumps share the
   flow with one spare. Reason: the fill wets only so much water per square foot before it
   floods; the extra cell lets one be taken out for cleaning in summer.
+- `SW-PRC-18` Vacuum ejector set (added 2026-11-24). A steam jet compresses the gas it draws
+  by a limited ratio, and the steam it needs rises steeply with that ratio. A vacuum is
+  therefore held by stages in series, with a surface condenser after each stage to take out
+  the steam before the next stage has to compress it.
+  - Water's vapour pressure: ln(p / 14.696) = −(L M / R)(1/T − 1/671.67), p in psia and T in
+    °R, with L = 1,000 Btu/lb, M = 18 and R = 1.986 Btu/lbmol·°R. This is the
+    Clausius–Clapeyron relation from the boiling point at one atmosphere (212 °F) and the
+    latent heat the cooling tower rule takes (SW-PRC-16). SmartWeld's own relation: no table
+    of steam properties is used or checked against.
+  - The first condenser's pressure is that at which steam condenses 15 °F above the
+    temperature the cooling water leaves at (so at 120 °F). Reason: the first stage compresses
+    the whole load at its largest volume, so it is asked for as little as the water allows;
+    water cannot condense steam colder than itself and needs a difference to work with.
+  - From there to the hotwell's pressure the further stages compress by equal ratios, as few
+    stages as keep each ratio at five or less. The first stage's own ratio is five at most
+    too: a column held at a lower pressure than that allows would need a stage with no
+    condenser after it, which is not built here.
+  - Each condenser's vent leaves 10 °F warmer than the water enters (at 95 °F): the gas that
+    does not condense, carrying the water vapour that saturates it at that temperature, moles
+    of vapour = moles of gas × p_w / (p − p_w). That vent is the next stage's load. The oil in
+    the column's overhead condenses in the first condenser. The gas that leaves the last
+    condenser is carried on the flowsheet dry.
+  - Motive steam: the flowsheet's quantity, shared among the stages in proportion to
+    n T ln r of each (moles of load, absolute suction temperature, compression ratio), which
+    is the work of compressing the load at one temperature.
+  - A condenser's duty is the water it condenses × L (the oil's own heat, about a hundredth
+    of it, is left out). Each condenser takes cooling water in parallel, 85 to 105 °F, so the
+    set's water is the sum of the duties / 20 Btu/lb. Surface and shells by SW-PRC-8
+    (condensing vapour to water, U 90), the steam condensing at the temperature of its
+    pressure; the shell not smaller than three times its ejector's discharge, as far as
+    SW-PRC-8's shells go.
+  - Condensate leaves each condenser at its condensing temperature. The last condenser's
+    leaves together with the gas, as one mixed stream. The hotwell's contents are at the
+    mixed temperature of what it receives, to 5 °F.
+  - Sizes. An ejector's suction is the line size (SW-PRC-4) for its load at its suction
+    pressure and temperature. Its discharge is the line size for load and steam together at
+    the condenser's pressure and their mass-weighted mean temperature (the steam arrives at
+    its header's temperature). Its steam connection is the line size for its steam, 2 in at
+    least. A condenser's water connections are the line size for its water, 2 in at least.
+  - Tail pipes. A condenser at less than the hotwell's pressure can drain only down a leg
+    tall enough to balance the difference. Its drain stands above the hotwell's liquid, taken
+    at the hotwell's centre line, by (hotwell's pressure − condenser's pressure) × 144 / K-5
+    ft of water, and 5 ft more. Each stage's condensate has a tail pipe of its own to the
+    hotwell, sized as a gravity line: legs at different pressures joined above their seals
+    would pass vapour from one condenser back to another.
+    The hotwell is at least 4 ft longer than its tail pipes are apart, to the next foot:
+    the flowsheet states the length, and a test checks it against the set as built.
+  Reason: each figure is what the service asks, as stated with it; the ratios and
+  temperature differences are round figures of general practice, SmartWeld's own choice.
 
 ## 76. Plant 3: the code layer (`SW-REG-*`) — recalled from general knowledge, flagged, for the owner to verify
 
@@ -4142,9 +4247,13 @@ company practice was consulted, and they are for the owner to tune (PROVENANCE P
   racks want level ground; a 2 : 1 slope stands in soil and weathered rock without a wall.
 - `SW-SITE-4` Where each area goes, and why.
   - Process units, on one bench at mid-height: on both sides of a main pipeway that runs
-    east–west in a corridor 100 ft wide (the rack, and an access way each side, which keeps
-    facing units 100 ft apart), each unit's own rack at right angles to it, the unit's battery
-    limit at the pipeway. Fired heaters stand at the outer end of their unit, away from the
+    east–west in a corridor 60 ft wide (the rack, 40 ft, and 10 ft either side of it), each
+    unit's own rack at right angles to it, the unit's battery limit at the corridor's edge.
+    (Amended 2026-11-24 at the owner's instruction, "the units are all too segregated, they
+    should be together and more intertwined to where they all connect with one another":
+    the corridor was 100 ft, which left 30 ft of open ground between a unit's valve bay and
+    the rack its lines cross to; at 10 ft a line steps from the unit's last bent to the main
+    rack's column line in one span, and the way along the pipeway is under the rack itself.) Fired heaters stand at the outer end of their unit, away from the
     pipeway and from equipment that can leak. The crude and vacuum units stand side by side,
     since they exchange hot streams; the hydrogen users stand beside the reformer that feeds
     them; the sulfur block stands downwind of the others; room is left for one more unit.
@@ -4170,8 +4279,14 @@ company practice was consulted, and they are for the owner to tune (PROVENANCE P
     boundary, upwind and at least 500 ft from the nearest unit; the control building between
     them and the units, 250 ft from the nearest unit; truck loading at the north-west with its
     own gate, so road tankers do not pass through the plant.
-- `SW-SITE-5` Spacing kept on the plot (clear distances): unit to unit 100 ft, with a road
-  between; equipment to a fired heater 50 ft; tank shell to tank shell half the larger
+- `SW-SITE-5` Spacing kept on the plot (clear distances): unit to unit 50 ft, with a road
+  between (amended 2026-11-24 at the owner's instruction, from 100 ft: a road 20 ft wide
+  and 15 ft either side of it is room for a fire engine or a crane to stand and work
+  between two units; the units along the pipeway are one plant and share its rack); a
+  unit's plot is no wider than its unit, to the next 10 ft (added 2026-11-24: the plots
+  were drawn before the units were built, twice as wide as the units came to be, so that
+  neighbours stood 200 to 300 ft apart and read as separate plants); equipment to a fired
+  heater 50 ft; tank shell to tank shell half the larger
   diameter, 50 ft at least; tank shell to its dike's inner toe half its height, 15 ft at least;
   tanks to a process unit 250 ft; spheres and bullets one diameter from each other and 200 ft
   from anything else; units and tanks to the property line 200 ft. Tanks of one kind of stock
@@ -4180,7 +4295,9 @@ company practice was consulted, and they are for the owner to tune (PROVENANCE P
   before it is fought, and fire-fighters need a road and room between.
 - `SW-SITE-6` Roads: primary roads 24 ft wide and secondary 20 ft, on their own graded benches
   at 6 % at most, with a road round the process bench, round each tank terrace and to every
-  area; pipeways cross roads on bridges with 20 ft clear (SW-STA-8). A chain-link fence on
+  area; pipeways cross roads on bridges with 20 ft clear (SW-STA-8), except the road across
+  the main pipeway, which passes under its rack between two bents (SW-PWY-2; amended
+  2026-11-24). A chain-link fence on
   posts runs 50 ft inside the property line. Reason: every unit and tank must be reachable by
   a fire engine from two directions.
 - `SW-SITE-7` The plot plan — the rectangle, bench elevation and orientation of every area — is
@@ -4240,6 +4357,18 @@ their own geometry rules, which are unchanged.
   end of the row or in a row behind it (amended 2026-11-24: two tanks 30 and 50 ft across
   stood in the middle of the sulfur unit's first row and pushed its stripper, furnace and
   converters 110 ft from the rack; a tank has three or four connections, a column a dozen).
+  An ejector set stands behind the column it draws from, in a row of its own 10 ft further
+  from the rack, its first ejector's suction at the column's station along the rack and
+  its condensers' channels toward the heater end (added 2026-11-24). Reason: a vacuum
+  column's overhead is the unit's largest line, and under vacuum every foot and every
+  turn of it costs pressure the ejectors must make up: it runs straight back from the
+  column's top and falls onto the first ejector; and the generator sends along the rack any
+  process line whose ends are more than 20 ft apart along it (SW-RT-*), which this line
+  must never be.
+  A hotwell stands under the ejector set that drains into it, square to the rack, its axis
+  under the set's row of drains and its middle under the middle of that row (added
+  2026-11-24). Reason: a tail pipe is a leg of liquid held up by the vacuum above it, and
+  must fall straight, with no level run for vapour to lodge in.
   Reason: pumps under
   the edge of the rack have the shortest suction and discharge; a channel end facing the access
   way lets a tube bundle be pulled; heaters away from equipment that can leak keep a leak from
@@ -4311,6 +4440,40 @@ their own geometry rules, which are unchanged.
     SW-EQC-55, whose headers are part of the item: the plant's lines could not meet them on
     the grid, and the headers are piping, which the generator makes with its welds and valves).
     Each takes the wall of SW-PRC-14 where the catalogue lets a wall be stated (§72).
+  - The vacuum ejector set (SW-EQC-68 at the sizes of SW-PRC-18; added 2026-11-24) stands on
+    a steel deck of its own, built of catalogue members as the rack is, its long axis along
+    the rack and the later condensers toward the rack (where it stands: SW-CELL-3). Its
+    seven connections are left off, as every body's are.
+    - Height. The deck's floor is where the first condenser's boot stands the tail pipe's
+      height of SW-PRC-18 above the hotwell's centre line, raised to a whole number of
+      equal stair flights (12 ft at most each, risers of 7.5 in: SW-SR-1, -3).
+    - Plan. The deck reaches 30 in beyond the set's widest part on the side away from the
+      rack (the way along the set), 24 in beyond the water pipes on the rack side, 48 in
+      beyond the channel covers (room to take a cover off) and 36 in beyond the steam pipe
+      behind the first ejector; each to the next foot.
+    - Steel, sized as §71 sizes its structures, for a floor load of 250 psf (SW-STA-12).
+      Beams across the deck, of depth span / 20 to 2 in, each sized for that load on what
+      it carries (SW-PF-3): one under each line of saddles and each ejector frame, which
+      also takes its equipment as a load at mid-span × 1.25 (a condenser is weighed with
+      its tubes and full of water; a frame takes a third of the first ejector); between
+      those, beams at 4 ft at most (SW-PLT-2). Where pipes pass through the floor the two
+      beams either side of their row stand 4 ft apart about its middle. A girder under each
+      long edge, of the beams' depth, for the floor load on half the width and the heaviest
+      beam's end as a load at mid-span. Columns under the girders at 20 ft at most, of
+      depth height / 36 to 2 in (SW-PLT-3), on base plates and pads. Struts between the
+      columns at the height of each stair landing: along each line (8 in), and across
+      (depth span / 30 to 2 in). Crossed rods in every storey of the end bay of each line
+      next the channel covers and of both end frames (no line hangs from a rod). Grating (SW-GR-1) cut round the
+      saddles, the frames' posts and the set's own pipes (an inch clear), and under each
+      boot for the sleeve of the tail pipe that falls from it (SW-PEN-1); guardrail on
+      every edge.
+    - A stair of those flights stands along the deck's far side, a landing at each end of
+      each flight on posts of its own, its top landing against the deck beside the
+      condensers, where the guardrail is open.
+    Reason: the set must stand a tail pipe's height above its hotwell; a deck gives its
+    condensers and ejectors a floor to be reached, lifted and cleaned from, and leaves the
+    ground under it to the hotwell and the tail pipes.
+  - A hotwell (SW-CELL-3) is a horizontal drum as any other, turned square to the rack.
   - Every body stands on an equipment pad 6 in high and 12 in larger all round, as in plants 1
     and 2 (SW-LAY-*). Nozzles are not part of a body: the piping stage adds each one from the
     nozzle schedule, so that the nozzle and the line that meets it are of one size and class.
@@ -4329,6 +4492,13 @@ their own geometry rules, which are unchanged.
   the rack's lowest tier a stringer `W8x18` runs along its centre line from bent to bent, its
   top level with the tier's steel: a line crossing under the rack, 24 ft from column line to
   column line, hangs from it midway.
+  Where a body stands in a row behind the first (an ejector set, SW-CELL-3), the same steel
+  leads to it (added 2026-11-24): beams of the same section and height, parallel to the
+  rack, at 15 ft at most between the yard's line and the body's own steel; each as long as
+  the body's connections toward the rack and its hotwell reach along the rack, with 6 ft
+  over at either end, on posts at 20 ft at most. Reason: the set's water, steam and hotwell
+  lines cross 45 ft of open ground between the yard's line and its deck, three times what a
+  pipe of their size spans; 15 ft is what the smallest of them, 3 in, spans (SW-PS-7).
 - `SW-CELL-7` Footprints (added 2026-11-24). A body's footprint in its row is not a figure
   given beforehand but what its solids and pads cover: every body is built once at the origin
   and measured there, and its row keeps that width and depth about the body's datum (a
@@ -4439,6 +4609,20 @@ What this section adds is what that generator is given.
     2026-11-24 from the other way round, when the pit stood elsewhere); the steam leaves on
     top at mid-length and the feed water enters underneath there. Reason: gas above, liquid sulfur below; water boils in the
     shell.
+  - Vacuum ejector set (SW-EQC-68; added 2026-11-24): each connection where the catalogue
+    item has it. The column's overhead enters on top of the first ejector's suction chamber;
+    each tail pipe, and the last condenser's outlet, leaves under its condenser's boot;
+    motive steam and cooling water are met at the lower ends of the set's own pipes, under
+    its deck. The set stands so that all seven are on the grid (SW-CELL-4).
+  - Hotwell (SW-CELL-3; added 2026-11-24): each tail pipe, and the last condenser's outlet,
+    enters on top directly under the boot it comes from; gas leaves on top midway between
+    the last two of them, the end toward the rack; water leaves underneath midway between
+    the first two, and oil underneath below the second tail pipe, toward the rack and its
+    pumps. Reason: a tail pipe falls straight (SW-CELL-3); oil floats to the far end from
+    where most of the water arrives; the gas line leaves from the end nearest the deck's
+    edge, within a span of the first steel it can hang from (as first written the gas left
+    beside the first tail pipe, 18 ft from that steel, and its run to the rack had no
+    support at all).
   - Reaction furnace with its waste heat boiler: the combustion air into the top of the
     burner's windbox; the acid gas into the windbox's side toward the rack and a second
     gas into its other side, both at the axis's height; the process gas from the end of the
@@ -4566,6 +4750,9 @@ What this section adds is what that generator is given.
     connections left 13 risers standing in the narrower chase and no way down for its
     24 in overhead line; the wider one given to every column made the generator's search
     in a small column's chase several times longer for nothing);
+    and in any case as far from the shell as the valve set on its largest connection
+    toward the rack, and the turn after it, reach (added 2026-11-24: the vacuum column's 36 in
+    feed, whose valve set ends 12 ft from the shell, outside a room 10 ft deep);
     for any other body, 6 ft all round; each as high as that body's highest connection
     needs for its valve and the turn after it, with 6 ft over, and closed again above.
     Where a line joins connections up there on two bodies (a column's top and the air
@@ -4574,7 +4761,9 @@ What this section adds is what that generator is given.
     steel that carries the cooler (added 2026-11-24: without it the crude column's overhead
     line had to come down under the rack's top tier and rise again to the cooler, and the
     generator's search, pulled straight toward the cooler, spent itself in the column's
-    chase before it found that way). A
+    chase before it found that way). The room of an ejector set reaches as high as the room
+    of the column whose overhead it takes (added 2026-11-24): that line runs back from the
+    column's top at the top's own level and falls onto the first ejector (SW-CELL-3). A
     line leaving a column's top comes down in the chase, beside the column's other lines,
     before it turns away (the 9 ft leaves room for
     the valved take-offs that rise from the headers on the top tier). (Amended 2026-11-24
@@ -4843,4 +5032,102 @@ What this section adds is what that generator is given.
   in the report; every other finding of the checks stands as the generator gives it.
   Reason: the checks are the generator's and are not changed for plant 3; what is
   reported must be what is there.
+- `SW-RPI-14` Valves not built (added 2026-11-24). The generator stands an isolation valve at
+  every equipment connection (SW-LL-6), which is right for most and wrong for a few. On the
+  generator's result, at the ends named here, the valve and what stands with it between the
+  nozzle and the line's own flange (blind or spade, a second valve, their gaskets and studs)
+  are taken out, the flange is brought up to the nozzle with one gasket and one set of
+  studs, and the pipe behind it is lengthened by what was taken out; its field weld moves
+  with the flange. Nothing else of the line changes, and the piece is cut again if that made
+  it longer than 40 ft (SW-RPI-10).
+  - Both ends of the line from a fired heater's process outlet to the column or reactor it
+    feeds. Reason: a transfer line carries the unit's whole charge, hot and part vapour; a
+    valve there could shut a fired coil in, and nothing is ever isolated between the two.
+  - Both ends of the line from a column's top to its condenser, air cooler or ejector set.
+    Reason: the column's relief is by way of its overhead; a valve there could shut it in,
+    and at a vacuum column's size would itself leak air into the vacuum.
+  - Both ends of each tail pipe and of the last condenser's outlet of an ejector set.
+    Reason: a shut drain floods its condenser and the vacuum is lost.
+  - The ejector set's end of its motive steam and cooling water lines. Reason: that end is
+    under the set's deck, where no one could reach a valve; each of these lines has its
+    valve at the header it leaves (SW-RPI-5), and the set's own valves, at each ejector and
+    each channel, belong to the set and are not drawn (SW-EQC-68).
+  The generator's own code is not changed; the correction is plant 3's, made in
+  `src/refinery/pipingReport.ts`, and each end corrected is named in the unit's notes. This
+  is the second of the two ways put to the owner on 2026-11-24 (PROVENANCE P-86), taken as
+  said there unless told otherwise. What it leaves as the generator made it: every other
+  equipment connection has its valve, including those a designer would leave out for a
+  relief path's sake, since this model carries no relief valves (SW-RPI-3).
 
+## 80. Plant 3: the main pipeway and the lines between units (`SW-PWY-*`)
+
+Written 2026-11-24 at the owner's instruction: "the units are all too segregated, they should be
+together and more intertwined to where they all connect with one another". The units stand
+closer (§77, amended the same day); this section joins them. The main pipeway is piped by the
+generator of plants 1 and 2, unchanged, as each unit is (§79): it is given a rack, the units'
+battery-limit spools as connections and a line for every stream between units. Nothing was
+looked up; the arrangement and its round figures are SmartWeld's own, from the reasoning given
+(PROVENANCE P-88).
+
+- `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),
+  in inches: x east along the rack from its west end, z south across it from its centre line,
+  y up from the bench. It is set on the site by a shift alone. Area number 10; its lines are
+  numbered `10nnn` (SW-LL-1).
+- `SW-PWY-2` The rack. One rack down the middle of the corridor between the two rows of units
+  (SW-SITE-4): 40 ft wide, bents at 20 ft, built as a unit's rack is (SW-RK-*, 40 psf a tier),
+  from 15 ft west of the first unit's plot to beyond the last, a whole number of bays. Tiers
+  at 19, 25 and 31 ft, midway between the tiers of the units' racks (16, 22 and 28 ft).
+  Reason: a line that turns from a unit's rack onto the main rack changes height as it
+  turns, 3 ft up or down, so that it crosses the lines already running there instead of
+  meeting them; 3 ft is two elbows of a 12 in line. The road across the pipeway (SW-SITE-6)
+  passes under the rack between two bents, 17 ft under the lowest tier's steel, and the way
+  along the pipeway is under the rack between its column lines.
+- `SW-PWY-3` What runs on it. Each stream between units (SW-REF-12) is a line of the size,
+  class and design conditions the process model gives that stream. It runs from the
+  battery-limit spool (SW-RPI-4) of each unit that sends it to the spool of each unit that
+  receives it. Where a stream has one unit at each end that is one line. Where it has more
+  (sour water from six units to one), the line runs between the two parties furthest apart
+  along the pipeway and every other party joins it by a branch from its own spool, with a tee
+  where the branch meets it. Reason: a collected or distributed stream is a header along the
+  rack with a connection at each unit it passes.
+- `SW-PWY-4` Limit spools. A party that has no battery-limit spool yet (a unit not yet piped;
+  the tank farm, the marine terminal, wastewater treatment and the other offsite areas, whose
+  pipeways are a later stage) is met at a limit spool of the pipeway's own: a flanged spool
+  12 in long closed by a blind flange, behind the block valve the generator stands at every
+  connection. Tag `PL-10{sequence}`. For a unit on the pipeway it stands at the edge of the
+  corridor on that unit's side, on the unit's centre line along the pipeway, at the elevation
+  of the unit racks' lowest tier, 2 ft from the next; for an offsite area it stands beyond
+  the end of the main rack nearest that area's pipeway (SW-SITE-4): east for the tank farm,
+  the liquefied gas bench, wastewater treatment and what lies beyond them, west for the
+  flare and the fire water tanks. Reason: every line of the pipeway can then be built whole
+  and valved off, and is met at its flange when the area beyond is piped; a blind behind a
+  valve is how a line is left for a later tie-in.
+- `SW-PWY-5` Tiers and lanes. Each line that runs the main rack is given its tier and lane
+  beforehand, as on a unit's rack (SW-RPI-7): the largest first, the lowest tier first,
+  each tier loaded to the same share of its width; lanes from the centre line outward on the
+  side of the rack where the line's first party stands; spacing by the same rule. A line of
+  14 in or more lies on the lowest tier.
+- `SW-PWY-6` The generator is run once for each line that runs the rack, with the branches
+  that join it, on the tier and in the lane given it, the lanes of the lines still to come
+  kept; then once for the lines between units that face each other across the corridor or
+  stand within 20 ft along it, which the generator lays direct (SW-RT-*). As SW-RPI-7.
+- `SW-PWY-7` At a unit's spool. The pipeway's line bolts to the spool's outer face flange to
+  flange: the valve the generator stands there is not built (as SW-RPI-14, by the same
+  correction on its result). Reason: the unit's own valve on the spool's inner face is the
+  block at the limit, and the spool between the two flanges is the piece taken out to part
+  them; a second valve a pipe's length from the first would shut nothing more. At a limit
+  spool (SW-PWY-4) the valve stays.
+- `SW-PWY-8` Where the pipeway's lines may travel. In the corridor; and, to reach a spool,
+  in the valve bay of that spool's unit between the unit's limit and the spool's face, no
+  wider than the unit's rack. Everywhere else the generator is shown the solid blocks of
+  SW-RPI-6. The first bent of each unit's rack and its spools are shown to it as they
+  stand.
+- `SW-PWY-9` Supports. The generator carries each line on the main rack's beams (SW-PS-*).
+  Between a unit's spool and the main rack a line passes over the first bent of that unit's
+  rack, on the beam of the tier it leaves the unit on: it rests on a shoe there, which is
+  added to the generator's result, since the generator knows no rack but the one it is
+  given. What remains unsupported is listed, as for a unit.
+- `SW-PWY-10` Checks, records and exports as for a unit (§40, SW-REG-9, SW-GT-*, SW-PCF-*):
+  the pipeway is one more piped area, shown with the units in every view of the plant.
+  Utility headers along the main rack, with a branch to each unit's header, are the next
+  stage: until then a unit's headers end capped at its battery limit (SW-RPI-12).

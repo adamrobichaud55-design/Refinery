@@ -10,12 +10,12 @@
   3
  ],
  "tierRoom": 180,
- "seconds": 1127,
+ "seconds": 937,
  "stats": {
   "lines": 134,
   "routed": 134,
   "failed": 0,
-  "comps": 4363,
+  "comps": 4347,
   "welds": 2405,
   "supports": 460,
   "penetrations": 0
@@ -41,7 +41,7 @@
    "12\"-P150-P-11702: unsupported span 439 in > 240 on run from 1944,276,-128",
    "12\"-P600-P-11021: unsupported span 512 in > 240 on run from 1524,210,730",
    "24\"-P300-P-11022: unsupported span 242 in > 240 on run from 3494,354,72",
-   "24\"-P300-P-11022: unsupported span 538 in > 240 on run from 558,486,32",
+   "24\"-P300-P-11022: unsupported span 575 in > 240 on run from 558,486,32",
    "10\"-P150-P-11024: unsupported span 256 in > 240 on run from 726,414,-241",
    "10\"-P150-P-11024: unsupported span 263 in > 240 on run from 1608,288,113",
    "10\"-P150-P-11025: unsupported span 444 in > 240 on run from 2376,294,-71",
@@ -898,7 +898,7 @@
    "designP": 60,
    "designT": 730,
    "routed": true,
-   "components": 28,
+   "components": 22,
    "welds": 19,
    "supports": 13,
    "lengthFt": 333,
@@ -916,7 +916,7 @@
    "designP": 50,
    "designT": 300,
    "routed": true,
-   "components": 28,
+   "components": 22,
    "welds": 19,
    "supports": 0,
    "lengthFt": 122
@@ -2844,14 +2844,14 @@
    "cap": 10,
    "elbow": 812,
    "flange": 456,
-   "gasket": 726,
+   "gasket": 720,
    "olet": 6,
    "pipe": 1200,
    "reducer": 80,
    "spade": 80,
-   "spectacle": 8,
+   "spectacle": 6,
    "tee": 42,
-   "valve": 305
+   "valve": 301
   },
   "welds": {
    "BW, field": 339,
@@ -2868,5 +2868,10 @@
    "trunnion": 55
   }
  },
- "notes": []
+ "notes": [
+  "24\"-P300-P-11022: no valve at H-1101-N2; GATE 24 and what stood with it left out, 3 pieces, the pipe 35.1 in longer (SW-RPI-14)",
+  "24\"-P300-P-11022: no valve at C-1101-N2; GATE 24 and what stood with it left out, 5 pieces, the pipe 36.9 in longer (SW-RPI-14)",
+  "24\"-P150-P-11023: no valve at C-1101-N3; GATE 24 and what stood with it left out, 5 pieces, the pipe 36.5 in longer (SW-RPI-14)",
+  "24\"-P150-P-11023: no valve at A-1101A-N1; GATE 24 and what stood with it left out, 3 pieces, the pipe 35.1 in longer (SW-RPI-14)"
+ ]
 }

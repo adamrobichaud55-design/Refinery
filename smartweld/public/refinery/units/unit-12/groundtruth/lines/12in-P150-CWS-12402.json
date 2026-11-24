@@ -1,0 +1,774 @@
+{
+ "header": {
+  "line": "12\"-P150-CWS-12402",
+  "lineClass": "W150",
+  "fluid": "Water (cooling and process)",
+  "service": "CWS",
+  "NPS": 12,
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "kind": "header",
+  "from": "cap",
+  "to": "cap",
+  "flow": "cap → cap",
+  "joint": "BW"
+ },
+ "items": [
+  {
+   "tag": "12\"-P150-CWS-12402/cap0",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 12\" P150",
+   "designation": "CAP12-P150",
+   "key": "CAP|12|P150",
+   "NPS": 12,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 18.5301,
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "a": {
+    "E": 368,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 372,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 370,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/p2",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 12\" P150 BEVELLED ENDS",
+   "designation": "PIPE12-P150",
+   "key": "PIPE|12|P150|412.000",
+   "NPS": 12,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 412,
+   "weight": 1600.0135,
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "a": {
+    "E": 372,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 784,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 578,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/p3",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 12\" P150 BEVELLED ENDS",
+   "designation": "PIPE12-P150",
+   "key": "PIPE|12|P150|412.000",
+   "NPS": 12,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 412,
+   "weight": 1600.0135,
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "a": {
+    "E": 784,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 1196,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 990,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/T:12\"-P150-CWS-12502",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "kind": "tee",
+   "itemNo": 3,
+   "description": "TEE EQUAL 12\" P150",
+   "designation": "TEE12-P150",
+   "key": "TEE|12|P150|12",
+   "NPS": 12,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW×BW",
+   "weight": 94.4811,
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "a": {
+    "E": 1196,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 1216,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 1206,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-2",
+    "SW-FIT-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/p5",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 12\" P150 BEVELLED ENDS",
+   "designation": "PIPE12-P150",
+   "key": "PIPE|12|P150|406.000",
+   "NPS": 12,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 406,
+   "weight": 1576.7124,
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "a": {
+    "E": 1216,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 1622,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 1419,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/p6",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 12\" P150 BEVELLED ENDS",
+   "designation": "PIPE12-P150",
+   "key": "PIPE|12|P150|406.000",
+   "NPS": 12,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 406,
+   "weight": 1576.7124,
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "a": {
+    "E": 1622,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 2028,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 1825,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/cap1",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "kind": "cap",
+   "itemNo": 1,
+   "description": "CAP 12\" P150",
+   "designation": "CAP12-P150",
+   "key": "CAP|12|P150",
+   "NPS": 12,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW",
+   "weight": 18.5301,
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "a": {
+    "E": 2028,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 2032,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 2030,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FIT-4",
+    "SW-FIT-5"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "12\"-P150-CWS-12402/W1",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P150",
+   "joins": [
+    "12\"-P150-CWS-12402/cap0",
+    "12\"-P150-CWS-12402/p2"
+   ],
+   "shopField": "shop",
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "spools": [
+    "12\"-P150-CWS-12402-SP01",
+    "12\"-P150-CWS-12402-SP01"
+   ],
+   "at": {
+    "E": 372,
+    "N": 24,
+    "EL": 1548
+   },
+   "key": "BW|12|P150",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/W2",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P150",
+   "joins": [
+    "12\"-P150-CWS-12402/p2",
+    "12\"-P150-CWS-12402/p3"
+   ],
+   "shopField": "shop",
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "spools": [
+    "12\"-P150-CWS-12402-SP01",
+    "12\"-P150-CWS-12402-SP01"
+   ],
+   "at": {
+    "E": 784,
+    "N": 24,
+    "EL": 1548
+   },
+   "key": "BW|12|P150",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/W3",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P150",
+   "joins": [
+    "12\"-P150-CWS-12402/p3",
+    "12\"-P150-CWS-12402/T:12\"-P150-CWS-12502"
+   ],
+   "shopField": "shop",
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "spools": [
+    "12\"-P150-CWS-12402-SP01",
+    "12\"-P150-CWS-12402-SP01"
+   ],
+   "at": {
+    "E": 1196,
+    "N": 24,
+    "EL": 1548
+   },
+   "key": "BW|12|P150",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/W4",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P150",
+   "joins": [
+    "12\"-P150-CWS-12402/T:12\"-P150-CWS-12502",
+    "12\"-P150-CWS-12402/p5"
+   ],
+   "shopField": "shop",
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "spools": [
+    "12\"-P150-CWS-12402-SP01",
+    "12\"-P150-CWS-12402-SP01"
+   ],
+   "at": {
+    "E": 1216,
+    "N": 24,
+    "EL": 1548
+   },
+   "key": "BW|12|P150",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/W5",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P150",
+   "joins": [
+    "12\"-P150-CWS-12402/p5",
+    "12\"-P150-CWS-12402/p6"
+   ],
+   "shopField": "shop",
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "spools": [
+    "12\"-P150-CWS-12402-SP01",
+    "12\"-P150-CWS-12402-SP01"
+   ],
+   "at": {
+    "E": 1622,
+    "N": 24,
+    "EL": 1548
+   },
+   "key": "BW|12|P150",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/W6",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "BW",
+   "size": 0.375,
+   "NPS": 12,
+   "cls": "P150",
+   "joins": [
+    "12\"-P150-CWS-12402/p6",
+    "12\"-P150-CWS-12402/cap1"
+   ],
+   "shopField": "shop",
+   "spool": "12\"-P150-CWS-12402-SP01",
+   "spools": [
+    "12\"-P150-CWS-12402-SP01",
+    "12\"-P150-CWS-12402-SP01"
+   ],
+   "at": {
+    "E": 2028,
+    "N": 24,
+    "EL": 1548
+   },
+   "key": "BW|12|P150",
+   "weight": 1.2266,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "12\"-P150-CWS-12402/S1",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "guide",
+   "description": "GUIDE FOR 12\" LINE (GUIDE-12)",
+   "designation": "GUIDE-12",
+   "key": "SHOE|12|P150|guide|6.000",
+   "material": "Grade 36",
+   "weight": 23.8141,
+   "spool": "loose",
+   "at": {
+    "E": 600,
+    "N": 24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/S2",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "guide",
+   "description": "GUIDE FOR 12\" LINE (GUIDE-12)",
+   "designation": "GUIDE-12",
+   "key": "SHOE|12|P150|guide|6.000",
+   "material": "Grade 36",
+   "weight": 23.8141,
+   "spool": "loose",
+   "at": {
+    "E": 840,
+    "N": 24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/S3",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "anchor",
+   "description": "ANCHOR FOR 12\" LINE (ANCHOR-12)",
+   "designation": "ANCHOR-12",
+   "key": "SHOE|12|P150|anchor|6.000",
+   "material": "Grade 36",
+   "weight": 18.71,
+   "spool": "loose",
+   "at": {
+    "E": 1080,
+    "N": 24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/S4",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "guide",
+   "description": "GUIDE FOR 12\" LINE (GUIDE-12)",
+   "designation": "GUIDE-12",
+   "key": "SHOE|12|P150|guide|6.000",
+   "material": "Grade 36",
+   "weight": 23.8141,
+   "spool": "loose",
+   "at": {
+    "E": 1320,
+    "N": 24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/S5",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "shoe",
+   "description": "SHOE FOR 12\" LINE (SHOE-12)",
+   "designation": "SHOE-12",
+   "key": "SHOE|12|P150|shoe|6.000",
+   "material": "Grade 36",
+   "weight": 18.71,
+   "spool": "loose",
+   "at": {
+    "E": 1560,
+    "N": 24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "12\"-P150-CWS-12402/S6",
+   "line": "12\"-P150-CWS-12402",
+   "lineClass": "W150",
+   "type": "guide",
+   "description": "GUIDE FOR 12\" LINE (GUIDE-12)",
+   "designation": "GUIDE-12",
+   "key": "SHOE|12|P150|guide|6.000",
+   "material": "Grade 36",
+   "weight": 23.8141,
+   "spool": "loose",
+   "at": {
+    "E": 1800,
+    "N": 24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "12\"-P150-CWS-12402-SP01",
+   "items": [
+    "12\"-P150-CWS-12402/cap0",
+    "12\"-P150-CWS-12402/p2",
+    "12\"-P150-CWS-12402/p3",
+    "12\"-P150-CWS-12402/T:12\"-P150-CWS-12502",
+    "12\"-P150-CWS-12402/p5",
+    "12\"-P150-CWS-12402/p6",
+    "12\"-P150-CWS-12402/cap1"
+   ],
+   "shopWelds": [
+    "12\"-P150-CWS-12402/W1",
+    "12\"-P150-CWS-12402/W2",
+    "12\"-P150-CWS-12402/W3",
+    "12\"-P150-CWS-12402/W4",
+    "12\"-P150-CWS-12402/W5",
+    "12\"-P150-CWS-12402/W6"
+   ],
+   "weight": 6492.3527
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "CAP 12\" P150",
+   "qty": 2,
+   "weight": 37.0603
+  },
+  {
+   "itemNo": 2,
+   "description": "PIPE 12\" P150 BEVELLED ENDS",
+   "qty": 4,
+   "length": 1636,
+   "weight": 6353.4519
+  },
+  {
+   "itemNo": 3,
+   "description": "TEE EQUAL 12\" P150",
+   "qty": 1,
+   "weight": 94.4811
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 368,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "cap start",
+   "ref": "12\"-P150-CWS-12402/cap0"
+  },
+  {
+   "at": {
+    "E": 372,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "cap end",
+   "ref": "12\"-P150-CWS-12402/cap0"
+  },
+  {
+   "at": {
+    "E": 784,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "12\"-P150-CWS-12402/p2"
+  },
+  {
+   "at": {
+    "E": 1196,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "12\"-P150-CWS-12402/p3"
+  },
+  {
+   "at": {
+    "E": 1206,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "tee centre",
+   "ref": "12\"-P150-CWS-12402/T:12\"-P150-CWS-12502"
+  },
+  {
+   "at": {
+    "E": 1216,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "tee end",
+   "ref": "12\"-P150-CWS-12402/T:12\"-P150-CWS-12502"
+  },
+  {
+   "at": {
+    "E": 1622,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "12\"-P150-CWS-12402/p5"
+  },
+  {
+   "at": {
+    "E": 2028,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "12\"-P150-CWS-12402/p6"
+  },
+  {
+   "at": {
+    "E": 2032,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "cap end",
+   "ref": "12\"-P150-CWS-12402/cap1"
+  }
+ ],
+ "totals": {
+  "items": 7,
+  "welds": 6,
+  "fieldWelds": 0,
+  "supports": 6,
+  "pipeLength": 1636,
+  "weight": 6484.9933
+ }
+}

@@ -116,11 +116,43 @@ export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}
   if (models.length > 1) {
     const byNo = new Map(models.flatMap(m => m.lines.map(r => [r.no, r] as const))), stats: Record<string, number> = {};
     for (const m of models) for (const [key, v] of Object.entries(m.stats)) stats[key] = (stats[key] ?? 0) + v;
-    model = { ...models[models.length - 1], lines: up.lines.map(l => byNo.get(l.def.no)!).filter(Boolean), failures: models.flatMap(m => m.failures), stats };
+    model = { ...models[models.length - 1], lines: up.lines.map(l => byNo.get(l.def.no)!).filter(Boolean), failures: models.flatMap(m => m.failures), stats, cuts: models.flatMap(m => m.cuts ?? []) };
   }
+  const bared = removeValves(model, up); if (bared.length) { notes.push(...bared.map(c => `${c} (SW-RPI-14)`)); log(`unit ${up.unit}: ${bared.length} connection${bared.length > 1 ? 's' : ''} left without the generator's valve (SW-RPI-14)`); }
   const made = lengthenShortPieces(model); if (made.length) { notes.push(...made.map(c => `${c}: a make-up piece under 2 in beside a 45° offset, the offset moved along the run to make it 2 in (SW-RPI-11)`)); log(`unit ${up.unit}: ${made.length} make-up piece${made.length > 1 ? 's' : ''} under 2 in lengthened (SW-RPI-11)`); }
   const cut = cutLongPipes(model); if (cut.length) { notes.push(...cut.map(c => `${c}: a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)`)); log(`unit ${up.unit}: ${cut.length} piece${cut.length > 1 ? 's' : ''} of pipe over 40 ft cut again (SW-RPI-10)`); }
   return model;
+}
+/**
+ * SW-RPI-14: valves not built. At each end a line names (`UnitLine.bare`), what the generator stood between the nozzle and the line's own flange is taken out:
+ * the valve, a blind or spade, a second valve with its stub and flanges, their gaskets and studs. The line's flange is brought up to the nozzle with the
+ * gasket at the nozzle's face and the studs of the joint it made with the valve; the pipe behind it is lengthened by what was taken out, and its weld moves
+ * with the flange. Returns the ends corrected.
+ */
+export function removeValves(m: PipingModel, up: Pick<UnitPiping, 'lines'>): string[] {
+  const done: string[] = [], d3 = (p: V3, q: V3) => Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]), STACK = new Set(['gasket', 'spectacle', 'spade', 'valve', 'studs', 'flange']);
+  for (const l of up.lines) for (const side of l.bare ?? []) {
+    const r = m.lines.find(q => q.no === l.def.no); if (!r || !r.ok) continue;
+    // from the nozzle outward. The generator builds a stack from its nozzle, so each of its pieces has its end `a` toward the nozzle at either end of a line; a pipe runs with the flow
+    const cs = side === 'from' ? r.comps : [...r.comps].reverse(), near = 'a', far = 'b', pEnd = side === 'from' ? 'a' : 'b', end = l.def[side];
+    // the last valve reached from the nozzle through nothing but the pieces of a valve stack and stubs under 12 in; the line's flange is the first after it
+    let iv = -1; for (let i = 0; i < cs.length; i++) { const c = cs[i]; if (c.kind === 'valve') iv = i; else if (!(STACK.has(c.kind) || (c.kind === 'pipe' && d3(c.a, c.b) < 12))) break; }
+    const iF = iv < 0 ? -1 : cs.findIndex((c, i) => i > iv && c.kind === 'flange'), g = cs[0], fl = cs[iF], pipe = iF < 0 ? undefined : cs.slice(iF + 1).find(c => c.kind !== 'studs');
+    if (iv < 0 || !fl || g.kind !== 'gasket' || !pipe || pipe.kind !== 'pipe' || d3(pipe[pEnd], fl[far]) > 0.01) throw new Error(`${r.no}: its ${side} end is not a valve stack SW-RPI-14 knows (${cs.slice(0, 10).map(c => c.kind).join(', ')})`);
+    const shift: V3 = [g[far][0] - fl[near][0], g[far][1] - fl[near][1], g[far][2] - fl[near][2]], add = (p: V3): V3 => [p[0] + shift[0], p[1] + shift[1], p[2] + shift[2]], moveT = <T extends number[]>(t: T): T => [...t.slice(0, 12), t[12] + shift[0], t[13] + shift[1], t[14] + shift[2], 1] as unknown as T;
+    // the studs of the joint the flange made: those nearest its face; every other piece between the nozzle's gasket and the flange goes
+    const studs = cs.slice(1, iF + 2).filter(c => c.kind === 'studs').sort((p, q) => d3([(p.a[0] + p.b[0]) / 2, (p.a[1] + p.b[1]) / 2, (p.a[2] + p.b[2]) / 2], fl[near]) - d3([(q.a[0] + q.b[0]) / 2, (q.a[1] + q.b[1]) / 2, (q.a[2] + q.b[2]) / 2], fl[near]))[0];
+    const out = new Set(cs.slice(1, iF + 2).filter(c => c !== fl && c !== studs && (c.kind !== 'pipe' || cs.indexOf(c) < iF)).map(c => c.tag)), valves = cs.filter(c => out.has(c.tag) && c.kind === 'valve').map(c => c.key.split('|').slice(1, 3).join(' '));
+    for (const wd of r.welds) if (wd.joins.includes(fl.tag) && d3(wd.at, fl[far]) < 0.01) { wd.at = add(wd.at); wd.T = moveT(wd.T); }
+    for (const c of [fl, ...(studs ? [studs] : [])]) { c.a = add(c.a); c.b = add(c.b); c.T = moveT(c.T); }
+    pipe[pEnd] = add(pipe[pEnd]); if (pEnd === 'a') pipe.T = [...pipe.T.slice(0, 12), pipe.a[0], pipe.a[1], pipe.a[2], 1] as typeof pipe.T;
+    pipe.key = `${pipe.key.split('|').slice(0, 3).join('|')}|${d3(pipe.a, pipe.b).toFixed(3)}`;
+    const welds = r.welds.filter(wd => wd.joins.some(t => out.has(t))).length;
+    r.comps = r.comps.filter(c => !out.has(c.tag)); r.welds = r.welds.filter(wd => !wd.joins.some(t => out.has(t)));
+    m.stats.comps = (m.stats.comps ?? 0) - out.size; m.stats.welds = (m.stats.welds ?? 0) - welds;
+    done.push(`${r.no}: no valve at ${end.k === 'nozzle' ? end.id : side}; ${valves.join(' and ')} and what stood with ${valves.length > 1 ? 'them' : 'it'} left out, ${out.size} pieces, the pipe ${d3(shift, [0, 0, 0]).toFixed(1)} in longer`);
+  }
+  return done;
 }
 /**
  * SW-RPI-11: no make-up piece shorter than 2 in. The generator sets a branch's tee on its parent's run and afterwards turns a short jog of that run into
@@ -225,6 +257,9 @@ export function pipingDocument(all: PipedUnit[]): string {
     if (u.roots.length) out.push('### Branch roots', '', 'Branches that travel the rack start at a spool on it, a block valve on each face (SW-RPI-8).', '', table(['Spool', 'Branch', 'Connection to the tee', 'On', 'Stands at (x, y, z), in', 'Tier'], u.roots.map(r => [r.tag, r.line, r.connection, r.parent, r.at.join(', '), r.tier + 1])), '');
     const cv = u.lines.filter(l => l.controlValve);
     if (cv.length) out.push('### Control valve stations', '', 'Each stands at grade under the rack, on a spool that divides its line (SW-RPI-9).', '', table(['Line', 'Station', 'Spool', 'Stands at (x, y, z), in', 'The line after it'], cv.map(l => { const st = u.stations.find(q => q.line === l.no); return [l.no, l.controlValve!, st?.tag ?? '—', st ? st.at.join(', ') : '—', st?.after ?? '—']; })), '');
+    const bare = (u.notes ?? []).filter(n => n.endsWith('(SW-RPI-14)'));
+    if (bare.length) out.push('### Connections without a valve', '', 'At these ends the valve the generator stands at every equipment connection is not built, and the line\'s own flange meets the nozzle (SW-RPI-14): a transfer line from a fired heater, a line from a column\'s top, an ejector set\'s drains and its connections under its deck.', '', ...bare.map(n => `- ${n.replace(' (SW-RPI-14)', '')}`), '');
+    if (u.stats.penetrations) out.push(`${u.stats.penetrations} floor penetration${u.stats.penetrations > 1 ? 's' : ''}: a sleeve where a line passes down through a deck's grating (SW-PEN-1).`, '');
     out.push('### Lines', '', table(['Line', 'Kind', 'Fluid', 'From', 'To', 'Design', 'Rack tier', 'Components', 'Welds', 'Supports', 'Length, ft'], u.lines.map(l => [l.no, l.origin, l.fluidName, l.from, l.to, `${l.designP} psi, ${l.designT} °F`, l.tier ?? '—', l.components, l.welds, l.supports, l.lengthFt])), '');
   }
   return out.join('\n');

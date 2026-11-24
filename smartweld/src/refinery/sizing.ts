@@ -9,6 +9,7 @@ import { CLASS_PRESSURE, CLASS_SERIES, pipeDims, type PipeClass } from '../catal
 import { FLUIDS, rho, rhoL, rhoV, cfs, ATM, BBL_FT3, liquid, vapour, type State } from './fluids';
 import { STEAM, STEAM_SAT, type UnitSheet, type Equip, type PLine, type Util, type End } from './flowsheet';
 import { processModel } from './process';
+import { ejectorStages, tailPipeHeight, EJ } from './ejector';
 
 const G = K.G_FT_S2, up = (x: number, step: number) => Math.ceil(x / step - 1e-9) * step;
 /** SW-PRC-4: the line sizes used */
@@ -111,6 +112,7 @@ export function sideOf(e: Equip, name: string, utility: boolean): string {
   if (e.kind === 'hx') return name.startsWith('tube') ? 'tube' : 'shell';
   if (e.kind === 'condenser' || e.kind === 'fluegascooler') return utility ? 'steam side' : 'process';
   if (e.kind === 'heater') return name.startsWith('steam coil') ? 'steam coil' : utility || /gas$/.test(name) ? 'fuel' : 'process';
+  if (e.kind === 'ejector') return utility ? (/steam/.test(name) ? 'steam' : 'water') : 'process';   // SW-PRC-18: the ejectors' steam chests, the condensers' tubes, and what is under vacuum
   return utility ? 'utility' : 'process';
 }
 const isEq = (e: End, tag: string, port?: string) => e.k === 'eq' && e.tag === tag && (port === undefined || e.port === port);
@@ -227,6 +229,7 @@ function sizeEquip(sh: UnitSheet, e: Equip, lines: LineSize[], utils: UnitSizing
         const byHold = Math.cbrt((8 * vLiq) / (3 * Math.PI)), byGas = qv > 0 ? Math.sqrt((8 * qv) / (6 * u0 * Math.PI)) : 0;
         D = Math.max(36, up(Math.max(byGas, byHold) * 12, 6)); L = 3 * D;
         if (liqOut.length > 1) L = Math.max(L, 144);                                                    // SW-PRC-6: two liquid outlets must both stand between the saddles
+        L = Math.max(L, num('minL'));                                                                  // SW-PRC-18: a hotwell as long as its tail pipes need
       }
       Object.assign(r.d, { D, L, t: wall(D, designP, designT, vacuum), vertical: vertical ? 1 : 0, ...(num('boot') ? { boot: Math.max(12, up(D / 3, 6)) } : {}) });
       r.type = vertical ? 'vertical' : 'horizontal'; r.text = `${D} in inside diameter × ${ft(L)} between tangents, ${r.type}${num('boot') ? ', with a water boot' : ''}`;
@@ -353,6 +356,30 @@ function sizeEquip(sh: UnitSheet, e: Equip, lines: LineSize[], utils: UnitSizing
     case 'psa': Object.assign(r, { count: 4, running: 4 }); Object.assign(r.d, { D: 72, TT: 240, beds: 4, t: wall(72, designP, designT) }); r.type = 'four adsorbers'; r.text = 'four adsorbers of 72 in × 20 ft between tangents'; break;   // SW-CELL-4
     case 'furnace': { const b = sides.utility ?? sides.process; Object.assign(r.d, { D: 72, furnaceL: 180, boilerL: 180, t: 0.75, boilerT: wall(72, b.designP, b.designT), drumT: wall(0.6 * 72, b.designP, b.designT) }); r.type = 'reaction furnace with waste heat boiler'; r.text = '72 in: 15 ft of chamber and 15 ft of waste heat boiler'; break; }   // SW-CELL-4
     case 'boiler': { const Ts = designTemperature(STEAM_SAT.HS); Object.assign(r.d, { steamID: 54, L: 300, centres: 180, drumT: wall(54, designP, Ts), drumDesignT: Ts }); r.type = 'water-tube, two drums'; r.text = `${Math.round(num('lbh')).toLocaleString('en-US')} lb/h of steam at ${STEAM.HS.P} psi and ${STEAM.HS.T} °F: steam drum 54 in × 25 ft`; break; }   // SW-CELL-4
+    case 'ejector': {                                                                                   // SW-PRC-18
+      const st = ejectorStages({ load: port('inlet')!.s, gas: num('gas'), gasMw: num('gasMw'), oil: num('oil'), steam: num('steam'), steamT: num('steamT'), Pout: port('outlet')!.s.P });
+      const ms = utils.find(u => u.tag === e.tag && sideOf(e, u.port, true) === 'steam'); if (!ms) throw new Error(`${e.tag}: an ejector set with no motive steam`);
+      const gasNPS = (w: number, moles: number, T: number, psia: number) => lineSize(vapour('HG', w, w / moles, T, psia - ATM), false, 'P150', 2).NPS;
+      const U = coefficient({ fluid: 'SW', Tin: 0, Tout: 0, P: 0, gas: true, condensing: true, how: 'process' }, { fluid: 'CWS', Tin: EJ.cwIn, Tout: EJ.cwOut, P: 60, gas: false, condensing: false, how: 'water' });
+      const big = SHELL_IDS[SHELL_IDS.length - 1], sizes: string[] = [];
+      st.forEach((q, k) => {
+        const n = k + 1, suction = gasNPS(q.load, q.moles, q.Ts, q.Ps), discharge = gasNPS(q.load + q.steam, q.outMoles, q.Td, q.Pd);
+        const motive = lineSize(utilState({ fluid: ms.fluid, w: q.steam, T: ms.T, P: ms.P }), false, ms.cls, 2).NPS, water = lineSize(liquid('CWS', q.cw, 1, EJ.cwIn, 60), false, 'P150', 2).NPS;
+        const dT = lmtd(q.Tc, q.Tc, EJ.cwIn, EJ.cwOut), A = q.duty / (0.9 * U * dT);
+        if (A > shellArea(big)) throw new Error(`${e.tag}: stage ${n}'s condenser needs ${Math.round(A)} ft², more than one shell: parallel elements are not built`);
+        const ID = SHELL_IDS.find(d => shellArea(d) >= A && d >= Math.min(3 * discharge, big))!, designT = designTemperature(Math.max(q.Td, q.Tc));
+        sides.process.designT = Math.max(sides.process.designT, designT);
+        Object.assign(r.d, { [`s${n}Psia`]: q.Ps, [`s${n}Ratio`]: q.ratio, [`s${n}Load`]: q.load, [`s${n}Steam`]: q.steam, [`s${n}Suction`]: suction, [`s${n}Discharge`]: discharge, [`s${n}Motive`]: motive,
+          [`c${n}Psia`]: q.Pd, [`c${n}T`]: q.Tc, [`c${n}DutyMMBtu`]: q.duty / 1e6, [`c${n}AreaFt2`]: A, [`c${n}ID`]: ID, [`c${n}Tubes`]: tubeCount(ID), [`c${n}Shell`]: wall(ID, sides.process.designP, designT, true), [`c${n}DesignT`]: designT, [`c${n}Water`]: water,
+          [`c${n}Vent`]: k + 1 < st.length ? gasNPS(q.vent, q.ventMoles, q.Tv, q.Pd) : 0, [`c${n}LegIn`]: tailPipeHeight(q.Pd, port('outlet')!.s.P) });
+        sizes.push(`${suction} in on a condenser of ${ID} in × 20 ft (${(q.duty / 1e6).toFixed(1)} million Btu/h, ${Math.round(A).toLocaleString('en-US')} ft²)`);
+      });
+      r.designT = sides.process.designT; r.cls = classFor(r.designP, r.designT);
+      Object.assign(r, { count: st.length, running: st.length }); Object.assign(r.d, { stages: st.length, tubeLength: 240 });
+      r.type = `${st.length} stages, a surface condenser after each`;
+      r.text = `${st[0].Ps.toFixed(2)} to ${st[st.length - 1].Pd.toFixed(1)} psia in ${st.length} stages of ratio ${st.map(q => q.ratio.toFixed(1)).join(', ')}; ejectors of ${sizes.join('; ')}; first drain ${Math.round(r.d.c1LegIn / 12)} ft above the hotwell's liquid`;
+      break;
+    }
     default: r.text = '';                                                                               // the remaining kinds are sized with their bodies (stage R5)
   }
   return r;

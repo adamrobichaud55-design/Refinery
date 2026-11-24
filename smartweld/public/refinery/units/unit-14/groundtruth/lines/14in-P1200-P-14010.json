@@ -55,20 +55,21 @@
    ]
   },
   {
-   "tag": "14\"-P1200-P-14010/A2",
+   "tag": "14\"-P1200-P-14010/A5",
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
-   "kind": "valve",
+   "kind": "flange",
    "itemNo": 2,
-   "description": "VALVE, GATE, WEDGE, OS&Y 14\" P1200",
-   "designation": "GATE14-P1200",
-   "key": "VLV|GATE|14|P1200",
+   "description": "FLANGE WELD-NECK 14\" P1200 RAISED FACE",
+   "designation": "FLG14-P1200",
+   "key": "WNF|14|P1200",
    "NPS": 14,
    "cls": "P1200",
-   "material": "Grade 36 casting",
-   "ends": "RF×RF",
-   "weight": 2389.5589,
-   "spool": "loose",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 147.4357,
+   "spool": "14\"-P1200-P-14010-SP01",
    "a": {
     "E": 3912,
     "N": 37.0625,
@@ -76,12 +77,12 @@
    },
    "b": {
     "E": 3912,
-    "N": 65.1875,
+    "N": 43.75,
     "EL": 1326
    },
    "centre": {
     "E": 3912,
-    "N": 51.125,
+    "N": 40.4063,
     "EL": 1326
    },
    "axis": {
@@ -90,23 +91,18 @@
     "EL": 0
    },
    "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
     "SW-FLG-4",
     "SW-FLG-5",
     "SW-FLG-6",
-    "SW-VLV-1",
-    "SW-VLV-10",
-    "SW-VLV-2",
-    "SW-VLV-4",
-    "SW-VLV-5",
-    "SW-VLV-9",
-    "SW-VLV-F-2",
-    "SW-VLV-G-1",
-    "SW-VLV-G-2",
-    "SW-VLV-G-3"
+    "SW-FLG-7",
+    "SW-FLG-9"
    ]
   },
   {
-   "tag": "14\"-P1200-P-14010/A3",
+   "tag": "14\"-P1200-P-14010/A6",
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "studs",
@@ -146,150 +142,24 @@
    ]
   },
   {
-   "tag": "14\"-P1200-P-14010/A4",
-   "line": "14\"-P1200-P-14010",
-   "lineClass": "H1200",
-   "kind": "gasket",
-   "itemNo": 1,
-   "description": "GASKET 14\" P1200 COMPRESSED SHEET",
-   "designation": "GASKET14-P1200",
-   "key": "GSK|14|P1200",
-   "NPS": 14,
-   "cls": "P1200",
-   "material": "compressed sheet (non-steel)",
-   "ends": "—",
-   "weight": 0,
-   "spool": "loose",
-   "a": {
-    "E": 3912,
-    "N": 65.1875,
-    "EL": 1326
-   },
-   "b": {
-    "E": 3912,
-    "N": 65.3125,
-    "EL": 1326
-   },
-   "centre": {
-    "E": 3912,
-    "N": 65.25,
-    "EL": 1326
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-2"
-   ]
-  },
-  {
-   "tag": "14\"-P1200-P-14010/A5",
-   "line": "14\"-P1200-P-14010",
-   "lineClass": "H1200",
-   "kind": "flange",
-   "itemNo": 4,
-   "description": "FLANGE WELD-NECK 14\" P1200 RAISED FACE",
-   "designation": "FLG14-P1200",
-   "key": "WNF|14|P1200",
-   "NPS": 14,
-   "cls": "P1200",
-   "material": "Grade 36 forging",
-   "ends": "BW×RF",
-   "flangeType": "WN",
-   "weight": 147.4357,
-   "spool": "14\"-P1200-P-14010-SP01",
-   "a": {
-    "E": 3912,
-    "N": 65.3125,
-    "EL": 1326
-   },
-   "b": {
-    "E": 3912,
-    "N": 72,
-    "EL": 1326
-   },
-   "centre": {
-    "E": 3912,
-    "N": 68.6563,
-    "EL": 1326
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-1",
-    "SW-FLG-2",
-    "SW-FLG-3",
-    "SW-FLG-4",
-    "SW-FLG-5",
-    "SW-FLG-6",
-    "SW-FLG-7",
-    "SW-FLG-9"
-   ]
-  },
-  {
-   "tag": "14\"-P1200-P-14010/A6",
-   "line": "14\"-P1200-P-14010",
-   "lineClass": "H1200",
-   "kind": "studs",
-   "itemNo": 3,
-   "description": "STUD SET 16 × 1\" × 7-1/4\" WITH 2 NUTS, FOR 14\" P1200",
-   "designation": "STUDS 16×1x7.25 (14-P1200)",
-   "key": "STUDS|14|P1200|4.750",
-   "NPS": 14,
-   "cls": "P1200",
-   "material": "Grade 90 stud",
-   "ends": "—",
-   "weight": 36.3891,
-   "spool": "loose",
-   "a": {
-    "E": 3912,
-    "N": 61.625,
-    "EL": 1326
-   },
-   "b": {
-    "E": 3912,
-    "N": 68.875,
-    "EL": 1326
-   },
-   "centre": {
-    "E": 3912,
-    "N": 65.25,
-    "EL": 1326
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-4",
-    "SW-FLG-7"
-   ]
-  },
-  {
    "tag": "14\"-P1200-P-14010/p7",
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
-   "key": "PIPE|14|P1200|18.667",
+   "key": "PIPE|14|P1200|46.917",
    "NPS": 14,
    "cls": "P1200",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 18.6667,
-   "weight": 125.6949,
+   "cutLength": 46.9167,
+   "weight": 315.9173,
    "spool": "14\"-P1200-P-14010-SP02",
    "a": {
     "E": 3912,
-    "N": 72,
+    "N": 43.75,
     "EL": 1326
    },
    "b": {
@@ -299,7 +169,7 @@
    },
    "centre": {
     "E": 3912,
-    "N": 81.3334,
+    "N": 67.2084,
     "EL": 1326
    },
    "axis": {
@@ -319,7 +189,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -361,7 +231,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|121.333",
@@ -404,7 +274,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -446,7 +316,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|175.333",
@@ -489,7 +359,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -531,7 +401,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|315.667",
@@ -574,7 +444,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|315.667",
@@ -617,7 +487,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -659,7 +529,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|7.333",
@@ -702,7 +572,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -744,7 +614,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|7.333",
@@ -787,7 +657,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -829,7 +699,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|259.333",
@@ -872,7 +742,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -914,7 +784,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|7.333",
@@ -957,7 +827,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -999,7 +869,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|109.333",
@@ -1042,7 +912,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -1084,7 +954,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
    "key": "PIPE|14|P1200|73.333",
@@ -1127,7 +997,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "designation": "EL90-14-P1200",
    "key": "EL|14|P1200|90",
@@ -1169,16 +1039,16 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 14\" P1200 BEVELLED ENDS",
    "designation": "PIPE14-P1200",
-   "key": "PIPE|14|P1200|3.542",
+   "key": "PIPE|14|P1200|33.792",
    "NPS": 14,
    "cls": "P1200",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 3.5417,
-   "weight": 23.8502,
+   "cutLength": 33.7917,
+   "weight": 227.5397,
    "spool": "14\"-P1200-P-14010-SP03",
    "a": {
     "E": 3066,
@@ -1188,12 +1058,12 @@
    "b": {
     "E": 3066,
     "N": 540,
-    "EL": 1623.125
+    "EL": 1592.875
    },
    "centre": {
     "E": 3066,
     "N": 540,
-    "EL": 1624.8958
+    "EL": 1609.7708
    },
    "axis": {
     "E": 0,
@@ -1225,17 +1095,17 @@
    "a": {
     "E": 3066,
     "N": 540,
-    "EL": 1612.75
+    "EL": 1582.5
    },
    "b": {
     "E": 3066,
     "N": 540,
-    "EL": 1620
+    "EL": 1589.75
    },
    "centre": {
     "E": 3066,
     "N": 540,
-    "EL": 1616.375
+    "EL": 1586.125
    },
    "axis": {
     "E": 0,
@@ -1252,7 +1122,7 @@
    "line": "14\"-P1200-P-14010",
    "lineClass": "H1200",
    "kind": "flange",
-   "itemNo": 4,
+   "itemNo": 2,
    "description": "FLANGE WELD-NECK 14\" P1200 RAISED FACE",
    "designation": "FLG14-P1200",
    "key": "WNF|14|P1200",
@@ -1266,17 +1136,17 @@
    "a": {
     "E": 3066,
     "N": 540,
-    "EL": 1616.4375
+    "EL": 1586.1875
    },
    "b": {
     "E": 3066,
     "N": 540,
-    "EL": 1623.125
+    "EL": 1592.875
    },
    "centre": {
     "E": 3066,
     "N": 540,
-    "EL": 1619.7813
+    "EL": 1589.5313
    },
    "axis": {
     "E": 0,
@@ -1291,215 +1161,6 @@
     "SW-FLG-5",
     "SW-FLG-6",
     "SW-FLG-7",
-    "SW-FLG-9"
-   ]
-  },
-  {
-   "tag": "14\"-P1200-P-14010/B6",
-   "line": "14\"-P1200-P-14010",
-   "lineClass": "H1200",
-   "kind": "gasket",
-   "itemNo": 1,
-   "description": "GASKET 14\" P1200 COMPRESSED SHEET",
-   "designation": "GASKET14-P1200",
-   "key": "GSK|14|P1200",
-   "NPS": 14,
-   "cls": "P1200",
-   "material": "compressed sheet (non-steel)",
-   "ends": "—",
-   "weight": 0,
-   "spool": "loose",
-   "a": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1616.3125
-   },
-   "b": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1616.4375
-   },
-   "centre": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1616.375
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-2"
-   ]
-  },
-  {
-   "tag": "14\"-P1200-P-14010/B5",
-   "line": "14\"-P1200-P-14010",
-   "lineClass": "H1200",
-   "kind": "studs",
-   "itemNo": 7,
-   "description": "STUD SET 16 × 1\" × 9-1/4\" WITH 2 NUTS, FOR 14\" P1200",
-   "designation": "STUDS 16×1x9.25 (14-P1200)",
-   "key": "STUDS|14|P1200|6.750",
-   "NPS": 14,
-   "cls": "P1200",
-   "material": "Grade 90 stud",
-   "ends": "—",
-   "weight": 43.5159,
-   "spool": "loose",
-   "a": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1583.5
-   },
-   "b": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1590.75
-   },
-   "centre": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1587.125
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-4",
-    "SW-FLG-7"
-   ]
-  },
-  {
-   "tag": "14\"-P1200-P-14010/B4",
-   "line": "14\"-P1200-P-14010",
-   "lineClass": "H1200",
-   "kind": "valve",
-   "itemNo": 2,
-   "description": "VALVE, GATE, WEDGE, OS&Y 14\" P1200",
-   "designation": "GATE14-P1200",
-   "key": "VLV|GATE|14|P1200",
-   "NPS": 14,
-   "cls": "P1200",
-   "material": "Grade 36 casting",
-   "ends": "RF×RF",
-   "weight": 2389.5589,
-   "spool": "loose",
-   "a": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1588.1875
-   },
-   "b": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1616.3125
-   },
-   "centre": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1602.25
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-4",
-    "SW-FLG-5",
-    "SW-FLG-6",
-    "SW-VLV-1",
-    "SW-VLV-10",
-    "SW-VLV-2",
-    "SW-VLV-4",
-    "SW-VLV-5",
-    "SW-VLV-9",
-    "SW-VLV-F-2",
-    "SW-VLV-G-1",
-    "SW-VLV-G-2",
-    "SW-VLV-G-3"
-   ]
-  },
-  {
-   "tag": "14\"-P1200-P-14010/B3",
-   "line": "14\"-P1200-P-14010",
-   "lineClass": "H1200",
-   "kind": "gasket",
-   "itemNo": 1,
-   "description": "GASKET 14\" P1200 COMPRESSED SHEET",
-   "designation": "GASKET14-P1200",
-   "key": "GSK|14|P1200",
-   "NPS": 14,
-   "cls": "P1200",
-   "material": "compressed sheet (non-steel)",
-   "ends": "—",
-   "weight": 0,
-   "spool": "loose",
-   "a": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1588.0625
-   },
-   "b": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1588.1875
-   },
-   "centre": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1588.125
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-2"
-   ]
-  },
-  {
-   "tag": "14\"-P1200-P-14010/B2",
-   "line": "14\"-P1200-P-14010",
-   "lineClass": "H1200",
-   "kind": "spectacle",
-   "itemNo": 8,
-   "description": "SPECTACLE BLIND 14\" P1200 1.875\" THICK",
-   "designation": "SPEC14-P1200",
-   "key": "SPEC|14|P1200",
-   "NPS": 14,
-   "cls": "P1200",
-   "material": "Grade 36 forging",
-   "ends": "RF×RF",
-   "weight": 142.8008,
-   "spool": "loose",
-   "a": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1586.1875
-   },
-   "b": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1588.0625
-   },
-   "centre": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1587.125
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-13",
     "SW-FLG-9"
    ]
   },
@@ -1564,7 +1225,7 @@
    ],
    "at": {
     "E": 3912,
-    "N": 72,
+    "N": 43.75,
     "EL": 1326
    },
    "key": "BW|14|P1200",
@@ -2313,7 +1974,7 @@
    "at": {
     "E": 3066,
     "N": 540,
-    "EL": 1623.125
+    "EL": 1592.875
    },
    "key": "BW|14|P1200",
    "weight": 2.8323,
@@ -2441,7 +2102,7 @@
     "14\"-P1200-P-14010/W7",
     "14\"-P1200-P-14010/W8"
    ],
-   "weight": 7129.4887
+   "weight": 7319.7111
   },
   {
    "id": "14\"-P1200-P-14010-SP03",
@@ -2476,7 +2137,7 @@
     "14\"-P1200-P-14010/W21",
     "14\"-P1200-P-14010/W22"
    ],
-   "weight": 4900.5913
+   "weight": 5104.2807
   },
   {
    "id": "14\"-P1200-P-14010-SP04",
@@ -2491,51 +2152,33 @@
   {
    "itemNo": 1,
    "description": "GASKET 14\" P1200 COMPRESSED SHEET",
-   "qty": 5,
+   "qty": 2,
    "weight": 0
   },
   {
    "itemNo": 2,
-   "description": "VALVE, GATE, WEDGE, OS&Y 14\" P1200",
-   "qty": 2,
-   "weight": 4779.1179
-  },
-  {
-   "itemNo": 3,
-   "description": "STUD SET 16 × 1\" × 7-1/4\" WITH 2 NUTS, FOR 14\" P1200",
-   "qty": 3,
-   "weight": 109.1673
-  },
-  {
-   "itemNo": 4,
    "description": "FLANGE WELD-NECK 14\" P1200 RAISED FACE",
    "qty": 2,
    "weight": 294.8715
   },
   {
-   "itemNo": 5,
-   "description": "PIPE 14\" P1200 BEVELLED ENDS",
-   "qty": 12,
-   "length": 1414.209,
-   "weight": 9522.6145
+   "itemNo": 3,
+   "description": "STUD SET 16 × 1\" × 7-1/4\" WITH 2 NUTS, FOR 14\" P1200",
+   "qty": 2,
+   "weight": 72.7782
   },
   {
-   "itemNo": 6,
+   "itemNo": 4,
+   "description": "PIPE 14\" P1200 BEVELLED ENDS",
+   "qty": 12,
+   "length": 1472.709,
+   "weight": 9916.5263
+  },
+  {
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 14\" P1200",
    "qty": 10,
    "weight": 2450.8204
-  },
-  {
-   "itemNo": 7,
-   "description": "STUD SET 16 × 1\" × 9-1/4\" WITH 2 NUTS, FOR 14\" P1200",
-   "qty": 1,
-   "weight": 43.5159
-  },
-  {
-   "itemNo": 8,
-   "description": "SPECTACLE BLIND 14\" P1200 1.875\" THICK",
-   "qty": 1,
-   "weight": 142.8008
   }
  ],
  "nodes": [
@@ -2560,25 +2203,7 @@
   {
    "at": {
     "E": 3912,
-    "N": 65.1875,
-    "EL": 1326
-   },
-   "kind": "valve end",
-   "ref": "14\"-P1200-P-14010/A2"
-  },
-  {
-   "at": {
-    "E": 3912,
-    "N": 65.3125,
-    "EL": 1326
-   },
-   "kind": "gasket end",
-   "ref": "14\"-P1200-P-14010/A4"
-  },
-  {
-   "at": {
-    "E": 3912,
-    "N": 72,
+    "N": 43.75,
     "EL": 1326
    },
    "kind": "flange end",
@@ -2867,7 +2492,7 @@
    "at": {
     "E": 3066,
     "N": 540,
-    "EL": 1623.125
+    "EL": 1592.875
    },
    "kind": "pipe end",
    "ref": "14\"-P1200-P-14010/p28"
@@ -2876,46 +2501,10 @@
    "at": {
     "E": 3066,
     "N": 540,
-    "EL": 1616.4375
+    "EL": 1586.1875
    },
    "kind": "flange end",
    "ref": "14\"-P1200-P-14010/B7"
-  },
-  {
-   "at": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1616.3125
-   },
-   "kind": "gasket end",
-   "ref": "14\"-P1200-P-14010/B6"
-  },
-  {
-   "at": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1588.1875
-   },
-   "kind": "valve end",
-   "ref": "14\"-P1200-P-14010/B4"
-  },
-  {
-   "at": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1588.0625
-   },
-   "kind": "gasket end",
-   "ref": "14\"-P1200-P-14010/B3"
-  },
-  {
-   "at": {
-    "E": 3066,
-    "N": 540,
-    "EL": 1586.1875
-   },
-   "kind": "spectacle end",
-   "ref": "14\"-P1200-P-14010/B2"
   },
   {
    "at": {
@@ -2928,11 +2517,11 @@
   }
  ],
  "totals": {
-  "items": 36,
+  "items": 28,
   "welds": 23,
   "fieldWelds": 3,
   "supports": 4,
-  "pipeLength": 1414.209,
-  "weight": 17342.9081
+  "pipeLength": 1472.709,
+  "weight": 12734.9964
  }
 }

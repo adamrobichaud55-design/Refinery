@@ -4,12 +4,12 @@
  *  minutes, so the saved model is checked rather than made again here (tools/refinery-piping.ts makes it). */
 import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
-import { unitPiping, gateReach, gateWidth, laneSpacing, heldAs, BIG, TIER_ROOM, TIER_SHARE } from '../src/refinery/unitPiping';
+import { unitPiping, gateReach, gateWidth, laneSpacing, heldAs, BIG, TIER_ROOM, TIER_SHARE, type UnitLine } from '../src/refinery/unitPiping';
 import { processModel } from '../src/refinery/process';
 import { sizing } from '../src/refinery/sizing';
 import { serviceOf } from '../src/refinery/registry';
 import { RACK, PAD, valveDrop, bodySolids } from '../src/refinery/cell';
-import { pipingDocument, cutLongPipes, lengthenShortPieces, measuredAgain, elbowGap, valveBoxFn, runSolids, PIPING_IMAGES, type PipedUnit } from '../src/refinery/pipingReport';
+import { pipingDocument, cutLongPipes, lengthenShortPieces, removeValves, measuredAgain, elbowGap, valveBoxFn, runSolids, PIPING_IMAGES, type PipedUnit } from '../src/refinery/pipingReport';
 import * as K from '../src/generator/pipingCheck';
 import { makeValve, gateFaceToFace, globeFaceToFace, designFlange, pipeDims, elbowRadius } from '../src/catalogue';
 import { worldBox, type PipingModel } from '../src/generator/piping';
@@ -51,6 +51,32 @@ describe('plant 3: what the generator is given for a unit (SW-RPI-1 to SW-RPI-5)
       expect(o.u[0]).toBe(0); expect(o.u[1]).toBe(0); expect(Math.abs(o.u[2])).toBe(1); expect(Math.abs(o.A[2])).toBe(204); expect(Math.sign(o.A[2])).toBe(Math.sign(i.A[2])); expect(o.A[0]).toBe(s.x + 36); expect(o.A[1]).toBeLessThan(s.yt!); expect(o.A[1]).toBeGreaterThan(RACK.tiers[2] + 108);
     }
   });
+  it('the vacuum unit: an ejector set\'s connections where its item has them, a hotwell\'s under the boots, and the ends where no valve is built (SW-RPI-2, SW-RPI-14)', () => {
+    const u12 = unitPiping(12), by = (equip: string, service: string) => { const n = [...u12.nozzles.values()].find(q => q.equip === equip && q.service === service); expect(n, `${equip} ${service}`).toBeDefined(); return n!; };
+    const J = u12.cell.spots.find(q => q.item === 'J-1201')!, lineAt = (id: string) => u12.lines.find(l => [l.def.from, l.def.to].some(en => en.k === 'nozzle' && en.id === id))!;
+    // the overhead runs from the column's top to the first suction at one station along the rack, so the generator lays it direct and not along the rack
+    const top = by('C-1201', 'overhead'), inlet = by('J-1201', 'inlet'); expect(inlet.u).toEqual([0, 1, 0]); expect(inlet.face[0]).toBe(top.face[0]); expect(inlet.NPS).toBe(top.NPS); expect(inlet.face[1]).toBeGreaterThan(J.yt!);
+    expect(lineAt(inlet.id).tier).toBeUndefined(); expect(u12.runs[u12.runOf.get(lineAt(inlet.id).def.no)!].kind).toBe('chase');
+    // each tail pipe, and the last condenser's outlet, falls straight from its boot to the hotwell's top
+    for (const [a, b] of [['condensate 1', 'tail pipe 1'], ['condensate 2', 'tail pipe 2'], ['outlet', 'inlet']]) {
+      const p = by('J-1201', a), q = by('D-1201', b); expect(p.u).toEqual([0, -1, 0]); expect(q.u).toEqual([0, 1, 0]); expect(p.face[0]).toBe(q.face[0]); expect(p.face[2]).toBe(q.face[2]); expect(p.face[1] - q.face[1]).toBeGreaterThan(360);
+      expect(lineAt(p.id)).toBe(lineAt(q.id)); expect(lineAt(p.id).tier).toBeUndefined();
+    }
+    // the hotwell's gas leaves on top between the last two inlets, the end toward the rack; water underneath midway between the first two tail pipes, oil below the second
+    const t1 = by('D-1201', 'tail pipe 1'), t2 = by('D-1201', 'tail pipe 2'), t3 = by('D-1201', 'inlet'), gas = by('D-1201', 'gas'), water = by('D-1201', 'water'), oil = by('D-1201', 'oil');
+    expect(gas.u).toEqual([0, 1, 0]); expect(Math.abs(gas.face[2] - (t2.face[2] + t3.face[2]) / 2)).toBeLessThanOrEqual(3); expect(Math.abs(gas.face[2])).toBeLessThan(Math.abs(t2.face[2])); expect(Math.abs(gas.face[2] - t2.face[2])).toBeGreaterThanOrEqual(18); expect(Math.abs(gas.face[2] - t3.face[2])).toBeGreaterThanOrEqual(18);
+    expect(water.u).toEqual([0, -1, 0]); expect(water.face[2]).toBe((t1.face[2] + t2.face[2]) / 2); expect(oil.u).toEqual([0, -1, 0]); expect(oil.face[2]).toBe(t2.face[2]);
+    // steam and water are met under the deck
+    for (const sv of ['motive steam', 'cooling water in', 'cooling water out']) { const n = by('J-1201', sv); expect(n.u).toEqual([0, -1, 0]); expect(n.face[1]).toBeLessThan(J.yt! - 24); expect(n.face[1]).toBeGreaterThan(J.yt! - 48); }
+    // SW-RPI-14: the transfer line, the overhead and the set's drains at both ends; the set's end of its steam and water
+    const bare = Object.fromEntries(u12.lines.filter(l => l.bare).map(l => [l.def.no.split('-').pop(), `${l.origin}: ${l.bare!.join('+')}`]));
+    expect(bare).toEqual({ 12002: 'process: from+to', 12003: 'process: from+to', 12004: 'process: from+to', 12005: 'process: from+to', 12006: 'process: from+to', 12501: 'utility: to', 12502: 'utility: to', 12503: 'utility: from' });
+    for (const l of u12.lines.filter(q => q.bare)) for (const side of l.bare!) { const en = l.def[side]; expect(en.k).toBe('nozzle'); expect(/^(BL|CS|RS)-/.test((en as { id: string }).id)).toBe(false); }
+    // in the pilot unit: the heater's outlet to the reactor and each column's top, and nothing else
+    const b15 = up.lines.filter(l => l.bare); expect(b15.length).toBeGreaterThanOrEqual(2);
+    for (const l of b15) { const f = sh.lines[l.flow!].from as { tag: string; port: string }, k = sh.equip.get(f.tag)!.kind; expect(['heater', 'column']).toContain(k); if (k === 'heater') expect(f.port).toBe('outlet'); else { const n = up.nozzles.get((l.def.from as { id: string }).id) ?? [...up.nozzles.values()].find(q => q.equip === f.tag && q.service === f.port)!; expect(n.u).toEqual([0, 1, 0]); } }
+    for (const t of ['SW-RPI-14', 'Valves not built', 'a shut drain floods its condenser']) expect(basisDoc).toContain(t);
+  }, 300_000);
   it('lists every line of the flowsheet with its size, class, service and ends, and a tee for every spare', () => {
     const proc = up.lines.filter(l => l.origin === 'process'); expect(proc.length).toBe(sh.lines.length);
     proc.forEach((l, i) => { const s = z.lines[i], f = sh.lines[i]; expect(l.def.NPS).toBe(s.NPS); expect(l.def.cls).toBe(s.cls); expect(l.def.service).toBe('P'); expect(serviceOf(f.s.fluid, s.cls, false)).toBe('P');   /* a line of the flowsheet is built as a process line whatever it carries (SW-RPI-3) */ expect(l.def.no).toMatch(new RegExp(`-${U * 1000 + i + 1}$`)); expect(l.def.NPS).toBeGreaterThanOrEqual(3); expect(l.designP).toBe(s.designP);
@@ -267,6 +293,37 @@ describe('plant 3: the piped units on disk', () => {
     const cv = r.lines.filter(l => l.controlValve); expect(cv.length).toBe(sh.lines.filter(l => l.cv).length); expect(cv.filter(l => l.controlValve === 'piped').length).toBeGreaterThan(cv.length / 2);
     expect(r.counts.components.valve).toBeGreaterThan(100); expect(Object.values(r.counts.welds).reduce((a, b) => a + b, 0)).toBeGreaterThan(600);
   });
+  it('at every end SW-RPI-14 names, the saved model has the line\'s flange on the nozzle\'s gasket and no valve; each is named in the report', () => {
+    let ends = 0;
+    for (const r of reports) {
+      const plan = r.unit === U ? up : unitPiping(r.unit), m = JSON.parse(readFileSync(new URL(`unit-${r.unit}.json`, dir), 'utf8')) as PipingModel, said = r.notes.filter(n => n.endsWith('(SW-RPI-14)'));
+      const bare = plan.lines.filter(l => l.bare); expect(said.length, `unit ${r.unit}`).toBe(bare.reduce((a, l) => a + l.bare!.length, 0));
+      for (const l of bare) for (const side of l.bare!) {
+        const run = m.lines.find(q => q.no === l.def.no)!, cs = side === 'from' ? run.comps : [...run.comps].reverse(), id = (l.def[side] as { id: string }).id; ends++;
+        expect(said.some(n => n.startsWith(`${l.def.no}: no valve at ${id};`)), `${l.def.no} ${side}`).toBe(true);
+        // from the nozzle: its gasket, the flange (with the joint's studs before or after it), then pipe; no valve before the first turn
+        const head = cs.slice(0, 4).map(c => c.kind); expect(head[0]).toBe('gasket'); expect(head.slice(1, 3).sort()).toEqual(['flange', 'studs']); expect(head[3]).toBe('pipe');
+        const turn = cs.findIndex(c => c.kind === 'elbow' || c.kind === 'tee'); expect(cs.slice(0, turn < 0 ? cs.length : turn).some(c => c.kind === 'valve' && cs.indexOf(c) < 8)).toBe(false);
+        const g = cs[0], fl = cs.slice(1, 3).find(c => c.kind === 'flange')!, pipe = cs[3]; expect(Math.hypot(g.b[0] - fl.a[0], g.b[1] - fl.a[1], g.b[2] - fl.a[2])).toBeLessThan(1e-3);
+        const pe = side === 'from' ? pipe.a : pipe.b; expect(Math.hypot(pe[0] - fl.b[0], pe[1] - fl.b[1], pe[2] - fl.b[2])).toBeLessThan(1e-3);
+        expect(run.welds.some(w => w.joins.includes(fl.tag) && w.joins.includes(pipe.tag) && Math.hypot(w.at[0] - fl.b[0], w.at[1] - fl.b[1], w.at[2] - fl.b[2]) < 1e-3)).toBe(true);
+        for (const c of run.comps) if (c.kind === 'pipe') expect(Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), c.tag).toBeLessThanOrEqual(480.001);   // and no piece made longer than 40 ft by it
+      }
+    }
+    expect(ends).toBeGreaterThan(30);
+  }, 900_000);
+  it('the vacuum unit as piped: the overhead direct, the tail pipes straight down through sleeves in the deck where the deck is cut for them', () => {
+    const r = reports.find(q => q.unit === 12); expect(r).toBeDefined(); if (!r) return;
+    const m = JSON.parse(readFileSync(new URL('unit-12.json', dir), 'utf8')) as PipingModel, u12 = unitPiping(12), J = u12.cell.spots.find(q => q.item === 'J-1201')!;
+    const run = (seq: number) => m.lines.find(l => l.no.endsWith(`-${seq}`))!, span = (l: typeof m.lines[number], a: number) => Math.max(...l.path.map(p => p[a])) - Math.min(...l.path.map(p => p[a]));
+    // the overhead keeps to the column's station along the rack: it never runs the rack
+    const ov = run(12003); expect(span(ov, 0)).toBeLessThan(1); expect(ov.comps.some(c => c.kind === 'valve')).toBe(false); expect(ov.NPS).toBe(48);
+    // each tail pipe is one vertical line, with no valve and no turn, through one sleeve at the deck
+    for (const seq of [12004, 12005, 12006]) { const t = run(seq); expect(span(t, 0)).toBeLessThan(1e-6); expect(span(t, 2)).toBeLessThan(1e-6); expect(span(t, 1)).toBeGreaterThan(400); expect(t.comps.some(c => c.kind === 'valve' || c.kind === 'elbow')).toBe(false); expect((t.pens ?? []).length).toBe(1); }
+    // the deck's grating is cut where each sleeve stands, as wide as the sleeve asks
+    expect((m.cuts ?? []).length).toBe(3); for (const c of m.cuts ?? []) { expect(Math.abs(c.y - J.yt!)).toBeLessThan(1e-6); expect(J.holes!.some(hh => Math.abs(hh.x - c.x) < 1e-6 && Math.abs(hh.z - c.z) < 1e-6 && Math.abs(hh.r - c.r) < 1e-6), JSON.stringify(c)).toBe(true); }
+    expect(r.stats.penetrations).toBe(3);
+  }, 300_000);
   it('what is not at zero is said: support spans where no steel stands are listed in the report and the document', () => {
     const doc = readFileSync(new URL('../docs/REFINERY-PIPING.md', import.meta.url), 'utf8'); expect(doc).toBe(pipingDocument(reports) + '\n');
     for (const r of reports) for (const s of r.checks.supports) expect(doc).toContain(s);
@@ -283,6 +340,42 @@ describe('plant 3: the piped units on disk', () => {
     expect(l.welds.length).toBe(3); const w = l.welds[2]; expect(w.joins).toEqual([`${no}/p1`, `${no}/p4`]); expect(w.field).toBe(false); expect(w.at).toEqual([at, 342, 0]);
     expect(l.welds[0].joins).toEqual([`${no}/p4`, `${no}/p2`]);                                                // what was welded to the far end is welded to the second half
     expect(m.stats).toEqual({ comps: 4, welds: 3 }); expect(cutLongPipes(m)).toEqual([]);
+  });
+  it('at an end named for it, the generator\'s valve and what stands with it are left out and the line\'s flange meets the nozzle (SW-RPI-14)', () => {
+    const I = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0], T = (p: number[]) => [...I, p[0], p[1], p[2], 1], no = '3"-P150-P-99002';
+    // down from a nozzle face at y = 100: gasket, spade, gasket, valve, gasket, flange, pipe to y = 40; then along x and up into a second nozzle at y = 100 through a throttled stack
+    let y = 100; const down = (tag: string, kind: string, key: string, len: number, e1 = 'RF', e2 = 'RF') => { const c = { tag: `${no}/${tag}`, kind, key, T: T([0, y, 0]), a: [0, y, 0], b: [0, y - len, 0], NPS: 3, cls: 'P150', e1, e2 }; y -= len; return c; };
+    const A = [down('A1', 'gasket', 'GSK|3|P150', 0.125), down('A2', 'spade', 'SPADE|3|P150', 0.25), down('A3', 'gasket', 'GSK|3|P150', 0.125), down('A4', 'valve', 'VLV|GATE|3|P150', 8), down('A6', 'gasket', 'GSK|3|P150', 0.125), down('A7', 'flange', 'WNF|3|P150', 2.75, 'RF', 'BW'), down('p9', 'pipe', 'PIPE|3|P150|48.625', 48.625, 'BW', 'BW')];
+    const studs = (tag: string, at: number, len: string) => ({ tag: `${no}/${tag}`, kind: 'studs', key: `STUDS|3|P150|${len}`, T: T([0, at + 2, 0]), a: [0, at + 2, 0], b: [0, at - 2, 0], NPS: 3, cls: 'P150', e1: 'X', e2: 'X' });
+    A.splice(4, 0, studs('A5', 99.75, '4.000')); A.splice(7, 0, studs('A8', 91.44, '3.500'));
+    expect(y).toBeCloseTo(40, 9);
+    // the far end, up at x = 60: pipe, flange, gasket, globe, gasket, flange, stub, flange, gasket, butterfly, gasket (the nozzle's face at y = 100)
+    // (the generator builds a stack from its nozzle outward: each of its pieces has its end `a` toward the nozzle, at either end of a line; a pipe runs with the flow)
+    let yb = 40; const upc = (tag: string, kind: string, key: string, len: number, e1 = 'RF', e2 = 'RF') => { const lo = [60, yb, 0], hi = [60, yb + len, 0], c = kind === 'pipe' && len > 12 ? { tag: `${no}/${tag}`, kind, key, T: T(lo), a: lo, b: hi, NPS: 3, cls: 'P150', e1, e2 } : { tag: `${no}/${tag}`, kind, key, T: T(hi), a: hi, b: lo, NPS: 3, cls: 'P150', e1: e2, e2: e1 }; yb += len; return c; };
+    const B = [upc('p20', 'pipe', 'PIPE|3|P150|22.000', 22, 'BW', 'BW'), upc('B1', 'flange', 'WNF|3|P150', 2.75, 'BW', 'RF'), upc('B2', 'gasket', 'GSK|3|P150', 0.125), upc('B3', 'valve', 'VLV|GLOBE|3|P150', 14), upc('B4', 'gasket', 'GSK|3|P150', 0.125), upc('B5', 'flange', 'WNF|3|P150', 2.75, 'RF', 'BW'), upc('B6', 'pipe', 'PIPE|3|P150|6.000', 6, 'BW', 'BW'), upc('B7', 'flange', 'WNF|3|P150', 2.75, 'BW', 'RF'), upc('B8', 'gasket', 'GSK|3|P150', 0.125), upc('B9', 'valve', 'VLV|BFLY|3|P150', 9.25), upc('B10', 'gasket', 'GSK|3|P150', 0.125)];
+    expect(yb).toBeCloseTo(100, 9);
+    const mid = { tag: `${no}/p15`, kind: 'pipe', key: 'PIPE|3|P150|60.000', T: T([0, 40, 0]), a: [0, 40, 0], b: [60, 40, 0], NPS: 3, cls: 'P150', e1: 'BW', e2: 'BW' };   // the turns are left out of this chain: only the ends matter here
+    const weld = (k: number, at: number[], a: string, b: string, field = false) => ({ id: `${no}/W${k}`, line: no, type: 'BW', size: 0.2, at, dir: [0, 1, 0], joins: [`${no}/${a}`, `${no}/${b}`], field, NPS: 3, key: 'BW|3|P150', T: T(at) });
+    const welds = [weld(1, [0, 88.625, 0], 'A7', 'p9', true), weld(2, [0, 40, 0], 'p9', 'p15'), weld(3, [60, 40, 0], 'p15', 'p20'), weld(4, [60, 62, 0], 'p20', 'B1', true), weld(5, [60, 81.75, 0], 'B5', 'B6'), weld(6, [60, 87.75, 0], 'B6', 'B7')];
+    // the generator lists a joint's studs before the flange or valve nearer the far end: here before B1, B3 and B7
+    B.splice(1, 0, studs('B11', 64.8, '3.500')); B.splice(4, 0, studs('B12', 79, '3.500')); B.splice(9, 0, studs('B13', 95, '4.000'));
+    const comps = [...A, mid, ...B];
+    const m = { lines: [{ no, service: 'P', NPS: 3, cls: 'P150', kind: 'routed', from: 'X-1-N1', to: 'X-2-N1', comps, welds, supports: [], path: [], ok: true }], nozzles: [], failures: [], stats: { comps: comps.length, welds: welds.length } } as unknown as PipingModel;
+    const line = { def: { no, from: { k: 'nozzle', id: 'X-1-N1' }, to: { k: 'nozzle', id: 'X-2-N1' } }, bare: ['from', 'to'] } as unknown as UnitLine;
+    const done = removeValves(m, { lines: [line] }), l = m.lines[0], tags = l.comps.map(c => c.tag.split('/')[1]);
+    expect(done.length).toBe(2); expect(done[0]).toContain('X-1-N1'); expect(done[0]).toContain('GATE 3'); expect(done[1]).toContain('BFLY 3 and GLOBE 3');
+    // what is left: at each nozzle its gasket, the line's flange and one set of studs; no valve, spade or stub
+    expect(tags).toEqual(['A1', 'A7', 'A8', 'p9', 'p15', 'p20', 'B11', 'B1', 'B10']); expect(l.comps.some(c => c.kind === 'valve' || c.kind === 'spade')).toBe(false);
+    const by = (t: string) => l.comps.find(c => c.tag === `${no}/${t}`)!;
+    expect(by('A7').a[1]).toBeCloseTo(99.875, 9); expect(by('A7').b[1]).toBeCloseTo(97.125, 9); expect(by('A7').T[13]).toBeCloseTo(99.875, 9);            // the flange's face on the nozzle's gasket
+    expect(by('p9').a[1]).toBeCloseTo(97.125, 9); expect(by('p9').b[1]).toBeCloseTo(40, 9); expect(by('p9').key).toBe('PIPE|3|P150|57.125'); expect(by('p9').T[13]).toBeCloseTo(97.125, 9);
+    expect(by('A8').a[1] - by('A8').b[1]).toBeCloseTo(4, 9); expect((by('A8').a[1] + by('A8').b[1]) / 2).toBeCloseTo(91.44 + 8.5, 9);                     // the studs of the joint the flange made, moved with it
+    expect(by('B1').a[1]).toBeCloseTo(99.875, 9); expect(by('B1').b[1]).toBeCloseTo(97.125, 9); expect(by('p20').b[1]).toBeCloseTo(97.125, 9); expect(by('p20').a[1]).toBeCloseTo(40, 9); expect(by('p20').key).toBe('PIPE|3|P150|57.125'); expect(by('p20').T[13]).toBeCloseTo(40, 9);
+    // each end's field weld moves with its flange; the stub's two welds go with the stub
+    expect(l.welds.map(w => w.id.split('/')[1])).toEqual(['W1', 'W2', 'W3', 'W4']); expect(l.welds[0].at[1]).toBeCloseTo(97.125, 9); expect(l.welds[3].at[1]).toBeCloseTo(97.125, 9); expect(l.welds[1].at).toEqual([0, 40, 0]);
+    expect(m.stats).toEqual({ comps: 9, welds: 4 });
+    // a line with no end named is left as it was, and an end with no valve is an error rather than a guess
+    expect(removeValves(m, { lines: [{ ...line, bare: undefined } as unknown as UnitLine] })).toEqual([]); expect(() => removeValves(m, { lines: [line] })).toThrow(/SW-RPI-14/);
   });
   it('a make-up piece under 2 in between a tee and a 45° offset is made 2 in by moving the offset along the run (SW-RPI-11)', () => {
     const I = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0], T = (p: number[]) => [...I, p[0], p[1], p[2], 1], no = '3"-P150-P-99001', c = Math.SQRT1_2;

@@ -4291,7 +4291,7 @@
       "dir": "out",
       "NPS": 10,
       "cls": "P150",
-      "line": 9,
+      "line": 11,
       "fluid": "GO",
       "n": 1
      },
@@ -4300,7 +4300,7 @@
       "dir": "in",
       "NPS": 8,
       "cls": "P300",
-      "line": 11,
+      "line": 13,
       "fluid": "GO",
       "n": 1
      },
@@ -4309,7 +4309,7 @@
       "dir": "out",
       "NPS": 14,
       "cls": "P150",
-      "line": 13,
+      "line": 15,
       "fluid": "GO",
       "n": 1
      },
@@ -4318,7 +4318,7 @@
       "dir": "in",
       "NPS": 8,
       "cls": "P150",
-      "line": 17,
+      "line": 19,
       "fluid": "GO",
       "n": 1
      },
@@ -4327,7 +4327,7 @@
       "dir": "out",
       "NPS": 8,
       "cls": "P300",
-      "line": 18,
+      "line": 20,
       "fluid": "RS",
       "n": 1
      },
@@ -4336,7 +4336,7 @@
       "dir": "in",
       "NPS": 3,
       "cls": "P300",
-      "line": 21,
+      "line": 23,
       "fluid": "RS",
       "n": 1
      },
@@ -4359,38 +4359,64 @@
     "installed": 1,
     "running": 1,
     "designP": 50,
-    "designT": 160,
+    "designT": 275,
     "vacuum": false,
     "cls": "P150",
     "sides": {
      "process": {
       "designP": 50,
-      "designT": 160,
+      "designT": 275,
       "cls": "P150",
       "vacuum": false
      }
     },
     "size": {
      "D": 36,
-     "L": 144,
+     "L": 180,
      "t": 0.375,
      "vertical": 0
     },
-    "description": "36 in inside diameter × 12 ft between tangents, horizontal",
+    "description": "36 in inside diameter × 15 ft between tangents, horizontal",
     "dutyBtuh": {},
-    "given": {},
+    "given": {
+     "minL": 180
+    },
     "ports": [
      {
       "name": "inlet",
       "dir": "in",
       "fluid": "HG",
       "ph": "M",
-      "w": 10300,
-      "sg": 0.62,
-      "mw": 22,
-      "T": 110,
+      "w": 1323.548,
+      "sg": 1,
+      "mw": 35,
+      "T": 221,
       "P": 3,
-      "vf": 0.08
+      "vf": 0.6044361
+     },
+     {
+      "name": "tail pipe 1",
+      "dir": "in",
+      "fluid": "OW",
+      "ph": "L",
+      "w": 19899.68,
+      "sg": 0.9878779,
+      "mw": 0,
+      "T": 120,
+      "P": -12.96976,
+      "vf": 0
+     },
+     {
+      "name": "tail pipe 2",
+      "dir": "in",
+      "fluid": "SW",
+      "ph": "L",
+      "w": 1076.768,
+      "sg": 1,
+      "mw": 0,
+      "T": 167,
+      "P": -9.169016,
+      "vf": 0
      },
      {
       "name": "gas",
@@ -4400,7 +4426,7 @@
       "w": 800,
       "sg": 0,
       "mw": 35,
-      "T": 110,
+      "T": 130,
       "P": 3,
       "vf": 1
      },
@@ -4412,7 +4438,7 @@
       "w": 1500,
       "sg": 0.86,
       "mw": 0,
-      "T": 110,
+      "T": 130,
       "P": 3,
       "vf": 0
      },
@@ -4424,7 +4450,7 @@
       "w": 20000,
       "sg": 1,
       "mw": 0,
-      "T": 110,
+      "T": 130,
       "P": 3,
       "vf": 0
      }
@@ -4433,10 +4459,28 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 4,
+      "NPS": 3,
       "cls": "P150",
       "line": 3,
       "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "tail pipe 1",
+      "dir": "in",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 4,
+      "fluid": "OW",
+      "n": 1
+     },
+     {
+      "port": "tail pipe 2",
+      "dir": "in",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 5,
+      "fluid": "SW",
       "n": 1
      },
      {
@@ -4444,7 +4488,7 @@
       "dir": "out",
       "NPS": 3,
       "cls": "P150",
-      "line": 4,
+      "line": 6,
       "fluid": "HG",
       "n": 1
      },
@@ -4453,7 +4497,7 @@
       "dir": "out",
       "NPS": 3,
       "cls": "P150",
-      "line": 5,
+      "line": 7,
       "fluid": "OW",
       "n": 1
      },
@@ -4462,7 +4506,7 @@
       "dir": "out",
       "NPS": 3,
       "cls": "P150",
-      "line": 7,
+      "line": 9,
       "fluid": "SW",
       "n": 1
      }
@@ -4488,7 +4532,7 @@
      },
      "fuel": {
       "designP": 75,
-      "designT": 160,
+      "designT": 180,
       "cls": "P150",
       "vacuum": false
      }
@@ -4539,7 +4583,7 @@
       "w": 800,
       "sg": 0,
       "mw": 35,
-      "T": 110,
+      "T": 130,
       "P": 3,
       "vf": 1
      }
@@ -4568,7 +4612,7 @@
       "dir": "in",
       "NPS": 3,
       "cls": "P150",
-      "line": 4,
+      "line": 6,
       "fluid": "HG",
       "n": 1
      },
@@ -4587,33 +4631,102 @@
     "tag": "J-1201",
     "service": "Vacuum ejector set, three stages with condensers",
     "kind": "ejector",
-    "type": "",
-    "installed": 1,
-    "running": 1,
+    "type": "3 stages, a surface condenser after each",
+    "installed": 3,
+    "running": 3,
     "designP": 50,
-    "designT": 200,
+    "designT": 330,
     "vacuum": true,
     "cls": "P150",
     "sides": {
      "process": {
       "designP": 50,
-      "designT": 200,
+      "designT": 330,
       "cls": "P150",
       "vacuum": true
      },
-     "utility": {
+     "steam": {
       "designP": 175,
       "designT": 450,
       "cls": "P300",
       "vacuum": false
+     },
+     "water": {
+      "designP": 85,
+      "designT": 155,
+      "cls": "P150",
+      "vacuum": false
      }
     },
-    "size": {},
-    "description": "",
-    "dutyBtuh": {
-     "process": -1650802
+    "size": {
+     "s1Psia": 0.396,
+     "s1Ratio": 4.359193,
+     "s1Load": 10300,
+     "s1Steam": 10801.75,
+     "s1Suction": 48,
+     "s1Discharge": 42,
+     "s1Motive": 6,
+     "c1Psia": 1.726241,
+     "c1T": 120,
+     "c1DutyMMBtu": 18.39968,
+     "c1AreaFt2": 9623.465,
+     "c1ID": 60,
+     "c1Tubes": 3439,
+     "c1Shell": 0.5,
+     "c1DesignT": 330,
+     "c1Water": 12,
+     "c1Vent": 8,
+     "c1LegIn": 502.2395,
+     "s2Psia": 1.726241,
+     "s2Ratio": 3.201746,
+     "s2Load": 1202.067,
+     "s2Steam": 749.8066,
+     "s2Suction": 8,
+     "s2Discharge": 6,
+     "s2Motive": 2,
+     "c2Psia": 5.526984,
+     "c2T": 166.6119,
+     "c2DutyMMBtu": 1.076768,
+     "c2AreaFt2": 186.8525,
+     "c2ID": 18,
+     "c2Tubes": 253,
+     "c2Shell": 0.375,
+     "c2DesignT": 265,
+     "c2Water": 3,
+     "c2Vent": 4,
+     "c2LegIn": 396.9881,
+     "s3Psia": 5.526984,
+     "s3Ratio": 3.201746,
+     "s3Load": 875.105,
+     "s3Steam": 448.4427,
+     "s3Suction": 4,
+     "s3Discharge": 3,
+     "s3Motive": 2,
+     "c3Psia": 17.696,
+     "c3T": 221.3756,
+     "c3DutyMMBtu": 0.5235478,
+     "c3AreaFt2": 51.25273,
+     "c3ID": 12,
+     "c3Tubes": 97,
+     "c3Shell": 0.375,
+     "c3DesignT": 275,
+     "c3Water": 2,
+     "c3Vent": 0,
+     "c3LegIn": 0,
+     "stages": 3,
+     "tubeLength": 240
     },
-    "given": {},
+    "description": "0.40 to 17.7 psia in 3 stages of ratio 4.4, 3.2, 3.2; ejectors of 48 in on a condenser of 60 in × 20 ft (18.4 million Btu/h, 9,623 ft²); 8 in on a condenser of 18 in × 20 ft (1.1 million Btu/h, 187 ft²); 4 in on a condenser of 12 in × 20 ft (0.5 million Btu/h, 51 ft²); first drain 42 ft above the hotwell's liquid",
+    "dutyBtuh": {
+     "process": -219299.2
+    },
+    "given": {
+     "gas": 800,
+     "gasMw": 35,
+     "oil": 1500,
+     "steam": 12000,
+     "steamT": 400
+    },
     "ports": [
      {
       "name": "inlet",
@@ -4632,12 +4745,36 @@
       "dir": "out",
       "fluid": "HG",
       "ph": "M",
-      "w": 10300,
-      "sg": 0.62,
-      "mw": 22,
-      "T": 110,
+      "w": 1323.548,
+      "sg": 1,
+      "mw": 35,
+      "T": 221,
       "P": 3,
-      "vf": 0.08
+      "vf": 0.6044361
+     },
+     {
+      "name": "condensate 1",
+      "dir": "out",
+      "fluid": "OW",
+      "ph": "L",
+      "w": 19899.68,
+      "sg": 0.9878779,
+      "mw": 0,
+      "T": 120,
+      "P": -12.96976,
+      "vf": 0
+     },
+     {
+      "name": "condensate 2",
+      "dir": "out",
+      "fluid": "SW",
+      "ph": "L",
+      "w": 1076.768,
+      "sg": 1,
+      "mw": 0,
+      "T": 167,
+      "P": -9.169016,
+      "vf": 0
      }
     ],
     "nozzles": [
@@ -4653,10 +4790,28 @@
      {
       "port": "outlet",
       "dir": "out",
-      "NPS": 4,
+      "NPS": 3,
       "cls": "P150",
       "line": 3,
       "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "condensate 1",
+      "dir": "out",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 4,
+      "fluid": "OW",
+      "n": 1
+     },
+     {
+      "port": "condensate 2",
+      "dir": "out",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 5,
+      "fluid": "SW",
       "n": 1
      },
      {
@@ -4696,28 +4851,28 @@
     "installed": 2,
     "running": 1,
     "designP": 150,
-    "designT": 160,
+    "designT": 180,
     "vacuum": false,
     "cls": "P150",
     "sides": {
      "process": {
       "designP": 150,
-      "designT": 160,
+      "designT": 180,
       "cls": "P150",
       "vacuum": false
      }
     },
     "size": {
-     "gpm": 3.931668,
-     "headFt": 211.9169,
-     "shaftHp": 0.3210862,
+     "gpm": 3.97241,
+     "headFt": 214.1129,
+     "shaftHp": 0.3244135,
      "motorHp": 1,
      "rpm": 3560,
      "stages": 1,
-     "impeller": 7.517664,
+     "impeller": 7.556516,
      "motorFrame": 4.641589
     },
-    "description": "4 gpm each × 212 ft, 1 hp at 3560 rpm; 2 installed, 1 running",
+    "description": "4 gpm each × 214 ft, 1 hp at 3560 rpm; 2 installed, 1 running",
     "dutyBtuh": {
      "process": 0
     },
@@ -4731,7 +4886,7 @@
       "w": 1500,
       "sg": 0.86,
       "mw": 0,
-      "T": 110,
+      "T": 130,
       "P": 3,
       "vf": 0
      },
@@ -4743,7 +4898,7 @@
       "w": 1500,
       "sg": 0.86,
       "mw": 0,
-      "T": 110,
+      "T": 130,
       "P": 80,
       "vf": 0
      }
@@ -4754,7 +4909,7 @@
       "dir": "in",
       "NPS": 2,
       "cls": "P150",
-      "line": 5,
+      "line": 7,
       "fluid": "OW",
       "n": 1
      },
@@ -4763,7 +4918,7 @@
       "dir": "out",
       "NPS": 2,
       "cls": "P150",
-      "line": 6,
+      "line": 8,
       "fluid": "OW",
       "n": 1
      }
@@ -4777,28 +4932,28 @@
     "installed": 2,
     "running": 1,
     "designP": 160,
-    "designT": 160,
+    "designT": 180,
     "vacuum": false,
     "cls": "P300",
     "sides": {
      "process": {
       "designP": 160,
-      "designT": 160,
+      "designT": 180,
       "cls": "P300",
       "vacuum": false
      }
     },
     "size": {
-     "gpm": 44.40004,
-     "headFt": 202.7972,
-     "shaftHp": 4.096913,
+     "gpm": 44.58017,
+     "headFt": 203.6199,
+     "shaftHp": 4.113534,
      "motorHp": 5,
      "rpm": 3560,
      "stages": 1,
-     "impeller": 7.354127,
+     "impeller": 7.369029,
      "motorFrame": 7.937005
     },
-    "description": "44 gpm each × 203 ft, 5 hp at 3560 rpm; 2 installed, 1 running",
+    "description": "45 gpm each × 204 ft, 5 hp at 3560 rpm; 2 installed, 1 running",
     "dutyBtuh": {
      "process": 0
     },
@@ -4812,7 +4967,7 @@
       "w": 20000,
       "sg": 1,
       "mw": 0,
-      "T": 110,
+      "T": 130,
       "P": 3,
       "vf": 0
      },
@@ -4824,7 +4979,7 @@
       "w": 20000,
       "sg": 1,
       "mw": 0,
-      "T": 110,
+      "T": 130,
       "P": 90,
       "vf": 0
      }
@@ -4835,7 +4990,7 @@
       "dir": "in",
       "NPS": 2,
       "cls": "P150",
-      "line": 7,
+      "line": 9,
       "fluid": "SW",
       "n": 1
      },
@@ -4844,7 +4999,7 @@
       "dir": "out",
       "NPS": 2,
       "cls": "P300",
-      "line": 8,
+      "line": 10,
       "fluid": "SW",
       "n": 1
      }
@@ -4916,7 +5071,7 @@
       "dir": "in",
       "NPS": 8,
       "cls": "P150",
-      "line": 9,
+      "line": 11,
       "fluid": "GO",
       "n": 1
      },
@@ -4925,7 +5080,7 @@
       "dir": "out",
       "NPS": 6,
       "cls": "P300",
-      "line": 10,
+      "line": 12,
       "fluid": "GO",
       "n": 1
      }
@@ -4996,7 +5151,7 @@
       "dir": "in",
       "NPS": 8,
       "cls": "P300",
-      "line": 10,
+      "line": 12,
       "fluid": "GO",
       "n": 1
      },
@@ -5005,7 +5160,7 @@
       "dir": "out",
       "NPS": 8,
       "cls": "P300",
-      "line": 11,
+      "line": 13,
       "fluid": "GO",
       "n": 1
      }
@@ -5077,7 +5232,7 @@
       "dir": "in",
       "NPS": 12,
       "cls": "P150",
-      "line": 13,
+      "line": 15,
       "fluid": "GO",
       "n": 1
      },
@@ -5086,7 +5241,7 @@
       "dir": "out",
       "NPS": 8,
       "cls": "P300",
-      "line": 14,
+      "line": 16,
       "fluid": "GO",
       "n": 1
      }
@@ -5168,7 +5323,7 @@
       "dir": "in",
       "NPS": 6,
       "cls": "P300",
-      "line": 15,
+      "line": 17,
       "fluid": "GO",
       "n": 1
      },
@@ -5177,7 +5332,7 @@
       "dir": "out",
       "NPS": 6,
       "cls": "P300",
-      "line": 16,
+      "line": 18,
       "fluid": "GO",
       "n": 1
      },
@@ -5267,7 +5422,7 @@
       "dir": "in",
       "NPS": 6,
       "cls": "P300",
-      "line": 18,
+      "line": 20,
       "fluid": "RS",
       "n": 1
      },
@@ -5276,7 +5431,7 @@
       "dir": "out",
       "NPS": 4,
       "cls": "P600",
-      "line": 19,
+      "line": 21,
       "fluid": "RS",
       "n": 1
      }
@@ -5358,7 +5513,7 @@
       "dir": "in",
       "NPS": 3,
       "cls": "P600",
-      "line": 20,
+      "line": 22,
       "fluid": "RS",
       "n": 1
      },
@@ -5367,7 +5522,7 @@
       "dir": "out",
       "NPS": 3,
       "cls": "P300",
-      "line": 21,
+      "line": 23,
       "fluid": "RS",
       "n": 1
      },

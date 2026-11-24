@@ -28,6 +28,7 @@ const SUFFIX = 'ABCDEFGH', near = (v: number, s = 6) => Math.round(v / s) * s, u
 export interface UnitLine {
   def: LineDef; unit: number; seq: number; fluid: string; origin: 'process' | 'spare' | 'utility' | 'header' | 'root' | 'control'; /** the flowsheet line it is, or branches from */ flow?: number; /** the utility connection it is */ util?: number;
   designP: number; designT: number; /** the rack tier it runs on, where it runs the rack (SW-RPI-7) */ tier?: number; /** the control station it is divided at (SW-RPI-9) */ station?: string; /** a control valve the flowsheet asks for that is not piped: the catalogue does not offer its size */ cvOmitted?: boolean;
+  /** SW-RPI-14: the ends at which the generator's valve is not built */ bare?: ('from' | 'to')[];
 }
 /** a battery limit spool: two nozzles back to back on a lane of the rack (SW-RPI-4) */
 export interface BlSpool { tag: string; stream: string; dir: 'in' | 'out'; line: string; NPS: number; cls: PipeClass; at: V3; /** the rack tier its line runs on (an index into the rack's tiers) */ tier: number; /** the rack lane its line is expected to run in */ lane?: number }
@@ -87,7 +88,7 @@ function segDist(a: V3, b: V3, c: V3, d: V3): number {
 interface Anchor { A: V3; u: V3; /** a standout other than SW-NOZ-1's */ S?: number }
 
 /** SW-RPI-2: where each connection of an item stands on one of its bodies */
-function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spot | undefined, temps: (port: string) => number | undefined, solids: () => SolidBox[]): Map<string, Anchor> {
+function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spot | undefined, temps: (port: string) => number | undefined, solids: () => SolidBox[], mate: (port: string) => Anchor | undefined = () => undefined): Map<string, Anchor> {
   const pumpX = (port: string) => { const o = other(port); return o && o.kind === 'pump' ? o.x : undefined; };
   const out = new Map<string, Anchor>(), R = s.R ?? 0, toRack: V3 = [0, 0, -s.side], ports = z.nozzles;
   const od = (port: string) => { const n = ports.find(q => q.port === port)!; return designFlange(n.NPS, n.cls).OD; };
@@ -125,6 +126,20 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
       return out;
     }
     case 'hv': {
+      if (s.axis === 'z') {
+        // a hotwell, square to the rack under its ejector set: each tail pipe and the last condenser's outlet enters on top under the boot it comes from; gas leaves on top
+        // midway between the last two of them, the end toward the rack; water underneath midway between the first two; oil underneath below the second tail pipe
+        const ins = ports.filter(q => q.dir === 'in').map(q => ({ q, m: mate(q.port) })); if (ins.some(v => !v.m) || ins.length < 2) throw new Error(`${e.tag}: a hotwell whose inlets do not each come from a boot of its set`);
+        const zs = ins.map(v => v.m!.A[2]).sort((a, b) => (toRack[2] > 0 ? a - b : b - a)), top = s.yc! + R, bot = s.yc! - R;
+        for (const v of ins) { if (Math.abs(v.m!.A[0] - s.x) > 1e-6 || Math.abs(v.m!.A[2] - s.z) > s.len! / 2 - 18) throw new Error(`${e.tag}: "${v.q.port}" does not stand under its boot on the shell`); out.set(v.q.port, { A: [s.x, top, v.m!.A[2]], u: [0, 1, 0] }); }
+        const nI = zs.length, zw = near((zs[0] + zs[1]) / 2), zg = near((zs[nI - 2] + zs[nI - 1]) / 2), outs = ports.filter(q => q.dir === 'out'), gas = outs.filter(q => /gas|vapour|vent/.test(q.port)), liq = outs.filter(q => !gas.includes(q));
+        if (gas.length !== 1 || liq.length > 2) throw new Error(`${e.tag}: a hotwell has one gas outlet and two liquid outlets at most`);
+        if (nI < 3 || Math.min(Math.abs(zg - zs[nI - 2]), Math.abs(zg - zs[nI - 1])) < od(gas[0].port) / 2 + od(ins[0].q.port) / 2 + 6) throw new Error(`${e.tag}: no room on top for its gas outlet between its last two inlets`);
+        out.set(gas[0].port, { A: [s.x, top, zg], u: [0, 1, 0] });
+        const water = liq.find(q => /water/.test(q.port)) ?? liq[0], oil = liq.find(q => q !== water);
+        if (water) out.set(water.port, { A: [s.x, bot, zw], u: [0, -1, 0] }); if (oil) out.set(oil.port, { A: [s.x, bot, zs[1]], u: [0, -1, 0] });
+        return out;
+      }
       // a horizontal drum, its axis along the rack: what enters and gas on top, liquids below, in order along its length
       // a deaerator: the water it deaerates and the steam that does it enter its dome; the deaerated water leaves under the storage shell as a drum's does
       const dome = e.kind === 'deaerator' ? solids().find(b => b.name === 'dome shell') : undefined, onDome = new Map<string, Anchor>();
@@ -265,6 +280,15 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
         need('steam coil in', { A: [snap(coil.mn[0] + r), coil.mx[1], snap(toRack[2] > 0 ? coil.mx[2] - r : coil.mn[2] + r)], u: [0, 1, 0] }); need('steam coil out', { A: [snap(coil.mn[0] + r), coil.mx[1], snap(toRack[2] > 0 ? coil.mn[2] + r : coil.mx[2] - r)], u: [0, 1, 0] });
         return out;
       }
+      if (e.kind === 'ejector') {
+        // each connection where the catalogue's set has it (SW-EQC-68): on top of the first ejector's suction chamber; under each condenser's boot; at the lower ends of the set's steam and water pipes
+        const under = (re: RegExp): Anchor => { const b = boxOf(re); return { A: [mid(b, 0), b.mn[1], mid(b, 2)], u: [0, -1, 0] }; }, ch = boxOf(/^stage 1 ejector: suction chamber$/), n = Number(z.d.stages);
+        need('inlet', { A: [mid(ch, 0), ch.mx[1], mid(ch, 2)], u: [0, 1, 0] });
+        for (let k = 1; k < n; k++) need(`condensate ${k}`, under(new RegExp(`^condenser ${k}: condensate boot$`)));
+        need('outlet', under(new RegExp(`^condenser ${n}: condensate boot$`)));
+        need('motive steam', under(/^motive steam leg$/)); need('cooling water in', under(/^cooling water supply leg$/)); need('cooling water out', under(/^cooling water return leg$/));
+        return out;
+      }
       if (e.kind === 'loading') { const rs = boxOf(/^loading arm riser$/); need('inlet', { A: [mid(rs, 0), up(rs.mn[1] + 12), toRack[2] > 0 ? rs.mx[2] : rs.mn[2]], u: toRack }); return out; }
       if (e.kind === 'blower') { const of = boxOf(/^outlet flange$/); need('discharge', { A: [mid(of, 0), of.mx[1], mid(of, 2)], u: [0, 1, 0] }); return out; }
       throw new Error(`${e.tag}: no nozzle rule yet for a ${e.kind}`);
@@ -291,10 +315,19 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
   });
   // ---- nozzles of the equipment (SW-RPI-2) ----
   const nozzleId = (tag: string, port: string, body = 0) => { const b = bodies(tag)[body]; if (!b) throw new Error(`${tag}: no body ${body}`); return `${b.tag}-${port === 'S' || port === 'D' ? port : `N${Z.equip.get(tag)!.nozzles.findIndex(q => q.port === port) + 1}`}`; };
+  // the far end of the line at a connection: the item and its port
+  const farEnd = (tag: string, port: string) => { const l = sh.lines.find(q => [q.from, q.to].some(en => en.k === 'eq' && en.tag === tag && en.port === port)); if (!l) return undefined; const far = l.from.k === 'eq' && l.from.tag === tag && l.from.port === port ? l.to : l.from; return far.k === 'eq' ? far : undefined; };
+  const anchorMemo = new Map<string, Map<string, Anchor>>();
+  const anchorsFor = (e: Equip, k: number): Map<string, Anchor> => {
+    const s = bodies(e.tag)[k], key = `${e.tag}|${k}`; let a = anchorMemo.get(key);
+    if (!a) { a = anchorsOf(s, e, Z.equip.get(e.tag)!, port => { const far = farEnd(e.tag, port); return far ? bodies(far.tag)[0] : undefined; }, port => Z.utils.find(u => u.tag === e.tag && u.port === port)?.T, () => bodySolids(cell, s.tag),
+      port => { const far = farEnd(e.tag, port), fe = far ? sh.equip.get(far.tag) : undefined; return far && fe && fe !== e && bodies(far.tag).length ? anchorsFor(fe, 0).get(far.port) : undefined; }); anchorMemo.set(key, a); }
+    return a;
+  };
   for (const e of sh.equip.values()) {
     const z = Z.equip.get(e.tag)!; if (!z.nozzles.length) continue;
     for (const [k, s] of bodies(e.tag).entries()) {
-      const a = anchorsOf(s, e, z, port => { const l = sh.lines.find(q => [q.from, q.to].some(en => en.k === 'eq' && en.tag === e.tag && en.port === port)); if (!l) return undefined; const far = l.from.k === 'eq' && l.from.tag === e.tag && l.from.port === port ? l.to : l.from; return far.k === 'eq' ? bodies(far.tag)[0] : undefined; }, port => Z.utils.find(u => u.tag === e.tag && u.port === port)?.T, () => bodySolids(cell, s.tag));
+      const a = anchorsFor(e, k);
       for (const q of z.nozzles) { const an = a.get(q.port); if (!an) throw new Error(`${e.tag}: no place for "${q.port}"`); const cls = q.dir === 'in' && q.line !== undefined ? after.get(q.line)?.cls ?? q.cls : q.cls; addNozzle(nozzleId(e.tag, q.port, k), s.tag, q.port === 'S' ? 'suction' : q.port === 'D' ? 'discharge' : q.port, q.NPS, cls, an, s.z, an.S); }
     }
   }
@@ -520,6 +553,20 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
   // ---- before the generator runs: no two nozzles' valve stacks may stand in each other's way (SW-RPI-2) ----
   { const all = [...nozzles.values()].filter(q => q.service !== 'pipeway side'), env = (q: Nozzle) => { const f = designFlange(q.NPS, q.cls); return { a: q.face, b: [q.face[0] + q.u[0] * (gateFaceToFace(q.NPS, q.cls) + 12), q.face[1] + q.u[1] * (gateFaceToFace(q.NPS, q.cls) + 12), q.face[2] + q.u[2] * (gateFaceToFace(q.NPS, q.cls) + 12)] as V3, r: f.OD / 2 }; };
     for (let i = 0; i < all.length; i++) for (let j = i + 1; j < all.length; j++) { const p = env(all[i]), q = env(all[j]), d = segDist(p.a, p.b, q.a, q.b); if (d < p.r + q.r + 1) notes.push(`nozzles ${all[i].id} and ${all[j].id} stand ${d.toFixed(1)} in apart, their flanges need ${(p.r + q.r + 1).toFixed(1)}`); } }
+  // ---- SW-RPI-14: the ends at which the generator's valve is not built ----
+  {
+    const itemOf = (id: string) => { const q = nozzles.get(id), sp = q ? cell.spots.find(v => v.tag === q.equip) : undefined; return q && sp ? { q, sp, e: sh.equip.get(sp.item)! } : undefined; }, bareFlow = new Set<number>();
+    sh.lines.forEach((l, i) => {
+      if (l.from.k !== 'eq' || !here(l.from)) return; const fe = sh.equip.get(l.from.tag)!;
+      if (fe.kind === 'heater' && l.from.port === 'outlet' && l.to.k === 'eq' && ['column', 'reactor'].includes(sh.equip.get(l.to.tag)!.kind)) bareFlow.add(i);                 // a transfer line
+      if (fe.kind === 'ejector') bareFlow.add(i);                                                                                                                              // a tail pipe, or the last condenser's outlet
+      if (fe.kind === 'column') { const q = nozzles.get(nozzleId(l.from.tag, l.from.port)), sp = bodies(l.from.tag)[0]; if (q && sp.shape === 'vv' && q.u[1] > 0 && q.A[1] >= sp.yt! - 1e-6) bareFlow.add(i); }   // from a column's top
+    });
+    for (const l of lines) {
+      const ends = (['from', 'to'] as const).filter(side => { const en = l.def[side]; if (en.k !== 'nozzle') return false; const it = itemOf(en.id); return !!it && (it.e.kind === 'ejector' || (l.flow !== undefined && bareFlow.has(l.flow) && (l.origin === 'process' || l.origin === 'control'))); });
+      if (ends.length) l.bare = ends;
+    }
+  }
   const list = lines.map(l => l.def), byNo = new Map(list.map(l => [l.no, l]));
   // a unit has no building: its "drawing" is its plot's extent, for what frames a view of it
   const building: BuildingModel = { instances: [], derived: {}, notes: [], drawing: { bays: Math.ceil(cell.x1 / RACK.bent), bayFt: RACK.bent / 12, widthFt: Math.ceil(2 * Math.max(-cell.z0, cell.z1) / 12), eaveFt: 0, slopeRisePer12: 0, slabIn: 0 } } as unknown as BuildingModel;
@@ -533,6 +580,8 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
   const tall = new Set([...nozzles.values()].filter(high).map(q => q.equip)), reach = new Map<string, number>(), reaches = (tag: string, y: number) => reach.set(tag, Math.max(reach.get(tag) ?? 0, y));
   // how high each such body's lines need room: over an upward connection its valve and the turn after it, beside any other a handwheel, and 6 ft
   for (const q of nozzles.values()) if (high(q)) reaches(q.equip, q.face[1] + (q.u[1] > 0 ? valveDrop(q.NPS, q.cls) : gateReach(q.NPS)) + 72);
+  // an ejector set's room reaches as high as the room of the column whose overhead it takes: that line runs back from the column's top at the top's own level
+  for (const l of lines) { const a = l.def.from, b = l.def.to; if (a.k !== 'nozzle' || b.k !== 'nozzle') continue; const na = nozzles.get(a.id)!, sa = cell.spots.find(sp => sp.tag === na.equip), sb = cell.spots.find(sp => sp.tag === nozzles.get(b.id)!.equip); if (sa && sb && sb.kind === 'ejector' && sa.shape === 'vv' && na.u[1] > 0) reaches(sb.tag, reach.get(sa.tag) ?? 0); }
   type Rect = { x0: number; x1: number; z0: number; z1: number };
   // the room such a body's lines need: for a vertical vessel a chase on the side that faces the rack, 2 ft wider than the shell on either hand and
   // 10 ft beyond it (its lines stand on that side and come down there); for any other body, 6 ft all round
@@ -542,7 +591,9 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
       // the narrower chase holds two rows of risers 2 ft apart across it; a vessel with more connections than that has the wider and deeper one
       const R = sp.R ?? 0, many = [...nozzles.values()].filter(q => q.equip === sp.tag).length > 2 * Math.floor((2 * R + 48) / 24);
       const half = Math.max(R + 24, many && sp.lane === 'vessel' ? sp.lx / 2 : 0), yardZ = !many || sp.lane !== 'vessel' ? undefined : sp.side < 0 ? cell.yard.neg : cell.yard.pos, toYard = yardZ === undefined ? 0 : Math.abs(sp.z - yardZ) - 12;
-      const back = sp.z + sp.side * (R + 12), front = sp.z - sp.side * Math.max(R + 120, toYard); return { x0: sp.x - half, x1: sp.x + half, z0: Math.min(back, front), z1: Math.max(back, front) };
+      // and as far as the valve set on its largest connection toward the rack, and the turn after it, reach from the shell
+      const sets = Math.max(0, ...[...nozzles.values()].filter(q => q.equip === sp.tag && q.u[1] === 0).map(q => valveDrop(q.NPS, q.cls)));
+      const back = sp.z + sp.side * (R + 12), front = sp.z - sp.side * Math.max(R + 120, toYard, R + sets); return { x0: sp.x - half, x1: sp.x + half, z0: Math.min(back, front), z1: Math.max(back, front) };
     }
     return { x0: sp.x - sp.lx / 2 - 72, x1: sp.x + sp.lx / 2 + 72, z0: sp.z - sp.lz / 2 - 72, z1: sp.z + sp.lz / 2 + 72 };
   };

@@ -55,20 +55,21 @@
    ]
   },
   {
-   "tag": "10\"-P600-P-13009/A2",
+   "tag": "10\"-P600-P-13009/A5",
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
-   "kind": "valve",
+   "kind": "flange",
    "itemNo": 2,
-   "description": "VALVE, GATE, WEDGE, OS&Y 10\" P600",
-   "designation": "GATE10-P600",
-   "key": "VLV|GATE|10|P600",
+   "description": "FLANGE WELD-NECK 10\" P600 RAISED FACE",
+   "designation": "FLG10-P600",
+   "key": "WNF|10|P600",
    "NPS": 10,
    "cls": "P600",
-   "material": "Grade 36 casting",
-   "ends": "RF×RF",
-   "weight": 617.2568,
-   "spool": "loose",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 51.5629,
+   "spool": "10\"-P600-P-13009-SP01",
    "a": {
     "E": 3444,
     "N": 67.4375,
@@ -76,12 +77,12 @@
    },
    "b": {
     "E": 3444,
-    "N": 87.3125,
+    "N": 72.25,
     "EL": 1326
    },
    "centre": {
     "E": 3444,
-    "N": 77.375,
+    "N": 69.8438,
     "EL": 1326
    },
    "axis": {
@@ -90,23 +91,18 @@
     "EL": 0
    },
    "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
     "SW-FLG-4",
     "SW-FLG-5",
     "SW-FLG-6",
-    "SW-VLV-1",
-    "SW-VLV-10",
-    "SW-VLV-2",
-    "SW-VLV-4",
-    "SW-VLV-5",
-    "SW-VLV-9",
-    "SW-VLV-F-2",
-    "SW-VLV-G-1",
-    "SW-VLV-G-2",
-    "SW-VLV-G-3"
+    "SW-FLG-7",
+    "SW-FLG-9"
    ]
   },
   {
-   "tag": "10\"-P600-P-13009/A3",
+   "tag": "10\"-P600-P-13009/A6",
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "studs",
@@ -146,150 +142,24 @@
    ]
   },
   {
-   "tag": "10\"-P600-P-13009/A4",
-   "line": "10\"-P600-P-13009",
-   "lineClass": "H600",
-   "kind": "gasket",
-   "itemNo": 1,
-   "description": "GASKET 10\" P600 COMPRESSED SHEET",
-   "designation": "GASKET10-P600",
-   "key": "GSK|10|P600",
-   "NPS": 10,
-   "cls": "P600",
-   "material": "compressed sheet (non-steel)",
-   "ends": "—",
-   "weight": 0,
-   "spool": "loose",
-   "a": {
-    "E": 3444,
-    "N": 87.3125,
-    "EL": 1326
-   },
-   "b": {
-    "E": 3444,
-    "N": 87.4375,
-    "EL": 1326
-   },
-   "centre": {
-    "E": 3444,
-    "N": 87.375,
-    "EL": 1326
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-2"
-   ]
-  },
-  {
-   "tag": "10\"-P600-P-13009/A5",
-   "line": "10\"-P600-P-13009",
-   "lineClass": "H600",
-   "kind": "flange",
-   "itemNo": 4,
-   "description": "FLANGE WELD-NECK 10\" P600 RAISED FACE",
-   "designation": "FLG10-P600",
-   "key": "WNF|10|P600",
-   "NPS": 10,
-   "cls": "P600",
-   "material": "Grade 36 forging",
-   "ends": "BW×RF",
-   "flangeType": "WN",
-   "weight": 51.5629,
-   "spool": "10\"-P600-P-13009-SP01",
-   "a": {
-    "E": 3444,
-    "N": 87.4375,
-    "EL": 1326
-   },
-   "b": {
-    "E": 3444,
-    "N": 92.25,
-    "EL": 1326
-   },
-   "centre": {
-    "E": 3444,
-    "N": 89.8438,
-    "EL": 1326
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-1",
-    "SW-FLG-2",
-    "SW-FLG-3",
-    "SW-FLG-4",
-    "SW-FLG-5",
-    "SW-FLG-6",
-    "SW-FLG-7",
-    "SW-FLG-9"
-   ]
-  },
-  {
-   "tag": "10\"-P600-P-13009/A6",
-   "line": "10\"-P600-P-13009",
-   "lineClass": "H600",
-   "kind": "studs",
-   "itemNo": 3,
-   "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P600",
-   "designation": "STUDS 12×0.75x5 (10-P600)",
-   "key": "STUDS|10|P600|3.250",
-   "NPS": 10,
-   "cls": "P600",
-   "material": "Grade 90 stud",
-   "ends": "—",
-   "weight": 10.856,
-   "spool": "loose",
-   "a": {
-    "E": 3444,
-    "N": 84.875,
-    "EL": 1326
-   },
-   "b": {
-    "E": 3444,
-    "N": 89.875,
-    "EL": 1326
-   },
-   "centre": {
-    "E": 3444,
-    "N": 87.375,
-    "EL": 1326
-   },
-   "axis": {
-    "E": 0,
-    "N": 1,
-    "EL": 0
-   },
-   "rules": [
-    "SW-FLG-4",
-    "SW-FLG-7"
-   ]
-  },
-  {
    "tag": "10\"-P600-P-13009/p7",
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
-   "key": "PIPE|10|P600|5.083",
+   "key": "PIPE|10|P600|25.083",
    "NPS": 10,
    "cls": "P600",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 5.0833,
-   "weight": 13.7083,
+   "cutLength": 25.0833,
+   "weight": 67.6462,
    "spool": "10\"-P600-P-13009-SP02",
    "a": {
     "E": 3444,
-    "N": 92.25,
+    "N": 72.25,
     "EL": 1326
    },
    "b": {
@@ -299,7 +169,7 @@
    },
    "centre": {
     "E": 3444,
-    "N": 94.7917,
+    "N": 84.7917,
     "EL": 1326
    },
    "axis": {
@@ -319,7 +189,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -361,7 +231,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|44.667",
@@ -404,7 +274,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -446,7 +316,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|2.667",
@@ -489,7 +359,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -531,7 +401,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|164.667",
@@ -574,7 +444,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -616,7 +486,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|8.667",
@@ -659,7 +529,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -701,7 +571,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|361.333",
@@ -744,7 +614,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|361.333",
@@ -787,7 +657,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -829,7 +699,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|2.667",
@@ -872,7 +742,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -914,7 +784,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|320.667",
@@ -957,7 +827,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -999,7 +869,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|2.667",
@@ -1042,7 +912,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -1084,7 +954,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|218.667",
@@ -1127,7 +997,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -1169,7 +1039,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
    "key": "PIPE|10|P600|116.667",
@@ -1212,7 +1082,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "elbow",
-   "itemNo": 6,
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "designation": "EL90-10-P600",
    "key": "EL|10|P600|90",
@@ -1254,16 +1124,16 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "pipe",
-   "itemNo": 5,
+   "itemNo": 4,
    "description": "PIPE 10\" P600 BEVELLED ENDS",
    "designation": "PIPE10-P600",
-   "key": "PIPE|10|P600|6.896",
+   "key": "PIPE|10|P600|28.021",
    "NPS": 10,
    "cls": "P600",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 6.8958,
-   "weight": 18.5978,
+   "cutLength": 28.0208,
+   "weight": 75.5697,
    "spool": "10\"-P600-P-13009-SP02",
    "a": {
     "E": 2526,
@@ -1273,12 +1143,12 @@
    "b": {
     "E": 2526,
     "N": 540,
-    "EL": 1668.4375
+    "EL": 1647.3125
    },
    "centre": {
     "E": 2526,
     "N": 540,
-    "EL": 1671.8854
+    "EL": 1661.3229
    },
    "axis": {
     "E": 0,
@@ -1310,17 +1180,17 @@
    "a": {
     "E": 2526,
     "N": 540,
-    "EL": 1661.0625
+    "EL": 1639.9375
    },
    "b": {
     "E": 2526,
     "N": 540,
-    "EL": 1666.0625
+    "EL": 1644.9375
    },
    "centre": {
     "E": 2526,
     "N": 540,
-    "EL": 1663.5625
+    "EL": 1642.4375
    },
    "axis": {
     "E": 0,
@@ -1337,7 +1207,7 @@
    "line": "10\"-P600-P-13009",
    "lineClass": "H600",
    "kind": "flange",
-   "itemNo": 4,
+   "itemNo": 2,
    "description": "FLANGE WELD-NECK 10\" P600 RAISED FACE",
    "designation": "FLG10-P600",
    "key": "WNF|10|P600",
@@ -1351,17 +1221,17 @@
    "a": {
     "E": 2526,
     "N": 540,
-    "EL": 1663.625
+    "EL": 1642.5
    },
    "b": {
     "E": 2526,
     "N": 540,
-    "EL": 1668.4375
+    "EL": 1647.3125
    },
    "centre": {
     "E": 2526,
     "N": 540,
-    "EL": 1666.0313
+    "EL": 1644.9063
    },
    "axis": {
     "E": 0,
@@ -1376,215 +1246,6 @@
     "SW-FLG-5",
     "SW-FLG-6",
     "SW-FLG-7",
-    "SW-FLG-9"
-   ]
-  },
-  {
-   "tag": "10\"-P600-P-13009/B6",
-   "line": "10\"-P600-P-13009",
-   "lineClass": "H600",
-   "kind": "gasket",
-   "itemNo": 1,
-   "description": "GASKET 10\" P600 COMPRESSED SHEET",
-   "designation": "GASKET10-P600",
-   "key": "GSK|10|P600",
-   "NPS": 10,
-   "cls": "P600",
-   "material": "compressed sheet (non-steel)",
-   "ends": "—",
-   "weight": 0,
-   "spool": "loose",
-   "a": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1663.5
-   },
-   "b": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1663.625
-   },
-   "centre": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1663.5625
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-2"
-   ]
-  },
-  {
-   "tag": "10\"-P600-P-13009/B5",
-   "line": "10\"-P600-P-13009",
-   "lineClass": "H600",
-   "kind": "studs",
-   "itemNo": 7,
-   "description": "STUD SET 12 × 0.75\" × 6-1/8\" WITH 2 NUTS, FOR 10\" P600",
-   "designation": "STUDS 12×0.75x6.125 (10-P600)",
-   "key": "STUDS|10|P600|4.375",
-   "NPS": 10,
-   "cls": "P600",
-   "material": "Grade 90 stud",
-   "ends": "—",
-   "weight": 12.5473,
-   "spool": "loose",
-   "a": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1640.5
-   },
-   "b": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1645.5
-   },
-   "centre": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1643
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-4",
-    "SW-FLG-7"
-   ]
-  },
-  {
-   "tag": "10\"-P600-P-13009/B4",
-   "line": "10\"-P600-P-13009",
-   "lineClass": "H600",
-   "kind": "valve",
-   "itemNo": 2,
-   "description": "VALVE, GATE, WEDGE, OS&Y 10\" P600",
-   "designation": "GATE10-P600",
-   "key": "VLV|GATE|10|P600",
-   "NPS": 10,
-   "cls": "P600",
-   "material": "Grade 36 casting",
-   "ends": "RF×RF",
-   "weight": 617.2568,
-   "spool": "loose",
-   "a": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1643.625
-   },
-   "b": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1663.5
-   },
-   "centre": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1653.5625
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-4",
-    "SW-FLG-5",
-    "SW-FLG-6",
-    "SW-VLV-1",
-    "SW-VLV-10",
-    "SW-VLV-2",
-    "SW-VLV-4",
-    "SW-VLV-5",
-    "SW-VLV-9",
-    "SW-VLV-F-2",
-    "SW-VLV-G-1",
-    "SW-VLV-G-2",
-    "SW-VLV-G-3"
-   ]
-  },
-  {
-   "tag": "10\"-P600-P-13009/B3",
-   "line": "10\"-P600-P-13009",
-   "lineClass": "H600",
-   "kind": "gasket",
-   "itemNo": 1,
-   "description": "GASKET 10\" P600 COMPRESSED SHEET",
-   "designation": "GASKET10-P600",
-   "key": "GSK|10|P600",
-   "NPS": 10,
-   "cls": "P600",
-   "material": "compressed sheet (non-steel)",
-   "ends": "—",
-   "weight": 0,
-   "spool": "loose",
-   "a": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1643.5
-   },
-   "b": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1643.625
-   },
-   "centre": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1643.5625
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-2"
-   ]
-  },
-  {
-   "tag": "10\"-P600-P-13009/B2",
-   "line": "10\"-P600-P-13009",
-   "lineClass": "H600",
-   "kind": "spectacle",
-   "itemNo": 8,
-   "description": "SPECTACLE BLIND 10\" P600 1.000\" THICK",
-   "designation": "SPEC10-P600",
-   "key": "SPEC|10|P600",
-   "NPS": 10,
-   "cls": "P600",
-   "material": "Grade 36 forging",
-   "ends": "RF×RF",
-   "weight": 41.5879,
-   "spool": "loose",
-   "a": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1642.5
-   },
-   "b": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1643.5
-   },
-   "centre": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1643
-   },
-   "axis": {
-    "E": 0,
-    "N": 0,
-    "EL": 1
-   },
-   "rules": [
-    "SW-FLG-13",
     "SW-FLG-9"
    ]
   },
@@ -1649,7 +1310,7 @@
    ],
    "at": {
     "E": 3444,
-    "N": 92.25,
+    "N": 72.25,
     "EL": 1326
    },
    "key": "BW|10|P600",
@@ -2466,7 +2127,7 @@
    "at": {
     "E": 2526,
     "N": 540,
-    "EL": 1668.4375
+    "EL": 1647.3125
    },
    "key": "BW|10|P600",
    "weight": 0.7601,
@@ -2624,7 +2285,7 @@
     "10\"-P600-P-13009/W23",
     "10\"-P600-P-13009/W24"
    ],
-   "weight": 5148.664
+   "weight": 5259.5738
   },
   {
    "id": "10\"-P600-P-13009-SP03",
@@ -2639,51 +2300,33 @@
   {
    "itemNo": 1,
    "description": "GASKET 10\" P600 COMPRESSED SHEET",
-   "qty": 5,
+   "qty": 2,
    "weight": 0
   },
   {
    "itemNo": 2,
-   "description": "VALVE, GATE, WEDGE, OS&Y 10\" P600",
-   "qty": 2,
-   "weight": 1234.5136
-  },
-  {
-   "itemNo": 3,
-   "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P600",
-   "qty": 3,
-   "weight": 32.5681
-  },
-  {
-   "itemNo": 4,
    "description": "FLANGE WELD-NECK 10\" P600 RAISED FACE",
    "qty": 2,
    "weight": 103.1258
   },
   {
-   "itemNo": 5,
-   "description": "PIPE 10\" P600 BEVELLED ENDS",
-   "qty": 13,
-   "length": 1616.6451,
-   "weight": 4359.929
+   "itemNo": 3,
+   "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P600",
+   "qty": 2,
+   "weight": 21.7121
   },
   {
-   "itemNo": 6,
+   "itemNo": 4,
+   "description": "PIPE 10\" P600 BEVELLED ENDS",
+   "qty": 13,
+   "length": 1657.7701,
+   "weight": 4470.8388
+  },
+  {
+   "itemNo": 5,
    "description": "ELBOW 90° R = 5/3 OD 10\" P600",
    "qty": 11,
    "weight": 771.253
-  },
-  {
-   "itemNo": 7,
-   "description": "STUD SET 12 × 0.75\" × 6-1/8\" WITH 2 NUTS, FOR 10\" P600",
-   "qty": 1,
-   "weight": 12.5473
-  },
-  {
-   "itemNo": 8,
-   "description": "SPECTACLE BLIND 10\" P600 1.000\" THICK",
-   "qty": 1,
-   "weight": 41.5879
   }
  ],
  "nodes": [
@@ -2708,25 +2351,7 @@
   {
    "at": {
     "E": 3444,
-    "N": 87.3125,
-    "EL": 1326
-   },
-   "kind": "valve end",
-   "ref": "10\"-P600-P-13009/A2"
-  },
-  {
-   "at": {
-    "E": 3444,
-    "N": 87.4375,
-    "EL": 1326
-   },
-   "kind": "gasket end",
-   "ref": "10\"-P600-P-13009/A4"
-  },
-  {
-   "at": {
-    "E": 3444,
-    "N": 92.25,
+    "N": 72.25,
     "EL": 1326
    },
    "kind": "flange end",
@@ -3042,7 +2667,7 @@
    "at": {
     "E": 2526,
     "N": 540,
-    "EL": 1668.4375
+    "EL": 1647.3125
    },
    "kind": "pipe end",
    "ref": "10\"-P600-P-13009/p30"
@@ -3051,46 +2676,10 @@
    "at": {
     "E": 2526,
     "N": 540,
-    "EL": 1663.625
+    "EL": 1642.5
    },
    "kind": "flange end",
    "ref": "10\"-P600-P-13009/B7"
-  },
-  {
-   "at": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1663.5
-   },
-   "kind": "gasket end",
-   "ref": "10\"-P600-P-13009/B6"
-  },
-  {
-   "at": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1643.625
-   },
-   "kind": "valve end",
-   "ref": "10\"-P600-P-13009/B4"
-  },
-  {
-   "at": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1643.5
-   },
-   "kind": "gasket end",
-   "ref": "10\"-P600-P-13009/B3"
-  },
-  {
-   "at": {
-    "E": 2526,
-    "N": 540,
-    "EL": 1642.5
-   },
-   "kind": "spectacle end",
-   "ref": "10\"-P600-P-13009/B2"
   },
   {
    "at": {
@@ -3103,11 +2692,11 @@
   }
  ],
  "totals": {
-  "items": 38,
+  "items": 30,
   "welds": 25,
   "fieldWelds": 2,
   "supports": 4,
-  "pipeLength": 1616.6451,
-  "weight": 6555.5246
+  "pipeLength": 1657.7701,
+  "weight": 5366.9297
  }
 }

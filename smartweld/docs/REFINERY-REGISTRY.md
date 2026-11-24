@@ -14,12 +14,12 @@ No form of any code body is reproduced: the printable records are in SmartWeld's
 
 | Kind of record | Count | Rule |
 | --- | --- | --- |
-| Pressure vessel records, designation U-1 | 98 | SW-REG-1, -2, -3 |
+| Pressure vessel records, designation U-1 | 99 | SW-REG-1, -2, -3 |
 | Pressure vessel records, designation U-1A | 104 | SW-REG-1, -2, -3 |
 | Boiler records, designation P-3 (drums as P-4 parts, external piping P-4A) | 3 | SW-REG-1, -2, -3 |
 | Fired heater coils | 9 | SW-REG-1 |
 | Packaged components counted with the fittings | 6 | SW-REG-1 |
-| Lines with fluid service, line class and severity | 742 | SW-REG-4, -5, -8 |
+| Lines with fluid service, line class and severity | 744 | SW-REG-4, -5, -8 |
 | Line classes | 32 | SW-REG-8 |
 | Piping system registrations (a line class in a unit) | 141 | SW-REG-6 |
 | Fitting registrations (category × pipe class × maker) | 96 | SW-REG-6 |
@@ -33,7 +33,7 @@ SmartWeld stands in for the owner in designating each line (SW-REG-4): Category 
 | Unit | Name | Lines | Category D | Normal | Category M |
 | --- | --- | --- | --- | --- | --- |
 | 11 | Crude distillation | 79 | 12 | 67 | 0 |
-| 12 | Vacuum distillation | 31 | 3 | 28 | 0 |
+| 12 | Vacuum distillation | 33 | 3 | 30 | 0 |
 | 13 | Naphtha hydrotreater and splitter | 48 | 5 | 43 | 0 |
 | 14 | Catalytic reformer and hydrogen purification | 58 | 8 | 50 | 0 |
 | 15 | Kerosene hydrotreater | 38 | 5 | 33 | 0 |
@@ -48,7 +48,7 @@ SmartWeld stands in for the owner in designating each line (SW-REG-4): Category 
 | 24 | Wastewater treatment | 20 | 4 | 16 | 0 |
 | 25 | Flare | 8 | 1 | 7 | 0 |
 | 26 | Fire water | 8 | 6 | 2 | 0 |
-|  | Plant | 742 | 115 | 612 | 15 |
+|  | Plant | 744 | 115 | 614 | 15 |
 
 | Fluid service | Examination of welds (recalled) | Leak test (recalled) | Threaded joints |
 | --- | --- | --- | --- |
@@ -77,14 +77,14 @@ A line class is written `{group}{rating}-{material}-{service}{rank}` (SW-REG-8, 
 | `H600-CS-N4` | P600 | carbon steel | Normal | 3 | 4 | **4** | 23 | 3 to 8 | 585 psi, 355 °F | hydrogen-rich gas, reactor effluent (oil and hydrogen), liquefied petroleum gas |
 | `S1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 9 | 2 to 8 | 660 psi, 700 °F | steam, 600 psi |
 | `H150-C5-N3` | P150 | 5 Cr alloy steel | Normal | 1 | 3 | **3** | 5 | 6 to 14 | 55 psi, 700 °F | gas oil, residue |
-| `H150-CS-N3` | P150 | carbon steel | Normal | 1 | 3 | **3** | 166 | 3 to 36 | 150 psi, 600 °F | crude oil, naphtha, diesel, kerosene, gas oil, residue, oily water, gasoline, reformate, slurry oil |
+| `H150-CS-N3` | P150 | carbon steel | Normal | 1 | 3 | **3** | 167 | 3 to 36 | 150 psi, 600 °F | crude oil, naphtha, diesel, kerosene, gas oil, residue, oily water, gasoline, reformate, slurry oil |
 | `H300-C5-N3` | P300 | 5 Cr alloy steel | Normal | 2 | 3 | **3** | 7 | 4 to 14 | 270 psi, 740 °F | gas oil, residue, slurry oil |
 | `H300-CS-N3` | P300 | carbon steel | Normal | 2 | 3 | **3** | 104 | 3 to 24 | 300 psi, 600 °F | oily water, crude oil, naphtha, diesel, gas oil, kerosene, residue, reformate, slurry oil, gasoline |
 | `H600-C5-N3` | P600 | 5 Cr alloy steel | Normal | 3 | 3 | **3** | 5 | 3 to 10 | 260 psi, 740 °F | residue, slurry oil |
 | `H600-CS-N2` | P600 | carbon steel | Normal | 3 | 2 | **3** | 14 | 3 to 6 | 500 psi, 305 °F | process and wash water, sour water, amine solution, caustic solution |
 | `H600-CS-N3` | P600 | carbon steel | Normal | 3 | 3 | **3** | 26 | 3 to 12 | 595 psi, 555 °F | crude oil, naphtha, kerosene, gas oil, diesel, gasoline |
 | `C300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 9 | 2 to 3 | 275 psi, 410 °F | boiler feed water, steam condensate |
-| `H150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 43 | 2 to 42 | 150 psi, 650 °F | sour water, amine solution, process air, flue gas, caustic solution, liquid sulfur, boiler feed water |
+| `H150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 44 | 2 to 42 | 150 psi, 650 °F | sour water, amine solution, process air, flue gas, caustic solution, liquid sulfur, boiler feed water |
 | `H150-SS-N2` | P150 | stainless steel | Normal | 1 | 2 | **2** | 2 | 3 | 115 psi, 170 °F | sour water |
 | `H300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 23 | 2 to 20 | 285 psi, 450 °F | process and wash water, sour water, amine solution, caustic solution, raw and service water, demineralised water, steam, 150 psi, nitrogen, fire water |
 | `S150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 2 | 10 to 14 | 75 psi, 370 °F | steam, 50 psi |
@@ -99,8 +99,8 @@ A line class is written `{group}{rating}-{material}-{service}{rank}` (SW-REG-8, 
 | --- | --- |
 | 5 | 15 |
 | 4 | 194 |
-| 3 | 327 |
-| 2 | 91 |
+| 3 | 328 |
+| 2 | 92 |
 | 1 | 115 |
 
 ## Pressure equipment
@@ -143,9 +143,10 @@ Distils the atmospheric residue again under vacuum, so that gas oil for the crac
 | Tag | Service | Report | Registration | Working pressure and temperature | Size | Wall, in | Material | Radiography | Heat treatment | Minimum metal temperature, °F | Weight, lb |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | C-1201 | Vacuum column | U-1 | C6025.7 | vessel: 50 psi and full vacuum at 800 °F | 228 in × 101.5 ft | 1.625 | SA-516-70 | full | post-weld heat treated | -20 | 414,458 |
-| D-1201 | Ejector hotwell | U-1A | H6546.7 | vessel: 50 psi at 160 °F | 36 in × 12 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 2,531 |
-| J-1201-C1 | Vacuum ejector set, three stages with condensers: condenser 1 | U-1 | V3179.7 | shell side: 50 psi and full vacuum at 200 °F; tube side: 85 psi at 155 °F | 30 in × 10 ft | 0.375 | SA-516-70 | spot | none | -20 | 7,520 |
-| J-1201-C2 | Vacuum ejector set, three stages with condensers: condenser 2 | U-1 | Y4798.7 | shell side: 50 psi and full vacuum at 200 °F; tube side: 85 psi at 155 °F | 30 in × 10 ft | 0.375 | SA-516-70 | spot | none | -20 | 7,520 |
+| D-1201 | Ejector hotwell | U-1A | H6546.7 | vessel: 50 psi at 275 °F | 36 in × 15 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 2,968 |
+| J-1201-C1 | Vacuum ejector set, three stages with condensers: condenser 1 | U-1 | V3179.7 | shell side: 50 psi and full vacuum at 330 °F; tube side: 85 psi at 155 °F | 60 in × 20 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 70,260 |
+| J-1201-C2 | Vacuum ejector set, three stages with condensers: condenser 2 | U-1 | Y4798.7 | shell side: 50 psi and full vacuum at 265 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 5,653 |
+| J-1201-C3 | Vacuum ejector set, three stages with condensers: condenser 3 | U-1 | X6417.7 | shell side: 50 psi and full vacuum at 275 °F; tube side: 85 psi at 155 °F | 12 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 2,756 |
 | A-1201A | Light vacuum gas oil cooler | U-1A | P4670.7 | headers and tubes: 220 psi at 350 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1201B | Light vacuum gas oil cooler | U-1A | L3051.7 | headers and tubes: 220 psi at 350 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | E-1201 | Heavy vacuum gas oil steam generator | U-1 | R2335.7 | shell side: 260 psi at 600 °F; tube side: 275 psi at 415 °F | 36 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 19,840 |
@@ -421,9 +422,9 @@ As recalled, a fired process heater's coil is pressure equipment whose design is
 
 | Tag | Unit | Service | Category | Maker | Registration |
 | --- | --- | --- | --- | --- | --- |
-| J-1201-1 | 12 | Vacuum ejector set, three stages with condensers | H: other pressure-retaining components | Demonstration Maker 2 | 0H38353.7 |
-| J-1201-2 | 12 | Vacuum ejector set, three stages with condensers | H: other pressure-retaining components | Demonstration Maker 2 | 0H38353.7 |
-| J-1201-3 | 12 | Vacuum ejector set, three stages with condensers | H: other pressure-retaining components | Demonstration Maker 3 | 0H90734.7 |
+| J-1201-J1 | 12 | Vacuum ejector set, three stages with condensers | H: other pressure-retaining components | Demonstration Maker 1 | 0H15496.7 |
+| J-1201-J2 | 12 | Vacuum ejector set, three stages with condensers | H: other pressure-retaining components | Demonstration Maker 1 | 0H15496.7 |
+| J-1201-J3 | 12 | Vacuum ejector set, three stages with condensers | H: other pressure-retaining components | Demonstration Maker 2 | 0H38353.7 |
 | X-1901 | 19 | High to medium pressure let-down and desuperheater | H: other pressure-retaining components | Demonstration Maker 1 | 0H39013.7 |
 | X-1902 | 19 | Medium to low pressure let-down and desuperheater | H: other pressure-retaining components | Demonstration Maker 1 | 0H68103.7 |
 | X-1904 | 19 | Nitrogen vaporisers | H: other pressure-retaining components | Demonstration Maker 1 | 0H68103.7 |

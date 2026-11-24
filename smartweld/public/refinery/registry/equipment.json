@@ -5509,7 +5509,7 @@
       "source": "model"
      },
      "temperature": {
-      "value": 160,
+      "value": 275,
       "source": "model"
      },
      "fullVacuum": {
@@ -5545,7 +5545,7 @@
      "source": "model"
     },
     "length": {
-     "value": 144,
+     "value": 180,
      "source": "model"
     },
     "thickness": {
@@ -5578,7 +5578,7 @@
      "mark": "N1",
      "service": "inlet",
      "size": {
-      "value": 4,
+      "value": 3,
       "source": "model"
      },
      "pipeClass": {
@@ -5589,6 +5589,32 @@
     },
     {
      "mark": "N2",
+     "service": "tail pipe 1",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "oily water"
+    },
+    {
+     "mark": "N3",
+     "service": "tail pipe 2",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "sour water"
+    },
+    {
+     "mark": "N4",
      "service": "gas",
      "size": {
       "value": 3,
@@ -5601,7 +5627,7 @@
      "fluid": "hydrocarbon gas"
     },
     {
-     "mark": "N3",
+     "mark": "N5",
      "service": "oil",
      "size": {
       "value": 3,
@@ -5614,7 +5640,7 @@
      "fluid": "oily water"
     },
     {
-     "mark": "N4",
+     "mark": "N6",
      "service": "water",
      "size": {
       "value": 3,
@@ -5644,12 +5670,12 @@
     }
    ],
    "emptyWeightLb": {
-    "value": 2531,
+    "value": 2968,
     "source": "model"
    },
    "weightBasis": "shell, heads and supports as drawn",
    "volumeFt3": {
-    "value": 92,
+    "value": 113,
     "source": "model"
    },
    "signatures": "demonstration record: not certified, not signed"
@@ -5695,7 +5721,7 @@
       "source": "model"
      },
      "temperature": {
-      "value": 200,
+      "value": 330,
       "source": "model"
      },
      "fullVacuum": {
@@ -5708,6 +5734,7 @@
      },
      "contents": [
       "hydrocarbon gas",
+      "oily water",
       "steam condensing"
      ]
     },
@@ -5749,15 +5776,15 @@
      "source": "recalled"
     },
     "insideDiameter": {
-     "value": 30,
+     "value": 60,
      "source": "model"
     },
     "length": {
-     "value": 120,
+     "value": 240,
      "source": "model"
     },
     "thickness": {
-     "value": 0.375,
+     "value": 0.5,
      "source": "model"
     },
     "heads": {
@@ -5771,7 +5798,7 @@
      "source": "recalled"
     },
     "count": {
-     "value": 805,
+     "value": 3439,
      "source": "model"
     },
     "outsideDiameter": {
@@ -5779,11 +5806,11 @@
      "source": "model"
     },
     "length": {
-     "value": 120,
+     "value": 240,
      "source": "model"
     },
     "surfaceFt2": {
-     "value": 1581,
+     "value": 13505,
      "source": "model"
     }
    },
@@ -5796,7 +5823,7 @@
     "source": "recalled"
    },
    "heatTreatment": {
-    "value": "none",
+    "value": "post-weld heat treated",
     "source": "recalled"
    },
    "lethalService": {
@@ -5821,7 +5848,7 @@
      "mark": "N2",
      "service": "outlet",
      "size": {
-      "value": 4,
+      "value": 3,
       "source": "model"
      },
      "pipeClass": {
@@ -5832,6 +5859,32 @@
     },
     {
      "mark": "N3",
+     "service": "condensate 1",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "oily water"
+    },
+    {
+     "mark": "N4",
+     "service": "condensate 2",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "sour water"
+    },
+    {
+     "mark": "N5",
      "service": "motive steam",
      "size": {
       "value": 6,
@@ -5844,7 +5897,7 @@
      "fluid": "steam, 150 psi"
     },
     {
-     "mark": "N4",
+     "mark": "N6",
      "service": "cooling water in",
      "size": {
       "value": 12,
@@ -5857,7 +5910,7 @@
      "fluid": "cooling water supply"
     },
     {
-     "mark": "N5",
+     "mark": "N7",
      "service": "cooling water out",
      "size": {
       "value": 12,
@@ -5897,10 +5950,10 @@
     }
    ],
    "emptyWeightLb": {
-    "value": 7520,
+    "value": 70260,
     "source": "model"
    },
-   "weightBasis": "shell, channel, covers and saddles as drawn, with the tubes added by count (SW-EQC-30)",
+   "weightBasis": "shell, channel, covers and saddles as the catalogue draws them (SW-DET-11), with the tubes added by count (SW-EQC-30); its connections and boot not included",
    "signatures": "demonstration record: not certified, not signed"
   },
   {
@@ -5944,7 +5997,283 @@
       "source": "model"
      },
      "temperature": {
-      "value": 200,
+      "value": 265,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": true,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 65,
+      "source": "recalled"
+     },
+     "contents": [
+      "hydrocarbon gas",
+      "sour water",
+      "steam condensing"
+     ]
+    },
+    {
+     "name": "tube side",
+     "mawp": {
+      "value": 85,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 155,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": false,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 111,
+      "source": "recalled"
+     },
+     "contents": [
+      "cooling water supply",
+      "cooling water return"
+     ]
+    }
+   ],
+   "mdmt": {
+    "value": -20,
+    "source": "recalled"
+   },
+   "corrosionAllowance": {
+    "value": 0.125,
+    "source": "model"
+   },
+   "shell": {
+    "material": {
+     "value": "SA-516-70",
+     "source": "recalled"
+    },
+    "insideDiameter": {
+     "value": 18,
+     "source": "model"
+    },
+    "length": {
+     "value": 240,
+     "source": "model"
+    },
+    "thickness": {
+     "value": 0.375,
+     "source": "model"
+    },
+    "heads": {
+     "value": "2:1 ellipsoidal, of the shell's thickness",
+     "source": "model"
+    }
+   },
+   "tubes": {
+    "material": {
+     "value": "SA-179",
+     "source": "recalled"
+    },
+    "count": {
+     "value": 253,
+     "source": "model"
+    },
+    "outsideDiameter": {
+     "value": 0.75,
+     "source": "model"
+    },
+    "length": {
+     "value": 240,
+     "source": "model"
+    },
+    "surfaceFt2": {
+     "value": 994,
+     "source": "model"
+    }
+   },
+   "radiography": {
+    "value": "spot",
+    "source": "recalled"
+   },
+   "jointEfficiency": {
+    "value": 0.85,
+    "source": "recalled"
+   },
+   "heatTreatment": {
+    "value": "post-weld heat treated",
+    "source": "recalled"
+   },
+   "lethalService": {
+    "value": false,
+    "source": "recalled"
+   },
+   "nozzles": [
+    {
+     "mark": "N1",
+     "service": "inlet",
+     "size": {
+      "value": 48,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N2",
+     "service": "outlet",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N3",
+     "service": "condensate 1",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "oily water"
+    },
+    {
+     "mark": "N4",
+     "service": "condensate 2",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "sour water"
+    },
+    {
+     "mark": "N5",
+     "service": "motive steam",
+     "size": {
+      "value": 6,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P300",
+      "source": "model"
+     },
+     "fluid": "steam, 150 psi"
+    },
+    {
+     "mark": "N6",
+     "service": "cooling water in",
+     "size": {
+      "value": 12,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "cooling water supply"
+    },
+    {
+     "mark": "N7",
+     "service": "cooling water out",
+     "size": {
+      "value": 12,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "cooling water return"
+    }
+   ],
+   "supports": {
+    "value": "two saddles",
+    "source": "model"
+   },
+   "relief": [
+    {
+     "tag": {
+      "value": "PSV-1201-C2S",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 50,
+      "source": "model"
+     }
+    },
+    {
+     "tag": {
+      "value": "PSV-1201-C2T",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 85,
+      "source": "model"
+     }
+    }
+   ],
+   "emptyWeightLb": {
+    "value": 5653,
+    "source": "model"
+   },
+   "weightBasis": "shell, channel, covers and saddles as the catalogue draws them (SW-DET-11), with the tubes added by count (SW-EQC-30); its connections and boot not included",
+   "signatures": "demonstration record: not certified, not signed"
+  },
+  {
+   "demonstration": true,
+   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
+   "tag": "J-1201-C3",
+   "item": "J-1201",
+   "unit": 12,
+   "service": "Vacuum ejector set, three stages with condensers: condenser 3",
+   "kind": "ejector",
+   "shape": "cylinder",
+   "code": {
+    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
+    "source": "recalled"
+   },
+   "report": {
+    "value": "U-1",
+    "source": "recalled"
+   },
+   "registration": {
+    "value": "X6417.7",
+    "source": "invented"
+   },
+   "fabricator": {
+    "value": "Demonstration Fabricator D",
+    "source": "invented"
+   },
+   "serial": {
+    "value": "DF-15272",
+    "source": "invented"
+   },
+   "yearBuilt": {
+    "value": 2025,
+    "source": "invented"
+   },
+   "chambers": [
+    {
+     "name": "shell side",
+     "mawp": {
+      "value": 50,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 275,
       "source": "model"
      },
      "fullVacuum": {
@@ -5998,11 +6327,11 @@
      "source": "recalled"
     },
     "insideDiameter": {
-     "value": 30,
+     "value": 12,
      "source": "model"
     },
     "length": {
-     "value": 120,
+     "value": 240,
      "source": "model"
     },
     "thickness": {
@@ -6020,7 +6349,7 @@
      "source": "recalled"
     },
     "count": {
-     "value": 805,
+     "value": 97,
      "source": "model"
     },
     "outsideDiameter": {
@@ -6028,11 +6357,11 @@
      "source": "model"
     },
     "length": {
-     "value": 120,
+     "value": 240,
      "source": "model"
     },
     "surfaceFt2": {
-     "value": 1581,
+     "value": 381,
      "source": "model"
     }
    },
@@ -6045,7 +6374,7 @@
     "source": "recalled"
    },
    "heatTreatment": {
-    "value": "none",
+    "value": "post-weld heat treated",
     "source": "recalled"
    },
    "lethalService": {
@@ -6070,7 +6399,7 @@
      "mark": "N2",
      "service": "outlet",
      "size": {
-      "value": 4,
+      "value": 3,
       "source": "model"
      },
      "pipeClass": {
@@ -6081,6 +6410,32 @@
     },
     {
      "mark": "N3",
+     "service": "condensate 1",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "oily water"
+    },
+    {
+     "mark": "N4",
+     "service": "condensate 2",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "sour water"
+    },
+    {
+     "mark": "N5",
      "service": "motive steam",
      "size": {
       "value": 6,
@@ -6093,7 +6448,7 @@
      "fluid": "steam, 150 psi"
     },
     {
-     "mark": "N4",
+     "mark": "N6",
      "service": "cooling water in",
      "size": {
       "value": 12,
@@ -6106,7 +6461,7 @@
      "fluid": "cooling water supply"
     },
     {
-     "mark": "N5",
+     "mark": "N7",
      "service": "cooling water out",
      "size": {
       "value": 12,
@@ -6126,7 +6481,7 @@
    "relief": [
     {
      "tag": {
-      "value": "PSV-1201-C2S",
+      "value": "PSV-1201-C3S",
       "source": "invented"
      },
      "setPressure": {
@@ -6136,7 +6491,7 @@
     },
     {
      "tag": {
-      "value": "PSV-1201-C2T",
+      "value": "PSV-1201-C3T",
       "source": "invented"
      },
      "setPressure": {
@@ -6146,10 +6501,10 @@
     }
    ],
    "emptyWeightLb": {
-    "value": 7520,
+    "value": 2756,
     "source": "model"
    },
-   "weightBasis": "shell, channel, covers and saddles as drawn, with the tubes added by count (SW-EQC-30)",
+   "weightBasis": "shell, channel, covers and saddles as the catalogue draws them (SW-DET-11), with the tubes added by count (SW-EQC-30); its connections and boot not included",
    "signatures": "demonstration record: not certified, not signed"
   },
   {
@@ -40419,16 +40774,16 @@
  "components": [
   {
    "demonstration": true,
-   "tag": "J-1201-1",
+   "tag": "J-1201-J1",
    "unit": 12,
    "service": "Vacuum ejector set, three stages with condensers",
    "category": "H",
    "maker": {
-    "value": "Demonstration Maker 2",
+    "value": "Demonstration Maker 1",
     "source": "invented"
    },
    "registration": {
-    "value": "0H38353.7",
+    "value": "0H15496.7",
     "source": "invented"
    },
    "pipeClass": {
@@ -40438,16 +40793,16 @@
   },
   {
    "demonstration": true,
-   "tag": "J-1201-2",
+   "tag": "J-1201-J2",
    "unit": 12,
    "service": "Vacuum ejector set, three stages with condensers",
    "category": "H",
    "maker": {
-    "value": "Demonstration Maker 2",
+    "value": "Demonstration Maker 1",
     "source": "invented"
    },
    "registration": {
-    "value": "0H38353.7",
+    "value": "0H15496.7",
     "source": "invented"
    },
    "pipeClass": {
@@ -40457,16 +40812,16 @@
   },
   {
    "demonstration": true,
-   "tag": "J-1201-3",
+   "tag": "J-1201-J3",
    "unit": 12,
    "service": "Vacuum ejector set, three stages with condensers",
    "category": "H",
    "maker": {
-    "value": "Demonstration Maker 3",
+    "value": "Demonstration Maker 2",
     "source": "invented"
    },
    "registration": {
-    "value": "0H90734.7",
+    "value": "0H38353.7",
     "source": "invented"
    },
    "pipeClass": {

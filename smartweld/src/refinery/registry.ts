@@ -9,7 +9,7 @@
  * none was issued by a regulator. These are demonstration records, not manufacturer's data reports and not
  * registrations.
  */
-import { makeVerticalVessel, type PartSpec } from '../catalogue';
+import { makeVerticalVessel, makeShellTubeExchanger, type PartSpec } from '../catalogue';
 import { processModel } from './process';
 import { sizing, allowable, designPressure, designTemperature, tubeCount, fireTubeCount, type EquipSize, type Side } from './sizing';
 import { FLUIDS } from './fluids';
@@ -97,9 +97,11 @@ function plans(sh: UnitSheet, e: Equip, z: EquipSize, body: Map<string, PartSpec
       return [['RX', 'reactor vessel and stripper', 'reactorD', 'reactorTT'], ['RG', 'regenerator', 'regenD', 'regenTT']].map(([s, name, kd, kl]) => ({ tag: `${e.tag}-${s}`, report: 'U-1' as const, shape: 'cylinder' as const, service: `${e.service}: ${name}`, chambers: one(), ID: v(kd), L: v(kl), t: 1, supports: 'skirt and structure', weightBasis: `not split between the two vessels; the catalogue's weight of the whole cracker as drawn, both vessels, riser, standpipes and steel, is ${Math.round(b?.weight.value ?? 0).toLocaleString('en-US')} lb; refractory not included`, volume: true })); }
     case 'aircooler': { const tubes = d.tubesPerBay, L = d.tubeLength, lb = tubesLb(tubes, 1, L) + 2 * 2 * (12 * 24 + 12 * d.bayWidth + 24 * d.bayWidth) * 1 * STEEL;
       return tags(d.bays).map(tag => ({ tag, report: 'U-1A' as const, shape: 'tube bundle' as const, chambers: one('headers and tubes'), tubes: { n: tubes, d: 1, L }, supports: 'structure', weight: lb, weightBasis: 'pressure parts only: the tubes and two header boxes weighed as 1 in plate (SW-REG-3); fins, fans and structure not included' })); }
-    case 'ejector': { const cw = { designP: designPressure(60), designT: designTemperature(105), vacuum: false }, n = tubeCount(30);
-      return [1, 2].map(k => ({ tag: `${e.tag}-C${k}`, report: 'U-1' as const, shape: 'cylinder' as const, service: `${e.service}: condenser ${k}`, chambers: [{ name: 'shell side', ...proc, contents: names(p => /inlet|outlet/.test(p)).concat('steam condensing') }, { name: 'tube side', ...cw, contents: ['cooling water supply', 'cooling water return'] }], ID: 30, L: 120, t: 0.375, tubes: { n, d: 0.75, L: 120 }, supports: 'two saddles',
-        weight: w(`${e.tag}-C${k}`) !== undefined ? w(`${e.tag}-C${k}`)! + tubesLb(n, 0.75, 120) : undefined, weightBasis: 'shell, channel, covers and saddles as drawn, with the tubes added by count (SW-EQC-30)' })); }
+    case 'ejector': {   // SW-PRC-18, SW-EQC-68: one condenser a stage; the shell under the stage's vacuum and at its own design temperature, the tubes on cooling water
+      const fluidOf = (port: string) => { const q = z.nozzles.find(v => v.port === port); return q ? [FLUIDS[q.fluid]?.name ?? q.fluid] : []; };
+      return Array.from({ length: d.stages }, (_, i) => { const k = i + 1, tag = `${e.tag}-C${k}`, ID = d[`c${k}ID`], t = d[`c${k}Shell`], n = d[`c${k}Tubes`], L = d.tubeLength;
+        return { tag, report: 'U-1' as const, shape: 'cylinder' as const, service: `${e.service}: condenser ${k}`, chambers: [{ name: 'shell side', ...proc, designT: d[`c${k}DesignT`], contents: [...new Set([...fluidOf('inlet'), ...fluidOf(k < d.stages ? `condensate ${k}` : 'outlet'), 'steam condensing'])] }, { name: 'tube side', ...z.sides.water, contents: ['cooling water supply', 'cooling water return'] }], ID, L, t, tubes: { n, d: 0.75, L }, supports: 'two saddles',
+          weight: makeShellTubeExchanger({ tag, ID, t, TT: L, centreline: ID }).weight.value + tubesLb(n, 0.75, L), weightBasis: 'shell, channel, covers and saddles as the catalogue draws them (SW-DET-11), with the tubes added by count (SW-EQC-30); its connections and boot not included' }; }); }
     case 'boiler': { const sd = d.steamID, md = 0.65 * sd, Ts = model(d.drumDesignT);
       return [{ tag: e.tag, report: 'P-3', shape: 'boiler', chambers: [{ name: 'steam and water side', ...proc, contents: ['boiler feed water', 'high-pressure steam'] }], supports: 'structure', weight: w(e.tag), weightBasis: 'the boiler as drawn: drums, tubes, casing, burners and stack',
         parts: [{ tag: `${e.tag}-SD`, description: 'steam drum', report: recalled('P-4'), insideDiameter: model(sd), thickness: model(d.drumT), temperature: Ts }, { tag: `${e.tag}-MD`, description: 'mud drum', report: recalled('P-4'), insideDiameter: model(md), thickness: model(drumWall(md)), temperature: Ts },
@@ -262,7 +264,7 @@ export function componentRecords(): ComponentRecord[] {
   const M = processModel(), Z = sizing(), out: ComponentRecord[] = [];
   for (const sh of M.sheets) for (const e of sh.equip.values()) {
     const z = Z.get(sh.no)!.equip.get(e.tag)!; if (!(e.kind === 'ejector' || (e.kind === 'package' && /let-down|vaporiser/i.test(e.service)))) continue;
-    for (const tag of e.kind === 'ejector' ? [1, 2, 3].map(k => `${e.tag}-${k}`) : [e.tag]) { const maker = makerOf(tag); out.push({ demonstration: true, tag, unit: sh.no, service: e.service, category: 'H', maker: invented(maker), registration: invented(fittingCrn('H', z.cls, maker)), pipeClass: model(z.cls) }); }
+    for (const tag of e.kind === 'ejector' ? Array.from({ length: z.d.stages }, (_, k) => `${e.tag}-J${k + 1}`) : [e.tag]) { const maker = makerOf(tag); out.push({ demonstration: true, tag, unit: sh.no, service: e.service, category: 'H', maker: invented(maker), registration: invented(fittingCrn('H', z.cls, maker)), pipeClass: model(z.cls) }); }
   }
   return out;
 }

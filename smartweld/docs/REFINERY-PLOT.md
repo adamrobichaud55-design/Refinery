@@ -32,7 +32,7 @@ Each area stands on a level bench cut and filled into the natural ground with sl
 
 | Bench | East, ft | North, ft | Size, ft | Elevation, ft | Natural ground under it, ft |
 |---|---|---|---|---|---|
-| Process bench | 850 to 3,050 | −3,260 to −2,110 | 2,200 × 1,150 | 58 | 45 to 76 |
+| Process bench | 850 to 2,200 | −3,260 to −2,110 | 1,350 × 1,150 | 59 | 45 to 76 |
 | South tank terrace | 940 to 3,560 | −1,860 to −1,390 | 2,620 × 470 | 84 | 52 to 110 |
 | North tank terrace | 1,000 to 3,160 | −1,200 to −740 | 2,160 × 460 | 116 | 96 to 147 |
 | Liquefied gas bench | 3,760 to 4,260 | −1,880 to −1,480 | 500 × 400 | 45 | 37 to 66 |
@@ -43,7 +43,7 @@ Each area stands on a level bench cut and filled into the natural ground with sl
 | Jetty head | 1,080 to 1,320 | −4,260 to −4,080 | 240 × 180 | 39 | 27 to 42 |
 | Storm pond | 3,720 to 4,080 | −3,400 to −3,300 | 360 × 100 | 15 | 12 to 19 |
 
-Earth moved to make the benches and roads: about 860 thousand cubic yards cut and 825 thousand filled.
+Earth moved to make the benches and roads: about 832 thousand cubic yards cut and 725 thousand filled.
 
 ## 3. Plots
 
@@ -51,21 +51,21 @@ Where each unit and building stands, and why there (SW-SITE-4): process units on
 
 | Plot | Unit | Stands on | East, ft | North, ft | Size, ft | Elevation, ft |
 |---|---|---|---|---|---|---|
-| Utilities (battery limit on its south side) | 19 | Process bench | 1,000 to 1,420 | −2,650 to −2,170 | 420 × 480 | 58 |
-| Crude distillation (battery limit on its south side) | 11 | Process bench | 1,520 to 1,820 | −2,650 to −2,230 | 300 × 420 | 58 |
-| Vacuum distillation (battery limit on its south side) | 12 | Process bench | 1,920 to 2,180 | −2,650 to −2,350 | 260 × 300 | 58 |
-| Fluid catalytic cracker (battery limit on its south side) | 17 | Process bench | 2,280 to 2,620 | −2,650 to −2,170 | 340 × 480 | 58 |
-| Cooling tower | 19 | Process bench | 2,720 to 2,920 | −2,590 to −2,190 | 200 × 400 | 58 |
-| Naphtha hydrotreater (battery limit on its north side) | 13 | Process bench | 1,000 to 1,240 | −3,070 to −2,750 | 240 × 320 | 58 |
-| Catalytic reformer (battery limit on its north side) | 14 | Process bench | 1,340 to 1,600 | −3,110 to −2,750 | 260 × 360 | 58 |
-| Kerosene hydrotreater (battery limit on its north side) | 15 | Process bench | 1,700 to 1,920 | −3,010 to −2,750 | 220 × 260 | 58 |
-| Diesel hydrotreater (battery limit on its north side) | 16 | Process bench | 2,020 to 2,260 | −3,090 to −2,750 | 240 × 340 | 58 |
-| Sulfur block (battery limit on its north side) | 18 | Process bench | 2,360 to 2,620 | −3,150 to −2,750 | 260 × 400 | 58 |
-| Space for a future unit |  | Process bench | 2,720 to 2,940 | −3,150 to −2,750 | 220 × 400 | 58 |
+| Utilities (battery limit on its south side) | 19 | Process bench | 1,010 to 1,220 | −2,670 to −2,190 | 210 × 480 | 59 |
+| Crude distillation (battery limit on its south side) | 11 | Process bench | 1,270 to 1,410 | −2,670 to −2,250 | 140 × 420 | 59 |
+| Vacuum distillation (battery limit on its south side) | 12 | Process bench | 1,460 to 1,630 | −2,670 to −2,370 | 170 × 300 | 59 |
+| Fluid catalytic cracker (battery limit on its south side) | 17 | Process bench | 1,680 to 1,840 | −2,670 to −2,190 | 160 × 480 | 59 |
+| Cooling tower | 19 | Process bench | 1,980 to 2,090 | −2,590 to −2,190 | 110 × 400 | 59 |
+| Naphtha hydrotreater (battery limit on its north side) | 13 | Process bench | 1,000 to 1,120 | −3,050 to −2,730 | 120 × 320 | 59 |
+| Catalytic reformer (battery limit on its north side) | 14 | Process bench | 1,170 to 1,300 | −3,090 to −2,730 | 130 × 360 | 59 |
+| Kerosene hydrotreater (battery limit on its north side) | 15 | Process bench | 1,350 to 1,460 | −2,990 to −2,730 | 110 × 260 | 59 |
+| Diesel hydrotreater (battery limit on its north side) | 16 | Process bench | 1,510 to 1,630 | −3,070 to −2,730 | 120 × 340 | 59 |
+| Sulfur block (battery limit on its north side) | 18 | Process bench | 1,680 to 1,880 | −3,130 to −2,730 | 200 × 400 | 59 |
+| Space for a future unit |  | Process bench | 1,930 to 2,150 | −3,130 to −2,730 | 220 × 400 | 59 |
 | Truck loading | 23 | Truck loading bench | 260 to 720 | −1,990 to −1,560 | 460 × 430 | 77 |
 | Wastewater treatment | 24 | Wastewater bench | 3,660 to 4,240 | −3,190 to −2,810 | 580 × 380 | 23 |
 | Flare stack and seal drum | 25 | Flare pad | 480 to 560 | −560 to −480 | 80 × 80 | 192 |
-| Flare knock-out drum | 25 | Process bench | 865 to 945 | −2,290 to −2,170 | 80 × 120 | 58 |
+| Flare knock-out drum | 25 | Process bench | 865 to 945 | −2,290 to −2,170 | 80 × 120 | 59 |
 | Marine terminal shore station | 22 | Jetty head | 1,100 to 1,300 | −4,250 to −4,100 | 200 × 150 | 39 |
 | Storm pond | 24 | Storm pond | 3,740 to 4,060 | −3,385 to −3,315 | 320 × 70 | 15 |
 | Fire water tanks and pumps | 26 | Administration bench | 520 to 740 | −2,450 to −2,290 | 220 × 160 | 55 |
@@ -132,27 +132,27 @@ Primary roads 24 ft wide, secondary 20 ft, tracks 16 ft, at 6 % at most; ramps b
 
 | Road | Width, ft | Length, ft | From elevation, ft | To, ft | Steepest |
 |---|---|---|---|---|---|
-| Main road from the gate | 24 | 975 | 53 | 58 | 1.5 % |
-| Process ring road | 24 | 6,300 | 58 | 58 | 0.0 % |
-| Road between units | 20 | 515 | 58 | 58 | 0.0 % |
-| Road between units | 20 | 515 | 58 | 58 | 0.0 % |
-| Road between units | 20 | 515 | 58 | 58 | 0.0 % |
-| Road between units | 20 | 485 | 58 | 58 | 0.0 % |
-| Road between units | 20 | 485 | 58 | 58 | 0.0 % |
-| Road between units | 20 | 485 | 58 | 58 | 0.0 % |
-| Road between units | 20 | 485 | 58 | 58 | 0.0 % |
-| Road across the pipeway | 20 | 1,100 | 58 | 58 | 0.0 % |
-| Ramp to the south terrace | 24 | 473 | 58 | 84 | 5.5 % |
+| Main road from the gate | 24 | 975 | 53 | 59 | 1.9 % |
+| Process ring road | 24 | 4,600 | 59 | 59 | 0.0 % |
+| Road between units | 20 | 535 | 59 | 59 | 0.0 % |
+| Road between units | 20 | 535 | 59 | 59 | 0.0 % |
+| Road between units | 20 | 535 | 59 | 59 | 0.0 % |
+| Road between units | 20 | 505 | 59 | 59 | 0.0 % |
+| Road between units | 20 | 505 | 59 | 59 | 0.0 % |
+| Road between units | 20 | 505 | 59 | 59 | 0.0 % |
+| Road between units | 20 | 505 | 59 | 59 | 0.0 % |
+| Road across the pipeway | 20 | 1,100 | 59 | 59 | 0.0 % |
+| Ramp to the south terrace | 24 | 473 | 59 | 84 | 5.3 % |
 | South terrace road | 24 | 6,000 | 84 | 84 | 0.0 % |
 | Road between the dikes | 20 | 430 | 84 | 84 | 0.0 % |
 | Ramp to the north terrace | 24 | 575 | 84 | 116 | 5.6 % |
 | North terrace road | 24 | 5,080 | 116 | 116 | 0.0 % |
-| Road to the liquefied gas bench | 20 | 804 | 58 | 45 | 1.6 % |
+| Road to the liquefied gas bench | 20 | 1,654 | 59 | 45 | 0.8 % |
 | Liquefied gas bench road | 20 | 1,640 | 45 | 45 | 0.0 % |
-| Road to the wastewater bench | 20 | 666 | 58 | 23 | 5.3 % |
+| Road to the wastewater bench | 20 | 1,516 | 59 | 23 | 2.4 % |
 | East road | 20 | 870 | 45 | 23 | 2.5 % |
 | Wastewater bench road | 20 | 2,240 | 23 | 23 | 0.0 % |
-| Road to the jetty | 20 | 874 | 58 | 39 | 2.2 % |
+| Road to the jetty | 20 | 874 | 59 | 39 | 2.3 % |
 | Truck gate road | 24 | 240 | 74 | 77 | 1.4 % |
 | Truck loading road | 24 | 2,020 | 77 | 77 | 0.0 % |
 | Road from the offices to truck loading | 20 | 461 | 55 | 77 | 4.8 % |
@@ -161,7 +161,7 @@ Primary roads 24 ft wide, secondary 20 ft, tracks 16 ft, at 6 % at most; ramps b
 | Road from truck loading to the tanks | 20 | 185 | 77 | 84 | 3.8 % |
 | Track to the flare | 16 | 1,383 | 116 | 192 | 5.5 % |
 
-Roads in all: 36,866 ft.
+Roads in all: 37,006 ft.
 
 ## 6. Pipeways
 
@@ -169,15 +169,15 @@ Where lines run between units and areas; the racks, sleepers and lines themselve
 
 | Pipeway | Carried on | Width, ft | Length, ft |
 |---|---|---|---|
-| Main pipeway | a pipe rack | 40 | 2,000 |
-| Tank farm pipeway | sleepers at grade | 30 | 1,690 |
+| Main pipeway | a pipe rack | 40 | 1,170 |
+| Tank farm pipeway | sleepers at grade | 30 | 1,717 |
 | South terrace pipe track | sleepers at grade | 24 | 2,510 |
 | North terrace pipe track | sleepers at grade | 24 | 2,060 |
 | Jetty pipeway | sleepers at grade | 30 | 2,545 |
 | Jetty trestle | the trestle, over the water | 40 | 800 |
 | Flare line | sleepers at grade | 12 | 2,388 |
-| Liquefied gas lines | sleepers at grade | 16 | 1,350 |
-| Wastewater lines | sleepers at grade | 16 | 711 |
+| Liquefied gas lines | sleepers at grade | 16 | 2,116 |
+| Wastewater lines | sleepers at grade | 16 | 1,500 |
 | Truck loading lines | sleepers at grade | 16 | 251 |
 
 The berth is 840 ft off the headland, in 65 ft of water at low tide; the trestle's deck is at elevation 32 ft, 21 ft above high water.
@@ -190,24 +190,24 @@ The berth is 840 ft off the headland, in 65 ft of water at low tide; the trestle
 | SW-SITE-3 | Every plot lies on its bench | all | 27 of 27 | meets |
 | SW-SITE-3 | Every dike lies on its terrace, 40 ft inside its edge | all | 6 of 6 | meets |
 | SW-SITE-4 | The cooling tower stands east (downwind) of every process unit | at least 100 ft | 100 ft | meets |
-| SW-SITE-4 | The tank terraces stand above the process bench (lower terrace) | above | 26 ft | meets |
+| SW-SITE-4 | The tank terraces stand above the process bench (lower terrace) | above | 25 ft | meets |
 | SW-SITE-4 | The liquefied gas bench lies below the tank terraces | below | 39 ft | meets |
-| SW-SITE-4 | The wastewater bench lies below the process bench, so drains reach it by gravity | below | 35 ft | meets |
+| SW-SITE-4 | The wastewater bench lies below the process bench, so drains reach it by gravity | below | 36 ft | meets |
 | SW-SITE-4 | The wastewater bench stands above the highest tide | above 11 ft | 23 ft elevation | meets |
 | SW-SITE-4 | Flare to the nearest tank shell | at least 500 ft | 706 ft | meets |
 | SW-SITE-4 | Flare to the nearest unit or building | at least 500 ft | 1,040 ft | meets |
 | SW-SITE-4 | Flare to the property line | at least 500 ft | 520 ft | meets |
-| SW-SITE-4 | Offices, laboratory, workshop, stores and fire station to the nearest process unit | at least 500 ft | 530 ft | meets |
+| SW-SITE-4 | Offices, laboratory, workshop, stores and fire station to the nearest process unit | at least 500 ft | 540 ft | meets |
 | SW-SITE-4 | Control building to the nearest process unit | at least 250 ft | 260 ft | meets |
 | SW-SITE-4 | Buildings stand west (upwind) of every process unit | all | 9 of 9 | meets |
 | SW-SITE-4 | Water at the berth at low tide | at least 60 ft | 65 ft | meets |
 | SW-SITE-4 | The berth from the shore | at most 900 ft | 840 ft | meets |
-| SW-SITE-5 | Process unit to process unit | at least 100 ft | 100 ft | meets |
+| SW-SITE-5 | Process unit to process unit | at least 50 ft | 50 ft | meets |
 | SW-SITE-5 | Tank shell to tank shell, over what the rule asks (least margin) | half the larger diameter, 50 ft at least | 0 ft | meets |
 | SW-SITE-5 | Tank shell to the toe of its dike, over what the rule asks (least margin) | half its height, 15 ft at least | 0 ft | meets |
 | SW-CIV-14 | Each dike holds 1.1 × its largest tank within a wall of 6 ft at most (highest wall) | at most 6 ft | 6 ft | meets |
 | SW-SITE-5 | Dike to dike | at least 100 ft | 100 ft | meets |
-| SW-SITE-5 | Tank shell to the nearest process unit | at least 250 ft | 495 ft | meets |
+| SW-SITE-5 | Tank shell to the nearest process unit | at least 250 ft | 515 ft | meets |
 | SW-SITE-5 | Sphere to sphere | one diameter | 0 ft over | meets |
 | SW-SITE-5 | Spheres to the nearest tank, unit or building | at least 200 ft | 414 ft | meets |
 | SW-SITE-5 | Process units and tanks to the property line | at least 200 ft | 842 ft | meets |

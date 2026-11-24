@@ -5,7 +5,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { ENTRIES } from '../src/scene/catalogueList';
-import { makeTurbineCompressor, makeLoadingStation, makePlatformedColumn, makeFlueGasCooler, makeHorizontalDrum, makeBullet, makeDesalter, makeDeaerator, makeKettleReboiler, makeEjector, makeSteamTurbine, makeInlinePump, makeSulfurFurnace, makeDuctRun, makeSphere, makeCoolingTower, makeCabinHeater, makeReformer, makePsaUnit, makeIncinerator, makePrecipitator, makeVentSilencer, makeMultiBedReactor, makeSwagedTower, seriesUp } from '../src/catalogue';
+import { makeTurbineCompressor, makeLoadingStation, makePlatformedColumn, makeFlueGasCooler, makeHorizontalDrum, makeBullet, makeDesalter, makeDeaerator, makeKettleReboiler, makeEjector, makeEjectorSet, ejectorSetLayout, makeSteamTurbine, makeInlinePump, makeSulfurFurnace, makeDuctRun, makeSphere, makeCoolingTower, makeCabinHeater, makeReformer, makePsaUnit, makeIncinerator, makePrecipitator, makeVentSilencer, makeMultiBedReactor, makeSwagedTower, seriesUp } from '../src/catalogue';
 import { makePileCap, makeRetainingWall, makeCatchBasin, makeManhole, makeSleeper, makeMachineBlock, makeTableTop, makeSeparatorBasin, makeSulfurPit, makeBoxCulvert, makeDuctBank, planeMat, type Bar } from '../src/catalogue';
 import { makeMitreBend, makeInsulatedPipe, insulationThickness, makeExpansionJoint, makeYStrainer, makeStubIn, makeSpringHanger, makeConeStrainer, makeLateral, makeSteamTrap, bendPath, pipeDims, designFlange } from '../src/catalogue';
 import { makePipeRack, makeStairFlight, makeStairTower, makePlatform, makeFixedLadder, makePipeBridge, makeFireproofedColumn, makeTSupport, makeGoalPost, makeMonorail, makeProcessStructure, stairFlight, stairTower, sec, colSec, zReq } from '../src/scene/structures';
@@ -181,6 +181,31 @@ describe('further process equipment (SW-EQC-45..65)', () => {
     expect(solidsOf(c0).filter(q => /duct flange/.test(q.name)).length).toBe(2); expect(solidsOf(c1).filter(q => /duct flange/.test(q.name)).length).toBe(1);
     const od = (p: typeof c0) => { const q = solidsOf(p).find(v => v.name === 'outlet duct')!; return 2 * Math.max(...Array.from(q.mesh.positions).filter((_, i) => i % 3 === 0)); }; expect(od(c0)).toBeCloseTo(0.5 * 96 + 1.5, 1); expect(od(c1)).toBeCloseTo(24, 1);
     expect(solidsOf(makeSulfurPit('X', { L: 384, W: 180, D: 96, noDischarge: true })).length).toBe(solidsOf(makeSulfurPit('X', { L: 384, W: 180, D: 96 })).length);
+  }, 120_000);
+  it('SW-EQC-52 with stated sizes, and SW-EQC-68: the vacuum ejector set', () => {
+    // an ejector with nothing stated is as it was; a stated discharge ends the diverging cone at its diameter, a stated steam size is the nozzle's
+    const plain = makeEjector('J', 6), sized = makeEjector('J', 8, { dischargeNPS: 6, motiveNPS: 2 }), box = (p: typeof plain, name: string) => { const q = solidsOf(p).find(v => v.name === name)!, P = Array.from(q.mesh.positions); return { r: Math.max(...P.filter((_, i) => i % 3 === 0)), z1: Math.max(...P.filter((_, i) => i % 3 === 2)) }; };
+    expect(plain.designation).toBe('Steam jet ejector, 6" suction'); expect(plain.dims.discharge).toBeUndefined(); expect(plain.dims.motive.value).toBe(2); expect(box(plain, 'diffuser outlet cone').r).toBeCloseTo(pipeDims(6, 'P150').OD / 2, 1);
+    expect(sized.designation).toBe('Steam jet ejector, 8" suction, 6" discharge'); expect(sized.dims.discharge.value).toBe(6); expect(box(sized, 'diffuser outlet cone').r).toBeCloseTo(pipeDims(6, 'P150').OD / 2, 1); expect(sized.dims.overall.value).toBeGreaterThan(10 * pipeDims(8, 'P150').OD);
+    const inp = { tag: 'J', steam: 6, water: 12, stages: [{ suction: 48, discharge: 42, motive: 6, ID: 60, t: 0.5, vent: 8, water: 12, drain: 3 }, { suction: 8, discharge: 6, motive: 2, ID: 18, t: 0.375, vent: 4, water: 3, drain: 3 }, { suction: 4, discharge: 3, motive: 2, ID: 12, t: 0.375, vent: 0, water: 2, drain: 3 }] };
+    const set = makeEjectorSet(inp), L = ejectorSetLayout(inp), so = solidsOf(set), ext = (re: RegExp) => { const mn = [Infinity, Infinity, Infinity], mx = [-Infinity, -Infinity, -Infinity]; for (const q of so) if (re.test(q.name)) for (let i = 0; i < q.mesh.positions.length; i += 3) for (let a = 0; a < 3; a++) { mn[a] = Math.min(mn[a], q.mesh.positions[i + a]); mx[a] = Math.max(mx[a], q.mesh.positions[i + a]); } return { mn, mx, mid: mn.map((v, a) => (v + mx[a]) / 2) }; };
+    // the condensers side by side on the 6 in module, 30 in and 18 in between body flanges at least; saddles in one line on the steel
+    expect(L.x[0]).toBe(0); for (const [k, x] of L.x.entries()) { expect(x % 6).toBe(0); if (k) { const gap = x - L.x[k - 1] - L.half[k] - L.half[k - 1]; expect(gap).toBeGreaterThanOrEqual(k === 1 ? 30 : 18); expect(gap).toBeLessThan((k === 1 ? 30 : 18) + 6); } }
+    for (let k = 1; k <= 3; k++) { const sd = ext(new RegExp(`^condenser ${k}: saddle base`)); expect(sd.mn[1]).toBeCloseTo(0, 6); expect(ext(new RegExp(`^condenser ${k}: shell$`)).mn[1]).toBeCloseTo(48, 6); expect(sd.mid[2]).toBeCloseTo(120, 6); }
+    // what a plant connects to stands on the 6 in module from the first condenser's axis and the tubesheet line: the first suction on top, the drains under their boots, steam and water below the steel
+    const at = (re: RegExp) => ext(re).mid, onGrid = (v: number) => expect(Math.abs(v / 6 - Math.round(v / 6))).toBeLessThan(1e-6);
+    const chamber = at(/^stage 1 ejector: suction chamber$/); expect(chamber[0]).toBeCloseTo(0, 6); expect(L.suctionZ % 6).toBe(0); expect(ext(/^stage 1 ejector: suction nozzle: flange ring$/).mid[2]).toBeCloseTo(L.suctionZ, 3);
+    for (let k = 1; k <= 3; k++) { const b = ext(new RegExp(`^condenser ${k}: condensate boot$`)); expect(b.mid[0]).toBeCloseTo(L.x[k - 1], 6); expect(b.mid[2]).toBeCloseTo(L.drainZ, 6); expect(b.mn[1]).toBeCloseTo(36, 6); }
+    for (const leg of [/^motive steam leg$/, /^cooling water supply leg$/, /^cooling water return leg$/]) { const b = ext(leg); onGrid(b.mid[0]); onGrid(b.mid[2]); expect(b.mn[1]).toBeCloseTo(-24, 6); expect(b.mid[0]).toBeGreaterThan(L.half[0]); }
+    expect(at(/^cooling water return leg$/)[0] - at(/^cooling water supply leg$/)[0]).toBeCloseTo(42, 6);
+    // the later ejectors stand on their condensers' inlets, discharge down; the first lies above its condenser and overhangs its rear head, on two frames
+    for (const k of [2, 3]) { const ch = ext(new RegExp(`^stage ${k} ejector: suction chamber$`)), cone = ext(new RegExp(`^stage ${k} ejector: diffuser outlet cone$`)), shell = ext(new RegExp(`^condenser ${k}: shell$`)); expect(ch.mn[1]).toBeGreaterThan(cone.mx[1] - 1e-6); expect(cone.mn[1]).toBeGreaterThan(shell.mx[1]); expect(ch.mid[0]).toBeCloseTo(L.x[k - 1], 3); }
+    expect(ext(/^stage 1 ejector: suction chamber$/).mn[2]).toBeGreaterThan(ext(/^condenser 1: rear head$/).mx[2]); expect(so.filter(q => /^ejector frame \d: posts/.test(q.name)).length).toBe(2);
+    // each straight and each bend of the pipework is a solid of its own; in a plant the seven connections' own flanges are left off, and only those
+    expect(so.filter(q => /^vent 1: (run|bend) \d$/.test(q.name)).length).toBe(7);
+    const off = so.filter(q => /nozzle/.test(q.name)).map(q => q.name.split(':')[0].replace(/ flange.*$/, '')); expect([...new Set(off)].sort()).toEqual(['condensate 1 nozzle', 'condensate 2 nozzle', 'cooling water in nozzle', 'cooling water out nozzle', 'motive steam nozzle', 'outlet nozzle', 'stage 1 ejector']);
+    expect(so.some(q => /stub|blind flange|flange face/.test(q.name))).toBe(false);
+    expect(set.weight.value).toBeGreaterThan(60000); expect(set.dims.top.value).toBeCloseTo(L.top, 6);
   }, 120_000);
   it('SW-EQC-51, -52, -61, -63, -64, -56: machines and the rest', () => {
     expect(makeKettleReboiler({ tag: 'E', bundleD: 30, tubeL: 192 }).dims.shellD.value).toBe(48); expect(makeEjector('J', 6).dims.diverging.value).toBeCloseTo(5 * pipeDims(6, 'P150').OD);

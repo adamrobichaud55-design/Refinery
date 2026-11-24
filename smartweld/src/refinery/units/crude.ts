@@ -3,8 +3,9 @@
  * demonstration scheme and conditions (PROVENANCE P-79). A stream that crosses the battery limit carries the same
  * name in the unit it leaves and the unit it enters.
  */
-import { UnitBuilder, type UnitSheet } from '../flowsheet';
-import { liquid, vapour } from '../fluids';
+import { UnitBuilder, STEAM, type UnitSheet } from '../flowsheet';
+import { liquid, vapour, ATM } from '../fluids';
+import { ejectorStages } from '../ejector';
 import type { Balance } from '../balance';
 
 export function unit11(B: Balance): UnitSheet {
@@ -83,20 +84,28 @@ export function unit11(B: Balance): UnitSheet {
   return u.done();
 }
 
+/** the vacuum column's overhead beside its steam, lb/h: gas that does not condense (and its molecular weight) and oil; the ejectors' motive steam, lb/h; the hotwell's pressure, psig */
+export const VAC_SET = { gas: 800, gasMw: 35, oil: 1500, steam: 12000, hotwell: 3 } as const;
 export function unit12(B: Balance): UnitSheet {
   const u = new UnitBuilder(12, 'Vacuum distillation'), c = B.cut, VAC = -14.1;
-  const ovhd = 8000 + 800 + 1500, lpa = 250000, hpa = 322000, quench = 40000;
+  const ovhd = 8000 + VAC_SET.gas + VAC_SET.oil, lpa = 250000, hpa = 322000, quench = 40000;
   u.item('C-1201', 'column', 'Vacuum column', { swaged: 1, vapW: 0.4 * B.atmResid.w + 8000, vapMw: 300, vapT: 730, vapP: VAC, liqSg: 0.85, topVapW: ovhd + 60000, topMw: 120, topT: 300, botVapW: 12000, botMw: 40, hBot: 240, hMid: 480, hTop: 360, skirt: 240 });
-  u.item('D-1201', 'drum', 'Ejector hotwell');
+  u.item('D-1201', 'drum', 'Ejector hotwell', { minL: 180 });                                           // SW-PRC-18: 4 ft longer than its tail pipes are apart, to the next foot
   u.feed('atmospheric residue', liquid('RS', B.atmResid.w, B.atmResid.sg, 650, 150))
     .fired('H-1201', 750, 'Vacuum heater', { ph: 'M', vf: 0.40, mw: 300, P: -12.5, cv: true }).into('C-1201', 'feed', { kind: 'column' });
-  // overhead: ejectors and hotwell
-  u.out('C-1201', 'overhead', vapour('HG', ovhd, 22, 150, -14.3)).thru('J-1201', 'ejector', 'Vacuum ejector set, three stages with condensers', { T: 110, P: 3, ph: 'M', vf: 0.08 }).into('D-1201', 'inlet');
-  u.utility('MS', 'J-1201', 'motive steam', 'to', 12000, 400, 150);
-  u.utility('CWS', 'J-1201', 'cooling water in', 'to', 950000, 85, 60); u.utility('CWR', 'J-1201', 'cooling water out', 'from', 950000, 105, 45);
-  u.out('D-1201', 'gas', vapour('HG', 800, 35, 110, 3)).into('H-1201', 'off-gas', { kind: 'heater' });
-  u.out('D-1201', 'oil', liquid('OW', 1500, 0.86, 110, 3)).pump('P-1204', 80, 'Hotwell slop oil pump').toBL('slop oil', { cv: true });
-  u.out('D-1201', 'water', liquid('SW', 20000, 1, 110, 3)).pump('P-1205', 90, 'Hotwell sour water pump').toBL('sour water', { cv: true });
+  // overhead: the ejector set and its hotwell (SW-PRC-18). Each stage's condenser drains down a tail pipe of its own; the last drains with the gas
+  const top = vapour('HG', ovhd, 22, 150, -14.3), ej = ejectorStages({ load: top, gas: VAC_SET.gas, gasMw: VAC_SET.gasMw, oil: VAC_SET.oil, steam: VAC_SET.steam, steamT: STEAM.MS.T, Pout: VAC_SET.hotwell }), last = ej[ej.length - 1];
+  const steamed = ovhd - VAC_SET.gas - VAC_SET.oil + VAC_SET.steam, cw = ej.reduce((a, q) => a + q.cw, 0);
+  // the hotwell's contents at the mixed temperature of what it receives, to 5 °F
+  const Thot = 5 * Math.round(ej.reduce((a, q) => a + (q.water + q.oil) * q.Tc, last.vent * last.Tc) / (ovhd + VAC_SET.steam) / 5);
+  u.item('J-1201', 'ejector', `Vacuum ejector set, ${['one', 'two', 'three', 'four', 'five'][ej.length - 1]} stages with condensers`, { gas: VAC_SET.gas, gasMw: VAC_SET.gasMw, oil: VAC_SET.oil, steam: VAC_SET.steam, steamT: STEAM.MS.T });
+  u.out('C-1201', 'overhead', top).thru('J-1201', 'ejector', '', { T: Math.round(last.Tc), P: VAC_SET.hotwell, ph: 'M', vf: last.vent / (last.water + last.vent), addW: last.water + last.vent - ovhd, sg: 1, mw: VAC_SET.gasMw }).into('D-1201', 'inlet');
+  ej.slice(0, -1).forEach((q, k) => u.out('J-1201', `condensate ${k + 1}`, liquid(q.oil ? 'OW' : 'SW', q.water + q.oil, (q.water + q.oil) / (q.water + q.oil / 0.86), Math.round(q.Tc), q.Pd - ATM)).into('D-1201', `tail pipe ${k + 1}`, { slow: true }));
+  u.utility('MS', 'J-1201', 'motive steam', 'to', VAC_SET.steam, STEAM.MS.T, STEAM.MS.P);
+  u.utility('CWS', 'J-1201', 'cooling water in', 'to', cw, 85, 60); u.utility('CWR', 'J-1201', 'cooling water out', 'from', cw, 105, 45);
+  u.out('D-1201', 'gas', vapour('HG', VAC_SET.gas, VAC_SET.gasMw, Thot, VAC_SET.hotwell)).into('H-1201', 'off-gas', { kind: 'heater' });
+  u.out('D-1201', 'oil', liquid('OW', VAC_SET.oil, 0.86, Thot, VAC_SET.hotwell)).pump('P-1204', 80, 'Hotwell slop oil pump').toBL('slop oil', { cv: true });
+  u.out('D-1201', 'water', liquid('SW', steamed, 1, Thot, VAC_SET.hotwell)).pump('P-1205', 90, 'Hotwell sour water pump').toBL('sour water', { cv: true });
   // light vacuum gas oil: pumparound and product
   const lv = u.out('C-1201', 'light vacuum gas oil draw', liquid('GO', c.LVGO.w + lpa, c.LVGO.sg, 300, VAC)).pump('P-1201', 120, 'Light vacuum gas oil pump')
     .air('A-1201', 150, 'Light vacuum gas oil cooler'), lvProduct = lv.split(c.LVGO.w);

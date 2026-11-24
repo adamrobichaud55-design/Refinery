@@ -5,7 +5,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'node:fs';
 import { natural, shore, meanGround, distRect, groundMeshes, grade, SITE, TIDE } from '../src/refinery/terrain';
-import { BENCHES, PLOTS, DIKES, spheres, ROADS, PIPEWAYS, JETTY, FLARE, siteGround, bench, plot, PIPEWAY_Z, PIPEWAY_HALF } from '../src/refinery/site';
+import { BENCHES, PLOTS, DIKES, spheres, ROADS, PIPEWAYS, JETTY, FLARE, siteGround, bench, plot, PIPEWAY_Z, PIPEWAY_HALF, UNIT_GAP } from '../src/refinery/site';
 import { siteChecks } from '../src/refinery/siteChecks';
 import { plotDocument, plotData, earthworks, IMAGES } from '../src/refinery/siteReport';
 import { processModel } from '../src/refinery/process';
@@ -81,7 +81,7 @@ describe('plant 3: plot plan (SW-SITE-4, SW-SITE-5, SW-SITE-7)', () => {
     for (const no of [11, 12, 13, 14, 15, 16, 17, 18, 19]) { const p = PLOTS.find(q => q.unit === no && q.kind === 'unit')!; expect(p, `unit ${no}`).toBeTruthy(); expect(p.bench).toBe('process'); expect(p.faces === 'S' ? p.z1 : p.z0, `unit ${no}`).toBe(PIPEWAY_Z + (p.faces === 'S' ? -PIPEWAY_HALF : PIPEWAY_HALF)); }
     for (const sh of processModel().sheets) expect(PLOTS.some(p => p.unit === sh.no) || DIKES().some(d => d.unit === sh.no), `unit ${sh.no}`).toBe(true);
     expect(plot('U19').x0).toBeLessThan(plot('U11').x0); expect(plot('CT').x0).toBeGreaterThan(plot('U17').x1);          // utilities upwind, cooling tower downwind
-    expect(Math.abs(plot('U11').x1 - plot('U12').x0)).toBe(100);                                                         // the crude and vacuum units side by side
+    expect(Math.abs(plot('U11').x1 - plot('U12').x0)).toBe(UNIT_GAP); expect(UNIT_GAP).toBe(50); expect(2 * PIPEWAY_HALF).toBe(60);         // the crude and vacuum units side by side, a road's width apart; the corridor the rack and 10 ft either side
   });
   it('every storage tank stands once in a dike that holds it, at the size its duty gave', () => {
     const Z = sizing(), placed = DIKES().flatMap(d => d.tanks), tags = placed.map(t => t.tag);

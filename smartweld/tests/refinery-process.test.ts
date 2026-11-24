@@ -6,9 +6,12 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { balance, CRUDE_BPD, CUTS } from '../src/refinery/balance';
 import { processModel, sent, received } from '../src/refinery/process';
-import { sizing, designPressure, designTemperature, classFor, lineSize, motorHp, wall, allowable, tubeCount, transferLine, LINE_SIZES } from '../src/refinery/sizing';
+import { sizing, designPressure, designTemperature, classFor, lineSize, motorHp, wall, allowable, tubeCount, shellArea, transferLine, LINE_SIZES } from '../src/refinery/sizing';
+import { ejectorStages, tailPipeHeight, vapourPressure, condensingT, EJ } from '../src/refinery/ejector';
+import { VAC_SET } from '../src/refinery/units/crude';
+import { STEAM } from '../src/refinery/flowsheet';
 import { processDocument, processData, UNIT_ROLE } from '../src/refinery/report';
-import { FLUIDS, liquid, vapour, rho, cfs } from '../src/refinery/fluids';
+import { FLUIDS, liquid, vapour, rho, cfs, ATM } from '../src/refinery/fluids';
 import { storage, tankBbl } from '../src/refinery/units/offsites';
 import { bundleSolids } from '../src/catalogue/parts/processUnits';
 import { CLASS_PRESSURE, pipeDims } from '../src/catalogue';
@@ -71,9 +74,38 @@ describe('plant 3: unit flowsheets (SW-REF-10)', () => {
   it('a vessel\'s inlets arrive at no less than the pressure its outlets leave at', () => {
     for (const sh of M.sheets) for (const e of sh.equip.values()) {
       if (!['drum', 'vessel', 'desalter', 'deaerator'].includes(e.kind)) continue;
-      const ins = e.ports.filter(p => p.dir === 'in' && !/open/.test(p.name)), outs = e.ports.filter(p => p.dir === 'out' && !/open/.test(p.name));
+      // a tail pipe leaves its condenser under vacuum and arrives with the head of its leg (SW-PRC-18): it is checked with the ejector set, below
+      const ins = e.ports.filter(p => p.dir === 'in' && !/open/.test(p.name) && !/^tail pipe/.test(p.name)), outs = e.ports.filter(p => p.dir === 'out' && !/open/.test(p.name));
       if (ins.length && outs.length) expect(Math.min(...ins.map(p => p.s.P)), e.tag).toBeGreaterThanOrEqual(Math.max(...outs.map(p => p.s.P)));
     }
+  });
+  it('the vacuum ejector set: stages, loads, steam and water as SW-PRC-18 states them', () => {
+    const sh = M.sheet(12), J = sh.equip.get('J-1201')!, top = J.ports.find(p => p.name === 'inlet')!.s, hot = J.ports.find(p => p.name === 'outlet')!.s.P;
+    const st = ejectorStages({ load: top, gas: VAC_SET.gas, gasMw: VAC_SET.gasMw, oil: VAC_SET.oil, steam: VAC_SET.steam, steamT: STEAM.MS.T, Pout: hot });
+    // water boils at 212 °F at one atmosphere, and the two relations are each other's inverse
+    expect(vapourPressure(212)).toBeCloseTo(ATM, 9); for (const T of [95, 120, 221]) expect(condensingT(vapourPressure(T))).toBeCloseTo(T, 9);
+    // the first condenser condenses 15 °F above the returning water; the others' pressures follow in equal ratios, none above five; the last reaches the hotwell
+    expect(st.length).toBe(3); expect(st[0].Tc).toBeCloseTo(EJ.cwOut + EJ.approach, 9); expect(st[0].Ps).toBeCloseTo(top.P + ATM, 9); expect(st[2].Pd).toBeCloseTo(hot + ATM, 9);
+    expect(st[1].ratio).toBeCloseTo(st[2].ratio, 9); for (const q of st) expect(q.ratio).toBeLessThanOrEqual(EJ.maxRatio);
+    for (let k = 1; k < st.length; k++) { expect(st[k].Ps).toBeCloseTo(st[k - 1].Pd, 9); expect(st[k].load).toBeCloseTo(st[k - 1].vent, 9); expect(st[k].Ts).toBe(EJ.cwIn + EJ.vent); }
+    // a vent is the gas saturated with water at 95 °F: the vapour's share of the moles is its share of the pressure
+    const pw = vapourPressure(EJ.cwIn + EJ.vent), nGas = VAC_SET.gas / VAC_SET.gasMw;
+    for (const q of st.slice(0, -1)) expect((q.ventMoles - nGas) / q.ventMoles).toBeCloseTo(pw / q.Pd, 9);
+    // all the steam is used, most of it by the first stage; all the water condenses; the cooling water takes it at 20 Btu/lb
+    expect(st.reduce((a, q) => a + q.steam, 0)).toBeCloseTo(VAC_SET.steam, 6); expect(st[0].steam).toBeGreaterThan(0.85 * VAC_SET.steam);
+    const water = st.reduce((a, q) => a + q.water, 0); expect(water).toBeCloseTo(top.w - VAC_SET.gas - VAC_SET.oil + VAC_SET.steam, 6);
+    const cw = sh.utils.find(u => u.tag === 'J-1201' && u.fluid === 'CWS')!; expect(cw.w).toBeCloseTo((water * EJ.latent) / 20, 3);
+    // the hotwell receives what the overhead and the steam bring, and sends it on
+    const D = sh.equip.get('D-1201')!, sum = (dir: 'in' | 'out') => D.ports.filter(p => p.dir === dir).reduce((a, p) => a + p.s.w, 0);
+    expect(sum('in')).toBeCloseTo(top.w + VAC_SET.steam, 6); expect(sum('out')).toBeCloseTo(sum('in'), 6);
+    // each tail pipe's leg holds the hotwell's pressure against its condenser's, with 5 ft over; the last condenser, above the hotwell's pressure, needs none
+    for (const p of D.ports.filter(q => /^tail pipe/.test(q.name))) { const h = tailPipeHeight(p.s.P + ATM, hot); expect(p.s.P + (((h - EJ.margin) / 12) * 62.4) / 144).toBeCloseTo(hot, 9); expect(h).toBeGreaterThan(360); }
+    expect(tailPipeHeight(hot + ATM + 0.1, hot)).toBe(0);
+    // sized: one ejector and one condenser a stage, each shell wide enough for its vapour and its surface
+    const z = Z.get(12)!.equip.get('J-1201')!; expect(z.count).toBe(3); expect(z.vacuum).toBe(true);
+    for (let n = 1; n <= 3; n++) { expect(shellArea(z.d[`c${n}ID`])).toBeGreaterThanOrEqual(z.d[`c${n}AreaFt2`]); expect(z.d[`c${n}ID`]).toBeGreaterThanOrEqual(Math.min(3 * z.d[`s${n}Discharge`], 60)); expect(z.d[`s${n}Discharge`]).toBeLessThanOrEqual(z.d[`s${n}Suction`]); }
+    expect(z.d.s1Suction).toBe(Z.get(12)!.lines.find((_, i) => sh.lines[i].to.k === 'eq' && (sh.lines[i].to as { tag: string }).tag === 'J-1201')!.NPS);
+    expect(z.sides.steam.designP).toBeGreaterThan(z.sides.water.designP);
   });
   it('each exchanger\'s two process sides exchange the same heat', () => {
     let n = 0;

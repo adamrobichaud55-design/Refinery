@@ -3,7 +3,7 @@
  * Each check gives what the rule asks and what the plot has, so the document can show the margin and a test can hold it.
  */
 import { natural, shore, distRect, SITE, TIDE, type Rect } from './terrain';
-import { BENCHES, PLOTS, DIKES, spheres, ROADS, FLARE, JETTY, bench, fenceLine, type Plot } from './site';
+import { BENCHES, PLOTS, DIKES, spheres, ROADS, FLARE, JETTY, UNIT_GAP, bench, fenceLine, type Plot } from './site';
 
 export interface Check { rule: string; what: string; asks: string; has: string; ok: boolean }
 const gap = (a: Rect, b: Rect) => Math.hypot(Math.max(a.x0 - b.x1, b.x0 - a.x1, 0), Math.max(a.z0 - b.z1, b.z0 - a.z1, 0));
@@ -39,7 +39,7 @@ export function siteChecks(): Check[] {
   add('SW-SITE-4', 'water at the berth at low tide', 'at least 60 ft', -berth - TIDE, -berth - TIDE >= 60);
   add('SW-SITE-4', 'the berth from the shore', 'at most 900 ft', off, off <= 900);
   // SW-SITE-5
-  add('SW-SITE-5', 'process unit to process unit', 'at least 100 ft', least(pairs(process), ([a, b]) => gap(a, b)), pairs(process).every(([a, b]) => gap(a, b) >= 100));
+  add('SW-SITE-5', 'process unit to process unit', `at least ${UNIT_GAP} ft`, least(pairs(process), ([a, b]) => gap(a, b)), pairs(process).every(([a, b]) => gap(a, b) >= UNIT_GAP));
   const shellGap = (a: { x: number; z: number; D: number }, b: { x: number; z: number; D: number }) => Math.hypot(a.x - b.x, a.z - b.z) - a.D / 2 - b.D / 2;
   add('SW-SITE-5', 'tank shell to tank shell, over what the rule asks (least margin)', 'half the larger diameter, 50 ft at least', least(pairs(tanks), ([a, b]) => shellGap(a, b) - Math.max(50, Math.max(a.D, b.D) / 2)), pairs(tanks).every(([a, b]) => shellGap(a, b) >= Math.max(50, Math.max(a.D, b.D) / 2) - 1e-6));
   add('SW-SITE-5', 'tank shell to the toe of its dike, over what the rule asks (least margin)', 'half its height, 15 ft at least', least(DIKES(), d => least(d.tanks, t => Math.min(t.x - t.D / 2 - d.x0, d.x1 - t.x - t.D / 2, t.z - t.D / 2 - d.z0, d.z1 - t.z - t.D / 2) - Math.max(15, t.H / 2))), DIKES().every(d => d.tanks.every(t => Math.min(t.x - t.D / 2 - d.x0, d.x1 - t.x - t.D / 2, t.z - t.D / 2 - d.z0, d.z1 - t.z - t.D / 2) >= Math.max(15, t.H / 2) - 1e-6)));

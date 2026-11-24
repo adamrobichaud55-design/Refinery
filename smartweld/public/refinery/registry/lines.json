@@ -430,7 +430,7 @@
    "severity": 3,
    "pressureRank": 1,
    "mediumRank": 3,
-   "lines": 166,
+   "lines": 167,
    "units": [
     11,
     12,
@@ -666,7 +666,7 @@
    "severity": 2,
    "pressureRank": 1,
    "mediumRank": 2,
-   "lines": 43,
+   "lines": 44,
    "units": [
     11,
     12,
@@ -7446,7 +7446,7 @@
   },
   {
    "demonstration": true,
-   "number": "4\"-P150-P-12004",
+   "number": "3\"-P150-P-12004",
    "unit": 12,
    "kind": "process",
    "from": "J-1201 outlet",
@@ -7455,93 +7455,14 @@
    "fluidName": "hydrocarbon gas",
    "hazard": "flammable",
    "phase": "two-phase",
-   "lbh": 10300,
+   "lbh": 1324,
    "operating": {
-    "T": 110,
+    "T": 221,
     "P": 3
    },
    "design": {
     "value": {
-     "T": 160,
-     "P": 50,
-     "fullVacuum": false
-    },
-    "source": "model"
-   },
-   "size": {
-    "value": 4,
-    "source": "model"
-   },
-   "pipeClass": {
-    "value": "P150",
-    "source": "model"
-   },
-   "lineClass": {
-    "value": "H150-CS-N4",
-    "source": "model"
-   },
-   "severity": {
-    "value": {
-     "level": 4,
-     "pressure": 1,
-     "medium": 4
-    },
-    "source": "model"
-   },
-   "code": {
-    "value": "ASME B31.3 Process Piping",
-    "source": "recalled"
-   },
-   "fluidService": {
-    "value": "Normal",
-    "source": "recalled"
-   },
-   "examination": {
-    "value": "visual, and 5 % random radiography of girth butt welds",
-    "source": "recalled"
-   },
-   "leakTest": {
-    "value": "hydrostatic at 75 psi",
-    "source": "recalled"
-   },
-   "threadedJoints": {
-    "value": true,
-    "source": "recalled"
-   },
-   "materials": {
-    "value": {
-     "code": "CS",
-     "pipe": "A106-B",
-     "fittings": "A234-WPB",
-     "flanges": "A105",
-     "bolting": "A193-B7 studs, A194-2H nuts"
-    },
-    "source": "recalled"
-   },
-   "pipingSystemRegistration": {
-    "value": "A2743.7",
-    "source": "invented"
-   }
-  },
-  {
-   "demonstration": true,
-   "number": "3\"-P150-P-12005",
-   "unit": 12,
-   "kind": "process",
-   "from": "D-1201 gas",
-   "to": "H-1201 off-gas",
-   "fluid": "HG",
-   "fluidName": "hydrocarbon gas",
-   "hazard": "flammable",
-   "phase": "vapour",
-   "lbh": 800,
-   "operating": {
-    "T": 110,
-    "P": 3
-   },
-   "design": {
-    "value": {
-     "T": 160,
+     "T": 275,
      "P": 50,
      "fullVacuum": false
     },
@@ -7604,7 +7525,244 @@
   },
   {
    "demonstration": true,
+   "number": "3\"-P150-P-12005",
+   "unit": 12,
+   "kind": "process",
+   "from": "J-1201 condensate 1",
+   "to": "D-1201 tail pipe 1",
+   "fluid": "OW",
+   "fluidName": "oily water",
+   "hazard": "flammable",
+   "phase": "liquid",
+   "lbh": 19900,
+   "operating": {
+    "T": 120,
+    "P": -13
+   },
+   "design": {
+    "value": {
+     "T": 170,
+     "P": 50,
+     "fullVacuum": true
+    },
+    "source": "model"
+   },
+   "size": {
+    "value": 3,
+    "source": "model"
+   },
+   "pipeClass": {
+    "value": "P150",
+    "source": "model"
+   },
+   "lineClass": {
+    "value": "H150-CS-N3",
+    "source": "model"
+   },
+   "severity": {
+    "value": {
+     "level": 3,
+     "pressure": 1,
+     "medium": 3
+    },
+    "source": "model"
+   },
+   "code": {
+    "value": "ASME B31.3 Process Piping",
+    "source": "recalled"
+   },
+   "fluidService": {
+    "value": "Normal",
+    "source": "recalled"
+   },
+   "examination": {
+    "value": "visual, and 5 % random radiography of girth butt welds",
+    "source": "recalled"
+   },
+   "leakTest": {
+    "value": "hydrostatic at 75 psi",
+    "source": "recalled"
+   },
+   "threadedJoints": {
+    "value": true,
+    "source": "recalled"
+   },
+   "materials": {
+    "value": {
+     "code": "CS",
+     "pipe": "A106-B",
+     "fittings": "A234-WPB",
+     "flanges": "A105",
+     "bolting": "A193-B7 studs, A194-2H nuts"
+    },
+    "source": "recalled"
+   },
+   "pipingSystemRegistration": {
+    "value": "D6886.7",
+    "source": "invented"
+   }
+  },
+  {
+   "demonstration": true,
    "number": "3\"-P150-P-12006",
+   "unit": 12,
+   "kind": "process",
+   "from": "J-1201 condensate 2",
+   "to": "D-1201 tail pipe 2",
+   "fluid": "SW",
+   "fluidName": "sour water",
+   "hazard": "harmful",
+   "phase": "liquid",
+   "lbh": 1077,
+   "operating": {
+    "T": 167,
+    "P": -9
+   },
+   "design": {
+    "value": {
+     "T": 220,
+     "P": 50,
+     "fullVacuum": true
+    },
+    "source": "model"
+   },
+   "size": {
+    "value": 3,
+    "source": "model"
+   },
+   "pipeClass": {
+    "value": "P150",
+    "source": "model"
+   },
+   "lineClass": {
+    "value": "H150-CS-N2",
+    "source": "model"
+   },
+   "severity": {
+    "value": {
+     "level": 2,
+     "pressure": 1,
+     "medium": 2
+    },
+    "source": "model"
+   },
+   "code": {
+    "value": "ASME B31.3 Process Piping",
+    "source": "recalled"
+   },
+   "fluidService": {
+    "value": "Normal",
+    "source": "recalled"
+   },
+   "examination": {
+    "value": "visual, and 5 % random radiography of girth butt welds",
+    "source": "recalled"
+   },
+   "leakTest": {
+    "value": "hydrostatic at 75 psi",
+    "source": "recalled"
+   },
+   "threadedJoints": {
+    "value": true,
+    "source": "recalled"
+   },
+   "materials": {
+    "value": {
+     "code": "CS",
+     "pipe": "A106-B",
+     "fittings": "A234-WPB",
+     "flanges": "A105",
+     "bolting": "A193-B7 studs, A194-2H nuts"
+    },
+    "source": "recalled"
+   },
+   "pipingSystemRegistration": {
+    "value": "C8505.7",
+    "source": "invented"
+   }
+  },
+  {
+   "demonstration": true,
+   "number": "3\"-P150-P-12007",
+   "unit": 12,
+   "kind": "process",
+   "from": "D-1201 gas",
+   "to": "H-1201 off-gas",
+   "fluid": "HG",
+   "fluidName": "hydrocarbon gas",
+   "hazard": "flammable",
+   "phase": "vapour",
+   "lbh": 800,
+   "operating": {
+    "T": 130,
+    "P": 3
+   },
+   "design": {
+    "value": {
+     "T": 180,
+     "P": 50,
+     "fullVacuum": false
+    },
+    "source": "model"
+   },
+   "size": {
+    "value": 3,
+    "source": "model"
+   },
+   "pipeClass": {
+    "value": "P150",
+    "source": "model"
+   },
+   "lineClass": {
+    "value": "H150-CS-N4",
+    "source": "model"
+   },
+   "severity": {
+    "value": {
+     "level": 4,
+     "pressure": 1,
+     "medium": 4
+    },
+    "source": "model"
+   },
+   "code": {
+    "value": "ASME B31.3 Process Piping",
+    "source": "recalled"
+   },
+   "fluidService": {
+    "value": "Normal",
+    "source": "recalled"
+   },
+   "examination": {
+    "value": "visual, and 5 % random radiography of girth butt welds",
+    "source": "recalled"
+   },
+   "leakTest": {
+    "value": "hydrostatic at 75 psi",
+    "source": "recalled"
+   },
+   "threadedJoints": {
+    "value": true,
+    "source": "recalled"
+   },
+   "materials": {
+    "value": {
+     "code": "CS",
+     "pipe": "A106-B",
+     "fittings": "A234-WPB",
+     "flanges": "A105",
+     "bolting": "A193-B7 studs, A194-2H nuts"
+    },
+    "source": "recalled"
+   },
+   "pipingSystemRegistration": {
+    "value": "A2743.7",
+    "source": "invented"
+   }
+  },
+  {
+   "demonstration": true,
+   "number": "3\"-P150-P-12008",
    "unit": 12,
    "kind": "process",
    "from": "D-1201 oil",
@@ -7615,12 +7773,12 @@
    "phase": "liquid",
    "lbh": 1500,
    "operating": {
-    "T": 110,
+    "T": 130,
     "P": 3
    },
    "design": {
     "value": {
-     "T": 160,
+     "T": 180,
      "P": 50,
      "fullVacuum": false
     },
@@ -7683,7 +7841,7 @@
   },
   {
    "demonstration": true,
-   "number": "3\"-P150-P-12007",
+   "number": "3\"-P150-P-12009",
    "unit": 12,
    "kind": "process",
    "from": "P-1204 D",
@@ -7694,12 +7852,12 @@
    "phase": "liquid",
    "lbh": 1500,
    "operating": {
-    "T": 110,
+    "T": 130,
     "P": 80
    },
    "design": {
     "value": {
-     "T": 160,
+     "T": 180,
      "P": 150,
      "fullVacuum": false
     },
@@ -7762,7 +7920,7 @@
   },
   {
    "demonstration": true,
-   "number": "3\"-P150-P-12008",
+   "number": "3\"-P150-P-12010",
    "unit": 12,
    "kind": "process",
    "from": "D-1201 water",
@@ -7773,12 +7931,12 @@
    "phase": "liquid",
    "lbh": 20000,
    "operating": {
-    "T": 110,
+    "T": 130,
     "P": 3
    },
    "design": {
     "value": {
-     "T": 160,
+     "T": 180,
      "P": 50,
      "fullVacuum": false
     },
@@ -7841,7 +7999,7 @@
   },
   {
    "demonstration": true,
-   "number": "3\"-P300-P-12009",
+   "number": "3\"-P300-P-12011",
    "unit": 12,
    "kind": "process",
    "from": "P-1205 D",
@@ -7852,12 +8010,12 @@
    "phase": "liquid",
    "lbh": 20000,
    "operating": {
-    "T": 110,
+    "T": 130,
     "P": 90
    },
    "design": {
     "value": {
-     "T": 160,
+     "T": 180,
      "P": 160,
      "fullVacuum": false
     },
@@ -7920,7 +8078,7 @@
   },
   {
    "demonstration": true,
-   "number": "10\"-P150-P-12010",
+   "number": "10\"-P150-P-12012",
    "unit": 12,
    "kind": "process",
    "from": "C-1201 light vacuum gas oil draw",
@@ -7999,7 +8157,7 @@
   },
   {
    "demonstration": true,
-   "number": "8\"-P300-P-12011",
+   "number": "8\"-P300-P-12013",
    "unit": 12,
    "kind": "process",
    "from": "P-1201 D",
@@ -8078,7 +8236,7 @@
   },
   {
    "demonstration": true,
-   "number": "8\"-P300-P-12012",
+   "number": "8\"-P300-P-12014",
    "unit": 12,
    "kind": "process",
    "from": "A-1201 outlet",
@@ -8157,10 +8315,10 @@
   },
   {
    "demonstration": true,
-   "number": "3\"-P300-P-12013",
+   "number": "3\"-P300-P-12015",
    "unit": 12,
    "kind": "process",
-   "from": "line 8\"-P300-P-12012",
+   "from": "line 8\"-P300-P-12014",
    "to": "battery limit (light vacuum gas oil)",
    "fluid": "GO",
    "fluidName": "gas oil",
@@ -8236,7 +8394,7 @@
   },
   {
    "demonstration": true,
-   "number": "14\"-P150-P-12014",
+   "number": "14\"-P150-P-12016",
    "unit": 12,
    "kind": "process",
    "from": "C-1201 heavy vacuum gas oil draw",
@@ -8315,7 +8473,7 @@
   },
   {
    "demonstration": true,
-   "number": "10\"-P300-P-12015",
+   "number": "10\"-P300-P-12017",
    "unit": 12,
    "kind": "process",
    "from": "P-1202 D",
@@ -8394,10 +8552,10 @@
   },
   {
    "demonstration": true,
-   "number": "6\"-P300-P-12016",
+   "number": "6\"-P300-P-12018",
    "unit": 12,
    "kind": "process",
-   "from": "line 10\"-P300-P-12015",
+   "from": "line 10\"-P300-P-12017",
    "to": "E-1201 shell in",
    "fluid": "GO",
    "fluidName": "gas oil",
@@ -8473,7 +8631,7 @@
   },
   {
    "demonstration": true,
-   "number": "6\"-P300-P-12017",
+   "number": "6\"-P300-P-12019",
    "unit": 12,
    "kind": "process",
    "from": "E-1201 shell out",
@@ -8552,7 +8710,7 @@
   },
   {
    "demonstration": true,
-   "number": "8\"-P150-P-12018",
+   "number": "8\"-P150-P-12020",
    "unit": 12,
    "kind": "process",
    "from": "battery limit (vacuum gas oil pumparound return)",
@@ -8631,7 +8789,7 @@
   },
   {
    "demonstration": true,
-   "number": "8\"-P300-P-12019",
+   "number": "8\"-P300-P-12021",
    "unit": 12,
    "kind": "process",
    "from": "C-1201 bottoms",
@@ -8710,7 +8868,7 @@
   },
   {
    "demonstration": true,
-   "number": "6\"-P600-P-12020",
+   "number": "6\"-P600-P-12022",
    "unit": 12,
    "kind": "process",
    "from": "P-1203 D",
@@ -8789,10 +8947,10 @@
   },
   {
    "demonstration": true,
-   "number": "3\"-P600-P-12021",
+   "number": "3\"-P600-P-12023",
    "unit": 12,
    "kind": "process",
-   "from": "line 6\"-P600-P-12020",
+   "from": "line 6\"-P600-P-12022",
    "to": "E-1202 shell in",
    "fluid": "RS",
    "fluidName": "residue",
@@ -8868,7 +9026,7 @@
   },
   {
    "demonstration": true,
-   "number": "3\"-P300-P-12022",
+   "number": "3\"-P300-P-12024",
    "unit": 12,
    "kind": "process",
    "from": "E-1202 shell out",
@@ -9035,7 +9193,7 @@
    "fluidName": "cooling water supply",
    "hazard": "benign",
    "phase": "liquid",
-   "lbh": 950000,
+   "lbh": 1000000,
    "operating": {
     "T": 85,
     "P": 60
@@ -9114,7 +9272,7 @@
    "fluidName": "cooling water return",
    "hazard": "benign",
    "phase": "liquid",
-   "lbh": 950000,
+   "lbh": 1000000,
    "operating": {
     "T": 105,
     "P": 45

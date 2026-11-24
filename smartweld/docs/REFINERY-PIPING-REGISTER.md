@@ -10,14 +10,15 @@ What is whose: sizes, classes, counts, lengths and line classes are the model's 
 
 | Unit | Name | Lines | Pipe, ft | Components | Pipe pieces | Fittings (A) | Flanges and blanks (B) | Valves (C) | Studs and gaskets | Fitting numbers in use | Welds |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 11 | Crude distillation | 134 | 12,723 | 4,483 | 1,260 | 950 | 604 | 305 | 1,364 | 27 | 2,465 |
-| 13 | Naphtha hydrotreater and splitter | 84 | 6,781 | 2,542 | 678 | 507 | 361 | 185 | 811 | 34 | 1,330 |
-| 14 | Catalytic reformer and hydrogen purification | 97 | 8,829 | 2,847 | 794 | 565 | 381 | 210 | 897 | 36 | 1,522 |
-| 15 | Kerosene hydrotreater | 65 | 4,417 | 1,935 | 499 | 378 | 283 | 143 | 632 | 25 | 994 |
-| 16 | Diesel hydrotreater | 85 | 7,817 | 2,633 | 720 | 520 | 369 | 192 | 832 | 32 | 1,390 |
-| 18 | Sulfur block | 130 | 11,772 | 4,180 | 1,084 | 802 | 605 | 313 | 1,376 | 30 | 2,136 |
+| 11 | Crude distillation | 134 | 12,735 | 4,467 | 1,260 | 950 | 602 | 301 | 1,354 | 27 | 2,465 |
+| 12 | Vacuum distillation | 60 | 4,399 | 1,723 | 467 | 357 | 249 | 117 | 533 | 25 | 932 |
+| 13 | Naphtha hydrotreater and splitter | 84 | 6,791 | 2,518 | 678 | 507 | 358 | 179 | 796 | 34 | 1,330 |
+| 14 | Catalytic reformer and hydrogen purification | 97 | 8,846 | 2,813 | 794 | 565 | 376 | 202 | 876 | 36 | 1,522 |
+| 15 | Kerosene hydrotreater | 65 | 4,423 | 1,919 | 499 | 378 | 281 | 139 | 622 | 25 | 994 |
+| 16 | Diesel hydrotreater | 85 | 7,826 | 2,609 | 720 | 520 | 366 | 186 | 817 | 32 | 1,390 |
+| 18 | Sulfur block | 130 | 11,778 | 4,162 | 1,084 | 802 | 602 | 309 | 1,365 | 30 | 2,136 |
 | 19 | Utilities | 104 | 9,763 | 3,150 | 892 | 574 | 459 | 231 | 994 | 33 | 1,648 |
-|  | **all** | 699 | 62,102 | 21,770 | 5,927 | 4,296 | 3,062 | 1,579 | 6,906 | 36 | 11,485 |
+|  | **all** | 759 | 66,561 | 23,361 | 6,394 | 4,653 | 3,293 | 1,664 | 7,357 | 36 | 12,417 |
 
 Categories as recalled (SW-REG-6): A pipe fittings; B flanges; C line valves. Line blanks (spades and spectacle blinds) are counted with the flanges they are clamped between.
 
@@ -28,8 +29,8 @@ Piping systems: a line class in the unit, with the number its lines and their pi
 | Line class | Fluid service | Severity | Piping system number | Lines | Pipe, ft | Components |
 | --- | --- | --- | --- | --- | --- | --- |
 | `H150-C5-N4` | Normal | 4 | W9246.7 | 1 | 179 | 35 |
-| `H150-CS-N4` | Normal | 4 | M2860.7 | 15 | 1,873 | 377 |
-| `H300-C5-N4` | Normal | 4 | V9269.7 | 1 | 307 | 32 |
+| `H150-CS-N4` | Normal | 4 | M2860.7 | 15 | 1,879 | 369 |
+| `H300-C5-N4` | Normal | 4 | V9269.7 | 1 | 313 | 24 |
 | `H150-C5-N3` | Normal | 3 | T5103.7 | 8 | 678 | 294 |
 | `H150-CS-N3` | Normal | 3 | E1241.7 | 30 | 2,616 | 994 |
 | `H300-C5-N3` | Normal | 3 | D6936.7 | 7 | 536 | 245 |
@@ -54,10 +55,10 @@ Lines by what they are: 66 of the flowsheet (16 of them as far as a control stat
 | --- | --- | --- | --- | --- |
 | pipe | 1,260 | its line's piping system | A106-B; A335-P5 | — |
 | elbow | 812 | category A | A234-WPB; A234-WP5 | 8 |
-| gasket | 726 | not registered | compressed sheet (non-steel) | — |
-| stud set | 638 | not registered | A193-B7 studs, A194-2H nuts | — |
+| gasket | 720 | not registered | compressed sheet (non-steel) | — |
+| stud set | 634 | not registered | A193-B7 studs, A194-2H nuts | — |
 | flange | 516 | category B | A105; A182-F5 | 7 |
-| gate valve | 231 | category C | A216-WCB; A217-C5 | 8 |
+| gate valve | 227 | category C | A216-WCB; A217-C5 | 8 |
 | reducer | 80 | category A | A234-WPB; A234-WP5 | 7 |
 | spade | 80 | category B | A105; A182-F5 | 8 |
 | tee | 42 | category A | A234-WPB; A234-WP5 | 7 |
@@ -66,8 +67,53 @@ Lines by what they are: 66 of the flowsheet (16 of them as far as a control stat
 | control valve | 16 | category C | A216-WCB; A217-C5 | 7 |
 | bfly valve | 12 | category C | A216-WCB | 2 |
 | cap | 10 | category A | A234-WPB | 3 |
-| spectacle blind | 8 | category B | A105; A182-F5 | 4 |
+| spectacle blind | 6 | category B | A105; A182-F5 | 3 |
 | branch outlet fitting | 6 | category A | A234-WPB | 3 |
+
+## Unit 12: Vacuum distillation
+
+Piping systems: a line class in the unit, with the number its lines and their pipe carry.
+
+| Line class | Fluid service | Severity | Piping system number | Lines | Pipe, ft | Components |
+| --- | --- | --- | --- | --- | --- | --- |
+| `H150-CS-N4` | Normal | 4 | A2743.7 | 5 | 520 | 86 |
+| `H300-C5-N4` | Normal | 4 | H3274.7 | 1 | 191 | 39 |
+| `H150-CS-N3` | Normal | 3 | D6886.7 | 14 | 1,040 | 455 |
+| `H300-C5-N3` | Normal | 3 | E4179.7 | 4 | 299 | 148 |
+| `H300-CS-N3` | Normal | 3 | E6701.7 | 13 | 570 | 436 |
+| `H600-C5-N3` | Normal | 3 | U3264.7 | 4 | 159 | 133 |
+| `C300-CS-N2` | Normal | 2 | V8421.7 | 3 | 291 | 71 |
+| `H150-CS-N2` | Normal | 2 | C8505.7 | 3 | 147 | 61 |
+| `H300-CS-N2` | Normal | 2 | F5082.7 | 3 | 164 | 116 |
+| `S300-CS-N2` | Normal | 2 | E9413.7 | 4 | 371 | 80 |
+| `S150-CS-D1` | D | 1 | A9009.7 | 2 | 180 | 36 |
+| `W150-CS-D1` | D | 1 | T8349.7 | 4 | 467 | 62 |
+
+| Fluid service | Lines | Examination of welds (recalled) | Butt welds | Socket welds | Fillet welds | Shop | Field |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Normal | 54 | visual, and 5 % random radiography of girth butt welds | 857 | 0 | 3 | 738 | 122 |
+| Category D | 6 | visual | 64 | 0 | 8 | 65 | 7 |
+
+Lines by what they are: 24 of the flowsheet (9 of them as far as a control station), 9 parts after a control station (2 in a lower class than the line ahead: a specification break), 12 connections of installed spares, 0 branch root connections, 9 utility connections and 6 utility headers.
+
+| Component | Count | Registered as | Material labels (recalled) | Fitting numbers in use |
+| --- | --- | --- | --- | --- |
+| pipe | 467 | its line's piping system | A335-P5; A106-B | — |
+| elbow | 283 | category A | A234-WP5; A234-WPB | 7 |
+| gasket | 276 | not registered | compressed sheet (non-steel) | — |
+| stud set | 257 | not registered | A193-B7 studs, A194-2H nuts | — |
+| flange | 230 | category B | A182-F5; A105 | 7 |
+| gate valve | 85 | category C | A217-C5; A216-WCB | 8 |
+| reducer | 38 | category A | A234-WP5; A234-WPB | 7 |
+| tee | 21 | category A | A234-WPB; A234-WP5 | 6 |
+| spade | 18 | category B | A105; A182-F5 | 6 |
+| cap | 12 | category A | A234-WPB | 3 |
+| globe valve | 11 | category C | A216-WCB | 2 |
+| check valve | 10 | category C | A216-WCB; A217-C5 | 4 |
+| control valve | 9 | category C | A217-C5; A216-WCB | 5 |
+| branch outlet fitting | 3 | category A | A234-WPB; A234-WP5 | 2 |
+| bfly valve | 2 | category C | A216-WCB | 1 |
+| spectacle blind | 1 | category B | A182-F5 | 1 |
 
 ## Unit 13: Naphtha hydrotreater and splitter
 
@@ -76,9 +122,9 @@ Piping systems: a line class in the unit, with the number its lines and their pi
 | Line class | Fluid service | Severity | Piping system number | Lines | Pipe, ft | Components |
 | --- | --- | --- | --- | --- | --- | --- |
 | `C1200-CS-N2` | Normal | 4 | U3268.7 | 2 | 317 | 42 |
-| `H150-CS-N4` | Normal | 4 | P5322.7 | 5 | 508 | 106 |
-| `H300-CS-N4` | Normal | 4 | L8633.7 | 5 | 583 | 176 |
-| `H600-C1-N4` | Normal | 4 | F8044.7 | 4 | 710 | 164 |
+| `H150-CS-N4` | Normal | 4 | P5322.7 | 5 | 512 | 98 |
+| `H300-CS-N4` | Normal | 4 | L8633.7 | 5 | 586 | 168 |
+| `H600-C1-N4` | Normal | 4 | F8044.7 | 4 | 714 | 156 |
 | `H600-CS-N4` | Normal | 4 | S3386.7 | 11 | 514 | 225 |
 | `S1200-CS-N2` | Normal | 4 | K6780.7 | 2 | 312 | 34 |
 | `H150-CS-N3` | Normal | 3 | V6227.7 | 22 | 1,208 | 727 |
@@ -100,15 +146,15 @@ Lines by what they are: 39 of the flowsheet (12 of them as far as a control stat
 | Component | Count | Registered as | Material labels (recalled) | Fitting numbers in use |
 | --- | --- | --- | --- | --- |
 | pipe | 678 | its line's piping system | A106-B; A335-P11 | — |
-| gasket | 431 | not registered | compressed sheet (non-steel) | — |
 | elbow | 423 | category A | A234-WPB; A234-WP11 | 10 |
-| stud set | 380 | not registered | A193-B7 studs, A194-2H nuts | — |
+| gasket | 422 | not registered | compressed sheet (non-steel) | — |
+| stud set | 374 | not registered | A193-B7 studs, A194-2H nuts | — |
 | flange | 310 | category B | A105; A182-F11 | 9 |
-| gate valve | 143 | category C | A216-WCB; A217-WC6 | 8 |
+| gate valve | 137 | category C | A216-WCB; A217-WC6 | 8 |
 | reducer | 42 | category A | A234-WPB | 7 |
 | spade | 34 | category B | A105; A182-F11 | 9 |
 | tee | 24 | category A | A234-WPB | 9 |
-| spectacle blind | 17 | category B | A105; A182-F11 | 7 |
+| spectacle blind | 14 | category B | A105; A182-F11 | 7 |
 | control valve | 12 | category C | A216-WCB; A217-WC6 | 7 |
 | cap | 12 | category A | A234-WPB | 4 |
 | globe valve | 12 | category C | A216-WCB | 6 |
@@ -123,10 +169,10 @@ Piping systems: a line class in the unit, with the number its lines and their pi
 | Line class | Fluid service | Severity | Piping system number | Lines | Pipe, ft | Components |
 | --- | --- | --- | --- | --- | --- | --- |
 | `C1200-CS-N2` | Normal | 4 | T7365.7 | 4 | 711 | 75 |
-| `H1200-C1-N4` | Normal | 4 | P5784.7 | 8 | 1,355 | 284 |
+| `H1200-C1-N4` | Normal | 4 | P5784.7 | 8 | 1,369 | 260 |
 | `H1200-CS-N2` | Normal | 4 | B7348.7 | 2 | 347 | 59 |
 | `H150-CS-N4` | Normal | 4 | X8157.7 | 12 | 978 | 310 |
-| `H300-CS-N4` | Normal | 4 | B1850.7 | 16 | 1,345 | 520 |
+| `H300-CS-N4` | Normal | 4 | B1850.7 | 16 | 1,347 | 510 |
 | `H600-C1-N4` | Normal | 4 | T9247.7 | 2 | 70 | 41 |
 | `H600-CS-N4` | Normal | 4 | X4785.7 | 20 | 946 | 478 |
 | `S1200-CS-N2` | Normal | 4 | T4501.7 | 4 | 462 | 86 |
@@ -147,18 +193,18 @@ Lines by what they are: 41 of the flowsheet (13 of them as far as a control stat
 | --- | --- | --- | --- | --- |
 | pipe | 794 | its line's piping system | A106-B; A335-P11 | — |
 | elbow | 481 | category A | A234-WPB; A234-WP11 | 12 |
-| gasket | 473 | not registered | compressed sheet (non-steel) | — |
-| stud set | 424 | not registered | A193-B7 studs, A194-2H nuts | — |
+| gasket | 460 | not registered | compressed sheet (non-steel) | — |
+| stud set | 416 | not registered | A193-B7 studs, A194-2H nuts | — |
 | flange | 332 | category B | A105; A182-F11 | 10 |
-| gate valve | 157 | category C | A216-WCB; A217-WC6 | 10 |
+| gate valve | 149 | category C | A216-WCB; A217-WC6 | 10 |
 | tee | 33 | category A | A234-WPB; A234-WP11 | 9 |
 | reducer | 32 | category A | A234-WPB | 7 |
-| spade | 32 | category B | A105; A182-F11 | 9 |
+| spade | 31 | category B | A105; A182-F11 | 9 |
 | globe valve | 20 | category C | A216-WCB | 4 |
-| spectacle blind | 17 | category B | A105; A182-F11 | 8 |
 | bfly valve | 16 | category C | A216-WCB | 2 |
 | cap | 14 | category A | A234-WPB | 3 |
 | control valve | 13 | category C | A216-WCB; A217-WC6 | 7 |
+| spectacle blind | 13 | category B | A105; A182-F11 | 8 |
 | branch outlet fitting | 5 | category A | A234-WPB | 3 |
 | check valve | 4 | category C | A216-WCB | 2 |
 
@@ -168,8 +214,8 @@ Piping systems: a line class in the unit, with the number its lines and their pi
 
 | Line class | Fluid service | Severity | Piping system number | Lines | Pipe, ft | Components |
 | --- | --- | --- | --- | --- | --- | --- |
-| `H150-CS-N4` | Normal | 4 | M5528.7 | 6 | 659 | 191 |
-| `H600-C1-N4` | Normal | 4 | P8610.7 | 5 | 673 | 188 |
+| `H150-CS-N4` | Normal | 4 | M5528.7 | 6 | 661 | 183 |
+| `H600-C1-N4` | Normal | 4 | P8610.7 | 5 | 676 | 180 |
 | `H600-CS-N4` | Normal | 4 | B7972.7 | 9 | 504 | 208 |
 | `H150-CS-N3` | Normal | 3 | N7861.7 | 13 | 605 | 404 |
 | `H300-CS-N3` | Normal | 3 | P1434.7 | 11 | 659 | 374 |
@@ -190,17 +236,17 @@ Lines by what they are: 32 of the flowsheet (8 of them as far as a control stati
 | Component | Count | Registered as | Material labels (recalled) | Fitting numbers in use |
 | --- | --- | --- | --- | --- |
 | pipe | 499 | its line's piping system | A106-B; A335-P11 | — |
-| gasket | 336 | not registered | compressed sheet (non-steel) | — |
+| gasket | 330 | not registered | compressed sheet (non-steel) | — |
 | elbow | 311 | category A | A234-WPB; A234-WP11 | 9 |
-| stud set | 296 | not registered | A193-B7 studs, A194-2H nuts | — |
+| stud set | 292 | not registered | A193-B7 studs, A194-2H nuts | — |
 | flange | 243 | category B | A105; A182-F11 | 7 |
-| gate valve | 111 | category C | A216-WCB; A217-WC6 | 6 |
+| gate valve | 107 | category C | A216-WCB; A217-WC6 | 6 |
 | reducer | 36 | category A | A234-WPB; A234-WP11 | 7 |
 | spade | 30 | category B | A105; A182-F11 | 5 |
 | tee | 20 | category A | A234-WPB | 7 |
-| spectacle blind | 10 | category B | A105; A182-F11 | 4 |
 | check valve | 10 | category C | A216-WCB | 4 |
 | control valve | 8 | category C | A216-WCB; A217-WC6 | 6 |
+| spectacle blind | 8 | category B | A105; A182-F11 | 4 |
 | cap | 8 | category A | A234-WPB | 2 |
 | bfly valve | 8 | category C | A216-WCB | 2 |
 | globe valve | 6 | category C | A216-WCB | 3 |
@@ -212,11 +258,11 @@ Piping systems: a line class in the unit, with the number its lines and their pi
 
 | Line class | Fluid service | Severity | Piping system number | Lines | Pipe, ft | Components |
 | --- | --- | --- | --- | --- | --- | --- |
-| `H1200-C1-N4` | Normal | 4 | D4394.7 | 5 | 908 | 197 |
+| `H1200-C1-N4` | Normal | 4 | D4394.7 | 5 | 912 | 189 |
 | `H1200-CS-N2` | Normal | 4 | B2126.7 | 10 | 625 | 314 |
 | `H1200-CS-N3` | Normal | 4 | A3745.7 | 2 | 290 | 68 |
-| `H1200-CS-N4` | Normal | 4 | U5364.7 | 14 | 933 | 315 |
-| `H150-CS-N4` | Normal | 4 | N1971.7 | 6 | 843 | 149 |
+| `H1200-CS-N4` | Normal | 4 | U5364.7 | 14 | 935 | 307 |
+| `H150-CS-N4` | Normal | 4 | N1971.7 | 6 | 846 | 141 |
 | `H300-CS-N4` | Normal | 4 | P4988.7 | 2 | 210 | 87 |
 | `H600-CS-N4` | Normal | 4 | L3907.7 | 2 | 125 | 47 |
 | `H150-CS-N3` | Normal | 3 | H1066.7 | 14 | 930 | 468 |
@@ -236,17 +282,17 @@ Lines by what they are: 43 of the flowsheet (13 of them as far as a control stat
 | Component | Count | Registered as | Material labels (recalled) | Fitting numbers in use |
 | --- | --- | --- | --- | --- |
 | pipe | 720 | its line's piping system | A106-B; A335-P11 | — |
-| gasket | 436 | not registered | compressed sheet (non-steel) | — |
 | elbow | 435 | category A | A234-WPB; A234-WP11 | 10 |
-| stud set | 396 | not registered | A193-B7 studs, A194-2H nuts | — |
+| gasket | 427 | not registered | compressed sheet (non-steel) | — |
+| stud set | 390 | not registered | A193-B7 studs, A194-2H nuts | — |
 | flange | 329 | category B | A105; A182-F11 | 8 |
-| gate valve | 159 | category C | A216-WCB; A217-WC6 | 9 |
+| gate valve | 153 | category C | A216-WCB; A217-WC6 | 9 |
 | reducer | 50 | category A | A234-WPB; A234-WP11 | 6 |
 | spade | 28 | category B | A105; A182-F11 | 5 |
 | tee | 23 | category A | A234-WPB | 7 |
 | control valve | 13 | category C | A216-WCB; A217-WC6 | 5 |
-| spectacle blind | 12 | category B | A105; A182-F11 | 7 |
 | check valve | 12 | category C | A216-WCB | 4 |
+| spectacle blind | 9 | category B | A105; A182-F11 | 5 |
 | cap | 8 | category A | A234-WPB | 2 |
 | branch outlet fitting | 4 | category A | A234-WPB | 2 |
 | bfly valve | 4 | category C | A216-WCB | 1 |
@@ -259,7 +305,7 @@ Piping systems: a line class in the unit, with the number its lines and their pi
 | Line class | Fluid service | Severity | Piping system number | Lines | Pipe, ft | Components |
 | --- | --- | --- | --- | --- | --- | --- |
 | `H150-CS-M5` | M | 5 | G2165.7 | 10 | 1,840 | 354 |
-| `H150-SS-M5` | M | 5 | A4669.7 | 10 | 949 | 384 |
+| `H150-SS-M5` | M | 5 | A4669.7 | 10 | 954 | 366 |
 | `C1200-CS-N2` | Normal | 4 | J8761.7 | 5 | 794 | 118 |
 | `H150-CS-N4` | Normal | 4 | T1785.7 | 4 | 757 | 120 |
 | `S1200-CS-N2` | Normal | 4 | C7161.7 | 4 | 505 | 86 |
@@ -285,18 +331,18 @@ Lines by what they are: 59 of the flowsheet (22 of them as far as a control stat
 | Component | Count | Registered as | Material labels (recalled) | Fitting numbers in use |
 | --- | --- | --- | --- | --- |
 | pipe | 1,084 | its line's piping system | A106-B; A312-TP316L | — |
-| gasket | 730 | not registered | compressed sheet (non-steel) | — |
+| gasket | 723 | not registered | compressed sheet (non-steel) | — |
 | elbow | 661 | category A | A234-WPB; A403-WP316L | 10 |
-| stud set | 646 | not registered | A193-B7 studs, A194-2H nuts | — |
+| stud set | 642 | not registered | A193-B7 studs, A194-2H nuts | — |
 | flange | 521 | category B | A105; A182-F316L | 9 |
-| gate valve | 224 | category C | A216-WCB; A351-CF8M | 7 |
+| gate valve | 220 | category C | A216-WCB; A351-CF8M | 7 |
 | reducer | 84 | category A | A234-WPB; A403-WP316L | 8 |
 | spade | 63 | category B | A105; A182-F316L | 6 |
 | globe valve | 38 | category C | A216-WCB | 5 |
 | tee | 36 | category A | A234-WPB; A403-WP316L | 9 |
 | control valve | 22 | category C | A216-WCB; A351-CF8M | 7 |
-| spectacle blind | 21 | category B | A105; A182-F316L | 3 |
 | check valve | 21 | category C | A216-WCB; A351-CF8M | 5 |
+| spectacle blind | 18 | category B | A105; A182-F316L | 3 |
 | cap | 14 | category A | A234-WPB | 4 |
 | bfly valve | 8 | category C | A216-WCB | 2 |
 | branch outlet fitting | 7 | category A | A234-WPB | 4 |

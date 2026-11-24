@@ -7,6 +7,7 @@
 import { drawing, rule, type Dim } from '../../core/basis';
 import { K } from '../../core/constants';
 import type { PartSpec } from '../part';
+import type { PipeClass } from './pipe';
 import { extrude, revolve, transformMesh, mergeMeshes, signedVolume, type MeshData, type Profile } from '../../geometry/mesh';
 import { circle, rect } from '../../geometry/polygon';
 import { wProfile } from '../../geometry/profiles';
@@ -15,7 +16,7 @@ import { proportionW } from './wideFlange';
 import { pipeDims, designFlange } from './pipe';
 import { shellRing, headLoop, vesselSolids, makeVerticalVessel } from './equipment';
 import { sweep, boxMesh, orient, type V3 } from './detailKit';
-import { done, cylZ, cylX, cylY, tube, at, flangeSolids, flangeLen, seriesUp, makeNozzle, makeManway, makeSupportLugs, dressVessel, seamSolids, makeShellTubeExchanger, motorSolids, MOTOR_SHAFT, NOZZLE_UP, SHAFT_X_UP_Z, type Solid } from './equipmentKit';
+import { done, cylZ, cylX, cylY, tube, at, flangeSolids, flangeLen, seriesUp, makeNozzle, makeManway, makeSupportLugs, dressVessel, seamSolids, makeShellTubeExchanger, motorSolids, MOTOR_SHAFT, NOZZLE_UP, NOZZLE_DOWN, SHAFT_X_UP_Z, type Solid } from './equipmentKit';
 import { member, pipeRun, frustum, lift, named, onShell, pointUp, pointDown, floorsThrough, towerAccess, ringFlange, straightRail, saddleSolids, drumBody, spiralStair, ringRail, ringPlatform, ladderSolids, stackSolids, burnerSolids, makeFlueGasCooler, partSolids, P_L3, P_W8 } from './processUnits';
 import { bendPath } from './pipingSpecials';
 import { gratingCover } from './civil';
@@ -139,12 +140,107 @@ export function makeKettleReboiler(inp: { tag: string; bundleD: number; tubeL: n
   return equip(tag, 'EXCHANGER', `${tag} kettle reboiler, ${Db}" bundle × ${(Lt / 12).toFixed(0)}' tubes`, { bundleD: drawing(Db, 'Bundle diameter'), tubeL: drawing(Lt, 'Tube length'), shellD: rule(1.6 * Db, 'SW-EQC-63', 'Shell diameter (1.6 Db)'), cone: rule(0.6 * Db, 'SW-EQC-63', 'Eccentric cone length (0.6 Db)'), shellL: rule(1.15 * Lt, 'SW-EQC-63', 'Tubesheet to rear tangent (1.15 tube lengths)'), vapour: rule(nV, 'SW-EQC-63', 'Vapour nozzles (Db / 3, to the series), two') }, Lc + zs + Ls + Rs / 2, s, ['The bundle and weir are inside and not drawn.']);
 }
 // ---- SW-EQC-52: steam jet ejector -----------------------------------------------------------------------------------------------------
-export function makeEjector(id: string, NPS: number): PartSpec {
-  const pd = pipeDims(NPS, 'P150'), OD = pd.OD, t = Math.max(0.25, pd.t), f = designFlange(NPS, 'P150'), Lf = flangeLen(f), nM = seriesUp(Math.max(1, NPS / 3)), rt = 0.225 * OD + t, s: Solid[] = [];
-  s.push({ name: 'suction chamber', role: 'casting', mesh: mergeMeshes([tube(0.8 * OD, t, 2 * OD, 0), cylZ(0, 0, 0.8 * OD, -t, 0, 48)]) }, { name: 'diffuser inlet cone', role: 'casting', mesh: frustum(0.8 * OD, rt, 2 * OD, 4 * OD, t, 48) }, { name: 'throat', role: 'casting', mesh: tube(rt, t, OD, 4 * OD) }, { name: 'diffuser outlet cone', role: 'casting', mesh: frustum(rt, OD / 2, 5 * OD, 10 * OD, t, 48) });
+export function makeEjector(id: string, NPS: number, o: { /** the discharge flange where it is not of the suction's size, and the motive steam nozzle where it is not a third of it (SW-PRC-18) */ dischargeNPS?: number; motiveNPS?: number } = {}): PartSpec {
+  const pd = pipeDims(NPS, 'P150'), OD = pd.OD, t = Math.max(0.25, pd.t), dN = o.dischargeNPS ?? NPS, f = designFlange(dN, 'P150'), Lf = flangeLen(f), nM = o.motiveNPS ?? seriesUp(Math.max(1, NPS / 3)), rt = 0.225 * OD + t, rd = pipeDims(dN, 'P150').OD / 2, s: Solid[] = [];
+  s.push({ name: 'suction chamber', role: 'casting', mesh: mergeMeshes([tube(0.8 * OD, t, 2 * OD, 0), cylZ(0, 0, 0.8 * OD, -t, 0, 48)]) }, { name: 'diffuser inlet cone', role: 'casting', mesh: frustum(0.8 * OD, rt, 2 * OD, 4 * OD, t, 48) }, { name: 'throat', role: 'casting', mesh: tube(rt, t, OD, 4 * OD) }, { name: 'diffuser outlet cone', role: 'casting', mesh: frustum(rt, rd, 5 * OD, 10 * OD, t, 48) });
   s.push(...flangeSolids(f, 'discharge flange').map(q => ({ ...q, role: 'casting' as const, mesh: transformMesh(q.mesh, multiply(translate(0, 0, 10 * OD + Lf), rotateX(Math.PI))) })));
   s.push(...endOn(noz(`${id}-M`, nM, t, undefined, { projection: 6 }), 0, 0, -t + 0.1, -1, 'motive steam nozzle').map(q => ({ ...q, role: 'casting' as const })), ...radialOn(noz(`${id}-S`, NPS, t, 0.8 * OD, { projection: 6 }), 0.8 * OD, OD, Math.PI, 'suction nozzle').map(q => ({ ...q, role: 'casting' as const })));
-  return equip(id, 'PROCESS_UNIT', `Steam jet ejector, ${NPS}" suction`, { NPS: drawing(NPS, 'Suction size'), chamberD: rule(1.6 * OD, 'SW-EQC-52', 'Suction chamber diameter (1.6 OD)'), throat: rule(0.45 * OD, 'SW-EQC-52', 'Throat diameter (0.45 OD)'), diverging: rule(5 * OD, 'SW-EQC-52', 'Diverging cone length (5 OD)'), motive: rule(nM, 'SW-EQC-52', 'Motive steam nozzle (a third of the suction, to the series)'), overall: rule(10 * OD + Lf, 'SW-EQC-52', 'Chamber back to discharge face') }, 10 * OD + Lf, s);
+  return equip(id, 'PROCESS_UNIT', `Steam jet ejector, ${NPS}" suction${dN !== NPS ? `, ${dN}" discharge` : ''}`, { NPS: drawing(NPS, 'Suction size'), chamberD: rule(1.6 * OD, 'SW-EQC-52', 'Suction chamber diameter (1.6 OD)'), throat: rule(0.45 * OD, 'SW-EQC-52', 'Throat diameter (0.45 OD)'), diverging: rule(5 * OD, 'SW-EQC-52', 'Diverging cone length (5 OD)'), motive: o.motiveNPS !== undefined ? drawing(nM, 'Motive steam nozzle') : rule(nM, 'SW-EQC-52', 'Motive steam nozzle (a third of the suction, to the series)'), ...(o.dischargeNPS !== undefined ? { discharge: drawing(dN, 'Discharge size') } : {}), overall: rule(10 * OD + Lf, 'SW-EQC-52', 'Chamber back to discharge face') }, 10 * OD + Lf, s);
+}
+// ---- SW-EQC-68: vacuum ejector set ------------------------------------------------------------------------------------------------------
+export interface EjectorSetStage { /** the ejector: suction, discharge and steam connection */ suction: number; discharge: number; motive: number; /** its condenser: shell inside diameter and wall; vent to the next stage (0 on the last); water connections; drain */ ID: number; t: number; vent: number; water: number; drain: number }
+export interface EjectorSetInput { tag: string; stages: EjectorSetStage[]; /** the set's steam and water connections, and the steam's class */ steam: number; steamCls?: PipeClass; water: number }
+/** where the set's parts stand, for whoever builds what carries it: across (x), along (z, from the tubesheets' line) and up (y, from the steel under the saddles) */
+export interface EjectorSetLayout { x: number[]; saddles: number[]; frames: number[]; clear: number; suctionZ: number; drainZ: number; top: number }
+const SET_CLEAR = 48, SET_TT = 240, up6 = (v: number) => Math.ceil(v / 6 - 1e-9) * 6;
+/** a pipe through `pts` with bends of 1.5 diameters, a flange at either end where asked: each straight and each bend a solid of its own */
+function spoolSolids(label: string, pts: V3[], NPS: number, cls: PipeClass, ends: [boolean, boolean], lastName?: string): Solid[] {
+  const pd = pipeDims(NPS, cls), OD = pd.OD, R = 1.5 * OD, f = designFlange(NPS, cls), Lf = flangeLen(f), out: Solid[] = [], n = pts.length;
+  const un = (a: V3, b: V3): V3 => { const d: V3 = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], l = Math.hypot(d[0], d[1], d[2]); return [d[0] / l, d[1] / l, d[2] / l]; }, mv = (p: V3, u: V3, k: number): V3 => [p[0] + u[0] * k, p[1] + u[1] * k, p[2] + u[2] * k];
+  const perp = (u: V3): V3 => (Math.abs(u[1]) > 0.9 ? [1, 0, 0] : [0, 1, 0]);
+  const g = f.gasketT;                                                                                // a flanged end stands a gasket's thickness off the face it meets
+  for (let i = 0; i + 1 < n; i++) {
+    const u = un(pts[i], pts[i + 1]), a = mv(pts[i], u, i > 0 ? R : ends[0] ? Lf + g : 0), b = mv(pts[i + 1], u, -(i + 2 < n ? R : ends[1] ? Lf + g : 0)), L = (b[0] - a[0]) * u[0] + (b[1] - a[1]) * u[1] + (b[2] - a[2]) * u[2];
+    if (L < -0.01) throw new Error(`${label}: no room for its bends and flanges between ${pts[i]} and ${pts[i + 1]} (${L.toFixed(2)} in)`);
+    if (L > 0.05) out.push({ name: i + 2 === n && lastName ? lastName : `${label}: run ${i + 1}`, mesh: pipeRun([a, b], OD, 24) });
+    if (i + 2 < n) { const v = un(pts[i + 1], pts[i + 2]); out.push({ name: `${label}: bend ${i + 1}`, mesh: pipeRun(bendPath([mv(pts[i + 1], u, -R), pts[i + 1], mv(pts[i + 1], v, R)], R, 8), OD, 24) }); }
+  }
+  const fl = (at: V3, toward: V3, k: number) => flangeSolids(f, `${label}: flange ${k}`).map(q => ({ ...q, name: q.name.replace('raised face', 'facing'), mesh: transformMesh(q.mesh, frameFromAxes(mv(at, toward, g), perp(toward), toward)) }));
+  if (ends[0]) out.push(...fl(pts[0], un(pts[0], pts[1]), 1)); if (ends[1]) out.push(...fl(pts[n - 1], un(pts[n - 1], pts[n - 2]), 2));
+  return out;
+}
+/** SW-EQC-68: where the parts of a set of these stages stand */
+export function ejectorSetLayout(inp: EjectorSetInput): EjectorSetLayout & { half: number[]; R: number[]; inletZ: number[] } {
+  const half: number[] = [], R: number[] = [], x: number[] = [], inletZ: number[] = [];
+  inp.stages.forEach((q, k) => {
+    const r = q.ID / 2 + q.t, f = designFlange(seriesUp(q.ID), 'P150', q.ID, q.t, 2 * r); R.push(r); half.push(f.OD / 2);
+    x.push(k === 0 ? 0 : up6(x[k - 1] + half[k - 1] + (k === 1 ? 30 : 18) + half[k]));
+    inletZ.push(up6(flangeLen(f) + pipeDims(q.discharge, 'P150').OD + 6) + (k ? 18 * k : 0));
+  });
+  const q0 = inp.stages[0], dOD = pipeDims(q0.discharge, 'P150').OD, sOD = pipeDims(q0.suction, 'P150').OD, fd = designFlange(q0.discharge, 'P150'), Lf = flangeLen(fd), base = inletZ[0] + 1.5 * dOD + 2 * Lf + fd.gasketT + 9 * sOD, suctionZ = up6(base);
+  const yE = SET_CLEAR + 2 * R[0] + 8 + Lf + fd.gasketT + 1.5 * dOD;
+  return { x, half, R, inletZ, saddles: [0.2 * SET_TT, 0.8 * SET_TT], frames: [suctionZ, suctionZ - 3.5 * sOD], clear: SET_CLEAR, suctionZ, drainZ: up6(0.9 * SET_TT), top: yE + 0.8 * sOD };
+}
+export function makeEjectorSet(inp: EjectorSetInput): PartSpec {
+  const { tag, stages } = inp, n = stages.length, L = ejectorSetLayout(inp), X = L.x, s: Solid[] = [], sCls = inp.steamCls ?? 'P300', zv = L.drainZ;
+  if (n < 2) throw new Error('SW-EQC-68: a set has two stages at least');
+  const add = (list: Solid[], T: number[], label: string, rename: (nm: string) => string = nm => nm) => { for (const q of list) s.push({ ...q, name: `${label}: ${rename(q.name)}`, mesh: transformMesh(q.mesh, T) }); };
+  const od = (N: number, cls: PipeClass = 'P150') => pipeDims(N, cls).OD, lf = (N: number, cls: PipeClass = 'P150') => flangeLen(designFlange(N, cls)) + designFlange(N, cls).gasketT;   // a flange and the gasket it stands off by
+  const yc = stages.map((_, k) => SET_CLEAR + L.R[k]), top = (k: number) => yc[k] + L.R[k], zw: number[] = [], suction: V3[] = [], motive: V3[] = [];
+  // on a shell: a nozzle of the catalogue's kind, on top or underneath, its face `proj` from the shell
+  const onShell = (k: number, N: number, z: number, upward: boolean, label: string, proj = 8) => add(partSolids(makeNozzle(`${tag}-${label}`, { NPS: N, cls: 'P150', shellT: stages[k].t, shellR: L.R[k], projection: proj })), multiply(translate(X[k], upward ? top(k) : yc[k] - L.R[k], z), upward ? NOZZLE_UP : NOZZLE_DOWN), label);
+  // the supply pipe's height, and so how far the first channel's water inlet reaches down to the turn into it
+  const yS = od(inp.water) / 2 + 8, drop = (k: number, N: number) => SET_CLEAR - (yS + 1.5 * od(N) + lf(N));
+  stages.forEach((q, k) => {
+    const ex = makeShellTubeExchanger({ tag: `${tag}-C${k + 1}`, ID: q.ID, t: q.t, TT: SET_TT, centreline: yc[k] }), ts = ex.dims.tubesheet.value, Lc = ex.dims.channel.value, mid = -ts - Lc / 2;
+    add(partSolids(ex).filter(so => !/^(shell|channel) (inlet|outlet): /.test(so.name)), translate(X[k], yc[k], 0), `condenser ${k + 1}`);
+    zw.push(k === 0 ? 6 * Math.round(mid / 6) : mid);
+    onShell(k, q.discharge, L.inletZ[k], true, `condenser ${k + 1}: vapour inlet`);
+    if (q.vent) onShell(k, q.vent, zv, true, `condenser ${k + 1}: vent`);
+    onShell(k, q.water, zw[k], true, `condenser ${k + 1}: water outlet`); onShell(k, q.water, zw[k], false, `condenser ${k + 1}: water inlet`, k === 0 ? drop(0, q.water) : 8);
+    // the boot: twice the drain's size, 6 in least, 12 in long, closed underneath
+    const bN = seriesUp(Math.max(6, 2 * q.drain)), bR = od(bN) / 2, yb = yc[k] - L.R[k] - 12, sag = L.R[k] - Math.sqrt(L.R[k] ** 2 - bR ** 2);
+    s.push({ name: `condenser ${k + 1}: condensate boot`, mesh: transformMesh(mergeMeshes([tube(bR, 0.375, 12 + sag, 0), cylZ(0, 0, bR, 0, 0.5, 32)]), frameFromAxes([X[k], yb, zv], [1, 0, 0], [0, 1, 0])) });
+    add(partSolids(makeNozzle(`${tag}-D${k + 1}`, { NPS: q.drain, cls: 'P150', shellT: 0.5, projection: 6 })), multiply(translate(X[k], yb, zv), NOZZLE_DOWN), k + 1 === n ? 'outlet nozzle' : `condensate ${k + 1} nozzle`);
+    // the ejector: the first lying above its condenser, the later ones standing on theirs
+    const ej = makeEjector(`${tag}-J${k + 1}`, q.suction, { dischargeNPS: q.discharge, motiveNPS: q.motive }), len = ej.dims.overall.value, sOD = od(q.suction), inner = (nm: string) => nm.replace('nozzle', 'connection'), back = 6 + Math.max(0.25, pipeDims(q.suction, 'P150').t) - 0.1;
+    if (k === 0) {
+      const dOD = od(q.discharge), yE = top(0) + 8 + lf(q.discharge) + 1.5 * dOD, zB = L.suctionZ + sOD, zf = zB - len;
+      add(partSolids(ej), frameFromAxes([0, yE, zB], [0, -1, 0], [0, 0, -1]), 'stage 1 ejector', nm => (nm.startsWith('suction nozzle') ? nm : inner(nm)));
+      s.push(...spoolSolids('stage 1 discharge', [[0, yE, zf], [0, yE, L.inletZ[0]], [0, top(0) + 8, L.inletZ[0]]], q.discharge, 'P150', [true, true]));
+      suction.push([0, yE + 0.8 * sOD + 6, L.suctionZ]); motive.push([0, yE, zB + back]);
+      // two frames under what overhangs the condenser: posts either side, a beam under the ejector
+      L.frames.forEach((zf2, i) => { const r = i === 0 ? 0.8 * sOD : 0.225 * sOD + Math.max(0.25, pipeDims(q.suction, 'P150').t), yb2 = yE - r - 0.5, xp = up6(r + 6);
+        s.push({ name: `ejector frame ${i + 1}: posts W8x24`, role: 'steel', mesh: mergeMeshes([-xp, xp].map(xx => member([xx, 0, zf2], [xx, yb2 - 8, zf2], P_W8, [1, 0, 0]))) }, { name: `ejector frame ${i + 1}: beam W8x24`, role: 'steel', mesh: member([-xp - 4, yb2 - 4, zf2], [xp + 4, yb2 - 4, zf2], P_W8, [0, 1, 0]) }, { name: `ejector frame ${i + 1}: cradle PL1/2`, role: 'steel', mesh: boxMesh(-0.5 * r, yb2, zf2 - 6, 0.5 * r, yb2 + 0.5, zf2 + 6) }); });
+    } else {
+      const yT = top(k) + 8 + designFlange(q.discharge, 'P150').gasketT + len;                       // its back, at the top
+      add(partSolids(ej), frameFromAxes([X[k], yT, L.inletZ[k]], [1, 0, 0], [0, -1, 0]), `stage ${k + 1} ejector`, inner);
+      suction.push([X[k] - 0.8 * sOD - 6, yT - sOD, L.inletZ[k]]); motive.push([X[k], yT + back, L.inletZ[k]]);
+    }
+  });
+  // vents: up from each condenser to the next suction's height, across to the gap beside the next condenser, back along it and in
+  for (let k = 0; k + 1 < n; k++) { const N = stages[k].vent, to = suction[k + 1], xg = to[0] - lf(N) - 1.5 * od(N) - 1, from: V3 = [X[k], top(k) + 8, zv];
+    s.push(...spoolSolids(`vent ${k + 1}`, [from, [from[0], to[1], zv], [xg, to[1], zv], [xg, to[1], to[2]], to], N, 'P150', [true, true])); }
+  // steam: up through the floor between the first two condensers, along the set at the first ejector's height, and round behind it; a branch across and down to each later ejector
+  const xs = up6(L.half[0] + 12), yM = motive[0][1], mR = 1.5 * od(inp.steam, sCls), zU = motive[0][2] + lf(inp.steam, sCls) + mR + 6;
+  s.push(...spoolSolids('steam main', [[xs, -24, -6], [xs, yM, -6], [xs, yM, zU], [0, yM, zU], motive[0]], inp.steam, sCls, [false, true]).map(q => (q.name === 'steam main: run 1' ? { ...q, name: 'motive steam leg' } : q)));
+  for (let k = 1; k < n; k++) s.push(...spoolSolids(`steam branch ${k + 1}`, [[xs + od(inp.steam, sCls) / 2 - 0.5, yM, motive[k][2]], [motive[k][0], yM, motive[k][2]], motive[k]], stages[k].motive, sCls, [false, true]));
+  // cooling water: supply under the channels, return over them, both down through the floor beyond the last condenser
+  const wN = inp.water, xd = up6(X[n - 1] + L.half[n - 1] + 24), yR = top(0) + 8 + lf(wN) + 1.5 * od(wN), z0 = zw[0];
+  s.push(...spoolSolids('cooling water supply', [[xd, -24, z0], [xd, yS, z0], [0, yS, z0], [0, SET_CLEAR - drop(0, stages[0].water), z0]], wN, 'P150', [false, true]).map(q => (q.name === 'cooling water supply: run 1' ? { ...q, name: 'cooling water supply leg' } : q)));
+  s.push(...spoolSolids('cooling water return', [[0, top(0) + 8, z0], [0, yR, z0], [xd + 42, yR, z0], [xd + 42, -24, z0]], wN, 'P150', [true, false], 'cooling water return leg'));
+  for (let k = 1; k < n; k++) { const N = stages[k].water, yb = yc[k] - L.R[k] - 8, yt = top(k) + 8, ym = yS + od(wN) / 2 + (yb - yS - od(wN) / 2) / 2, yh = yt + lf(N) + 1.5 * od(N) + 2;
+    s.push(...spoolSolids(`water supply branch ${k + 1}`, [[X[k], yS + od(wN) / 2 - 0.5, z0], [X[k], ym, z0], [X[k], ym, zw[k]], [X[k], yb, zw[k]]], N, 'P150', [false, true]));
+    s.push(...spoolSolids(`water return branch ${k + 1}`, [[X[k], yt, zw[k]], [X[k], yh, zw[k]], [X[k], yh, z0], [X[k], yR - od(wN) / 2 + 0.5, z0]], N, 'P150', [true, false])); }
+  // the flanges of the three connections under the floor (a plant makes these itself)
+  for (const [label, N, cls, x, z] of [['motive steam', inp.steam, sCls, xs, -6], ['cooling water in', wN, 'P150', xd, z0], ['cooling water out', wN, 'P150', xd + 42, z0]] as [string, number, PipeClass, number, number][])
+    s.push(...flangeSolids(designFlange(N, cls), `${label} nozzle flange`).map(q => ({ ...q, mesh: transformMesh(q.mesh, frameFromAxes([x, -24 - flangeLen(designFlange(N, cls)), z], [1, 0, 0], [0, 1, 0])) })));
+  const zMax = L.suctionZ + od(stages[0].suction);
+  return equip(tag, 'PROCESS_UNIT', `${tag} vacuum ejector set, ${n} stages: ejectors ${stages.map(q => `${q.suction}"`).join(', ')} on condensers ${stages.map(q => `${q.ID}"`).join(', ')} × 20'`, {
+    stages: drawing(n, 'Stages', 'count'), ...Object.fromEntries(stages.flatMap((q, k) => [[`suction${k + 1}`, drawing(q.suction, `Stage ${k + 1} ejector suction`)], [`shell${k + 1}`, drawing(q.ID, `Stage ${k + 1} condenser inside diameter`)]])),
+    clear: rule(SET_CLEAR, 'SW-EQC-68', 'Shell undersides above the steel'), pitch1: rule(X[1], 'SW-EQC-68', 'First to second condenser (30 in between body flanges, to 6 in)'), suctionZ: rule(L.suctionZ, 'SW-EQC-68', 'First suction from the tubesheet line (to 6 in)'), drainZ: rule(zv, 'SW-EQC-68', 'Vents and drains from the tubesheet line (0.9 of the tube length)'),
+    top: rule(L.top, 'SW-EQC-68', 'Top of the first ejector\'s chamber'), overall: rule(zMax + zU - motive[0][2], 'SW-EQC-68', 'Tubesheet line to the steam turn behind the first ejector'),
+  }, zMax, s, ['Ejectors by SW-EQC-52 at the stated sizes; condensers by SW-DET-11. Valves, instruments and tubes are not drawn (SW-EQC-68).']);
 }
 // ---- SW-EQC-51: steam turbine driver --------------------------------------------------------------------------------------------------
 export function makeSteamTurbine(id: string, d: number): PartSpec {

@@ -8,8 +8,13 @@ import {
   makeVerticalVessel, makeHorizontalVessel, makeExchanger, makePump, makeAirCooler, makeFiredHeater, makeCompressorPackage, makeBlower,
   makePlatformedColumn, makeSwagedTower, makeCabinHeater, makeConeRoofTank, makeCatCracker, makeWetScrubber, makeFlueGasCooler, makeSulfurFurnace,
   makeSulfurCondenser, makeIncinerator, makeWaterTubeBoiler, makeTurbineCompressor, makeLoadingStation, makeCoolingTower, makeSilo, makeDeaerator, makeEjector, makeSulfurPit, makeSeparatorBasin,
+  makeEjectorSet, ejectorSetLayout, makeShellTubeExchanger, makeGrating, makeRod, GRATING, type EjectorSetInput, type Cut,
   MOTOR_SHAFT, designFlange, pipeDims, gateFaceToFace, globeFaceToFace, elbowRadius, makeWideFlange, type PartSpec, type PipeClass,
 } from '../catalogue';
+import { K } from '../core/constants';
+import { zReq } from '../scene/structures';
+import { sizeW } from '../generator/building';
+import { partFromKey } from '../generator/piping';
 import type { Dim } from '../core/basis';
 import { frameFromAxes, multiply, translate, standUp, rotateY } from '../geometry/transform';
 import type { Mat4 } from '../geometry/mesh';
@@ -17,13 +22,13 @@ import type { Placed } from '../generator/building';
 import type { InteriorModel } from '../generator/interior';
 import { interiorKit, type RackLayout } from '../generator/interiorKit';
 import { processModel } from './process';
-import { sizing, type EquipSize } from './sizing';
+import { sizing, tubeCount, type EquipSize } from './sizing';
 import type { Equip, UnitSheet, EqKind } from './flowsheet';
 import { cfs, FLUIDS } from './fluids';
 import { buildGeometry } from '../geometry/partGeometry';
 import { nozzleStandout } from '../generator/nozzles';
 
-const up = (v: number, s = 6) => Math.ceil(v / s - 1e-9) * s, near = (v: number, s = 6) => Math.round(v / s) * s;
+const up = (v: number, s = 6) => Math.ceil(v / s - 1e-9) * s, down = (v: number, s = 6) => Math.floor(v / s + 1e-9) * s, near = (v: number, s = 6) => Math.round(v / s) * s;
 /** SW-CELL-2: the unit rack */
 export const RACK = { start: 360, bent: 240, half: 144, tiers: [192, 264, 336] as const, loadPsf: 40 };
 export const PAD = 6, PUMP_PAD = 9, Y_VESSEL = PAD + 1.5 + 0.75;
@@ -31,7 +36,7 @@ export const PAD = 6, PUMP_PAD = 9, Y_VESSEL = PAD + 1.5 + 0.75;
 /** SW-CELL-6: the underside of the yard's support beams */
 export const YARD = 366;
 export const DECK = RACK.tiers[RACK.tiers.length - 1] + 108, RACK_COL = Math.ceil(RACK.tiers[RACK.tiers.length - 1] / 24 / 2) * 2;
-export type Lane = 'pump' | 'exchanger' | 'air' | 'vessel' | 'heater' | 'pit';
+export type Lane = 'pump' | 'exchanger' | 'air' | 'vessel' | 'heater' | 'pit' | 'under' | 'behind';
 /** where a body stands in its unit, and the facts of its shape the nozzle schedule needs */
 export interface Spot {
   tag: string; item: string; kind: EqKind; lane: Lane; side: 1 | -1; x: number; z: number; /** footprint along and across the rack, and height */ lx: number; lz: number; h: number;
@@ -39,6 +44,7 @@ export interface Spot {
   /** a plane on the grid square to the axis: a pump's or compressor's casing centre, an exchanger's channel centre; and a pump's suction end */ zc?: number; zs?: number;
   /** the platform floors of a column, elevations */ floors?: number[];
   /** the tags of the parts that make up the body */ parts?: string[];
+  /** round holes in the body's own floor where pipes pass, in plan (SW-CELL-4) */ holes?: { x: number; z: number; r: number }[];
 }
 export interface CellModel { unit: number; name: string; rack: RackLayout; spots: Spot[]; interior: InteriorModel; /** where the yard's support beams run, z, on each side that has one */ yard: { neg?: number; pos?: number }; /** the unit's extent in its own frame */ x1: number; z0: number; z1: number; y1: number }
 
@@ -95,6 +101,21 @@ export function bare(p: PartSpec): PartSpec {
 
 /** SW-CELL-4: a connection at which the generator stands a throttling globe valve after the block valve (SW-LL-7): where a water connection from a header arrives, and where a cooling water return leaves; water above class P300, and any line of the flowsheet, is piped as a process line (SW-RPI-3) */
 const throttled = (q: { fluid: string; cls: PipeClass; dir: 'in' | 'out'; util?: string }) => { const sv = FLUIDS[q.fluid].svc; return q.util !== undefined && ['CWS', 'CWR', 'W'].includes(sv) && Number(q.cls.slice(1)) <= 300 && (q.dir === 'in' || sv === 'CWR'); };
+/** SW-CELL-4: how far a horizontal drum's underside stands above its pad: 4 ft, 10 ft where a pump draws from it, and what the valve under its largest liquid outlet needs */
+function drumUnder(sh: UnitSheet, e: Equip, z: EquipSize): number {
+  const feedsPump = sh.lines.some(l => l.from.k === 'eq' && l.from.tag === e.tag && l.to.k === 'eq' && sh.equip.get(l.to.tag)?.kind === 'pump');
+  return up(Math.max(feedsPump ? 120 : 48, ...z.nozzles.filter(q => q.dir === 'out' && !/gas|vapour|vent|steam out/.test(q.port)).map(q => valveDrop(q.NPS, q.cls))));
+}
+/** SW-CELL-3: a drum that tail pipes run down to */
+const isHotwell = (sh: UnitSheet, tag: string) => sh.lines.some(l => l.to.k === 'eq' && l.to.tag === tag && /^tail pipe/.test(l.to.port));
+/** SW-EQC-68's input from the sizes of SW-PRC-18 */
+export function ejectorSetInput(tag: string, z: EquipSize): EjectorSetInput {
+  const d = z.d, n = d.stages, nz = (port: string) => { const q = z.nozzles.find(v => v.port === port); if (!q) throw new Error(`${tag}: no connection "${port}"`); return q; };
+  return { tag, steam: nz('motive steam').NPS, steamCls: nz('motive steam').cls, water: nz('cooling water in').NPS,
+    stages: Array.from({ length: n }, (_, k) => ({ suction: d[`s${k + 1}Suction`], discharge: d[`s${k + 1}Discharge`], motive: d[`s${k + 1}Motive`], ID: d[`c${k + 1}ID`], t: d[`c${k + 1}Shell`], vent: d[`c${k + 1}Vent`], water: d[`c${k + 1}Water`], drain: nz(k + 1 < n ? `condensate ${k + 1}` : 'outlet').NPS })) };
+}
+/** SW-CELL-4: the deck's floor load, psf (SW-STA-12), and a 3/4 in tube's weight, lb/ft (wall d / 9, SW-EQC-30) */
+const DECK_PSF = 250, TUBE_LB_FT = (Math.PI / 4) * (0.75 ** 2 - (0.75 * (7 / 9)) ** 2) * 12 * K.STEEL_DENSITY_LB_IN3;
 function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
   const d = z.d, tags = (n: number) => Array.from({ length: n }, (_, i) => (n > 1 ? `${e.tag}${SUFFIX[i]}` : e.tag));
   const place = (c: Ctx, part: PartSpec, T: Mat4, tag: string) => { c.out.push({ part, transform: T, tags: [tag, 'equipment'] }); c.equipment.push({ tag, part, transform: T }); };
@@ -109,8 +130,15 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       Object.assign(s, { shape: 'vv', R, yb: Y_VESSEL + skirt + R / 2, yt: Y_VESSEL + skirt + R / 2 + TT, ...(platforms ? { floors: (part.extra!.floors as number[]).map(f => Y_VESSEL + f) } : {}) });
     } };
   };
-  const horizontal = (tag: string, ID: number, t: number, TT: number, under: number, exchanger = false): Plan => {
+  const horizontal = (tag: string, ID: number, t: number, TT: number, under: number, exchanger = false, across = false): Plan => {
     const R = ID / 2 + t, yc = PAD + under + R, pier = under - 18;
+    // SW-CELL-3, SW-CELL-4: a hotwell, square to the rack under the set that drains into it: it takes no room in a row
+    if (across) return { tag, item: e.tag, kind: e.kind, lane: 'under', lx: 0, lz: 0, h: yc + R, build: (c, s) => {
+      pad(c, s.x, s.z, 2 * R + 24, TT + 24, tag);
+      for (const f of [0.2, 0.8]) { const w = up(Math.max(6, ID / 3) + 12, 1), dp = up(2 * R * 0.95 + 12, 1); c.out.push({ part: c.kit.concrete('pier', w, pier, dp), transform: frameFromAxes([s.x - dp / 2, PAD + pier / 2, s.z - TT / 2 + f * TT], [0, 1, 0], [1, 0, 0]), tags: [tag, 'pad'] }); }
+      place(c, makeHorizontalVessel({ tag, ID, t, TT, centreline: R + 18 }), frameFromAxes([s.x, yc, s.z - TT / 2], [0, 1, 0], [0, 0, 1]), tag);
+      Object.assign(s, { shape: 'hv', R, yc, axis: 'z', len: TT });
+    } };
     return { tag, item: e.tag, kind: e.kind, lane: 'vessel', lx: TT + R + 24, lz: 2 * R + 24, h: yc + R, build: (c, s) => {
       const part = (exchanger ? makeExchanger : makeHorizontalVessel)({ tag, ID, t, TT, centreline: R + 18 });
       pad(c, s.x, s.z, TT + 24, 2 * R + 24, tag);
@@ -123,6 +151,86 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
   const boxy = (tag: string, lane: Lane, lx: number, lz: number, h: number, build: (c: Ctx, s: Spot) => void, gap = 48, ground = false, align?: Plan['align']): Plan => ({ tag, item: e.tag, kind: e.kind, lane, lx, lz, h, gap, ground, ...(align ? { align } : {}), build: (c, s) => { build(c, s); Object.assign(s, { shape: s.shape ?? 'box' }); } });
   const volume = (min = 600) => { const s = e.ports.find(p => p.dir === 'in')?.s; return s ? Math.max(8, cfs(s) * (s.ph === 'L' ? min : 20)) : 50; };
   const asVessel = (tag: string, ft3: number, skirt = 60) => { const ID = Math.max(36, up(Math.cbrt((4 * ft3) / (2.5 * Math.PI)) * 12, 6)); return vertical(tag, ID, 0.375, 2.5 * ID, skirt, false); };
+
+  /** SW-CELL-4: the ejector set on its deck. `drainY` is where the first condenser's boot must stand at least; the set's axes are x toward the rack, z along it from the tubesheets. */
+  const ejectorDeck = (tag: string, inp: EjectorSetInput, drainY: number, stageCount: number): Plan => {
+    const L = ejectorSetLayout(inp), set = bare(makeEjectorSet(inp)), sb = partBoxes(set), bx = (re: RegExp) => { const b = sb.filter(q => re.test(q.name)); if (!b.length) throw new Error(`${tag}: the set has no solid named ${re}`); return union(b); };
+    const RISE = 7.5, RUN = 10, bar = GRATING.barDepth, deckTag = `${tag}-deck`;
+    // height: the floor where the first boot stands the tail pipe's height above the hotwell, raised to equal flights of 12 ft at most
+    const floorMin = drainY - bx(/^condenser 1: condensate boot$/).mn[1] + bar, flights = Math.ceil(floorMin / 144 - 1e-9), risers = Math.ceil(floorMin / RISE / flights - 1e-9), rise = risers * RISE, E = flights * rise, steel = E - bar;
+    // plan: beyond the set's widest part, the water pipes, the channel covers and the steam pipe behind the first ejector
+    const all = union(sb), legs = bx(/leg$/), xA = -up(-all.mn[0] + 30, 12), xB = up(legs.mx[0] + 24, 12), zA = -up(-bx(/channel cover$/).mn[2] + 48, 12), zB = up(all.mx[2] + 36, 12), W = xB - xA, len = zB - zA, nx = Math.ceil(len / 240 - 1e-9), sx = len / nx;
+    // what the beams carry: a condenser with its tubes and full of water, half on each line of saddles; a third of the first ejector on each of its frames
+    const full = inp.stages.reduce((a, q) => a + makeShellTubeExchanger({ tag: 'w', ID: q.ID, t: q.t, TT: 240, centreline: q.ID }).weight.value + tubeCount(q.ID) * 20 * TUBE_LB_FT + ((Math.PI / 4) * q.ID ** 2 * 240 * K.WATER_DENSITY_LB_FT3) / 1728, 0) / 1000;
+    const q0 = inp.stages[0], Pc = full / 2, Pe = makeEjector('w', q0.suction, { dischargeNPS: q0.discharge, motiveNPS: q0.motive }).weight.value / 3000;
+    const zPoint = (kip: number, span: number) => (1.25 * kip * span) / 4 / (0.9 * 36), D = Math.max(6, up(W / 20, 2)), girder = sizeW(D, zReq(DECK_PSF, W / 2, sx) + zPoint(Math.max(Pc, Pe) / 2, sx)), Dx = Math.max(8, up(W / 30, 2));
+    // the beams' stations along the set: ends, column lines, saddles, frames, and 2 ft either side of the middle of each row of pipes through the floor; between them at 4 ft at most
+    const rows = [[bx(/^cooling water supply leg$/), bx(/^motive steam leg$/)].map(b => (b.mn[2] + b.mx[2]) / 2), [L.drainZ]], bands = rows.map(r => { const m = (Math.min(...r) + Math.max(...r)) / 2; return [m - 24, m + 24]; });
+    const fixed = new Map<number, number>(), put = (zz: number, kip = 0) => fixed.set(zz, Math.max(fixed.get(zz) ?? 0, kip));
+    put(zA); put(zB); for (let i = 1; i < nx; i++) put(zA + i * sx); for (const zz of L.saddles) put(zz, Pc); for (const zz of L.frames) put(zz, Pe); for (const b of bands) { put(b[0]); put(b[1]); }
+    const keys = [...fixed.keys()].sort((a, b) => a - b), stations: { z: number; kip: number }[] = [];
+    keys.forEach((zz, i) => {
+      if (bands.some(b => zz > b[0] + 1e-6 && zz < b[1] - 1e-6)) throw new Error(`${tag}: a beam at ${zz} would cross a row of pipes through the floor`);
+      if (i && zz - keys[i - 1] < 8) throw new Error(`${tag}: beams at ${keys[i - 1]} and ${zz} stand on one another`);
+      stations.push({ z: zz, kip: fixed.get(zz)! }); if (i + 1 === keys.length) return;
+      const gap = keys[i + 1] - zz, m = bands.some(b => Math.abs(b[0] - zz) < 1e-6 && Math.abs(b[1] - keys[i + 1]) < 1e-6) ? 1 : Math.ceil(gap / 48 - 1e-9);
+      for (let j = 1; j < m; j++) stations.push({ z: zz + (gap * j) / m, kip: 0 });
+    });
+    return boxy(tag, 'behind', len + 24, W + 132, E + L.top, (c, s) => {
+      const sd = s.side, k = interiorKit({ pedestal: PAD, padHeight: PAD }, c.out, {}), U = (xl: number, y: number, zl: number): V3 => [sd * zl, y, -sd * xl], far = sd as 1 | -1;   // `far`: the way across, away from the rack
+      place(c, set, frameFromAxes([0, steel, 0], [0, 1, 0], [sd, 0, 0]), tag);
+      const w = (Dn: number, wt: number, a: V3, b: V3, ...more: string[]) => { k.wBeam(Dn, wt, a, b, deckTag); c.out[c.out.length - 1].tags.push('structure', ...more); };
+      // beams across, girders along, columns under the girders
+      stations.forEach((st, i) => { const trib = ((stations[i + 1]?.z ?? st.z) - (stations[i - 1]?.z ?? st.z)) / 2, b = sizeW(D, zReq(DECK_PSF, trib, W) + zPoint(st.kip, W)); w(D, b.w, U(xA + girder.dims.tw / 2, steel - b.dims.d / 2, st.z), U(xB - girder.dims.tw / 2, steel - b.dims.d / 2, st.z), st.kip ? 'carrying-beam' : 'floor-beam'); });
+      const lines = [xA, xB], cols = Array.from({ length: nx + 1 }, (_, i) => zA + i * sx), colTop = steel - girder.dims.d;
+      for (const xl of lines) { for (let i = 0; i < nx; i++) w(D, girder.w, U(xl, steel - girder.dims.d / 2, cols[i]), U(xl, steel - girder.dims.d / 2, cols[i + 1]), 'girder'); for (const zl of cols) { const p = U(xl, 0, zl); k.postColumn(p[0], p[2], colTop, deckTag); } }
+      // struts at each landing's height, and crossed rods in the end bay of each line next the channel covers and in both end frames, storey by storey
+      const levels = Array.from({ length: flights - 1 }, (_, j) => (j + 1) * rise), d8 = sizeW(8, 2), dX = sizeW(Dx, 2);
+      for (const y of levels) { for (const xl of lines) for (let i = 0; i < nx; i++) w(8, d8.w, U(xl, y - d8.dims.d / 2, cols[i]), U(xl, y - d8.dims.d / 2, cols[i + 1]), 'strut'); for (const zl of cols) w(Dx, dX.w, U(xA, y - dX.dims.d / 2, zl), U(xB, y - dX.dims.d / 2, zl), 'strut'); }
+      const rod = (a: V3, b: V3, nrm: V3) => { const Lr = Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]); k.add(k.part(`xrod:${Lr.toFixed(1)}`, () => makeRod('XR', 0.75, Lr)), frameFromAxes(a, nrm, [(b[0] - a[0]) / Lr, (b[1] - a[1]) / Lr, (b[2] - a[2]) / Lr]), deckTag, 'structure', 'bolted-rod'); };   // a rod is no steel to hang a line from: the generator hangs from nothing whose tag says bolt
+      const storeys = [PAD + 12, ...levels, colTop].map((y, j, a) => (j + 1 < a.length ? [j ? y + 6 : y, a[j + 1] - 14] : null)).filter((v): v is number[] => !!v);
+      for (const [y0, y1] of storeys) {
+        for (const xl of lines) for (const [za, zb] of [[cols[0], cols[1]], [cols[1], cols[0]]]) rod(U(xl, y0, za), U(xl, y1, zb), [0, 0, 1]);
+        for (const zl of [zA, zB]) for (const [xa, xb] of [[xA, xB], [xB, xA]]) rod(U(xa, y0, zl), U(xb, y1, zl), [1, 0, 0]);
+      }
+      // grating between the beams, cut round the saddles, the frames' posts and every pipe through the floor; panels 3 ft wide at most
+      const plan = (b: { mn: V3; mx: V3 }, m: number) => { const p = U(b.mn[0], 0, b.mn[2]), q = U(b.mx[0], 0, b.mx[2]); return { x0: Math.min(p[0], q[0]) - m, x1: Math.max(p[0], q[0]) + m, z0: Math.min(p[2], q[2]) - m, z1: Math.max(p[2], q[2]) + m }; };
+      const rects = sb.filter(b => /saddle base|: posts /.test(b.name) && b.mn[1] < 1).map(b => plan(b, 1));
+      // round holes: the set's own pipes, an inch clear; and under each boot the hole its tail pipe's sleeve needs (SW-PEN-1), since a tail pipe falls straight (SW-CELL-3)
+      const rounds = [...sb.filter(b => /leg$/.test(b.name)).map(b => { const p = U((b.mn[0] + b.mx[0]) / 2, 0, (b.mn[2] + b.mx[2]) / 2); return { x: p[0], z: p[2], r: (b.mx[0] - b.mn[0]) / 2 + 1 }; }),
+        ...inp.stages.map((q, i) => { const b = bx(new RegExp(`^condenser ${i + 1}: condensate boot$`)), p = U((b.mn[0] + b.mx[0]) / 2, 0, (b.mn[2] + b.mx[2]) / 2); return { x: p[0], z: p[2], r: (partFromKey(`FSLV|${q.drain}|P150`).extra!.cutD as number) / 2 }; })];
+      const z0 = Math.min(U(xA, 0, 0)[2], U(xB, 0, 0)[2]), nP = Math.ceil(W / 36 - 1e-9);
+      for (let i = 0; i + 1 < stations.length; i++) {
+        const xa = Math.min(sd * stations[i].z, sd * stations[i + 1].z), xb = Math.max(sd * stations[i].z, sd * stations[i + 1].z), wd = xb - xa;
+        for (let j = 0; j < nP; j++) {
+          const s0 = (W * j) / nP, hh = W / nP, zTop = z0 + s0 + hh;
+          const cuts: Cut[] = [...rects.filter(r => r.x1 > xa && r.x0 < xb && r.z1 > zTop - hh && r.z0 < zTop).map(r => ({ x0: r.x0 - xa, y0: zTop - r.z1, x1: r.x1 - xa, y1: zTop - r.z0 })), ...rounds.filter(r => r.x + r.r > xa && r.x - r.r < xb && r.z + r.r > zTop - hh && r.z - r.r < zTop).map(r => ({ cx: r.x - xa, cy: zTop - r.z, r: r.r }))];
+          const panel = k.part(`deck-grating:${wd.toFixed(2)}:${hh.toFixed(2)}:${JSON.stringify(cuts)}`, () => makeGrating('GR', wd, hh, cuts));
+          if (panel.dims.bars.value > 0) k.add(panel, frameFromAxes([xa, E, zTop], [0, 0, -1], [0, 1, 0]), deckTag, 'grating');
+        }
+      }
+      // the stair: equal flights along the deck's far side, a landing at each end; the top landing against the deck beside the condensers
+      const run = (risers - 1) * RUN, gap = 18, zf = U(xA, 0, 0)[2], zIn = zf + far * gap, zOut = zIn + far * 84, laneZ = (inner: boolean) => zIn + far * (inner ? 21 : 63), postTop = (el: number) => el - bar - k.platformBeam.dims.d;
+      let zN = up(L.saddles[0] + 60, 6); const clearOf = (zz: number) => cols.every(cz => Math.abs(cz - zz) >= 30); while (![zN, zN + 36, zN + 36 + run, zN + 72 + run].every(clearOf)) zN += 6;
+      const ux = (u: number) => sd * (zN + u), span = (u0: number, u1: number) => [Math.min(ux(u0), ux(u1)), Math.max(ux(u0), ux(u1))], zLo = Math.min(zIn, zOut), zHi = Math.max(zIn, zOut), stairTag = `${tag}-stair`;
+      for (let j = 0; j < flights; j++) {
+        const el = E - j * rise, near = j % 2 === 0, [x0, x1] = near ? span(0, 36) : span(36 + run, 72 + run), topL = j === 0;
+        // the landing: to the deck's edge at the top, where the guardrail is open; on four posts of its own
+        k.platform(x0, topL ? Math.min(zLo, zf) : zLo, x1, topL ? Math.max(zHi, zf) : zHi, el, { span: 'z', tag: stairTag });
+        for (const [px, pz] of [[x0, zLo], [x1, zLo], [x1, zHi], [x0, zHi]]) k.postColumn(px, pz, postTop(el), stairTag);
+        const cen: [number, number] = [(x0 + x1) / 2, (zLo + zHi) / 2], xEnd = near ? ux(0) : ux(72 + run), xFl = near ? ux(36) : ux(36 + run);
+        k.guardrail([[xFl, el, zOut], [xEnd, el, zOut], [xEnd, el, topL ? zf : zIn], ...(topL ? [] : [[xFl, el, zIn] as V3])], cen, stairTag);
+        if (topL) { k.guardrail([[xFl, el, zf], [xFl, el, laneZ(true) + far * 21]], cen, stairTag); }
+        // the flight down from it: even ones climb toward the near end in the outer lane, odd ones toward the far end in the inner lane
+        k.stairFlight([near ? ux(36 + run) : ux(36), el - rise, laneZ(!near)], (near ? -sd : sd) as 1 | -1, risers, stairTag);
+      }
+      // guardrail round the deck, open where the top landing meets it
+      const [l0, l1] = span(0, 36), y = E, c1 = U(xA, y, zA), c2 = U(xB, y, zA), c3 = U(xB, y, zB), c4 = U(xA, y, zB), centre: [number, number] = [U(0, 0, (zA + zB) / 2)[0], U((xA + xB) / 2, 0, 0)[2]];
+      // from the landing's upper end along the far edge, round the deck, and back along the far edge to the landing's lower end
+      k.guardrail([[l1, y, zf], ...(c1[0] > c4[0] ? [c1, c2, c3, c4] : [c4, c3, c2, c1]), [l0, y, zf]], centre, deckTag);
+      Object.assign(s, { yt: E, holes: rounds });
+    }, 96, true, { solid: /^condenser 1: condensate boot$/, axes: 'xz' });   // the boot under the first condenser stands on the set's 6 in module, as every connection of the set does
+  };
 
   switch (e.kind) {
     case 'pump': return tags(z.count).map(tag => {
@@ -156,7 +264,7 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
     case 'aircooler': return tags(d.bays).map(tag => boxy(tag, 'air', 168 + 12, 384 + 24, DECK + 134, (c, s) => { place(c, bare(makeAirCooler({ tag, W: 168, L: 384, fans: 2, legH: 24 })), multiply(translate(s.x, DECK, s.z), multiply(rotateY(Math.PI / 2), standUp())), tag); Object.assign(s, { yt: DECK + 134 }); }, 0));
     case 'drum': {
       if (e.p.vertical) return [vertical(e.tag, d.D, d.t, d.L, 60, false)];
-      return [horizontal(e.tag, d.D, d.t, d.L, up(Math.max(feedsPump ? 120 : 48, ...z.nozzles.filter(q => q.dir === 'out' && !/gas|vapour|vent|steam out/.test(q.port)).map(q => valveDrop(q.NPS, q.cls)))))];
+      return [horizontal(e.tag, d.D, d.t, d.L, drumUnder(sh, e, z), false, isHotwell(sh, e.tag))];
     }
     case 'desalter': return [horizontal(e.tag, d.D, d.t, d.L, up(Math.max(60, ...z.nozzles.filter(q => q.port !== 'oil').map(q => valveDrop(q.NPS, q.cls)))))];   // SW-CELL-4: the crude enters and the brine leaves underneath, each through its valve; the oil leaves on top
     case 'deaerator': return [boxy(e.tag, 'vessel', d.L + d.D, d.D + 24, 180 + 2 * d.D, (c, s) => { pad(c, s.x, s.z, d.L + 24, d.D + 24, e.tag); for (const f of [0.2, 0.8]) pad(c, s.x - d.L / 2 + f * d.L, s.z, 48, d.D, e.tag, 162, 'pier'), c.out[c.out.length - 1].transform = frameFromAxes([s.x - d.L / 2 + f * d.L - 24, PAD + 81, s.z], [0, 1, 0], [1, 0, 0]);
@@ -200,8 +308,12 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
     case 'boiler': return [boxy(e.tag, 'vessel', 420, 420, 1200, (c, s) => { place(c, bare(makeWaterTubeBoiler({ tag: e.tag, steamID: d.steamID, L: d.L, centres: d.centres, stackD: 72, stackH: 1200, drumT: d.drumT })), upright(s.x - 60, PAD, s.z + 150), e.tag); }, 180)];
     case 'coolingtower': return [boxy(e.tag, 'vessel', d.cells * d.cellFt * 12 + 48, d.cellFt * 12 + 96, 560, (c, s) => place(c, bare(makeCoolingTower({ tag: e.tag, cells: d.cells, cellL: d.cellFt * 12, cellW: d.cellFt * 12, H: 480, riserNPS: 24 })), upright(s.x - (d.cells * d.cellFt * 12) / 2, 0, s.z + d.cellFt * 6), e.tag), 240, true)];
     case 'hopper': return [boxy(e.tag, 'vessel', 192, 192, 480, (c, s) => { place(c, bare(makeSilo({ tag: e.tag, D: 144, H: 300, outletNPS: 8, outletH: 96 })), upright(s.x, Y_VESSEL, s.z), e.tag); })];
-    case 'ejector': return [boxy(e.tag, 'vessel', 240, 96, 240, (c, s) => { for (const [k, dx] of [-84, 0, 84].entries()) place(c, bare(makeEjector(`${e.tag}-${k + 1}`, [10, 8, 6][k])), frameFromAxes([s.x + dx, PAD + 156, s.z - 30], [0, 1, 0], [0, 0, 1]), `${e.tag}-${k + 1}`);
-      for (const [k, dx] of [-42, 42].entries()) place(c, makeExchanger({ tag: `${e.tag}-C${k + 1}`, ID: 30, t: 0.375, TT: 120, centreline: 60 }), frameFromAxes([s.x + dx - 60, PAD + 60, s.z + 12], [0, 1, 0], [1, 0, 0]), `${e.tag}-C${k + 1}`); })];
+    case 'ejector': {   // SW-CELL-4: the set of SW-EQC-68 at its sizes, on a deck of its own a tail pipe's height above its hotwell
+      const nz = (port: string) => z.nozzles.find(q => q.port === port)!, n = d.stages, first = sh.lines.find(l => l.from.k === 'eq' && l.from.tag === e.tag && l.from.port === 'condensate 1')?.to;
+      if (!first || first.k !== 'eq') throw new Error(`${e.tag}: an ejector set whose first tail pipe runs to no hotwell`);
+      const hot = sh.equip.get(first.tag)!, zh = sizing().get(sh.no)!.equip.get(first.tag)!;
+      return [ejectorDeck(e.tag, ejectorSetInput(e.tag, z), PAD + drumUnder(sh, hot, zh) + zh.d.D / 2 + zh.d.t + d.c1LegIn, n)];
+    }
     case 'pit': return [boxy(e.tag, 'vessel', 420, 204, 60, (c, s) => place(c, makeSulfurPit(e.tag, { L: 384, W: 180, D: 96, noDischarge: true }), multiply(translate(s.x - 192, 0, s.z + 90), standUp()), e.tag), 48, true, { point: [10, 12, 0], axes: 'xz' })];   // SW-CELL-4: one end of its steam coil on the grid, and so the other
     case 'basin': return [boxy(e.tag, 'vessel', 1260, 600, 36, (c, s) => place(c, makeSeparatorBasin(e.tag, { channels: 2, w: 240, d: 96, L: 1200 }), multiply(translate(s.x - 600, 0, s.z + 252), standUp()), e.tag), 120, true)];
     case 'package': return [asVessel(e.tag, volume())];
@@ -244,18 +356,18 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
   { const tanks = plans.filter(p => p.kind === 'tank' && p.lane === 'vessel' && p.lx >= 240); for (const p of tanks) plans.splice(plans.indexOf(p), 1); plans.push(...tanks); }
   // SW-CELL-3: pumps stand on the side of the vessels they draw from where they draw from one, otherwise on the exchanger side
   const laneOf = new Map<string, Lane>(plans.map(p => [p.item, p.lane]));
-  for (const p of plans) if (p.lane === 'pump') { const src = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && l.to.port === 'S')?.from; p.side = src && src.k === 'eq' && laneOf.get(src.tag) === 'vessel' ? -1 : 1; }
+  for (const p of plans) if (p.lane === 'pump') { const src = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && l.to.port === 'S')?.from; p.side = src && src.k === 'eq' && ['vessel', 'under'].includes(laneOf.get(src.tag) ?? '') ? -1 : 1; }
   // SW-CELL-7: every body is built once, at the origin, and measured there: its footprint is what its solids and pads cover, about its
   // datum. A body with no datum the connections are set from (a package, a furnace, a boiler) stands by its extent instead: level on a pad
   // laid under what it stands on, and centred on its spot. Each is then moved to its spot whole.
-  const sideOf = (p: Plan): 1 | -1 => (p.lane === 'pump' ? p.side! : p.lane === 'vessel' || p.lane === 'air' ? -1 : 1);
+  const sideOf = (p: Plan): 1 | -1 => (p.lane === 'pump' ? p.side! : ['vessel', 'air', 'behind', 'under'].includes(p.lane) ? -1 : 1);
   const built = new Map<Plan, { out: Placed[]; equipment: InteriorModel['equipment']; facts: Spot }>();
   for (const p of plans) {
     const c: Ctx = { out: [], equipment: [], kit }, s0: Spot = { tag: p.tag, item: p.item, kind: p.kind, lane: p.lane, side: sideOf(p), x: 0, z: 0, lx: p.lx, lz: p.lz, h: p.h, shape: 'box' };
     p.build(c, s0); built.set(p, { out: c.out, equipment: c.equipment, facts: s0 });
     if (!c.equipment.length) continue;
     if (p.lane === 'air') { p.h = Math.max(p.h, union(placedBoxes(c.out)).mx[1]); continue; }   // the bays stand side by side on their deck at the pitch given (SW-CELL-4)
-    const move = (dx: number, dy: number, dz: number) => { const T = translate(dx, dy, dz); for (const q of [...c.out, ...c.equipment]) q.transform = multiply(T, q.transform); };
+    const move = (dx: number, dy: number, dz: number) => { const T = translate(dx, dy, dz); for (const q of [...c.out, ...c.equipment]) q.transform = multiply(T, q.transform); for (const hh of s0.holes ?? []) { hh.x += dx; hh.z += dz; } };
     if (s0.shape === 'box') {
       const ref = (a: NonNullable<Plan['align']>) => { if (a.point) { const T = c.equipment[0].transform, q = a.point; return [0, 1, 2].map(k => T[k] * q[0] + T[4 + k] * q[1] + T[8 + k] * q[2] + T[12 + k]); } const b = union(placedBoxes(c.equipment).filter(q => a.solid!.test(q.name))); return [(b.mn[0] + b.mx[0]) / 2, (b.mn[1] + b.mx[1]) / 2, (b.mn[2] + b.mx[2]) / 2]; };
       if (!p.ground) {
@@ -281,7 +393,7 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
     const b = built.get(p)!, T = translate(s.x, 0, s.z), f = b.facts;
     for (const q of b.out) out.push({ ...q, transform: multiply(T, q.transform) });
     for (const q of b.equipment) equipment.push({ ...q, transform: multiply(T, q.transform) });
-    Object.assign(s, { shape: f.shape, parts: b.equipment.map(q => q.tag), ...(f.R !== undefined ? { R: f.R } : {}), ...(f.yb !== undefined ? { yb: f.yb } : {}), ...(f.yt !== undefined ? { yt: f.yt } : {}), ...(f.yc !== undefined ? { yc: f.yc } : {}), ...(f.axis ? { axis: f.axis } : {}), ...(f.len !== undefined ? { len: f.len } : {}), ...(f.floors ? { floors: f.floors } : {}),
+    Object.assign(s, { shape: f.shape, parts: b.equipment.map(q => q.tag), ...(f.holes ? { holes: f.holes.map(hh => ({ x: hh.x + s.x, z: hh.z + s.z, r: hh.r })) } : {}), ...(f.R !== undefined ? { R: f.R } : {}), ...(f.yb !== undefined ? { yb: f.yb } : {}), ...(f.yt !== undefined ? { yt: f.yt } : {}), ...(f.yc !== undefined ? { yc: f.yc } : {}), ...(f.axis ? { axis: f.axis } : {}), ...(f.len !== undefined ? { len: f.len } : {}), ...(f.floors ? { floors: f.floors } : {}),
       ...(f.o ? { o: [f.o[0] + s.x, f.o[1], f.o[2] + s.z] } : {}), ...(f.zc !== undefined ? { zc: f.zc + s.z } : {}), ...(f.zs !== undefined ? { zs: f.zs + s.z } : {}) });
   };
   const hw = half, spots: Spot[] = [], x0 = RACK.start + 60, heat = plans.filter(p => p.lane === 'heater');
@@ -333,6 +445,22 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
   // pump opposite the vessel it draws from, as near its centre as the pumps before it allow (SW-CELL-3)
   const mine = pumps(-1), depthP = mine.length ? Math.max(...mine.map(p => p.lz)) : 0;
   rows(plans.filter(p => p.lane === 'vessel'), -1, hw + pumpOff(-1) + depthP + (mine.length ? 96 : 0), 120, true);
+  // SW-CELL-3: an ejector set behind the column it draws from, in a row of its own 10 ft further from the rack, its first ejector's suction at the column's station along the rack
+  for (const p of plans.filter(q => q.lane === 'behind')) {
+    const src = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && l.to.port === 'inlet')?.from, col = src && src.k === 'eq' ? spots.find(q => q.item === src.tag) : undefined;
+    if (!col) throw new Error(`${p.item}: the column it draws from is not placed`);
+    const ch = union(placedBoxes(built.get(p)!.equipment).filter(q => /^stage 1 ejector: suction chamber$/.test(q.name)));
+    const sp: Spot = { tag: p.tag, item: p.item, kind: p.kind, lane: p.lane, side: col.side, x: col.x - near((ch.mn[0] + ch.mx[0]) / 2), z: near(col.z + col.side * (col.lz / 2 + 120 + p.lz / 2)), lx: p.lx, lz: p.lz, h: p.h, shape: 'box' };
+    spots.push(sp); settle(p, sp); far = Math.max(far, sp.x + p.lx / 2);
+  }
+  // SW-CELL-3: a hotwell under the ejector set that drains into it, square to the rack: its axis under the row of the condensers' boots, its middle under the row's middle
+  for (const p of plans.filter(q => q.lane === 'under')) {
+    const src = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && /^tail pipe/.test(l.to.port))!.from as { tag: string }, host = spots.find(q => q.item === src.tag), hp = plans.find(q => q.item === src.tag);
+    if (!host || !hp) throw new Error(`${p.item}: the set that drains into it is not placed`);
+    const boots = placedBoxes(built.get(hp)!.equipment).filter(b => /condensate boot$/.test(b.name)), bz = boots.map(b => (b.mn[2] + b.mx[2]) / 2 + host.z);
+    const sp: Spot = { tag: p.tag, item: p.item, kind: p.kind, lane: p.lane, side: host.side, x: near((boots[0].mn[0] + boots[0].mx[0]) / 2 + host.x), z: near((Math.min(...bz) + Math.max(...bz)) / 2), lx: p.lx, lz: p.lz, h: p.h, shape: 'box' };
+    spots.push(sp); settle(p, sp);
+  }
   const sourceX = (p: Plan) => { const src = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && l.to.port === 'S')?.from, v = src && src.k === 'eq' ? spots.find(q => q.item === src.tag) : undefined; return v ? v.x : Infinity; };
   const groups = [...new Set(mine.map(p => p.item))].map(item => ({ item, ps: mine.filter(p => p.item === item), x: sourceX(mine.find(p => p.item === item)!) })).sort((a, b) => a.x - b.x);
   let cursor = x0;
@@ -354,6 +482,16 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
     for (let x = RACK.start; x <= rackEnd + 1e-6; x += RACK.bent) { out.push({ part: kit.concrete('pedestal', 20, PAD, 20), transform: frameFromAxes([x - 10, PAD / 2, side * zb], [0, 1, 0], [1, 0, 0]), tags: ['yard-support', 'pad'] }); out.push({ part: post, transform: multiply(translate(x, PAD, side * zb), standUp()), tags: ['yard-support', 'post'] }); }
     out.push({ part: beam, transform: frameFromAxes([RACK.start, YARD + 6, side * zb], [0, 1, 0], [1, 0, 0]), tags: ['yard-support', 'beam'] });
     if (side > 0) yard.pos = zb; else yard.neg = -zb;
+    // where a body stands in a row behind the first (an ejector set), the same steel leads to it: beams along the rack at 15 ft at most between the yard's line and
+    // the body's own steel, as long as its connections toward the rack and its hotwell reach along the rack, with 6 ft over at either end; posts at 20 ft at most
+    for (const b of spots.filter(q => q.side === side && q.lane === 'behind')) {
+      const under = spots.filter(q => q.lane === 'under' && Math.abs(q.x - b.x) < b.lx / 2 && Math.abs(q.z - b.z) < b.lz / 2), legs = placedBoxes(equipment.filter(q => q.tag === b.tag)).filter(q => /leg$/.test(q.name));
+      const xs = [...under.map(q => q.x), ...legs.flatMap(q => [q.mn[0], q.mx[0]])]; if (!xs.length) continue;
+      const x0 = down(Math.min(...xs) - 72), x1 = up(Math.max(...xs) + 72), nb = Math.ceil((x1 - x0) / 240 - 1e-9), edge = Math.abs(b.z) - b.lz / 2, n = Math.ceil((edge - zb) / 180 - 1e-9), way = makeWideFlange('W12x40', 12, 40, x1 - x0);   // 15 ft: what a 3 in line spans (SW-PS-7)
+      for (let k = 1; k < n; k++) { const z = side * near(zb + ((edge - zb) * k) / n);
+        for (let i = 0; i <= nb; i++) { const x = x0 + ((x1 - x0) * i) / nb; out.push({ part: kit.concrete('pedestal', 20, PAD, 20), transform: frameFromAxes([x - 10, PAD / 2, z], [0, 1, 0], [1, 0, 0]), tags: ['yard-support', 'pad'] }); out.push({ part: post, transform: multiply(translate(x, PAD, z), standUp()), tags: ['yard-support', 'post'] }); }
+        out.push({ part: way, transform: frameFromAxes([x0, YARD + 6, z], [0, 1, 0], [1, 0, 0]), tags: ['yard-support', 'beam', 'way'] }); }
+    }
   }
   // heaters beyond the outer end of the rack, 50 ft from the nearest equipment, side by side across it
   let zh = -heat.reduce((a, p) => a + p.lz + 120, -120) / 2, xH = 0;

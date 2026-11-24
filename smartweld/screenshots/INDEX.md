@@ -416,3 +416,8 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/unit-19-piping-valve-bay.png` | Plant 3, unit 19: the valve bay at the battery limit, a block valve and spool on each line |
 | `refinery/unit-19-piping-exchangers.png` | Plant 3, unit 19: piping at the exchangers |
 | `refinery/plant-piped-units-along-the-pipeway.png` | Plant 3: the piped units along the main pipeway, their lines coloured by line class |
+| `stage10/cat10-Vacuum-ejector-set-three-stages-on-surface-condensers.png` | Catalogue entry Vacuum ejector set, three stages on surface condensers (Process equipment) |
+| `refinery/unit-12-piping-from-the-vessel-side.png` | Plant 3, unit 12 (Vacuum distillation) piped, from the vessel side: lines coloured by line class |
+| `refinery/unit-12-piping-from-the-exchanger-side.png` | Plant 3, unit 12 (Vacuum distillation) piped, from the exchanger side |
+| `refinery/unit-12-piping-valve-bay.png` | Plant 3, unit 12: the valve bay at the battery limit, a block valve and spool on each line |
+| `refinery/unit-12-piping-exchangers.png` | Plant 3, unit 12: piping at the exchangers |
