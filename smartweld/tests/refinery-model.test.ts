@@ -3,7 +3,7 @@
  *  plot; and the units are set on the site inside their plots at their bench's elevation. No piping yet. */
 import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'node:fs';
-import { buildCell, bare, bodySolids, RACK, TOWER_TAGS, PUMP_PAD, DECK, YARD, PAD } from '../src/refinery/cell';
+import { buildCell, bare, bodySolids, worksBoxes, RACK, TOWER_TAGS, PUMP_PAD, DECK, YARD, PAD } from '../src/refinery/cell';
 import { cells, cellToSite, plotLength, siteParts } from '../src/refinery/assemble';
 import { processModel } from '../src/refinery/process';
 import { sizing } from '../src/refinery/sizing';
@@ -37,6 +37,7 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
     }
   });
   it('every body lies within its own footprint and on its pad, measured from its solids (SW-CELL-7)', () => {
+    const piered: string[] = [];
     for (const { cell: c } of all) {
       for (const s of c.spots) {
         const bs = bodySolids(c, s.tag); expect(bs.length, s.tag).toBeGreaterThan(0);
@@ -45,9 +46,15 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
         if (s.lx > 0) { expect(mn[2], s.tag).toBeGreaterThanOrEqual(s.z - s.lz / 2 - 6.01); expect(mx[2], s.tag).toBeLessThanOrEqual(s.z + s.lz / 2 + 6.01); }
         expect(mx[1], s.tag).toBeLessThanOrEqual(s.h + 0.01);
         // nothing that carries a body is below the top of its pad, save what stands in the ground
-        if (s.shape === 'box' && !['pit', 'basin', 'coolingtower', 'ejector'].includes(s.kind) && s.lane !== 'air') {   /* an ejector set stands on a deck of its own (below) */ const low = Math.min(...bs.filter(b => !/anchor|holding-down|bolts|studs and nuts/i.test(b.name)).map(b => b.mn[1])); expect(low, s.tag).toBeGreaterThanOrEqual(PAD - 1e-3); expect(low, s.tag).toBeLessThan(PAD + 6); }   /* on its pad, which is up to 6 in thicker where the body's axis is brought onto the grid */
+        if (s.shape === 'box' && !['pit', 'basin', 'coolingtower', 'ejector'].includes(s.kind) && s.lane !== 'air') {   /* an ejector set stands on a deck of its own (below) */ const low = Math.min(...bs.filter(b => !/anchor|holding-down|bolts|studs and nuts/i.test(b.name)).map(b => b.mn[1])), piers = worksBoxes(c, s.tag, 'pier'), on = piers.length ? Math.min(...piers.map(b => b.mn[1])) : low;
+          expect(on, s.tag).toBeGreaterThanOrEqual(PAD - 1e-3); expect(on, s.tag).toBeLessThan(PAD + 6);   /* on its pad, which is up to 6 in thicker where the body's axis is brought onto the grid */
+          // SW-CELL-4: a body on piers stands on them: each pier from the top of the pad to the under side of a base, and under the whole of it
+          for (const p of piers) { expect(p.mn[1], s.tag).toBeCloseTo(on, 6); expect(p.mx[1], s.tag).toBeCloseTo(low, 6); const base = bs.filter(b => Math.abs(b.mn[1] - low) < 1e-6 && b.mn[0] >= p.mn[0] - 1e-6 && b.mx[0] <= p.mx[0] + 1e-6 && b.mn[2] >= p.mn[2] - 1e-6 && b.mx[2] <= p.mx[2] + 1e-6); expect(base.length, s.tag).toBeGreaterThan(0); }
+          if (piers.length) piered.push(s.tag);
+        }
       }
     }
+    expect(piered).toEqual(['E-1703']);   // the cracking unit's flue gas cooler alone: at the height of the scrubber's inlet duct
   });
   it('the vacuum ejector set stands on a deck of its own behind its column, a tail pipe\'s height above the hotwell under it (SW-CELL-3, SW-CELL-4, SW-PRC-18)', () => {
     const c = all.find(a => a.plot.unit === 12)!.cell, J = c.spots.find(s => s.item === 'J-1201')!, D = c.spots.find(s => s.item === 'D-1201')!, col = c.spots.find(s => s.item === 'C-1201')!, z = Z.get(12)!.equip.get('J-1201')!;
@@ -95,12 +102,12 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
     for (const { cell: c } of all) {
       for (const side of [1, -1]) { const row = c.spots.filter(q => q.lane === 'pump' && q.side === side), off = row.length ? Math.abs(row[0].z) - row[0].lz / 2 - c.rack.halfWidth : 60; expect(off).toBeGreaterThanOrEqual(60); for (const s of row) expect(Math.abs(s.z) - s.lz / 2, s.tag).toBeCloseTo(c.rack.halfWidth + off, 0); }   /* one line for the row, 5 ft from the columns or as far as its largest suction valve set needs */
       for (const s of c.spots.filter(q => q.lane === 'pump')) { expect(s.shape).toBe('pump'); expect(s.yc!).toBeGreaterThan(PUMP_PAD); }
-      // SW-CELL-3: a reboiler stands on the vessels' side, next after the column it boils for and in its row, near enough for its two lines to be laid direct (SW-RT-1)
+      // SW-CELL-3: a reboiler stands with the column it boils for (on the vessels' side, or across the rack where the flowsheet states its column there), next after it and in its row, near enough for its two lines to be laid direct (SW-RT-1)
       const sheet = M.sheet(c.unit), boils = new Map(sheet.lines.filter(l => l.from.k === 'eq' && l.to.k === 'eq' && l.to.port === 'reboiler return' && sheet.equip.get(l.from.tag)?.kind === 'hx').map(l => [(l.from as { tag: string }).tag, (l.to as { tag: string }).tag]));
       for (const s of c.spots.filter(q => q.shape === 'hx')) {
         const col = boils.has(s.item) ? c.spots.find(q => q.item === boils.get(s.item)) : undefined;
-        expect(s.side, s.tag).toBe(col ? -1 : 1); expect(s.axis).toBe('z'); expect(s.side * s.o![2], s.tag).toBeGreaterThan(c.rack.halfWidth + 240);
-        if (col) { expect(s.z, s.tag).toBe(col.z); expect(s.x - col.x, s.tag).toBeGreaterThan(col.R! + 54 + 36 + s.R! - 6.01); expect(s.x - col.x, s.tag).toBeLessThanOrEqual(240); expect(c.spots.filter(q => q.side === -1 && q.z === col.z && q.x > col.x && q.x < s.x).length, s.tag).toBe(0); }
+        expect(s.side, s.tag).toBe(col ? col.side : 1); if (col) expect(col.side, col.tag).toBe(sheet.equip.get(col.item)!.p.across !== undefined ? 1 : -1); expect(s.axis).toBe('z'); expect(s.side * s.o![2], s.tag).toBeGreaterThan(c.rack.halfWidth + 240);
+        if (col) { expect(s.z, s.tag).toBe(col.z); expect(s.x - col.x, s.tag).toBeGreaterThan(col.R! + 54 + 36 + s.R! - 6.01); expect(s.x - col.x, s.tag).toBeLessThanOrEqual(240); expect(c.spots.filter(q => q.side === col.side && q.z === col.z && q.x > col.x && q.x < s.x).length, s.tag).toBe(0); }
       }
       const last = Math.max(...c.spots.filter(q => q.lane !== 'heater').map(q => q.x + q.lx / 2));
       for (const s of c.spots.filter(q => q.lane === 'heater')) { expect(s.x - s.lx / 2, s.tag).toBeGreaterThanOrEqual(last + 600 - 6); expect(s.x - s.lx / 2 - c.rack.x1, s.tag).toBeGreaterThanOrEqual(114); expect(s.x - s.lx / 2 - c.rack.x1, s.tag).toBeLessThan(360); }

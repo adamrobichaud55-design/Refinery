@@ -8,7 +8,8 @@ import { unitPiping, gateReach, gateWidth, laneSpacing, heldAs, BIG, TIER_ROOM, 
 import { processModel } from '../src/refinery/process';
 import { sizing, headerDesign, stationed } from '../src/refinery/sizing';
 import { unitHeaders, connection } from '../src/refinery/headers';
-import { serviceOf } from '../src/refinery/registry';
+import { serviceOf, lineNumber, routedFree } from '../src/refinery/registry';
+import { FLUIDS } from '../src/refinery/fluids';
 import { RACK, PAD, valveDrop, bodySolids } from '../src/refinery/cell';
 import { pipingDocument, cutLongPipes, lengthenShortPieces, removeValves, joinHeaders, measuredAgain, elbowGap, valveBoxFn, runSolids, PIPING_IMAGES, type PipedUnit } from '../src/refinery/pipingReport';
 import * as K from '../src/generator/pipingCheck';
@@ -78,6 +79,105 @@ describe('plant 3: what the generator is given for a unit (SW-RPI-1 to SW-RPI-5)
     for (const l of b15) { const f = sh.lines[l.flow!].from as { tag: string; port: string }, k = sh.equip.get(f.tag)!.kind; expect(['heater', 'column']).toContain(k); if (k === 'heater') expect(f.port).toBe('outlet'); else { const n = up.nozzles.get((l.def.from as { id: string }).id) ?? [...up.nozzles.values()].find(q => q.equip === f.tag && q.service === f.port)!; expect(n.u).toEqual([0, 1, 0]); } }
     for (const t of ['SW-RPI-14', 'Valves not built', 'a shut drain floods its condenser']) expect(basisDoc).toContain(t);
   }, 300_000);
+  it('the cracking unit: the cracker between its fractionator and its flue gas train, each connection where its stream enters or leaves, the ducts and the vapour line routed free (SW-CELL-3, SW-CELL-4, SW-RPI-2, SW-RPI-3, SW-RPI-14)', () => {
+    const u17 = unitPiping(17), c = u17.cell, sp = (tag: string) => c.spots.find(q => q.tag === tag)!, N = (tag: string, service: string) => { const n = [...u17.nozzles.values()].find(q => q.equip === tag && q.service === service); if (!n) throw new Error(`${tag} has no "${service}"`); return n; };
+    const sol = (tag: string, name: RegExp) => { const b = bodySolids(c, tag).filter(q => name.test(q.name)); if (!b.length) throw new Error(`${tag} has no solid ${name}`); return { mn: [0, 1, 2].map(k => Math.min(...b.map(q => q.mn[k]))), mx: [0, 1, 2].map(k => Math.max(...b.map(q => q.mx[k]))) }; };
+    const mid = (b: { mn: number[]; mx: number[] }, k: number) => (b.mn[k] + b.mx[k]) / 2, onGrid = (v: number) => Math.abs(v / 6 - Math.round(v / 6)) < 1e-6, rf = (n: { NPS: number; cls: string }) => designFlange(n.NPS, n.cls as never).OD / 2;
+    // SW-CELL-3: the row next the rack in the order stated, on one centre line, the hoppers and the slurry filter at its end; behind the three drums the head of the gas plant, which ends before the side stripper
+    const row = ['D-1701', 'D-1703', 'D-1702', 'C-1702', 'C-1701', 'R-1701', 'E-1703', 'C-1705', 'V-1701', 'V-1702', 'F-1701'], back = ['D-1704', 'C-1703', 'C-1704', 'C-1706'];
+    for (const line of [row, back]) for (let i = 0; i < line.length; i++) { expect(sp(line[i]).side, line[i]).toBe(-1); expect(sp(line[i]).z, line[i]).toBe(sp(line[0]).z); if (i) expect(sp(line[i]).x, line[i]).toBeGreaterThan(sp(line[i - 1]).x); }
+    expect(sp(back[0]).z).toBeLessThan(sp(row[0]).z); expect(sp('C-1706').x).toBeLessThan(sp('C-1702').x - sp('C-1702').lx / 2);
+    // nothing else stands on that side but the pumps: behind the side stripper, the fractionator and the converter there is no way to the rack
+    expect(c.spots.filter(q => q.side === -1 && q.lane === 'vessel' && q.lx > 0).map(q => q.tag).sort()).toEqual([...row, ...back].sort());
+    for (const q of c.spots.filter(v => v.side === -1 && v.lane === 'vessel' && back.includes(v.tag))) for (const f of ['C-1702', 'C-1701', 'R-1701', 'E-1703', 'C-1705']) expect(Math.abs(q.x - sp(f).x), `${q.tag} behind ${f}`).toBeGreaterThanOrEqual(sp(f).lx / 2);
+    // the rest of the gas plant across the rack (`across`): one row on one centre line in the order declared, each reboiler next after its column; beyond the exchangers' and machines' row, and 4 ft and more beyond the regenerator's station
+    const over = ['D-1706', 'C-1707', 'E-1707', 'C-1708', 'E-1715', 'D-1705', 'C-1709', 'V-1703', 'C-1710', 'E-1714', 'D-1707', 'V-1704'], shx = c.spots.filter(q => q.side === 1 && q.lane === 'exchanger' && q.lx > 0);
+    for (let i = 0; i < over.length; i++) { const q = sp(over[i]); expect(q.side, q.tag).toBe(1); expect(q.lane, q.tag).toBe('vessel'); expect(q.z, q.tag).toBe(sp(over[0]).z); if (i) expect(q.x - q.lx / 2, q.tag).toBeGreaterThanOrEqual(sp(over[i - 1]).x + sp(over[i - 1]).lx / 2); expect(M.sheet(17).equip.get(q.item)!.p.across ?? (q.kind === 'hx' ? 1 : undefined), q.tag).toBe(1); }
+    expect(c.spots.filter(q => q.side === 1 && q.lane === 'vessel').map(q => q.tag).sort()).toEqual([...over].sort());
+    const lead = sp(over[0]), regenX = N('R-1701', 'regenerator air').face[0];
+    expect(lead.x - lead.lx / 2).toBeGreaterThanOrEqual(regenX + 48); expect(lead.x - lead.lx / 2).toBeLessThan(regenX + 48 + 12); for (const q of shx) expect(q.x + q.lx / 2, q.tag).toBeLessThan(lead.x - lead.lx / 2);
+    expect(Math.abs(Math.min(...over.map(tag => sp(tag).z - sp(tag).lz / 2)) - Math.min(...shx.map(q => q.z - q.lz / 2)))).toBeLessThanOrEqual(6);   // 8 ft beyond the pumps' row, as the exchangers are
+    // a pump that draws from a vessel across the rack stands there, opposite its vessel; the pumps of the vessels' side as before
+    for (const [pump, drum] of [['P-1712', 'D-1705'], ['P-1713', 'D-1707']]) { const ps = c.spots.filter(q => q.item === pump); expect(ps.length).toBe(2); for (const q of ps) { expect(q.side, q.tag).toBe(1); expect(q.lane).toBe('pump'); expect(Math.abs(q.x - sp(drum).x), q.tag).toBeLessThan(sp(drum).lx / 2); expect(q.z, q.tag).toBeLessThan(sp(drum).z - sp(drum).lz / 2); } }
+    for (const q of c.spots.filter(v => v.lane === 'pump' && !['P-1712', 'P-1713', 'P-1714'].includes(v.item))) expect(q.side, q.tag).toBe(-1);
+    // the blower across the rack from the regenerator, after the last exchanger of its row
+    expect(sp('K-1701').side).toBe(1); expect(sp('K-1701').x).toBeGreaterThan(sp('E-1716').x); expect(Math.abs(sp('K-1701').x - regenX)).toBeLessThan(480);
+    // the cracker turned: its reactor toward the fractionator, its riser toward the rack; the two vessels and the riser on the grid
+    const regen = sol('R-1701', /^regenerator shell$/), react = sol('R-1701', /^reactor shell$/), riser = sol('R-1701', /^riser$/), tower = sol('R-1701', /^reactor tower/), cone = sol('R-1701', /^regenerator top cone$/), head = sol('R-1701', /^reactor top head$/);
+    expect(mid(react, 0)).toBeLessThan(mid(regen, 0)); expect(mid(react, 0)).toBeGreaterThan(sp('C-1701').x); expect(mid(riser, 2)).toBeGreaterThan(mid(react, 2)); expect(sp('R-1701').side).toBe(-1);
+    for (const b of [regen, react, riser]) for (const k of [0, 2]) expect(onGrid(mid(b, k)), `${mid(b, k)}`).toBe(true);
+    expect(bodySolids(c, 'R-1701').filter(q => /flange$/.test(q.name) && /^(flue gas outlet|air inlet|vapour outlet)/.test(q.name))).toEqual([]);   // the plant's own connections stand there
+    // SW-CELL-7: one axis for the scrubber, the cooler and the regenerator; SW-CELL-4: the cooler on piers at the height of the scrubber's inlet duct
+    const cool = sol('E-1703', /^shell$/), scr = sol('C-1705', /^shell$/), duct = sol('C-1705', /^gas inlet duct$/);
+    for (const b of [cool, scr, duct]) expect(mid(b, 2)).toBeCloseTo(mid(regen, 2), 6);
+    expect(mid(duct, 1)).toBeCloseTo(mid(cool, 1), 6); expect(duct.mx[1] - duct.mn[1]).toBeCloseTo(pipeDims(36, 'P150').OD, 1);
+    const piers = c.interior.instances.filter(i => i.tags.includes('E-1703') && i.tags.includes('pier')); expect(piers.length).toBe(2);
+    // SW-RPI-2: the cracker's connections
+    const fg = N('R-1701', 'flue gas'), air = N('R-1701', 'regenerator air'), vap = N('R-1701', 'reactor vapour'), feed = N('R-1701', 'feed'), stm = N('R-1701', 'riser and stripping steam'), cat = [N('R-1701', 'catalyst withdrawal'), N('R-1701', 'fresh catalyst')];
+    expect(fg.u).toEqual([0, 1, 0]); expect(fg.A[0]).toBeCloseTo(mid(regen, 0), 6); expect(fg.A[2]).toBeCloseTo(mid(regen, 2), 6); expect(fg.A[1]).toBeCloseTo(cone.mx[1], 0); expect(cone.mx[0] - cone.mn[0]).toBeGreaterThan(2 * 21);
+    expect(air.u).toEqual([0, 0, 1]); expect(air.A[0]).toBe(mid(regen, 0)); expect(onGrid(air.A[1])).toBe(true); expect(air.A[2]).toBeCloseTo(sol('R-1701', /^air inlet line$/).mx[2], 0);
+    // SW-CELL-4: the air inlet line runs out 3 ft under the rack's lowest tier, the height its line from the blower crosses under the rack at: under that tier's beams with the pipe's radius and 3 in to spare
+    { const od = pipeDims(air.NPS, air.cls as never).OD, under = Math.min(...c.interior.instances.filter(i => i.tags.some(g => /^rack-(bent|bay):/.test(g)) && (i.tags.includes('beam') || i.tags.includes('intermediate-beam'))).map(i => i.transform[13]).filter(y => y > RACK.tiers[0] - 40 && y <= RACK.tiers[0]));
+      expect(air.A[1]).toBe(RACK.tiers[0] - 36); expect(air.A[1] + od / 2 + 3).toBeLessThan(under - 9); }
+    expect(vap.u).toEqual([0, 1, 0]); expect(vap.A[0]).toBeCloseTo(mid(react, 0), 6); expect(vap.A[2]).toBeCloseTo(mid(react, 2), 6); expect(vap.A[1]).toBeCloseTo(head.mx[1], 0);
+    expect(vap.face[1]).toBeGreaterThanOrEqual(Math.max(...bodySolids(c, 'R-1701').filter(q => /^reactor platform \d+: platform grating/.test(q.name)).map(q => q.mx[1])) + 54 - 1e-6);
+    for (const n of [feed, stm]) { expect(n.u).toEqual([0, 0, 1]); expect(n.A[0]).toBe(mid(riser, 0)); expect(n.A[2]).toBeCloseTo(riser.mx[2], 0); expect(n.face[2]).toBeGreaterThan(tower.mx[2] + 5.9); }
+    expect(feed.A[1]).toBeGreaterThan(stm.A[1] + 36);
+    { // each passes out through the tower's face 3 in clear of its girts and bracing: panels 2.4 half-widths high from the tower's foot to the reactor's bottom tangent, both diagonals in each (SW-EQC-29)
+      const b = (react.mx[0] - react.mn[0]) / 2 + 18, top = react.mn[1], levels = [tower.mn[1]]; for (let y = tower.mn[1]; y < top - 1;) { y = Math.min(top, y + 2.4 * b); if (top - y < 0.6 * b) y = top; levels.push(y); }
+      for (const n of [feed, stm]) { const dx = n.A[0] - mid(react, 0), r = rf(n); expect(Math.abs(dx)).toBeLessThan(b);
+        for (let k = 0; k + 1 < levels.length; k++) { const L = levels[k], L1 = levels[k + 1], m = (L1 - L) / (2 * b); if (k) expect(Math.abs(n.A[1] - L), `${n.service} at a girt`).toBeGreaterThan(r + 3); if (n.A[1] < L || n.A[1] > L1) continue;
+          for (const yl of [L + (dx + b) * m, L + (b - dx) * m]) expect(Math.abs(n.A[1] - yl) / Math.hypot(1, m), `${n.service} at a diagonal`).toBeGreaterThan(r + 3); } }
+    }
+    for (const n of cat) { expect(n.u).toEqual([0, 0, 1]); expect(n.A[0]).toBe(mid(regen, 0)); expect(n.A[2]).toBeCloseTo(regen.mx[2], 0); expect(n.A[1]).toBeGreaterThan(regen.mn[1]); expect(n.A[1]).toBeLessThan(regen.mx[1]);
+      for (const q of bodySolids(c, 'R-1701').filter(v => /^regenerator platform \d+: /.test(v.name))) expect(q.mx[1] <= n.A[1] - rf(n) - 3 + 1e-6 || q.mn[1] >= n.A[1] + gateReach(n.NPS) + 3 - 1e-6, `${n.service} and ${q.name}`).toBe(true); }
+    expect(cat[1].A[1]).toBeGreaterThan(cat[0].A[1] + 60);
+    // the hoppers: out through the skirt's opening side by side, in through the roof over the handrail
+    { const frame = sol('V-1701', /^skirt opening frame$/), out = N('V-1701', 'catalyst out'), ca = N('V-1701', 'conveying air'), inn = N('V-1702', 'catalyst in'), roof = sol('V-1702', /^top plate$/);
+      for (const n of [out, ca]) { expect(n.u).toEqual([1, 0, 0]); expect(n.A[1]).toBeGreaterThan(frame.mn[1] + rf(n)); expect(n.A[1]).toBeLessThan(frame.mx[1] - rf(n)); expect(n.A[2]).toBeGreaterThan(frame.mn[2]); expect(n.A[2]).toBeLessThan(frame.mx[2]); }
+      expect(out.A[2] - ca.A[2]).toBe(12); expect(inn.u).toEqual([0, 1, 0]); expect(inn.face[1]).toBeGreaterThanOrEqual(roof.mx[1] + 54 - 1e-6); expect(inn.A[0]).toBeCloseTo(mid(sol('V-1702', /^shell$/), 0), 6); expect(inn.A[2]).toBeCloseTo(mid(sol('V-1702', /^shell$/), 2), 6); }
+    // the flue gas train's connections face one another on the one axis; the scrubber's sump connections under its lowest platform; the cooler's steam and water on its drum
+    { const ci = N('E-1703', 'inlet'), co = N('E-1703', 'outlet'), si = N('C-1705', 'flue gas in'), drum = sol('E-1703', /^steam drum shell$/), low = Math.min(...bodySolids(c, 'C-1705').filter(q => /^platform \d+: /.test(q.name)).map(q => q.mn[1]));
+      expect(ci.u).toEqual([-1, 0, 0]); expect(co.u).toEqual([1, 0, 0]); expect(si.u).toEqual([-1, 0, 0]); for (const n of [ci, co, si]) { expect(n.A[1]).toBeCloseTo(mid(cool, 1), 6); expect(n.A[2]).toBeCloseTo(mid(cool, 2), 6); }
+      expect(ci.face[0]).toBeGreaterThan(regen.mx[0] + 36 + 24 + elbowRadius(42)); expect(si.face[0] - co.face[0]).toBeGreaterThan(2 * gateFaceToFace(36, 'P150'));
+      for (const n of [N('C-1705', 'make-up water'), N('C-1705', 'caustic')]) { expect(n.u).toEqual([0, 0, 1]); expect(n.A[0]).toBe(mid(scr, 0)); expect(n.A[1] + gateReach(n.NPS) + 3).toBeLessThanOrEqual(low); }
+      for (const n of [N('E-1703', 'steam out'), N('E-1703', 'feed water in')]) { expect(n.u).toEqual([0, 1, 0]); expect(n.A[1]).toBeCloseTo(drum.mx[1], 0); expect(n.A[2]).toBeCloseTo(mid(drum, 2), 6); }
+      expect(N('E-1703', 'steam out').A[0]).toBeCloseTo(mid(drum, 0), 6); expect(N('E-1703', 'feed water in').A[0]).toBe(N('E-1703', 'steam out').A[0] - 36); }   // 3 ft toward the gas inlet
+    // SW-RPI-3: the five lines routed free are numbered and built with V, each in a run of its own before every other line, the largest first; none has a lane on the rack
+    const free = u17.lines.filter(l => l.def.service === 'V' && l.origin === 'process'); expect(free.map(l => l.seq)).toEqual([8, 11, 12, 13, 37]); expect(free.map(l => l.def.NPS)).toEqual([20, 42, 36, 24, 24]);
+    for (const l of free) { expect(routedFree(17, l.seq)).toBe(true); expect(l.def.no).toBe(lineNumber(17, l.seq, l.def.NPS, l.def.cls, l.fluid)); expect(l.def.no).toContain('-V-'); }
+    for (const l of free.filter(q => q.seq !== 8)) expect(l.bare, l.def.no).toEqual(['from', 'to']);                                          // SW-RPI-14: the ducts, the vapour line, the fractionator's overhead
+    expect(free.find(l => l.seq === 8)!.bare).toEqual(['to']);                                                                               // the air line: its one valve at the blower
+    const first = [...free].sort((a, b) => b.def.NPS - a.def.NPS || a.seq - b.seq); expect(u17.runs.slice(0, 5).map(r => r.lines[0])).toEqual(first.map(l => l.def.no)); for (const r of u17.runs.slice(0, 5)) expect(r.kind).toBe('overhead');
+    expect(u17.runs.filter(r => r.kind === 'rack').some(r => free.some(l => r.lines.includes(l.def.no)))).toBe(false);
+    for (let s = 1; s <= M.sheet(15).lines.length; s++) expect(routedFree(15, s)).toBe(false); expect(lineNumber(17, 7, 8, 'P600', 'GO')).toContain('-P-');
+    // the fractionator's overhead: its condenser stands last of the air coolers, next the fractionator; each of the condenser's lines runs to the bay nearest its other end, and the bays' branches go with their line
+    const ov = free.find(l => l.seq === 37)!, to = u17.nozzles.get((ov.def.to as { id: string }).id)!, bays = c.spots.filter(q => q.item === 'A-1701');
+    expect(bays.map(q => q.tag)).toEqual(['A-1701A', 'A-1701B', 'A-1701C']); expect(Math.min(...bays.map(q => q.x))).toBeGreaterThan(Math.max(...c.spots.filter(q => q.lane === 'air' && q.item !== 'A-1701').map(q => q.x)));
+    expect(to.equip).toBe('A-1701C'); expect(sp('A-1701C').x).toBeLessThan(sp('C-1701').x); expect(sp('C-1701').x - sp('A-1701C').x).toBeLessThan(sp('C-1701').x - sp('A-1701A').x);
+    const kids = u17.lines.filter(l => l.origin === 'spare' && l.flow === 36); expect(kids.length).toBe(2); for (const k of kids) { expect(k.def.service).toBe('V'); expect(k.def.no).toContain('-V-'); expect(k.def.from).toEqual({ k: 'tap', line: ov.def.no, valve: false }); }
+    expect(kids.map(k => u17.nozzles.get((k.def.to as { id: string }).id)!.equip)).toEqual(['A-1701B', 'A-1701A']); expect(u17.runs.find(r => r.lines[0] === ov.def.no)!.lines).toEqual([ov.def.no, ...kids.map(k => k.def.no)]);
+    const outlet = u17.lines.find(l => l.origin === 'process' && l.seq === 38)!; expect(u17.nozzles.get((outlet.def.from as { id: string }).id)!.equip).toBe('A-1701A');   // toward the trim condenser, which stands that way
+    // SW-RPI-7: the wet gas line, 14 in, whose riser would foul an intermediate beam, and the debutaniser's 12 in overhead, both of whose ends stand above the lowest tier, run the top tier
+    const lane = (seq: number) => u17.runs.find(r => r.lines[0] === u17.lines.find(l => l.origin === 'process' && l.seq === seq)!.def.no)!.lane!, top = RACK.tiers.length - 1;
+    const wet = u17.lines.find(l => l.origin === 'process' && l.seq === 48)!, wn = u17.nozzles.get((wet.def.from as { id: string }).id)!;
+    expect(wet.def.NPS).toBe(14); expect(wn.equip).toBe('D-1702'); expect(wn.u).toEqual([0, 1, 0]); expect(lane(48).t).toBe(top);
+    { const mids = c.interior.instances.filter(i => i.tags.includes('intermediate-beam')).map(i => i.transform[12]); expect(Math.min(...mids.map(x => Math.abs(x - wn.A[0])))).toBeLessThan(18); }
+    const deb = u17.lines.find(l => l.origin === 'process' && l.seq === 74)!; expect(deb.def.NPS).toBe(12); for (const e of [deb.def.from, deb.def.to]) expect(u17.nozzles.get((e as { id: string }).id)!.face[1]).toBeGreaterThan(RACK.tiers[0]); expect(lane(74).t).toBe(top);
+    // no line of 12 in or more on a middle tier; none on the lowest whose own connection, square to the rack, stands within the beam's hold of a bent or of the middle of a bay
+    for (const r of u17.runs.filter(q => q.kind === 'rack' && q.lane)) { const l = u17.lines.find(q => q.def.no === r.lines[0])!; if (l.def.NPS >= 12) expect([0, top], l.def.no).toContain(r.lane!.t); }
+    // SW-RPI-7: a lane no nearer the columns than the generator lays that pipe: 2 ft inside the rack's edge only to 6 in on a tier the columns pass through, to 10 in on the top tier
+    for (const r of u17.runs.filter(q => q.kind === 'rack' && q.lane)) { const l = u17.lines.find(q => q.def.no === r.lines[0])!, L = r.lane!; expect(Math.abs(L.z), l.def.no).toBeLessThanOrEqual(c.rack.halfWidth - 24); if (Math.abs(L.z) === c.rack.halfWidth - 24) expect(l.def.NPS, l.def.no).toBeLessThanOrEqual(L.t === top ? 10 : 6); }
+    expect(u17.runs.some(r => r.kind === 'rack' && r.lane && Math.abs(r.lane.z) === c.rack.halfWidth - 24)).toBe(true);
+    // SW-RPI-9: the reflux's station, whose onward line climbs the fractionator: not between 20 ft and 20 ft and its outlet's length short of the column along the rack
+    { const st = u17.stations.find(q => q.after === u17.lines.find(l => l.def.no.endsWith('17715'))!.def.no)!, col = sp('C-1701').x, d = Math.abs(st.at[0] - col); expect(d > 240 + gateFaceToFace(4, 'P150') + 2 * 4 + 48 || d <= 240, `${d}`).toBe(true); expect(u17.runs.find(r => r.lines.includes(st.after))!.kind).toBe(d > 240 ? 'rack' : 'chase'); }
+    // SW-RPI-3: a water connection over 12 in is built as a process line (no throttling valve is offered at that size); the water headers keep their letter
+    { const big = u17.lines.filter(l => l.origin === 'utility' && FLUIDS[l.fluid].svc.startsWith('CW') && l.def.NPS > 12); expect(big.length).toBeGreaterThan(0); for (const l of big) { expect(l.def.service, l.def.no).toBe('P'); expect(l.def.no).toContain('-P-'); }
+      for (const l of u17.lines.filter(q => q.origin === 'utility' && FLUIDS[q.fluid].svc.startsWith('CW') && q.def.NPS <= 12)) expect(l.def.service, l.def.no).toBe(FLUIDS[l.fluid].svc);
+      for (const h of u17.lines.filter(q => q.origin === 'header' && FLUIDS[q.fluid].svc.startsWith('CW'))) { expect(h.def.NPS).toBeGreaterThan(12); expect(h.def.service).toBe(FLUIDS[h.fluid].svc); } }
+    // SW-CELL-2: its rack is 30 ft wide, for its ten headers; no other unit's rack is changed by counting them
+    expect(c.rack.halfWidth).toBe(180); expect(u17.notes.filter(s => /stand .* apart/.test(s))).toEqual([]);
+  }, 600_000);
   it('lists every line of the flowsheet with its size, class, service and ends, and a tee for every spare', () => {
     const proc = up.lines.filter(l => l.origin === 'process'); expect(proc.length).toBe(sh.lines.length);
     proc.forEach((l, i) => { const s = z.lines[i], f = sh.lines[i]; expect(l.def.NPS).toBe(s.NPS); expect(l.def.cls).toBe(s.cls); expect(l.def.service).toBe('P'); expect(serviceOf(f.s.fluid, s.cls, false)).toBe('P');   /* a line of the flowsheet is built as a process line whatever it carries (SW-RPI-3) */ expect(l.def.no).toMatch(new RegExp(`-${U * 1000 + i + 1}$`)); expect(l.def.NPS).toBeGreaterThanOrEqual(3); expect(l.designP).toBe(s.designP);

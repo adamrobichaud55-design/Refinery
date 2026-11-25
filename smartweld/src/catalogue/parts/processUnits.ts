@@ -192,30 +192,33 @@ export function straightRail(a: V3, b: V3): MeshData {
 }
 
 // ---- SW-EQC-33: cat cracker reactor and regenerator ------------------------------------------------------------------
-export interface CatCrackerInput { tag: string; regenD: number; regenTT: number; reactorD: number; reactorTT: number }
+export interface CatCrackerInput { tag: string; regenD: number; regenTT: number; reactorD: number; reactorTT: number; /** SW-EQC-33: stated where a plant sets its own connections on the item: the outside diameters of the flue gas outlet and of the air inlet line, drawn without flanges (the vapour outlet's stub not at all), and a grid the two vessels' centres and the riser stand on; and the side of the line of centres the riser stands on (1: the other side, the item's mirror image about that line in its riser, standpipes and slide valves) */ plant?: { flueOD: number; airOD: number; grid: number; riserSide?: 1 | -1; /** the direction the air inlet line leaves the regenerator in, an angle about its axis in place of 180° */ airAt?: number; /** the height above the base at which the air inlet line runs out level, in place of 0.25 Dg below the bottom head */ airZ?: number } }
 export function makeCatCracker(inp: CatCrackerInput): PartSpec {
-  const Dg = inp.regenD, Dr = inp.reactorD, t = 1, Rg = Dg / 2 + t, Rr = Dr / 2 + t, X = Rg + Rr + 0.6 * Dg, dS = 0.12 * Dg, dR = 0.15 * Dg, rs = 0.25 * Dr + t, T60 = Math.tan(Math.PI / 3), s: Solid[] = [];
+  const Dg = inp.regenD, Dr = inp.reactorD, t = 1, Rg = Dg / 2 + t, Rr = Dr / 2 + t, G = inp.plant?.grid, onG = (v: number) => (G ? Math.ceil(v / G - 1e-9) * G : v), X = onG(Rg + Rr + 0.6 * Dg), dS = 0.12 * Dg, dR = 0.15 * Dg, rs = 0.25 * Dr + t, T60 = Math.tan(Math.PI / 3), s: Solid[] = [];
   // the riser stands beside the stripper; the regenerated-catalyst standpipe runs to its foot no flatter than 60°
-  const rx = X - 30, ry = -(rs + dR / 2 + 6), phi = Math.atan2(ry, rx), g1: V3 = [Rg * Math.cos(phi), Rg * Math.sin(phi), 0], run1 = Math.hypot(rx - g1[0], ry - g1[1]);
+  const sd = inp.plant?.riserSide === 1 ? -1 : 1;   // 1: as drawn by default, the riser on the −y side; −1: mirrored
+  const rx = X - 30, ry = -sd * onG(rs + dR / 2 + 6), phi = Math.atan2(ry, rx), g1: V3 = [Rg * Math.cos(phi), Rg * Math.sin(phi), 0], run1 = Math.hypot(rx - g1[0], ry - g1[1]);
   const Hs = Math.ceil(Math.max(120, 72 + T60 * run1 - Rg / 2 - 0.15 * inp.regenTT) / 12) * 12, zg0 = Hs + Rg / 2, zg1 = zg0 + inp.regenTT, zOut = zg0 + 0.15 * inp.regenTT, zW = zOut - T60 * run1;
   // regenerator
   s.push({ name: 'regenerator skirt', mesh: tube(Rg, 0.75, Hs + Rg / 4, 0) }, { name: 'regenerator base ring', mesh: at(extrude({ outer: circle(0, 0, Rg + 8, 64), inner: circle(0, 0, Rg - 0.75, 64) }, 1, 0), 0, 0, -1) },
     { name: 'regenerator bottom head', mesh: at(orient(revolve(headLoop(Rg, t, -1), 64)), 0, 0, zg0) }, { name: 'regenerator shell', mesh: at(shellRing(Rg, t, inp.regenTT), 0, 0, zg0) }, { name: 'regenerator weld seams', mesh: seamSolids(Rg, t, zg0, inp.regenTT) });
-  const rf = 0.125 * Dg + t, zc = zg1 + (Rg - rf);
-  s.push({ name: 'regenerator top cone', mesh: frustum(Rg, rf, zg1, zc, t) }, { name: 'flue gas outlet', mesh: tube(rf, t, 24, zc) }, { name: 'flue gas outlet flange', mesh: ringFlange(rf, zc + 24) });
-  s.push({ name: 'air inlet line', mesh: pipeRun([[0, 0, zg0 - Rg / 2 + 3], [0, 0, zg0 - Rg / 2 - 0.25 * Dg], [-(Rg + 36), 0, zg0 - Rg / 2 - 0.25 * Dg]], 0.2 * Dg, 24) }, { name: 'air inlet flange', mesh: transformMesh(ringFlange(0.1 * Dg, 0), multiply(translate(-(Rg + 36), 0, zg0 - Rg / 2 - 0.25 * Dg), rotateY(-Math.PI / 2))) });
+  const rf = inp.plant ? inp.plant.flueOD / 2 : 0.125 * Dg + t, zc = zg1 + (Rg - rf);
+  s.push({ name: 'regenerator top cone', mesh: frustum(Rg, rf, zg1, zc, t) }); if (!inp.plant) s.push({ name: 'flue gas outlet', mesh: tube(rf, t, 24, zc) }, { name: 'flue gas outlet flange', mesh: ringFlange(rf, zc + 24) });
+  const aA = inp.plant?.airAt, zAir = inp.plant?.airZ ?? zg0 - Rg / 2 - 0.25 * Dg, airEnd: V3 = aA === undefined ? [-(Rg + 36), 0, zAir] : [(Rg + 36) * Math.cos(aA), (Rg + 36) * Math.sin(aA), zAir];
+  if (inp.plant?.airZ !== undefined && (zAir > zg0 - Rg / 2 - 24 - inp.plant.airOD / 2 - 6 || zAir < inp.plant.airOD / 2 + 12)) throw new Error(`${inp.tag}: the air inlet line cannot run out at ${zAir} in: it needs its bend and 6 in under the bottom head, at ${zg0 - Rg / 2} in, and a foot over the base (SW-EQC-33)`);
+  s.push({ name: 'air inlet line', mesh: pipeRun([[0, 0, zg0 - Rg / 2 + 3], [0, 0, zAir], airEnd], inp.plant ? inp.plant.airOD : 0.2 * Dg, 24) }); if (!inp.plant) s.push({ name: 'air inlet flange', mesh: transformMesh(ringFlange(0.1 * Dg, 0), multiply(translate(-(Rg + 36), 0, zg0 - Rg / 2 - 0.25 * Dg), rotateY(-Math.PI / 2))) });
   const mwG = [zg0 + 42, zg1 - 54];
   for (const [k, z] of mwG.entries()) s.push(...onShell(makeManway(`${inp.tag}-RG-M${k + 1}`, { D: 24, cls: 'P150', shellT: t, shellR: Rg }), Rg, Math.PI, z, `regenerator manway ${k + 1}`));
   s.push(...turn(accessSolids(Rg, floorsThrough([mwG[0] - 36, mwG[1] - 36])), Math.PI).map(q => ({ ...q, name: `regenerator ${q.name}` })));
   // spent catalyst: stripper bottom → regenerator, no flatter than 60°
-  const th2 = 0.5, g2: V3 = [Rg * Math.cos(th2), Rg * Math.sin(th2), zg0 + 0.3 * inp.regenTT], sb: V3 = [X, rs * 0.5, 0], run2 = Math.hypot(sb[0] - g2[0], sb[1] - g2[1]);
+  const th2 = 0.5 * sd, g2: V3 = [Rg * Math.cos(th2), Rg * Math.sin(th2), zg0 + 0.3 * inp.regenTT], sb: V3 = [X, sd * rs * 0.5, 0], run2 = Math.hypot(sb[0] - g2[0], sb[1] - g2[1]);
   sb[2] = g2[2] + T60 * run2;
   const zs0 = sb[2] + (rs - dS / 2) * T60 * 0.6, zs1 = zs0 + 1.5 * Dr, zr0 = zs1 + (Rr - rs) * T60, zr1 = zr0 + inp.reactorTT;
   // reactor (disengager) and stripper, about (X, 0)
   const R: Solid[] = [
     { name: 'stripper bottom cone', mesh: frustum(dS / 2 + t, rs, sb[2] - 6, zs0, t) }, { name: 'stripper', mesh: at(shellRing(rs, t, zs1 - zs0), 0, 0, zs0) }, { name: 'reactor cone', mesh: frustum(rs, Rr, zs1, zr0, t) },
     { name: 'reactor shell', mesh: at(shellRing(Rr, t, inp.reactorTT), 0, 0, zr0) }, { name: 'reactor top head', mesh: at(orient(revolve(headLoop(Rr, t, 1), 64)), 0, 0, zr1) }, { name: 'reactor weld seams', mesh: seamSolids(Rr, t, zr0, inp.reactorTT) },
-    { name: 'vapour outlet', mesh: tube(0.1 * Dr + t, t, 30, zr1 + Rr / 2 - 4) }, { name: 'vapour outlet flange', mesh: ringFlange(0.1 * Dr + t, zr1 + Rr / 2 + 26) },
+    ...(inp.plant ? [] : [{ name: 'vapour outlet', mesh: tube(0.1 * Dr + t, t, 30, zr1 + Rr / 2 - 4) }, { name: 'vapour outlet flange', mesh: ringFlange(0.1 * Dr + t, zr1 + Rr / 2 + 26) }]),
     ...onShell(makeManway(`${inp.tag}-RX-M1`, { D: 24, cls: 'P150', shellT: t, shellR: Rr }), Rr, 0, zr0 + 48, 'reactor manway'),
     ...onShell(makeManway(`${inp.tag}-ST-M1`, { D: 20, cls: 'P150', shellT: t, shellR: rs }), rs, 0, zs0 + 0.75 * Dr, 'stripper manway'),
   ];
@@ -230,9 +233,9 @@ export function makeCatCracker(inp: CatCrackerInput): PartSpec {
   // riser, standpipes and slide valves
   const zRe = zr0 + 0.25 * inp.reactorTT;
   s.push({ name: 'riser', mesh: at(tube(dR / 2 + 0.5, 0.5, zRe - zW + 2 * dR, zW - 2 * dR), rx, ry, 0) }, { name: 'riser bottom flange and lift nozzle', mesh: at(mergeMeshes([cylZ(0, 0, dR / 2 + 5, zW - 2 * dR - 2, zW - 2 * dR, 48), cylZ(0, 0, 3, zW - 2 * dR - 14, zW - 2 * dR - 2, 24)]), rx, ry, 0) },
-    { name: 'riser guides', role: 'steel', mesh: mergeMeshes(floorsThrough([zr0 - 24], zW + 60).map(z => boxMesh(rx - dR / 2 - 3, ry - dR / 2 - 3, z, rx + dR / 2 + 3, ry - dR / 2 + 1, z + 4))) });
+    { name: 'riser guides', role: 'steel', mesh: mergeMeshes(floorsThrough([zr0 - 24], zW + 60).map(z => (sd > 0 ? boxMesh(rx - dR / 2 - 3, ry - dR / 2 - 3, z, rx + dR / 2 + 3, ry - dR / 2 + 1, z + 4) : boxMesh(rx - dR / 2 - 3, ry + dR / 2 - 1, z, rx + dR / 2 + 3, ry + dR / 2 + 3, z + 4)))) });
   const stand = (a: V3, bb: V3, label: string) => {
-    const d = sub(bb, a), L = Math.hypot(d[0], d[1], d[2]), u: V3 = [d[0] / L, d[1] / L, d[2] / L], mid: V3 = [a[0] + d[0] * 0.5, a[1] + d[1] * 0.5, a[2] + d[2] * 0.5], hp: V3 = [-u[1] / Math.hypot(u[0], u[1]), u[0] / Math.hypot(u[0], u[1]), 0];
+    const d = sub(bb, a), L = Math.hypot(d[0], d[1], d[2]), u: V3 = [d[0] / L, d[1] / L, d[2] / L], mid: V3 = [a[0] + d[0] * 0.5, a[1] + d[1] * 0.5, a[2] + d[2] * 0.5], hp: V3 = [(-sd * u[1]) / Math.hypot(u[0], u[1]), (sd * u[0]) / Math.hypot(u[0], u[1]), 0];
     const along = (o: V3, k: number): V3 => [o[0] + u[0] * k, o[1] + u[1] * k, o[2] + u[2] * k], side = (o: V3, k: number): V3 => [o[0] + hp[0] * k, o[1] + hp[1] * k, o[2] + hp[2] * k];
     s.push({ name: `${label} standpipe`, mesh: member(a, bb, { outer: circle(0, 0, dS / 2 + 0.5, 32), inner: circle(0, 0, dS / 2, 32) }) },
       { name: `${label} slide valve`, role: 'machine', mesh: mergeMeshes([member(along(mid, -1.25 * dS), along(mid, 1.25 * dS), { outer: rect(-0.8 * dS, -0.8 * dS, 0.8 * dS, 0.8 * dS) }), member(side(mid, 0.8 * dS), side(mid, 3 * dS), { outer: rect(-0.6 * dS, -0.4 * dS, 0.6 * dS, 0.4 * dS) }, u), member(side(mid, 3 * dS), side(mid, 5.5 * dS), { outer: circle(0, 0, 0.45 * dS, 24) })]) });
@@ -241,9 +244,11 @@ export function makeCatCracker(inp: CatCrackerInput): PartSpec {
   return done(inp.tag, 'PROCESS_UNIT', `${inp.tag} cat cracker: regenerator ${Dg}" × ${inp.regenTT}", reactor ${Dr}" × ${inp.reactorTT}"`, {
     regenD: drawing(Dg, 'Regenerator diameter'), regenTT: drawing(inp.regenTT, 'Regenerator tangent length'), reactorD: drawing(Dr, 'Reactor diameter'), reactorTT: drawing(inp.reactorTT, 'Reactor tangent length'),
     skirtH: rule(Hs, 'SW-EQC-33', 'Regenerator skirt height (the standpipe no flatter than 60°)'), stripperD: rule(0.5 * Dr, 'SW-EQC-33', 'Stripper diameter (0.5 Dr)'), stripperL: rule(1.5 * Dr, 'SW-EQC-33', 'Stripper length (1.5 Dr)'),
-    riserD: rule(dR, 'SW-EQC-33', 'Riser diameter (0.15 Dg)'), standpipeD: rule(dS, 'SW-EQC-33', 'Standpipe diameter (0.12 Dg)'), flueD: rule(0.25 * Dg, 'SW-EQC-33', 'Flue gas outlet (0.25 Dg)'), vapourD: rule(0.2 * Dr, 'SW-EQC-33', 'Vapour outlet (0.2 Dr)'),
-    reactorBase: rule(zr0, 'SW-EQC-33', 'Reactor bottom tangent elevation'), top: rule(zr1 + Rr / 2 + 28, 'SW-EQC-33', 'Top of the vapour outlet'), centres: rule(X, 'SW-EQC-33', 'Regenerator to reactor centres'),
-  }, zr1 + Rr / 2 + 28, s, ['Cyclones, grids and refractory lining are not drawn (SW-EQC-33).'], { X, zg0, zr0 });
+    riserD: rule(dR, 'SW-EQC-33', 'Riser diameter (0.15 Dg)'), standpipeD: rule(dS, 'SW-EQC-33', 'Standpipe diameter (0.12 Dg)'),
+    ...(inp.plant ? { flueD: drawing(inp.plant.flueOD, 'Flue gas outlet outside diameter (stated)'), airD: drawing(inp.plant.airOD, 'Air inlet line outside diameter (stated)'), top: rule(zr1 + Rr / 2, 'SW-EQC-33', 'Top of the reactor\'s head') }
+      : { flueD: rule(0.25 * Dg, 'SW-EQC-33', 'Flue gas outlet (0.25 Dg)'), vapourD: rule(0.2 * Dr, 'SW-EQC-33', 'Vapour outlet (0.2 Dr)'), top: rule(zr1 + Rr / 2 + 28, 'SW-EQC-33', 'Top of the vapour outlet') }),
+    reactorBase: rule(zr0, 'SW-EQC-33', 'Reactor bottom tangent elevation'), centres: rule(X, 'SW-EQC-33', 'Regenerator to reactor centres'),
+  }, zr1 + Rr / 2 + (inp.plant ? 0 : 28), s, ['Cyclones, grids and refractory lining are not drawn (SW-EQC-33).'], inp.plant ? { X, zg0, zr0, zAir, airEnd, zCone: zc, zHead: zr1 + Rr / 2, riser: [rx, ry], zWye: zW, towerHalf: Rr + 18 } : { X, zg0, zr0 });
 }
 
 // ---- SW-EQC-34: coke drums with their structure ---------------------------------------------------------------------
@@ -326,15 +331,16 @@ export function makeFlareStack(inp: FlareInput): PartSpec {
 }
 
 // ---- SW-EQC-36: wet scrubber tower ----------------------------------------------------------------------------------
-export interface ScrubberInput { tag: string; D: number; H: number }
+export interface ScrubberInput { tag: string; D: number; H: number; /** SW-EQC-36: a stated outside diameter for the gas inlet duct, which is then drawn level and without its flange, for a plant's own nozzle on its end */ inlet?: { OD: number }; /** SW-EQC-36: the angle about the tower at which the pumps, their riser and the spray nozzles stand, in place of 90° */ pumpsAt?: number }
 export function makeWetScrubber(inp: ScrubberInput): PartSpec {
-  const D = inp.D, H = inp.H, t = 0.375, R = D / 2 + t, zIn = 0.2 * H + 0.3 * D, rs = 0.25 * D + t, zc = H + (R - rs), thR = Math.PI / 2, rr = R + 16, s: Solid[] = [];
+  const D = inp.D, H = inp.H, t = 0.375, R = D / 2 + t, zIn = 0.2 * H + 0.3 * D, rs = 0.25 * D + t, zc = H + (R - rs), thR = inp.pumpsAt ?? Math.PI / 2, rr = R + 16, s: Solid[] = [];
   s.push({ name: 'base plate', mesh: cylZ(0, 0, R + 5, 0, 0.75, 64) }, { name: 'shell', mesh: tube(R, t, H - 0.75, 0.75) }, { name: 'weld seams', mesh: seamSolids(R, t, 0.75, H - 0.75) },
     { name: 'anchor lugs', mesh: mergeMeshes(Array.from({ length: 8 }, (_, i) => transformMesh(mergeMeshes([boxMesh(R - 0.1, -2, 0.75, R + 4.5, -1.625, 6.75), boxMesh(R - 0.1, 1.625, 0.75, R + 4.5, 2, 6.75)]), rotateZ((i + 0.5) * (Math.PI / 4))))) },
     { name: 'anchor bolts', role: 'hardware', mesh: mergeMeshes(Array.from({ length: 8 }, (_, i) => transformMesh(mergeMeshes([cylZ(R + 3, 0, 0.375, -1, 3, 10), at(hexNut(0.75), R + 3, 0, 0.75)]), rotateZ((i + 0.5) * (Math.PI / 4))))) },
     { name: 'top cone', mesh: frustum(R, rs, H, zc, t) }, { name: 'outlet stack', mesh: tube(rs, t, D, zc) }, { name: 'outlet flange', mesh: ringFlange(rs, zc + D) });
-  const o: V3 = [R + 0.8 * D, 0, zIn + 0.14 * D], i0: V3 = [R - 3, 0, zIn], u: V3 = [(i0[0] - o[0]), 0, (i0[2] - o[2])], ul = Math.hypot(u[0], u[2]);
-  s.push({ name: 'gas inlet duct', mesh: member(o, i0, { outer: circle(0, 0, 0.25 * D + 0.25, 48), inner: circle(0, 0, 0.25 * D, 48) }) }, { name: 'gas inlet flange', mesh: member(o, [o[0] + (u[0] / ul) * 1.5, 0, o[2] + (u[2] / ul) * 1.5], { outer: circle(0, 0, 0.25 * D + 4, 48), inner: circle(0, 0, 0.25 * D, 48) }) });
+  const o: V3 = [R + 0.8 * D, 0, zIn + 0.14 * D], i0: V3 = [R - 3, 0, inp.inlet ? o[2] : zIn], u: V3 = [(i0[0] - o[0]), 0, (i0[2] - o[2])], ul = Math.hypot(u[0], u[2]);
+  if (inp.inlet) s.push({ name: 'gas inlet duct', mesh: member(o, i0, { outer: circle(0, 0, inp.inlet.OD / 2, 48), inner: circle(0, 0, inp.inlet.OD / 2 - 0.25, 48) }) });
+  else s.push({ name: 'gas inlet duct', mesh: member(o, i0, { outer: circle(0, 0, 0.25 * D + 0.25, 48), inner: circle(0, 0, 0.25 * D, 48) }) }, { name: 'gas inlet flange', mesh: member(o, [o[0] + (u[0] / ul) * 1.5, 0, o[2] + (u[2] / ul) * 1.5], { outer: circle(0, 0, 0.25 * D + 4, 48), inner: circle(0, 0, 0.25 * D, 48) }) });
   const zs = [0, 1, 2].map(k => zIn + 0.4 * D + k * 0.12 * H), zWash = 0.8 * H - 14;
   s.push({ name: 'mist eliminator support rings', mesh: mergeMeshes([0.8 * H, 0.8 * H + 24].map(z => at(extrude({ outer: circle(0, 0, R + 3, 64), inner: circle(0, 0, R, 64) }, 0.5, 0), 0, 0, z))) });
   // recirculation pumps facing the tower, their discharge riser, and a flanged feed to each spray level and the wash header
@@ -358,9 +364,9 @@ export function makeWetScrubber(inp: ScrubberInput): PartSpec {
   floors.forEach((z, k) => s.push(...onShell(makeManway(`${inp.tag}-M${k + 1}`, { D: 24, cls: 'P150', shellT: t, shellR: R }), R, Math.PI, z + 36, k === 2 ? 'eliminator manway' : 'spray section manway')));
   s.push(...turn(accessSolids(R, floorsThrough(floors)), Math.PI));
   return done(inp.tag, 'SCRUBBER', `${inp.tag} wet scrubber tower ${D}" × ${(H / 12).toFixed(0)}'`, {
-    D: drawing(D, 'Tower diameter'), H: drawing(H, 'Shell height'), sump: rule(0.2 * H, 'SW-EQC-36', 'Sump depth (0.2 H)'), inlet: rule(0.5 * D, 'SW-EQC-36', 'Gas inlet duct (0.5 D)'), outlet: rule(0.5 * D, 'SW-EQC-36', 'Outlet stack (0.5 D)'),
+    D: drawing(D, 'Tower diameter'), H: drawing(H, 'Shell height'), sump: rule(0.2 * H, 'SW-EQC-36', 'Sump depth (0.2 H)'), inlet: inp.inlet ? drawing(inp.inlet.OD, 'Gas inlet duct outside diameter (stated)') : rule(0.5 * D, 'SW-EQC-36', 'Gas inlet duct (0.5 D)'), outlet: rule(0.5 * D, 'SW-EQC-36', 'Outlet stack (0.5 D)'),
     sprayLevels: rule(3, 'SW-EQC-36', 'Spray levels', 'count'), eliminator: rule(0.8 * H, 'SW-EQC-36', 'Mist eliminator from (0.8 H)'), pumps: rule(2, 'SW-EQC-36', 'Recirculation pumps', 'count'),
-  }, zc + D + 2, s, ['Spray headers, packing and the eliminator are inside and not drawn; their nozzles and feeds are (SW-EQC-36).']);
+  }, zc + D + 2, s, ['Spray headers, packing and the eliminator are inside and not drawn; their nozzles and feeds are (SW-EQC-36).'], inp.inlet ? { zInlet: o[2] } : undefined);
 }
 
 // ---- drums, the flue gas cooler, the boiler (SW-EQC-37..42) ------------------------------------------------------------

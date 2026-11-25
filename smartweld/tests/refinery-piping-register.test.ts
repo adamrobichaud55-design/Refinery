@@ -6,7 +6,7 @@ import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import type { PipingModel } from '../src/generator/piping';
 import { unitPiping } from '../src/refinery/unitPiping';
 import { pipingRegister, pipingRegisterDocument, serializeRegister, VALVE_BODY, type PipingRegister } from '../src/refinery/pipingRegister';
-import { lineRecords, lineNumber, fittingCrn, designCrn, fluidService, serviceOf, utilitySeq, MAKERS, MATERIALS, BOLTING } from '../src/refinery/registry';
+import { routedFree, lineRecords, lineNumber, fittingCrn, designCrn, fluidService, serviceOf, utilitySeq, MAKERS, MATERIALS, BOLTING } from '../src/refinery/registry';
 import { sizing, headerDesign } from '../src/refinery/sizing';
 import { processModel } from '../src/refinery/process';
 
@@ -45,7 +45,7 @@ describe('plant 3: the piping register of a piped unit (SW-REG-9)', () => {
       }
       // numbers: a flowsheet line is a process line whatever it carries, and every one piped on this plot is in the register (a line wholly of another plot, the cooling tower's, is that plot's); the utility numbers are 401 to 600
       const piped = new Set(unitPiping(u).lines.filter(l => l.origin === 'process').map(l => l.flow!)); expect(piped.size).toBeGreaterThan(0.8 * sh.lines.length);
-      sh.lines.forEach((f, i) => { const no = lineNumber(u, i + 1, z.lines[i].NPS, z.lines[i].cls, f.s.fluid); expect(no).toContain('-P-'); expect(r.lines.some(q => q.number === no), no).toBe(piped.has(i)); });
+      sh.lines.forEach((f, i) => { const no = lineNumber(u, i + 1, z.lines[i].NPS, z.lines[i].cls, f.s.fluid); expect(no).toContain(routedFree(u, i + 1) ? '-V-' : '-P-'); expect(r.lines.some(q => q.number === no), no).toBe(piped.has(i)); });   // SW-RPI-3: V, a line the generator routes free of the rack
       for (const l of r.lines) expect(utilitySeq(Number(l.number.slice(-5)) - u * 1000), l.number).toBe(l.origin === 'utility' || l.origin === 'header' || (l.origin === 'control' && base.has(l.number)));
     }
   });

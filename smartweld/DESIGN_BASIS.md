@@ -2921,6 +2921,23 @@ Items:
   ladders with landings up the tower (SW-EQC-28). Cyclones, grids and linings are not drawn.
   Reason: catalyst is a solid that must slide, hence the 60°; the reactor stands above the
   regenerator's bed so spent catalyst runs down by its own head.
+  Stated in place of the proportions, where a plant sets its own connections on the item
+  (added 2026-11-25, for plant 3; without them the item is as above): the outside diameters
+  of the flue gas outlet and of the air inlet line, which are then drawn without their
+  flanges, the flue gas outlet as the open top of the regenerator's cone, and the vapour
+  outlet's stub not at all; and a grid, to whose next multiple the distance between the two
+  vessels' centres is raised, the riser standing on multiples of it from the regenerator's
+  centre (30 in short of the reactor's along the line of centres, and across it the next
+  multiple beyond the 6 in it keeps clear of the stripper); and the side of the line of
+  centres the riser stands on, the riser, standpipes and slide valves then being the mirror
+  image of the item as drawn; and the direction in which the air inlet line leaves the
+  regenerator, an angle about its axis in place of the side away from the reactor, and
+  the height above the item's base at which it runs out level, in place of 0.25 Dg below
+  the bottom head (it must leave the line's own bend and 6 in under that head). Reason:
+  a line bolts to a nozzle
+  of its own size, and the process sizes the flue gas, air and vapour lines by their flows,
+  not by the vessels' diameters (42, 20 and 24 in against stubs of 56, 44 and 28 in); and a
+  connection on a vessel's axis can stand on a plant's layout grid only if the axis does.
 - `SW-EQC-34` Coke drums (a pair) with their structure: each drum a shell of stated diameter D and
   tangent length, a top 2:1 head with a top flange of 0.25 D for the drill stem, a bottom cone at
   60° to a bottom flange of 0.25 D, on a skirt from the cone's rim to a table; the table a steel
@@ -2944,7 +2961,11 @@ Items:
   section in the top fifth, between two support rings, with a wash header nozzle of 2 in below it; a top cone at 45° to an outlet stack of 0.5
   D; two recirculation pumps (SW-DET-10) at the base on the suction nozzle with their discharge
   riser; manways at the sump, each spray level and the eliminator; platforms and ladders as a
-  column's. Reason: gas rises against sprayed liquid; droplets are caught before the outlet.
+  column's. Reason: gas rises against sprayed liquid; droplets are caught before the outlet. The
+  gas inlet duct may be given a stated outside diameter in place of 0.5 D; it is then drawn
+  level, at the height its upper end would have had, and without its flange, for a plant's
+  own nozzle to stand on its end; and the pumps, their riser and the spray nozzles may be
+  given a stated angle about the tower in place of 90° (added 2026-11-25, for plant 3).
 - `SW-EQC-37` Flue gas cooler (a horizontal fire-tube waste heat exchanger with its steam drum):
   a shell of stated diameter and length with tubesheets and tubes of 2 in on a 1.25 pitch; inlet
   and outlet channels as cones at 30° from the duct diameter of 0.5 D; a steam drum of 0.6 D
@@ -4387,9 +4408,13 @@ their own geometry rules, which are unchanged.
   the rack of plants 1 and 2). It is 30 ft wide, or 36 ft, where the unit's lines would
   load three tiers of a narrower rack beyond 60 % of their lanes: the lines that run more
   than 20 ft along it, a pipe's width and 3 in each, counted at the busiest section between
-  the centres of the bodies they join, with 5 ft for the utility headers, shared among
+  the centres of the bodies they join, with 5 ft for the utility headers, or the lanes its
+  own headers take on the top tier where that is more (each as wide as its pipe, or as its
+  largest connection's flange and 6 in, and 3 in between: SW-RPI-5), shared among
   three tiers of the rack's width less 4 ft (amended 2026-11-24: the crude unit's lines do
-  not fit a 24 ft rack on three tiers). Its lanes begin 30 ft from the battery limit and run as far as
+  not fit a 24 ft rack on three tiers; amended 2026-11-25: the cracking unit's ten headers,
+  two of them 20 in, take 17 ft 5 in of a top tier, not 5 ft, and on a 24 ft rack its lines
+  found no lane on the two tiers left to them; no other unit's rack is changed by it). Its lanes begin 30 ft from the battery limit and run as far as
   the unit's longest row of equipment, and where heaters stand beyond it, on to 10 ft short of
   their pads, so that their lines have steel under them; one bay more of the same steel stands ahead of them,
   from 10 ft to 30 ft from the battery limit: the valve bay, where the unit's isolation valves
@@ -4440,6 +4465,81 @@ their own geometry rules, which are unchanged.
   under the set's row of drains and its middle under the middle of that row (added
   2026-11-24). Reason: a tail pipe is a leg of liquid held up by the vacuum above it, and
   must fall straight, with no level run for vapour to lodge in.
+  Where the flowsheet states that an item stands after another (its parameter `after`), it
+  stands next after that item in that item's row, whatever the order the process meets them
+  in; and an item stated to begin a row (`row: 'new'`) begins one, though the row before it
+  is not full (added 2026-11-25). The cracking unit is laid out with these and with the
+  order its items are declared in. Next the rack, from the battery limit: the feed drum;
+  the compressor's interstage drum and the main fractionator's receiver, its side stripper
+  and the fractionator itself, under the air coolers and across the rack from the
+  compressors and exchangers that serve them; the reactor and regenerator; the flue gas
+  cooler; the scrubber with its stack; and after the scrubber the two catalyst hoppers and the
+  slurry filter. Behind
+  the three drums, in a row of its own that ends before the side stripper, the head of the
+  gas plant in the order the gas goes through it: the high-pressure separator, the primary
+  and sponge absorbers and the fuel gas amine absorber. The rest of the gas plant stands
+  across the rack (next paragraph), in the order the gas, the gasoline and the liquefied
+  gas go through it: the fuel gas knock-out drum; the stripper with its reboiler; the
+  debutaniser with its reboiler and its receiver; the liquefied gas amine contactor and
+  its caustic wash drum; the depropaniser with its reboiler and its receiver; and the
+  gasoline's caustic wash drum. The air blower stands after the last exchanger of its
+  row, across the rack from the regenerator.
+  Where the flowsheet states that a vessel stands across the rack (its parameter
+  `across`), it stands on the exchangers' side: the vessels so stated in one row on one
+  centre line, in the order they are declared, 8 ft beyond the pumps' row as the exchangers
+  are, and beginning where the exchangers' and machines' row ends, or 4 ft beyond the
+  station of a regenerator that stands across the rack where that is further along: its
+  blower's discharge runs along the row to that station before it turns under the rack
+  (SW-RPI-3), and the ground it runs over is left to it. A reboiler goes with its column. A
+  pump that draws from a vessel across the rack stands on that side too, opposite its
+  vessel, as the pumps of the vessels' side stand opposite theirs (added 2026-11-25).
+  Reason: a reactor and regenerator with their tower are a wall beside the rack, here 48 ft
+  long and 126 ft high, and a main fractionator with its platforms one 23 ft long and
+  115 ft high; what stands in a row behind either has no way to the rack but round its
+  ends, where a drum on its saddles is passed over. As first laid out, the fuel gas
+  knock-out drum and the stripper stood behind the side stripper and the fractionator, and
+  twelve more items behind the cracker, the flue gas cooler and the scrubber. The
+  generator takes a line off the rack at the station of the item it goes to, or within 3 ft
+  of it (SW-RT-1); the debutaniser's station lay inside the reactor's tower, its 12 in
+  overhead could not be brought to the rack there, and the search for a way round ran to
+  the limit of what the generator looks at without finding one (the first full routing
+  run, 2026-11-25). The side of the rack opposite the converter was empty beyond the last
+  exchanger. The items moved there stand each with the rack before it and nothing between,
+  along from the condensers and coolers that serve them; the two hoppers and the filter,
+  at the end of the cracker's own row, have the rack before them as well; and the four
+  items left in the second row stand behind the feed drum, the interstage drum and the
+  receiver.
+  The cracker stands with its reactor toward the fractionator it feeds: where that stands
+  before it in the row the item is turned end for end, and built with its riser on the
+  other side of its line of centres (SW-EQC-33), so that the riser still faces the rack.
+  Its air inlet line leaves the regenerator toward the rack, where the blower stands. The
+  flue gas cooler's inlet end faces the item its gas comes from; the scrubber's inlet duct
+  faces the item its gas comes from, the tower turned end for end where that stands before
+  it and its pumps then built on the other side (SW-EQC-36), away from the rack. The
+  main fractionator's overhead condenser stands last of the air coolers, next the
+  fractionator (`after`).
+  The regenerator and its cooler stand clear of one another by what the duct between them
+  needs in one plane: 2 ft beside the regenerator's platforms, the duct's elbow, and at the
+  cooler's inlet the connection itself and the length the generator needs straight at a
+  connection for the valve it stands there (which is not built, SW-RPI-14, but is in its
+  way while it routes: a gate valve's length, two pipe sizes and 1 ft), 23 ft in all. The
+  cooler and the scrubber stand apart by twice that straight length and their two
+  connections, and 1 ft, 28 ft: the duct between them is one straight piece, for the
+  cooler stands on piers that bring its axis to the height of the scrubber's inlet duct
+  (SW-CELL-4). Reason: the regenerator's flue gas goes through its cooler to the scrubber
+  and the reactor's vapour to the main fractionator, in the unit's largest and hottest
+  lines, and each of those lines should have the turns it needs and no more; a column's
+  overhead system stands where its air coolers are; and the gas plant begins beside the
+  compressor that feeds it. Laid out in the order the flowsheet first named its items, the
+  cooler stood in the second row, 35 ft behind the others and 90 ft along from the
+  regenerator; the hoppers and the scrubber stood between the reactor and the
+  fractionator; the fractionator's overhead ran 175 ft back along the rack to its air
+  coolers, the wet gas 260 ft to the compressor and as far back again twice more; and three
+  tiers of a 30 ft rack had no lane left for the last of the lines sent along it. And laid
+  out with the cooler 20 ft from the regenerator and 15 ft from the scrubber, on its pad,
+  the 42 in duct went round the regenerator's air inlet by a dog-leg of 12 ft and the
+  36 in duct came back on itself, because the two valves the generator stands at the ends
+  of each, 12 and 10 ft long, left its elbows no room between them.
   Reason: pumps under
   the edge of the rack have the shortest suction and discharge; a channel end facing the access
   way lets a tube bundle be pulled; heaters away from equipment that can leak keep a leak from
@@ -4493,8 +4593,25 @@ their own geometry rules, which are unchanged.
     SW-PRC-13.
   - The cracker (SW-EQC-33): regenerator diameter for its flue gas rising at 3 ft/s, to 6 in,
     and 1.5 diameters between tangents; reactor vessel 0.6 of the regenerator's diameter and
-    1.2 of its height. The wet scrubber (SW-EQC-36): diameter for the flue gas at 10 ft/s, eight
-    diameters high. The flue gas cooler (SW-EQC-37), sulfur furnace and condensers (SW-EQC-56,
+    1.2 of its height. Its flue gas outlet and air inlet line are of the outside diameters of
+    the lines that join them, its vapour outlet is the plant's own connection, and its two
+    vessels and riser stand on the 6 in grid (SW-EQC-33's stated inputs; added 2026-11-25);
+    it is set so that the regenerator's axis is on the grid along and across the rack and
+    the air inlet line's axis in height (SW-CELL-7). That line runs out 3 ft under the
+    rack's lowest tier (amended 2026-11-25): its line from the blower across the rack
+    passes under that tier's beams, 14 in deep, with the pipe's radius and a foot to spare,
+    and comes into the regenerator at the height it crossed at. At the item's own
+    proportion the inlet stood 6 ft 6 in higher, level with the space between two tiers:
+    the line dipped under the rack and climbed again, two more elbows, and the generator's
+    search, which found that way on the first layout, ran out on the second without
+    finding it. The wet scrubber (SW-EQC-36): diameter for the flue gas at 10 ft/s, eight
+    diameters high, its gas inlet duct level and of its line's outside diameter. The flue gas
+    cooler's two ducts are of their lines' outside diameters, without flanges, and the steam
+    outlet its drum is drawn with gives way to the plant's own connection; where its gas goes
+    on to a scrubber it stands on concrete piers under its saddles, as high as brings its
+    axis to that scrubber's inlet duct (11 ft 6 in), so that the duct between the two is
+    straight (added 2026-11-25).
+    The flue gas cooler (SW-EQC-37), sulfur furnace and condensers (SW-EQC-56,
     -57), incinerator (SW-EQC-58), adsorbers (SW-EQC-55), boilers (SW-EQC-40), cooling tower
     (SW-EQC-49) and flare (SW-EQC-35) are the catalogue's items at the size their flow or duty
     gives; packages with no body of their own are shown as a vessel of their volume. The
@@ -4584,7 +4701,12 @@ their own geometry rules, which are unchanged.
   the unit's frame (SW-RPI-2). Where a connection must stand on the axis of one of them (a
   burner, a duct, a casing's outlet), the body is moved by up to 3 in so that that solid's
   centre is on the 6 in grid along and across the rack, and its pad made up to 6 in thicker
-  so that it is in height.
+  so that it is in height. The scrubber, the flue gas cooler and the cracker's regenerator
+  stand with their axes on their row's own centre line across the rack, not the nearest
+  grid line to where their extents would put them (added 2026-11-25): a duct runs from each
+  to the next along the row, and with the scrubber centred by its extent, which its two
+  pumps make lopsided, its axis stood 36 in to one side of the cooler's, a jog a 36 in duct
+  has no room to make between them. Their footprints are measured about that axis.
 
 ## 79. Plant 3: piping of a unit (`SW-RPI-*`)
 
@@ -4747,6 +4869,42 @@ What this section adds is what that generator is given.
     legs leave a valve no room. (Amended 2026-11-24 from both on top: four upright valve
     stacks in a row on two bays' headers left a second bay's outlet no way to the first's
     line.)
+  - Reactor and regenerator (SW-EQC-33; added 2026-11-25). The flue gas leaves the open top
+    of the regenerator's cone, upward on the vessel's axis. The air enters the end of the air
+    inlet line, on its axis. The reactor's vapour leaves the top of the reactor's head on
+    its axis, its flange 54 in above the top platform's floor, as a column's top connection
+    stands. The feed enters the side of the riser that faces the rack, 8 ft above the place
+    where the regenerated catalyst's standpipe meets the riser, and the riser's steam enters
+    2 ft above that place; the riser stands inside the plan of the reactor's tower, so each
+    of the two stands out until its face is 6 in beyond the tower's face, and is moved up
+    the riser 6 in at a time until its flange passes 3 in clear of the tower's girts and
+    bracing. Catalyst is withdrawn from, and fresh catalyst blown into, the regenerator's
+    shell on its centre line where it faces the rack: the withdrawal in the lowest stretch
+    of shell that lies between two platform levels, the fresh catalyst in the next stretch
+    above, each at the middle of the room between the handrail below (and its own flange)
+    and the platform above (and its valve's handwheel), on the grid. Reason: each stands
+    where the stream enters or leaves the item: air under the bed, flue gas from the top of
+    the regenerator, oil into the foot of the riser above the hot catalyst with steam under
+    it to lift and spread it, vapour from the top of the disengager, catalyst to and from
+    the bed. The regenerator's platforms are the catalogue's, about its manways, and cover
+    the side toward the rack; a connection between two of them leaves under one and over
+    the other's handrail.
+  - Catalyst hopper (the silo of SW-EQC-22; added 2026-11-25). Catalyst leaves, and the air
+    that carries it enters, through the skirt's opening: two connections on the skirt's
+    face at the opening's mid-height (to the grid), 12 in apart about its centre line, the
+    catalyst's the one toward the rack. The hopper's own outlet from the foot of the cone to
+    the opening is inside the skirt and is not drawn. Catalyst arriving enters through the
+    roof at its centre, its flange 54 in above the roof, over the handrail. Reason: a hopper
+    on a skirt is emptied through the skirt's opening, where the carrying air picks the
+    catalyst up; it is filled from the top.
+  - Wet scrubber (SW-EQC-36; added 2026-11-25): the flue gas enters the end of the gas
+    inlet duct, on its axis; make-up water and caustic enter the sump, on the shell's centre
+    line where it faces the rack, under its lowest platform: the water 2 ft above the base,
+    to the grid, and the caustic 3 ft above the water. The stack is open.
+  - Flue gas cooler (SW-EQC-37; added 2026-11-25): the gas enters the end of the inlet duct
+    and leaves the end of the outlet duct, on the shell's axis; the steam leaves the top of
+    the steam drum at mid-length and the feed water enters its top 3 ft along, toward the
+    gas inlet. Reason: as the sulfur furnace's boiler.
 - `SW-RPI-3` Line list. Each line of the flowsheet is one line of the generator with its size
   and class of SW-PRC-3 and -4, its service letter by its fluid's group (SW-PRC-1), and its
   number by SW-REF-3. An end at an item is that item's nozzle; a branch is a tap on its run; an
@@ -4765,14 +4923,50 @@ What this section adds is what that generator is given.
   (SW-VLV-11). So are steam and condensate lines over 12 in (added 2026-11-25, with the
   plant's 14 in low-pressure steam header, SW-PWY-11): the globe valves the generator
   gives steam and condensate lines are offered to 12 in, and a line larger than that is
-  shut by a gate valve. What a line carries is on its record (§76), not in its number. An installed spare, and each further body of an item in parallel,
+  shut by a gate valve. So is a water connection over 12 in to or from the item it
+  serves (added 2026-11-25, with the debutaniser condenser's 14 in cooling water): the
+  generator stands a throttling globe valve at a water consumer (SW-LL-7), offered to
+  12 in, and has no other valve for that duty; such a connection has the gate valve at its
+  take-off and the one at the item, and is not throttled in this model. The water headers
+  keep their letter at any size: nothing is valved on them. What a line carries is on its
+  record (§76), not in its number. An installed spare, and each further body of an item in parallel,
   joins the first body's line with a tee (SW-LL-3), numbered from unit × 1000 + 301; where
   the first body's line is itself a branch that ends at a tee on another line, the further
   body joins that other line with a tee of its own (amended 2026-11-24: an injection
   pump's connection, no longer than its valves, left its spare no straight piece to join),
-  unless the branch has a root spool on the rack (SW-RPI-8). Each line
+  unless the branch has a root spool on the rack (SW-RPI-8). Where the flowsheet states
+  that an item is met at its nearest body (`nearest`), a line to it runs to the body nearest
+  the line's other end along the rack, and the others join in the order of their distance
+  from it (added 2026-11-25, for the main fractionator's condenser: its overhead comes to
+  its three bays from one end and its condensate leaves from the other, and with both
+  lines made to the same bay one of them had to pass the other two bays' connections to
+  reach it, which the overhead could not and the outlet did only by leaving a bay's branch
+  no place to join). Each line
   carries beside the generator's record the fluid, design conditions and origin that the code
   layer needs (§76).
+  A line of the flowsheet that must not be sent along the rack, though its ends stand more
+  than 20 ft apart along it, is numbered and built with the letter V in place of P (added
+  2026-11-25): the generator routes free any line that is not a process line, and V is a
+  letter of its own that, on a line tapping no other, stands for the process group, so the
+  line's joints, flanges and valves are those of a process line of its class. They are five,
+  all in the cracking unit: the regenerator's flue gas to its cooler, the cooled flue gas
+  to the scrubber, the reactor's vapour to the main fractionator, the regenerator's air
+  from its blower, and a line into an item the flowsheet states is met direct (`direct`):
+  the main fractionator's overhead to its condenser. Reason: sent along the rack, a 42 in
+  duct would come down from the regenerator's top onto the top tier and climb off it again
+  30 ft on, and the 24 in vapour line would fall 100 ft to the rack and rise 25 ft to the
+  fractionator; each goes straight from the one item to the other, over nothing but their
+  own ground. The air line, sent along the rack for the 26 ft between the blower's station
+  and the regenerator's, took eleven elbows to get on and off it; free, it goes under the
+  rack and up. The fractionator's overhead, whose condenser bays reach 45 ft along the
+  rack, could not rise from a lane on the rack to connections on top of the bays that
+  stand over it; free, it crosses over the bays at their own level (SW-RPI-6), with a
+  branch down to each, as the crude unit's does from a column that stands beside its bays.
+  Each is routed in a run of its own before every other line of the unit, the largest
+  first (SW-RPI-7), so that the smaller lines find their way round it. A branch that joins
+  such a line for a further body in parallel carries the same letter: the generator routes
+  the branches of process lines before any line that is not one, and would look for the
+  tee on a line it had not yet laid.
 - `SW-RPI-4` Battery limit. Each stream entering or leaving the unit ends at a spool in the valve
   bay, the rack's bay nearest the battery limit (SW-CELL-2): two nozzles back to back, 24 in face
   to face, 30 in inside the bay's first bent, at the elevation its line runs at on its tier
@@ -4850,7 +5044,12 @@ What this section adds is what that generator is given.
     and in any case as far from the shell as the valve set on its largest connection
     toward the rack, and the turn after it, reach (added 2026-11-24: the vacuum column's 36 in
     feed, whose valve set ends 12 ft from the shell, outside a room 10 ft deep);
-    for any other body, 6 ft all round; each as high as that body's highest connection
+    for any other body, 6 ft all round, and for an air cooler bay further on the side a
+    connection faces where that connection's valve set ends further out: to that end, half
+    the pipe and 1 ft (added 2026-11-25: the valve at a 16 in outlet of the main
+    fractionator's condenser ends 6 ft 6 in from the bay, 6 in outside the room, and the
+    line had nowhere to turn down; no bay of the units piped before has a connection
+    larger than 10 in, and none of their rooms is changed by it); each as high as that body's highest connection
     needs for its valve and the turn after it, with 6 ft over, and closed again above.
     Where a line joins connections up there on two bodies (a column's top and the air
     cooler it feeds), the way between their two rooms is open as well, over the width they
@@ -4900,13 +5099,53 @@ What this section adds is what that generator is given.
       line's own height on its tier and the clearances: room for the 36 in of a 12 in line
       and not for the 42 in of a 14 in line. Below the lowest tier and above the top one
       nothing stands in its way.
+    - A 12 in line both of whose ends are connections standing above the lowest tier:
+      the top tier only (added 2026-11-25). Reason: the generator keeps a straight of two
+      elbow radii and 2 in, rounded up to its 6 in grid, between two elbows (SW-RT-4): 42 in
+      for a 12 in line, 48 in for a 14 in line, and under the tier above there are 36 in.
+      So a 12 in line cannot turn in between two tiers either, whatever the paragraph
+      above allows it by the elbows' own lengths: in the eight units routed before the
+      cracking unit every 12 in line on the lowest tier came up into it from below. An
+      end that stands above that tier reaches it only by going down under the tier and
+      up again. One such end the generator finds its way from, as it did in the crude
+      unit; with both ends above (the debutaniser's overhead, from the top of its column
+      to the top of its condenser) the line belongs on the top tier, which it enters
+      from above at both ends.
+    - A line of 12 in and larger whose riser into the lowest tier would foul a beam: the
+      top tier only (added 2026-11-25). Such a line comes up into the lowest tier at the
+      station of its end and nowhere else: the generator looks 3 ft either side of that
+      station for a clear place, and a line whose elbows must stand 42 or 48 in apart
+      cannot step aside by less. At every bent the tier's beam crosses the rack, and
+      midway between bents an intermediate beam (SW-RK-6). A riser is held to foul one
+      where its axis is nearer the beam's axis, along the rack, than the radius the
+      generator holds the beam at (half the diagonal of its section), the pipe's radius,
+      the 3 in clearance of SW-RT-3 and half a square of the generator's grid, which is
+      how closely it measures. The same beams stand under every tier, so a line that
+      cannot come up beside one cannot come down past the one above it either; the top
+      tier it reaches from above, past none. A connection that stands on the rack itself
+      (a battery limit or root spool) has no riser, and one that points along the rack
+      is not tested: its line's station is where the valves on it end, which the
+      generator decides. In the cracking unit the wet gas line, 14 in, leaves the top of
+      the main fractionator's receiver 12 in along from an intermediate beam; given the
+      lowest tier it was not routed (the first full routing run, 2026-11-25).
     - A line to or from an air cooler: the top tier, then the tiers below it in turn.
       Reason: the coolers stand on the rack's top; their lines leave the rack upward and
       then pass no other tier's lanes.
     - Any other line: the lowest tier, then upward. Reason: the largest lines are the
       heaviest and their branches the stiffest, so they go lowest, where the columns carry
       them with the least moment and the drops to equipment are shortest.
-  - Lane. On its tier a line takes the lane nearest the rack's centre line that is free
+  - Lane. A lane's centre lies on the 6 in grid, no nearer the rack's edge than 2 ft, and
+    no nearer the rack's columns than the generator will lay that pipe (added 2026-11-25):
+    it holds a column as the squares of its 6 in grid whose centres lie within the column's
+    half-diagonal and a square's half-diagonal of the column's axis, and keeps a line's
+    centre its radius and 3 in from the nearest such centre (less whatever of the column's
+    own half-diagonal reaches beyond that centre). This plan makes the same test at a bent
+    for each lane it would give. By it the lane 2 ft inside the edge takes a pipe to 6 in on
+    a tier the columns pass through, and to 10 in on the top tier, over the columns' tops;
+    the next lane inward takes any to 18 in. The outermost lane had carried only 6 in lines
+    until the cracking unit, whose ten headers fill its top tier nearly to the last: the
+    compressor's 12 in discharge, given that lane, found none (2026-11-25). On its tier a
+    line takes the lane nearest the rack's centre line that is free
     over its run; where both its ends stand on one side of the rack, the lanes of that half
     are tried before the others, so that it leaves the rack on its own side and does not
     pass under the other half's lanes to do it. On the lowest tier no lane lies nearer
@@ -5079,7 +5318,18 @@ What this section adds is what that generator is given.
   at least (added 2026-11-24: the generator runs a line whose ends are more than 20 ft
   apart along the rack in a lane, SW-RT-1, and needs some feet of rack to do it; a
   station at the very end left the reformer's tail gas line to its heater 5 ft of rack,
-  and the generator no lane). The line as the flowsheet numbers it runs from its source to the
+  and the generator no lane). A station whose onward line climbs to a connection above
+  the lowest tier, and whose far face looks toward that connection, does not stand
+  between 20 ft and 20 ft and its own outlet's length (a gate valve, two pipe sizes, 4 ft)
+  short of the connection along the rack (added 2026-11-25). Reason: the generator measures
+  the 20 ft of SW-RT-1 from where the pieces it stands on the spool's face end, some feet
+  nearer the connection than the spool; in that stretch this plan counted the line a rack
+  line and gave it a lane, and the generator sent it free. A short line on the level it
+  finds its way with either way; the main fractionator's reflux, sent free from under the
+  rack to a connection 106 ft up a column whose rack side already carried five lines, was
+  more than its search found a way for (the cracking unit, 2026-11-25). From a lane the
+  same line is two short searches, one at each end.
+  The line as the flowsheet numbers it runs from its source to the
   spool's near face, which looks toward the source, and carries the station there; the rest
   runs from the far face to the destination under a number from unit × 1000 + 701. A branch
   joins or leaves such a line ahead of its station; a spare at the line's destination joins
@@ -5182,6 +5432,17 @@ What this section adds is what that generator is given.
     under the set's deck, where no one could reach a valve; each of these lines has its
     valve at the header it leaves (SW-RPI-5), and the set's own valves, at each ejector and
     each channel, belong to the set and are not drawn (SW-EQC-68).
+  - Both ends of the flue gas line from a regenerator to its cooler and of the line from
+    that cooler to the scrubber (added 2026-11-25). Reason: the regenerator's pressure is
+    held by a slide valve in this duct, which is the item's own and is not drawn; nothing
+    else may ever stand shut between the regenerator and the stack.
+  - Both ends of the line from a reactor's top to the fractionator it feeds (added
+    2026-11-25). Reason: it carries the whole of the cracked vapour at 980 °F, and coke
+    forms wherever that vapour stands still; the two are parted by a blind set in the line
+    at a shutdown, not by a valve.
+  - The regenerator's end of the air line from the blower (added 2026-11-25). Reason: the
+    air's one block valve is at the blower's discharge; at the regenerator the line runs
+    straight into the air grid.
   Where the line is of another size than the nozzle, the reducer the generator stands
   behind that flange moves up with it (added 2026-11-24, with §80). The generator's own code is not changed; the correction is plant 3's, made in
   `src/refinery/pipingReport.ts`, and each end corrected is named in the unit's notes. This

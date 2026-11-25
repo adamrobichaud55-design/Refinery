@@ -17,6 +17,7 @@ import { sizeW } from '../generator/building';
 import { partFromKey } from '../generator/piping';
 import type { Dim } from '../core/basis';
 import { frameFromAxes, multiply, translate, standUp, rotateY } from '../geometry/transform';
+import { unitHeaders, connection } from './headers';
 import type { Mat4 } from '../geometry/mesh';
 import type { Placed } from '../generator/building';
 import type { InteriorModel } from '../generator/interior';
@@ -61,7 +62,7 @@ export function suctionReach(lineNPS: number, nozNPS: number, cls: PipeClass): n
   return nozzleStandout(nozNPS, cls) + 2 + L(fn) + (lineNPS !== nozNPS ? lineNPS : 6) + 2 * L(fl) + gateFaceToFace(lineNPS, cls) + 2 * fl.rfH + elbowRadius(pipeDims(lineNPS, cls).OD);
 }
 /** a body before it is placed: its footprint and how to build it at a spot */
-interface Plan { tag: string; item: string; kind: EqKind; lane: Lane; lx: number; lz: number; h: number; gap?: number; side?: 1 | -1; /** room along the row kept with it for what must stand next to it (a column's reboiler) */ keep?: number; /** a pump: the room its suction valve set needs between the casing's end and the rack's columns */ reach?: number; /** stands in the ground, with no pad (a pit, a basin) */ ground?: boolean; /** SW-CELL-7: the solid whose centre is brought onto the 6 in grid in the axes named, so that connections on it can be met (in y by a thicker pad) */ align?: { solid?: RegExp; /** or a point of the body's own frame */ point?: [number, number, number]; axes: string }; build: (c: Ctx, s: Spot) => void }
+interface Plan { tag: string; item: string; kind: EqKind; lane: Lane; lx: number; lz: number; h: number; gap?: number; side?: 1 | -1; /** a vessel the flowsheet states to stand across the rack, on the exchangers' side (SW-CELL-3) */ across?: boolean; /** room along the row kept with it for what must stand next to it (a column's reboiler) */ keep?: number; /** a pump: the room its suction valve set needs between the casing's end and the rack's columns */ reach?: number; /** stands in the ground, with no pad (a pit, a basin) */ ground?: boolean; /** SW-CELL-7: the solid whose centre is brought onto the 6 in grid in the axes named, so that connections on it can be met (in y by a thicker pad) */ align?: { solid?: RegExp; /** or a point of the body's own frame */ point?: [number, number, number]; axes: string; /** across the rack, onto the row's own centre line, not the nearest grid line: bodies whose ducts run from one to the next along the row share an axis */ onLine?: boolean }; /** SW-CELL-4: stands on concrete piers this high, one under each of its solids named */ raise?: { by: number; under: RegExp }; build: (c: Ctx, s: Spot) => void }
 interface Ctx { out: Placed[]; equipment: InteriorModel['equipment']; kit: ReturnType<typeof interiorKit> }
 type V3 = [number, number, number];
 export interface SolidBox { part: string; name: string; mn: V3; mx: V3 }
@@ -90,6 +91,8 @@ export function bodySolids(cell: CellModel, tag: string): SolidBox[] {
   let r = m.get(tag); if (!r) { const sp = cell.spots.find(q => q.tag === tag), parts = new Set(sp?.parts ?? [tag]); m.set(tag, (r = placedBoxes(cell.interior.equipment.filter(q => parts.has(q.tag))))); }
   return r;
 }
+/** the boxes of the cell's own works that carry every tag given: a body's pad, the piers it stands on (SW-CELL-4) */
+export function worksBoxes(cell: CellModel, ...tags: string[]): SolidBox[] { return placedBoxes(cell.interior.instances.filter(i => tags.every(t => i.tags.includes(t)))); }
 const SUFFIX = 'ABCDEFGH';
 /** a catalogue item without the nozzles it draws for the catalogue: the piping stage adds the plant's own (SW-CELL-4) */
 export function bare(p: PartSpec): PartSpec {
@@ -116,6 +119,16 @@ export function ejectorSetInput(tag: string, z: EquipSize): EjectorSetInput {
 }
 /** SW-CELL-4: the deck's floor load, psf (SW-STA-12), and a 3/4 in tube's weight, lb/ft (wall d / 9, SW-EQC-30) */
 const DECK_PSF = 250, TUBE_LB_FT = (Math.PI / 4) * (0.75 ** 2 - (0.75 * (7 / 9)) ** 2) * 12 * K.STEEL_DENSITY_LB_IN3;
+/** SW-CELL-3: the room between two bodies whose connections face one another on one axis, joined by a straight duct: the valve the generator stands at each end (not built: SW-RPI-14), each connection's own length, and 2 ft of pipe between */
+const ductRoom = (NPS: number, cls: PipeClass) => up(2 * (stackLength(NPS, cls) + nozzleStandout(NPS, cls)) + 12, 12);
+/** the length the generator's valve, its gaskets, the line's flange and the lead pipe behind it take at a connection (SW-LL-6): what a line needs straight before its first turn, whether the valve is built or not */
+const stackLength = (NPS: number, cls: PipeClass) => gateFaceToFace(NPS, cls) + 2 * NPS + 12;
+/** SW-CELL-4: the wet scrubber as the plant builds it: its gas inlet duct level and of its line's outside diameter; turned end for end, its pumps on the other side, where its gas comes from an item before it in the row (SW-CELL-3) */
+function scrubberBody(sh: UnitSheet, e: Equip, z: EquipSize): { body: PartSpec; D: number; turned: boolean; duct?: { NPS: number; cls: PipeClass } } {
+  const gas = e.ports.find(p => p.name.startsWith('stack'))!.s, D = up(Math.sqrt((4 * cfs(gas)) / (Math.PI * 10)) * 12, 6), nG = z.nozzles.find(q => q.port === 'flue gas in'), order = [...sh.equip.keys()];
+  const from = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === e.tag && l.to.port === 'flue gas in')?.from, turned = !!from && from.k === 'eq' && order.indexOf(from.tag) < order.indexOf(e.tag);
+  return { body: bare(makeWetScrubber({ tag: e.tag, D, H: 8 * D, ...(nG ? { inlet: { OD: pipeDims(nG.NPS, nG.cls).OD } } : {}), ...(turned ? { pumpsAt: -Math.PI / 2 } : {}) })), D, turned, ...(nG ? { duct: { NPS: nG.NPS, cls: nG.cls } } : {}) };
+}
 function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
   const d = z.d, tags = (n: number) => Array.from({ length: n }, (_, i) => (n > 1 ? `${e.tag}${SUFFIX[i]}` : e.tag));
   const place = (c: Ctx, part: PartSpec, T: Mat4, tag: string) => { c.out.push({ part, transform: T, tags: [tag, 'equipment'] }); c.equipment.push({ tag, part, transform: T }); };
@@ -259,7 +272,20 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
         Object.assign(s, { shape: 'hx', R, yc, axis: 'z', len: TT, o: [s.x, yc, zo], zc });
       } };
     });
-    case 'fluegascooler': return [boxy(e.tag, 'vessel', 240 + d.ID, d.ID + 96, d.ID + 150, (c, s) => { place(c, bare(makeFlueGasCooler({ tag: e.tag, D: d.ID, L: 240, t: d.tShell, drumT: d.drumT })), frameFromAxes([s.x - 120, PAD + d.ID / 2 + 36, s.z], [0, 1, 0], [1, 0, 0]), e.tag); })];
+    case 'fluegascooler': {
+      // SW-CELL-4: its ducts of their lines' outside diameters, without flanges, and no drawn steam outlet: the plant's own connections stand there (SW-RPI-2)
+      const nIn = z.nozzles.find(q => q.port === 'inlet')!, nOut = z.nozzles.find(q => q.port === 'outlet')!, order = [...sh.equip.keys()];
+      const from = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === e.tag && l.to.port === 'inlet')?.from, east = !!from && from.k === 'eq' && order.indexOf(from.tag) > order.indexOf(e.tag);   // SW-CELL-3: its inlet end toward the item its gas comes from
+      const drawn = bare(makeFlueGasCooler({ tag: e.tag, D: d.ID, L: 240, t: d.tShell, drumT: d.drumT, ducts: { inletOD: pipeDims(nIn.NPS, nIn.cls).OD, outletOD: pipeDims(nOut.NPS, nOut.cls).OD, plain: ['inlet', 'outlet'] } }));
+      const body: PartSpec = { ...drawn, extra: { ...drawn.extra, solids: (drawn.extra!.solids as { name: string }[]).filter(q => !/^steam drum steam outlet: /.test(q.name)) } };
+      // SW-CELL-4: on piers, where its gas goes on to a scrubber: its axis at the height of that scrubber's inlet duct, so that the duct between them is straight
+      const to = sh.lines.find(l => l.from.k === 'eq' && l.from.tag === e.tag && l.from.port === 'outlet')?.to, sc = to && to.k === 'eq' ? sh.equip.get(to.tag) : undefined;
+      const axisOver = (boxes: { name: string; mn: V3; mx: V3 }[], re: RegExp, k: number) => { const b = boxes.filter(q => re.test(q.name)); return (Math.min(...b.map(q => q.mn[k])) + Math.max(...b.map(q => q.mx[k]))) / 2 - Math.min(...boxes.filter(q => !HELD.test(q.name)).map(q => q.mn[k])); };
+      const by = sc && sc.kind === 'scrubber' ? up(PAD + axisOver(partBoxes(scrubberBody(sh, sc, sizing().get(sh.no)!.equip.get(sc.tag)!).body), /^gas inlet duct$/, 2) - 1e-6) - up(PAD + axisOver(partBoxes(body), /^shell$/, 1) - 1e-6) : 0;
+      // SW-CELL-3: clear of the item after it by what the duct between them needs: toward the regenerator, 2 ft, the duct's elbow, the length of the valve the generator stands at this inlet (not built: SW-RPI-14) and the connection's own length
+      const toRegen = up(24 + elbowRadius(pipeDims(nIn.NPS, nIn.cls).OD) + stackLength(nIn.NPS, nIn.cls) + nozzleStandout(nIn.NPS, nIn.cls), 12);
+      return [{ ...boxy(e.tag, 'vessel', 240 + d.ID, d.ID + 96, d.ID + 150, (c, s) => { place(c, body, frameFromAxes([s.x + (east ? 120 : -120), PAD + d.ID / 2 + 36, s.z], [0, 1, 0], [east ? -1 : 1, 0, 0]), e.tag); }, east ? toRegen : ductRoom(nOut.NPS, nOut.cls), false, { solid: /^shell$/, axes: 'xyz', onLine: true }), ...(by > 0 ? { raise: { by, under: /^saddle base/ } } : {}) }];
+    }
     // SW-CELL-4: over the rack, on a deck 9 ft above its top tier, the tubes across the rack; the catalogue cooler on 2 ft legs, its headers' tops 134 in above the deck
     case 'aircooler': return tags(d.bays).map(tag => boxy(tag, 'air', 168 + 12, 384 + 24, DECK + 134, (c, s) => { place(c, bare(makeAirCooler({ tag, W: 168, L: 384, fans: 2, legH: 24 })), multiply(translate(s.x, DECK, s.z), multiply(rotateY(Math.PI / 2), standUp())), tag); Object.assign(s, { yt: DECK + 134 }); }, 0));
     case 'drum': {
@@ -299,9 +325,17 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
     }
     case 'cracker': {
       const flue = e.ports.find(p => p.name === 'flue gas')!.s, regenD = up(Math.sqrt((4 * cfs({ ...flue, P: 28 })) / (Math.PI * 3)) * 12, 6), regenTT = 1.5 * regenD, reactorD = up(0.6 * regenD, 6), reactorTT = 1.2 * regenTT;
-      return [boxy(e.tag, 'vessel', 3.2 * regenD, 2 * regenD, 6 * regenD, (c, s) => { place(c, bare(makeCatCracker({ tag: e.tag, regenD, regenTT, reactorD, reactorTT })), upright(s.x - 0.6 * regenD, PAD, s.z), e.tag); }, 120)];
+      // SW-CELL-4: the flue gas outlet and the air inlet line of their lines' outside diameters, the vessels and the riser on the grid; set so that the regenerator's axis and the air line's are on it (SW-CELL-7)
+      const nF = z.nozzles.find(q => q.port === 'flue gas')!, nA = z.nozzles.find(q => q.port === 'regenerator air')!, order = [...sh.equip.keys()];
+      // SW-CELL-3: its reactor toward the fractionator it feeds: where that stands before it in the row the item is turned end for end, and built with its riser on the other side so that the riser still faces the rack
+      const to = sh.lines.find(l => l.from.k === 'eq' && l.from.tag === e.tag && l.from.port === 'reactor vapour')?.to, turned = !!to && to.k === 'eq' && order.indexOf(to.tag) < order.indexOf(e.tag);
+      const body = bare(makeCatCracker({ tag: e.tag, regenD, regenTT, reactorD, reactorTT, plant: { flueOD: pipeDims(nF.NPS, nF.cls).OD, airOD: pipeDims(nA.NPS, nA.cls).OD, grid: 6, airAt: turned ? Math.PI / 2 : -Math.PI / 2, airZ: RACK.tiers[0] - 36 - PAD - 6, ...(turned ? { riserSide: 1 as const } : {}) } }));   // the air inlet toward the rack, where the blower stands, and 3 ft under the rack's lowest tier, the height its line crosses under the rack at (stated less the pad and the 6 in by which the item is then raised to stand on the grid, SW-CELL-7)
+      return [boxy(e.tag, 'vessel', 3.2 * regenD, 2 * regenD, 6 * regenD, (c, s) => { place(c, body, upright(s.x + (turned ? 0.6 : -0.6) * regenD, PAD, s.z, turned ? Math.PI : 0), e.tag); }, turned ? up(24 + elbowRadius(pipeDims(nF.NPS, nF.cls).OD) + stackLength(nF.NPS, nF.cls) + nozzleStandout(nF.NPS, nF.cls), 12) : 120, false, { point: [0, 0, body.extra!.zAir as number], axes: 'xyz', onLine: true })];
     }
-    case 'scrubber': { const gas = e.ports.find(p => p.name.startsWith('stack'))!.s, D = up(Math.sqrt((4 * cfs(gas)) / (Math.PI * 10)) * 12, 6); return [boxy(e.tag, 'vessel', D + 96, D + 96, 8 * D, (c, s) => { place(c, bare(makeWetScrubber({ tag: e.tag, D, H: 8 * D })), upright(s.x, PAD, s.z), e.tag); }, 96)]; }
+    case 'scrubber': {
+      const { body, D, turned, duct } = scrubberBody(sh, e, z);
+      return [boxy(e.tag, 'vessel', D + 96, D + 96, 8 * D, (c, s) => { place(c, body, upright(s.x, PAD, s.z, turned ? Math.PI : 0), e.tag); }, duct && !turned ? ductRoom(duct.NPS, duct.cls) : 96, false, duct ? { point: [0, 0, body.extra!.zInlet as number], axes: 'xyz', onLine: true } : undefined)];
+    }
     case 'furnace': return [boxy(e.tag, 'vessel', 420, 144, 144, (c, s) => { const og = z.nozzles.find(q => q.port === 'process gas'); place(c, bare(makeSulfurFurnace({ tag: e.tag, D: d.D, furnaceL: d.furnaceL, boilerL: d.boilerL, boilerT: d.boilerT, drumT: d.drumT, ...(og ? { outletOD: pipeDims(og.NPS, og.cls).OD } : {}) })), frameFromAxes([s.x - 190, PAD + 66, s.z], [0, 1, 0], [1, 0, 0]), e.tag); }, 48, false, { solid: /^furnace chamber$/, axes: 'y' })];
     case 'incinerator': return [boxy(e.tag, 'heater', 420, 144, 1300, (c, s) => { place(c, bare(makeIncinerator({ tag: e.tag, D: 72, L: 240, stackH: 1200 })), upright(s.x - 190, PAD, s.z), e.tag); }, 240, false, { solid: /^chamber shell$/, axes: 'y' })];
     case 'psa': return tags(z.count).map(tag => vertical(tag, d.D, d.t, d.TT, 60, false));   // SW-CELL-4: each adsorber a vessel of its own, piped to the others by the generator
@@ -331,7 +365,10 @@ export function rackHalf(unit: number, longest = 4200, part: 'all' | 'tower' | '
   const xOf = (en: UnitSheet['lines'][number]['from']) => (en.k === 'eq' ? c.spots.find(q => q.item === en.tag)?.x : en.k === 'bl' ? xBay : undefined);
   const runs = sh.lines.map((l, i) => ({ xa: xOf(l.from), xb: xOf(l.to), z: Z.lines[i] })).filter(r => r.xa !== undefined && r.xb !== undefined && Math.abs(r.xa - r.xb) > 240);   // every line of the flowsheet is a process line (SW-RPI-3)
   let peak = 0; for (let x = RACK.start; x <= c.rack.x1; x += 24) peak = Math.max(peak, runs.filter(r => Math.min(r.xa!, r.xb!) - 36 <= x && Math.max(r.xa!, r.xb!) + 36 >= x).reduce((a, r) => a + pipeDims(r.z.NPS, r.z.cls).OD + 3, 0));
-  return [RACK.half, RACK.half + 36, RACK.half + 72].find(h => (peak + 60) / RACK.tiers.length <= 0.6 * (2 * h - 48)) ?? RACK.half + 72;
+  // the unit's own headers on the top tier, each as wide as the lane it is given (SW-RPI-5): its pipe, or its largest connection's flange and 6 in
+  const here = (tag: string) => part === 'all' || (part === 'tower') === TOWER_TAGS.includes(tag);
+  const heads = unitHeaders(unit, here).reduce((a, h) => a + Math.max(pipeDims(h.NPS, h.cls).OD, ...h.utils.map(i => { const q = connection(Z.utils[i]); return designFlange(q.NPS, q.cls).OD + 6; })) + 3, 0);
+  return [RACK.half, RACK.half + 36, RACK.half + 72].find(h => (peak + Math.max(60, heads)) / RACK.tiers.length <= 0.6 * (2 * h - 48)) ?? RACK.half + 72;
 }
 /** the cooling tower and its pumps stand on their own plot at the downwind end of the process bench (SW-SITE-4) */
 export const TOWER_TAGS = ['X-1903', 'P-1905', 'P-1906', 'F-1902'];
@@ -350,17 +387,28 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
     const column = plans[col]; for (const p of mine) { p.lane = 'vessel'; plans.splice(plans.indexOf(p), 1); }
     plans.splice(plans.indexOf(column) + 1, 0, ...mine); column.gap = 12; column.keep = mine.reduce((w, p) => w + p.lx, 12);                                   // the footprints of the two keep 12 in of their own beyond the platforms and the shell
   }
-  // SW-CELL-3: a sulfur pit stands beyond the outer ends of the condensers that drain into it (set once they are placed, below)
+  // SW-CELL-3: an item the flowsheet states to stand after another stands next after it, in its row
+  for (const e of sh.equip.values()) {
+    const host = e.p.after; if (typeof host !== 'string') continue;
+    const mine = plans.filter(p => p.item === e.tag && p.lane !== 'pump'), theirs = plans.filter(p => p.item === host && p.lane !== 'pump'); if (!mine.length) continue;
+    if (!theirs.length) throw new Error(`${e.tag}: stated to stand after ${host}, which has no place in a row`);
+    for (const p of mine) { plans.splice(plans.indexOf(p), 1); p.lane = theirs[0].lane; }
+    plans.splice(plans.indexOf(theirs[theirs.length - 1]) + 1, 0, ...mine);
+  }
+  // SW-CELL-3: a vessel the flowsheet states to stand across the rack; a reboiler goes with its column
+  for (const e of sh.equip.values()) if (e.p.across !== undefined) for (const p of plans) if (p.item === e.tag && p.lane === 'vessel') p.across = true;
+  for (const l of sh.lines) { if (l.from.k !== 'eq' || l.to.k !== 'eq' || l.to.port !== 'reboiler return') continue; const tag = l.to.tag, own = l.from.tag; if (plans.some(p => p.item === tag && p.lane === 'vessel' && p.across)) for (const p of plans) if (p.item === own && p.lane === 'vessel') p.across = true; }
+  const acrossItems = new Set(plans.filter(p => p.across).map(p => p.item));
   if (plans.some(p => p.kind === 'condenser' && p.lane === 'exchanger')) for (const p of plans) if (p.kind === 'pit') p.lane = 'pit';
   // SW-CELL-3: a unit's storage tanks stand after its other vessels, so that the row next the rack is the process equipment's
   { const tanks = plans.filter(p => p.kind === 'tank' && p.lane === 'vessel' && p.lx >= 240); for (const p of tanks) plans.splice(plans.indexOf(p), 1); plans.push(...tanks); }
   // SW-CELL-3: pumps stand on the side of the vessels they draw from where they draw from one, otherwise on the exchanger side
   const laneOf = new Map<string, Lane>(plans.map(p => [p.item, p.lane]));
-  for (const p of plans) if (p.lane === 'pump') { const src = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && l.to.port === 'S')?.from; p.side = src && src.k === 'eq' && ['vessel', 'under'].includes(laneOf.get(src.tag) ?? '') ? -1 : 1; }
+  for (const p of plans) if (p.lane === 'pump') { const src = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && l.to.port === 'S')?.from; p.side = src && src.k === 'eq' && ['vessel', 'under'].includes(laneOf.get(src.tag) ?? '') ? (acrossItems.has(src.tag) ? 1 : -1) : 1; }   // a vessel across the rack has its pumps there with it
   // SW-CELL-7: every body is built once, at the origin, and measured there: its footprint is what its solids and pads cover, about its
   // datum. A body with no datum the connections are set from (a package, a furnace, a boiler) stands by its extent instead: level on a pad
   // laid under what it stands on, and centred on its spot. Each is then moved to its spot whole.
-  const sideOf = (p: Plan): 1 | -1 => (p.lane === 'pump' ? p.side! : ['vessel', 'air', 'behind', 'under'].includes(p.lane) ? -1 : 1);
+  const sideOf = (p: Plan): 1 | -1 => (p.lane === 'pump' ? p.side! : p.across ? 1 : ['vessel', 'air', 'behind', 'under'].includes(p.lane) ? -1 : 1);
   const built = new Map<Plan, { out: Placed[]; equipment: InteriorModel['equipment']; facts: Spot }>();
   for (const p of plans) {
     const c: Ctx = { out: [], equipment: [], kit }, s0: Spot = { tag: p.tag, item: p.item, kind: p.kind, lane: p.lane, side: sideOf(p), x: 0, z: 0, lx: p.lx, lz: p.lz, h: p.h, shape: 'box' };
@@ -377,11 +425,16 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
         const lift = p.align?.axes.includes('y') ? (() => { const cy = ref(p.align!)[1]; return up(cy - 1e-6) - cy; })() : 0; if (lift) move(0, lift, 0);
         const foot = union(placedBoxes(c.equipment).filter(b => !HELD.test(b.name) && b.mn[1] <= PAD + lift + 3)), lx = up(foot.mx[0] - foot.mn[0] + 12, 1), lz = up(foot.mx[2] - foot.mn[2] + 12, 1);
         c.out.push({ part: kit.concrete('equipment pad', lz, PAD + lift, lx), transform: frameFromAxes([(foot.mn[0] + foot.mx[0]) / 2 - lx / 2, (PAD + lift) / 2, (foot.mn[2] + foot.mx[2]) / 2], [0, 1, 0], [1, 0, 0]), tags: [p.tag, 'pad'] });
+        if (p.raise && p.raise.by > 0) {   // on piers: the body lifted, and a pier 6 in larger all round under each solid it stands on
+          const bases = placedBoxes(c.equipment).filter(b => p.raise!.under.test(b.name)), T = translate(0, p.raise.by, 0); if (!bases.length) throw new Error(`${p.tag}: nothing named ${p.raise.under} to stand on piers`);
+          for (const q of c.equipment) q.transform = multiply(T, q.transform); for (const q of c.out) if (q.tags.includes('equipment')) q.transform = multiply(T, q.transform);
+          for (const b of bases) { const px = up(b.mx[0] - b.mn[0] + 12, 1), pz = up(b.mx[2] - b.mn[2] + 12, 1); c.out.push({ part: kit.concrete('pier', pz, p.raise.by, px), transform: frameFromAxes([(b.mn[0] + b.mx[0]) / 2 - px / 2, PAD + lift + p.raise.by / 2, (b.mn[2] + b.mx[2]) / 2], [0, 1, 0], [1, 0, 0]), tags: [p.tag, 'pier'] }); }
+        }
       }
       // SW-CELL-4: a pit stands in the ground, the top of its roof slab 1 ft above grade
       if (p.ground) { const roof = placedBoxes(c.equipment).filter(b => /^roof slab/.test(b.name)); if (roof.length) move(0, 12 - Math.max(...roof.map(b => b.mx[1])), 0); }
       const all = union(placedBoxes(c.out)); move(-near((all.mn[0] + all.mx[0]) / 2), 0, -near((all.mn[2] + all.mx[2]) / 2));
-      if (p.align) { const c0 = ref(p.align); move(p.align.axes.includes('x') ? near(c0[0]) - c0[0] : 0, 0, p.align.axes.includes('z') ? near(c0[2]) - c0[2] : 0); }
+      if (p.align) { const c0 = ref(p.align); move(p.align.axes.includes('x') ? near(c0[0]) - c0[0] : 0, 0, p.align.axes.includes('z') ? (p.align.onLine ? -c0[2] : near(c0[2]) - c0[2]) : 0); }
     }
     // the measured extent about the datum; a figure given with the plan stands where the body keeps within 6 in of it (one step of the grid it is set on)
     const ext = union(placedBoxes(c.out)), fit = (given: number, measured: number) => (s0.shape === 'box' || measured > given + 12 ? up(measured, 6) : given);
@@ -400,13 +453,14 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
   const room = longest - (heat.length ? 600 + Math.max(...heat.map(p => p.lx)) + 48 : 48) - 264;          // the heaters' ground at the outer end, and the rack's last bay
   /** rows of bodies along the rack, a new row further out when one is full; returns the outer edge and how far the rows run */
   let far = x0 + RACK.bent;
-  const rows = (list: Plan[], side: 1 | -1, zIn: number, way: number, centred: boolean): number => {
-    const lines: Plan[][] = [[]]; let x = x0;
-    for (const p of list) { if (p.lx > 0 && x + p.lx + (p.keep ?? 0) > room && lines[lines.length - 1].length) { lines.push([]); x = x0; } lines[lines.length - 1].push(p); if (p.lx > 0) x += p.lx + (p.gap ?? 48); }
+  const rows = (list: Plan[], side: 1 | -1, zIn: number, way: number, centred: boolean, from = x0): number => {
+    const lines: Plan[][] = [[]]; let x = from;
+    const begins = (p: Plan) => sh.equip.get(p.item)?.p.row === 'new' && list.find(q => q.item === p.item) === p;   // SW-CELL-3: an item the flowsheet states to begin a row
+    for (const p of list) { if (p.lx > 0 && (x + p.lx + (p.keep ?? 0) > room || begins(p)) && lines[lines.length - 1].length) { lines.push([]); x = x0; } lines[lines.length - 1].push(p); if (p.lx > 0) x += p.lx + (p.gap ?? 48); }
     let z = zIn;
     for (const line of lines) {
       if (!line.length) continue;
-      const depth = Math.max(...line.map(p => p.lz)); let xx = x0;
+      const depth = Math.max(...line.map(p => p.lz)); let xx = line === lines[0] ? from : x0;
       for (const p of line) {
         if (p.lx > 0) xx = up(xx + p.lx / 2);
         const s: Spot = { tag: p.tag, item: p.item, kind: p.kind, lane: p.lane, side, x: p.lx > 0 ? xx : spots[spots.length - 1].x, z: near(side * (z + (centred ? depth : p.lz) / 2)), lx: p.lx, lz: p.lz, h: p.h, shape: 'box' };
@@ -420,7 +474,10 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
   // SW-CELL-3: the pumps' row stands 5 ft from the columns' line, or as far as the largest suction valve set on that side needs to end outside it
   const pumpOff = (side: 1 | -1) => up(Math.max(60, ...pumps(side).map(p => p.reach ?? 0)));
   // exchanger side (+z): pumps, access way, exchangers and machines, then the air coolers
-  const zP = rows(pumps(1), 1, hw + pumpOff(1), 48, false); rows(plans.filter(p => p.lane === 'exchanger'), 1, zP + 96, 96, false);
+  // (the pumps that draw from a vessel standing across the rack are placed opposite it, below; their row is as deep as the deepest of all the pumps on this side)
+  const sourceOf = (p: Plan) => sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && l.to.port === 'S')?.from, drawsAcross = (p: Plan) => { const src = sourceOf(p); return !!src && src.k === 'eq' && acrossItems.has(src.tag); };
+  const theirs = pumps(1).filter(drawsAcross);
+  const zP = Math.max(rows(pumps(1).filter(p => !drawsAcross(p)), 1, hw + pumpOff(1), 48, false), theirs.length ? hw + pumpOff(1) + Math.max(...theirs.map(p => p.lz)) : -Infinity); rows(plans.filter(p => p.lane === 'exchanger'), 1, zP + 96, 96, false);
   // SW-CELL-3: a sulfur pit beyond the outer ends of the condensers that drain into it, across an 8 ft way, its middle at theirs along the rack: each rundown is then a few feet of pipe laid direct
   for (const p of plans.filter(q => q.lane === 'pit')) {
     const cond = spots.filter(q => q.kind === 'condenser' && q.lane === 'exchanger'), x = near(cond.reduce((a, q) => a + q.x, 0) / cond.length);
@@ -444,7 +501,15 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
   // vessel side (−z): the vessels first, each row on one centre line beyond the pumps' row and the access way; then each
   // pump opposite the vessel it draws from, as near its centre as the pumps before it allow (SW-CELL-3)
   const mine = pumps(-1), depthP = mine.length ? Math.max(...mine.map(p => p.lz)) : 0;
-  rows(plans.filter(p => p.lane === 'vessel'), -1, hw + pumpOff(-1) + depthP + (mine.length ? 96 : 0), 120, true);
+  rows(plans.filter(p => p.lane === 'vessel' && !p.across), -1, hw + pumpOff(-1) + depthP + (mine.length ? 96 : 0), 120, true);
+  // SW-CELL-3: the vessels stated to stand across the rack: one row on one centre line on the exchangers' side, begun where the exchangers' and machines' row ends, or 4 ft beyond the
+  // station of a regenerator across the rack where that is further along (its blower's discharge runs along the row to that station before it turns under the rack)
+  { const acr = plans.filter(p => p.lane === 'vessel' && p.across);
+    if (acr.length) {
+      const end = Math.max(x0, ...spots.filter(q => q.side === 1 && q.lane === 'exchanger' && q.lx > 0).map(q => q.x + q.lx / 2 + (plans.find(p => p.tag === q.tag)?.gap ?? 48)));
+      const regen = spots.filter(q => q.kind === 'cracker' && q.side === -1).map(q => { const b = union(placedBoxes(equipment.filter(v => v.tag === q.tag)).filter(v => /^regenerator shell$/.test(v.name))); return (b.mn[0] + b.mx[0]) / 2 + 48; });
+      rows(acr, 1, zP + 96, 120, true, up(Math.max(end, ...regen)));
+    } }
   // SW-CELL-3: an ejector set behind the column it draws from, in a row of its own 10 ft further from the rack, its first ejector's suction at the column's station along the rack
   for (const p of plans.filter(q => q.lane === 'behind')) {
     const src = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && l.to.port === 'inlet')?.from, col = src && src.k === 'eq' ? spots.find(q => q.item === src.tag) : undefined;
@@ -462,13 +527,17 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
     spots.push(sp); settle(p, sp);
   }
   const sourceX = (p: Plan) => { const src = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === p.item && l.to.port === 'S')?.from, v = src && src.k === 'eq' ? spots.find(q => q.item === src.tag) : undefined; return v ? v.x : Infinity; };
-  const groups = [...new Set(mine.map(p => p.item))].map(item => ({ item, ps: mine.filter(p => p.item === item), x: sourceX(mine.find(p => p.item === item)!) })).sort((a, b) => a.x - b.x);
-  let cursor = x0;
-  for (const g of groups) {
-    const width = g.ps.reduce((a, p) => a + p.lx + (p.gap ?? 36), 0); let xx = Math.max(cursor, Number.isFinite(g.x) ? up(g.x - width / 2) : cursor);
-    for (const p of g.ps) { xx = up(xx + p.lx / 2); const sp: Spot = { tag: p.tag, item: p.item, kind: p.kind, lane: p.lane, side: -1, x: xx, z: near(-(hw + pumpOff(-1) + p.lz / 2)), lx: p.lx, lz: p.lz, h: p.h, shape: 'box' }; spots.push(sp); settle(p, sp); xx += p.lx / 2 + (p.gap ?? 36); far = Math.max(far, xx); }
-    cursor = xx;
-  }
+  const opposite = (list: Plan[], side: 1 | -1, start: number) => {
+    const groups = [...new Set(list.map(p => p.item))].map(item => ({ item, ps: list.filter(p => p.item === item), x: sourceX(list.find(p => p.item === item)!) })).sort((a, b) => a.x - b.x);
+    let cursor = start;
+    for (const g of groups) {
+      const width = g.ps.reduce((a, p) => a + p.lx + (p.gap ?? 36), 0); let xx = Math.max(cursor, Number.isFinite(g.x) ? up(g.x - width / 2) : cursor);
+      for (const p of g.ps) { xx = up(xx + p.lx / 2); const sp: Spot = { tag: p.tag, item: p.item, kind: p.kind, lane: p.lane, side, x: xx, z: near(side * (hw + pumpOff(side) + p.lz / 2)), lx: p.lx, lz: p.lz, h: p.h, shape: 'box' }; spots.push(sp); settle(p, sp); xx += p.lx / 2 + (p.gap ?? 36); far = Math.max(far, xx); }
+      cursor = xx;
+    }
+  };
+  opposite(mine, -1, x0);
+  if (theirs.length) opposite(theirs, 1, Math.max(x0, ...spots.filter(q => q.side === 1 && q.lane === 'pump').map(q => q.x + q.lx / 2 + 36)));   // the vessels across the rack: their pumps opposite them too, beyond the pumps already in that row
   const rackEnd = RACK.start + up(far - RACK.start, RACK.bent);
   // SW-CELL-6: a stringer along the rack's centre line under the lowest tier, bay by bay, from which lines crossing under the rack hang
   { const st = makeWideFlange('W8x18', 8, 18, RACK.bent - 12);

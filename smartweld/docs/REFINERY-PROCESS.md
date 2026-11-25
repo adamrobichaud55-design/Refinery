@@ -385,17 +385,19 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | Tag | Service | Type | Design | Class | Size |
 |---|---|---|---|---|---|
 | D-1701 | Fresh feed surge drum | horizontal | 55 psi, 450 °F | P150 | 126 in inside diameter × 31.5 ft between tangents, horizontal |
+| D-1703 | Compressor interstage drum | horizontal | 80 psi, 170 °F | P150 | 42 in inside diameter × 10.5 ft between tangents, horizontal, with a water boot |
+| D-1702 | Main column overhead receiver | horizontal | 50 psi, 160 °F | P150 | 84 in inside diameter × 21 ft between tangents, horizontal, with a water boot |
+| C-1702 | Light cycle oil stripper | trayed | 50 psi, 500 °F | P150 | 42 in inside diameter × 32 ft between tangents, 6 trays, on a 20 ft skirt |
+| C-1701 | Main fractionator | trayed | 55 psi, 1,030 °F | P300 | 144 in inside diameter × 84 ft between tangents, 32 trays, on a 20 ft skirt |
 | R-1701 | Reactor and regenerator | cracker | 55 psi, 650 °F | P150 |  |
+| E-1703 | Flue gas cooler (steam generator) | steam generator | 50 psi, 650 °F | P150 | 36.2 million Btu/h, 6,979 ft²: 126 in × 20 ft, 2,083 tubes of 2 in, the gas at 48 ft/s in them |
+| C-1705 | Flue gas wet scrubber and stack | scrubber | atmospheric | P150 |  |
+| V-1701 | Fresh catalyst hopper | hopper | atmospheric | P150 |  |
+| V-1702 | Equilibrium catalyst hopper | hopper | atmospheric | P150 |  |
+| F-1701 | Slurry filter | vertical | 210 psi, 250 °F | P300 | 24 in inside diameter × 4 ft between tangents, vertical |
 | K-1701 | Main air blower | motor driven | 65 psi, 430 °F | P150 | 36,204 ft³/min at suction, ratio 3.72, 2 stages, 4,475 hp of gas power; 5,000 hp motor |
 | K-1702 | Wet gas compressor, first stage, turbine driven | steam turbine driven | 85 psi, 250 °F | P150 | 8,029 ft³/min at suction, ratio 3.44, 1 stage, 1,450 hp of gas power; 2,850 hp turbine, which also drives K-1703 |
 | K-1703 | Wet gas compressor, second stage, on the first stage's shaft | on the shaft of K-1702 | 240 psi, 280 °F | P300 | 2,432 ft³/min at suction, ratio 3.30, 1 stage, 1,354 hp of gas power; driven by K-1702's turbine |
-| V-1701 | Fresh catalyst hopper | hopper | atmospheric | P150 |  |
-| V-1702 | Equilibrium catalyst hopper | hopper | atmospheric | P150 |  |
-| C-1705 | Flue gas wet scrubber and stack | scrubber | atmospheric | P150 |  |
-| C-1701 | Main fractionator | trayed | 55 psi, 1,030 °F | P300 | 144 in inside diameter × 84 ft between tangents, 32 trays, on a 20 ft skirt |
-| C-1702 | Light cycle oil stripper | trayed | 50 psi, 500 °F | P150 | 42 in inside diameter × 32 ft between tangents, 6 trays, on a 20 ft skirt |
-| D-1702 | Main column overhead receiver | horizontal | 50 psi, 160 °F | P150 | 84 in inside diameter × 21 ft between tangents, horizontal, with a water boot |
-| D-1703 | Compressor interstage drum | horizontal | 80 psi, 170 °F | P150 | 42 in inside diameter × 10.5 ft between tangents, horizontal, with a water boot |
 | D-1704 | High-pressure separator | horizontal | 225 psi, 150 °F | P300 | 90 in inside diameter × 22.5 ft between tangents, horizontal, with a water boot |
 | C-1703 | Primary absorber | trayed | 225 psi, 165 °F | P300 | 66 in inside diameter × 80 ft between tangents, 30 trays, on a 10 ft skirt |
 | C-1704 | Sponge absorber | trayed | 215 psi, 165 °F | P300 | 36 in inside diameter × 60 ft between tangents, 20 trays, on a 10 ft skirt |
@@ -405,16 +407,17 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | C-1708 | Debutaniser | trayed | 185 psi, 435 °F | P300 | 84 in inside diameter × 92 ft between tangents, 36 trays, on a 15 ft skirt |
 | D-1705 | Debutaniser receiver | horizontal | 165 psi, 160 °F | P300 | 84 in inside diameter × 21 ft between tangents, horizontal |
 | C-1709 | Liquefied gas amine contactor | liquid contactor | 265 psi, 170 °F | P300 | 42 in inside diameter × 40 ft between tangents, 10 trays, on a 10 ft skirt |
+| V-1703 | Liquefied gas caustic wash drum | vertical | 260 psi, 160 °F | P300 | 66 in inside diameter × 13.8 ft between tangents, vertical |
 | C-1710 | Depropaniser | trayed | 250 psi, 285 °F | P300 | 54 in inside diameter × 100 ft between tangents, 40 trays, on a 15 ft skirt |
 | D-1707 | Depropaniser receiver | horizontal | 235 psi, 160 °F | P300 | 72 in inside diameter × 18 ft between tangents, horizontal |
+| V-1704 | Gasoline caustic wash drum | vertical | 160 psi, 150 °F | P300 | 72 in inside diameter × 15 ft between tangents, vertical |
+| A-1701 | Main column overhead condenser | forced draught | 50 psi, 320 °F | P150 | 45.5 million Btu/h: 3 bays of 14 ft × 32 ft, 6 fans |
 | P-1701 | Fresh feed pump | motor driven | 330 psi, 390 °F | P600 | 658 gpm each × 643 ft, 150 hp at 3560 rpm; 2 installed, 1 running |
 | E-1701 | Feed / light cycle oil pumparound exchanger | process to process | 330 psi, 500 °F | P600 | 8.8 million Btu/h, 3,280 ft²: 36 in × 20 ft, 1,165 tubes |
 | E-1702 | Feed / slurry exchanger | process to process | 330 psi, 730 °F | P1200 | 7.3 million Btu/h, 838 ft²: 30 in × 20 ft, 805 tubes |
-| E-1703 | Flue gas cooler (steam generator) | steam generator | 50 psi, 650 °F | P150 | 36.2 million Btu/h, 6,979 ft²: 126 in × 20 ft, 2,083 tubes of 2 in, the gas at 48 ft/s in them |
 | P-1702 | Slurry pump | motor driven | 210 psi, 730 °F | P600 | 1550 gpm each × 381 ft, 200 hp at 3560 rpm; 2 installed, 1 running |
 | E-1704 | Slurry steam generator | steam generator | 275 psi, 710 °F | P600 | 55.2 million Btu/h, 6,460 ft²: 48 in × 20 ft, 2,161 tubes |
 | E-1705 | Slurry product cooler | water cooler | 210 psi, 530 °F | P300 | 3.5 million Btu/h, 353 ft²: 18 in × 20 ft, 253 tubes |
-| F-1701 | Slurry filter | vertical | 210 psi, 250 °F | P300 | 24 in inside diameter × 4 ft between tangents, vertical |
 | P-1703 | Heavy cycle oil pumparound pump | motor driven | 210 psi, 650 °F | P300 | 754 gpm each × 327 ft, 100 hp at 3560 rpm; 2 installed, 1 running |
 | E-1715 | Debutaniser reboiler | process to process | 210 psi, 650 °F | P300 | 18.6 million Btu/h, 1,845 ft²: 36 in × 20 ft, 1,165 tubes |
 | P-1704 | Light cycle oil pumparound pump | motor driven | 210 psi, 500 °F | P300 | 718 gpm each × 380 ft, 100 hp at 3560 rpm; 2 installed, 1 running |
@@ -422,7 +425,6 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | P-1705 | Light cycle oil product pump | motor driven | 345 psi, 485 °F | P600 | 213 gpm each × 706 ft, 50 hp at 3560 rpm; 2 installed, 1 running |
 | A-1702 | Light cycle oil air cooler | forced draught | 345 psi, 485 °F | P600 | 12.8 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | E-1708 | Sponge oil cooler | water cooler | 345 psi, 190 °F | P600 | 0.7 million Btu/h, 468 ft²: 18 in × 20 ft, 253 tubes |
-| A-1701 | Main column overhead condenser | forced draught | 50 psi, 320 °F | P150 | 45.5 million Btu/h: 3 bays of 14 ft × 32 ft, 6 fans |
 | E-1709 | Overhead trim condenser | water cooler | 140 psi, 190 °F | P150 | 6.9 million Btu/h, 3,593 ft²: 48 in × 20 ft, 2,161 tubes |
 | P-1706 | Main column reflux pump | motor driven | 145 psi, 150 °F | P150 | 205 gpm each × 232 ft, 15 hp at 3560 rpm; 2 installed, 1 running |
 | P-1707 | Unstabilised gasoline pump | motor driven | 370 psi, 150 °F | P600 | 290 gpm each × 805 ft, 75 hp at 3560 rpm; 2 installed, 1 running |
@@ -438,9 +440,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | P-1712 | Debutaniser reflux and product pump | motor driven | 300 psi, 160 °F | P300 | 617 gpm each × 452 ft, 75 hp at 3560 rpm; 2 installed, 1 running |
 | A-1705 | Gasoline air cooler | forced draught | 175 psi, 285 °F | P300 | 7.6 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | E-1717 | Gasoline trim cooler | water cooler | 170 psi, 190 °F | P300 | 3.2 million Btu/h, 2,175 ft²: 30 in × 20 ft, 805 tubes |
-| V-1704 | Gasoline caustic wash drum | vertical | 160 psi, 150 °F | P300 | 72 in inside diameter × 15 ft between tangents, vertical |
 | P-1714 | Lean gasoline pump | motor driven | 325 psi, 150 °F | P600 | 120 gpm each × 405 ft, 15 hp at 3560 rpm; 2 installed, 1 running |
-| V-1703 | Liquefied gas caustic wash drum | vertical | 260 psi, 160 °F | P300 | 66 in inside diameter × 13.8 ft between tangents, vertical |
 | E-1713 | Depropaniser condenser | water cooler | 240 psi, 170 °F | P300 | 11.5 million Btu/h, 7,271 ft²: 48 in × 20 ft, 2,161 tubes |
 | P-1713 | Depropaniser reflux and product pump | motor driven | 305 psi, 160 °F | P600 | 328 gpm each × 246 ft, 15 hp at 3560 rpm; 2 installed, 1 running |
 | E-1714 | Depropaniser reboiler | steam heater | 250 psi, 450 °F | P300 | 7.4 million Btu/h, 600 ft²: 24 in × 20 ft, 499 tubes |

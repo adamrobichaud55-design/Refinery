@@ -167,11 +167,19 @@ const EXAMINATION: Record<Category, string> = { D: 'visual', Normal: 'visual, an
 const GROUP: Record<string, string> = { P: 'H', RV: 'H', CWS: 'W', CWR: 'W', W: 'W', LS: 'S', SC: 'C', IA: 'G', PA: 'G', N: 'G', FL: 'F' };
 const fmt = (n: number) => (n === 0.75 ? '3/4' : n === 0.5 ? '1/2' : String(n));   // as SW-LL-1 writes a size: a number's parts are split at its hyphens, so a size carries none
 /** SW-REF-3: a line's number: size, class, the generator's service letter, and unit × 1000 + a running number */
-/** SW-RPI-3: the service a line is numbered and built as: a line of the flowsheet as a process line whatever it carries; a utility header or a connection that taps one by its fluid's letter, but water and plant gases above class P300, and steam and condensate over 12 in, as process lines (the valves the generator gives them are not offered there, SW-VLV-11) */
-export const serviceOf = (fluid: string, cls: string, utility: boolean, NPS = 0): string => { if (!utility) return 'P'; const sv = FLUIDS[fluid].svc, g = GROUP[sv]; return ((g === 'W' || g === 'G') && Number(cls.slice(1)) > 300) || ((g === 'S' || g === 'C') && NPS > 12) ? 'P' : sv; };
-/** SW-REF-3: the running numbers 401 to 600 of a unit are its utility headers and the connections that tap them */
-export const utilitySeq = (seq: number) => seq > 400 && seq <= 600;
-export const lineNumber = (unit: number, seq: number, NPS: number, cls: string, fluid: string) => `${fmt(NPS)}"-${cls}-${serviceOf(fluid, cls, utilitySeq(seq), NPS)}-${unit * 1000 + seq}`;
+/** SW-RPI-3: the service a line is numbered and built as: a line of the flowsheet as a process line whatever it carries; a utility header or a connection that taps one by its fluid's letter, but water and plant gases above class P300, steam and condensate over 12 in, and a water connection (`connection`: to or from the item it serves, not a header) over 12 in, as process lines (the valves the generator gives them are not offered there, SW-VLV-11) */
+export const serviceOf = (fluid: string, cls: string, utility: boolean, NPS = 0, connection = false): string => { if (!utility) return 'P'; const sv = FLUIDS[fluid].svc, g = GROUP[sv]; return ((g === 'W' || g === 'G') && Number(cls.slice(1)) > 300) || ((g === 'S' || g === 'C') && NPS > 12) || (g === 'W' && connection && NPS > 12) ? 'P' : sv; };
+/** SW-REF-3: the running numbers 401 to 600 of a unit are its utility headers and the connections that tap them (the connections from 501) */
+export const utilitySeq = (seq: number) => seq > 400 && seq <= 600, connectionSeq = (seq: number) => seq > 500 && seq <= 600;
+/** SW-RPI-3: a line of the flowsheet the generator must route free, not along the rack: a cracker's flue gas and its reactor's vapour, the cooled flue gas to its scrubber, the regenerator's air from its blower, and a line into an item the flowsheet states is met direct. By its place in its unit's flowsheet, from 1 */
+export function routedFree(unit: number, seq: number): boolean {
+  const sh = processModel().sheets.find(x => x.no === unit), l = sh?.lines[seq - 1]; if (!sh || !l || l.from.k !== 'eq') return false;   // an area with no flowsheet (the main pipeway's) has none
+  const fe = sh.equip.get(l.from.tag)!, te = l.to.k === 'eq' ? sh.equip.get(l.to.tag) : undefined;
+  return (fe.kind === 'cracker' && ['flue gas', 'reactor vapour'].includes(l.from.port)) || (fe.kind === 'fluegascooler' && l.from.port === 'outlet' && te?.kind === 'scrubber')
+    || (fe.kind === 'blower' && te?.kind === 'cracker') || (!!te && te.p.direct !== undefined && l.to.k === 'eq' && l.to.port === 'inlet');
+}
+/** `free`: the line is routed free (SW-RPI-3); a flowsheet line's own number says so by itself, a branch made in piping (a spare's, a further body's) is told by the line it joins */
+export const lineNumber = (unit: number, seq: number, NPS: number, cls: string, fluid: string, free = routedFree(unit, seq)) => `${fmt(NPS)}"-${cls}-${free ? 'V' : serviceOf(fluid, cls, utilitySeq(seq), NPS, connectionSeq(seq))}-${unit * 1000 + seq}`;
 export type MaterialCode = 'CS' | 'C1' | 'C5' | 'SS';
 export const MATERIALS: Record<MaterialCode, { name: string; pipe: string; fittings: string; flanges: string }> = {
   CS: { name: 'carbon steel', pipe: 'A106-B', fittings: 'A234-WPB', flanges: 'A105' }, C1: { name: '1-1/4 Cr alloy steel', pipe: 'A335-P11', fittings: 'A234-WP11', flanges: 'A182-F11' },

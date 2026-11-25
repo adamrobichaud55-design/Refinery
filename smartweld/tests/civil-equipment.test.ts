@@ -171,6 +171,41 @@ describe('process units, boiler equipment and tanks: the rules (SW-EQC-27..44)',
     expect(f.dims.reactorBase.value).toBeGreaterThan(f.dims.skirtH.value + 240 / 4 + 300); expect(f.dims.riserD.value).toBeCloseTo(36, 9); expect(f.dims.skirtH.value % 12).toBe(0);
     const k = makeCokeDrums({ tag: 'D', D: 288, TT: 720 }); expect(k.dims.derrick.value).toBeCloseTo(576, 9); expect(k.dims.flange.value).toBeCloseTo(72, 9);
   });
+  it('SW-EQC-33, SW-EQC-36: what a plant states of the lines that join its cracker and its scrubber; unstated, they are drawn as before', () => {
+    type Sol = { name: string; mesh: { positions: ArrayLike<number> } };
+    const names = (p: PartSpec) => (p.extra!.solids as Sol[]).map(q => q.name);
+    const box = (p: PartSpec, re: RegExp) => { const q = (p.extra!.solids as Sol[]).filter(v => re.test(v.name)); expect(q.length, String(re)).toBeGreaterThan(0); const mn = [Infinity, Infinity, Infinity], mx = [-Infinity, -Infinity, -Infinity]; for (const v of q) { const P = v.mesh.positions; for (let i = 0; i < P.length; i += 3) for (let k = 0; k < 3; k++) { mn[k] = Math.min(mn[k], P[i + k]); mx[k] = Math.max(mx[k], P[i + k]); } } return { mn, mx }; }, mid = (b: { mn: number[]; mx: number[] }, k: number) => (b.mn[k] + b.mx[k]) / 2;
+    const base = { tag: 'R', regenD: 240, regenTT: 300, reactorD: 144, reactorTT: 240 }, f = makeCatCracker(base), g = makeCatCracker({ ...base, plant: { flueOD: 42, airOD: 20, grid: 6, riserSide: 1, airAt: Math.PI / 2 } }), Rg = 240 / 2 + 1;
+    // where the plant's own lines join, the stubs and flanges the catalogue draws are left off; nothing else is taken away, nothing added
+    const off = ['flue gas outlet', 'flue gas outlet flange', 'air inlet flange', 'vapour outlet', 'vapour outlet flange'];
+    for (const n of off) { expect(names(f), n).toContain(n); expect(names(g), n).not.toContain(n); }
+    expect(names(f).filter(n => !off.includes(n))).toEqual(names(g));
+    // the top cone closes to the flue gas line's outside diameter, at 45°; the top of the item is the reactor's head, no outlet stub above it
+    const cone = box(g, /^regenerator top cone$/); expect(cone.mx[2] - cone.mn[2]).toBeCloseTo(Rg - 21, 6); expect(g.extra!.zCone as number).toBeCloseTo(cone.mx[2], 6); expect(g.dims.flueD.value).toBe(42); expect(f.dims.flueD.value).toBe(60);
+    expect(g.dims.top.value).toBeCloseTo(box(g, /^reactor top head$/).mx[2], 1); expect(f.dims.top.value).toBeCloseTo(box(f, /^reactor top head$/).mx[2] + 28, 1); expect(g.extra!.zHead as number).toBeCloseTo(g.dims.top.value, 9); expect(g.dims.vapourD).toBeUndefined();
+    // the air inlet line: of the line's outside diameter, out the way stated (here +y), 36 in beyond the shell; unstated it leaves toward −x, 0.2 Dg across
+    const air = box(g, /^air inlet line$/), air0 = box(f, /^air inlet line$/), e = g.extra!.airEnd as number[];
+    expect(e[0]).toBeCloseTo(0, 6); expect(e[1]).toBeCloseTo(Rg + 36, 6); expect(e[2]).toBeCloseTo(g.extra!.zAir as number, 9); expect(air.mx[1]).toBeCloseTo(Rg + 36, 6); expect(air.mx[0] - air.mn[0]).toBeGreaterThan(19.5); expect(air.mx[0] - air.mn[0]).toBeLessThanOrEqual(20 + 1e-6); expect(g.dims.airD.value).toBe(20);
+    expect(air0.mn[0]).toBeCloseTo(-(Rg + 36), 6); expect(air0.mx[1] - air0.mn[1]).toBeGreaterThan(47); expect(air0.mx[1] - air0.mn[1]).toBeLessThanOrEqual(48 + 1e-6);
+    // the height the air inlet line runs out at, stated: in place of 0.25 Dg below the bottom head; refused where the line's bend and 6 in do not fit under that head, or a foot over the base
+    { const low = (f.extra!.zg0 as number) - Rg / 2, h = makeCatCracker({ ...base, plant: { flueOD: 42, airOD: 20, grid: 6, airZ: 150 } }), lineOf = (p: PartSpec) => box(p, /^air inlet line$/);
+      expect(g.extra!.zAir as number).toBeCloseTo((g.extra!.zg0 as number) - Rg / 2 - 0.25 * 240, 9); expect(h.extra!.zAir).toBe(150); expect((h.extra!.airEnd as number[])[2]).toBe(150);
+      expect(lineOf(h).mn[2]).toBeCloseTo(150 - 10, 1); expect(lineOf(g).mn[2]).toBeCloseTo((g.extra!.zAir as number) - 10, 1); expect(lineOf(h).mx[2]).toBeCloseTo(lineOf(g).mx[2], 6);   // from the same point of the bottom head
+      expect(() => makeCatCracker({ ...base, plant: { flueOD: 42, airOD: 20, grid: 6, airZ: low - 24 - 10 - 6 } })).not.toThrow(); expect(() => makeCatCracker({ ...base, plant: { flueOD: 42, airOD: 20, grid: 6, airZ: low - 24 - 10 - 5 } })).toThrow(/air inlet line cannot run out/);
+      expect(() => makeCatCracker({ ...base, plant: { flueOD: 42, airOD: 20, grid: 6, airZ: 22 } })).not.toThrow(); expect(() => makeCatCracker({ ...base, plant: { flueOD: 42, airOD: 20, grid: 6, airZ: 21 } })).toThrow(/SW-EQC-33/); }
+    // on the plant's grid: the two vessels' centres and the riser; the riser on the +y side when mirrored, on −y as drawn by default
+    const X = g.extra!.X as number, X0 = f.extra!.X as number, [rx, ry] = g.extra!.riser as number[];
+    expect(X % 6).toBe(0); expect(X).toBeGreaterThanOrEqual(X0); expect(X - X0).toBeLessThan(6); expect(g.dims.centres.value).toBe(X); expect(rx).toBe(X - 30); expect(ry % 6).toBe(0); expect(ry).toBeGreaterThan(0);
+    expect(mid(box(g, /^riser$/), 0)).toBeCloseTo(rx, 6); expect(mid(box(g, /^riser$/), 1)).toBeCloseTo(ry, 6); expect(mid(box(f, /^riser$/), 1)).toBeLessThan(0); expect(mid(box(g, /^reactor shell$/), 0)).toBeCloseTo(X, 6);
+    expect(mid(box(g, /^riser guides$/), 1)).toBeGreaterThan(0); expect(mid(box(f, /^riser guides$/), 1)).toBeLessThan(0);
+    // the scrubber: its inlet duct level and of the line's outside diameter, without a flange; its pumps where stated
+    const sc = { tag: 'T', D: 120, H: 480 }, s0 = makeWetScrubber(sc), s1 = makeWetScrubber({ ...sc, inlet: { OD: 36 }, pumpsAt: -Math.PI / 2 });
+    expect(names(s0)).toContain('gas inlet flange'); expect(names(s1)).not.toContain('gas inlet flange'); expect(names(s0).filter(n => n !== 'gas inlet flange')).toEqual(names(s1));
+    const d0 = box(s0, /^gas inlet duct$/), d1 = box(s1, /^gas inlet duct$/);
+    expect(d1.mx[2] - d1.mn[2]).toBeGreaterThan(35.5); expect(d1.mx[2] - d1.mn[2]).toBeLessThanOrEqual(36 + 1e-6); expect(mid(d1, 2)).toBeCloseTo(s1.extra!.zInlet as number, 6); expect(s1.dims.inlet.value).toBe(36);
+    expect(d0.mx[2] - d0.mn[2]).toBeGreaterThan(60.5 + 0.1 * 120); expect(s0.dims.inlet.value).toBe(60);   // as drawn by default it slopes down into the shell
+    expect(mid(box(s0, /^recirculation pump 1: /), 1)).toBeGreaterThan(60); expect(mid(box(s1, /^recirculation pump 1: /), 1)).toBeLessThan(-60); expect(mid(box(s1, /^recirculation riser/), 1)).toBeLessThan(-60);
+  });
   it('SW-EQC-40: the boiler\'s mud drum is 0.65 of the steam drum; SW-EQC-44: tank capacity from the shell', () => {
     const b = makeWaterTubeBoiler({ tag: 'B', steamID: 54, L: 240, centres: 180 }); expect(b.dims.mudID.value).toBeCloseTo(35.1, 9); expect(b.dims.bank.value).toBe(8 * b.dims.walls.value);
     const t = makeConeRoofTank({ tag: 'T', D: 480, H: 384 }); expect(t.dims.courses.value).toBe(4); expect(t.dims.capacity.value).toBeGreaterThan(7000); expect(t.dims.capacity.value).toBeLessThan(7200);

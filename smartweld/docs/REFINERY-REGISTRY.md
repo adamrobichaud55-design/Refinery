@@ -260,12 +260,14 @@ Cracks gas oil on hot fluidised catalyst into gasoline and liquefied gas, burnin
 | Tag | Service | Report | Registration | Working pressure and temperature | Size | Wall, in | Material | Radiography | Heat treatment | Minimum metal temperature, °F | Weight, lb |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | D-1701 | Fresh feed surge drum | U-1A | X4049.7 | vessel: 55 psi at 450 °F | 126 in × 31.5 ft | 0.625 | SA-516-70 | spot | none | -20 | 36,384 |
+| D-1703 | Compressor interstage drum | U-1A | A9811.7 | vessel: 80 psi at 170 °F | 42 in × 10.5 ft | 0.375 | SA-516-70 | spot | none | -20 | 2,798 |
+| D-1702 | Main column overhead receiver | U-1A | B8192.7 | vessel: 50 psi at 160 °F | 84 in × 21 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 10,570 |
+| C-1702 | Light cycle oil stripper | U-1 | X5255.7 | vessel: 50 psi at 500 °F | 42 in × 32 ft | 0.375 | SA-516-70 | spot | none | -20 | 16,652 |
+| C-1701 | Main fractionator | U-1 | W6874.7 | vessel: 55 psi at 1,030 °F | 144 in × 84 ft | 0.625 | SA-516-70 | spot | none | -20 | 121,305 |
 | R-1701-RX | Reactor and regenerator: reactor vessel and stripper | U-1 | F1008.7 | vessel: 55 psi at 650 °F | 132 in × 32.4 ft | 1 | SA-516-70 | spot | none | -20 | — |
 | R-1701-RG | Reactor and regenerator: regenerator | U-1 | L6197.7 | vessel: 55 psi at 650 °F | 216 in × 27 ft | 1 | SA-516-70 | spot | none | -20 | — |
-| C-1701 | Main fractionator | U-1 | W6874.7 | vessel: 55 psi at 1,030 °F | 144 in × 84 ft | 0.625 | SA-516-70 | spot | none | -20 | 121,305 |
-| C-1702 | Light cycle oil stripper | U-1 | X5255.7 | vessel: 50 psi at 500 °F | 42 in × 32 ft | 0.375 | SA-516-70 | spot | none | -20 | 16,652 |
-| D-1702 | Main column overhead receiver | U-1A | B8192.7 | vessel: 50 psi at 160 °F | 84 in × 21 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 10,570 |
-| D-1703 | Compressor interstage drum | U-1A | A9811.7 | vessel: 80 psi at 170 °F | 42 in × 10.5 ft | 0.375 | SA-516-70 | spot | none | -20 | 2,798 |
+| E-1703 | Flue gas cooler (steam generator) | P-3 | Y9974.7 | steam and water side (shell and steam drum): 770 psi at 700 °F; gas side (tubes and channels): 50 psi at 650 °F | 126 in × 20 ft | 3.125 | SA-516-70 | full | post-weld heat treated | -20 | 332,921 |
+| F-1701 | Slurry filter | U-1A | X1335.7 | vessel: 210 psi at 250 °F | 24 in × 4 ft | 0.375 | SA-516-70 | spot | none | -20 | 1,015 |
 | D-1704 | High-pressure separator | U-1A | D8906.7 | vessel: 225 psi at 150 °F | 90 in × 22.5 ft | 0.75 | SA-516-70 | spot | post-weld heat treated | -20 | 22,140 |
 | C-1703 | Primary absorber | U-1 | Y3636.7 | vessel: 225 psi at 165 °F | 66 in × 80 ft | 0.625 | SA-516-70 | spot | none | -20 | 56,617 |
 | C-1704 | Sponge absorber | U-1 | A2017.7 | vessel: 215 psi at 165 °F | 36 in × 60 ft | 0.375 | SA-516-70 | spot | none | -20 | 19,345 |
@@ -275,21 +277,21 @@ Cracks gas oil on hot fluidised catalyst into gasoline and liquefied gas, burnin
 | C-1708 | Debutaniser | U-1 | E4541.7 | vessel: 185 psi at 435 °F | 84 in × 92 ft | 0.625 | SA-516-70 | spot | none | -20 | 79,910 |
 | D-1705 | Debutaniser receiver | U-1A | C1525.7 | vessel: 165 psi at 160 °F | 84 in × 21 ft | 0.625 | SA-516-70 | spot | none | -20 | 16,406 |
 | C-1709 | Liquefied gas amine contactor | U-1 | F2922.7 | vessel: 265 psi at 170 °F | 42 in × 40 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 18,869 |
+| V-1703 | Liquefied gas caustic wash drum | U-1A | X1893.7 | vessel: 260 psi at 160 °F | 66 in × 13.75 ft | 0.625 | SA-516-70 | spot | none | -20 | 9,299 |
 | C-1710 | Depropaniser | U-1 | F4684.7 | vessel: 250 psi at 285 °F | 54 in × 100 ft | 0.5 | SA-516-70 | spot | none | -20 | 52,125 |
 | D-1707 | Depropaniser receiver | U-1A | E7287.7 | vessel: 235 psi at 160 °F | 72 in × 18 ft | 0.625 | SA-516-70 | spot | none | -20 | 12,140 |
+| V-1704 | Gasoline caustic wash drum | U-1A | F8560.7 | vessel: 160 psi at 150 °F | 72 in × 15 ft | 0.5 | SA-516-70 | spot | none | -20 | 9,048 |
+| A-1701A | Main column overhead condenser | U-1A | J9311.7 | headers and tubes: 50 psi at 320 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
+| A-1701B | Main column overhead condenser | U-1A | M1930.7 | headers and tubes: 50 psi at 320 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
+| A-1701C | Main column overhead condenser | U-1A | L3549.7 | headers and tubes: 50 psi at 320 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | E-1701 | Feed / light cycle oil pumparound exchanger | U-1 | W6736.7 | shell side: 210 psi at 500 °F; tube side: 330 psi at 450 °F | 36 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 19,840 |
 | E-1702 | Feed / slurry exchanger | U-1 | X2593.7 | shell side: 210 psi at 730 °F; tube side: 330 psi at 500 °F | 30 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 14,219 |
-| E-1703 | Flue gas cooler (steam generator) | P-3 | Y9974.7 | steam and water side (shell and steam drum): 770 psi at 700 °F; gas side (tubes and channels): 50 psi at 650 °F | 126 in × 20 ft | 3.125 | SA-516-70 | full | post-weld heat treated | -20 | 328,404 |
 | E-1704 | Slurry steam generator | U-1 | A5831.7 | shell side: 210 psi at 710 °F; tube side: 275 psi at 450 °F | 48 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 34,977 |
 | E-1705 | Slurry product cooler | U-1 | B4212.7 | shell side: 210 psi at 530 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
-| F-1701 | Slurry filter | U-1A | X1335.7 | vessel: 210 psi at 250 °F | 24 in × 4 ft | 0.375 | SA-516-70 | spot | none | -20 | 1,015 |
 | E-1715 | Debutaniser reboiler | U-1 | A8689.7 | shell side: 210 psi at 650 °F; tube side: 185 psi at 435 °F | 36 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,716 |
 | E-1707 | Stripper reboiler | U-1 | Y7450.7 | shell side: 210 psi at 440 °F; tube side: 240 psi at 335 °F | 30 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 13,296 |
 | A-1702 | Light cycle oil air cooler | U-1A | G4861.7 | headers and tubes: 345 psi at 485 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | E-1708 | Sponge oil cooler | U-1 | E4403.7 | shell side: 345 psi at 190 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
-| A-1701A | Main column overhead condenser | U-1A | J9311.7 | headers and tubes: 50 psi at 320 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| A-1701B | Main column overhead condenser | U-1A | M1930.7 | headers and tubes: 50 psi at 320 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| A-1701C | Main column overhead condenser | U-1A | L3549.7 | headers and tubes: 50 psi at 320 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | E-1709 | Overhead trim condenser | U-1 | F2784.7 | shell side: 50 psi at 190 °F; tube side: 140 psi at 155 °F | 48 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 33,428 |
 | A-1703 | Interstage cooler | U-1A | H3242.7 | headers and tubes: 85 psi at 250 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1704 | High-pressure cooler | U-1A | E4147.7 | headers and tubes: 300 psi at 280 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
@@ -298,8 +300,6 @@ Cracks gas oil on hot fluidised catalyst into gasoline and liquefied gas, burnin
 | E-1712 | Debutaniser condenser | U-1 | H1308.7 | shell side: 175 psi at 190 °F; tube side: 140 psi at 155 °F | 54 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 43,971 |
 | A-1705 | Gasoline air cooler | U-1A | F2528.7 | headers and tubes: 175 psi at 285 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | E-1717 | Gasoline trim cooler | U-1 | C5451.7 | shell side: 170 psi at 190 °F; tube side: 140 psi at 155 °F | 30 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 13,296 |
-| V-1704 | Gasoline caustic wash drum | U-1A | F8560.7 | vessel: 160 psi at 150 °F | 72 in × 15 ft | 0.5 | SA-516-70 | spot | none | -20 | 9,048 |
-| V-1703 | Liquefied gas caustic wash drum | U-1A | X1893.7 | vessel: 260 psi at 160 °F | 66 in × 13.75 ft | 0.625 | SA-516-70 | spot | none | -20 | 9,299 |
 | E-1713 | Depropaniser condenser | U-1 | G2927.7 | shell side: 240 psi at 170 °F; tube side: 140 psi at 155 °F | 48 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 34,977 |
 | E-1714 | Depropaniser reboiler | U-1 | B7070.7 | shell side: 250 psi at 285 °F; tube side: 185 psi at 450 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
 | E-1716 | Four-carbon cooler | U-1 | D3832.7 | shell side: 250 psi at 285 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
@@ -456,7 +456,7 @@ Design temperature of 800 °F or more (9 lines): marked "elevated-temperature pr
 | 14"-P1200-P-14011 | R-1402 outlet | H-1403 inlet | reactor effluent (oil and hydrogen) | 375 psi at 940 °F |
 | 14"-P1200-P-14012 | H-1403 outlet | R-1403 inlet | reactor effluent (oil and hydrogen) | 360 psi at 1,000 °F |
 | 14"-P1200-P-14013 | R-1403 outlet | E-1401 shell in | reactor effluent (oil and hydrogen) | 350 psi at 970 °F |
-| 24"-P300-P-17013 | R-1701 reactor vapour | C-1701 feed | hydrocarbon gas | 55 psi at 1,030 °F |
+| 24"-P300-V-17013 | R-1701 reactor vapour | C-1701 feed | hydrocarbon gas | 55 psi at 1,030 °F |
 
 ## What the owner is asked to verify
 

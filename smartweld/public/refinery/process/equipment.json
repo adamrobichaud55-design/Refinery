@@ -15305,386 +15305,52 @@
     ]
    },
    {
-    "tag": "R-1701",
-    "service": "Reactor and regenerator",
-    "kind": "cracker",
-    "type": "",
+    "tag": "D-1703",
+    "service": "Compressor interstage drum",
+    "kind": "drum",
+    "type": "horizontal",
     "installed": 1,
     "running": 1,
-    "designP": 55,
-    "designT": 650,
+    "designP": 80,
+    "designT": 170,
     "vacuum": false,
     "cls": "P150",
     "sides": {
      "process": {
-      "designP": 55,
-      "designT": 650,
-      "cls": "P150",
-      "vacuum": false
-     },
-     "utility": {
-      "designP": 185,
-      "designT": 450,
-      "cls": "P300",
-      "vacuum": false
-     }
-    },
-    "size": {},
-    "description": "",
-    "dutyBtuh": {},
-    "given": {
-     "cokeLbh": 12768.84
-    },
-    "ports": [
-     {
-      "name": "feed",
-      "dir": "in",
-      "fluid": "GO",
-      "ph": "L",
-      "w": 236460,
-      "sg": 0.9182653,
-      "mw": 0,
-      "T": 450,
-      "P": 230,
-      "vf": 0
-     },
-     {
-      "name": "regenerator air",
-      "dir": "in",
-      "fluid": "AIR",
-      "ph": "V",
-      "w": 165994.9,
-      "sg": 0,
-      "mw": 29,
-      "T": 380,
-      "P": 40,
-      "vf": 1
-     },
-     {
-      "name": "fresh catalyst",
-      "dir": "in",
-      "fluid": "AIR",
-      "ph": "V",
-      "w": 2000,
-      "sg": 0,
-      "mw": 29,
-      "T": 100,
-      "P": 45,
-      "vf": 1
-     },
-     {
-      "name": "catalyst withdrawal",
-      "dir": "out",
-      "fluid": "AIR",
-      "ph": "V",
-      "w": 2000,
-      "sg": 0,
-      "mw": 29,
-      "T": 600,
-      "P": 30,
-      "vf": 1
-     },
-     {
-      "name": "flue gas",
-      "dir": "out",
-      "fluid": "FLG",
-      "ph": "V",
-      "w": 178763.7,
-      "sg": 0,
-      "mw": 30,
-      "T": 1300,
-      "P": 28,
-      "vf": 1
-     },
-     {
-      "name": "reactor vapour",
-      "dir": "out",
-      "fluid": "HG",
-      "ph": "V",
-      "w": 235691.1,
-      "sg": 0,
-      "mw": 75,
-      "T": 980,
-      "P": 28,
-      "vf": 1
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "feed",
-      "dir": "in",
-      "NPS": 8,
-      "cls": "P600",
-      "line": 6,
-      "fluid": "GO",
-      "n": 1
-     },
-     {
-      "port": "regenerator air",
-      "dir": "in",
-      "NPS": 20,
-      "cls": "P150",
-      "line": 7,
-      "fluid": "AIR",
-      "n": 1
-     },
-     {
-      "port": "fresh catalyst",
-      "dir": "in",
-      "NPS": 3,
-      "cls": "P150",
-      "line": 8,
-      "fluid": "AIR",
-      "n": 1
-     },
-     {
-      "port": "catalyst withdrawal",
-      "dir": "out",
-      "NPS": 3,
-      "cls": "P150",
-      "line": 9,
-      "fluid": "AIR",
-      "n": 1
-     },
-     {
-      "port": "flue gas",
-      "dir": "out",
-      "NPS": 42,
-      "cls": "P150",
-      "line": 10,
-      "fluid": "FLG",
-      "n": 1
-     },
-     {
-      "port": "reactor vapour",
-      "dir": "out",
-      "NPS": 24,
-      "cls": "P300",
-      "line": 12,
-      "fluid": "HG",
-      "n": 1
-     },
-     {
-      "port": "riser and stripping steam",
-      "dir": "in",
-      "NPS": 6,
-      "cls": "P300",
-      "util": "MS",
-      "fluid": "MS",
-      "n": 1
-     }
-    ]
-   },
-   {
-    "tag": "K-1701",
-    "service": "Main air blower",
-    "kind": "blower",
-    "type": "motor driven",
-    "installed": 1,
-    "running": 1,
-    "designP": 65,
-    "designT": 430,
-    "vacuum": false,
-    "cls": "P150",
-    "sides": {
-     "process": {
-      "designP": 65,
-      "designT": 430,
+      "designP": 80,
+      "designT": 170,
       "cls": "P150",
       "vacuum": false
      }
     },
     "size": {
-     "acfm": 36203.84,
-     "ratio": 3.721829,
-     "stages": 2,
-     "gasHp": 4475.322,
-     "driverHp": 5000,
-     "motorFrame": 79.37005
+     "D": 42,
+     "L": 126,
+     "t": 0.375,
+     "vertical": 0,
+     "boot": 18
     },
-    "description": "36,204 ft³/min at suction, ratio 3.72, 2 stages, 4,475 hp of gas power; 5,000 hp motor",
+    "description": "42 in inside diameter × 10.5 ft between tangents, horizontal, with a water boot",
     "dutyBtuh": {},
-    "given": {},
-    "ports": [
-     {
-      "name": "intake (open)",
-      "dir": "in",
-      "fluid": "AIR",
-      "ph": "V",
-      "w": 165994.9,
-      "sg": 0,
-      "mw": 29,
-      "T": 60,
-      "P": 0,
-      "vf": 1
-     },
-     {
-      "name": "discharge",
-      "dir": "out",
-      "fluid": "AIR",
-      "ph": "V",
-      "w": 165994.9,
-      "sg": 0,
-      "mw": 29,
-      "T": 380,
-      "P": 40,
-      "vf": 1
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "discharge",
-      "dir": "out",
-      "NPS": 20,
-      "cls": "P150",
-      "line": 7,
-      "fluid": "AIR",
-      "n": 1
-     }
-    ]
-   },
-   {
-    "tag": "K-1702",
-    "service": "Wet gas compressor, first stage, turbine driven",
-    "kind": "compressor",
-    "type": "steam turbine driven",
-    "installed": 1,
-    "running": 1,
-    "designP": 85,
-    "designT": 250,
-    "vacuum": false,
-    "cls": "P150",
-    "sides": {
-     "process": {
-      "designP": 85,
-      "designT": 250,
-      "cls": "P150",
-      "vacuum": false
-     },
-     "utility": {
-      "designP": 685,
-      "designT": 700,
-      "cls": "P1200",
-      "vacuum": false
-     }
-    },
-    "size": {
-     "acfm": 8029.221,
-     "ratio": 3.442847,
-     "stages": 1,
-     "gasHp": 1450.102,
-     "driverHp": 2850,
-     "wheel": 36.45683
-    },
-    "description": "8,029 ft³/min at suction, ratio 3.44, 1 stage, 1,450 hp of gas power; 2,850 hp turbine, which also drives K-1703",
-    "dutyBtuh": {
-     "process": 3800531
-    },
     "given": {
-     "drives": "K-1703"
+     "boot": 1
     },
     "ports": [
      {
       "name": "inlet",
       "dir": "in",
       "fluid": "HG",
-      "ph": "V",
+      "ph": "M",
       "w": 73087.14,
-      "sg": 0,
+      "sg": 0.62,
       "mw": 42,
-      "T": 100,
-      "P": 7,
-      "vf": 1
+      "T": 120,
+      "P": 55,
+      "vf": 0.85
      },
      {
-      "name": "outlet",
+      "name": "gas",
       "dir": "out",
-      "fluid": "HG",
-      "ph": "V",
-      "w": 73087.14,
-      "sg": 0,
-      "mw": 42,
-      "T": 200,
-      "P": 60,
-      "vf": 1
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "inlet",
-      "dir": "in",
-      "NPS": 14,
-      "cls": "P150",
-      "line": 47,
-      "fluid": "HG",
-      "n": 1
-     },
-     {
-      "port": "outlet",
-      "dir": "out",
-      "NPS": 12,
-      "cls": "P150",
-      "line": 48,
-      "fluid": "HG",
-      "n": 1
-     },
-     {
-      "port": "turbine steam in",
-      "dir": "in",
-      "NPS": 8,
-      "cls": "P1200",
-      "util": "HS",
-      "fluid": "HS",
-      "n": 1
-     },
-     {
-      "port": "turbine exhaust",
-      "dir": "out",
-      "NPS": 14,
-      "cls": "P150",
-      "util": "LS",
-      "fluid": "LS",
-      "n": 1
-     }
-    ]
-   },
-   {
-    "tag": "K-1703",
-    "service": "Wet gas compressor, second stage, on the first stage's shaft",
-    "kind": "compressor",
-    "type": "on the shaft of K-1702",
-    "installed": 1,
-    "running": 1,
-    "designP": 240,
-    "designT": 280,
-    "vacuum": false,
-    "cls": "P300",
-    "sides": {
-     "process": {
-      "designP": 240,
-      "designT": 280,
-      "cls": "P300",
-      "vacuum": false
-     }
-    },
-    "size": {
-     "acfm": 2432.084,
-     "ratio": 3.295684,
-     "stages": 1,
-     "gasHp": 1353.995,
-     "driverHp": 0
-    },
-    "description": "2,432 ft³/min at suction, ratio 3.30, 1 stage, 1,354 hp of gas power; driven by K-1702's turbine",
-    "dutyBtuh": {
-     "process": 3553497
-    },
-    "given": {
-     "shaft": "K-1702"
-    },
-    "ports": [
-     {
-      "name": "inlet",
-      "dir": "in",
       "fluid": "HG",
       "ph": "V",
       "w": 62124.06,
@@ -15695,16 +15361,16 @@
       "vf": 1
      },
      {
-      "name": "outlet",
+      "name": "liquid",
       "dir": "out",
-      "fluid": "HG",
-      "ph": "V",
-      "w": 62124.06,
-      "sg": 0,
-      "mw": 38,
-      "T": 230,
-      "P": 215,
-      "vf": 1
+      "fluid": "GS",
+      "ph": "L",
+      "w": 10963.07,
+      "sg": 0.68,
+      "mw": 0,
+      "T": 120,
+      "P": 55,
+      "vf": 0
      }
     ],
     "nozzles": [
@@ -15713,215 +15379,329 @@
       "dir": "in",
       "NPS": 10,
       "cls": "P150",
+      "line": 49,
+      "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "gas",
+      "dir": "out",
+      "NPS": 10,
+      "cls": "P150",
       "line": 50,
       "fluid": "HG",
       "n": 1
      },
      {
-      "port": "outlet",
+      "port": "liquid",
       "dir": "out",
-      "NPS": 8,
-      "cls": "P300",
-      "line": 51,
+      "NPS": 3,
+      "cls": "P150",
+      "line": 54,
+      "fluid": "GS",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "tag": "D-1702",
+    "service": "Main column overhead receiver",
+    "kind": "drum",
+    "type": "horizontal",
+    "installed": 1,
+    "running": 1,
+    "designP": 50,
+    "designT": 160,
+    "vacuum": false,
+    "cls": "P150",
+    "sides": {
+     "process": {
+      "designP": 50,
+      "designT": 160,
+      "cls": "P150",
+      "vacuum": false
+     }
+    },
+    "size": {
+     "D": 84,
+     "L": 252,
+     "t": 0.375,
+     "vertical": 0,
+     "boot": 30
+    },
+    "description": "84 in inside diameter × 21 ft between tangents, horizontal, with a water boot",
+    "dutyBtuh": {},
+    "given": {
+     "boot": 1
+    },
+    "ports": [
+     {
+      "name": "inlet",
+      "dir": "in",
+      "fluid": "HG",
+      "ph": "M",
+      "w": 247551.3,
+      "sg": 0.62,
+      "mw": 60,
+      "T": 100,
+      "P": 7,
+      "vf": 0.22
+     },
+     {
+      "name": "inlet 2",
+      "dir": "in",
+      "fluid": "HG",
+      "ph": "V",
+      "w": 1765.764,
+      "sg": 0,
+      "mw": 38,
+      "T": 100,
+      "P": 9,
+      "vf": 1
+     },
+     {
+      "name": "inlet 3",
+      "dir": "in",
+      "fluid": "HG",
+      "ph": "V",
+      "w": 9037.814,
+      "sg": 0,
+      "mw": 40,
+      "T": 110,
+      "P": 10,
+      "vf": 1
+     },
+     {
+      "name": "reflux",
+      "dir": "out",
+      "fluid": "GS",
+      "ph": "L",
+      "w": 67532.97,
+      "sg": 0.74,
+      "mw": 0,
+      "T": 100,
+      "P": 7,
+      "vf": 0
+     },
+     {
+      "name": "gasoline",
+      "dir": "out",
+      "fluid": "GS",
+      "ph": "L",
+      "w": 95671.71,
+      "sg": 0.74,
+      "mw": 0,
+      "T": 100,
+      "P": 7,
+      "vf": 0
+     },
+     {
+      "name": "water",
+      "dir": "out",
+      "fluid": "SW",
+      "ph": "L",
+      "w": 27000,
+      "sg": 1,
+      "mw": 0,
+      "T": 100,
+      "P": 7,
+      "vf": 0
+     },
+     {
+      "name": "gas",
+      "dir": "out",
+      "fluid": "HG",
+      "ph": "V",
+      "w": 73087.14,
+      "sg": 0,
+      "mw": 42,
+      "T": 100,
+      "P": 7,
+      "vf": 1
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "inlet",
+      "dir": "in",
+      "NPS": 16,
+      "cls": "P150",
+      "line": 38,
+      "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "inlet 2",
+      "dir": "in",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 39,
+      "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "inlet 3",
+      "dir": "in",
+      "NPS": 6,
+      "cls": "P150",
+      "line": 40,
+      "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "reflux",
+      "dir": "out",
+      "NPS": 6,
+      "cls": "P150",
+      "line": 41,
+      "fluid": "GS",
+      "n": 1
+     },
+     {
+      "port": "gasoline",
+      "dir": "out",
+      "NPS": 6,
+      "cls": "P150",
+      "line": 43,
+      "fluid": "GS",
+      "n": 1
+     },
+     {
+      "port": "water",
+      "dir": "out",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 45,
+      "fluid": "SW",
+      "n": 1
+     },
+     {
+      "port": "gas",
+      "dir": "out",
+      "NPS": 14,
+      "cls": "P150",
+      "line": 47,
       "fluid": "HG",
       "n": 1
      }
     ]
    },
    {
-    "tag": "V-1701",
-    "service": "Fresh catalyst hopper",
-    "kind": "hopper",
-    "type": "",
+    "tag": "C-1702",
+    "service": "Light cycle oil stripper",
+    "kind": "column",
+    "type": "trayed",
     "installed": 1,
     "running": 1,
-    "designP": 0,
-    "designT": 150,
+    "designP": 50,
+    "designT": 500,
     "vacuum": false,
     "cls": "P150",
     "sides": {
      "process": {
-      "designP": 0,
-      "designT": 150,
+      "designP": 50,
+      "designT": 500,
       "cls": "P150",
       "vacuum": false
      },
      "utility": {
-      "designP": 115,
-      "designT": 150,
-      "cls": "P150",
+      "designP": 185,
+      "designT": 450,
+      "cls": "P300",
       "vacuum": false
      }
     },
-    "size": {},
-    "description": "",
+    "size": {
+     "D": 42,
+     "trays": 6,
+     "TT": 384,
+     "skirt": 240,
+     "t": 0.375
+    },
+    "description": "42 in inside diameter × 32 ft between tangents, 6 trays, on a 20 ft skirt",
     "dutyBtuh": {},
-    "given": {},
+    "given": {
+     "trays": 6,
+     "vapW": 8739.109,
+     "vapMw": 60,
+     "vapT": 440,
+     "vapP": 24,
+     "liqSg": 0.85,
+     "skirt": 240
+    },
     "ports": [
      {
-      "name": "catalyst out",
+      "name": "feed",
+      "dir": "in",
+      "fluid": "DI",
+      "ph": "L",
+      "w": 82420.13,
+      "sg": 0.95,
+      "mw": 0,
+      "T": 450,
+      "P": 24,
+      "vf": 0
+     },
+     {
+      "name": "vapour",
       "dir": "out",
-      "fluid": "AIR",
+      "fluid": "DI",
       "ph": "V",
-      "w": 2000,
+      "w": 9492.74,
       "sg": 0,
-      "mw": 29,
-      "T": 100,
-      "P": 45,
+      "mw": 60,
+      "T": 440,
+      "P": 23,
       "vf": 1
+     },
+     {
+      "name": "bottoms",
+      "dir": "out",
+      "fluid": "DI",
+      "ph": "L",
+      "w": 74927.4,
+      "sg": 0.95,
+      "mw": 0,
+      "T": 435,
+      "P": 24,
+      "vf": 0
      }
     ],
     "nozzles": [
      {
-      "port": "catalyst out",
-      "dir": "out",
-      "NPS": 3,
+      "port": "feed",
+      "dir": "in",
+      "NPS": 6,
       "cls": "P150",
-      "line": 8,
-      "fluid": "AIR",
+      "line": 27,
+      "fluid": "DI",
       "n": 1
      },
      {
-      "port": "conveying air",
+      "port": "vapour",
+      "dir": "out",
+      "NPS": 6,
+      "cls": "P150",
+      "line": 28,
+      "fluid": "DI",
+      "n": 1
+     },
+     {
+      "port": "bottoms",
+      "dir": "out",
+      "NPS": 6,
+      "cls": "P150",
+      "line": 29,
+      "fluid": "DI",
+      "n": 1
+     },
+     {
+      "port": "stripping steam",
       "dir": "in",
       "NPS": 2,
-      "cls": "P150",
-      "util": "IA",
-      "fluid": "IA",
-      "n": 1
-     }
-    ]
-   },
-   {
-    "tag": "V-1702",
-    "service": "Equilibrium catalyst hopper",
-    "kind": "hopper",
-    "type": "",
-    "installed": 1,
-    "running": 1,
-    "designP": 0,
-    "designT": 650,
-    "vacuum": false,
-    "cls": "P150",
-    "sides": {
-     "process": {
-      "designP": 0,
-      "designT": 650,
-      "cls": "P150",
-      "vacuum": false
-     }
-    },
-    "size": {},
-    "description": "",
-    "dutyBtuh": {},
-    "given": {},
-    "ports": [
-     {
-      "name": "catalyst in",
-      "dir": "in",
-      "fluid": "AIR",
-      "ph": "V",
-      "w": 2000,
-      "sg": 0,
-      "mw": 29,
-      "T": 600,
-      "P": 30,
-      "vf": 1
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "catalyst in",
-      "dir": "in",
-      "NPS": 3,
-      "cls": "P150",
-      "line": 9,
-      "fluid": "AIR",
-      "n": 1
-     }
-    ]
-   },
-   {
-    "tag": "C-1705",
-    "service": "Flue gas wet scrubber and stack",
-    "kind": "scrubber",
-    "type": "",
-    "installed": 1,
-    "running": 1,
-    "designP": 0,
-    "designT": 600,
-    "vacuum": false,
-    "cls": "P150",
-    "sides": {
-     "process": {
-      "designP": 0,
-      "designT": 600,
-      "cls": "P150",
-      "vacuum": false
-     },
-     "utility": {
-      "designP": 105,
-      "designT": 150,
-      "cls": "P150",
-      "vacuum": false
-     }
-    },
-    "size": {},
-    "description": "",
-    "dutyBtuh": {},
-    "given": {},
-    "ports": [
-     {
-      "name": "flue gas in",
-      "dir": "in",
-      "fluid": "FLG",
-      "ph": "V",
-      "w": 178763.7,
-      "sg": 0,
-      "mw": 30,
-      "T": 550,
-      "P": 3,
-      "vf": 1
-     },
-     {
-      "name": "stack (open)",
-      "dir": "out",
-      "fluid": "FLG",
-      "ph": "V",
-      "w": 178763.7,
-      "sg": 0,
-      "mw": 29,
-      "T": 150,
-      "P": 0,
-      "vf": 1
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "flue gas in",
-      "dir": "in",
-      "NPS": 36,
-      "cls": "P150",
-      "line": 11,
-      "fluid": "FLG",
-      "n": 1
-     },
-     {
-      "port": "make-up water",
-      "dir": "in",
-      "NPS": 3,
-      "cls": "P150",
-      "util": "RW",
-      "fluid": "RW",
-      "n": 1
-     },
-     {
-      "port": "caustic",
-      "dir": "in",
-      "NPS": 2,
-      "cls": "P150",
-      "util": "CA",
-      "fluid": "CA",
+      "cls": "P300",
+      "util": "MS",
+      "fluid": "MS",
       "n": 1
      }
     ]
@@ -16236,20 +16016,20 @@
     ]
    },
    {
-    "tag": "C-1702",
-    "service": "Light cycle oil stripper",
-    "kind": "column",
-    "type": "trayed",
+    "tag": "R-1701",
+    "service": "Reactor and regenerator",
+    "kind": "cracker",
+    "type": "",
     "installed": 1,
     "running": 1,
-    "designP": 50,
-    "designT": 500,
+    "designP": 55,
+    "designT": 650,
     "vacuum": false,
     "cls": "P150",
     "sides": {
      "process": {
-      "designP": 50,
-      "designT": 500,
+      "designP": 55,
+      "designT": 650,
       "cls": "P150",
       "vacuum": false
      },
@@ -16260,94 +16040,145 @@
       "vacuum": false
      }
     },
-    "size": {
-     "D": 42,
-     "trays": 6,
-     "TT": 384,
-     "skirt": 240,
-     "t": 0.375
-    },
-    "description": "42 in inside diameter × 32 ft between tangents, 6 trays, on a 20 ft skirt",
+    "size": {},
+    "description": "",
     "dutyBtuh": {},
     "given": {
-     "trays": 6,
-     "vapW": 8739.109,
-     "vapMw": 60,
-     "vapT": 440,
-     "vapP": 24,
-     "liqSg": 0.85,
-     "skirt": 240
+     "cokeLbh": 12768.84
     },
     "ports": [
      {
       "name": "feed",
       "dir": "in",
-      "fluid": "DI",
+      "fluid": "GO",
       "ph": "L",
-      "w": 82420.13,
-      "sg": 0.95,
+      "w": 236460,
+      "sg": 0.9182653,
       "mw": 0,
       "T": 450,
-      "P": 24,
+      "P": 230,
       "vf": 0
      },
      {
-      "name": "vapour",
-      "dir": "out",
-      "fluid": "DI",
+      "name": "regenerator air",
+      "dir": "in",
+      "fluid": "AIR",
       "ph": "V",
-      "w": 9492.74,
+      "w": 165994.9,
       "sg": 0,
-      "mw": 60,
-      "T": 440,
-      "P": 23,
+      "mw": 29,
+      "T": 380,
+      "P": 40,
       "vf": 1
      },
      {
-      "name": "bottoms",
+      "name": "fresh catalyst",
+      "dir": "in",
+      "fluid": "AIR",
+      "ph": "V",
+      "w": 2000,
+      "sg": 0,
+      "mw": 29,
+      "T": 100,
+      "P": 45,
+      "vf": 1
+     },
+     {
+      "name": "catalyst withdrawal",
       "dir": "out",
-      "fluid": "DI",
-      "ph": "L",
-      "w": 74927.4,
-      "sg": 0.95,
-      "mw": 0,
-      "T": 435,
-      "P": 24,
-      "vf": 0
+      "fluid": "AIR",
+      "ph": "V",
+      "w": 2000,
+      "sg": 0,
+      "mw": 29,
+      "T": 600,
+      "P": 30,
+      "vf": 1
+     },
+     {
+      "name": "flue gas",
+      "dir": "out",
+      "fluid": "FLG",
+      "ph": "V",
+      "w": 178763.7,
+      "sg": 0,
+      "mw": 30,
+      "T": 1300,
+      "P": 28,
+      "vf": 1
+     },
+     {
+      "name": "reactor vapour",
+      "dir": "out",
+      "fluid": "HG",
+      "ph": "V",
+      "w": 235691.1,
+      "sg": 0,
+      "mw": 75,
+      "T": 980,
+      "P": 28,
+      "vf": 1
      }
     ],
     "nozzles": [
      {
       "port": "feed",
       "dir": "in",
-      "NPS": 6,
-      "cls": "P150",
-      "line": 27,
-      "fluid": "DI",
+      "NPS": 8,
+      "cls": "P600",
+      "line": 6,
+      "fluid": "GO",
       "n": 1
      },
      {
-      "port": "vapour",
-      "dir": "out",
-      "NPS": 6,
-      "cls": "P150",
-      "line": 28,
-      "fluid": "DI",
-      "n": 1
-     },
-     {
-      "port": "bottoms",
-      "dir": "out",
-      "NPS": 6,
-      "cls": "P150",
-      "line": 29,
-      "fluid": "DI",
-      "n": 1
-     },
-     {
-      "port": "stripping steam",
+      "port": "regenerator air",
       "dir": "in",
-      "NPS": 2,
+      "NPS": 20,
+      "cls": "P150",
+      "line": 7,
+      "fluid": "AIR",
+      "n": 1
+     },
+     {
+      "port": "fresh catalyst",
+      "dir": "in",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 8,
+      "fluid": "AIR",
+      "n": 1
+     },
+     {
+      "port": "catalyst withdrawal",
+      "dir": "out",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 9,
+      "fluid": "AIR",
+      "n": 1
+     },
+     {
+      "port": "flue gas",
+      "dir": "out",
+      "NPS": 42,
+      "cls": "P150",
+      "line": 10,
+      "fluid": "FLG",
+      "n": 1
+     },
+     {
+      "port": "reactor vapour",
+      "dir": "out",
+      "NPS": 24,
+      "cls": "P300",
+      "line": 12,
+      "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "riser and stripping steam",
+      "dir": "in",
+      "NPS": 6,
       "cls": "P300",
       "util": "MS",
       "fluid": "MS",
@@ -16356,119 +16187,74 @@
     ]
    },
    {
-    "tag": "D-1702",
-    "service": "Main column overhead receiver",
-    "kind": "drum",
-    "type": "horizontal",
+    "tag": "E-1703",
+    "service": "Flue gas cooler (steam generator)",
+    "kind": "fluegascooler",
+    "type": "steam generator",
     "installed": 1,
     "running": 1,
     "designP": 50,
-    "designT": 160,
+    "designT": 650,
     "vacuum": false,
     "cls": "P150",
     "sides": {
      "process": {
       "designP": 50,
-      "designT": 160,
+      "designT": 650,
       "cls": "P150",
+      "vacuum": false
+     },
+     "steam side": {
+      "designP": 770,
+      "designT": 700,
+      "cls": "P1200",
       "vacuum": false
      }
     },
     "size": {
-     "D": 84,
-     "L": 252,
-     "t": 0.375,
-     "vertical": 0,
-     "boot": 30
+     "dutyMMBtu": 36.19966,
+     "lmtd": 288.1634,
+     "U": 20,
+     "areaFt2": 6978.998,
+     "shells": 1,
+     "ID": 126,
+     "tubes": 2083,
+     "tubeOD": 2,
+     "tubeLength": 240,
+     "tShell": 3.125,
+     "drumT": 1.875,
+     "tubeGasFts": 47.85708
     },
-    "description": "84 in inside diameter × 21 ft between tangents, horizontal, with a water boot",
-    "dutyBtuh": {},
+    "description": "36.2 million Btu/h, 6,979 ft²: 126 in × 20 ft, 2,083 tubes of 2 in, the gas at 48 ft/s in them",
+    "dutyBtuh": {
+     "process": -36199660
+    },
     "given": {
-     "boot": 1
+     "utility": "SG-HS"
     },
     "ports": [
      {
       "name": "inlet",
       "dir": "in",
-      "fluid": "HG",
-      "ph": "M",
-      "w": 247551.3,
-      "sg": 0.62,
-      "mw": 60,
-      "T": 100,
-      "P": 7,
-      "vf": 0.22
-     },
-     {
-      "name": "inlet 2",
-      "dir": "in",
-      "fluid": "HG",
+      "fluid": "FLG",
       "ph": "V",
-      "w": 1765.764,
+      "w": 178763.7,
       "sg": 0,
-      "mw": 38,
-      "T": 100,
-      "P": 9,
+      "mw": 30,
+      "T": 1300,
+      "P": 4,
       "vf": 1
      },
      {
-      "name": "inlet 3",
-      "dir": "in",
-      "fluid": "HG",
+      "name": "outlet",
+      "dir": "out",
+      "fluid": "FLG",
       "ph": "V",
-      "w": 9037.814,
+      "w": 178763.7,
       "sg": 0,
-      "mw": 40,
-      "T": 110,
-      "P": 10,
-      "vf": 1
-     },
-     {
-      "name": "reflux",
-      "dir": "out",
-      "fluid": "GS",
-      "ph": "L",
-      "w": 67532.97,
-      "sg": 0.74,
-      "mw": 0,
-      "T": 100,
-      "P": 7,
-      "vf": 0
-     },
-     {
-      "name": "gasoline",
-      "dir": "out",
-      "fluid": "GS",
-      "ph": "L",
-      "w": 95671.71,
-      "sg": 0.74,
-      "mw": 0,
-      "T": 100,
-      "P": 7,
-      "vf": 0
-     },
-     {
-      "name": "water",
-      "dir": "out",
-      "fluid": "SW",
-      "ph": "L",
-      "w": 27000,
-      "sg": 1,
-      "mw": 0,
-      "T": 100,
-      "P": 7,
-      "vf": 0
-     },
-     {
-      "name": "gas",
-      "dir": "out",
-      "fluid": "HG",
-      "ph": "V",
-      "w": 73087.14,
-      "sg": 0,
-      "mw": 42,
-      "T": 100,
-      "P": 7,
+      "mw": 30,
+      "T": 550,
+      "P": 3,
       "vf": 1
      }
     ],
@@ -16476,115 +16262,527 @@
      {
       "port": "inlet",
       "dir": "in",
-      "NPS": 16,
+      "NPS": 42,
       "cls": "P150",
-      "line": 38,
-      "fluid": "HG",
+      "line": 10,
+      "fluid": "FLG",
       "n": 1
      },
      {
-      "port": "inlet 2",
+      "port": "outlet",
+      "dir": "out",
+      "NPS": 36,
+      "cls": "P150",
+      "line": 11,
+      "fluid": "FLG",
+      "n": 1
+     },
+     {
+      "port": "feed water in",
       "dir": "in",
       "NPS": 3,
-      "cls": "P150",
-      "line": 39,
-      "fluid": "HG",
+      "cls": "P1200",
+      "util": "BW",
+      "fluid": "BW",
       "n": 1
      },
      {
-      "port": "inlet 3",
-      "dir": "in",
-      "NPS": 6,
-      "cls": "P150",
-      "line": 40,
-      "fluid": "HG",
-      "n": 1
-     },
-     {
-      "port": "reflux",
+      "port": "steam out",
       "dir": "out",
-      "NPS": 6,
-      "cls": "P150",
-      "line": 41,
-      "fluid": "GS",
-      "n": 1
-     },
-     {
-      "port": "gasoline",
-      "dir": "out",
-      "NPS": 6,
-      "cls": "P150",
-      "line": 43,
-      "fluid": "GS",
-      "n": 1
-     },
-     {
-      "port": "water",
-      "dir": "out",
-      "NPS": 3,
-      "cls": "P150",
-      "line": 45,
-      "fluid": "SW",
-      "n": 1
-     },
-     {
-      "port": "gas",
-      "dir": "out",
-      "NPS": 14,
-      "cls": "P150",
-      "line": 47,
-      "fluid": "HG",
+      "NPS": 8,
+      "cls": "P1200",
+      "util": "HS",
+      "fluid": "HS",
       "n": 1
      }
     ]
    },
    {
-    "tag": "D-1703",
-    "service": "Compressor interstage drum",
-    "kind": "drum",
-    "type": "horizontal",
+    "tag": "C-1705",
+    "service": "Flue gas wet scrubber and stack",
+    "kind": "scrubber",
+    "type": "",
     "installed": 1,
     "running": 1,
-    "designP": 80,
-    "designT": 170,
+    "designP": 0,
+    "designT": 600,
     "vacuum": false,
     "cls": "P150",
     "sides": {
      "process": {
-      "designP": 80,
-      "designT": 170,
+      "designP": 0,
+      "designT": 600,
+      "cls": "P150",
+      "vacuum": false
+     },
+     "utility": {
+      "designP": 105,
+      "designT": 150,
+      "cls": "P150",
+      "vacuum": false
+     }
+    },
+    "size": {},
+    "description": "",
+    "dutyBtuh": {},
+    "given": {},
+    "ports": [
+     {
+      "name": "flue gas in",
+      "dir": "in",
+      "fluid": "FLG",
+      "ph": "V",
+      "w": 178763.7,
+      "sg": 0,
+      "mw": 30,
+      "T": 550,
+      "P": 3,
+      "vf": 1
+     },
+     {
+      "name": "stack (open)",
+      "dir": "out",
+      "fluid": "FLG",
+      "ph": "V",
+      "w": 178763.7,
+      "sg": 0,
+      "mw": 29,
+      "T": 150,
+      "P": 0,
+      "vf": 1
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "flue gas in",
+      "dir": "in",
+      "NPS": 36,
+      "cls": "P150",
+      "line": 11,
+      "fluid": "FLG",
+      "n": 1
+     },
+     {
+      "port": "make-up water",
+      "dir": "in",
+      "NPS": 3,
+      "cls": "P150",
+      "util": "RW",
+      "fluid": "RW",
+      "n": 1
+     },
+     {
+      "port": "caustic",
+      "dir": "in",
+      "NPS": 2,
+      "cls": "P150",
+      "util": "CA",
+      "fluid": "CA",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "tag": "V-1701",
+    "service": "Fresh catalyst hopper",
+    "kind": "hopper",
+    "type": "",
+    "installed": 1,
+    "running": 1,
+    "designP": 0,
+    "designT": 150,
+    "vacuum": false,
+    "cls": "P150",
+    "sides": {
+     "process": {
+      "designP": 0,
+      "designT": 150,
+      "cls": "P150",
+      "vacuum": false
+     },
+     "utility": {
+      "designP": 115,
+      "designT": 150,
+      "cls": "P150",
+      "vacuum": false
+     }
+    },
+    "size": {},
+    "description": "",
+    "dutyBtuh": {},
+    "given": {},
+    "ports": [
+     {
+      "name": "catalyst out",
+      "dir": "out",
+      "fluid": "AIR",
+      "ph": "V",
+      "w": 2000,
+      "sg": 0,
+      "mw": 29,
+      "T": 100,
+      "P": 45,
+      "vf": 1
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "catalyst out",
+      "dir": "out",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 8,
+      "fluid": "AIR",
+      "n": 1
+     },
+     {
+      "port": "conveying air",
+      "dir": "in",
+      "NPS": 2,
+      "cls": "P150",
+      "util": "IA",
+      "fluid": "IA",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "tag": "V-1702",
+    "service": "Equilibrium catalyst hopper",
+    "kind": "hopper",
+    "type": "",
+    "installed": 1,
+    "running": 1,
+    "designP": 0,
+    "designT": 650,
+    "vacuum": false,
+    "cls": "P150",
+    "sides": {
+     "process": {
+      "designP": 0,
+      "designT": 650,
+      "cls": "P150",
+      "vacuum": false
+     }
+    },
+    "size": {},
+    "description": "",
+    "dutyBtuh": {},
+    "given": {},
+    "ports": [
+     {
+      "name": "catalyst in",
+      "dir": "in",
+      "fluid": "AIR",
+      "ph": "V",
+      "w": 2000,
+      "sg": 0,
+      "mw": 29,
+      "T": 600,
+      "P": 30,
+      "vf": 1
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "catalyst in",
+      "dir": "in",
+      "NPS": 3,
+      "cls": "P150",
+      "line": 9,
+      "fluid": "AIR",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "tag": "F-1701",
+    "service": "Slurry filter",
+    "kind": "filter",
+    "type": "vertical",
+    "installed": 1,
+    "running": 1,
+    "designP": 210,
+    "designT": 250,
+    "vacuum": false,
+    "cls": "P300",
+    "sides": {
+     "process": {
+      "designP": 210,
+      "designT": 250,
+      "cls": "P300",
+      "vacuum": false
+     }
+    },
+    "size": {
+     "D": 24,
+     "L": 48,
+     "t": 0.375
+    },
+    "description": "24 in inside diameter × 4 ft between tangents, vertical",
+    "dutyBtuh": {
+     "process": 0
+    },
+    "given": {},
+    "ports": [
+     {
+      "name": "inlet",
+      "dir": "in",
+      "fluid": "SL",
+      "ph": "L",
+      "w": 20808.48,
+      "sg": 1.07,
+      "mw": 0,
+      "T": 200,
+      "P": 120,
+      "vf": 0
+     },
+     {
+      "name": "outlet",
+      "dir": "out",
+      "fluid": "SL",
+      "ph": "L",
+      "w": 20808.48,
+      "sg": 1.07,
+      "mw": 0,
+      "T": 200,
+      "P": 115,
+      "vf": 0
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "inlet",
+      "dir": "in",
+      "NPS": 3,
+      "cls": "P300",
+      "line": 18,
+      "fluid": "SL",
+      "n": 1
+     },
+     {
+      "port": "outlet",
+      "dir": "out",
+      "NPS": 3,
+      "cls": "P300",
+      "line": 19,
+      "fluid": "SL",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "tag": "K-1701",
+    "service": "Main air blower",
+    "kind": "blower",
+    "type": "motor driven",
+    "installed": 1,
+    "running": 1,
+    "designP": 65,
+    "designT": 430,
+    "vacuum": false,
+    "cls": "P150",
+    "sides": {
+     "process": {
+      "designP": 65,
+      "designT": 430,
       "cls": "P150",
       "vacuum": false
      }
     },
     "size": {
-     "D": 42,
-     "L": 126,
-     "t": 0.375,
-     "vertical": 0,
-     "boot": 18
+     "acfm": 36203.84,
+     "ratio": 3.721829,
+     "stages": 2,
+     "gasHp": 4475.322,
+     "driverHp": 5000,
+     "motorFrame": 79.37005
     },
-    "description": "42 in inside diameter × 10.5 ft between tangents, horizontal, with a water boot",
+    "description": "36,204 ft³/min at suction, ratio 3.72, 2 stages, 4,475 hp of gas power; 5,000 hp motor",
     "dutyBtuh": {},
     "given": {
-     "boot": 1
+     "after": "E-1716"
+    },
+    "ports": [
+     {
+      "name": "intake (open)",
+      "dir": "in",
+      "fluid": "AIR",
+      "ph": "V",
+      "w": 165994.9,
+      "sg": 0,
+      "mw": 29,
+      "T": 60,
+      "P": 0,
+      "vf": 1
+     },
+     {
+      "name": "discharge",
+      "dir": "out",
+      "fluid": "AIR",
+      "ph": "V",
+      "w": 165994.9,
+      "sg": 0,
+      "mw": 29,
+      "T": 380,
+      "P": 40,
+      "vf": 1
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "discharge",
+      "dir": "out",
+      "NPS": 20,
+      "cls": "P150",
+      "line": 7,
+      "fluid": "AIR",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "tag": "K-1702",
+    "service": "Wet gas compressor, first stage, turbine driven",
+    "kind": "compressor",
+    "type": "steam turbine driven",
+    "installed": 1,
+    "running": 1,
+    "designP": 85,
+    "designT": 250,
+    "vacuum": false,
+    "cls": "P150",
+    "sides": {
+     "process": {
+      "designP": 85,
+      "designT": 250,
+      "cls": "P150",
+      "vacuum": false
+     },
+     "utility": {
+      "designP": 685,
+      "designT": 700,
+      "cls": "P1200",
+      "vacuum": false
+     }
+    },
+    "size": {
+     "acfm": 8029.221,
+     "ratio": 3.442847,
+     "stages": 1,
+     "gasHp": 1450.102,
+     "driverHp": 2850,
+     "wheel": 36.45683
+    },
+    "description": "8,029 ft³/min at suction, ratio 3.44, 1 stage, 1,450 hp of gas power; 2,850 hp turbine, which also drives K-1703",
+    "dutyBtuh": {
+     "process": 3800531
+    },
+    "given": {
+     "drives": "K-1703"
     },
     "ports": [
      {
       "name": "inlet",
       "dir": "in",
       "fluid": "HG",
-      "ph": "M",
+      "ph": "V",
       "w": 73087.14,
-      "sg": 0.62,
+      "sg": 0,
       "mw": 42,
-      "T": 120,
-      "P": 55,
-      "vf": 0.85
+      "T": 100,
+      "P": 7,
+      "vf": 1
      },
      {
-      "name": "gas",
+      "name": "outlet",
       "dir": "out",
+      "fluid": "HG",
+      "ph": "V",
+      "w": 73087.14,
+      "sg": 0,
+      "mw": 42,
+      "T": 200,
+      "P": 60,
+      "vf": 1
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "inlet",
+      "dir": "in",
+      "NPS": 14,
+      "cls": "P150",
+      "line": 47,
+      "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "outlet",
+      "dir": "out",
+      "NPS": 12,
+      "cls": "P150",
+      "line": 48,
+      "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "turbine steam in",
+      "dir": "in",
+      "NPS": 8,
+      "cls": "P1200",
+      "util": "HS",
+      "fluid": "HS",
+      "n": 1
+     },
+     {
+      "port": "turbine exhaust",
+      "dir": "out",
+      "NPS": 14,
+      "cls": "P150",
+      "util": "LS",
+      "fluid": "LS",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "tag": "K-1703",
+    "service": "Wet gas compressor, second stage, on the first stage's shaft",
+    "kind": "compressor",
+    "type": "on the shaft of K-1702",
+    "installed": 1,
+    "running": 1,
+    "designP": 240,
+    "designT": 280,
+    "vacuum": false,
+    "cls": "P300",
+    "sides": {
+     "process": {
+      "designP": 240,
+      "designT": 280,
+      "cls": "P300",
+      "vacuum": false
+     }
+    },
+    "size": {
+     "acfm": 2432.084,
+     "ratio": 3.295684,
+     "stages": 1,
+     "gasHp": 1353.995,
+     "driverHp": 0
+    },
+    "description": "2,432 ft³/min at suction, ratio 3.30, 1 stage, 1,354 hp of gas power; driven by K-1702's turbine",
+    "dutyBtuh": {
+     "process": 3553497
+    },
+    "given": {
+     "shaft": "K-1702"
+    },
+    "ports": [
+     {
+      "name": "inlet",
+      "dir": "in",
       "fluid": "HG",
       "ph": "V",
       "w": 62124.06,
@@ -16595,16 +16793,16 @@
       "vf": 1
      },
      {
-      "name": "liquid",
+      "name": "outlet",
       "dir": "out",
-      "fluid": "GS",
-      "ph": "L",
-      "w": 10963.07,
-      "sg": 0.68,
-      "mw": 0,
-      "T": 120,
-      "P": 55,
-      "vf": 0
+      "fluid": "HG",
+      "ph": "V",
+      "w": 62124.06,
+      "sg": 0,
+      "mw": 38,
+      "T": 230,
+      "P": 215,
+      "vf": 1
      }
     ],
     "nozzles": [
@@ -16613,26 +16811,17 @@
       "dir": "in",
       "NPS": 10,
       "cls": "P150",
-      "line": 49,
-      "fluid": "HG",
-      "n": 1
-     },
-     {
-      "port": "gas",
-      "dir": "out",
-      "NPS": 10,
-      "cls": "P150",
       "line": 50,
       "fluid": "HG",
       "n": 1
      },
      {
-      "port": "liquid",
+      "port": "outlet",
       "dir": "out",
-      "NPS": 3,
-      "cls": "P150",
-      "line": 54,
-      "fluid": "GS",
+      "NPS": 8,
+      "cls": "P300",
+      "line": 51,
+      "fluid": "HG",
       "n": 1
      }
     ]
@@ -16666,7 +16855,8 @@
     "description": "90 in inside diameter × 22.5 ft between tangents, horizontal, with a water boot",
     "dutyBtuh": {},
     "given": {
-     "boot": 1
+     "boot": 1,
+     "row": "new"
     },
     "ports": [
      {
@@ -17184,7 +17374,8 @@
     "description": "36 in inside diameter × 9 ft between tangents, vertical",
     "dutyBtuh": {},
     "given": {
-     "vertical": 1
+     "vertical": 1,
+     "across": 1
     },
     "ports": [
      {
@@ -17268,7 +17459,8 @@
      "vapT": 150,
      "vapP": 210,
      "liqSg": 0.65,
-     "skirt": 180
+     "skirt": 180,
+     "across": 1
     },
     "ports": [
      {
@@ -17415,7 +17607,8 @@
      "vapT": 140,
      "vapP": 150,
      "liqSg": 0.55,
-     "skirt": 180
+     "skirt": 180,
+     "across": 1
     },
     "ports": [
      {
@@ -17575,7 +17768,9 @@
     },
     "description": "84 in inside diameter × 21 ft between tangents, horizontal",
     "dutyBtuh": {},
-    "given": {},
+    "given": {
+     "across": 1
+    },
     "ports": [
      {
       "name": "inlet",
@@ -17659,7 +17854,8 @@
      "vapT": 100,
      "vapP": 240,
      "liqSg": 0.55,
-     "skirt": 120
+     "skirt": 120,
+     "across": 1
     },
     "ports": [
      {
@@ -17751,6 +17947,99 @@
     ]
    },
    {
+    "tag": "V-1703",
+    "service": "Liquefied gas caustic wash drum",
+    "kind": "vessel",
+    "type": "vertical",
+    "installed": 1,
+    "running": 1,
+    "designP": 260,
+    "designT": 160,
+    "vacuum": false,
+    "cls": "P300",
+    "sides": {
+     "process": {
+      "designP": 260,
+      "designT": 160,
+      "cls": "P300",
+      "vacuum": false
+     },
+     "utility": {
+      "designP": 275,
+      "designT": 150,
+      "cls": "P300",
+      "vacuum": false
+     }
+    },
+    "size": {
+     "D": 66,
+     "L": 165,
+     "t": 0.625
+    },
+    "description": "66 in inside diameter × 13.8 ft between tangents, vertical",
+    "dutyBtuh": {
+     "process": 0
+    },
+    "given": {
+     "across": 1
+    },
+    "ports": [
+     {
+      "name": "inlet",
+      "dir": "in",
+      "fluid": "LP",
+      "ph": "L",
+      "w": 50872.32,
+      "sg": 0.55,
+      "mw": 0,
+      "T": 110,
+      "P": 235,
+      "vf": 0
+     },
+     {
+      "name": "outlet",
+      "dir": "out",
+      "fluid": "LP",
+      "ph": "L",
+      "w": 50872.32,
+      "sg": 0.55,
+      "mw": 0,
+      "T": 110,
+      "P": 230,
+      "vf": 0
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "inlet",
+      "dir": "in",
+      "NPS": 4,
+      "cls": "P300",
+      "line": 90,
+      "fluid": "LP",
+      "n": 1
+     },
+     {
+      "port": "outlet",
+      "dir": "out",
+      "NPS": 4,
+      "cls": "P300",
+      "line": 91,
+      "fluid": "LP",
+      "n": 1
+     },
+     {
+      "port": "caustic",
+      "dir": "in",
+      "NPS": 2,
+      "cls": "P300",
+      "util": "CA",
+      "fluid": "CA",
+      "n": 1
+     }
+    ]
+   },
+   {
     "tag": "C-1710",
     "service": "Depropaniser",
     "kind": "column",
@@ -17785,7 +18074,8 @@
      "vapT": 120,
      "vapP": 215,
      "liqSg": 0.5,
-     "skirt": 180
+     "skirt": 180,
+     "across": 1
     },
     "ports": [
      {
@@ -17945,7 +18235,9 @@
     },
     "description": "72 in inside diameter × 18 ft between tangents, horizontal",
     "dutyBtuh": {},
-    "given": {},
+    "given": {
+     "across": 1
+    },
     "ports": [
      {
       "name": "inlet",
@@ -17989,6 +18281,183 @@
       "cls": "P300",
       "line": 94,
       "fluid": "LP",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "tag": "V-1704",
+    "service": "Gasoline caustic wash drum",
+    "kind": "vessel",
+    "type": "vertical",
+    "installed": 1,
+    "running": 1,
+    "designP": 160,
+    "designT": 150,
+    "vacuum": false,
+    "cls": "P300",
+    "sides": {
+     "process": {
+      "designP": 160,
+      "designT": 150,
+      "cls": "P300",
+      "vacuum": false
+     },
+     "utility": {
+      "designP": 125,
+      "designT": 150,
+      "cls": "P150",
+      "vacuum": false
+     }
+    },
+    "size": {
+     "D": 72,
+     "L": 180,
+     "t": 0.5
+    },
+    "description": "72 in inside diameter × 15 ft between tangents, vertical",
+    "dutyBtuh": {
+     "process": 0
+    },
+    "given": {
+     "across": 1
+    },
+    "ports": [
+     {
+      "name": "inlet",
+      "dir": "in",
+      "fluid": "GS",
+      "ph": "L",
+      "w": 112554.9,
+      "sg": 0.75,
+      "mw": 0,
+      "T": 100,
+      "P": 131,
+      "vf": 0
+     },
+     {
+      "name": "outlet",
+      "dir": "out",
+      "fluid": "GS",
+      "ph": "L",
+      "w": 112554.9,
+      "sg": 0.75,
+      "mw": 0,
+      "T": 100,
+      "P": 126,
+      "vf": 0
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "inlet",
+      "dir": "in",
+      "NPS": 6,
+      "cls": "P300",
+      "line": 82,
+      "fluid": "GS",
+      "n": 1
+     },
+     {
+      "port": "outlet",
+      "dir": "out",
+      "NPS": 6,
+      "cls": "P300",
+      "line": 83,
+      "fluid": "GS",
+      "n": 1
+     },
+     {
+      "port": "caustic",
+      "dir": "in",
+      "NPS": 2,
+      "cls": "P150",
+      "util": "CA",
+      "fluid": "CA",
+      "n": 1
+     }
+    ]
+   },
+   {
+    "tag": "A-1701",
+    "service": "Main column overhead condenser",
+    "kind": "aircooler",
+    "type": "forced draught",
+    "installed": 3,
+    "running": 3,
+    "designP": 50,
+    "designT": 320,
+    "vacuum": false,
+    "cls": "P150",
+    "sides": {
+     "process": {
+      "designP": 50,
+      "designT": 320,
+      "cls": "P150",
+      "vacuum": false
+     }
+    },
+    "size": {
+     "dutyMMBtu": 45.54944,
+     "lmtd": 87.41094,
+     "bays": 3,
+     "bayWidth": 168,
+     "tubeLength": 384,
+     "tubesPerBay": 268,
+     "fans": 6
+    },
+    "description": "45.5 million Btu/h: 3 bays of 14 ft × 32 ft, 6 fans",
+    "dutyBtuh": {
+     "process": -45549440
+    },
+    "given": {
+     "after": "A-1705",
+     "direct": 1,
+     "nearest": 1
+    },
+    "ports": [
+     {
+      "name": "inlet",
+      "dir": "in",
+      "fluid": "HG",
+      "ph": "V",
+      "w": 247551.3,
+      "sg": 0,
+      "mw": 60,
+      "T": 270,
+      "P": 15,
+      "vf": 1
+     },
+     {
+      "name": "outlet",
+      "dir": "out",
+      "fluid": "HG",
+      "ph": "M",
+      "w": 247551.3,
+      "sg": 0.62,
+      "mw": 60,
+      "T": 140,
+      "P": 10,
+      "vf": 0.25
+     }
+    ],
+    "nozzles": [
+     {
+      "port": "inlet",
+      "dir": "in",
+      "NPS": 24,
+      "cls": "P150",
+      "line": 36,
+      "fluid": "HG",
+      "n": 1
+     },
+     {
+      "port": "outlet",
+      "dir": "out",
+      "NPS": 16,
+      "cls": "P150",
+      "line": 37,
+      "fluid": "HG",
       "n": 1
      }
     ]
@@ -18339,117 +18808,6 @@
     ]
    },
    {
-    "tag": "E-1703",
-    "service": "Flue gas cooler (steam generator)",
-    "kind": "fluegascooler",
-    "type": "steam generator",
-    "installed": 1,
-    "running": 1,
-    "designP": 50,
-    "designT": 650,
-    "vacuum": false,
-    "cls": "P150",
-    "sides": {
-     "process": {
-      "designP": 50,
-      "designT": 650,
-      "cls": "P150",
-      "vacuum": false
-     },
-     "steam side": {
-      "designP": 770,
-      "designT": 700,
-      "cls": "P1200",
-      "vacuum": false
-     }
-    },
-    "size": {
-     "dutyMMBtu": 36.19966,
-     "lmtd": 288.1634,
-     "U": 20,
-     "areaFt2": 6978.998,
-     "shells": 1,
-     "ID": 126,
-     "tubes": 2083,
-     "tubeOD": 2,
-     "tubeLength": 240,
-     "tShell": 3.125,
-     "drumT": 1.875,
-     "tubeGasFts": 47.85708
-    },
-    "description": "36.2 million Btu/h, 6,979 ft²: 126 in × 20 ft, 2,083 tubes of 2 in, the gas at 48 ft/s in them",
-    "dutyBtuh": {
-     "process": -36199660
-    },
-    "given": {
-     "utility": "SG-HS"
-    },
-    "ports": [
-     {
-      "name": "inlet",
-      "dir": "in",
-      "fluid": "FLG",
-      "ph": "V",
-      "w": 178763.7,
-      "sg": 0,
-      "mw": 30,
-      "T": 1300,
-      "P": 4,
-      "vf": 1
-     },
-     {
-      "name": "outlet",
-      "dir": "out",
-      "fluid": "FLG",
-      "ph": "V",
-      "w": 178763.7,
-      "sg": 0,
-      "mw": 30,
-      "T": 550,
-      "P": 3,
-      "vf": 1
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "inlet",
-      "dir": "in",
-      "NPS": 42,
-      "cls": "P150",
-      "line": 10,
-      "fluid": "FLG",
-      "n": 1
-     },
-     {
-      "port": "outlet",
-      "dir": "out",
-      "NPS": 36,
-      "cls": "P150",
-      "line": 11,
-      "fluid": "FLG",
-      "n": 1
-     },
-     {
-      "port": "feed water in",
-      "dir": "in",
-      "NPS": 3,
-      "cls": "P1200",
-      "util": "BW",
-      "fluid": "BW",
-      "n": 1
-     },
-     {
-      "port": "steam out",
-      "dir": "out",
-      "NPS": 8,
-      "cls": "P1200",
-      "util": "HS",
-      "fluid": "HS",
-      "n": 1
-     }
-    ]
-   },
-   {
     "tag": "P-1702",
     "service": "Slurry pump",
     "kind": "pump",
@@ -18744,82 +19102,6 @@
       "cls": "P150",
       "util": "CWR",
       "fluid": "CWR",
-      "n": 1
-     }
-    ]
-   },
-   {
-    "tag": "F-1701",
-    "service": "Slurry filter",
-    "kind": "filter",
-    "type": "vertical",
-    "installed": 1,
-    "running": 1,
-    "designP": 210,
-    "designT": 250,
-    "vacuum": false,
-    "cls": "P300",
-    "sides": {
-     "process": {
-      "designP": 210,
-      "designT": 250,
-      "cls": "P300",
-      "vacuum": false
-     }
-    },
-    "size": {
-     "D": 24,
-     "L": 48,
-     "t": 0.375
-    },
-    "description": "24 in inside diameter × 4 ft between tangents, vertical",
-    "dutyBtuh": {
-     "process": 0
-    },
-    "given": {},
-    "ports": [
-     {
-      "name": "inlet",
-      "dir": "in",
-      "fluid": "SL",
-      "ph": "L",
-      "w": 20808.48,
-      "sg": 1.07,
-      "mw": 0,
-      "T": 200,
-      "P": 120,
-      "vf": 0
-     },
-     {
-      "name": "outlet",
-      "dir": "out",
-      "fluid": "SL",
-      "ph": "L",
-      "w": 20808.48,
-      "sg": 1.07,
-      "mw": 0,
-      "T": 200,
-      "P": 115,
-      "vf": 0
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "inlet",
-      "dir": "in",
-      "NPS": 3,
-      "cls": "P300",
-      "line": 18,
-      "fluid": "SL",
-      "n": 1
-     },
-     {
-      "port": "outlet",
-      "dir": "out",
-      "NPS": 3,
-      "cls": "P300",
-      "line": 19,
-      "fluid": "SL",
       "n": 1
      }
     ]
@@ -19516,86 +19798,6 @@
       "cls": "P150",
       "util": "CWR",
       "fluid": "CWR",
-      "n": 1
-     }
-    ]
-   },
-   {
-    "tag": "A-1701",
-    "service": "Main column overhead condenser",
-    "kind": "aircooler",
-    "type": "forced draught",
-    "installed": 3,
-    "running": 3,
-    "designP": 50,
-    "designT": 320,
-    "vacuum": false,
-    "cls": "P150",
-    "sides": {
-     "process": {
-      "designP": 50,
-      "designT": 320,
-      "cls": "P150",
-      "vacuum": false
-     }
-    },
-    "size": {
-     "dutyMMBtu": 45.54944,
-     "lmtd": 87.41094,
-     "bays": 3,
-     "bayWidth": 168,
-     "tubeLength": 384,
-     "tubesPerBay": 268,
-     "fans": 6
-    },
-    "description": "45.5 million Btu/h: 3 bays of 14 ft × 32 ft, 6 fans",
-    "dutyBtuh": {
-     "process": -45549440
-    },
-    "given": {},
-    "ports": [
-     {
-      "name": "inlet",
-      "dir": "in",
-      "fluid": "HG",
-      "ph": "V",
-      "w": 247551.3,
-      "sg": 0,
-      "mw": 60,
-      "T": 270,
-      "P": 15,
-      "vf": 1
-     },
-     {
-      "name": "outlet",
-      "dir": "out",
-      "fluid": "HG",
-      "ph": "M",
-      "w": 247551.3,
-      "sg": 0.62,
-      "mw": 60,
-      "T": 140,
-      "P": 10,
-      "vf": 0.25
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "inlet",
-      "dir": "in",
-      "NPS": 24,
-      "cls": "P150",
-      "line": 36,
-      "fluid": "HG",
-      "n": 1
-     },
-     {
-      "port": "outlet",
-      "dir": "out",
-      "NPS": 16,
-      "cls": "P150",
-      "line": 37,
-      "fluid": "HG",
       "n": 1
      }
     ]
@@ -20976,97 +21178,6 @@
     ]
    },
    {
-    "tag": "V-1704",
-    "service": "Gasoline caustic wash drum",
-    "kind": "vessel",
-    "type": "vertical",
-    "installed": 1,
-    "running": 1,
-    "designP": 160,
-    "designT": 150,
-    "vacuum": false,
-    "cls": "P300",
-    "sides": {
-     "process": {
-      "designP": 160,
-      "designT": 150,
-      "cls": "P300",
-      "vacuum": false
-     },
-     "utility": {
-      "designP": 125,
-      "designT": 150,
-      "cls": "P150",
-      "vacuum": false
-     }
-    },
-    "size": {
-     "D": 72,
-     "L": 180,
-     "t": 0.5
-    },
-    "description": "72 in inside diameter × 15 ft between tangents, vertical",
-    "dutyBtuh": {
-     "process": 0
-    },
-    "given": {},
-    "ports": [
-     {
-      "name": "inlet",
-      "dir": "in",
-      "fluid": "GS",
-      "ph": "L",
-      "w": 112554.9,
-      "sg": 0.75,
-      "mw": 0,
-      "T": 100,
-      "P": 131,
-      "vf": 0
-     },
-     {
-      "name": "outlet",
-      "dir": "out",
-      "fluid": "GS",
-      "ph": "L",
-      "w": 112554.9,
-      "sg": 0.75,
-      "mw": 0,
-      "T": 100,
-      "P": 126,
-      "vf": 0
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "inlet",
-      "dir": "in",
-      "NPS": 6,
-      "cls": "P300",
-      "line": 82,
-      "fluid": "GS",
-      "n": 1
-     },
-     {
-      "port": "outlet",
-      "dir": "out",
-      "NPS": 6,
-      "cls": "P300",
-      "line": 83,
-      "fluid": "GS",
-      "n": 1
-     },
-     {
-      "port": "caustic",
-      "dir": "in",
-      "NPS": 2,
-      "cls": "P150",
-      "util": "CA",
-      "fluid": "CA",
-      "n": 1
-     }
-    ]
-   },
-   {
     "tag": "P-1714",
     "service": "Lean gasoline pump",
     "kind": "pump",
@@ -21143,97 +21254,6 @@
       "cls": "P600",
       "line": 85,
       "fluid": "GS",
-      "n": 1
-     }
-    ]
-   },
-   {
-    "tag": "V-1703",
-    "service": "Liquefied gas caustic wash drum",
-    "kind": "vessel",
-    "type": "vertical",
-    "installed": 1,
-    "running": 1,
-    "designP": 260,
-    "designT": 160,
-    "vacuum": false,
-    "cls": "P300",
-    "sides": {
-     "process": {
-      "designP": 260,
-      "designT": 160,
-      "cls": "P300",
-      "vacuum": false
-     },
-     "utility": {
-      "designP": 275,
-      "designT": 150,
-      "cls": "P300",
-      "vacuum": false
-     }
-    },
-    "size": {
-     "D": 66,
-     "L": 165,
-     "t": 0.625
-    },
-    "description": "66 in inside diameter × 13.8 ft between tangents, vertical",
-    "dutyBtuh": {
-     "process": 0
-    },
-    "given": {},
-    "ports": [
-     {
-      "name": "inlet",
-      "dir": "in",
-      "fluid": "LP",
-      "ph": "L",
-      "w": 50872.32,
-      "sg": 0.55,
-      "mw": 0,
-      "T": 110,
-      "P": 235,
-      "vf": 0
-     },
-     {
-      "name": "outlet",
-      "dir": "out",
-      "fluid": "LP",
-      "ph": "L",
-      "w": 50872.32,
-      "sg": 0.55,
-      "mw": 0,
-      "T": 110,
-      "P": 230,
-      "vf": 0
-     }
-    ],
-    "nozzles": [
-     {
-      "port": "inlet",
-      "dir": "in",
-      "NPS": 4,
-      "cls": "P300",
-      "line": 90,
-      "fluid": "LP",
-      "n": 1
-     },
-     {
-      "port": "outlet",
-      "dir": "out",
-      "NPS": 4,
-      "cls": "P300",
-      "line": 91,
-      "fluid": "LP",
-      "n": 1
-     },
-     {
-      "port": "caustic",
-      "dir": "in",
-      "NPS": 2,
-      "cls": "P300",
-      "util": "CA",
-      "fluid": "CA",
       "n": 1
      }
     ]

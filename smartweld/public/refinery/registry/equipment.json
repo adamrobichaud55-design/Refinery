@@ -21352,30 +21352,30 @@
   {
    "demonstration": true,
    "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "R-1701-RX",
-   "item": "R-1701",
+   "tag": "D-1703",
+   "item": "D-1703",
    "unit": 17,
-   "service": "Reactor and regenerator: reactor vessel and stripper",
-   "kind": "cracker",
+   "service": "Compressor interstage drum",
+   "kind": "drum",
    "shape": "cylinder",
    "code": {
     "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
     "source": "recalled"
    },
    "report": {
-    "value": "U-1",
+    "value": "U-1A",
     "source": "recalled"
    },
    "registration": {
-    "value": "F1008.7",
+    "value": "A9811.7",
     "source": "invented"
    },
    "fabricator": {
-    "value": "Demonstration Fabricator A",
+    "value": "Demonstration Fabricator E",
     "source": "invented"
    },
    "serial": {
-    "value": "DF-58641",
+    "value": "DF-87744",
     "source": "invented"
    },
    "yearBuilt": {
@@ -21386,11 +21386,11 @@
     {
      "name": "vessel",
      "mawp": {
-      "value": 55,
+      "value": 80,
       "source": "model"
      },
      "temperature": {
-      "value": 650,
+      "value": 170,
       "source": "model"
      },
      "fullVacuum": {
@@ -21398,15 +21398,12 @@
       "source": "model"
      },
      "testPressure": {
-      "value": 72,
+      "value": 104,
       "source": "recalled"
      },
      "contents": [
-      "gas oil",
-      "process air",
-      "flue gas",
       "hydrocarbon gas",
-      "steam, 150 psi"
+      "gasoline"
      ]
     }
    ],
@@ -21424,15 +21421,15 @@
      "source": "recalled"
     },
     "insideDiameter": {
-     "value": 132,
+     "value": 42,
      "source": "model"
     },
     "length": {
-     "value": 388.8,
+     "value": 126,
      "source": "model"
     },
     "thickness": {
-     "value": 1,
+     "value": 0.375,
      "source": "model"
     },
     "heads": {
@@ -21459,115 +21456,67 @@
    "nozzles": [
     {
      "mark": "N1",
-     "service": "feed",
+     "service": "inlet",
      "size": {
-      "value": 8,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P600",
-      "source": "model"
-     },
-     "fluid": "gas oil"
-    },
-    {
-     "mark": "N2",
-     "service": "regenerator air",
-     "size": {
-      "value": 20,
+      "value": 10,
       "source": "model"
      },
      "pipeClass": {
       "value": "P150",
-      "source": "model"
-     },
-     "fluid": "process air"
-    },
-    {
-     "mark": "N3",
-     "service": "fresh catalyst",
-     "size": {
-      "value": 3,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "process air"
-    },
-    {
-     "mark": "N4",
-     "service": "catalyst withdrawal",
-     "size": {
-      "value": 3,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "process air"
-    },
-    {
-     "mark": "N5",
-     "service": "flue gas",
-     "size": {
-      "value": 42,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "flue gas"
-    },
-    {
-     "mark": "N6",
-     "service": "reactor vapour",
-     "size": {
-      "value": 24,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P300",
       "source": "model"
      },
      "fluid": "hydrocarbon gas"
     },
     {
-     "mark": "N7",
-     "service": "riser and stripping steam",
+     "mark": "N2",
+     "service": "gas",
      "size": {
-      "value": 6,
+      "value": 10,
       "source": "model"
      },
      "pipeClass": {
-      "value": "P300",
+      "value": "P150",
       "source": "model"
      },
-     "fluid": "steam, 150 psi"
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N3",
+     "service": "liquid",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "gasoline"
     }
    ],
    "supports": {
-    "value": "skirt and structure",
+    "value": "two saddles",
     "source": "model"
    },
    "relief": [
     {
      "tag": {
-      "value": "PSV-1701-RX",
+      "value": "PSV-1703",
       "source": "invented"
      },
      "setPressure": {
-      "value": 55,
+      "value": 80,
       "source": "model"
      }
     }
    ],
-   "weightBasis": "not split between the two vessels; the catalogue's weight of the whole cracker as drawn, both vessels, riser, standpipes and steel, is 407,082 lb; refractory not included",
+   "emptyWeightLb": {
+    "value": 2798,
+    "source": "model"
+   },
+   "weightBasis": "shell, heads and supports as drawn",
    "volumeFt3": {
-    "value": 3428,
+    "value": 112,
     "source": "model"
    },
    "signatures": "demonstration record: not certified, not signed"
@@ -21575,30 +21524,30 @@
   {
    "demonstration": true,
    "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "R-1701-RG",
-   "item": "R-1701",
+   "tag": "D-1702",
+   "item": "D-1702",
    "unit": 17,
-   "service": "Reactor and regenerator: regenerator",
-   "kind": "cracker",
+   "service": "Main column overhead receiver",
+   "kind": "drum",
    "shape": "cylinder",
    "code": {
     "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
     "source": "recalled"
    },
    "report": {
-    "value": "U-1",
+    "value": "U-1A",
     "source": "recalled"
    },
    "registration": {
-    "value": "L6197.7",
+    "value": "B8192.7",
     "source": "invented"
    },
    "fabricator": {
-    "value": "Demonstration Fabricator A",
+    "value": "Demonstration Fabricator D",
     "source": "invented"
    },
    "serial": {
-    "value": "DF-93404",
+    "value": "DF-35363",
     "source": "invented"
    },
    "yearBuilt": {
@@ -21609,11 +21558,11 @@
     {
      "name": "vessel",
      "mawp": {
-      "value": 55,
+      "value": 50,
       "source": "model"
      },
      "temperature": {
-      "value": 650,
+      "value": 160,
       "source": "model"
      },
      "fullVacuum": {
@@ -21621,14 +21570,236 @@
       "source": "model"
      },
      "testPressure": {
-      "value": 72,
+      "value": 65,
       "source": "recalled"
      },
      "contents": [
-      "gas oil",
-      "process air",
-      "flue gas",
       "hydrocarbon gas",
+      "gasoline",
+      "sour water"
+     ]
+    }
+   ],
+   "mdmt": {
+    "value": -20,
+    "source": "recalled"
+   },
+   "corrosionAllowance": {
+    "value": 0.125,
+    "source": "model"
+   },
+   "shell": {
+    "material": {
+     "value": "SA-516-70",
+     "source": "recalled"
+    },
+    "insideDiameter": {
+     "value": 84,
+     "source": "model"
+    },
+    "length": {
+     "value": 252,
+     "source": "model"
+    },
+    "thickness": {
+     "value": 0.375,
+     "source": "model"
+    },
+    "heads": {
+     "value": "2:1 ellipsoidal, of the shell's thickness",
+     "source": "model"
+    }
+   },
+   "radiography": {
+    "value": "spot",
+    "source": "recalled"
+   },
+   "jointEfficiency": {
+    "value": 0.85,
+    "source": "recalled"
+   },
+   "heatTreatment": {
+    "value": "post-weld heat treated",
+    "source": "recalled"
+   },
+   "lethalService": {
+    "value": false,
+    "source": "recalled"
+   },
+   "nozzles": [
+    {
+     "mark": "N1",
+     "service": "inlet",
+     "size": {
+      "value": 16,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N2",
+     "service": "inlet 2",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N3",
+     "service": "inlet 3",
+     "size": {
+      "value": 6,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N4",
+     "service": "reflux",
+     "size": {
+      "value": 6,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "gasoline"
+    },
+    {
+     "mark": "N5",
+     "service": "gasoline",
+     "size": {
+      "value": 6,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "gasoline"
+    },
+    {
+     "mark": "N6",
+     "service": "water",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "sour water"
+    },
+    {
+     "mark": "N7",
+     "service": "gas",
+     "size": {
+      "value": 14,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    }
+   ],
+   "supports": {
+    "value": "two saddles",
+    "source": "model"
+   },
+   "relief": [
+    {
+     "tag": {
+      "value": "PSV-1702",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 50,
+      "source": "model"
+     }
+    }
+   ],
+   "emptyWeightLb": {
+    "value": 10570,
+    "source": "model"
+   },
+   "weightBasis": "shell, heads and supports as drawn",
+   "volumeFt3": {
+    "value": 898,
+    "source": "model"
+   },
+   "signatures": "demonstration record: not certified, not signed"
+  },
+  {
+   "demonstration": true,
+   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
+   "tag": "C-1702",
+   "item": "C-1702",
+   "unit": 17,
+   "service": "Light cycle oil stripper",
+   "kind": "column",
+   "shape": "cylinder",
+   "code": {
+    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
+    "source": "recalled"
+   },
+   "report": {
+    "value": "U-1",
+    "source": "recalled"
+   },
+   "registration": {
+    "value": "X5255.7",
+    "source": "invented"
+   },
+   "fabricator": {
+    "value": "Demonstration Fabricator C",
+    "source": "invented"
+   },
+   "serial": {
+    "value": "DF-45924",
+    "source": "invented"
+   },
+   "yearBuilt": {
+    "value": 2025,
+    "source": "invented"
+   },
+   "chambers": [
+    {
+     "name": "vessel",
+     "mawp": {
+      "value": 50,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 500,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": false,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 65,
+      "source": "recalled"
+     },
+     "contents": [
+      "diesel",
       "steam, 150 psi"
      ]
     }
@@ -21647,15 +21818,15 @@
      "source": "recalled"
     },
     "insideDiameter": {
-     "value": 216,
+     "value": 42,
      "source": "model"
     },
     "length": {
-     "value": 324,
+     "value": 384,
      "source": "model"
     },
     "thickness": {
-     "value": 1,
+     "value": 0.375,
      "source": "model"
     },
     "heads": {
@@ -21684,85 +21855,46 @@
      "mark": "N1",
      "service": "feed",
      "size": {
-      "value": 8,
+      "value": 6,
       "source": "model"
      },
      "pipeClass": {
-      "value": "P600",
+      "value": "P150",
       "source": "model"
      },
-     "fluid": "gas oil"
+     "fluid": "diesel"
     },
     {
      "mark": "N2",
-     "service": "regenerator air",
+     "service": "vapour",
      "size": {
-      "value": 20,
+      "value": 6,
       "source": "model"
      },
      "pipeClass": {
       "value": "P150",
       "source": "model"
      },
-     "fluid": "process air"
+     "fluid": "diesel"
     },
     {
      "mark": "N3",
-     "service": "fresh catalyst",
+     "service": "bottoms",
      "size": {
-      "value": 3,
+      "value": 6,
       "source": "model"
      },
      "pipeClass": {
       "value": "P150",
       "source": "model"
      },
-     "fluid": "process air"
+     "fluid": "diesel"
     },
     {
      "mark": "N4",
-     "service": "catalyst withdrawal",
+     "service": "stripping steam",
      "size": {
-      "value": 3,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "process air"
-    },
-    {
-     "mark": "N5",
-     "service": "flue gas",
-     "size": {
-      "value": 42,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "flue gas"
-    },
-    {
-     "mark": "N6",
-     "service": "reactor vapour",
-     "size": {
-      "value": 24,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P300",
-      "source": "model"
-     },
-     "fluid": "hydrocarbon gas"
-    },
-    {
-     "mark": "N7",
-     "service": "riser and stripping steam",
-     "size": {
-      "value": 6,
+      "value": 2,
       "source": "model"
      },
      "pipeClass": {
@@ -21773,24 +21905,28 @@
     }
    ],
    "supports": {
-    "value": "skirt and structure",
+    "value": "skirt",
     "source": "model"
    },
    "relief": [
     {
      "tag": {
-      "value": "PSV-1701-RG",
+      "value": "PSV-1702",
       "source": "invented"
      },
      "setPressure": {
-      "value": 55,
+      "value": 50,
       "source": "model"
      }
     }
    ],
-   "weightBasis": "not split between the two vessels; the catalogue's weight of the whole cracker as drawn, both vessels, riser, standpipes and steel, is 407,082 lb; refractory not included",
+   "emptyWeightLb": {
+    "value": 16652,
+    "source": "model"
+   },
+   "weightBasis": "shell, heads, skirt, platforms and ladders as drawn; trays not included",
    "volumeFt3": {
-    "value": 8397,
+    "value": 319,
     "source": "model"
    },
    "signatures": "demonstration record: not certified, not signed"
@@ -22104,11 +22240,11 @@
   {
    "demonstration": true,
    "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "C-1702",
-   "item": "C-1702",
+   "tag": "R-1701-RX",
+   "item": "R-1701",
    "unit": 17,
-   "service": "Light cycle oil stripper",
-   "kind": "column",
+   "service": "Reactor and regenerator: reactor vessel and stripper",
+   "kind": "cracker",
    "shape": "cylinder",
    "code": {
     "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
@@ -22119,15 +22255,15 @@
     "source": "recalled"
    },
    "registration": {
-    "value": "X5255.7",
+    "value": "F1008.7",
     "source": "invented"
    },
    "fabricator": {
-    "value": "Demonstration Fabricator C",
+    "value": "Demonstration Fabricator A",
     "source": "invented"
    },
    "serial": {
-    "value": "DF-45924",
+    "value": "DF-58641",
     "source": "invented"
    },
    "yearBuilt": {
@@ -22138,11 +22274,11 @@
     {
      "name": "vessel",
      "mawp": {
-      "value": 50,
+      "value": 55,
       "source": "model"
      },
      "temperature": {
-      "value": 500,
+      "value": 650,
       "source": "model"
      },
      "fullVacuum": {
@@ -22150,11 +22286,14 @@
       "source": "model"
      },
      "testPressure": {
-      "value": 65,
+      "value": 72,
       "source": "recalled"
      },
      "contents": [
-      "diesel",
+      "gas oil",
+      "process air",
+      "flue gas",
+      "hydrocarbon gas",
       "steam, 150 psi"
      ]
     }
@@ -22173,15 +22312,15 @@
      "source": "recalled"
     },
     "insideDiameter": {
-     "value": 42,
+     "value": 132,
      "source": "model"
     },
     "length": {
-     "value": 384,
+     "value": 388.8,
      "source": "model"
     },
     "thickness": {
-     "value": 0.375,
+     "value": 1,
      "source": "model"
     },
     "heads": {
@@ -22210,46 +22349,85 @@
      "mark": "N1",
      "service": "feed",
      "size": {
-      "value": 6,
+      "value": 8,
       "source": "model"
      },
      "pipeClass": {
-      "value": "P150",
+      "value": "P600",
       "source": "model"
      },
-     "fluid": "diesel"
+     "fluid": "gas oil"
     },
     {
      "mark": "N2",
-     "service": "vapour",
+     "service": "regenerator air",
      "size": {
-      "value": 6,
+      "value": 20,
       "source": "model"
      },
      "pipeClass": {
       "value": "P150",
       "source": "model"
      },
-     "fluid": "diesel"
+     "fluid": "process air"
     },
     {
      "mark": "N3",
-     "service": "bottoms",
+     "service": "fresh catalyst",
      "size": {
-      "value": 6,
+      "value": 3,
       "source": "model"
      },
      "pipeClass": {
       "value": "P150",
       "source": "model"
      },
-     "fluid": "diesel"
+     "fluid": "process air"
     },
     {
      "mark": "N4",
-     "service": "stripping steam",
+     "service": "catalyst withdrawal",
      "size": {
-      "value": 2,
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "process air"
+    },
+    {
+     "mark": "N5",
+     "service": "flue gas",
+     "size": {
+      "value": 42,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "flue gas"
+    },
+    {
+     "mark": "N6",
+     "service": "reactor vapour",
+     "size": {
+      "value": 24,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P300",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N7",
+     "service": "riser and stripping steam",
+     "size": {
+      "value": 6,
       "source": "model"
      },
      "pipeClass": {
@@ -22260,28 +22438,24 @@
     }
    ],
    "supports": {
-    "value": "skirt",
+    "value": "skirt and structure",
     "source": "model"
    },
    "relief": [
     {
      "tag": {
-      "value": "PSV-1702",
+      "value": "PSV-1701-RX",
       "source": "invented"
      },
      "setPressure": {
-      "value": 50,
+      "value": 55,
       "source": "model"
      }
     }
    ],
-   "emptyWeightLb": {
-    "value": 16652,
-    "source": "model"
-   },
-   "weightBasis": "shell, heads, skirt, platforms and ladders as drawn; trays not included",
+   "weightBasis": "not split between the two vessels; the catalogue's weight of the whole cracker as drawn, both vessels, riser, standpipes and steel, is 390,814 lb; refractory not included",
    "volumeFt3": {
-    "value": 319,
+    "value": 3428,
     "source": "model"
    },
    "signatures": "demonstration record: not certified, not signed"
@@ -22289,30 +22463,30 @@
   {
    "demonstration": true,
    "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "D-1702",
-   "item": "D-1702",
+   "tag": "R-1701-RG",
+   "item": "R-1701",
    "unit": 17,
-   "service": "Main column overhead receiver",
-   "kind": "drum",
+   "service": "Reactor and regenerator: regenerator",
+   "kind": "cracker",
    "shape": "cylinder",
    "code": {
     "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
     "source": "recalled"
    },
    "report": {
-    "value": "U-1A",
+    "value": "U-1",
     "source": "recalled"
    },
    "registration": {
-    "value": "B8192.7",
+    "value": "L6197.7",
     "source": "invented"
    },
    "fabricator": {
-    "value": "Demonstration Fabricator D",
+    "value": "Demonstration Fabricator A",
     "source": "invented"
    },
    "serial": {
-    "value": "DF-35363",
+    "value": "DF-93404",
     "source": "invented"
    },
    "yearBuilt": {
@@ -22323,11 +22497,11 @@
     {
      "name": "vessel",
      "mawp": {
-      "value": 50,
+      "value": 55,
       "source": "model"
      },
      "temperature": {
-      "value": 160,
+      "value": 650,
       "source": "model"
      },
      "fullVacuum": {
@@ -22335,13 +22509,15 @@
       "source": "model"
      },
      "testPressure": {
-      "value": 65,
+      "value": 72,
       "source": "recalled"
      },
      "contents": [
+      "gas oil",
+      "process air",
+      "flue gas",
       "hydrocarbon gas",
-      "gasoline",
-      "sour water"
+      "steam, 150 psi"
      ]
     }
    ],
@@ -22359,15 +22535,15 @@
      "source": "recalled"
     },
     "insideDiameter": {
-     "value": 84,
+     "value": 216,
      "source": "model"
     },
     "length": {
-     "value": 252,
+     "value": 324,
      "source": "model"
     },
     "thickness": {
-     "value": 0.375,
+     "value": 1,
      "source": "model"
     },
     "heads": {
@@ -22384,7 +22560,7 @@
     "source": "recalled"
    },
    "heatTreatment": {
-    "value": "post-weld heat treated",
+    "value": "none",
     "source": "recalled"
    },
    "lethalService": {
@@ -22394,72 +22570,33 @@
    "nozzles": [
     {
      "mark": "N1",
-     "service": "inlet",
+     "service": "feed",
      "size": {
-      "value": 16,
+      "value": 8,
       "source": "model"
      },
      "pipeClass": {
-      "value": "P150",
+      "value": "P600",
       "source": "model"
      },
-     "fluid": "hydrocarbon gas"
+     "fluid": "gas oil"
     },
     {
      "mark": "N2",
-     "service": "inlet 2",
+     "service": "regenerator air",
      "size": {
-      "value": 3,
+      "value": 20,
       "source": "model"
      },
      "pipeClass": {
       "value": "P150",
       "source": "model"
      },
-     "fluid": "hydrocarbon gas"
+     "fluid": "process air"
     },
     {
      "mark": "N3",
-     "service": "inlet 3",
-     "size": {
-      "value": 6,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "hydrocarbon gas"
-    },
-    {
-     "mark": "N4",
-     "service": "reflux",
-     "size": {
-      "value": 6,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "gasoline"
-    },
-    {
-     "mark": "N5",
-     "service": "gasoline",
-     "size": {
-      "value": 6,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "gasoline"
-    },
-    {
-     "mark": "N6",
-     "service": "water",
+     "service": "fresh catalyst",
      "size": {
       "value": 3,
       "source": "model"
@@ -22468,45 +22605,80 @@
       "value": "P150",
       "source": "model"
      },
-     "fluid": "sour water"
+     "fluid": "process air"
     },
     {
-     "mark": "N7",
-     "service": "gas",
+     "mark": "N4",
+     "service": "catalyst withdrawal",
      "size": {
-      "value": 14,
+      "value": 3,
       "source": "model"
      },
      "pipeClass": {
       "value": "P150",
       "source": "model"
      },
+     "fluid": "process air"
+    },
+    {
+     "mark": "N5",
+     "service": "flue gas",
+     "size": {
+      "value": 42,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "flue gas"
+    },
+    {
+     "mark": "N6",
+     "service": "reactor vapour",
+     "size": {
+      "value": 24,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P300",
+      "source": "model"
+     },
      "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N7",
+     "service": "riser and stripping steam",
+     "size": {
+      "value": 6,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P300",
+      "source": "model"
+     },
+     "fluid": "steam, 150 psi"
     }
    ],
    "supports": {
-    "value": "two saddles",
+    "value": "skirt and structure",
     "source": "model"
    },
    "relief": [
     {
      "tag": {
-      "value": "PSV-1702",
+      "value": "PSV-1701-RG",
       "source": "invented"
      },
      "setPressure": {
-      "value": 50,
+      "value": 55,
       "source": "model"
      }
     }
    ],
-   "emptyWeightLb": {
-    "value": 10570,
-    "source": "model"
-   },
-   "weightBasis": "shell, heads and supports as drawn",
+   "weightBasis": "not split between the two vessels; the catalogue's weight of the whole cracker as drawn, both vessels, riser, standpipes and steel, is 390,814 lb; refractory not included",
    "volumeFt3": {
-    "value": 898,
+    "value": 8397,
     "source": "model"
    },
    "signatures": "demonstration record: not certified, not signed"
@@ -22514,30 +22686,30 @@
   {
    "demonstration": true,
    "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "D-1703",
-   "item": "D-1703",
+   "tag": "E-1703",
+   "item": "E-1703",
    "unit": 17,
-   "service": "Compressor interstage drum",
-   "kind": "drum",
-   "shape": "cylinder",
+   "service": "Flue gas cooler (steam generator)",
+   "kind": "fluegascooler",
+   "shape": "boiler",
    "code": {
-    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
+    "value": "ASME Boiler and Pressure Vessel Code, Section I",
     "source": "recalled"
    },
    "report": {
-    "value": "U-1A",
+    "value": "P-3",
     "source": "recalled"
    },
    "registration": {
-    "value": "A9811.7",
+    "value": "Y9974.7",
     "source": "invented"
    },
    "fabricator": {
-    "value": "Demonstration Fabricator E",
+    "value": "Demonstration Fabricator F",
     "source": "invented"
    },
    "serial": {
-    "value": "DF-87744",
+    "value": "DF-57813",
     "source": "invented"
    },
    "yearBuilt": {
@@ -22546,13 +22718,13 @@
    },
    "chambers": [
     {
-     "name": "vessel",
+     "name": "steam and water side (shell and steam drum)",
      "mawp": {
-      "value": 80,
+      "value": 770,
       "source": "model"
      },
      "temperature": {
-      "value": 170,
+      "value": 700,
       "source": "model"
      },
      "fullVacuum": {
@@ -22560,12 +22732,42 @@
       "source": "model"
      },
      "testPressure": {
-      "value": 104,
+      "value": 1155,
       "source": "recalled"
      },
      "contents": [
-      "hydrocarbon gas",
-      "gasoline"
+      "boiler feed water",
+      "high-pressure steam"
+     ],
+     "insideDiameter": {
+      "value": 126,
+      "source": "model"
+     },
+     "thickness": {
+      "value": 3.125,
+      "source": "model"
+     }
+    },
+    {
+     "name": "gas side (tubes and channels)",
+     "mawp": {
+      "value": 50,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 650,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": false,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 75,
+      "source": "recalled"
+     },
+     "contents": [
+      "flue gas"
      ]
     }
    ],
@@ -22583,11 +22785,245 @@
      "source": "recalled"
     },
     "insideDiameter": {
-     "value": 42,
+     "value": 126,
      "source": "model"
     },
     "length": {
-     "value": 126,
+     "value": 240,
+     "source": "model"
+    },
+    "thickness": {
+     "value": 3.125,
+     "source": "model"
+    }
+   },
+   "tubes": {
+    "material": {
+     "value": "SA-179",
+     "source": "recalled"
+    },
+    "count": {
+     "value": 2083,
+     "source": "model"
+    },
+    "outsideDiameter": {
+     "value": 2,
+     "source": "model"
+    },
+    "length": {
+     "value": 240,
+     "source": "model"
+    },
+    "surfaceFt2": {
+     "value": 21813,
+     "source": "model"
+    }
+   },
+   "parts": [
+    {
+     "tag": "E-1703-SD",
+     "description": "steam drum",
+     "report": {
+      "value": "P-4",
+      "source": "recalled"
+     },
+     "insideDiameter": {
+      "value": 75.6,
+      "source": "model"
+     },
+     "thickness": {
+      "value": 1.875,
+      "source": "model"
+     }
+    },
+    {
+     "tag": "E-1703-BEP",
+     "description": "boiler external piping to the first stop valves",
+     "report": {
+      "value": "P-4A",
+      "source": "recalled"
+     }
+    }
+   ],
+   "radiography": {
+    "value": "full",
+    "source": "recalled"
+   },
+   "jointEfficiency": {
+    "value": 1,
+    "source": "recalled"
+   },
+   "heatTreatment": {
+    "value": "post-weld heat treated",
+    "source": "recalled"
+   },
+   "lethalService": {
+    "value": false,
+    "source": "recalled"
+   },
+   "nozzles": [
+    {
+     "mark": "N1",
+     "service": "inlet",
+     "size": {
+      "value": 42,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "flue gas"
+    },
+    {
+     "mark": "N2",
+     "service": "outlet",
+     "size": {
+      "value": 36,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "flue gas"
+    },
+    {
+     "mark": "N3",
+     "service": "feed water in",
+     "size": {
+      "value": 3,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P1200",
+      "source": "model"
+     },
+     "fluid": "boiler feed water"
+    },
+    {
+     "mark": "N4",
+     "service": "steam out",
+     "size": {
+      "value": 8,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P1200",
+      "source": "model"
+     },
+     "fluid": "steam, 600 psi"
+    }
+   ],
+   "supports": {
+    "value": "two saddles",
+    "source": "model"
+   },
+   "relief": [
+    {
+     "tag": {
+      "value": "PSV-1703S",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 770,
+      "source": "model"
+     }
+    },
+    {
+     "tag": {
+      "value": "PSV-1703T",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 50,
+      "source": "model"
+     }
+    }
+   ],
+   "emptyWeightLb": {
+    "value": 332921,
+    "source": "model"
+   },
+   "weightBasis": "shell, tubes, channels, steam drum and saddles as drawn; refractory not included",
+   "signatures": "demonstration record: not certified, not signed"
+  },
+  {
+   "demonstration": true,
+   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
+   "tag": "F-1701",
+   "item": "F-1701",
+   "unit": 17,
+   "service": "Slurry filter",
+   "kind": "filter",
+   "shape": "cylinder",
+   "code": {
+    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
+    "source": "recalled"
+   },
+   "report": {
+    "value": "U-1A",
+    "source": "recalled"
+   },
+   "registration": {
+    "value": "X1335.7",
+    "source": "invented"
+   },
+   "fabricator": {
+    "value": "Demonstration Fabricator A",
+    "source": "invented"
+   },
+   "serial": {
+    "value": "DF-80928",
+    "source": "invented"
+   },
+   "yearBuilt": {
+    "value": 2025,
+    "source": "invented"
+   },
+   "chambers": [
+    {
+     "name": "vessel",
+     "mawp": {
+      "value": 210,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 250,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": false,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 273,
+      "source": "recalled"
+     },
+     "contents": [
+      "slurry oil"
+     ]
+    }
+   ],
+   "mdmt": {
+    "value": -20,
+    "source": "recalled"
+   },
+   "corrosionAllowance": {
+    "value": 0.125,
+    "source": "model"
+   },
+   "shell": {
+    "material": {
+     "value": "SA-516-70",
+     "source": "recalled"
+    },
+    "insideDiameter": {
+     "value": 24,
+     "source": "model"
+    },
+    "length": {
+     "value": 48,
      "source": "model"
     },
     "thickness": {
@@ -22620,65 +23056,52 @@
      "mark": "N1",
      "service": "inlet",
      "size": {
-      "value": 10,
+      "value": 3,
       "source": "model"
      },
      "pipeClass": {
-      "value": "P150",
+      "value": "P300",
       "source": "model"
      },
-     "fluid": "hydrocarbon gas"
+     "fluid": "slurry oil"
     },
     {
      "mark": "N2",
-     "service": "gas",
-     "size": {
-      "value": 10,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "hydrocarbon gas"
-    },
-    {
-     "mark": "N3",
-     "service": "liquid",
+     "service": "outlet",
      "size": {
       "value": 3,
       "source": "model"
      },
      "pipeClass": {
-      "value": "P150",
+      "value": "P300",
       "source": "model"
      },
-     "fluid": "gasoline"
+     "fluid": "slurry oil"
     }
    ],
    "supports": {
-    "value": "two saddles",
+    "value": "skirt",
     "source": "model"
    },
    "relief": [
     {
      "tag": {
-      "value": "PSV-1703",
+      "value": "PSV-1701",
       "source": "invented"
      },
      "setPressure": {
-      "value": 80,
+      "value": 210,
       "source": "model"
      }
     }
    ],
    "emptyWeightLb": {
-    "value": 2798,
+    "value": 1015,
     "source": "model"
    },
-   "weightBasis": "shell, heads and supports as drawn",
+   "weightBasis": "shell, heads and skirt as drawn",
    "volumeFt3": {
-    "value": 112,
+    "value": 15,
     "source": "model"
    },
    "signatures": "demonstration record: not certified, not signed"
@@ -24351,6 +24774,178 @@
   {
    "demonstration": true,
    "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
+   "tag": "V-1703",
+   "item": "V-1703",
+   "unit": 17,
+   "service": "Liquefied gas caustic wash drum",
+   "kind": "vessel",
+   "shape": "cylinder",
+   "code": {
+    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
+    "source": "recalled"
+   },
+   "report": {
+    "value": "U-1A",
+    "source": "recalled"
+   },
+   "registration": {
+    "value": "X1893.7",
+    "source": "invented"
+   },
+   "fabricator": {
+    "value": "Demonstration Fabricator E",
+    "source": "invented"
+   },
+   "serial": {
+    "value": "DF-86838",
+    "source": "invented"
+   },
+   "yearBuilt": {
+    "value": 2025,
+    "source": "invented"
+   },
+   "chambers": [
+    {
+     "name": "vessel",
+     "mawp": {
+      "value": 260,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 160,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": false,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 338,
+      "source": "recalled"
+     },
+     "contents": [
+      "liquefied petroleum gas",
+      "caustic solution"
+     ]
+    }
+   ],
+   "mdmt": {
+    "value": -20,
+    "source": "recalled"
+   },
+   "corrosionAllowance": {
+    "value": 0.125,
+    "source": "model"
+   },
+   "shell": {
+    "material": {
+     "value": "SA-516-70",
+     "source": "recalled"
+    },
+    "insideDiameter": {
+     "value": 66,
+     "source": "model"
+    },
+    "length": {
+     "value": 165,
+     "source": "model"
+    },
+    "thickness": {
+     "value": 0.625,
+     "source": "model"
+    },
+    "heads": {
+     "value": "2:1 ellipsoidal, of the shell's thickness",
+     "source": "model"
+    }
+   },
+   "radiography": {
+    "value": "spot",
+    "source": "recalled"
+   },
+   "jointEfficiency": {
+    "value": 0.85,
+    "source": "recalled"
+   },
+   "heatTreatment": {
+    "value": "none",
+    "source": "recalled"
+   },
+   "lethalService": {
+    "value": false,
+    "source": "recalled"
+   },
+   "nozzles": [
+    {
+     "mark": "N1",
+     "service": "inlet",
+     "size": {
+      "value": 4,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P300",
+      "source": "model"
+     },
+     "fluid": "liquefied petroleum gas"
+    },
+    {
+     "mark": "N2",
+     "service": "outlet",
+     "size": {
+      "value": 4,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P300",
+      "source": "model"
+     },
+     "fluid": "liquefied petroleum gas"
+    },
+    {
+     "mark": "N3",
+     "service": "caustic",
+     "size": {
+      "value": 2,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P300",
+      "source": "model"
+     },
+     "fluid": "caustic solution"
+    }
+   ],
+   "supports": {
+    "value": "skirt",
+    "source": "model"
+   },
+   "relief": [
+    {
+     "tag": {
+      "value": "PSV-1703",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 260,
+      "source": "model"
+     }
+    }
+   ],
+   "emptyWeightLb": {
+    "value": 9299,
+    "source": "model"
+   },
+   "weightBasis": "shell, heads and skirt as drawn",
+   "volumeFt3": {
+    "value": 370,
+    "source": "model"
+   },
+   "signatures": "demonstration record: not certified, not signed"
+  },
+  {
+   "demonstration": true,
+   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
    "tag": "C-1710",
    "item": "C-1710",
    "unit": 17,
@@ -24714,6 +25309,658 @@
     "value": 565,
     "source": "model"
    },
+   "signatures": "demonstration record: not certified, not signed"
+  },
+  {
+   "demonstration": true,
+   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
+   "tag": "V-1704",
+   "item": "V-1704",
+   "unit": 17,
+   "service": "Gasoline caustic wash drum",
+   "kind": "vessel",
+   "shape": "cylinder",
+   "code": {
+    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
+    "source": "recalled"
+   },
+   "report": {
+    "value": "U-1A",
+    "source": "recalled"
+   },
+   "registration": {
+    "value": "F8560.7",
+    "source": "invented"
+   },
+   "fabricator": {
+    "value": "Demonstration Fabricator F",
+    "source": "invented"
+   },
+   "serial": {
+    "value": "DF-19695",
+    "source": "invented"
+   },
+   "yearBuilt": {
+    "value": 2025,
+    "source": "invented"
+   },
+   "chambers": [
+    {
+     "name": "vessel",
+     "mawp": {
+      "value": 160,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 150,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": false,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 208,
+      "source": "recalled"
+     },
+     "contents": [
+      "gasoline",
+      "caustic solution"
+     ]
+    }
+   ],
+   "mdmt": {
+    "value": -20,
+    "source": "recalled"
+   },
+   "corrosionAllowance": {
+    "value": 0.125,
+    "source": "model"
+   },
+   "shell": {
+    "material": {
+     "value": "SA-516-70",
+     "source": "recalled"
+    },
+    "insideDiameter": {
+     "value": 72,
+     "source": "model"
+    },
+    "length": {
+     "value": 180,
+     "source": "model"
+    },
+    "thickness": {
+     "value": 0.5,
+     "source": "model"
+    },
+    "heads": {
+     "value": "2:1 ellipsoidal, of the shell's thickness",
+     "source": "model"
+    }
+   },
+   "radiography": {
+    "value": "spot",
+    "source": "recalled"
+   },
+   "jointEfficiency": {
+    "value": 0.85,
+    "source": "recalled"
+   },
+   "heatTreatment": {
+    "value": "none",
+    "source": "recalled"
+   },
+   "lethalService": {
+    "value": false,
+    "source": "recalled"
+   },
+   "nozzles": [
+    {
+     "mark": "N1",
+     "service": "inlet",
+     "size": {
+      "value": 6,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P300",
+      "source": "model"
+     },
+     "fluid": "gasoline"
+    },
+    {
+     "mark": "N2",
+     "service": "outlet",
+     "size": {
+      "value": 6,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P300",
+      "source": "model"
+     },
+     "fluid": "gasoline"
+    },
+    {
+     "mark": "N3",
+     "service": "caustic",
+     "size": {
+      "value": 2,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "caustic solution"
+    }
+   ],
+   "supports": {
+    "value": "skirt",
+    "source": "model"
+   },
+   "relief": [
+    {
+     "tag": {
+      "value": "PSV-1704",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 160,
+      "source": "model"
+     }
+    }
+   ],
+   "emptyWeightLb": {
+    "value": 9048,
+    "source": "model"
+   },
+   "weightBasis": "shell, heads and skirt as drawn",
+   "volumeFt3": {
+    "value": 481,
+    "source": "model"
+   },
+   "signatures": "demonstration record: not certified, not signed"
+  },
+  {
+   "demonstration": true,
+   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
+   "tag": "A-1701A",
+   "item": "A-1701",
+   "unit": 17,
+   "service": "Main column overhead condenser",
+   "kind": "aircooler",
+   "shape": "tube bundle",
+   "code": {
+    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
+    "source": "recalled"
+   },
+   "report": {
+    "value": "U-1A",
+    "source": "recalled"
+   },
+   "registration": {
+    "value": "J9311.7",
+    "source": "invented"
+   },
+   "fabricator": {
+    "value": "Demonstration Fabricator D",
+    "source": "invented"
+   },
+   "serial": {
+    "value": "DF-36222",
+    "source": "invented"
+   },
+   "yearBuilt": {
+    "value": 2025,
+    "source": "invented"
+   },
+   "chambers": [
+    {
+     "name": "headers and tubes",
+     "mawp": {
+      "value": 50,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 320,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": false,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 65,
+      "source": "recalled"
+     },
+     "contents": [
+      "hydrocarbon gas"
+     ]
+    }
+   ],
+   "mdmt": {
+    "value": -20,
+    "source": "recalled"
+   },
+   "corrosionAllowance": {
+    "value": 0.125,
+    "source": "model"
+   },
+   "shell": {
+    "material": {
+     "value": "SA-516-70",
+     "source": "recalled"
+    }
+   },
+   "tubes": {
+    "material": {
+     "value": "SA-179",
+     "source": "recalled"
+    },
+    "count": {
+     "value": 268,
+     "source": "model"
+    },
+    "outsideDiameter": {
+     "value": 1,
+     "source": "model"
+    },
+    "length": {
+     "value": 384,
+     "source": "model"
+    },
+    "surfaceFt2": {
+     "value": 2245,
+     "source": "model"
+    }
+   },
+   "radiography": {
+    "value": "spot",
+    "source": "recalled"
+   },
+   "jointEfficiency": {
+    "value": 0.85,
+    "source": "recalled"
+   },
+   "heatTreatment": {
+    "value": "none",
+    "source": "recalled"
+   },
+   "lethalService": {
+    "value": false,
+    "source": "recalled"
+   },
+   "nozzles": [
+    {
+     "mark": "N1",
+     "service": "inlet",
+     "size": {
+      "value": 24,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N2",
+     "service": "outlet",
+     "size": {
+      "value": 16,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    }
+   ],
+   "supports": {
+    "value": "structure",
+    "source": "model"
+   },
+   "relief": [
+    {
+     "tag": {
+      "value": "PSV-1701A",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 50,
+      "source": "model"
+     }
+    }
+   ],
+   "emptyWeightLb": {
+    "value": 16243,
+    "source": "model"
+   },
+   "weightBasis": "pressure parts only: the tubes and two header boxes weighed as 1 in plate (SW-REG-3); fins, fans and structure not included",
+   "signatures": "demonstration record: not certified, not signed"
+  },
+  {
+   "demonstration": true,
+   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
+   "tag": "A-1701B",
+   "item": "A-1701",
+   "unit": 17,
+   "service": "Main column overhead condenser",
+   "kind": "aircooler",
+   "shape": "tube bundle",
+   "code": {
+    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
+    "source": "recalled"
+   },
+   "report": {
+    "value": "U-1A",
+    "source": "recalled"
+   },
+   "registration": {
+    "value": "M1930.7",
+    "source": "invented"
+   },
+   "fabricator": {
+    "value": "Demonstration Fabricator D",
+    "source": "invented"
+   },
+   "serial": {
+    "value": "DF-88603",
+    "source": "invented"
+   },
+   "yearBuilt": {
+    "value": 2025,
+    "source": "invented"
+   },
+   "chambers": [
+    {
+     "name": "headers and tubes",
+     "mawp": {
+      "value": 50,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 320,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": false,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 65,
+      "source": "recalled"
+     },
+     "contents": [
+      "hydrocarbon gas"
+     ]
+    }
+   ],
+   "mdmt": {
+    "value": -20,
+    "source": "recalled"
+   },
+   "corrosionAllowance": {
+    "value": 0.125,
+    "source": "model"
+   },
+   "shell": {
+    "material": {
+     "value": "SA-516-70",
+     "source": "recalled"
+    }
+   },
+   "tubes": {
+    "material": {
+     "value": "SA-179",
+     "source": "recalled"
+    },
+    "count": {
+     "value": 268,
+     "source": "model"
+    },
+    "outsideDiameter": {
+     "value": 1,
+     "source": "model"
+    },
+    "length": {
+     "value": 384,
+     "source": "model"
+    },
+    "surfaceFt2": {
+     "value": 2245,
+     "source": "model"
+    }
+   },
+   "radiography": {
+    "value": "spot",
+    "source": "recalled"
+   },
+   "jointEfficiency": {
+    "value": 0.85,
+    "source": "recalled"
+   },
+   "heatTreatment": {
+    "value": "none",
+    "source": "recalled"
+   },
+   "lethalService": {
+    "value": false,
+    "source": "recalled"
+   },
+   "nozzles": [
+    {
+     "mark": "N1",
+     "service": "inlet",
+     "size": {
+      "value": 24,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N2",
+     "service": "outlet",
+     "size": {
+      "value": 16,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    }
+   ],
+   "supports": {
+    "value": "structure",
+    "source": "model"
+   },
+   "relief": [
+    {
+     "tag": {
+      "value": "PSV-1701B",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 50,
+      "source": "model"
+     }
+    }
+   ],
+   "emptyWeightLb": {
+    "value": 16243,
+    "source": "model"
+   },
+   "weightBasis": "pressure parts only: the tubes and two header boxes weighed as 1 in plate (SW-REG-3); fins, fans and structure not included",
+   "signatures": "demonstration record: not certified, not signed"
+  },
+  {
+   "demonstration": true,
+   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
+   "tag": "A-1701C",
+   "item": "A-1701",
+   "unit": 17,
+   "service": "Main column overhead condenser",
+   "kind": "aircooler",
+   "shape": "tube bundle",
+   "code": {
+    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
+    "source": "recalled"
+   },
+   "report": {
+    "value": "U-1A",
+    "source": "recalled"
+   },
+   "registration": {
+    "value": "L3549.7",
+    "source": "invented"
+   },
+   "fabricator": {
+    "value": "Demonstration Fabricator D",
+    "source": "invented"
+   },
+   "serial": {
+    "value": "DF-50984",
+    "source": "invented"
+   },
+   "yearBuilt": {
+    "value": 2025,
+    "source": "invented"
+   },
+   "chambers": [
+    {
+     "name": "headers and tubes",
+     "mawp": {
+      "value": 50,
+      "source": "model"
+     },
+     "temperature": {
+      "value": 320,
+      "source": "model"
+     },
+     "fullVacuum": {
+      "value": false,
+      "source": "model"
+     },
+     "testPressure": {
+      "value": 65,
+      "source": "recalled"
+     },
+     "contents": [
+      "hydrocarbon gas"
+     ]
+    }
+   ],
+   "mdmt": {
+    "value": -20,
+    "source": "recalled"
+   },
+   "corrosionAllowance": {
+    "value": 0.125,
+    "source": "model"
+   },
+   "shell": {
+    "material": {
+     "value": "SA-516-70",
+     "source": "recalled"
+    }
+   },
+   "tubes": {
+    "material": {
+     "value": "SA-179",
+     "source": "recalled"
+    },
+    "count": {
+     "value": 268,
+     "source": "model"
+    },
+    "outsideDiameter": {
+     "value": 1,
+     "source": "model"
+    },
+    "length": {
+     "value": 384,
+     "source": "model"
+    },
+    "surfaceFt2": {
+     "value": 2245,
+     "source": "model"
+    }
+   },
+   "radiography": {
+    "value": "spot",
+    "source": "recalled"
+   },
+   "jointEfficiency": {
+    "value": 0.85,
+    "source": "recalled"
+   },
+   "heatTreatment": {
+    "value": "none",
+    "source": "recalled"
+   },
+   "lethalService": {
+    "value": false,
+    "source": "recalled"
+   },
+   "nozzles": [
+    {
+     "mark": "N1",
+     "service": "inlet",
+     "size": {
+      "value": 24,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    },
+    {
+     "mark": "N2",
+     "service": "outlet",
+     "size": {
+      "value": 16,
+      "source": "model"
+     },
+     "pipeClass": {
+      "value": "P150",
+      "source": "model"
+     },
+     "fluid": "hydrocarbon gas"
+    }
+   ],
+   "supports": {
+    "value": "structure",
+    "source": "model"
+   },
+   "relief": [
+    {
+     "tag": {
+      "value": "PSV-1701C",
+      "source": "invented"
+     },
+     "setPressure": {
+      "value": 50,
+      "source": "model"
+     }
+    }
+   ],
+   "emptyWeightLb": {
+    "value": 16243,
+    "source": "model"
+   },
+   "weightBasis": "pressure parts only: the tubes and two header boxes weighed as 1 in plate (SW-REG-3); fins, fans and structure not included",
    "signatures": "demonstration record: not certified, not signed"
   },
   {
@@ -25187,271 +26434,6 @@
   {
    "demonstration": true,
    "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "E-1703",
-   "item": "E-1703",
-   "unit": 17,
-   "service": "Flue gas cooler (steam generator)",
-   "kind": "fluegascooler",
-   "shape": "boiler",
-   "code": {
-    "value": "ASME Boiler and Pressure Vessel Code, Section I",
-    "source": "recalled"
-   },
-   "report": {
-    "value": "P-3",
-    "source": "recalled"
-   },
-   "registration": {
-    "value": "Y9974.7",
-    "source": "invented"
-   },
-   "fabricator": {
-    "value": "Demonstration Fabricator F",
-    "source": "invented"
-   },
-   "serial": {
-    "value": "DF-57813",
-    "source": "invented"
-   },
-   "yearBuilt": {
-    "value": 2025,
-    "source": "invented"
-   },
-   "chambers": [
-    {
-     "name": "steam and water side (shell and steam drum)",
-     "mawp": {
-      "value": 770,
-      "source": "model"
-     },
-     "temperature": {
-      "value": 700,
-      "source": "model"
-     },
-     "fullVacuum": {
-      "value": false,
-      "source": "model"
-     },
-     "testPressure": {
-      "value": 1155,
-      "source": "recalled"
-     },
-     "contents": [
-      "boiler feed water",
-      "high-pressure steam"
-     ],
-     "insideDiameter": {
-      "value": 126,
-      "source": "model"
-     },
-     "thickness": {
-      "value": 3.125,
-      "source": "model"
-     }
-    },
-    {
-     "name": "gas side (tubes and channels)",
-     "mawp": {
-      "value": 50,
-      "source": "model"
-     },
-     "temperature": {
-      "value": 650,
-      "source": "model"
-     },
-     "fullVacuum": {
-      "value": false,
-      "source": "model"
-     },
-     "testPressure": {
-      "value": 75,
-      "source": "recalled"
-     },
-     "contents": [
-      "flue gas"
-     ]
-    }
-   ],
-   "mdmt": {
-    "value": -20,
-    "source": "recalled"
-   },
-   "corrosionAllowance": {
-    "value": 0.125,
-    "source": "model"
-   },
-   "shell": {
-    "material": {
-     "value": "SA-516-70",
-     "source": "recalled"
-    },
-    "insideDiameter": {
-     "value": 126,
-     "source": "model"
-    },
-    "length": {
-     "value": 240,
-     "source": "model"
-    },
-    "thickness": {
-     "value": 3.125,
-     "source": "model"
-    }
-   },
-   "tubes": {
-    "material": {
-     "value": "SA-179",
-     "source": "recalled"
-    },
-    "count": {
-     "value": 2083,
-     "source": "model"
-    },
-    "outsideDiameter": {
-     "value": 2,
-     "source": "model"
-    },
-    "length": {
-     "value": 240,
-     "source": "model"
-    },
-    "surfaceFt2": {
-     "value": 21813,
-     "source": "model"
-    }
-   },
-   "parts": [
-    {
-     "tag": "E-1703-SD",
-     "description": "steam drum",
-     "report": {
-      "value": "P-4",
-      "source": "recalled"
-     },
-     "insideDiameter": {
-      "value": 75.6,
-      "source": "model"
-     },
-     "thickness": {
-      "value": 1.875,
-      "source": "model"
-     }
-    },
-    {
-     "tag": "E-1703-BEP",
-     "description": "boiler external piping to the first stop valves",
-     "report": {
-      "value": "P-4A",
-      "source": "recalled"
-     }
-    }
-   ],
-   "radiography": {
-    "value": "full",
-    "source": "recalled"
-   },
-   "jointEfficiency": {
-    "value": 1,
-    "source": "recalled"
-   },
-   "heatTreatment": {
-    "value": "post-weld heat treated",
-    "source": "recalled"
-   },
-   "lethalService": {
-    "value": false,
-    "source": "recalled"
-   },
-   "nozzles": [
-    {
-     "mark": "N1",
-     "service": "inlet",
-     "size": {
-      "value": 42,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "flue gas"
-    },
-    {
-     "mark": "N2",
-     "service": "outlet",
-     "size": {
-      "value": 36,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "flue gas"
-    },
-    {
-     "mark": "N3",
-     "service": "feed water in",
-     "size": {
-      "value": 3,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P1200",
-      "source": "model"
-     },
-     "fluid": "boiler feed water"
-    },
-    {
-     "mark": "N4",
-     "service": "steam out",
-     "size": {
-      "value": 8,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P1200",
-      "source": "model"
-     },
-     "fluid": "steam, 600 psi"
-    }
-   ],
-   "supports": {
-    "value": "two saddles",
-    "source": "model"
-   },
-   "relief": [
-    {
-     "tag": {
-      "value": "PSV-1703S",
-      "source": "invented"
-     },
-     "setPressure": {
-      "value": 770,
-      "source": "model"
-     }
-    },
-    {
-     "tag": {
-      "value": "PSV-1703T",
-      "source": "invented"
-     },
-     "setPressure": {
-      "value": 50,
-      "source": "model"
-     }
-    }
-   ],
-   "emptyWeightLb": {
-    "value": 328404,
-    "source": "model"
-   },
-   "weightBasis": "shell, tubes, channels, steam drum and saddles as drawn; refractory not included",
-   "signatures": "demonstration record: not certified, not signed"
-  },
-  {
-   "demonstration": true,
-   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
    "tag": "E-1704",
    "item": "E-1704",
    "unit": 17,
@@ -25917,164 +26899,6 @@
     "source": "model"
    },
    "weightBasis": "shell, channel, covers and saddles as drawn, with the tubes added by count (SW-EQC-30); tubesheets and baffles not included",
-   "signatures": "demonstration record: not certified, not signed"
-  },
-  {
-   "demonstration": true,
-   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "F-1701",
-   "item": "F-1701",
-   "unit": 17,
-   "service": "Slurry filter",
-   "kind": "filter",
-   "shape": "cylinder",
-   "code": {
-    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
-    "source": "recalled"
-   },
-   "report": {
-    "value": "U-1A",
-    "source": "recalled"
-   },
-   "registration": {
-    "value": "X1335.7",
-    "source": "invented"
-   },
-   "fabricator": {
-    "value": "Demonstration Fabricator A",
-    "source": "invented"
-   },
-   "serial": {
-    "value": "DF-80928",
-    "source": "invented"
-   },
-   "yearBuilt": {
-    "value": 2025,
-    "source": "invented"
-   },
-   "chambers": [
-    {
-     "name": "vessel",
-     "mawp": {
-      "value": 210,
-      "source": "model"
-     },
-     "temperature": {
-      "value": 250,
-      "source": "model"
-     },
-     "fullVacuum": {
-      "value": false,
-      "source": "model"
-     },
-     "testPressure": {
-      "value": 273,
-      "source": "recalled"
-     },
-     "contents": [
-      "slurry oil"
-     ]
-    }
-   ],
-   "mdmt": {
-    "value": -20,
-    "source": "recalled"
-   },
-   "corrosionAllowance": {
-    "value": 0.125,
-    "source": "model"
-   },
-   "shell": {
-    "material": {
-     "value": "SA-516-70",
-     "source": "recalled"
-    },
-    "insideDiameter": {
-     "value": 24,
-     "source": "model"
-    },
-    "length": {
-     "value": 48,
-     "source": "model"
-    },
-    "thickness": {
-     "value": 0.375,
-     "source": "model"
-    },
-    "heads": {
-     "value": "2:1 ellipsoidal, of the shell's thickness",
-     "source": "model"
-    }
-   },
-   "radiography": {
-    "value": "spot",
-    "source": "recalled"
-   },
-   "jointEfficiency": {
-    "value": 0.85,
-    "source": "recalled"
-   },
-   "heatTreatment": {
-    "value": "none",
-    "source": "recalled"
-   },
-   "lethalService": {
-    "value": false,
-    "source": "recalled"
-   },
-   "nozzles": [
-    {
-     "mark": "N1",
-     "service": "inlet",
-     "size": {
-      "value": 3,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P300",
-      "source": "model"
-     },
-     "fluid": "slurry oil"
-    },
-    {
-     "mark": "N2",
-     "service": "outlet",
-     "size": {
-      "value": 3,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P300",
-      "source": "model"
-     },
-     "fluid": "slurry oil"
-    }
-   ],
-   "supports": {
-    "value": "skirt",
-    "source": "model"
-   },
-   "relief": [
-    {
-     "tag": {
-      "value": "PSV-1701",
-      "source": "invented"
-     },
-     "setPressure": {
-      "value": 210,
-      "source": "model"
-     }
-    }
-   ],
-   "emptyWeightLb": {
-    "value": 1015,
-    "source": "model"
-   },
-   "weightBasis": "shell, heads and skirt as drawn",
-   "volumeFt3": {
-    "value": 15,
-    "source": "model"
-   },
    "signatures": "demonstration record: not certified, not signed"
   },
   {
@@ -26938,486 +27762,6 @@
     "source": "model"
    },
    "weightBasis": "shell, channel, covers and saddles as drawn, with the tubes added by count (SW-EQC-30); tubesheets and baffles not included",
-   "signatures": "demonstration record: not certified, not signed"
-  },
-  {
-   "demonstration": true,
-   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "A-1701A",
-   "item": "A-1701",
-   "unit": 17,
-   "service": "Main column overhead condenser",
-   "kind": "aircooler",
-   "shape": "tube bundle",
-   "code": {
-    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
-    "source": "recalled"
-   },
-   "report": {
-    "value": "U-1A",
-    "source": "recalled"
-   },
-   "registration": {
-    "value": "J9311.7",
-    "source": "invented"
-   },
-   "fabricator": {
-    "value": "Demonstration Fabricator D",
-    "source": "invented"
-   },
-   "serial": {
-    "value": "DF-36222",
-    "source": "invented"
-   },
-   "yearBuilt": {
-    "value": 2025,
-    "source": "invented"
-   },
-   "chambers": [
-    {
-     "name": "headers and tubes",
-     "mawp": {
-      "value": 50,
-      "source": "model"
-     },
-     "temperature": {
-      "value": 320,
-      "source": "model"
-     },
-     "fullVacuum": {
-      "value": false,
-      "source": "model"
-     },
-     "testPressure": {
-      "value": 65,
-      "source": "recalled"
-     },
-     "contents": [
-      "hydrocarbon gas"
-     ]
-    }
-   ],
-   "mdmt": {
-    "value": -20,
-    "source": "recalled"
-   },
-   "corrosionAllowance": {
-    "value": 0.125,
-    "source": "model"
-   },
-   "shell": {
-    "material": {
-     "value": "SA-516-70",
-     "source": "recalled"
-    }
-   },
-   "tubes": {
-    "material": {
-     "value": "SA-179",
-     "source": "recalled"
-    },
-    "count": {
-     "value": 268,
-     "source": "model"
-    },
-    "outsideDiameter": {
-     "value": 1,
-     "source": "model"
-    },
-    "length": {
-     "value": 384,
-     "source": "model"
-    },
-    "surfaceFt2": {
-     "value": 2245,
-     "source": "model"
-    }
-   },
-   "radiography": {
-    "value": "spot",
-    "source": "recalled"
-   },
-   "jointEfficiency": {
-    "value": 0.85,
-    "source": "recalled"
-   },
-   "heatTreatment": {
-    "value": "none",
-    "source": "recalled"
-   },
-   "lethalService": {
-    "value": false,
-    "source": "recalled"
-   },
-   "nozzles": [
-    {
-     "mark": "N1",
-     "service": "inlet",
-     "size": {
-      "value": 24,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "hydrocarbon gas"
-    },
-    {
-     "mark": "N2",
-     "service": "outlet",
-     "size": {
-      "value": 16,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "hydrocarbon gas"
-    }
-   ],
-   "supports": {
-    "value": "structure",
-    "source": "model"
-   },
-   "relief": [
-    {
-     "tag": {
-      "value": "PSV-1701A",
-      "source": "invented"
-     },
-     "setPressure": {
-      "value": 50,
-      "source": "model"
-     }
-    }
-   ],
-   "emptyWeightLb": {
-    "value": 16243,
-    "source": "model"
-   },
-   "weightBasis": "pressure parts only: the tubes and two header boxes weighed as 1 in plate (SW-REG-3); fins, fans and structure not included",
-   "signatures": "demonstration record: not certified, not signed"
-  },
-  {
-   "demonstration": true,
-   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "A-1701B",
-   "item": "A-1701",
-   "unit": 17,
-   "service": "Main column overhead condenser",
-   "kind": "aircooler",
-   "shape": "tube bundle",
-   "code": {
-    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
-    "source": "recalled"
-   },
-   "report": {
-    "value": "U-1A",
-    "source": "recalled"
-   },
-   "registration": {
-    "value": "M1930.7",
-    "source": "invented"
-   },
-   "fabricator": {
-    "value": "Demonstration Fabricator D",
-    "source": "invented"
-   },
-   "serial": {
-    "value": "DF-88603",
-    "source": "invented"
-   },
-   "yearBuilt": {
-    "value": 2025,
-    "source": "invented"
-   },
-   "chambers": [
-    {
-     "name": "headers and tubes",
-     "mawp": {
-      "value": 50,
-      "source": "model"
-     },
-     "temperature": {
-      "value": 320,
-      "source": "model"
-     },
-     "fullVacuum": {
-      "value": false,
-      "source": "model"
-     },
-     "testPressure": {
-      "value": 65,
-      "source": "recalled"
-     },
-     "contents": [
-      "hydrocarbon gas"
-     ]
-    }
-   ],
-   "mdmt": {
-    "value": -20,
-    "source": "recalled"
-   },
-   "corrosionAllowance": {
-    "value": 0.125,
-    "source": "model"
-   },
-   "shell": {
-    "material": {
-     "value": "SA-516-70",
-     "source": "recalled"
-    }
-   },
-   "tubes": {
-    "material": {
-     "value": "SA-179",
-     "source": "recalled"
-    },
-    "count": {
-     "value": 268,
-     "source": "model"
-    },
-    "outsideDiameter": {
-     "value": 1,
-     "source": "model"
-    },
-    "length": {
-     "value": 384,
-     "source": "model"
-    },
-    "surfaceFt2": {
-     "value": 2245,
-     "source": "model"
-    }
-   },
-   "radiography": {
-    "value": "spot",
-    "source": "recalled"
-   },
-   "jointEfficiency": {
-    "value": 0.85,
-    "source": "recalled"
-   },
-   "heatTreatment": {
-    "value": "none",
-    "source": "recalled"
-   },
-   "lethalService": {
-    "value": false,
-    "source": "recalled"
-   },
-   "nozzles": [
-    {
-     "mark": "N1",
-     "service": "inlet",
-     "size": {
-      "value": 24,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "hydrocarbon gas"
-    },
-    {
-     "mark": "N2",
-     "service": "outlet",
-     "size": {
-      "value": 16,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "hydrocarbon gas"
-    }
-   ],
-   "supports": {
-    "value": "structure",
-    "source": "model"
-   },
-   "relief": [
-    {
-     "tag": {
-      "value": "PSV-1701B",
-      "source": "invented"
-     },
-     "setPressure": {
-      "value": 50,
-      "source": "model"
-     }
-    }
-   ],
-   "emptyWeightLb": {
-    "value": 16243,
-    "source": "model"
-   },
-   "weightBasis": "pressure parts only: the tubes and two header boxes weighed as 1 in plate (SW-REG-3); fins, fans and structure not included",
-   "signatures": "demonstration record: not certified, not signed"
-  },
-  {
-   "demonstration": true,
-   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "A-1701C",
-   "item": "A-1701",
-   "unit": 17,
-   "service": "Main column overhead condenser",
-   "kind": "aircooler",
-   "shape": "tube bundle",
-   "code": {
-    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
-    "source": "recalled"
-   },
-   "report": {
-    "value": "U-1A",
-    "source": "recalled"
-   },
-   "registration": {
-    "value": "L3549.7",
-    "source": "invented"
-   },
-   "fabricator": {
-    "value": "Demonstration Fabricator D",
-    "source": "invented"
-   },
-   "serial": {
-    "value": "DF-50984",
-    "source": "invented"
-   },
-   "yearBuilt": {
-    "value": 2025,
-    "source": "invented"
-   },
-   "chambers": [
-    {
-     "name": "headers and tubes",
-     "mawp": {
-      "value": 50,
-      "source": "model"
-     },
-     "temperature": {
-      "value": 320,
-      "source": "model"
-     },
-     "fullVacuum": {
-      "value": false,
-      "source": "model"
-     },
-     "testPressure": {
-      "value": 65,
-      "source": "recalled"
-     },
-     "contents": [
-      "hydrocarbon gas"
-     ]
-    }
-   ],
-   "mdmt": {
-    "value": -20,
-    "source": "recalled"
-   },
-   "corrosionAllowance": {
-    "value": 0.125,
-    "source": "model"
-   },
-   "shell": {
-    "material": {
-     "value": "SA-516-70",
-     "source": "recalled"
-    }
-   },
-   "tubes": {
-    "material": {
-     "value": "SA-179",
-     "source": "recalled"
-    },
-    "count": {
-     "value": 268,
-     "source": "model"
-    },
-    "outsideDiameter": {
-     "value": 1,
-     "source": "model"
-    },
-    "length": {
-     "value": 384,
-     "source": "model"
-    },
-    "surfaceFt2": {
-     "value": 2245,
-     "source": "model"
-    }
-   },
-   "radiography": {
-    "value": "spot",
-    "source": "recalled"
-   },
-   "jointEfficiency": {
-    "value": 0.85,
-    "source": "recalled"
-   },
-   "heatTreatment": {
-    "value": "none",
-    "source": "recalled"
-   },
-   "lethalService": {
-    "value": false,
-    "source": "recalled"
-   },
-   "nozzles": [
-    {
-     "mark": "N1",
-     "service": "inlet",
-     "size": {
-      "value": 24,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "hydrocarbon gas"
-    },
-    {
-     "mark": "N2",
-     "service": "outlet",
-     "size": {
-      "value": 16,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "hydrocarbon gas"
-    }
-   ],
-   "supports": {
-    "value": "structure",
-    "source": "model"
-   },
-   "relief": [
-    {
-     "tag": {
-      "value": "PSV-1701C",
-      "source": "invented"
-     },
-     "setPressure": {
-      "value": 50,
-      "source": "model"
-     }
-    }
-   ],
-   "emptyWeightLb": {
-    "value": 16243,
-    "source": "model"
-   },
-   "weightBasis": "pressure parts only: the tubes and two header boxes weighed as 1 in plate (SW-REG-3); fins, fans and structure not included",
    "signatures": "demonstration record: not certified, not signed"
   },
   {
@@ -29072,350 +29416,6 @@
     "source": "model"
    },
    "weightBasis": "shell, channel, covers and saddles as drawn, with the tubes added by count (SW-EQC-30); tubesheets and baffles not included",
-   "signatures": "demonstration record: not certified, not signed"
-  },
-  {
-   "demonstration": true,
-   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "V-1704",
-   "item": "V-1704",
-   "unit": 17,
-   "service": "Gasoline caustic wash drum",
-   "kind": "vessel",
-   "shape": "cylinder",
-   "code": {
-    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
-    "source": "recalled"
-   },
-   "report": {
-    "value": "U-1A",
-    "source": "recalled"
-   },
-   "registration": {
-    "value": "F8560.7",
-    "source": "invented"
-   },
-   "fabricator": {
-    "value": "Demonstration Fabricator F",
-    "source": "invented"
-   },
-   "serial": {
-    "value": "DF-19695",
-    "source": "invented"
-   },
-   "yearBuilt": {
-    "value": 2025,
-    "source": "invented"
-   },
-   "chambers": [
-    {
-     "name": "vessel",
-     "mawp": {
-      "value": 160,
-      "source": "model"
-     },
-     "temperature": {
-      "value": 150,
-      "source": "model"
-     },
-     "fullVacuum": {
-      "value": false,
-      "source": "model"
-     },
-     "testPressure": {
-      "value": 208,
-      "source": "recalled"
-     },
-     "contents": [
-      "gasoline",
-      "caustic solution"
-     ]
-    }
-   ],
-   "mdmt": {
-    "value": -20,
-    "source": "recalled"
-   },
-   "corrosionAllowance": {
-    "value": 0.125,
-    "source": "model"
-   },
-   "shell": {
-    "material": {
-     "value": "SA-516-70",
-     "source": "recalled"
-    },
-    "insideDiameter": {
-     "value": 72,
-     "source": "model"
-    },
-    "length": {
-     "value": 180,
-     "source": "model"
-    },
-    "thickness": {
-     "value": 0.5,
-     "source": "model"
-    },
-    "heads": {
-     "value": "2:1 ellipsoidal, of the shell's thickness",
-     "source": "model"
-    }
-   },
-   "radiography": {
-    "value": "spot",
-    "source": "recalled"
-   },
-   "jointEfficiency": {
-    "value": 0.85,
-    "source": "recalled"
-   },
-   "heatTreatment": {
-    "value": "none",
-    "source": "recalled"
-   },
-   "lethalService": {
-    "value": false,
-    "source": "recalled"
-   },
-   "nozzles": [
-    {
-     "mark": "N1",
-     "service": "inlet",
-     "size": {
-      "value": 6,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P300",
-      "source": "model"
-     },
-     "fluid": "gasoline"
-    },
-    {
-     "mark": "N2",
-     "service": "outlet",
-     "size": {
-      "value": 6,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P300",
-      "source": "model"
-     },
-     "fluid": "gasoline"
-    },
-    {
-     "mark": "N3",
-     "service": "caustic",
-     "size": {
-      "value": 2,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P150",
-      "source": "model"
-     },
-     "fluid": "caustic solution"
-    }
-   ],
-   "supports": {
-    "value": "skirt",
-    "source": "model"
-   },
-   "relief": [
-    {
-     "tag": {
-      "value": "PSV-1704",
-      "source": "invented"
-     },
-     "setPressure": {
-      "value": 160,
-      "source": "model"
-     }
-    }
-   ],
-   "emptyWeightLb": {
-    "value": 9048,
-    "source": "model"
-   },
-   "weightBasis": "shell, heads and skirt as drawn",
-   "volumeFt3": {
-    "value": 481,
-    "source": "model"
-   },
-   "signatures": "demonstration record: not certified, not signed"
-  },
-  {
-   "demonstration": true,
-   "notice": "DEMONSTRATION DATA: not a manufacturer's data report, not a registration, not certified, not signed. Code names, report designations, test factors, examination and material labels are recalled from general knowledge and are for the owner to verify (SW-REG-0); every registration number is invented.",
-   "tag": "V-1703",
-   "item": "V-1703",
-   "unit": 17,
-   "service": "Liquefied gas caustic wash drum",
-   "kind": "vessel",
-   "shape": "cylinder",
-   "code": {
-    "value": "ASME Boiler and Pressure Vessel Code, Section VIII, Division 1",
-    "source": "recalled"
-   },
-   "report": {
-    "value": "U-1A",
-    "source": "recalled"
-   },
-   "registration": {
-    "value": "X1893.7",
-    "source": "invented"
-   },
-   "fabricator": {
-    "value": "Demonstration Fabricator E",
-    "source": "invented"
-   },
-   "serial": {
-    "value": "DF-86838",
-    "source": "invented"
-   },
-   "yearBuilt": {
-    "value": 2025,
-    "source": "invented"
-   },
-   "chambers": [
-    {
-     "name": "vessel",
-     "mawp": {
-      "value": 260,
-      "source": "model"
-     },
-     "temperature": {
-      "value": 160,
-      "source": "model"
-     },
-     "fullVacuum": {
-      "value": false,
-      "source": "model"
-     },
-     "testPressure": {
-      "value": 338,
-      "source": "recalled"
-     },
-     "contents": [
-      "liquefied petroleum gas",
-      "caustic solution"
-     ]
-    }
-   ],
-   "mdmt": {
-    "value": -20,
-    "source": "recalled"
-   },
-   "corrosionAllowance": {
-    "value": 0.125,
-    "source": "model"
-   },
-   "shell": {
-    "material": {
-     "value": "SA-516-70",
-     "source": "recalled"
-    },
-    "insideDiameter": {
-     "value": 66,
-     "source": "model"
-    },
-    "length": {
-     "value": 165,
-     "source": "model"
-    },
-    "thickness": {
-     "value": 0.625,
-     "source": "model"
-    },
-    "heads": {
-     "value": "2:1 ellipsoidal, of the shell's thickness",
-     "source": "model"
-    }
-   },
-   "radiography": {
-    "value": "spot",
-    "source": "recalled"
-   },
-   "jointEfficiency": {
-    "value": 0.85,
-    "source": "recalled"
-   },
-   "heatTreatment": {
-    "value": "none",
-    "source": "recalled"
-   },
-   "lethalService": {
-    "value": false,
-    "source": "recalled"
-   },
-   "nozzles": [
-    {
-     "mark": "N1",
-     "service": "inlet",
-     "size": {
-      "value": 4,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P300",
-      "source": "model"
-     },
-     "fluid": "liquefied petroleum gas"
-    },
-    {
-     "mark": "N2",
-     "service": "outlet",
-     "size": {
-      "value": 4,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P300",
-      "source": "model"
-     },
-     "fluid": "liquefied petroleum gas"
-    },
-    {
-     "mark": "N3",
-     "service": "caustic",
-     "size": {
-      "value": 2,
-      "source": "model"
-     },
-     "pipeClass": {
-      "value": "P300",
-      "source": "model"
-     },
-     "fluid": "caustic solution"
-    }
-   ],
-   "supports": {
-    "value": "skirt",
-    "source": "model"
-   },
-   "relief": [
-    {
-     "tag": {
-      "value": "PSV-1703",
-      "source": "invented"
-     },
-     "setPressure": {
-      "value": 260,
-      "source": "model"
-     }
-    }
-   ],
-   "emptyWeightLb": {
-    "value": 9299,
-    "source": "model"
-   },
-   "weightBasis": "shell, heads and skirt as drawn",
-   "volumeFt3": {
-    "value": 370,
-    "source": "model"
-   },
    "signatures": "demonstration record: not certified, not signed"
   },
   {

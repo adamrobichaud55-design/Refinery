@@ -24,26 +24,36 @@ export function unit17(B: Balance): UnitSheet {
   const h2sHere = G.h2s, fuelGas = G.fuelGas, amineFg = 60000, amineLpg = 20000;
   const slurryPa = 500000, hcoPa = 300000, lcoPa = 250000, debFeed = X.gasoline.w + lpgFcc + leanGasoline, strOvhd = 25000;
 
+  // the order the items are declared in is the order they stand in along their rows (SW-CELL-3). Next the rack, from the battery limit: the feed drum; the
+  // main fractionator's drums, its side stripper and the fractionator itself, under the air coolers and beside the compressors that serve them; the reactor and
+  // regenerator, the reactor toward the fractionator; the flue gas cooler and the scrubber with its stack. Behind them, in a row of its own, the gas plant in
+  // the order the gas and the gasoline go through it, and the catalyst hoppers. The blower stands across the rack from the regenerator.
   u.item('D-1701', 'drum', 'Fresh feed surge drum', { holdMin: 15 });
-  u.item('R-1701', 'cracker', 'Reactor and regenerator', { cokeLbh: X.coke });
-  u.item('K-1701', 'blower', 'Main air blower');
-  u.item('K-1702', 'compressor', 'Wet gas compressor, first stage, turbine driven', { drives: 'K-1703' }); u.item('K-1703', 'compressor', 'Wet gas compressor, second stage, on the first stage\'s shaft', { shaft: 'K-1702' });
-  u.item('V-1701', 'hopper', 'Fresh catalyst hopper'); u.item('V-1702', 'hopper', 'Equilibrium catalyst hopper');
-  u.item('C-1705', 'scrubber', 'Flue gas wet scrubber and stack');
-  u.item('C-1701', 'column', 'Main fractionator', { trays: 32, vapW: X.gasoline.w + lpgFcc + X.dryGas + refluxW + colSteam, vapMw: 60, vapT: 270, vapP: 15, liqSg: 0.72, skirt: 240 });
+  u.item('D-1703', 'drum', 'Compressor interstage drum', { boot: 1 }); u.item('D-1702', 'drum', 'Main column overhead receiver', { boot: 1 });
   u.item('C-1702', 'column', 'Light cycle oil stripper', { trays: 6, vapW: 0.15 * X.lco.w + 2000, vapMw: 60, vapT: 440, vapP: 24, liqSg: 0.85, skirt: 240 });
-  u.item('D-1702', 'drum', 'Main column overhead receiver', { boot: 1 }); u.item('D-1703', 'drum', 'Compressor interstage drum', { boot: 1 }); u.item('D-1704', 'drum', 'High-pressure separator', { boot: 1 });
+  u.item('C-1701', 'column', 'Main fractionator', { trays: 32, vapW: X.gasoline.w + lpgFcc + X.dryGas + refluxW + colSteam, vapMw: 60, vapT: 270, vapP: 15, liqSg: 0.72, skirt: 240 });
+  u.item('R-1701', 'cracker', 'Reactor and regenerator', { cokeLbh: X.coke });
+  u.item('E-1703', 'fluegascooler', 'Flue gas cooler (steam generator)');
+  u.item('C-1705', 'scrubber', 'Flue gas wet scrubber and stack');
+  u.item('V-1701', 'hopper', 'Fresh catalyst hopper'); u.item('V-1702', 'hopper', 'Equilibrium catalyst hopper'); u.item('F-1701', 'filter', 'Slurry filter');   // after the scrubber, at the end of the cracker's own row: the rack before them (SW-CELL-3)
+  u.item('K-1701', 'blower', 'Main air blower', { after: 'E-1716' });
+  u.item('K-1702', 'compressor', 'Wet gas compressor, first stage, turbine driven', { drives: 'K-1703' }); u.item('K-1703', 'compressor', 'Wet gas compressor, second stage, on the first stage\'s shaft', { shaft: 'K-1702' });
+  u.item('D-1704', 'drum', 'High-pressure separator', { boot: 1, row: 'new' });
   u.item('C-1703', 'column', 'Primary absorber', { trays: 30, vapW: 40000, vapMw: 32, vapT: 110, vapP: 195, liqSg: 0.72, skirt: 120 });
   u.item('C-1704', 'column', 'Sponge absorber', { trays: 20, vapW: 20000, vapMw: 24, vapT: 110, vapP: 190, liqSg: 0.9, skirt: 120 });
   u.item('C-1706', 'column', 'Fuel gas amine absorber', { trays: 20, vapW: fuelGas + h2sHere, vapMw: 21, vapT: 110, vapP: 180, liqSg: 1.03, skirt: 120 });
-  u.item('D-1706', 'drum', 'Fuel gas knock-out drum', { vertical: 1 });
-  u.item('C-1707', 'column', 'Stripper', { trays: 30, vapW: strOvhd, vapMw: 40, vapT: 150, vapP: 210, liqSg: 0.65, skirt: 180 });
-  u.item('C-1708', 'column', 'Debutaniser', { trays: 36, vapW: 3.5 * lpgFcc, vapMw: 52, vapT: 140, vapP: 150, liqSg: 0.55, skirt: 180 });
-  u.item('D-1705', 'drum', 'Debutaniser receiver');
-  u.item('C-1709', 'column', 'Liquefied gas amine contactor', { trays: 10, liquidOnly: 1, vapW: 0, vapMw: 50, vapT: 100, vapP: 240, liqSg: 0.55, skirt: 120 });
-  u.item('C-1710', 'column', 'Depropaniser', { trays: 40, vapW: 4 * c3, vapMw: 43, vapT: 120, vapP: 215, liqSg: 0.5, skirt: 180 });
-  u.item('D-1707', 'drum', 'Depropaniser receiver');
-
+  // the rest of the gas plant stands across the rack, opposite the converter: behind the main fractionator or the reactor's structure it would have no way to the rack (SW-CELL-3)
+  u.item('D-1706', 'drum', 'Fuel gas knock-out drum', { vertical: 1, across: 1 });
+  u.item('C-1707', 'column', 'Stripper', { trays: 30, vapW: strOvhd, vapMw: 40, vapT: 150, vapP: 210, liqSg: 0.65, skirt: 180, across: 1 });
+  u.item('C-1708', 'column', 'Debutaniser', { trays: 36, vapW: 3.5 * lpgFcc, vapMw: 52, vapT: 140, vapP: 150, liqSg: 0.55, skirt: 180, across: 1 });
+  u.item('D-1705', 'drum', 'Debutaniser receiver', { across: 1 });
+  u.item('C-1709', 'column', 'Liquefied gas amine contactor', { trays: 10, liquidOnly: 1, vapW: 0, vapMw: 50, vapT: 100, vapP: 240, liqSg: 0.55, skirt: 120, across: 1 });
+  u.item('V-1703', 'vessel', 'Liquefied gas caustic wash drum', { across: 1 });
+  u.item('C-1710', 'column', 'Depropaniser', { trays: 40, vapW: 4 * c3, vapMw: 43, vapT: 120, vapP: 215, liqSg: 0.5, skirt: 180, across: 1 });
+  u.item('D-1707', 'drum', 'Depropaniser receiver', { across: 1 });
+  u.item('V-1704', 'vessel', 'Gasoline caustic wash drum', { across: 1 });
+  // the main column's overhead condenser bays last of the air coolers, next the fractionator; its overhead line is met direct: over the bays at their own level, not by way of the rack (SW-RPI-3)
+  u.item('A-1701', 'aircooler', 'Main column overhead condenser', { after: 'A-1705', direct: 1, nearest: 1 });   // each of its lines to the bay nearest the line's other end
   // feed: surge drum, preheat against the main column's pumparounds, riser
   u.feed('atmospheric gas oil', liquid('GO', c.AGO.w, c.AGO.sg, 370, 100)).into('D-1701', 'inlet', { cv: true });
   u.feed('light vacuum gas oil', liquid('GO', c.LVGO.w, c.LVGO.sg, 150, 80)).into('D-1701', 'inlet 2', { cv: true });
