@@ -16,10 +16,11 @@ What is whose: sizes, classes, counts, lengths and line classes are the model's 
 | 14 | Catalytic reformer and hydrogen purification | 99 | 8,982 | 2,973 | 830 | 563 | 417 | 219 | 944 | 36 | 1,571 |
 | 15 | Kerosene hydrotreater | 65 | 4,476 | 1,960 | 512 | 374 | 293 | 143 | 638 | 25 | 1,007 |
 | 16 | Diesel hydrotreater | 85 | 7,878 | 2,659 | 737 | 521 | 378 | 190 | 833 | 34 | 1,412 |
+| 17 | Fluid catalytic cracker and gas concentration | 222 | 23,936 | 7,425 | 2,084 | 1,433 | 1,058 | 527 | 2,323 | 36 | 3,957 |
 | 18 | Sulfur block | 139 | 12,378 | 4,665 | 1,192 | 826 | 713 | 361 | 1,573 | 31 | 2,311 |
 | 19 | Utilities | 104 | 9,762 | 3,166 | 897 | 577 | 462 | 232 | 998 | 33 | 1,657 |
-| 10 | Main pipeway | 169 | 38,076 | 2,972 | 1,547 | 560 | 305 | 50 | 510 | 33 | 2,208 |
-|  | **all** | 944 | 105,944 | 27,482 | 8,201 | 5,222 | 3,878 | 1,834 | 8,347 | 36 | 14,998 |
+| 10 | Main pipeway | 145 | 37,716 | 2,730 | 1,499 | 567 | 230 | 26 | 408 | 27 | 2,165 |
+|  | **all** | 1142 | 129,520 | 34,665 | 10,237 | 6,662 | 4,861 | 2,337 | 10,568 | 36 | 18,912 |
 
 Categories as recalled (SW-REG-6): A pipe fittings; B flanges; C line valves. Line blanks (spades and spectacle blinds) are counted with the flanges they are clamped between.
 
@@ -305,6 +306,61 @@ Lines by what they are: 43 of the flowsheet (13 of them as far as a control stat
 | branch outlet fitting | 4 | category A | A234-WPB | 2 |
 | cap | 4 | category A | A234-WPB | 2 |
 
+## Unit 17: Fluid catalytic cracker and gas concentration
+
+Piping systems: a line class in the unit, with the number its lines and their pipe carry.
+
+| Line class | Fluid service | Severity | Piping system number | Lines | Pipe, ft | Components |
+| --- | --- | --- | --- | --- | --- | --- |
+| `C1200-CS-N2` | Normal | 4 | Y1120.7 | 4 | 581 | 152 |
+| `H150-CS-N4` | Normal | 4 | P6766.7 | 16 | 1,496 | 443 |
+| `H300-C5-N4` | Normal | 4 | L4991.7 | 1 | 126 | 17 |
+| `H300-CS-N4` | Normal | 4 | C1949.7 | 38 | 4,763 | 1,235 |
+| `H600-CS-N4` | Normal | 4 | H6022.7 | 4 | 415 | 160 |
+| `S1200-CS-N2` | Normal | 4 | F7800.7 | 3 | 533 | 78 |
+| `H150-C5-N3` | Normal | 3 | T1417.7 | 2 | 78 | 54 |
+| `H150-CS-N3` | Normal | 3 | L2623.7 | 33 | 2,163 | 1,124 |
+| `H300-C5-N3` | Normal | 3 | F9134.7 | 4 | 253 | 129 |
+| `H300-CS-N3` | Normal | 3 | K8616.7 | 33 | 4,341 | 1,160 |
+| `H600-C5-N3` | Normal | 3 | E7017.7 | 3 | 197 | 98 |
+| `H600-CS-N2` | Normal | 3 | F9260.7 | 7 | 873 | 308 |
+| `H600-CS-N3` | Normal | 3 | E1879.7 | 18 | 1,295 | 684 |
+| `C300-CS-N2` | Normal | 2 | H8076.7 | 2 | 135 | 84 |
+| `H150-CS-N2` | Normal | 2 | M1004.7 | 14 | 1,480 | 397 |
+| `H300-CS-N2` | Normal | 2 | J1235.7 | 7 | 721 | 221 |
+| `S300-CS-N2` | Normal | 2 | P1108.7 | 6 | 708 | 159 |
+| `W300-CS-N2` | Normal | 2 | F7600.7 | 2 | 452 | 81 |
+| `C150-CS-D1` | D | 1 | P4916.7 | 2 | 452 | 49 |
+| `G150-CS-D1` | D | 1 | S9392.7 | 3 | 509 | 97 |
+| `H150-CS-D1` | D | 1 | C2475.7 | 1 | 269 | 37 |
+| `W150-CS-D1` | D | 1 | Y9704.7 | 19 | 2,096 | 658 |
+
+| Fluid service | Lines | Examination of welds (recalled) | Butt welds | Socket welds | Fillet welds | Shop | Field |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Normal | 197 | visual, and 5 % random radiography of girth butt welds | 3,497 | 0 | 6 | 3,033 | 470 |
+| Category D | 25 | visual | 424 | 0 | 30 | 410 | 44 |
+
+Lines by what they are: 101 of the flowsheet (31 of them as far as a control station), 39 parts after a control station (18 in another class than the line ahead: a specification break), 32 connections of installed spares, 8 branch root connections, 32 utility connections and 10 utility headers.
+
+| Component | Count | Registered as | Material labels (recalled) | Fitting numbers in use |
+| --- | --- | --- | --- | --- |
+| pipe | 2,084 | its line's piping system | A106-B; A335-P5 | — |
+| elbow | 1,224 | category A | A234-WPB; A234-WP5 | 12 |
+| gasket | 1,219 | not registered | compressed sheet (non-steel) | — |
+| stud set | 1,104 | not registered | A193-B7 studs, A194-2H nuts | — |
+| flange | 943 | category B | A105; A182-F5 | 9 |
+| gate valve | 373 | category C | A216-WCB; A217-C5 | 10 |
+| reducer | 122 | category A | A234-WPB; A234-WP5 | 10 |
+| spade | 88 | category B | A105; A182-F5 | 10 |
+| tee | 57 | category A | A234-WPB; A234-WP5 | 9 |
+| globe valve | 46 | category C | A216-WCB | 7 |
+| bfly valve | 40 | category C | A216-WCB | 4 |
+| control valve | 39 | category C | A216-WCB | 9 |
+| check valve | 29 | category C | A216-WCB; A217-C5 | 6 |
+| spectacle blind | 27 | category B | A105; A182-F5 | 6 |
+| branch outlet fitting | 20 | category A | A234-WPB | 6 |
+| cap | 10 | category A | A234-WPB | 8 |
+
 ## Unit 18: Sulfur block
 
 Piping systems: a line class in the unit, with the number its lines and their pipe carry.
@@ -402,42 +458,42 @@ Piping systems: a line class in the unit, with the number its lines and their pi
 | Line class | Fluid service | Severity | Piping system number | Lines | Pipe, ft | Components |
 | --- | --- | --- | --- | --- | --- | --- |
 | `C1200-CS-N2` | Normal | 4 | V2873.7 | 1 | 1,117 | 36 |
-| `H1200-CS-N2` | Normal | 4 | Y8392.7 | 13 | 582 | 178 |
-| `H150-CS-N4` | Normal | 4 | N7585.7 | 21 | 4,036 | 364 |
-| `H300-CS-N4` | Normal | 4 | H6510.7 | 8 | 1,434 | 134 |
-| `H600-CS-N4` | Normal | 4 | N6685.7 | 3 | 879 | 60 |
+| `H1200-CS-N2` | Normal | 4 | Y8392.7 | 11 | 560 | 164 |
+| `H150-CS-N4` | Normal | 4 | N7585.7 | 18 | 4,044 | 334 |
+| `H300-CS-N4` | Normal | 4 | H6510.7 | 5 | 1,522 | 104 |
+| `H600-CS-N4` | Normal | 4 | N6685.7 | 3 | 884 | 62 |
 | `S1200-CS-N2` | Normal | 4 | G7841.7 | 1 | 1,114 | 36 |
-| `H150-CS-N3` | Normal | 3 | W9204.7 | 61 | 16,548 | 1,096 |
+| `H150-CS-N3` | Normal | 3 | W9204.7 | 54 | 16,504 | 1,034 |
 | `H300-C5-N3` | Normal | 3 | A1441.7 | 1 | 314 | 25 |
 | `H300-CS-N3` | Normal | 3 | N2367.7 | 2 | 625 | 46 |
 | `H600-C5-N3` | Normal | 3 | W6958.7 | 1 | 304 | 29 |
-| `H600-CS-N2` | Normal | 3 | L5971.7 | 7 | 1,589 | 120 |
-| `H150-CS-N2` | Normal | 2 | V1823.7 | 19 | 2,875 | 306 |
-| `H300-CS-N2` | Normal | 2 | P9748.7 | 12 | 658 | 170 |
-| `S300-CS-N2` | Normal | 2 | N6355.7 | 1 | 1,114 | 36 |
-| `W300-CS-N2` | Normal | 2 | C7967.7 | 1 | 1,117 | 35 |
-| `C150-CS-D1` | D | 1 | E6843.7 | 1 | 1,115 | 40 |
+| `H600-CS-N2` | Normal | 3 | L5971.7 | 5 | 1,228 | 68 |
+| `H150-CS-N2` | Normal | 2 | V1823.7 | 16 | 2,844 | 263 |
+| `H300-CS-N2` | Normal | 2 | P9748.7 | 10 | 653 | 162 |
+| `S300-CS-N2` | Normal | 2 | N6355.7 | 1 | 1,114 | 37 |
+| `W300-CS-N2` | Normal | 2 | C7967.7 | 1 | 1,117 | 36 |
+| `C150-CS-D1` | D | 1 | E6843.7 | 1 | 1,115 | 39 |
 | `G150-CS-D1` | D | 1 | R7503.7 | 1 | 1,117 | 34 |
-| `H150-CS-D1` | D | 1 | H5316.7 | 15 | 1,538 | 227 |
+| `H150-CS-D1` | D | 1 | H5316.7 | 13 | 1,540 | 221 |
 
 | Fluid service | Lines | Examination of welds (recalled) | Butt welds | Socket welds | Fillet welds | Shop | Field |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Normal | 152 | visual, and 5 % random radiography of girth butt welds | 1,942 | 0 | 21 | 1,713 | 250 |
-| Category D | 17 | visual | 245 | 0 | 0 | 218 | 27 |
+| Normal | 130 | visual, and 5 % random radiography of girth butt welds | 1,890 | 0 | 21 | 1,669 | 242 |
+| Category D | 15 | visual | 254 | 0 | 0 | 227 | 27 |
 
-Lines by what they are: 45 lines of streams between units, 65 branches to the further parties of streams that have more than two, and 50 valves with their blinds beyond the limit spools (SW-PWY-3, SW-PWY-4). Each stream's line is of the material of the unit lines it joins.
+Lines by what they are: 45 lines of streams between units, 65 branches to the further parties of streams that have more than two, and 26 valves with their blinds beyond the limit spools (SW-PWY-3, SW-PWY-4). Each stream's line is of the material of the unit lines it joins.
 
 | Component | Count | Registered as | Material labels (recalled) | Fitting numbers in use |
 | --- | --- | --- | --- | --- |
-| pipe | 1,547 | its line's piping system | A106-B; A335-P5 | — |
-| elbow | 453 | category A | A234-WPB; A234-WP5 | 10 |
-| gasket | 255 | not registered | compressed sheet (non-steel) | — |
-| flange | 255 | category B | A105; A182-F5 | 10 |
-| stud set | 255 | not registered | A193-B7 studs, A194-2H nuts | — |
-| gate valve | 50 | category C | A216-WCB | 9 |
-| blind flange | 50 | category B | A105 | 9 |
-| tee | 44 | category A | A234-WPB | 8 |
-| reducer | 24 | category A | A234-WPB | 7 |
+| pipe | 1,499 | its line's piping system | A106-B; A335-P5 | — |
+| elbow | 463 | category A | A234-WPB; A234-WP5 | 9 |
+| gasket | 204 | not registered | compressed sheet (non-steel) | — |
+| flange | 204 | category B | A105; A182-F5 | 9 |
+| stud set | 204 | not registered | A193-B7 studs, A194-2H nuts | — |
+| tee | 43 | category A | A234-WPB | 7 |
+| gate valve | 26 | category C | A216-WCB | 5 |
+| blind flange | 26 | category B | A105 | 5 |
+| reducer | 22 | category A | A234-WPB | 6 |
 | branch outlet fitting | 21 | category A | A234-WPB | 6 |
 | cap | 18 | category A | A234-WPB | 7 |
 
