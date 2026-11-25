@@ -30,7 +30,7 @@ const near = (v: number, s = 6) => Math.round(v / s) * s, up = (v: number, s = 6
 /** SW-PWY-1, SW-PWY-2, SW-PWY-9: the main pipeway's own figures. `west`: where its frame's origin stands on the site, ft east */
 export const PWY = { area: 10, west: 985, bays: 58, bent: 240, half: 180, tiers: [240, 312, 396] as const, loadPsf: 40, stringers: [-60, 60] as const, /** under the top tier: clear of where the headers' branches come down beside their band (SW-PWY-9, SW-PWY-12) */ topStringers: [-96, 0, 96] as const, limit: 60, PAD: 6, /** how far from the centre line a junction frame stands (SW-PWY-9): 2 ft inside the corridor's edge */ junction: 336 };
 /** the units piped so far: each has battery-limit spools for the pipeway's lines to meet (§79) */
-export const PIPED = [11, 12, 13, 14, 15, 16, 18, 19];
+export const PIPED = [11, 12, 13, 14, 15, 16, 17, 18, 19];
 /** the units of the process bench that stand on the main pipeway */
 const ON_BENCH = [11, 12, 13, 14, 15, 16, 17, 18, 19];
 /** the areas beyond the bench, by the end of the main rack their pipeways leave from (SW-SITE-4, SW-PWY-4) */

@@ -4966,7 +4966,15 @@ What this section adds is what that generator is given.
   stand over it; free, it crosses over the bays at their own level (SW-RPI-6), with a
   branch down to each, as the crude unit's does from a column that stands beside its bays.
   Each is routed in a run of its own before every other line of the unit, the largest
-  first (SW-RPI-7), so that the smaller lines find their way round it. A branch that joins
+  first (SW-RPI-7), so that the smaller lines find their way round it. While such a line
+  is laid, the way down before each side connection of a vertical vessel that a later
+  line will leave by is held for that line: from where its valves end, 6 ft further out
+  from the shell, a pipe and 1 ft wide, from 9 ft over the rack's top tier (or from above
+  the valve such a line has on a side connection of the same vessel) up to the
+  connection (added 2026-11-25: with the fractionator's chase made deeper, SW-RPI-6, its
+  24 in overhead came down the middle of it, before every side connection, and the
+  pumparound draw 53 ft up had no way down but with a step aside that the generator's
+  search did not reach). A branch that joins
   such a line for a further body in parallel carries the same letter: the generator routes
   the branches of process lines before any line that is not one, and would look for the
   tee on a line it had not yet laid.
@@ -5344,6 +5352,12 @@ What this section adds is what that generator is given.
   rack to a connection 106 ft up a column whose rack side already carried five lines, was
   more than its search found a way for (the cracking unit, 2026-11-25). From a lane the
   same line is two short searches, one at each end.
+  A station whose line comes down to it from a connection more than 9 ft above the rack's
+  top tier, on a vessel whose chase a line routed free crosses (SW-RPI-6), stands either
+  within 5 ft along the rack of that connection or far enough from it for the generator
+  to run the line on the rack, measured from the end of the station on its near face
+  (added 2026-11-25: the main fractionator's heavy cycle oil draw, 84 ft up, sent free to
+  a station 20 ft along, was not routed).
   The stations take their places in the order their lines come; but one whose onward line
   is not a process line, which the generator routes free however far it must go, is 3 in
   or larger (2 in lines it has routed free for 125 ft in the units piped before), and that

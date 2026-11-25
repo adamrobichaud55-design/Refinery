@@ -148,6 +148,8 @@ export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}
     let m = kept ?? generatePiping({ plant, only });
     // a line that finds no way in its cut grid is run again on the unit's whole grid before it is reported
     if (m.failures.length && run.kind !== 'rest') { plant = up.runPlant(k, prior, true); watch?.(plant); const again = generatePiping({ plant, only }); if (again.failures.length < m.failures.length) { m = again; notes.push(`${run.lines[0]}: routed on the unit's whole grid, having found no way in the grid cut to it (SW-RPI-7)`); } }
+    // and one that finds none there either, on a grid cut close to it, 10 ft beyond its connections: the generator's search looks at a limited number of places, and the less ground it is shown the further that number goes
+    if (m.failures.length && run.kind !== 'rest') { plant = up.runPlant(k, prior, 'close'); watch?.(plant); const again = generatePiping({ plant, only }); if (again.failures.length < m.failures.length) { m = again; notes.push(`${run.lines[0]}: routed on a grid cut close to it, 10 ft beyond its connections, having found no way in the grid first cut to it nor in the unit's whole grid (SW-RPI-7)`); } }
     if (!kept && run.kind !== 'rest') cache?.put(k, run.lines, m);
     models.push(m); routed += m.stats.routed ?? 0; failed += m.failures.length;
     if (run.kind === 'rest') log(`unit ${up.unit}: the rest, ${m.stats.routed} of ${m.lines.filter(l => l.kind !== 'stub').length} lines routed, ${m.failures.length} failures, ${((Date.now() - t0) / 1000).toFixed(0)} s`);

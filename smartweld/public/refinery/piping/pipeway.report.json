@@ -19,18 +19,21 @@
   2,
   3
  ],
- "tierRoom": 120,
- "seconds": 1097,
+ "tierRoom": 132,
+ "seconds": 1560,
  "stats": {
-  "lines": 169,
-  "routed": 119,
-  "failed": 0,
-  "comps": 2772,
-  "welds": 2108,
-  "supports": 2300,
+  "lines": 145,
+  "routed": 117,
+  "failed": 2,
+  "comps": 2626,
+  "welds": 2113,
+  "supports": 2296,
   "penetrations": 0
  },
- "failures": [],
+ "failures": [
+  "6\"-P600-P-10034: no rack lane with clear drops: ",
+  "6\"-P600-P-10122: no tap position on 6\"-P600-P-10034"
+ ],
  "checks": {
   "continuity": [],
   "joints": [],
@@ -38,11 +41,14 @@
   "valves": [],
   "lineClearance": [],
   "staticClearance": [],
-  "supports": []
+  "supports": [
+   "3\"-P150-P-10617: unsupported span 219 in > 180 on run from 9528,360,55",
+   "3\"-P600-P-10618: unsupported span 219 in > 180 on run from 9534,360,61"
+  ]
  },
  "limits": [
   {
-   "tag": "PL-1025",
+   "tag": "PL-1001",
    "stream": "desalter brine",
    "party": "the wastewater treatment",
    "unit": 24,
@@ -54,35 +60,18 @@
    "at": [
     13860,
     318,
-    -108
+    -72
    ],
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1004",
-   "stream": "crude overhead gas",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": false,
-   "line": "3\"-P150-P-10002",
-   "stub": "3\"-P150-P-10802",
-   "NPS": 3,
-   "cls": "P150",
-   "at": [
-    9456,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1026",
+   "tag": "PL-1002",
    "stream": "straight-run naphtha",
    "party": "the product tankage",
    "unit": 21,
    "sends": true,
    "line": "6\"-P150-P-10003",
-   "stub": "6\"-P150-P-10803",
+   "stub": "6\"-P150-P-10802",
    "NPS": 6,
    "cls": "P150",
    "at": [
@@ -93,13 +82,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1027",
+   "tag": "PL-1003",
    "stream": "straight-run naphtha",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "6\"-P150-P-10102",
-   "stub": "6\"-P150-P-10804",
+   "stub": "6\"-P150-P-10803",
    "NPS": 6,
    "cls": "P150",
    "at": [
@@ -110,30 +99,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1006",
-   "stream": "sour water",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": true,
-   "line": "4\"-P150-P-10004",
-   "stub": "3\"-P150-P-10805",
-   "NPS": 3,
-   "cls": "P150",
-   "at": [
-    9492,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1028",
+   "tag": "PL-1004",
    "stream": "straight-run diesel",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "6\"-P150-P-10006",
-   "stub": "6\"-P150-P-10806",
+   "stub": "6\"-P150-P-10804",
    "NPS": 6,
    "cls": "P150",
    "at": [
@@ -144,13 +116,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1029",
+   "tag": "PL-1005",
    "stream": "straight-run diesel",
    "party": "the product tankage",
    "unit": 21,
    "sends": true,
    "line": "6\"-P150-P-10109",
-   "stub": "6\"-P150-P-10807",
+   "stub": "6\"-P150-P-10805",
    "NPS": 6,
    "cls": "P150",
    "at": [
@@ -161,30 +133,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1005",
-   "stream": "atmospheric gas oil",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": false,
-   "line": "3\"-P150-P-10007",
-   "stub": "3\"-P150-P-10808",
-   "NPS": 3,
-   "cls": "P150",
-   "at": [
-    9474,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1030",
+   "tag": "PL-1006",
    "stream": "vacuum residue rundown",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "6\"-P150-P-10010",
-   "stub": "6\"-P150-P-10809",
+   "stub": "6\"-P150-P-10806",
    "NPS": 6,
    "cls": "P150",
    "at": [
@@ -195,13 +150,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1031",
+   "tag": "PL-1007",
    "stream": "crude",
    "party": "the crude tank farm",
    "unit": 20,
    "sends": true,
    "line": "16\"-P150-P-10011",
-   "stub": "12\"-P150-P-10810",
+   "stub": "12\"-P150-P-10807",
    "NPS": 12,
    "cls": "P150",
    "at": [
@@ -212,115 +167,64 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1032",
+   "tag": "PL-1008",
    "stream": "slop oil",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "3\"-P150-P-10015",
-   "stub": "3\"-P150-P-10811",
+   "stub": "3\"-P150-P-10808",
    "NPS": 3,
    "cls": "P150",
    "at": [
     13860,
     318,
-    -42
+    -24
    ],
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1033",
+   "tag": "PL-1009",
    "stream": "light vacuum gas oil",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "3\"-P150-P-10016",
-   "stub": "3\"-P150-P-10812",
+   "stub": "3\"-P150-P-10809",
    "NPS": 3,
    "cls": "P150",
    "at": [
     13860,
     318,
-    108
+    -108
    ],
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1011",
-   "stream": "light vacuum gas oil",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": false,
-   "line": "3\"-P150-P-10115",
-   "stub": "3\"-P150-P-10813",
-   "NPS": 3,
-   "cls": "P150",
-   "at": [
-    9582,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1034",
+   "tag": "PL-1010",
    "stream": "light vacuum gas oil",
    "party": "the product tankage",
    "unit": 21,
    "sends": true,
    "line": "3\"-P150-P-10116",
-   "stub": "3\"-P150-P-10814",
+   "stub": "3\"-P150-P-10810",
    "NPS": 3,
    "cls": "P150",
    "at": [
     13860,
     318,
-    144
+    -144
    ],
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1008",
-   "stream": "heavy vacuum gas oil",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": false,
-   "line": "6\"-P150-P-10017",
-   "stub": "6\"-P150-P-10815",
-   "NPS": 6,
-   "cls": "P150",
-   "at": [
-    9528,
-    204,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1003",
-   "stream": "stripper gas",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": false,
-   "line": "6\"-P150-P-10018",
-   "stub": "6\"-P150-P-10816",
-   "NPS": 6,
-   "cls": "P150",
-   "at": [
-    9438,
-    204,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1035",
+   "tag": "PL-1011",
    "stream": "light naphtha",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "3\"-P150-P-10019",
-   "stub": "3\"-P150-P-10817",
+   "stub": "3\"-P150-P-10811",
    "NPS": 3,
    "cls": "P150",
    "at": [
@@ -331,13 +235,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1036",
+   "tag": "PL-1012",
    "stream": "heavy naphtha to storage",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "6\"-P150-P-10021",
-   "stub": "6\"-P150-P-10818",
+   "stub": "6\"-P150-P-10812",
    "NPS": 6,
    "cls": "P150",
    "at": [
@@ -348,30 +252,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1002",
-   "stream": "reformer liquefied gas",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": false,
-   "line": "3\"-P300-P-10027",
-   "stub": "3\"-P300-P-10819",
-   "NPS": 3,
-   "cls": "P300",
-   "at": [
-    9420,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1037",
+   "tag": "PL-1013",
    "stream": "reformate",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "4\"-P150-P-10028",
-   "stub": "4\"-P150-P-10820",
+   "stub": "4\"-P150-P-10813",
    "NPS": 4,
    "cls": "P150",
    "at": [
@@ -382,13 +269,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1038",
+   "tag": "PL-1014",
    "stream": "heavy naphtha from storage",
    "party": "the product tankage",
    "unit": 21,
    "sends": true,
    "line": "6\"-P150-P-10029",
-   "stub": "6\"-P150-P-10821",
+   "stub": "6\"-P150-P-10814",
    "NPS": 6,
    "cls": "P150",
    "at": [
@@ -399,13 +286,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1039",
+   "tag": "PL-1015",
    "stream": "treated kerosene",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "4\"-P150-P-10030",
-   "stub": "4\"-P150-P-10822",
+   "stub": "4\"-P150-P-10815",
    "NPS": 4,
    "cls": "P150",
    "at": [
@@ -416,30 +303,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1010",
-   "stream": "rich amine",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": true,
-   "line": "4\"-P150-P-10031",
-   "stub": "4\"-P150-P-10823",
-   "NPS": 4,
-   "cls": "P150",
-   "at": [
-    9564,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1040",
+   "tag": "PL-1016",
    "stream": "treated diesel",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "6\"-P150-P-10032",
-   "stub": "6\"-P150-P-10824",
+   "stub": "6\"-P150-P-10816",
    "NPS": 6,
    "cls": "P150",
    "at": [
@@ -450,234 +320,13 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1007",
-   "stream": "light cycle oil to hydrotreating",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": true,
-   "line": "3\"-P150-P-10033",
-   "stub": "3\"-P150-P-10825",
-   "NPS": 3,
-   "cls": "P150",
-   "at": [
-    9510,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1009",
-   "stream": "lean amine",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": false,
-   "line": "6\"-P600-P-10034",
-   "stub": "4\"-P600-P-10826",
-   "NPS": 4,
-   "cls": "P600",
-   "at": [
-    9546,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1015",
-   "stream": "slurry oil",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": true,
-   "line": "3\"-P150-P-10035",
-   "stub": "3\"-P150-P-10827",
-   "NPS": 3,
-   "cls": "P150",
-   "at": [
-    9654,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1041",
+   "tag": "PL-1017",
    "stream": "slurry oil",
    "party": "the product tankage",
    "unit": 21,
    "sends": false,
    "line": "3\"-P150-P-10035",
-   "stub": "3\"-P150-P-10828",
-   "NPS": 3,
-   "cls": "P150",
-   "at": [
-    13860,
-    318,
-    -132
-   ],
-   "where": "east limit bay"
-  },
-  {
-   "tag": "PL-1014",
-   "stream": "light cycle oil to fuel oil",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": true,
-   "line": "4\"-P150-P-10036",
-   "stub": "4\"-P150-P-10829",
-   "NPS": 4,
-   "cls": "P150",
-   "at": [
-    9636,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1042",
-   "stream": "light cycle oil to fuel oil",
-   "party": "the product tankage",
-   "unit": 21,
-   "sends": false,
-   "line": "4\"-P150-P-10036",
-   "stub": "3\"-P150-P-10830",
-   "NPS": 3,
-   "cls": "P150",
-   "at": [
-    13860,
-    246,
-    -30
-   ],
-   "where": "east limit bay"
-  },
-  {
-   "tag": "PL-1001",
-   "stream": "fuel gas",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": true,
-   "line": "6\"-P150-P-10037",
-   "stub": "4\"-P150-P-10831",
-   "NPS": 4,
-   "cls": "P150",
-   "at": [
-    9402,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1012",
-   "stream": "cracked gasoline",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": true,
-   "line": "6\"-P150-P-10038",
-   "stub": "6\"-P150-P-10832",
-   "NPS": 6,
-   "cls": "P150",
-   "at": [
-    9600,
-    204,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1043",
-   "stream": "cracked gasoline",
-   "party": "the product tankage",
-   "unit": 21,
-   "sends": false,
-   "line": "6\"-P150-P-10038",
-   "stub": "6\"-P150-P-10833",
-   "NPS": 6,
-   "cls": "P150",
-   "at": [
-    13860,
-    252,
-    -6
-   ],
-   "where": "east limit bay"
-  },
-  {
-   "tag": "PL-1016",
-   "stream": "three-carbon liquefied gas",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": true,
-   "line": "3\"-P300-P-10039",
-   "stub": "3\"-P300-P-10834",
-   "NPS": 3,
-   "cls": "P300",
-   "at": [
-    9672,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1044",
-   "stream": "three-carbon liquefied gas",
-   "party": "the product tankage",
-   "unit": 21,
-   "sends": false,
-   "line": "3\"-P300-P-10039",
-   "stub": "3\"-P300-P-10835",
-   "NPS": 3,
-   "cls": "P300",
-   "at": [
-    13860,
-    318,
-    -156
-   ],
-   "where": "east limit bay"
-  },
-  {
-   "tag": "PL-1013",
-   "stream": "four-carbon liquefied gas",
-   "party": "unit 17",
-   "unit": 17,
-   "sends": true,
-   "line": "3\"-P300-P-10040",
-   "stub": "3\"-P300-P-10836",
-   "NPS": 3,
-   "cls": "P300",
-   "at": [
-    9618,
-    198,
-    -510
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1045",
-   "stream": "four-carbon liquefied gas",
-   "party": "the product tankage",
-   "unit": 21,
-   "sends": false,
-   "line": "3\"-P300-P-10040",
-   "stub": "3\"-P300-P-10837",
-   "NPS": 3,
-   "cls": "P300",
-   "at": [
-    13860,
-    318,
-    -12
-   ],
-   "where": "east limit bay"
-  },
-  {
-   "tag": "PL-1046",
-   "stream": "stripped water to wastewater",
-   "party": "the wastewater treatment",
-   "unit": 24,
-   "sends": false,
-   "line": "3\"-P150-P-10041",
-   "stub": "3\"-P150-P-10838",
+   "stub": "3\"-P150-P-10817",
    "NPS": 3,
    "cls": "P150",
    "at": [
@@ -688,13 +337,98 @@
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1047",
+   "tag": "PL-1018",
+   "stream": "light cycle oil to fuel oil",
+   "party": "the product tankage",
+   "unit": 21,
+   "sends": false,
+   "line": "4\"-P150-P-10036",
+   "stub": "3\"-P150-P-10818",
+   "NPS": 3,
+   "cls": "P150",
+   "at": [
+    13860,
+    246,
+    -30
+   ],
+   "where": "east limit bay"
+  },
+  {
+   "tag": "PL-1019",
+   "stream": "cracked gasoline",
+   "party": "the product tankage",
+   "unit": 21,
+   "sends": false,
+   "line": "6\"-P150-P-10038",
+   "stub": "6\"-P150-P-10819",
+   "NPS": 6,
+   "cls": "P150",
+   "at": [
+    13860,
+    252,
+    -6
+   ],
+   "where": "east limit bay"
+  },
+  {
+   "tag": "PL-1020",
+   "stream": "three-carbon liquefied gas",
+   "party": "the product tankage",
+   "unit": 21,
+   "sends": false,
+   "line": "3\"-P300-P-10039",
+   "stub": "3\"-P300-P-10820",
+   "NPS": 3,
+   "cls": "P300",
+   "at": [
+    13860,
+    318,
+    156
+   ],
+   "where": "east limit bay"
+  },
+  {
+   "tag": "PL-1021",
+   "stream": "four-carbon liquefied gas",
+   "party": "the product tankage",
+   "unit": 21,
+   "sends": false,
+   "line": "3\"-P300-P-10040",
+   "stub": "3\"-P300-P-10821",
+   "NPS": 3,
+   "cls": "P300",
+   "at": [
+    13860,
+    318,
+    132
+   ],
+   "where": "east limit bay"
+  },
+  {
+   "tag": "PL-1022",
+   "stream": "stripped water to wastewater",
+   "party": "the wastewater treatment",
+   "unit": 24,
+   "sends": false,
+   "line": "3\"-P150-P-10041",
+   "stub": "3\"-P150-P-10822",
+   "NPS": 3,
+   "cls": "P150",
+   "at": [
+    13860,
+    318,
+    108
+   ],
+   "where": "east limit bay"
+  },
+  {
+   "tag": "PL-1023",
    "stream": "fire water make-up",
    "party": "the fire water tanks",
    "unit": 26,
    "sends": false,
    "line": "6\"-P300-P-10042",
-   "stub": "6\"-P300-P-10839",
+   "stub": "6\"-P300-P-10823",
    "NPS": 6,
    "cls": "P300",
    "at": [
@@ -705,30 +439,30 @@
    "where": "west limit bay"
   },
   {
-   "tag": "PL-1048",
+   "tag": "PL-1024",
    "stream": "boiler blowdown",
    "party": "the wastewater treatment",
    "unit": 24,
    "sends": false,
    "line": "3\"-P150-P-10043",
-   "stub": "3\"-P150-P-10840",
+   "stub": "3\"-P150-P-10824",
    "NPS": 3,
    "cls": "P150",
    "at": [
     13860,
     318,
-    -72
+    -48
    ],
    "where": "east limit bay"
   },
   {
-   "tag": "PL-1049",
+   "tag": "PL-1025",
    "stream": "raw water",
    "party": "the site boundary (the intake)",
    "unit": 0,
    "sends": true,
    "line": "8\"-P150-P-10044",
-   "stub": "8\"-P150-P-10841",
+   "stub": "8\"-P150-P-10825",
    "NPS": 8,
    "cls": "P150",
    "at": [
@@ -739,13 +473,13 @@
    "where": "west limit bay"
   },
   {
-   "tag": "PL-1050",
+   "tag": "PL-1026",
    "stream": "purchased gas",
    "party": "the site boundary (the gas main)",
    "unit": 0,
    "sends": true,
    "line": "6\"-P150-P-10045",
-   "stub": "6\"-P150-P-10842",
+   "stub": "6\"-P150-P-10826",
    "NPS": 6,
    "cls": "P150",
    "at": [
@@ -754,142 +488,6 @@
     -72
    ],
    "where": "west limit bay"
-  },
-  {
-   "tag": "PL-1022",
-   "stream": "medium-pressure steam",
-   "party": "unit 17's header",
-   "unit": 17,
-   "sends": true,
-   "line": "10\"-P300-P-10601",
-   "stub": "10\"-P300-P-10843",
-   "NPS": 10,
-   "cls": "P300",
-   "at": [
-    9522,
-    348,
-    -600
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1023",
-   "stream": "instrument air",
-   "party": "unit 17's header",
-   "unit": 17,
-   "sends": false,
-   "line": "3\"-P150-P-10617",
-   "stub": "2\"-P150-P-10844",
-   "NPS": 2,
-   "cls": "P150",
-   "at": [
-    9540,
-    342,
-    -600
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1024",
-   "stream": "caustic",
-   "party": "unit 17's header",
-   "unit": 17,
-   "sends": false,
-   "line": "3\"-P600-P-10618",
-   "stub": "2\"-P600-P-10845",
-   "NPS": 2,
-   "cls": "P600",
-   "at": [
-    9552,
-    342,
-    -600
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1018",
-   "stream": "low-pressure steam",
-   "party": "unit 17's header",
-   "unit": 17,
-   "sends": true,
-   "line": "14\"-P150-P-10619",
-   "stub": "14\"-P150-P-10846",
-   "NPS": 14,
-   "cls": "P150",
-   "at": [
-    9408,
-    348,
-    -600
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1017",
-   "stream": "high-pressure steam",
-   "party": "unit 17's header",
-   "unit": 17,
-   "sends": false,
-   "line": "8\"-P1200-P-10626",
-   "stub": "8\"-P1200-P-10847",
-   "NPS": 8,
-   "cls": "P1200",
-   "at": [
-    9384,
-    348,
-    -600
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1020",
-   "stream": "boiler feed water",
-   "party": "unit 17's header",
-   "unit": 17,
-   "sends": false,
-   "line": "4\"-P1200-P-10633",
-   "stub": "4\"-P1200-P-10848",
-   "NPS": 4,
-   "cls": "P1200",
-   "at": [
-    9450,
-    342,
-    -600
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1021",
-   "stream": "service water",
-   "party": "unit 17's header",
-   "unit": 17,
-   "sends": false,
-   "line": "3\"-P300-P-10636",
-   "stub": "3\"-P300-P-10849",
-   "NPS": 3,
-   "cls": "P300",
-   "at": [
-    9504,
-    342,
-    -600
-   ],
-   "where": "valve bay"
-  },
-  {
-   "tag": "PL-1019",
-   "stream": "condensate",
-   "party": "unit 17's header",
-   "unit": 17,
-   "sends": true,
-   "line": "3\"-P150-P-10643",
-   "stub": "2\"-P150-P-10850",
-   "NPS": 2,
-   "cls": "P150",
-   "at": [
-    9432,
-    342,
-    -600
-   ],
-   "where": "valve bay"
   }
  ],
  "junctions": [
@@ -973,7 +571,7 @@
   },
   {
    "unit": 17,
-   "x": 9540,
+   "x": 9486,
    "z": -336,
    "half": 180,
    "tiers": [
@@ -1032,7 +630,7 @@
     {
      "party": "the wastewater treatment",
      "sends": false,
-     "nozzle": "PL-1025-P",
+     "nozzle": "PL-1001-P",
      "NPS": 3,
      "role": "end"
     }
@@ -1059,7 +657,7 @@
     {
      "party": "unit 17",
      "sends": false,
-     "nozzle": "PL-1004-P",
+     "nozzle": "BL-1707-P",
      "NPS": 3,
      "role": "end"
     }
@@ -1082,7 +680,7 @@
     {
      "party": "the product tankage",
      "sends": true,
-     "nozzle": "PL-1026-P",
+     "nozzle": "PL-1002-P",
      "NPS": 6,
      "role": "end"
     },
@@ -1103,7 +701,7 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1027-P",
+     "nozzle": "PL-1003-P",
      "NPS": 6,
      "role": "branch"
     }
@@ -1136,7 +734,7 @@
     {
      "party": "unit 17",
      "sends": true,
-     "nozzle": "PL-1006-P",
+     "nozzle": "BL-1709-P",
      "NPS": 3,
      "role": "end"
     },
@@ -1228,7 +826,7 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1028-P",
+     "nozzle": "PL-1004-P",
      "NPS": 6,
      "role": "end"
     },
@@ -1242,7 +840,7 @@
     {
      "party": "the product tankage",
      "sends": true,
-     "nozzle": "PL-1029-P",
+     "nozzle": "PL-1005-P",
      "NPS": 6,
      "role": "branch"
     }
@@ -1269,7 +867,7 @@
     {
      "party": "unit 17",
      "sends": false,
-     "nozzle": "PL-1005-P",
+     "nozzle": "BL-1701-P",
      "NPS": 3,
      "role": "end"
     }
@@ -1350,7 +948,7 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1030-P",
+     "nozzle": "PL-1006-P",
      "NPS": 6,
      "role": "end"
     }
@@ -1370,7 +968,7 @@
     {
      "party": "the crude tank farm",
      "sends": true,
-     "nozzle": "PL-1031-P",
+     "nozzle": "PL-1007-P",
      "NPS": 12,
      "role": "end"
     },
@@ -1513,7 +1111,7 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1032-P",
+     "nozzle": "PL-1008-P",
      "NPS": 3,
      "role": "end"
     },
@@ -1557,21 +1155,21 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1033-P",
+     "nozzle": "PL-1009-P",
      "NPS": 3,
      "role": "end"
     },
     {
      "party": "unit 17",
      "sends": false,
-     "nozzle": "PL-1011-P",
+     "nozzle": "BL-1702-P",
      "NPS": 3,
      "role": "branch"
     },
     {
      "party": "the product tankage",
      "sends": true,
-     "nozzle": "PL-1034-P",
+     "nozzle": "PL-1010-P",
      "NPS": 3,
      "role": "branch"
     }
@@ -1598,7 +1196,7 @@
     {
      "party": "unit 17",
      "sends": false,
-     "nozzle": "PL-1008-P",
+     "nozzle": "BL-1703-P",
      "NPS": 6,
      "role": "end"
     }
@@ -1628,7 +1226,7 @@
     {
      "party": "unit 17",
      "sends": false,
-     "nozzle": "PL-1003-P",
+     "nozzle": "BL-1708-P",
      "NPS": 6,
      "role": "end"
     },
@@ -1669,7 +1267,7 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1035-P",
+     "nozzle": "PL-1011-P",
      "NPS": 3,
      "role": "end"
     }
@@ -1723,7 +1321,7 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1036-P",
+     "nozzle": "PL-1012-P",
      "NPS": 6,
      "role": "end"
     }
@@ -1903,7 +1501,7 @@
     {
      "party": "unit 17",
      "sends": false,
-     "nozzle": "PL-1002-P",
+     "nozzle": "BL-1714-P",
      "NPS": 3,
      "role": "end"
     }
@@ -1930,7 +1528,7 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1037-P",
+     "nozzle": "PL-1013-P",
      "NPS": 4,
      "role": "end"
     }
@@ -1950,7 +1548,7 @@
     {
      "party": "the product tankage",
      "sends": true,
-     "nozzle": "PL-1038-P",
+     "nozzle": "PL-1014-P",
      "NPS": 6,
      "role": "end"
     },
@@ -1984,7 +1582,7 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1039-P",
+     "nozzle": "PL-1015-P",
      "NPS": 4,
      "role": "end"
     }
@@ -2013,7 +1611,7 @@
     {
      "party": "unit 17",
      "sends": true,
-     "nozzle": "PL-1010-P",
+     "nozzle": "BL-1711-P",
      "NPS": 4,
      "role": "end"
     },
@@ -2047,7 +1645,7 @@
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1040-P",
+     "nozzle": "PL-1016-P",
      "NPS": 6,
      "role": "end"
     }
@@ -2067,7 +1665,7 @@
     {
      "party": "unit 17",
      "sends": true,
-     "nozzle": "PL-1007-P",
+     "nozzle": "BL-1706-P",
      "NPS": 3,
      "role": "end"
     },
@@ -2103,7 +1701,7 @@
     {
      "party": "unit 17",
      "sends": false,
-     "nozzle": "PL-1009-P",
+     "nozzle": "BL-1710-P",
      "NPS": 4,
      "role": "end"
     },
@@ -2130,14 +1728,14 @@
     {
      "party": "unit 17",
      "sends": true,
-     "nozzle": "PL-1015-P",
+     "nozzle": "BL-1704-P",
      "NPS": 3,
      "role": "end"
     },
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1041-P",
+     "nozzle": "PL-1017-P",
      "NPS": 3,
      "role": "end"
     }
@@ -2157,14 +1755,14 @@
     {
      "party": "unit 17",
      "sends": true,
-     "nozzle": "PL-1014-P",
+     "nozzle": "BL-1705-P",
      "NPS": 4,
      "role": "end"
     },
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1042-P",
+     "nozzle": "PL-1018-P",
      "NPS": 3,
      "role": "end"
     }
@@ -2184,7 +1782,7 @@
     {
      "party": "unit 17",
      "sends": true,
-     "nozzle": "PL-1001-P",
+     "nozzle": "BL-1712-P",
      "NPS": 4,
      "role": "end"
     },
@@ -2211,14 +1809,14 @@
     {
      "party": "unit 17",
      "sends": true,
-     "nozzle": "PL-1012-P",
+     "nozzle": "BL-1713-P",
      "NPS": 6,
      "role": "end"
     },
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1043-P",
+     "nozzle": "PL-1019-P",
      "NPS": 6,
      "role": "end"
     }
@@ -2238,14 +1836,14 @@
     {
      "party": "unit 17",
      "sends": true,
-     "nozzle": "PL-1016-P",
+     "nozzle": "BL-1715-P",
      "NPS": 3,
      "role": "end"
     },
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1044-P",
+     "nozzle": "PL-1020-P",
      "NPS": 3,
      "role": "end"
     }
@@ -2265,14 +1863,14 @@
     {
      "party": "unit 17",
      "sends": true,
-     "nozzle": "PL-1013-P",
+     "nozzle": "BL-1716-P",
      "NPS": 3,
      "role": "end"
     },
     {
      "party": "the product tankage",
      "sends": false,
-     "nozzle": "PL-1045-P",
+     "nozzle": "PL-1021-P",
      "NPS": 3,
      "role": "end"
     }
@@ -2299,7 +1897,7 @@
     {
      "party": "the wastewater treatment",
      "sends": false,
-     "nozzle": "PL-1046-P",
+     "nozzle": "PL-1022-P",
      "NPS": 3,
      "role": "end"
     }
@@ -2326,7 +1924,7 @@
     {
      "party": "the fire water tanks",
      "sends": false,
-     "nozzle": "PL-1047-P",
+     "nozzle": "PL-1023-P",
      "NPS": 6,
      "role": "end"
     }
@@ -2353,7 +1951,7 @@
     {
      "party": "the wastewater treatment",
      "sends": false,
-     "nozzle": "PL-1048-P",
+     "nozzle": "PL-1024-P",
      "NPS": 3,
      "role": "end"
     }
@@ -2373,7 +1971,7 @@
     {
      "party": "the site boundary (the intake)",
      "sends": true,
-     "nozzle": "PL-1049-P",
+     "nozzle": "PL-1025-P",
      "NPS": 8,
      "role": "end"
     },
@@ -2400,7 +1998,7 @@
     {
      "party": "the site boundary (the gas main)",
      "sends": true,
-     "nozzle": "PL-1050-P",
+     "nozzle": "PL-1026-P",
      "NPS": 6,
      "role": "end"
     },
@@ -2492,7 +2090,7 @@
      "party": "unit 17's header",
      "unit": 17,
      "sends": true,
-     "nozzle": "PL-1018-P",
+     "nozzle": "BL-1725-P",
      "NPS": 14,
      "spool": 14,
      "branch": "14\"-P150-P-10619"
@@ -2557,7 +2155,7 @@
      "party": "unit 17's header",
      "unit": 17,
      "sends": false,
-     "nozzle": "PL-1017-P",
+     "nozzle": "BL-1719-P",
      "NPS": 8,
      "spool": 8,
      "branch": "8\"-P1200-P-10626"
@@ -2631,7 +2229,7 @@
      "party": "unit 17's header",
      "unit": 17,
      "sends": true,
-     "nozzle": "PL-1022-P",
+     "nozzle": "BL-1722-P",
      "NPS": 10,
      "spool": 10,
      "branch": "10\"-P300-P-10601"
@@ -2705,7 +2303,7 @@
      "party": "unit 17's header",
      "unit": 17,
      "sends": false,
-     "nozzle": "PL-1020-P",
+     "nozzle": "BL-1718-P",
      "NPS": 4,
      "spool": 4,
      "branch": "4\"-P1200-P-10633"
@@ -2862,7 +2460,7 @@
      "party": "unit 17's header",
      "unit": 17,
      "sends": true,
-     "nozzle": "PL-1019-P",
+     "nozzle": "BL-1726-P",
      "NPS": 3,
      "spool": 2,
      "branch": "3\"-P150-P-10643"
@@ -2900,7 +2498,7 @@
      "party": "unit 17's header",
      "unit": 17,
      "sends": false,
-     "nozzle": "PL-1023-P",
+     "nozzle": "BL-1717-P",
      "NPS": 3,
      "spool": 2,
      "branch": "3\"-P150-P-10617"
@@ -2938,7 +2536,7 @@
      "party": "unit 17's header",
      "unit": 17,
      "sends": false,
-     "nozzle": "PL-1021-P",
+     "nozzle": "BL-1720-P",
      "NPS": 3,
      "spool": 3,
      "branch": "3\"-P300-P-10636"
@@ -2976,7 +2574,7 @@
      "party": "unit 17's header",
      "unit": 17,
      "sends": false,
-     "nozzle": "PL-1024-P",
+     "nozzle": "BL-1721-P",
      "NPS": 3,
      "spool": 2,
      "branch": "3\"-P600-P-10618"
@@ -2987,15 +2585,15 @@
  "loads": [
   {
    "tier": 1,
-   "lines": 23,
-   "most": 320,
+   "lines": 25,
+   "most": 333,
    "bay": 20,
    "limit": 1200
   },
   {
    "tier": 2,
-   "lines": 21,
-   "most": 143,
+   "lines": 19,
+   "most": 106,
    "bay": 31,
    "limit": 1200
   },
@@ -3105,7 +2703,7 @@
    "fluid": "OW",
    "fluidName": "oily water",
    "from": "BL-1103-P",
-   "to": "PL-1025-P",
+   "to": "PL-1001-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 110,
@@ -3114,9 +2712,9 @@
    "components": 33,
    "welds": 30,
    "supports": 80,
-   "lengthFt": 825,
+   "lengthFt": 828,
    "tier": 2,
-   "lane": -108
+   "lane": -72
   },
   {
    "no": "3\"-P150-P-10801",
@@ -3124,7 +2722,7 @@
    "stream": "desalter brine",
    "fluid": "OW",
    "fluidName": "oily water",
-   "from": "PL-1025-U",
+   "from": "PL-1001-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P150",
@@ -3143,7 +2741,7 @@
    "fluid": "HG",
    "fluidName": "hydrocarbon gas",
    "from": "BL-1104-P",
-   "to": "PL-1004-P",
+   "to": "BL-1707-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 50,
@@ -3152,27 +2750,9 @@
    "components": 23,
    "welds": 20,
    "supports": 48,
-   "lengthFt": 499,
+   "lengthFt": 497,
    "tier": 2,
-   "lane": -120
-  },
-  {
-   "no": "3\"-P150-P-10802",
-   "origin": "limit",
-   "stream": "crude overhead gas",
-   "fluid": "HG",
-   "fluidName": "hydrocarbon gas",
-   "from": "PL-1004-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P150",
-   "designP": 50,
-   "designT": 150,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "lane": -84
   },
   {
    "no": "6\"-P150-P-10003",
@@ -3180,7 +2760,7 @@
    "stream": "straight-run naphtha",
    "fluid": "NA",
    "fluidName": "naphtha",
-   "from": "PL-1026-P",
+   "from": "PL-1002-P",
    "to": "BL-1301-P",
    "NPS": 6,
    "cls": "P150",
@@ -3219,7 +2799,7 @@
    "fluid": "NA",
    "fluidName": "naphtha",
    "from": "tap 6\"-P150-P-10003",
-   "to": "PL-1027-P",
+   "to": "PL-1003-P",
    "NPS": 6,
    "cls": "P150",
    "designP": 135,
@@ -3231,12 +2811,12 @@
    "lengthFt": 3
   },
   {
-   "no": "6\"-P150-P-10803",
+   "no": "6\"-P150-P-10802",
    "origin": "limit",
    "stream": "straight-run naphtha",
    "fluid": "NA",
    "fluidName": "naphtha",
-   "from": "PL-1026-U",
+   "from": "PL-1002-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -3249,12 +2829,12 @@
    "lengthFt": 1
   },
   {
-   "no": "6\"-P150-P-10804",
+   "no": "6\"-P150-P-10803",
    "origin": "limit",
    "stream": "straight-run naphtha",
    "fluid": "NA",
    "fluidName": "naphtha",
-   "from": "PL-1027-U",
+   "from": "PL-1003-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -3273,18 +2853,18 @@
    "fluid": "SW",
    "fluidName": "sour water",
    "from": "BL-1305-P",
-   "to": "PL-1006-P",
+   "to": "BL-1709-P",
    "NPS": 4,
    "cls": "P150",
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 45,
-   "welds": 42,
+   "components": 41,
+   "welds": 38,
    "supports": 41,
-   "lengthFt": 828,
-   "tier": 2,
-   "lane": 24
+   "lengthFt": 805,
+   "tier": 1,
+   "lane": -150
   },
   {
    "no": "3\"-P150-P-10103",
@@ -3299,10 +2879,10 @@
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 9,
-   "welds": 8,
+   "components": 5,
+   "welds": 4,
    "supports": 3,
-   "lengthFt": 50
+   "lengthFt": 30
   },
   {
    "no": "3\"-P150-P-10104",
@@ -3317,10 +2897,10 @@
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 9,
-   "welds": 8,
-   "supports": 3,
-   "lengthFt": 46
+   "components": 6,
+   "welds": 5,
+   "supports": 4,
+   "lengthFt": 55
   },
   {
    "no": "3\"-P150-P-10105",
@@ -3335,10 +2915,10 @@
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 9,
-   "welds": 8,
-   "supports": 3,
-   "lengthFt": 46
+   "components": 6,
+   "welds": 5,
+   "supports": 4,
+   "lengthFt": 55
   },
   {
    "no": "3\"-P150-P-10106",
@@ -3353,10 +2933,10 @@
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 9,
-   "welds": 8,
+   "components": 5,
+   "welds": 4,
    "supports": 3,
-   "lengthFt": 50
+   "lengthFt": 30
   },
   {
    "no": "4\"-P150-P-10107",
@@ -3373,26 +2953,8 @@
    "routed": true,
    "components": 6,
    "welds": 5,
-   "supports": 3,
-   "lengthFt": 40
-  },
-  {
-   "no": "3\"-P150-P-10805",
-   "origin": "limit",
-   "stream": "sour water",
-   "fluid": "SW",
-   "fluidName": "sour water",
-   "from": "PL-1006-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P150",
-   "designP": 85,
-   "designT": 190,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "supports": 4,
+   "lengthFt": 52
   },
   {
    "no": "4\"-P150-P-10005",
@@ -3421,7 +2983,7 @@
    "fluid": "DI",
    "fluidName": "diesel",
    "from": "BL-1108-P",
-   "to": "PL-1028-P",
+   "to": "PL-1004-P",
    "NPS": 6,
    "cls": "P150",
    "designP": 105,
@@ -3458,7 +3020,7 @@
    "stream": "straight-run diesel",
    "fluid": "DI",
    "fluidName": "diesel",
-   "from": "PL-1029-P",
+   "from": "PL-1005-P",
    "to": "tap 6\"-P150-P-10006",
    "NPS": 6,
    "cls": "P150",
@@ -3471,12 +3033,12 @@
    "lengthFt": 1
   },
   {
-   "no": "6\"-P150-P-10806",
+   "no": "6\"-P150-P-10804",
    "origin": "limit",
    "stream": "straight-run diesel",
    "fluid": "DI",
    "fluidName": "diesel",
-   "from": "PL-1028-U",
+   "from": "PL-1004-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -3489,12 +3051,12 @@
    "lengthFt": 1
   },
   {
-   "no": "6\"-P150-P-10807",
+   "no": "6\"-P150-P-10805",
    "origin": "limit",
    "stream": "straight-run diesel",
    "fluid": "DI",
    "fluidName": "diesel",
-   "from": "PL-1029-U",
+   "from": "PL-1005-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -3513,36 +3075,18 @@
    "fluid": "GO",
    "fluidName": "gas oil",
    "from": "BL-1109-P",
-   "to": "PL-1005-P",
+   "to": "BL-1701-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 125,
    "designT": 430,
    "routed": true,
-   "components": 28,
-   "welds": 25,
-   "supports": 47,
-   "lengthFt": 499,
+   "components": 27,
+   "welds": 24,
+   "supports": 48,
+   "lengthFt": 490,
    "tier": 2,
-   "lane": -132
-  },
-  {
-   "no": "3\"-P150-P-10808",
-   "origin": "limit",
-   "stream": "atmospheric gas oil",
-   "fluid": "GO",
-   "fluidName": "gas oil",
-   "from": "PL-1005-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P150",
-   "designP": 125,
-   "designT": 430,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "lane": -120
   },
   {
    "no": "8\"-P300-P-10008",
@@ -3591,7 +3135,7 @@
    "fluid": "RS",
    "fluidName": "residue",
    "from": "BL-1114-P",
-   "to": "PL-1030-P",
+   "to": "PL-1006-P",
    "NPS": 6,
    "cls": "P150",
    "designP": 135,
@@ -3605,12 +3149,12 @@
    "lane": -72
   },
   {
-   "no": "6\"-P150-P-10809",
+   "no": "6\"-P150-P-10806",
    "origin": "limit",
    "stream": "vacuum residue rundown",
    "fluid": "RS",
    "fluidName": "residue",
-   "from": "PL-1030-U",
+   "from": "PL-1006-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -3628,7 +3172,7 @@
    "stream": "crude",
    "fluid": "CR",
    "fluidName": "crude oil",
-   "from": "PL-1031-P",
+   "from": "PL-1007-P",
    "to": "BL-1101-P",
    "NPS": 16,
    "cls": "P150",
@@ -3643,12 +3187,12 @@
    "lane": -150
   },
   {
-   "no": "12\"-P150-P-10810",
+   "no": "12\"-P150-P-10807",
    "origin": "limit",
    "stream": "crude",
    "fluid": "CR",
    "fluidName": "crude oil",
-   "from": "PL-1031-U",
+   "from": "PL-1007-U",
    "to": "blind",
    "NPS": 12,
    "cls": "P150",
@@ -3673,12 +3217,12 @@
    "designP": 125,
    "designT": 170,
    "routed": true,
-   "components": 40,
-   "welds": 37,
+   "components": 41,
+   "welds": 38,
    "supports": 40,
-   "lengthFt": 790,
+   "lengthFt": 794,
    "tier": 2,
-   "lane": 48
+   "lane": 24
   },
   {
    "no": "4\"-P150-P-10110",
@@ -3696,7 +3240,7 @@
    "components": 14,
    "welds": 13,
    "supports": 2,
-   "lengthFt": 55
+   "lengthFt": 53
   },
   {
    "no": "3\"-P150-P-10111",
@@ -3711,10 +3255,10 @@
    "designP": 125,
    "designT": 170,
    "routed": true,
-   "components": 9,
-   "welds": 8,
+   "components": 10,
+   "welds": 9,
    "supports": 3,
-   "lengthFt": 44
+   "lengthFt": 46
   },
   {
    "no": "3\"-P150-P-10112",
@@ -3732,7 +3276,7 @@
    "components": 9,
    "welds": 8,
    "supports": 3,
-   "lengthFt": 39
+   "lengthFt": 41
   },
   {
    "no": "10\"-P300-P-10013",
@@ -3781,7 +3325,7 @@
    "fluid": "OW",
    "fluidName": "oily water",
    "from": "BL-1920-P",
-   "to": "PL-1032-P",
+   "to": "PL-1008-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 65,
@@ -3790,9 +3334,9 @@
    "components": 40,
    "welds": 37,
    "supports": 97,
-   "lengthFt": 992,
+   "lengthFt": 993,
    "tier": 2,
-   "lane": -42
+   "lane": -24
   },
   {
    "no": "3\"-P150-P-10113",
@@ -3807,10 +3351,10 @@
    "designP": 65,
    "designT": 200,
    "routed": true,
-   "components": 13,
-   "welds": 12,
+   "components": 11,
+   "welds": 10,
    "supports": 2,
-   "lengthFt": 46
+   "lengthFt": 48
   },
   {
    "no": "3\"-P150-P-10114",
@@ -3828,15 +3372,15 @@
    "components": 9,
    "welds": 8,
    "supports": 3,
-   "lengthFt": 53
+   "lengthFt": 52
   },
   {
-   "no": "3\"-P150-P-10811",
+   "no": "3\"-P150-P-10808",
    "origin": "limit",
    "stream": "slop oil",
    "fluid": "OW",
    "fluidName": "oily water",
-   "from": "PL-1032-U",
+   "from": "PL-1008-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P150",
@@ -3855,18 +3399,18 @@
    "fluid": "GO",
    "fluidName": "gas oil",
    "from": "BL-1204-P",
-   "to": "PL-1033-P",
+   "to": "PL-1009-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 105,
    "designT": 200,
    "routed": true,
-   "components": 27,
-   "welds": 24,
-   "supports": 59,
-   "lengthFt": 607,
+   "components": 26,
+   "welds": 23,
+   "supports": 58,
+   "lengthFt": 589,
    "tier": 2,
-   "lane": 108
+   "lane": -108
   },
   {
    "no": "3\"-P150-P-10115",
@@ -3875,16 +3419,16 @@
    "fluid": "GO",
    "fluidName": "gas oil",
    "from": "tap 3\"-P150-P-10016",
-   "to": "PL-1011-P",
+   "to": "BL-1702-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 105,
    "designT": 200,
    "routed": true,
-   "components": 10,
-   "welds": 9,
-   "supports": 4,
-   "lengthFt": 57
+   "components": 11,
+   "welds": 10,
+   "supports": 3,
+   "lengthFt": 41
   },
   {
    "no": "3\"-P150-P-10116",
@@ -3892,7 +3436,7 @@
    "stream": "light vacuum gas oil",
    "fluid": "GO",
    "fluidName": "gas oil",
-   "from": "PL-1034-P",
+   "from": "PL-1010-P",
    "to": "tap 3\"-P150-P-10016",
    "NPS": 3,
    "cls": "P150",
@@ -3905,12 +3449,12 @@
    "lengthFt": 3
   },
   {
-   "no": "3\"-P150-P-10812",
+   "no": "3\"-P150-P-10809",
    "origin": "limit",
    "stream": "light vacuum gas oil",
    "fluid": "GO",
    "fluidName": "gas oil",
-   "from": "PL-1033-U",
+   "from": "PL-1009-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P150",
@@ -3923,30 +3467,12 @@
    "lengthFt": 1
   },
   {
-   "no": "3\"-P150-P-10813",
+   "no": "3\"-P150-P-10810",
    "origin": "limit",
    "stream": "light vacuum gas oil",
    "fluid": "GO",
    "fluidName": "gas oil",
-   "from": "PL-1011-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P150",
-   "designP": 105,
-   "designT": 200,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
-  },
-  {
-   "no": "3\"-P150-P-10814",
-   "origin": "limit",
-   "stream": "light vacuum gas oil",
-   "fluid": "GO",
-   "fluidName": "gas oil",
-   "from": "PL-1034-U",
+   "from": "PL-1010-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P150",
@@ -3965,36 +3491,18 @@
    "fluid": "GO",
    "fluidName": "gas oil",
    "from": "BL-1206-P",
-   "to": "PL-1008-P",
+   "to": "BL-1703-P",
    "NPS": 6,
    "cls": "P150",
    "designP": 125,
    "designT": 450,
    "routed": true,
-   "components": 19,
-   "welds": 16,
+   "components": 21,
+   "welds": 18,
    "supports": 15,
-   "lengthFt": 277,
+   "lengthFt": 278,
    "tier": 1,
    "lane": 0
-  },
-  {
-   "no": "6\"-P150-P-10815",
-   "origin": "limit",
-   "stream": "heavy vacuum gas oil",
-   "fluid": "GO",
-   "fluidName": "gas oil",
-   "from": "PL-1008-U",
-   "to": "blind",
-   "NPS": 6,
-   "cls": "P150",
-   "designP": 125,
-   "designT": 450,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
   },
   {
    "no": "6\"-P150-P-10018",
@@ -4003,7 +3511,7 @@
    "fluid": "HG",
    "fluidName": "hydrocarbon gas",
    "from": "BL-1306-P",
-   "to": "PL-1003-P",
+   "to": "BL-1708-P",
    "NPS": 6,
    "cls": "P150",
    "designP": 50,
@@ -4012,7 +3520,7 @@
    "components": 33,
    "welds": 30,
    "supports": 41,
-   "lengthFt": 808,
+   "lengthFt": 818,
    "tier": 1,
    "lane": 72
   },
@@ -4053,31 +3561,13 @@
    "lengthFt": 37
   },
   {
-   "no": "6\"-P150-P-10816",
-   "origin": "limit",
-   "stream": "stripper gas",
-   "fluid": "HG",
-   "fluidName": "hydrocarbon gas",
-   "from": "PL-1003-U",
-   "to": "blind",
-   "NPS": 6,
-   "cls": "P150",
-   "designP": 50,
-   "designT": 190,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
-  },
-  {
    "no": "3\"-P150-P-10019",
    "origin": "main",
    "stream": "light naphtha",
    "fluid": "NA",
    "fluidName": "naphtha",
    "from": "BL-1307-P",
-   "to": "PL-1035-P",
+   "to": "PL-1011-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 75,
@@ -4091,12 +3581,12 @@
    "lane": 72
   },
   {
-   "no": "3\"-P150-P-10817",
+   "no": "3\"-P150-P-10811",
    "origin": "limit",
    "stream": "light naphtha",
    "fluid": "NA",
    "fluidName": "naphtha",
-   "from": "PL-1035-U",
+   "from": "PL-1011-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P150",
@@ -4135,7 +3625,7 @@
    "fluid": "NA",
    "fluidName": "naphtha",
    "from": "BL-1309-P",
-   "to": "PL-1036-P",
+   "to": "PL-1012-P",
    "NPS": 6,
    "cls": "P150",
    "designP": 75,
@@ -4149,12 +3639,12 @@
    "lane": 18
   },
   {
-   "no": "6\"-P150-P-10818",
+   "no": "6\"-P150-P-10812",
    "origin": "limit",
    "stream": "heavy naphtha to storage",
    "fluid": "NA",
    "fluidName": "naphtha",
-   "from": "PL-1036-U",
+   "from": "PL-1012-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -4181,10 +3671,10 @@
    "routed": true,
    "components": 31,
    "welds": 28,
-   "supports": 57,
-   "lengthFt": 584,
+   "supports": 56,
+   "lengthFt": 590,
    "tier": 2,
-   "lane": 84
+   "lane": 48
   },
   {
    "no": "3\"-P150-P-10119",
@@ -4199,10 +3689,10 @@
    "designP": 105,
    "designT": 170,
    "routed": true,
-   "components": 11,
-   "welds": 10,
-   "supports": 2,
-   "lengthFt": 42
+   "components": 9,
+   "welds": 8,
+   "supports": 3,
+   "lengthFt": 44
   },
   {
    "no": "3\"-P600-P-10023",
@@ -4255,12 +3745,12 @@
    "designP": 545,
    "designT": 160,
    "routed": true,
-   "components": 27,
-   "welds": 24,
-   "supports": 41,
-   "lengthFt": 432,
+   "components": 29,
+   "welds": 26,
+   "supports": 40,
+   "lengthFt": 438,
    "tier": 2,
-   "lane": 108
+   "lane": 84
   },
   {
    "no": "3\"-P150-P-10025",
@@ -4309,36 +3799,18 @@
    "fluid": "LP",
    "fluidName": "liquefied petroleum gas",
    "from": "BL-1407-P",
-   "to": "PL-1002-P",
+   "to": "BL-1714-P",
    "NPS": 3,
    "cls": "P300",
    "designP": 275,
    "designT": 160,
    "routed": true,
-   "components": 38,
-   "welds": 35,
+   "components": 37,
+   "welds": 34,
    "supports": 62,
-   "lengthFt": 649,
+   "lengthFt": 664,
    "tier": 2,
-   "lane": -84
-  },
-  {
-   "no": "3\"-P300-P-10819",
-   "origin": "limit",
-   "stream": "reformer liquefied gas",
-   "fluid": "LP",
-   "fluidName": "liquefied petroleum gas",
-   "from": "PL-1002-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P300",
-   "designP": 275,
-   "designT": 160,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "lane": -36
   },
   {
    "no": "4\"-P150-P-10028",
@@ -4347,7 +3819,7 @@
    "fluid": "RF",
    "fluidName": "reformate",
    "from": "BL-1408-P",
-   "to": "PL-1037-P",
+   "to": "PL-1013-P",
    "NPS": 4,
    "cls": "P150",
    "designP": 75,
@@ -4361,12 +3833,12 @@
    "lane": 12
   },
   {
-   "no": "4\"-P150-P-10820",
+   "no": "4\"-P150-P-10813",
    "origin": "limit",
    "stream": "reformate",
    "fluid": "RF",
    "fluidName": "reformate",
-   "from": "PL-1037-U",
+   "from": "PL-1013-U",
    "to": "blind",
    "NPS": 4,
    "cls": "P150",
@@ -4384,7 +3856,7 @@
    "stream": "heavy naphtha from storage",
    "fluid": "NA",
    "fluidName": "naphtha",
-   "from": "PL-1038-P",
+   "from": "PL-1014-P",
    "to": "BL-1402-P",
    "NPS": 6,
    "cls": "P150",
@@ -4399,12 +3871,12 @@
    "lane": 114
   },
   {
-   "no": "6\"-P150-P-10821",
+   "no": "6\"-P150-P-10814",
    "origin": "limit",
    "stream": "heavy naphtha from storage",
    "fluid": "NA",
    "fluidName": "naphtha",
-   "from": "PL-1038-U",
+   "from": "PL-1014-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -4423,7 +3895,7 @@
    "fluid": "KE",
    "fluidName": "kerosene",
    "from": "BL-1507-P",
-   "to": "PL-1039-P",
+   "to": "PL-1015-P",
    "NPS": 4,
    "cls": "P150",
    "designP": 75,
@@ -4437,12 +3909,12 @@
    "lane": 36
   },
   {
-   "no": "4\"-P150-P-10822",
+   "no": "4\"-P150-P-10815",
    "origin": "limit",
    "stream": "treated kerosene",
    "fluid": "KE",
    "fluidName": "kerosene",
-   "from": "PL-1039-U",
+   "from": "PL-1015-U",
    "to": "blind",
    "NPS": 4,
    "cls": "P150",
@@ -4461,18 +3933,18 @@
    "fluid": "AM",
    "fluidName": "amine solution",
    "from": "BL-1604-P",
-   "to": "PL-1010-P",
+   "to": "BL-1711-P",
    "NPS": 4,
    "cls": "P150",
    "designP": 95,
    "designT": 190,
    "routed": true,
-   "components": 28,
-   "welds": 25,
-   "supports": 15,
-   "lengthFt": 320,
+   "components": 25,
+   "welds": 22,
+   "supports": 16,
+   "lengthFt": 317,
    "tier": 2,
-   "lane": -30
+   "lane": -12
   },
   {
    "no": "4\"-P150-P-10121",
@@ -4487,28 +3959,10 @@
    "designP": 95,
    "designT": 190,
    "routed": true,
-   "components": 6,
-   "welds": 5,
-   "supports": 3,
-   "lengthFt": 51
-  },
-  {
-   "no": "4\"-P150-P-10823",
-   "origin": "limit",
-   "stream": "rich amine",
-   "fluid": "AM",
-   "fluidName": "amine solution",
-   "from": "PL-1010-U",
-   "to": "blind",
-   "NPS": 4,
-   "cls": "P150",
-   "designP": 95,
-   "designT": 190,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "components": 14,
+   "welds": 13,
+   "supports": 2,
+   "lengthFt": 52
   },
   {
    "no": "6\"-P150-P-10032",
@@ -4517,7 +3971,7 @@
    "fluid": "DI",
    "fluidName": "diesel",
    "from": "BL-1610-P",
-   "to": "PL-1040-P",
+   "to": "PL-1016-P",
    "NPS": 6,
    "cls": "P150",
    "designP": 75,
@@ -4531,12 +3985,12 @@
    "lane": 138
   },
   {
-   "no": "6\"-P150-P-10824",
+   "no": "6\"-P150-P-10816",
    "origin": "limit",
    "stream": "treated diesel",
    "fluid": "DI",
    "fluidName": "diesel",
-   "from": "PL-1040-U",
+   "from": "PL-1016-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -4554,37 +4008,19 @@
    "stream": "light cycle oil to hydrotreating",
    "fluid": "DI",
    "fluidName": "diesel",
-   "from": "PL-1007-P",
+   "from": "BL-1706-P",
    "to": "BL-1602-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 105,
    "designT": 190,
    "routed": true,
-   "components": 23,
-   "welds": 20,
+   "components": 19,
+   "welds": 16,
    "supports": 28,
-   "lengthFt": 300,
+   "lengthFt": 305,
    "tier": 2,
-   "lane": 120
-  },
-  {
-   "no": "3\"-P150-P-10825",
-   "origin": "limit",
-   "stream": "light cycle oil to hydrotreating",
-   "fluid": "DI",
-   "fluidName": "diesel",
-   "from": "PL-1007-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P150",
-   "designP": 105,
-   "designT": 190,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "lane": 84
   },
   {
    "no": "6\"-P600-P-10034",
@@ -4593,18 +4029,18 @@
    "fluid": "AM",
    "fluidName": "amine solution",
    "from": "BL-1603-P",
-   "to": "PL-1009-P",
+   "to": "BL-1710-P",
    "NPS": 6,
    "cls": "P600",
    "designP": 330,
    "designT": 170,
-   "routed": true,
-   "components": 26,
-   "welds": 23,
-   "supports": 14,
-   "lengthFt": 316,
-   "tier": 2,
-   "lane": -12
+   "routed": false,
+   "components": 0,
+   "welds": 0,
+   "supports": 0,
+   "lengthFt": 0,
+   "tier": 1,
+   "lane": 90
   },
   {
    "no": "6\"-P600-P-10122",
@@ -4618,29 +4054,11 @@
    "cls": "P600",
    "designP": 330,
    "designT": 170,
-   "routed": true,
-   "components": 9,
-   "welds": 8,
-   "supports": 2,
-   "lengthFt": 48
-  },
-  {
-   "no": "4\"-P600-P-10826",
-   "origin": "limit",
-   "stream": "lean amine",
-   "fluid": "AM",
-   "fluidName": "amine solution",
-   "from": "PL-1009-U",
-   "to": "blind",
-   "NPS": 4,
-   "cls": "P600",
-   "designP": 330,
-   "designT": 170,
-   "routed": true,
-   "components": 4,
+   "routed": false,
+   "components": 0,
    "welds": 0,
    "supports": 0,
-   "lengthFt": 1
+   "lengthFt": 0
   },
   {
    "no": "3\"-P150-P-10035",
@@ -4648,45 +4066,27 @@
    "stream": "slurry oil",
    "fluid": "SL",
    "fluidName": "slurry oil",
-   "from": "PL-1015-P",
-   "to": "PL-1041-P",
+   "from": "BL-1704-P",
+   "to": "PL-1017-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 85,
    "designT": 250,
    "routed": true,
-   "components": 17,
-   "welds": 14,
+   "components": 24,
+   "welds": 21,
    "supports": 37,
-   "lengthFt": 385,
-   "tier": 2,
-   "lane": -132
+   "lengthFt": 389,
+   "tier": 1,
+   "lane": -144
   },
   {
-   "no": "3\"-P150-P-10827",
+   "no": "3\"-P150-P-10817",
    "origin": "limit",
    "stream": "slurry oil",
    "fluid": "SL",
    "fluidName": "slurry oil",
-   "from": "PL-1015-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P150",
-   "designP": 85,
-   "designT": 250,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
-  },
-  {
-   "no": "3\"-P150-P-10828",
-   "origin": "limit",
-   "stream": "slurry oil",
-   "fluid": "SL",
-   "fluidName": "slurry oil",
-   "from": "PL-1041-U",
+   "from": "PL-1017-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P150",
@@ -4704,45 +4104,27 @@
    "stream": "light cycle oil to fuel oil",
    "fluid": "DI",
    "fluidName": "diesel",
-   "from": "PL-1014-P",
-   "to": "PL-1042-P",
+   "from": "BL-1705-P",
+   "to": "PL-1018-P",
    "NPS": 4,
    "cls": "P150",
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 19,
-   "welds": 16,
-   "supports": 20,
-   "lengthFt": 389,
+   "components": 22,
+   "welds": 19,
+   "supports": 18,
+   "lengthFt": 394,
    "tier": 1,
    "lane": -30
   },
   {
-   "no": "4\"-P150-P-10829",
+   "no": "3\"-P150-P-10818",
    "origin": "limit",
    "stream": "light cycle oil to fuel oil",
    "fluid": "DI",
    "fluidName": "diesel",
-   "from": "PL-1014-U",
-   "to": "blind",
-   "NPS": 4,
-   "cls": "P150",
-   "designP": 85,
-   "designT": 190,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
-  },
-  {
-   "no": "3\"-P150-P-10830",
-   "origin": "limit",
-   "stream": "light cycle oil to fuel oil",
-   "fluid": "DI",
-   "fluidName": "diesel",
-   "from": "PL-1042-U",
+   "from": "PL-1018-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P150",
@@ -4760,7 +4142,7 @@
    "stream": "fuel gas",
    "fluid": "FG",
    "fluidName": "fuel gas",
-   "from": "PL-1001-P",
+   "from": "BL-1712-P",
    "to": "BL-1915-P",
    "NPS": 6,
    "cls": "P150",
@@ -4770,27 +4152,9 @@
    "components": 28,
    "welds": 25,
    "supports": 33,
-   "lengthFt": 652,
+   "lengthFt": 656,
    "tier": 1,
    "lane": -114
-  },
-  {
-   "no": "4\"-P150-P-10831",
-   "origin": "limit",
-   "stream": "fuel gas",
-   "fluid": "FG",
-   "fluidName": "fuel gas",
-   "from": "PL-1001-U",
-   "to": "blind",
-   "NPS": 4,
-   "cls": "P150",
-   "designP": 95,
-   "designT": 165,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
   },
   {
    "no": "6\"-P150-P-10038",
@@ -4798,45 +4162,27 @@
    "stream": "cracked gasoline",
    "fluid": "GS",
    "fluidName": "gasoline",
-   "from": "PL-1012-P",
-   "to": "PL-1043-P",
+   "from": "BL-1713-P",
+   "to": "PL-1019-P",
    "NPS": 6,
    "cls": "P150",
    "designP": 75,
    "designT": 150,
    "routed": true,
-   "components": 22,
-   "welds": 19,
+   "components": 24,
+   "welds": 21,
    "supports": 20,
-   "lengthFt": 397,
+   "lengthFt": 400,
    "tier": 1,
    "lane": -6
   },
   {
-   "no": "6\"-P150-P-10832",
+   "no": "6\"-P150-P-10819",
    "origin": "limit",
    "stream": "cracked gasoline",
    "fluid": "GS",
    "fluidName": "gasoline",
-   "from": "PL-1012-U",
-   "to": "blind",
-   "NPS": 6,
-   "cls": "P150",
-   "designP": 75,
-   "designT": 150,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
-  },
-  {
-   "no": "6\"-P150-P-10833",
-   "origin": "limit",
-   "stream": "cracked gasoline",
-   "fluid": "GS",
-   "fluidName": "gasoline",
-   "from": "PL-1043-U",
+   "from": "PL-1019-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -4854,45 +4200,27 @@
    "stream": "three-carbon liquefied gas",
    "fluid": "LP",
    "fluidName": "liquefied petroleum gas",
-   "from": "PL-1016-P",
-   "to": "PL-1044-P",
+   "from": "BL-1715-P",
+   "to": "PL-1020-P",
    "NPS": 3,
    "cls": "P300",
    "designP": 265,
    "designT": 160,
    "routed": true,
-   "components": 17,
-   "welds": 14,
-   "supports": 36,
-   "lengthFt": 382,
+   "components": 19,
+   "welds": 16,
+   "supports": 40,
+   "lengthFt": 428,
    "tier": 2,
-   "lane": -156
+   "lane": 156
   },
   {
-   "no": "3\"-P300-P-10834",
+   "no": "3\"-P300-P-10820",
    "origin": "limit",
    "stream": "three-carbon liquefied gas",
    "fluid": "LP",
    "fluidName": "liquefied petroleum gas",
-   "from": "PL-1016-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P300",
-   "designP": 265,
-   "designT": 160,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
-  },
-  {
-   "no": "3\"-P300-P-10835",
-   "origin": "limit",
-   "stream": "three-carbon liquefied gas",
-   "fluid": "LP",
-   "fluidName": "liquefied petroleum gas",
-   "from": "PL-1044-U",
+   "from": "PL-1020-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P300",
@@ -4910,45 +4238,27 @@
    "stream": "four-carbon liquefied gas",
    "fluid": "LP",
    "fluidName": "liquefied petroleum gas",
-   "from": "PL-1013-P",
-   "to": "PL-1045-P",
+   "from": "BL-1716-P",
+   "to": "PL-1021-P",
    "NPS": 3,
    "cls": "P300",
    "designP": 225,
    "designT": 150,
    "routed": true,
-   "components": 23,
-   "welds": 20,
-   "supports": 37,
-   "lengthFt": 398,
+   "components": 22,
+   "welds": 19,
+   "supports": 40,
+   "lengthFt": 428,
    "tier": 2,
-   "lane": -12
+   "lane": 132
   },
   {
-   "no": "3\"-P300-P-10836",
+   "no": "3\"-P300-P-10821",
    "origin": "limit",
    "stream": "four-carbon liquefied gas",
    "fluid": "LP",
    "fluidName": "liquefied petroleum gas",
-   "from": "PL-1013-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P300",
-   "designP": 225,
-   "designT": 150,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
-  },
-  {
-   "no": "3\"-P300-P-10837",
-   "origin": "limit",
-   "stream": "four-carbon liquefied gas",
-   "fluid": "LP",
-   "fluidName": "liquefied petroleum gas",
-   "from": "PL-1045-U",
+   "from": "PL-1021-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P300",
@@ -4967,26 +4277,26 @@
    "fluid": "OW",
    "fluidName": "oily water",
    "from": "BL-1806-P",
-   "to": "PL-1046-P",
+   "to": "PL-1022-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 55,
    "designT": 170,
    "routed": true,
-   "components": 19,
-   "welds": 16,
-   "supports": 43,
-   "lengthFt": 443,
-   "tier": 1,
-   "lane": -144
+   "components": 22,
+   "welds": 19,
+   "supports": 40,
+   "lengthFt": 428,
+   "tier": 2,
+   "lane": 108
   },
   {
-   "no": "3\"-P150-P-10838",
+   "no": "3\"-P150-P-10822",
    "origin": "limit",
    "stream": "stripped water to wastewater",
    "fluid": "OW",
    "fluidName": "oily water",
-   "from": "PL-1046-U",
+   "from": "PL-1022-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P150",
@@ -5005,7 +4315,7 @@
    "fluid": "RW",
    "fluidName": "raw and service water",
    "from": "BL-1904-P",
-   "to": "PL-1047-P",
+   "to": "PL-1023-P",
    "NPS": 6,
    "cls": "P300",
    "designP": 160,
@@ -5019,12 +4329,12 @@
    "lane": -30
   },
   {
-   "no": "6\"-P300-P-10839",
+   "no": "6\"-P300-P-10823",
    "origin": "limit",
    "stream": "fire water make-up",
    "fluid": "RW",
    "fluidName": "raw and service water",
-   "from": "PL-1047-U",
+   "from": "PL-1023-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P300",
@@ -5043,7 +4353,7 @@
    "fluid": "OW",
    "fluidName": "oily water",
    "from": "BL-1910-P",
-   "to": "PL-1048-P",
+   "to": "PL-1024-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 55,
@@ -5052,17 +4362,17 @@
    "components": 39,
    "welds": 36,
    "supports": 97,
-   "lengthFt": 998,
+   "lengthFt": 1000,
    "tier": 2,
-   "lane": -72
+   "lane": -48
   },
   {
-   "no": "3\"-P150-P-10840",
+   "no": "3\"-P150-P-10824",
    "origin": "limit",
    "stream": "boiler blowdown",
    "fluid": "OW",
    "fluidName": "oily water",
-   "from": "PL-1048-U",
+   "from": "PL-1024-U",
    "to": "blind",
    "NPS": 3,
    "cls": "P150",
@@ -5080,7 +4390,7 @@
    "stream": "raw water",
    "fluid": "RW",
    "fluidName": "raw and service water",
-   "from": "PL-1049-P",
+   "from": "PL-1025-P",
    "to": "BL-1901-P",
    "NPS": 8,
    "cls": "P150",
@@ -5095,12 +4405,12 @@
    "lane": 0
   },
   {
-   "no": "8\"-P150-P-10841",
+   "no": "8\"-P150-P-10825",
    "origin": "limit",
    "stream": "raw water",
    "fluid": "RW",
    "fluidName": "raw and service water",
-   "from": "PL-1049-U",
+   "from": "PL-1025-U",
    "to": "blind",
    "NPS": 8,
    "cls": "P150",
@@ -5118,7 +4428,7 @@
    "stream": "purchased gas",
    "fluid": "FG",
    "fluidName": "fuel gas",
-   "from": "PL-1050-P",
+   "from": "PL-1026-P",
    "to": "BL-1918-P",
    "NPS": 6,
    "cls": "P150",
@@ -5133,12 +4443,12 @@
    "lane": -72
   },
   {
-   "no": "6\"-P150-P-10842",
+   "no": "6\"-P150-P-10826",
    "origin": "limit",
    "stream": "purchased gas",
    "fluid": "FG",
    "fluidName": "fuel gas",
-   "from": "PL-1050-U",
+   "from": "PL-1026-U",
    "to": "blind",
    "NPS": 6,
    "cls": "P150",
@@ -5163,8 +4473,8 @@
    "designP": 80,
    "designT": 370,
    "routed": true,
-   "components": 39,
-   "welds": 38,
+   "components": 38,
+   "welds": 37,
    "supports": 55,
    "lengthFt": 1118,
    "tier": 3,
@@ -5203,8 +4513,8 @@
    "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 36,
-   "welds": 35,
+   "components": 37,
+   "welds": 36,
    "supports": 55,
    "lengthFt": 1118,
    "tier": 3,
@@ -5263,8 +4573,8 @@
    "designP": 55,
    "designT": 280,
    "routed": true,
-   "components": 40,
-   "welds": 39,
+   "components": 39,
+   "welds": 38,
    "supports": 55,
    "lengthFt": 1118,
    "tier": 3,
@@ -5303,8 +4613,8 @@
    "designP": 160,
    "designT": 150,
    "routed": true,
-   "components": 35,
-   "welds": 34,
+   "components": 36,
+   "welds": 35,
    "supports": 55,
    "lengthFt": 1118,
    "tier": 3,
@@ -5336,35 +4646,17 @@
    "stream": "medium-pressure steam",
    "fluid": "MS",
    "fluidName": "steam, 150 psi",
-   "from": "PL-1022-P",
+   "from": "BL-1722-P",
    "to": "tap 10\"-P300-LS-10403",
    "NPS": 10,
    "cls": "P300",
    "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 10,
-   "welds": 9,
+   "components": 16,
+   "welds": 15,
    "supports": 3,
-   "lengthFt": 62
-  },
-  {
-   "no": "10\"-P300-P-10843",
-   "origin": "limit",
-   "stream": "medium-pressure steam",
-   "fluid": "MS",
-   "fluidName": "steam, 150 psi",
-   "from": "PL-1022-U",
-   "to": "blind",
-   "NPS": 10,
-   "cls": "P300",
-   "designP": 185,
-   "designT": 450,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 2
+   "lengthFt": 61
   },
   {
    "no": "8\"-P150-P-10602",
@@ -5381,7 +4673,7 @@
    "routed": true,
    "components": 17,
    "welds": 16,
-   "supports": 2,
+   "supports": 3,
    "lengthFt": 71
   },
   {
@@ -5472,7 +4764,7 @@
    "components": 17,
    "welds": 16,
    "supports": 2,
-   "lengthFt": 64
+   "lengthFt": 66
   },
   {
    "no": "4\"-P150-P-10608",
@@ -5523,10 +4815,10 @@
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 15,
-   "welds": 14,
-   "supports": 3,
-   "lengthFt": 57
+   "components": 17,
+   "welds": 16,
+   "supports": 4,
+   "lengthFt": 56
   },
   {
    "no": "3\"-P150-P-10611",
@@ -5595,8 +4887,8 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 12,
-   "welds": 11,
+   "components": 16,
+   "welds": 15,
    "supports": 4,
    "lengthFt": 55
   },
@@ -5643,34 +4935,16 @@
    "fluid": "IA",
    "fluidName": "instrument air",
    "from": "tap 4\"-P150-IA-10407",
-   "to": "PL-1023-P",
+   "to": "BL-1717-P",
    "NPS": 3,
    "cls": "P150",
    "designP": 130,
    "designT": 150,
    "routed": true,
-   "components": 11,
-   "welds": 10,
-   "supports": 4,
-   "lengthFt": 59
-  },
-  {
-   "no": "2\"-P150-P-10844",
-   "origin": "limit",
-   "stream": "instrument air",
-   "fluid": "IA",
-   "fluidName": "instrument air",
-   "from": "PL-1023-U",
-   "to": "blind",
-   "NPS": 2,
-   "cls": "P150",
-   "designP": 130,
-   "designT": 150,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "components": 19,
+   "welds": 18,
+   "supports": 3,
+   "lengthFt": 66
   },
   {
    "no": "3\"-P600-P-10618",
@@ -5679,34 +4953,16 @@
    "fluid": "CA",
    "fluidName": "caustic solution",
    "from": "tap 3\"-P600-P-10409",
-   "to": "PL-1024-P",
+   "to": "BL-1721-P",
    "NPS": 3,
    "cls": "P600",
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 11,
-   "welds": 10,
-   "supports": 4,
+   "components": 15,
+   "welds": 14,
+   "supports": 3,
    "lengthFt": 59
-  },
-  {
-   "no": "2\"-P600-P-10845",
-   "origin": "limit",
-   "stream": "caustic",
-   "fluid": "CA",
-   "fluidName": "caustic solution",
-   "from": "PL-1024-U",
-   "to": "blind",
-   "NPS": 2,
-   "cls": "P600",
-   "designP": 385,
-   "designT": 150,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
   },
   {
    "no": "14\"-P150-P-10619",
@@ -5714,35 +4970,17 @@
    "stream": "low-pressure steam",
    "fluid": "LS",
    "fluidName": "steam, 50 psi",
-   "from": "PL-1018-P",
+   "from": "BL-1725-P",
    "to": "tap 14\"-P150-P-10401",
    "NPS": 14,
    "cls": "P150",
    "designP": 80,
    "designT": 370,
    "routed": true,
-   "components": 10,
-   "welds": 9,
+   "components": 15,
+   "welds": 14,
    "supports": 2,
-   "lengthFt": 53
-  },
-  {
-   "no": "14\"-P150-P-10846",
-   "origin": "limit",
-   "stream": "low-pressure steam",
-   "fluid": "LS",
-   "fluidName": "steam, 50 psi",
-   "from": "PL-1018-U",
-   "to": "blind",
-   "NPS": 14,
-   "cls": "P150",
-   "designP": 80,
-   "designT": 370,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 2
+   "lengthFt": 63
   },
   {
    "no": "10\"-P1200-P-10620",
@@ -5829,10 +5067,10 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 17,
-   "welds": 16,
+   "components": 13,
+   "welds": 12,
    "supports": 2,
-   "lengthFt": 60
+   "lengthFt": 55
   },
   {
    "no": "8\"-P150-P-10625",
@@ -5859,34 +5097,16 @@
    "fluid": "HS",
    "fluidName": "steam, 600 psi",
    "from": "tap 10\"-P1200-LS-10402",
-   "to": "PL-1017-P",
+   "to": "BL-1719-P",
    "NPS": 8,
    "cls": "P1200",
    "designP": 685,
    "designT": 700,
    "routed": true,
-   "components": 10,
-   "welds": 9,
-   "supports": 3,
-   "lengthFt": 51
-  },
-  {
-   "no": "8\"-P1200-P-10847",
-   "origin": "limit",
-   "stream": "high-pressure steam",
-   "fluid": "HS",
-   "fluidName": "steam, 600 psi",
-   "from": "PL-1017-U",
-   "to": "blind",
-   "NPS": 8,
-   "cls": "P1200",
-   "designP": 685,
-   "designT": 700,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 2
+   "components": 17,
+   "welds": 16,
+   "supports": 2,
+   "lengthFt": 49
   },
   {
    "no": "6\"-P150-P-10627",
@@ -5901,10 +5121,10 @@
    "designP": 80,
    "designT": 370,
    "routed": true,
-   "components": 18,
-   "welds": 17,
+   "components": 14,
+   "welds": 13,
    "supports": 2,
-   "lengthFt": 62
+   "lengthFt": 58
   },
   {
    "no": "4\"-P300-P-10628",
@@ -5937,10 +5157,10 @@
    "designP": 55,
    "designT": 280,
    "routed": true,
-   "components": 13,
-   "welds": 12,
+   "components": 17,
+   "welds": 16,
    "supports": 2,
-   "lengthFt": 48
+   "lengthFt": 51
   },
   {
    "no": "4\"-P300-P-10630",
@@ -6003,34 +5223,16 @@
    "fluid": "BW",
    "fluidName": "boiler feed water",
    "from": "tap 8\"-P1200-SC-10404",
-   "to": "PL-1020-P",
+   "to": "BL-1718-P",
    "NPS": 4,
    "cls": "P1200",
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 17,
-   "welds": 16,
-   "supports": 3,
-   "lengthFt": 54
-  },
-  {
-   "no": "4\"-P1200-P-10848",
-   "origin": "limit",
-   "stream": "boiler feed water",
-   "fluid": "BW",
-   "fluidName": "boiler feed water",
-   "from": "PL-1020-U",
-   "to": "blind",
-   "NPS": 4,
-   "cls": "P1200",
-   "designP": 1035,
-   "designT": 300,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "components": 16,
+   "welds": 15,
+   "supports": 2,
+   "lengthFt": 47
   },
   {
    "no": "3\"-P150-P-10634",
@@ -6075,34 +5277,16 @@
    "fluid": "RW",
    "fluidName": "raw and service water",
    "from": "tap 4\"-P300-W-10408",
-   "to": "PL-1021-P",
+   "to": "BL-1720-P",
    "NPS": 3,
    "cls": "P300",
    "designP": 160,
    "designT": 150,
    "routed": true,
-   "components": 10,
-   "welds": 9,
+   "components": 16,
+   "welds": 15,
    "supports": 3,
-   "lengthFt": 48
-  },
-  {
-   "no": "3\"-P300-P-10849",
-   "origin": "limit",
-   "stream": "service water",
-   "fluid": "RW",
-   "fluidName": "raw and service water",
-   "from": "PL-1021-U",
-   "to": "blind",
-   "NPS": 3,
-   "cls": "P300",
-   "designP": 160,
-   "designT": 150,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "lengthFt": 56
   },
   {
    "no": "3\"-P150-P-10637",
@@ -6218,7 +5402,7 @@
    "stream": "condensate",
    "fluid": "CO",
    "fluidName": "steam condensate",
-   "from": "PL-1019-P",
+   "from": "BL-1726-P",
    "to": "tap 4\"-P150-SC-10406",
    "NPS": 3,
    "cls": "P150",
@@ -6228,50 +5412,32 @@
    "components": 16,
    "welds": 15,
    "supports": 2,
-   "lengthFt": 51
-  },
-  {
-   "no": "2\"-P150-P-10850",
-   "origin": "limit",
-   "stream": "condensate",
-   "fluid": "CO",
-   "fluidName": "steam condensate",
-   "from": "PL-1019-U",
-   "to": "blind",
-   "NPS": 2,
-   "cls": "P150",
-   "designP": 55,
-   "designT": 280,
-   "routed": true,
-   "components": 4,
-   "welds": 0,
-   "supports": 0,
-   "lengthFt": 1
+   "lengthFt": 44
   }
  ],
  "counts": {
   "components": {
-   "blind": 50,
+   "blind": 26,
    "cap": 18,
-   "elbow": 453,
-   "flange": 155,
-   "gasket": 255,
+   "elbow": 463,
+   "flange": 152,
+   "gasket": 204,
    "olet": 21,
    "pipe": 1447,
-   "reducer": 24,
-   "tee": 44,
-   "valve": 50
+   "reducer": 22,
+   "tee": 43,
+   "valve": 26
   },
   "welds": {
-   "BW, field": 277,
-   "BW, shop": 1810,
+   "BW, field": 269,
+   "BW, shop": 1823,
    "FW, shop": 21
   },
   "supports": {
-   "anchor": 54,
-   "guide": 209,
-   "hanger": 226,
-   "shoe": 1939,
+   "anchor": 53,
+   "guide": 205,
+   "hanger": 221,
+   "shoe": 1934,
    "stanchion": 1,
    "trapeze": 2
   }
@@ -6280,15 +5446,15 @@
   "Carried on from the headers' caps with the pipeways of the areas beyond the bench, not from the main rack (SW-PWY-11): medium-pressure steam: the flare; low-pressure steam: the product tankage; condensate: the product tankage; fuel gas to users: the flare; service water: the flare.",
   "Not on the main pipeway, though their streams are: slop oil: the marine terminal; slop oil: the truck loading; slop oil: the wastewater treatment; slop oil: the flare. What an area beyond the bench sends to another such area, or takes from one, runs on those areas' own pipeways (SW-PWY-3).",
   "3\"-P150-P-10001: no valve at BL-1103-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10001: no valve at PL-1025-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10001: no valve at PL-1001-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10002: no valve at BL-1104-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10002: no valve at PL-1004-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "6\"-P150-P-10003: no valve at PL-1026-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "3\"-P150-P-10002: no valve at BL-1707-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "6\"-P150-P-10003: no valve at PL-1002-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "6\"-P150-P-10003: no valve at BL-1301-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "6\"-P150-P-10101: no valve at BL-1105-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P150-P-10102: no valve at PL-1027-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "6\"-P150-P-10102: no valve at PL-1003-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "4\"-P150-P-10004: no valve at BL-1305-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "4\"-P150-P-10004: no valve at PL-1006-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "4\"-P150-P-10004: no valve at BL-1709-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10103: no valve at BL-1106-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10104: no valve at BL-1504-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10105: no valve at BL-1607-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
@@ -6297,18 +5463,18 @@
   "4\"-P150-P-10005: no valve at BL-1107-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "4\"-P150-P-10005: no valve at BL-1501-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "6\"-P150-P-10006: no valve at BL-1108-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P150-P-10006: no valve at PL-1028-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "6\"-P150-P-10006: no valve at PL-1004-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "6\"-P150-P-10108: no valve at BL-1601-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P150-P-10109: no valve at PL-1029-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "6\"-P150-P-10109: no valve at PL-1005-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "3\"-P150-P-10007: no valve at BL-1109-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10007: no valve at PL-1005-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10007: no valve at BL-1701-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "8\"-P300-P-10008: no valve at BL-1110-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
   "8\"-P300-P-10008: no valve at BL-1201-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
   "8\"-P300-P-10009: no valve at BL-1112-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
   "8\"-P300-P-10009: no valve at BL-1207-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
   "6\"-P150-P-10010: no valve at BL-1114-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P150-P-10010: no valve at PL-1030-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "16\"-P150-P-10011: no valve at PL-1031-P; GATE 12 and what stood with it left out, 3 pieces, the pipe 22.6 in longer (SW-RPI-14)",
+  "6\"-P150-P-10010: no valve at PL-1006-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "16\"-P150-P-10011: no valve at PL-1007-P; GATE 12 and what stood with it left out, 3 pieces, the pipe 22.6 in longer (SW-RPI-14)",
   "16\"-P150-P-10011: no valve at BL-1101-P; GATE 16 and what stood with it left out, 3 pieces, the pipe 25.9 in longer (SW-RPI-14)",
   "4\"-P150-P-10012: no valve at BL-1805-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "4\"-P150-P-10012: no valve at BL-1304-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
@@ -6320,25 +5486,25 @@
   "6\"-P600-P-10014: no valve at BL-1208-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "6\"-P600-P-10014: no valve at BL-1113-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "3\"-P150-P-10015: no valve at BL-1920-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10015: no valve at PL-1032-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10015: no valve at PL-1008-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10113: no valve at BL-1202-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10114: no valve at BL-1804-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10016: no valve at BL-1204-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10016: no valve at PL-1033-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10115: no valve at PL-1011-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10116: no valve at PL-1034-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10016: no valve at PL-1009-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10115: no valve at BL-1702-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10116: no valve at PL-1010-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "6\"-P150-P-10017: no valve at BL-1206-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P150-P-10017: no valve at PL-1008-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "6\"-P150-P-10017: no valve at BL-1703-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "6\"-P150-P-10018: no valve at BL-1306-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "6\"-P150-P-10018: no valve at PL-1003-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "6\"-P150-P-10018: no valve at BL-1708-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "3\"-P150-P-10117: no valve at BL-1505-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10118: no valve at BL-1608-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10019: no valve at BL-1307-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10019: no valve at PL-1035-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10019: no valve at PL-1011-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "6\"-P150-P-10020: no valve at BL-1308-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "6\"-P150-P-10020: no valve at BL-1401-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "6\"-P150-P-10021: no valve at BL-1309-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P150-P-10021: no valve at PL-1036-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "6\"-P150-P-10021: no valve at PL-1012-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "3\"-P150-P-10022: no valve at BL-1609-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10022: no valve at BL-1302-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10119: no valve at BL-1506-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
@@ -6352,46 +5518,43 @@
   "3\"-P150-P-10026: no valve at BL-1406-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10026: no valve at BL-1917-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P300-P-10027: no valve at BL-1407-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P300-P-10027: no valve at PL-1002-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P300-P-10027: no valve at BL-1714-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "4\"-P150-P-10028: no valve at BL-1408-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
-  "4\"-P150-P-10028: no valve at PL-1037-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
-  "6\"-P150-P-10029: no valve at PL-1038-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "4\"-P150-P-10028: no valve at PL-1013-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
+  "6\"-P150-P-10029: no valve at PL-1014-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "6\"-P150-P-10029: no valve at BL-1402-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "4\"-P150-P-10030: no valve at BL-1507-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
-  "4\"-P150-P-10030: no valve at PL-1039-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
+  "4\"-P150-P-10030: no valve at PL-1015-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "4\"-P150-P-10031: no valve at BL-1604-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "4\"-P150-P-10031: no valve at PL-1010-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
+  "4\"-P150-P-10031: no valve at BL-1711-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "4\"-P150-P-10121: no valve at BL-1801-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "6\"-P150-P-10032: no valve at BL-1610-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P150-P-10032: no valve at PL-1040-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "3\"-P150-P-10033: no valve at PL-1007-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "6\"-P150-P-10032: no valve at PL-1016-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "3\"-P150-P-10033: no valve at BL-1706-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10033: no valve at BL-1602-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "6\"-P600-P-10034: no valve at BL-1603-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
-  "6\"-P600-P-10034: no valve at PL-1009-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
-  "6\"-P600-P-10122: no valve at BL-1802-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "3\"-P150-P-10035: no valve at PL-1015-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10035: no valve at PL-1041-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "4\"-P150-P-10036: no valve at PL-1014-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
-  "4\"-P150-P-10036: no valve at PL-1042-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "6\"-P150-P-10037: no valve at PL-1001-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
+  "3\"-P150-P-10035: no valve at BL-1704-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10035: no valve at PL-1017-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "4\"-P150-P-10036: no valve at BL-1705-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
+  "4\"-P150-P-10036: no valve at PL-1018-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "6\"-P150-P-10037: no valve at BL-1712-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "6\"-P150-P-10037: no valve at BL-1915-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P150-P-10038: no valve at PL-1012-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P150-P-10038: no valve at PL-1043-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "3\"-P300-P-10039: no valve at PL-1016-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P300-P-10039: no valve at PL-1044-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P300-P-10040: no valve at PL-1013-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P300-P-10040: no valve at PL-1045-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "6\"-P150-P-10038: no valve at BL-1713-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "6\"-P150-P-10038: no valve at PL-1019-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "3\"-P300-P-10039: no valve at BL-1715-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P300-P-10039: no valve at PL-1020-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P300-P-10040: no valve at BL-1716-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P300-P-10040: no valve at PL-1021-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10041: no valve at BL-1806-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10041: no valve at PL-1046-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10041: no valve at PL-1022-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "6\"-P300-P-10042: no valve at BL-1904-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "6\"-P300-P-10042: no valve at PL-1047-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "6\"-P300-P-10042: no valve at PL-1023-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "3\"-P150-P-10043: no valve at BL-1910-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P150-P-10043: no valve at PL-1048-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "8\"-P150-P-10044: no valve at PL-1049-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
+  "3\"-P150-P-10043: no valve at PL-1024-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "8\"-P150-P-10044: no valve at PL-1025-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
   "8\"-P150-P-10044: no valve at BL-1901-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
-  "6\"-P150-P-10045: no valve at PL-1050-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
+  "6\"-P150-P-10045: no valve at PL-1026-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "6\"-P150-P-10045: no valve at BL-1918-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
-  "10\"-P300-P-10601: no valve at PL-1022-P; GATE 10 and what stood with it left out, 3 pieces, the pipe 20.0 in longer (SW-RPI-14)",
+  "10\"-P300-P-10601: no valve at BL-1722-P; GATE 10 and what stood with it left out, 3 pieces, the pipe 20.0 in longer (SW-RPI-14)",
   "8\"-P150-P-10602: no valve at BL-1919-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
   "8\"-P300-P-10603: no valve at BL-1908-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
   "8\"-P1200-P-10604: no valve at BL-1409-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.8 in longer (SW-RPI-14)",
@@ -6407,46 +5570,45 @@
   "3\"-P1200-P-10614: no valve at BL-1414-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 11.4 in longer (SW-RPI-14)",
   "3\"-P150-P-10615: no valve at BL-1413-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
   "3\"-P1200-P-10616: no valve at BL-1811-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 11.4 in longer (SW-RPI-14)",
-  "3\"-P150-P-10617: no valve at PL-1023-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
-  "3\"-P600-P-10618: no valve at PL-1024-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
-  "14\"-P150-P-10619: no valve at PL-1018-P; GATE 14 and what stood with it left out, 3 pieces, the pipe 24.6 in longer (SW-RPI-14)",
+  "3\"-P150-P-10617: no valve at BL-1717-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
+  "3\"-P600-P-10618: no valve at BL-1721-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
+  "14\"-P150-P-10619: no valve at BL-1725-P; GATE 14 and what stood with it left out, 3 pieces, the pipe 24.6 in longer (SW-RPI-14)",
   "10\"-P1200-P-10620: no valve at BL-1907-P; GATE 10 and what stood with it left out, 3 pieces, the pipe 21.6 in longer (SW-RPI-14)",
   "10\"-P150-P-10621: no valve at BL-1921-P; GATE 10 and what stood with it left out, 3 pieces, the pipe 20.0 in longer (SW-RPI-14)",
   "10\"-P150-P-10622: no valve at BL-1410-P; GATE 10 and what stood with it left out, 3 pieces, the pipe 20.0 in longer (SW-RPI-14)",
   "10\"-P150-P-10623: no valve at BL-1807-P; GATE 10 and what stood with it left out, 3 pieces, the pipe 20.0 in longer (SW-RPI-14)",
   "8\"-P1200-P-10624: no valve at BL-1906-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.8 in longer (SW-RPI-14)",
   "8\"-P150-P-10625: no valve at BL-1118-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
-  "8\"-P1200-P-10626: no valve at PL-1017-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.8 in longer (SW-RPI-14)",
+  "8\"-P1200-P-10626: no valve at BL-1719-P; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.8 in longer (SW-RPI-14)",
   "6\"-P150-P-10627: no valve at BL-1909-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "4\"-P300-P-10628: no valve at BL-1314-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "4\"-P150-P-10629: no valve at BL-1905-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "4\"-P300-P-10630: no valve at BL-1902-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "4\"-P300-P-10631: no valve at BL-1613-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
   "4\"-P150-P-10632: no valve at BL-1213-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
-  "4\"-P1200-P-10633: no valve at PL-1020-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.3 in longer (SW-RPI-14)",
+  "4\"-P1200-P-10633: no valve at BL-1718-P; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.3 in longer (SW-RPI-14)",
   "3\"-P150-P-10634: no valve at BL-1415-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P300-P-10635: no valve at BL-1510-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
-  "3\"-P300-P-10636: no valve at PL-1021-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
+  "3\"-P300-P-10636: no valve at BL-1720-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10637: no valve at BL-1315-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
   "3\"-P1200-P-10638: no valve at BL-1117-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 11.4 in longer (SW-RPI-14)",
   "3\"-P150-P-10639: no valve at BL-1511-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
   "3\"-P150-P-10640: no valve at BL-1614-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
   "3\"-P1200-P-10641: no valve at BL-1212-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 11.4 in longer (SW-RPI-14)",
   "3\"-P150-P-10642: no valve at BL-1813-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
-  "3\"-P150-P-10643: no valve at PL-1019-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
-  "3\"-P150-P-10001/p34 (40.4 ft, far end 13843,318,-108): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P150-P-10007/p13 (40.2 ft, far end 5776,318,-132): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10643: no valve at BL-1726-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
+  "3\"-P150-P-10001/p34 (40.4 ft, far end 13843,318,-72): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "16\"-P150-P-10011/p8 (41.3 ft, far end 13336,408,-150): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P150-P-10015/p41 (40.5 ft, far end 13843,318,-42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10015/p41 (40.5 ft, far end 13843,318,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "3\"-P150-P-10019/p43 (40.9 ft, far end 13843,318,72): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "6\"-P150-P-10021/p22 (40.1 ft, far end 4577,252,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P300-P-10027/p25 (40.1 ft, far end 6619,318,-84): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "4\"-P150-P-10028/p37 (41.0 ft, far end 13842,318,12): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "6\"-P150-P-10029/p7 (41.0 ft, far end 13352,252,114): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "6\"-P150-P-10038/p23 (40.5 ft, far end 13844,252,-6): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P300-P-10040/p24 (40.1 ft, far end 13843,318,-12): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P150-P-10043/p40 (40.9 ft, far end 13843,318,-72): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "14\"-P150-P-10401/p37 (40.3 ft, far end 13668,408,0): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10035/p25 (40.4 ft, far end 13843,246,-144): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "6\"-P150-P-10038/p25 (40.4 ft, far end 13844,252,-6): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p40 (40.9 ft, far end 13843,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "10\"-P300-LS-10403/p32 (40.2 ft, far end 12739,408,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "10\"-P300-LS-10403/p34 (40.2 ft, far end 13668,408,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "8\"-P1200-SC-10404/p26 (40.1 ft, far end 11297,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "8\"-P1200-SC-10404/p27 (40.1 ft, far end 11778,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "8\"-P1200-SC-10404/p28 (40.1 ft, far end 12260,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
@@ -6455,21 +5617,18 @@
   "8\"-P150-P-10405/p28 (40.0 ft, far end 12257,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "8\"-P150-P-10405/p29 (40.0 ft, far end 12737,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "8\"-P150-P-10405/p31 (40.5 ft, far end 13668,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "4\"-P150-SC-10406/p35 (40.2 ft, far end 12739,402,-42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "4\"-P150-SC-10406/p37 (40.2 ft, far end 13668,402,-42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "4\"-P300-W-10408/p8 (40.4 ft, far end 2900,402,-54): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "4\"-P300-W-10408/p11 (40.4 ft, far end 4305,402,-54): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "119 shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).",
-  "1 post set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 11 hangers set where the generator's stepping along a run had stopped for want of that steel: 3\"-P1200-P-10641 1 post; 3\"-P150-P-10613 3 hangers; 3\"-P150-P-10615 3 hangers; 4\"-P150-P-10031 1 hanger; 3\"-P150-P-10643 1 hanger; 3\"-P150-P-10041 3 hangers (SW-PWY-8).",
-  "4\"-P150-P-10110/el7 (elbow) passes rack-bent:120/beam/unit-11 at 2.91 in from the round the check holds that member by and 6.40 in from its section (SW-RPI-13)",
+  "4\"-P300-W-10408/p8 (40.1 ft, far end 2896,402,-54): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "4\"-P300-W-10408/p10 (40.1 ft, far end 3822,402,-54): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "4\"-P300-W-10408/p31 (40.0 ft, far end 13218,402,-54): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "113 shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).",
+  "1 post set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 6 hangers set where the generator's stepping along a run had stopped for want of that steel: 3\"-P1200-P-10641 1 post; 3\"-P150-P-10613 3 hangers; 3\"-P150-P-10615 3 hangers (SW-PWY-8).",
   "4\"-P150-P-10110/p8 (pipe) passes rack-bent:120/beam/unit-11 at 0.30 in from the round the check holds that member by and 6.40 in from its section (SW-RPI-13)",
-  "3\"-P150-P-10111/p5 (pipe) passes rack-bent:120/beam/unit-15 at 1.87 in from the round the check holds that member by and 7.30 in from its section (SW-RPI-13)",
-  "3\"-P150-P-10115/p6 (pipe) passes rack-bent:120/beam/unit-17 at 0.80 in from the round the check holds that member by and 6.90 in from its section (SW-RPI-13)",
+  "3\"-P150-P-10111/p6 (pipe) passes rack-bent:120/beam/unit-15 at 1.87 in from the round the check holds that member by and 7.30 in from its section (SW-RPI-13)",
+  "3\"-P150-P-10115/p5 (pipe) passes rack-bent:120/beam/unit-17 at 0.80 in from the round the check holds that member by and 6.90 in from its section (SW-RPI-13)",
   "6\"-P150-P-10018/A7 (reducer) passes rack-bent:120/beam/unit-13 at 2.86 in from the round the check holds that member by and 3.02 in from its section (SW-RPI-13)",
   "6\"-P150-P-10018/p8 (pipe) passes rack-bent:120/beam/unit-13 at 2.38 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
-  "6\"-P600-P-10034/p8 (pipe) passes rack-bent:120/beam/unit-16 at 2.38 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
-  "6\"-P600-P-10034/p27 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
+  "4\"-P150-P-10121/p8 (pipe) passes rack-bent:120/beam/unit-18 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)",
   "6\"-P150-P-10037/p8 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
-  "4\"-P150-P-10629/p9 (pipe) passes rack-bent:120/beam/unit-19 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)"
+  "4\"-P150-P-10629/p11 (pipe) passes rack-bent:120/beam/unit-19 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)"
  ]
 }

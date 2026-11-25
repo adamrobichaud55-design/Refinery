@@ -50,7 +50,7 @@ export interface UnitPiping {
   /** SW-RPI-7: the rack tiers in use, lowest first (indices into the rack's tiers) */
   tiers: number[];
   /** SW-RPI-7: the runs of the generator, in order; the run each line is routed in; and the plant as a run is given it, with the solids of the runs before (`whole`: on the unit's whole grid) */
-  runs: UnitRun[]; runOf: Map<string, number>; runPlant: (run: number, prior: Placed[], whole?: boolean) => PlantDef;
+  runs: UnitRun[]; runOf: Map<string, number>; runPlant: (run: number, prior: Placed[], whole?: boolean | 'close') => PlantDef;
   /** the lanes on each tier: the headers', each rack line's, each root spool's */
   foreseen: RackLane[];
 }
@@ -436,7 +436,7 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
   const headers = unitHeaders(unit, tag => bodies(tag).length > 0).map((h, k) => ({   // a connection of an item on another plot is that plot's
     ...h, no: lineNumber(unit, 401 + k, h.NPS, h.cls, h.fluid),
     // the lane a header takes is as wide as the largest flange on its valved take-offs, with 3 in each side for the valves' bodies (SW-RT-2, SW-RK-7)
-    width: Math.max(pipeDims(h.NPS, h.cls).OD, ...h.utils.map(i => { const c = connection(Z.utils[i]); return designFlange(c.NPS, c.cls).OD + 6; })), z: undefined as number | undefined,
+    width: Math.max(pipeDims(h.NPS, h.cls).OD, ...h.utils.filter(i => !(Z.utils[i].NPS > 12 && ['CWS', 'CWR', 'W'].includes(FLUIDS[Z.utils[i].fluid].svc))).map(i => { const c = connection(Z.utils[i]); return designFlange(c.NPS, c.cls).OD + 6; })), z: undefined as number | undefined,   // (a water connection over 12 in has no valve at its take-off, SW-RPI-3, and the generator widens a header's lane for valved take-offs only)
   }));
   // SW-PRC-19, SW-RPI-9: a utility connection with a control station is divided at a station spool as a process line is: the part on the header's side is of the header's class and
   // conditions, the part on the item's side of the item's own. These stations are set after the process lines', in the places those leave
@@ -476,7 +476,11 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
       // measuring from where the pieces on that face end, would not (between 20 ft and 20 ft and the outlet's length short of the connection)
       const on = st.after.def.to, dest = on.k === 'nozzle' && !/^(BL|RS|CS)-/.test(on.id) ? nozzles.get(on.id) : undefined, climbs = !!dest && dest.face[1] > RACK.tiers[0];
       const between = (x: number) => climbs && Math.sign(xd - x) === -dirA && Math.abs(x - xd) > 240 && Math.abs(x - xd) <= 240 + LB + 12;
-      const free = (x: number, z: number) => x >= lo && x <= hi && !between(x) && set.every(q => q.x1 + 12 <= x - left || q.x0 - 12 >= x + right || Math.abs(q.z - z) >= q.w + wide + 3) && braced.every(b => b + RACK.bent + 12 <= x - left || b - 12 >= x + right);
+      // and one whose line comes down to it from a connection above the lowest tier: not where the generator, measuring from the end of the station that stands on its near face, would send
+      // that line free (within 20 ft) while its drop is long: there it stands either under that connection's own station or beyond the stretch
+      const src = d.from.k === 'nozzle' && !/^(BL|RS|CS)-/.test(d.from.id) ? nozzles.get(d.from.id) : undefined, falls = !!src && src.face[1] > RACK.tiers[RACK.tiers.length - 1] + 108 && lines.some(l => l.def.service === 'V' && [l.def.from, l.def.to].some(e => { const q = e.k === 'nozzle' ? nozzles.get(e.id) : undefined; return !!q && q.equip === src.equip && q.u[1] === 0; }));   // (a vessel whose chase a line routed free crosses: the ways down before it are few)
+      const short = (x: number) => falls && Math.abs(x - xs) > 60 && Math.abs((x + dirA * LA) - xs) <= 240 + 12 && Math.abs(x - xs) > 0;
+      const free = (x: number, z: number) => x >= lo && x <= hi && !between(x) && !short(x) && set.every(q => q.x1 + 12 <= x - left || q.x0 - 12 >= x + right || Math.abs(q.z - z) >= q.w + wide + 3) && braced.every(b => b + RACK.bent + 12 <= x - left || b - 12 >= x + right);
       // on the destination's side wherever a place is free there within 20 ft along the rack of the nearest; failing that the nearest place on any file. Of two places the nearer comes first
       const seek = (zs: number[], steps: number) => { for (let k = 0; k <= steps && !at; k++) for (const x of k ? [near(xd) - 30 * k, near(xd) + 30 * k] : [Math.min(hi, Math.max(lo, near(xd)))]) for (const z of zs) if (!at && free(x, z)) at = [x, 36, z]; };
       seek(own, 8); seek(usable, 160);
@@ -855,7 +859,7 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     fill({ x0: cell.rack.x0 + 6, x1: cell.rack.x1 - 6, z0: -HW, z1: HW }, RACK.tiers[L.t] + 4, RACK.tiers[L.t] + 4 + widest(L.t), [{ x0: cell.rack.x0, x1: cell.rack.x1, z0: L.z - slot, z1: L.z + slot }, ...open], out);
     return out;
   };
-  const runPlant = (k: number, prior: Placed[], whole = false): PlantDef => {
+  const runPlant = (k: number, prior: Placed[], whole: boolean | 'close' = false): PlantDef => {
     const run = runs[k], rest = run.kind === 'rest', mine = new Set(run.lines);
     const held = [...lines.filter(l => runOf.get(l.def.no)! > k).flatMap(l => [[l.def.from, false] as const, [l.def.to, true] as const].filter(([e]) => e.k === 'nozzle').flatMap(([e, dest]) => reserve(l, (e as Extract<EndRef, { k: 'nozzle' }>).id, dest))),
       ...feeds.filter(f => runOf.get(f.stub.no)! > k).flatMap(f => reserve({ def: f.stub } as UnitLine, `${f.tag}-U`, false))];
@@ -874,12 +878,23 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     // in the last run the headers are laid without a look at what is there, and their end caps are not held on the generator's grid: a block about each cap keeps the
     // lines of that run, which pass the rack's two ends on the top tier, clear of it (SW-RPI-12)
     const caps = !rest ? [] : headers.filter(h => h.z !== undefined).flatMap(h => { const y = tierY(top, h.NPS, h.cls), q = pipeDims(h.NPS, h.cls).OD / 2 + 3; return [block([cell.rack.x0 + 3, y - q, h.z! - q], [cell.rack.x0 + 12, y + q, h.z! + q], 'header cap'), block([cell.rack.x1 - 12, y - q, h.z! - q], [cell.rack.x1 - 3, y + q, h.z! + q], 'header cap')]; });
-    const inst = [...shown.instances, ...held, ...ways, ...lanesHeld, ...pieces, ...lanesKept, ...gates, ...caps, ...prior];
+    // SW-RPI-3: while a line routed free is laid, the way down before each side connection of a vertical vessel that a later line will leave by is held for that line: from where its valves end, 6 ft
+    // further out, a pipe and 1 ft wide, from 9 ft over the top tier up to the connection (the fractionator's 24 in overhead otherwise comes down the middle of its chase, before all its side connections)
+    const drops = run.kind !== 'overhead' ? [] : lines.filter(l => runOf.get(l.def.no)! > k && l.def.service !== 'V').flatMap(l => [l.def.from, l.def.to].flatMap(e => {
+      if (e.k !== 'nozzle') return []; const q = nozzles.get(e.id)!, sp = cell.spots.find(s => s.tag === q.equip); if (!sp || sp.shape !== 'vv' || q.u[1] !== 0 || q.face[1] <= RACK.tiers[top] + 108) return [];
+      const w = pipeDims(q.NPS, q.cls).OD / 2 + 6, s0 = gateFaceToFace(q.NPS, q.cls) + 2 * q.NPS + 24, a: V3 = [q.face[0] + q.u[0] * s0, 0, q.face[2] + q.u[2] * s0], b: V3 = [a[0] + q.u[0] * 72, 0, a[2] + q.u[2] * 72];
+      // (from above the valve a line routed free has on a side connection of the same vessel, whose stem must have its room)
+      const low = Math.max(RACK.tiers[top] + 108, ...lines.filter(v => v.def.service === 'V').flatMap(v => [v.def.from, v.def.to]).flatMap(en => { const n = en.k === 'nozzle' ? nozzles.get(en.id) : undefined; return n && n.equip === q.equip && n.u[1] === 0 ? [n.face[1] + gateReach(n.NPS) + 12] : []; }));
+      if (q.face[1] + w <= low) return [];
+      return [block([Math.min(a[0], b[0]) - (q.u[0] ? 0 : w), low, Math.min(a[2], b[2]) - (q.u[2] ? 0 : w)], [Math.max(a[0], b[0]) + (q.u[0] ? 0 : w), q.face[1] + w, Math.max(a[2], b[2]) + (q.u[2] ? 0 : w)], 'way down kept')];
+    }));
+    const inst = [...shown.instances, ...held, ...ways, ...drops, ...lanesHeld, ...pieces, ...lanesKept, ...gates, ...caps, ...prior];
     // the grid cut to the run: 30 ft beyond its connections along and across the rack, its lane included, and 20 ft above the highest of them or of the rack's top tier
     const ends = lines.filter(l => mine.has(l.def.no)).flatMap(l => [l.def.from, l.def.to]).filter((e): e is Extract<EndRef, { k: 'nozzle' }> => e.k === 'nozzle').map(e => nozzles.get(e.id)!);
     const xs = ends.flatMap(q => [q.A[0], q.face[0]]), ys = ends.flatMap(q => [q.A[1], q.face[1]]), zs = [...ends.flatMap(q => [q.A[2], q.face[2]]), ...(run.lane ? [run.lane.z] : [])];
     const full = { x0: G.x0, x1: G.x1, y1: gridTop, z0: G.z0, z1: G.z1 }, y1 = Math.min(gridTop, up(Math.max(RACK.tiers[top] + 24, ...ys) + 240));
-    const grid = whole || !ends.length ? full : rest ? { ...full, y1 } : { x0: Math.max(G.x0, down(Math.min(...xs) - 360)), x1: Math.min(G.x1, up(Math.max(...xs) + 360)), y1, z0: Math.max(G.z0, down(Math.min(...zs) - 360)), z1: Math.min(G.z1, up(Math.max(...zs) + 360)) };
+    const far = whole === 'close' ? 120 : 360;   // 'close': the third attempt, 10 ft beyond the connections in place of 30
+    const grid = whole === true || !ends.length ? full : rest ? { ...full, y1 } : { x0: Math.max(G.x0, down(Math.min(...xs) - far)), x1: Math.min(G.x1, up(Math.max(...xs) + far)), y1: whole === 'close' ? Math.min(gridTop, up(Math.max(RACK.tiers[top] + 24, ...ys) + far)) : y1, z0: Math.max(G.z0, down(Math.min(...zs) - far)), z1: Math.min(G.z1, up(Math.max(...zs) + far)) };
     return { ...plant, grid, rack: { ...cell.rack, tiers: cell.rack.tiers.slice(run.lane ? run.lane.t : rest ? top : 0) }, interior: () => ({ ...shown, instances: inst }) };
   };
   return { unit, cell, plant, lines, nozzles, spools, roots, stations, headers: headerLanes, feeds, notes, tierRoom, tiers, runs, runOf, runPlant, foreseen };
