@@ -46,9 +46,9 @@ function tanks(u: UnitBuilder, S: Storage[]) {
   for (const s of S.filter(x => x.unit === u.sheet.no)) for (const t of s.tags) u.item(t, 'tank', `${s.service} tank`, { bbl: Math.round(tankBbl(s.bpd, s.days, s.tags.length)), days: s.days, roof: s.roof, fluid: s.fluid, ...(s.heated ? { heated: 1 } : {}) });
 }
 /** fill the tanks of one service from a rundown: the line runs to the first tank and the others branch from it, one tank receiving at a time */
-function fill(f: Flow, tags: string[], kind: EqKind = 'tank') {
+function fill(f: Flow, tags: string[], kind: EqKind = 'tank', cv = false) {
   const others = tags.slice(1).map(() => f.alt());
-  f.into(tags[0], 'inlet', { kind }); others.forEach((b, i) => b.into(tags[i + 1], 'inlet', { kind }));
+  f.into(tags[0], 'inlet', { kind, cv }); others.forEach((b, i) => b.into(tags[i + 1], 'inlet', { kind, cv }));
 }
 /** draw one service's tanks to a pump: the first tank's outlet runs to the pump suction and the others join that line */
 function draw(u: UnitBuilder, tags: string[], fluid: string, w: number, sg: number, T: number, pump: string, P: number, service: string, o: { count?: number; port?: string; Ps?: number } = {}): Flow {
@@ -121,7 +121,7 @@ export function unit21(B: Balance): UnitSheet {
   fill(vr, ['T-2115', 'T-2116']); fill(toAsphalt, ['T-2117', 'T-2118']);
   const cut = u.feed('light cycle oil to fuel oil', liquid('DI', B.lcoToFuelOil.w, B.lcoToFuelOil.sg, 140, 60)); cut.into('T-2119', 'inlet', { kind: 'tank' });
   u.feed('slurry oil', liquid('SL', X.slurry.w, X.slurry.sg, 200, 60)).mixInto(cut, 'slurry oil into the cutter stock rundown');
-  u.out('T-2119', 'outlet', liquid('DI', B.lcoToFuelOil.w + X.slurry.w, 0.98, 150, 5)).pump('P-2119', 140, 'Cutter stock blend pump').mixInto(rundown, 'cutter stock into the residue ahead of the cooler');
+  u.out('T-2119', 'outlet', liquid('DI', B.lcoToFuelOil.w + X.slurry.w, 0.98, 150, 5)).pump('P-2119', 140, 'Cutter stock blend pump').mixInto(rundown, 'cutter stock into the residue ahead of the cooler, under flow control', { cv: true });   // SW-PRC-2: the blend pump's blocked-in pressure then stops at its own valve, and the rundown line from the crude unit keeps its own
   ship(['T-2115', 'T-2116'], 'RS', P.fuelOil.sg, 200, 'P-2124', 'Fuel oil', RATE.fuelOilShip, 160);
   truck(['T-2117', 'T-2118'], 'RS', P.asphalt.sg, 320, 'P-2125', 'Asphalt', RATE.asphaltTruck);
   coils(u, ['T-2104', 'T-2115', 'T-2116', 'T-2117', 'T-2118', 'T-2119']);
@@ -203,7 +203,7 @@ export function unit25(B: Balance): UnitSheet {
 export function unit26(B: Balance): UnitSheet {
   const u = new UnitBuilder(26, 'Fire water'), rate = FIRE_GPM * 60 * 8.345;                              // lb/h of water at 8.345 lb a gallon (K-5 × 231 / 1728)
   for (const t of ['T-2601', 'T-2602']) u.item(t, 'tank', 'Fire water tank', { bbl: Math.round((FIRE_GPM * 60 * 4) / 42), roof: 'cone', fluid: 'FW' });
-  fill(u.feed('fire water make-up', liquid('RW', 250000, 1, 50, 40)), ['T-2601', 'T-2602']);
+  fill(u.feed('fire water make-up', liquid('RW', 250000, 1, 50, 40)), ['T-2601', 'T-2602'], 'tank', true);   // each tank kept full by its level valve: the make-up line arrives at the service water pump's blocked-in pressure (SW-PRC-2), and the tanks' connections are past the valves
   // three pumps, two engine driven and one motor driven, any two of which give the demand; jockey pumps hold the ring main's pressure
   const main = draw(u, ['T-2601', 'T-2602'], 'FW', rate, 1, 50, 'P-2601', 150, 'Fire water pump (two engine driven, one motor driven)', { count: 3 });
   main.toBL('fire water ring main');

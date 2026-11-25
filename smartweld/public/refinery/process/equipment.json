@@ -2390,7 +2390,7 @@
       "vacuum": false
      },
      "shell": {
-      "designP": 155,
+      "designP": 260,
       "designT": 600,
       "cls": "P300",
       "vacuum": false
@@ -2496,7 +2496,7 @@
       "port": "shell out",
       "dir": "out",
       "NPS": 8,
-      "cls": "P150",
+      "cls": "P300",
       "line": 62,
       "fluid": "GO",
       "n": 1
@@ -4317,7 +4317,7 @@
       "port": "heavy vacuum gas oil return",
       "dir": "in",
       "NPS": 8,
-      "cls": "P150",
+      "cls": "P300",
       "line": 19,
       "fluid": "GO",
       "n": 1
@@ -13842,13 +13842,13 @@
     "type": "motor driven",
     "installed": 2,
     "running": 1,
-    "designP": 1050,
+    "designP": 995,
     "designT": 170,
     "vacuum": false,
     "cls": "P1200",
     "sides": {
      "process": {
-      "designP": 1050,
+      "designP": 995,
       "designT": 170,
       "cls": "P1200",
       "vacuum": false
@@ -13856,15 +13856,15 @@
     },
     "size": {
      "gpm": 87.99128,
-     "headFt": 1778.524,
-     "shaftHp": 71.85955,
-     "motorHp": 75,
+     "headFt": 1224.179,
+     "shaftHp": 49.46177,
+     "motorHp": 50,
      "rpm": 3560,
      "stages": 2,
-     "impeller": 15.3998,
-     "motorFrame": 19.57434
+     "impeller": 12.77637,
+     "motorFrame": 17.09976
     },
-    "description": "88 gpm each × 1779 ft, 75 hp at 3560 rpm, 2 stages; 2 installed, 1 running",
+    "description": "88 gpm each × 1224 ft, 50 hp at 3560 rpm, 2 stages; 2 installed, 1 running",
     "dutyBtuh": {
      "process": 0
     },
@@ -13879,7 +13879,7 @@
       "sg": 1.03,
       "mw": 0,
       "T": 120,
-      "P": 60,
+      "P": 300,
       "vf": 0
      },
      {
@@ -13900,7 +13900,7 @@
       "port": "S",
       "dir": "in",
       "NPS": 3,
-      "cls": "P150",
+      "cls": "P600",
       "line": 6,
       "fluid": "AM",
       "n": 1
@@ -30757,7 +30757,7 @@
       "port": "inlet",
       "dir": "in",
       "NPS": 6,
-      "cls": "P300",
+      "cls": "P150",
       "line": 63,
       "fluid": "RS",
       "n": 1
@@ -30862,7 +30862,7 @@
       "port": "inlet",
       "dir": "in",
       "NPS": 6,
-      "cls": "P300",
+      "cls": "P150",
       "line": 64,
       "fluid": "RS",
       "n": 1
@@ -30967,7 +30967,7 @@
       "port": "inlet",
       "dir": "in",
       "NPS": 3,
-      "cls": "P300",
+      "cls": "P150",
       "line": 65,
       "fluid": "RS",
       "n": 1
@@ -31072,7 +31072,7 @@
       "port": "inlet",
       "dir": "in",
       "NPS": 3,
-      "cls": "P300",
+      "cls": "P150",
       "line": 66,
       "fluid": "RS",
       "n": 1
@@ -33268,15 +33268,15 @@
     "type": "forced draught",
     "installed": 1,
     "running": 1,
-    "designP": 220,
+    "designP": 135,
     "designT": 340,
     "vacuum": false,
-    "cls": "P300",
+    "cls": "P150",
     "sides": {
      "process": {
-      "designP": 220,
+      "designP": 135,
       "designT": 340,
-      "cls": "P300",
+      "cls": "P150",
       "vacuum": false
      }
     },
@@ -33325,7 +33325,7 @@
       "port": "inlet",
       "dir": "in",
       "NPS": 6,
-      "cls": "P300",
+      "cls": "P150",
       "line": 62,
       "fluid": "RS",
       "n": 1
@@ -33334,7 +33334,7 @@
       "port": "outlet",
       "dir": "out",
       "NPS": 6,
-      "cls": "P300",
+      "cls": "P150",
       "line": 63,
       "fluid": "RS",
       "n": 1
@@ -33901,7 +33901,7 @@
       "port": "inlet",
       "dir": "in",
       "NPS": 24,
-      "cls": "P150",
+      "cls": "P300",
       "line": 3,
       "fluid": "GS",
       "n": 1
@@ -33973,7 +33973,7 @@
       "port": "inlet",
       "dir": "in",
       "NPS": 24,
-      "cls": "P150",
+      "cls": "P300",
       "line": 5,
       "fluid": "DI",
       "n": 1
@@ -36372,7 +36372,7 @@
       "port": "inlet",
       "dir": "in",
       "NPS": 6,
-      "cls": "P150",
+      "cls": "P300",
       "line": 0,
       "fluid": "RW",
       "n": 1
@@ -36472,7 +36472,7 @@
       "port": "inlet",
       "dir": "in",
       "NPS": 6,
-      "cls": "P150",
+      "cls": "P300",
       "line": 1,
       "fluid": "RW",
       "n": 1

@@ -154,7 +154,7 @@ export function unit16(B: Balance): UnitSheet {
     .hx('E-1601', 'tube', 540, 'Feed / effluent exchanger', { ph: 'M', vf: 0.25, mw: 30, addW: recycle - quench + D.h2, fluid: 'RX' });
   // recycle gas: amine-scrubbed, knocked out, compressed; quench to the reactor; make-up hydrogen compressed in
   u.out('D-1602', 'gas', vapour('HY', recycle + h2s, 6, 130, 770)).into('C-1601', 'gas in', { kind: 'column' });
-  u.feed('lean amine', liquid('AM', amine, 1.03, 120, 60)).pump('P-1602', 830, 'Lean amine booster pump').into('C-1601', 'lean amine', { kind: 'column', cv: true });
+  u.feed('lean amine', liquid('AM', amine, 1.03, 120, 300)).pump('P-1602', 830, 'Lean amine booster pump')   /* at the pressure the lean amine line runs at for the cracker's absorbers (SW-REF-12) */.into('C-1601', 'lean amine', { kind: 'column', cv: true });
   u.out('C-1601', 'rich amine', liquid('AM', amine + h2s, 1.04, 140, 765)).set({ P: 80 }).toBL('rich amine', { cv: true });
   u.out('C-1601', 'treated gas', vapour('HY', recycle, 5, 130, 760)).into('D-1603', 'inlet');
   const rec = u.out('D-1603', 'gas', vapour('HY', recycle, 5, 130, 758)).thru('K-1601', 'compressor', 'Recycle gas compressor', { P: 905, T: 180, spare: true }), q = rec.split(quench);

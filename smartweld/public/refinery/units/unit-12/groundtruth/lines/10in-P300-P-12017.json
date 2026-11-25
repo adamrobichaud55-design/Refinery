@@ -1085,13 +1085,13 @@
    "itemNo": 8,
    "description": "PIPE 10\" P300 BEVELLED ENDS",
    "designation": "PIPE10-P300",
-   "key": "PIPE|10|P300|375.430",
+   "key": "PIPE|10|P300|269.000",
    "NPS": 10,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 375.4297,
-   "weight": 1012.4951,
+   "cutLength": 269,
+   "weight": 725.4646,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
     "E": 733.3333,
@@ -1099,12 +1099,12 @@
     "EL": 1404
    },
    "b": {
-    "E": 357.9036,
+    "E": 464.3333,
     "N": 18,
     "EL": 1404
    },
    "centre": {
-    "E": 545.6184,
+    "E": 598.8333,
     "N": 18,
     "EL": 1404
    },
@@ -1121,45 +1121,44 @@
    ]
   },
   {
-   "tag": "10\"-P300-P-12017/el27",
+   "tag": "10\"-P300-P-12017/T:6\"-P300-P-12018",
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
-   "kind": "elbow",
+   "kind": "tee",
    "itemNo": 11,
-   "description": "ELBOW 45° R = 5/3 OD 10\" P300",
-   "designation": "EL45-10-P300",
-   "key": "EL|10|P300|45",
+   "description": "TEE REDUCING 10\" × 6\" P300",
+   "designation": "TEE10x6-P300",
+   "key": "TEE|10|P300|6",
    "NPS": 10,
+   "NPS2": 6,
    "cls": "P300",
    "material": "Grade 35 pipe",
-   "ends": "BW×BW",
-   "weight": 35.1008,
+   "ends": "BW×BW×BW",
+   "weight": 47.3562,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 357.9036,
+    "E": 464.3333,
     "N": 18,
     "EL": 1404
    },
    "b": {
-    "E": 346.1184,
-    "N": 13.1184,
+    "E": 447.6667,
+    "N": 18,
     "EL": 1404
    },
    "centre": {
-    "E": 352.011,
-    "N": 15.5592,
+    "E": 456,
+    "N": 18,
     "EL": 1404
    },
    "axis": {
-    "E": -0.9239,
-    "N": -0.3827,
+    "E": -1,
+    "N": 0,
     "EL": 0
    },
    "rules": [
-    "SW-FIT-1",
-    "SW-FIT-5",
-    "SW-PIPE-2",
-    "SW-PIPE-3"
+    "SW-FIT-2",
+    "SW-FIT-5"
    ]
   },
   {
@@ -1170,32 +1169,32 @@
    "itemNo": 8,
    "description": "PIPE 10\" P300 BEVELLED ENDS",
    "designation": "PIPE10-P300",
-   "key": "PIPE|10|P300|45.590",
+   "key": "PIPE|10|P300|95.000",
    "NPS": 10,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 45.5897,
-   "weight": 122.9514,
+   "cutLength": 95,
+   "weight": 256.205,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 346.1184,
-    "N": 13.1184,
+    "E": 447.6667,
+    "N": 18,
     "EL": 1404
    },
    "b": {
-    "E": 313.8816,
-    "N": -19.1184,
+    "E": 352.6667,
+    "N": 18,
     "EL": 1404
    },
    "centre": {
-    "E": 330,
-    "N": -3,
+    "E": 400.1667,
+    "N": 18,
     "EL": 1404
    },
    "axis": {
-    "E": -0.7071,
-    "N": -0.7071,
+    "E": -1,
+    "N": 0,
     "EL": 0
    },
    "rules": [
@@ -1210,34 +1209,34 @@
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "kind": "elbow",
-   "itemNo": 11,
-   "description": "ELBOW 45° R = 5/3 OD 10\" P300",
-   "designation": "EL45-10-P300",
-   "key": "EL|10|P300|45",
+   "itemNo": 9,
+   "description": "ELBOW 90° R = 5/3 OD 10\" P300",
+   "designation": "EL90-10-P300",
+   "key": "EL|10|P300|90",
    "NPS": 10,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "weight": 35.1008,
+   "weight": 70.1139,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 313.8816,
-    "N": -19.1184,
+    "E": 352.6667,
+    "N": 18,
     "EL": 1404
    },
    "b": {
-    "E": 302.0964,
-    "N": -24,
+    "E": 336,
+    "N": 1.3333,
     "EL": 1404
    },
    "centre": {
-    "E": 307.989,
-    "N": -21.5592,
+    "E": 344.3334,
+    "N": 9.6667,
     "EL": 1404
    },
    "axis": {
-    "E": -0.9239,
-    "N": -0.3827,
+    "E": -0.7071,
+    "N": -0.7071,
     "EL": 0
    },
    "rules": [
@@ -1255,32 +1254,32 @@
    "itemNo": 8,
    "description": "PIPE 10\" P300 BEVELLED ENDS",
    "designation": "PIPE10-P300",
-   "key": "PIPE|10|P300|6.237",
+   "key": "PIPE|10|P300|8.667",
    "NPS": 10,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 6.2369,
-   "weight": 16.8205,
+   "cutLength": 8.6666,
+   "weight": 23.374,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 302.0964,
-    "N": -24,
+    "E": 336,
+    "N": 1.3333,
     "EL": 1404
    },
    "b": {
-    "E": 308.3333,
-    "N": -24,
+    "E": 336,
+    "N": -7.3333,
     "EL": 1404
    },
    "centre": {
-    "E": 305.2149,
-    "N": -24,
+    "E": 336,
+    "N": -3,
     "EL": 1404
    },
    "axis": {
-    "E": 1,
-    "N": 0,
+    "E": 0,
+    "N": -1,
     "EL": 0
    },
    "rules": [
@@ -1291,44 +1290,45 @@
    ]
   },
   {
-   "tag": "10\"-P300-P-12017/T:6\"-P300-P-12018",
+   "tag": "10\"-P300-P-12017/el31",
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
-   "kind": "tee",
-   "itemNo": 12,
-   "description": "TEE REDUCING 10\" × 6\" P300",
-   "designation": "TEE10x6-P300",
-   "key": "TEE|10|P300|6",
+   "kind": "elbow",
+   "itemNo": 9,
+   "description": "ELBOW 90° R = 5/3 OD 10\" P300",
+   "designation": "EL90-10-P300",
+   "key": "EL|10|P300|90",
    "NPS": 10,
-   "NPS2": 6,
    "cls": "P300",
    "material": "Grade 35 pipe",
-   "ends": "BW×BW×BW",
-   "weight": 47.3562,
+   "ends": "BW×BW",
+   "weight": 70.1139,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 308.3333,
-    "N": -24,
+    "E": 336,
+    "N": -7.3333,
     "EL": 1404
    },
    "b": {
-    "E": 291.6667,
+    "E": 319.3333,
     "N": -24,
     "EL": 1404
    },
    "centre": {
-    "E": 300,
-    "N": -24,
+    "E": 327.6667,
+    "N": -15.6666,
     "EL": 1404
    },
    "axis": {
-    "E": -1,
-    "N": 0,
+    "E": -0.7071,
+    "N": -0.7071,
     "EL": 0
    },
    "rules": [
-    "SW-FIT-2",
-    "SW-FIT-5"
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
    ]
   },
   {
@@ -1339,26 +1339,26 @@
    "itemNo": 8,
    "description": "PIPE 10\" P300 BEVELLED ENDS",
    "designation": "PIPE10-P300",
-   "key": "PIPE|10|P300|8.763",
+   "key": "PIPE|10|P300|2.667",
    "NPS": 10,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 8.7631,
-   "weight": 23.6329,
+   "cutLength": 2.6666,
+   "weight": 7.1926,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 291.6667,
+    "E": 319.3333,
     "N": -24,
     "EL": 1404
    },
    "b": {
-    "E": 282.9036,
+    "E": 316.6667,
     "N": -24,
     "EL": 1404
    },
    "centre": {
-    "E": 287.2852,
+    "E": 318,
     "N": -24,
     "EL": 1404
    },
@@ -1379,34 +1379,34 @@
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "kind": "elbow",
-   "itemNo": 11,
-   "description": "ELBOW 45° R = 5/3 OD 10\" P300",
-   "designation": "EL45-10-P300",
-   "key": "EL|10|P300|45",
+   "itemNo": 9,
+   "description": "ELBOW 90° R = 5/3 OD 10\" P300",
+   "designation": "EL90-10-P300",
+   "key": "EL|10|P300|90",
    "NPS": 10,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "weight": 35.1008,
+   "weight": 70.1139,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 282.9036,
+    "E": 316.6667,
     "N": -24,
     "EL": 1404
    },
    "b": {
-    "E": 271.1184,
-    "N": -19.1184,
+    "E": 300,
+    "N": -7.3333,
     "EL": 1404
    },
    "centre": {
-    "E": 277.011,
-    "N": -21.5592,
+    "E": 308.3334,
+    "N": -15.6666,
     "EL": 1404
    },
    "axis": {
-    "E": -0.9239,
-    "N": 0.3827,
+    "E": -0.7071,
+    "N": 0.7071,
     "EL": 0
    },
    "rules": [
@@ -1424,32 +1424,32 @@
    "itemNo": 8,
    "description": "PIPE 10\" P300 BEVELLED ENDS",
    "designation": "PIPE10-P300",
-   "key": "PIPE|10|P300|37.105",
+   "key": "PIPE|10|P300|2.667",
    "NPS": 10,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 37.1044,
-   "weight": 100.0683,
+   "cutLength": 2.6666,
+   "weight": 7.1926,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 271.1184,
-    "N": -19.1184,
+    "E": 300,
+    "N": -7.3333,
     "EL": 1404
    },
    "b": {
-    "E": 244.8816,
-    "N": 7.1184,
+    "E": 300,
+    "N": -4.6667,
     "EL": 1404
    },
    "centre": {
-    "E": 258,
+    "E": 300,
     "N": -6,
     "EL": 1404
    },
    "axis": {
-    "E": -0.7071,
-    "N": 0.7071,
+    "E": 0,
+    "N": 1,
     "EL": 0
    },
    "rules": [
@@ -1464,34 +1464,34 @@
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "kind": "elbow",
-   "itemNo": 11,
-   "description": "ELBOW 45° R = 5/3 OD 10\" P300",
-   "designation": "EL45-10-P300",
-   "key": "EL|10|P300|45",
+   "itemNo": 9,
+   "description": "ELBOW 90° R = 5/3 OD 10\" P300",
+   "designation": "EL90-10-P300",
+   "key": "EL|10|P300|90",
    "NPS": 10,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "weight": 35.1008,
+   "weight": 70.1139,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 244.8816,
-    "N": 7.1184,
+    "E": 300,
+    "N": -4.6667,
     "EL": 1404
    },
    "b": {
-    "E": 233.0964,
+    "E": 283.3333,
     "N": 12,
     "EL": 1404
    },
    "centre": {
-    "E": 238.989,
-    "N": 9.5592,
+    "E": 291.6667,
+    "N": 3.6667,
     "EL": 1404
    },
    "axis": {
-    "E": -0.9239,
-    "N": 0.3827,
+    "E": -0.7071,
+    "N": 0.7071,
     "EL": 0
    },
    "rules": [
@@ -1509,16 +1509,16 @@
    "itemNo": 8,
    "description": "PIPE 10\" P300 BEVELLED ENDS",
    "designation": "PIPE10-P300",
-   "key": "PIPE|10|P300|46.159",
+   "key": "PIPE|10|P300|96.396",
    "NPS": 10,
    "cls": "P300",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 46.1589,
-   "weight": 124.486,
+   "cutLength": 96.3958,
+   "weight": 259.9698,
    "spool": "10\"-P300-P-12017-SP03",
    "a": {
-    "E": 233.0964,
+    "E": 283.3333,
     "N": 12,
     "EL": 1404
    },
@@ -1528,7 +1528,7 @@
     "EL": 1404
    },
    "centre": {
-    "E": 210.017,
+    "E": 235.1354,
     "N": 12,
     "EL": 1404
    },
@@ -1549,7 +1549,7 @@
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "kind": "studs",
-   "itemNo": 13,
+   "itemNo": 12,
    "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P300",
    "designation": "STUDS 12×0.75x5 (10-P300)",
    "key": "STUDS|10|P300|3.250",
@@ -1589,7 +1589,7 @@
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "kind": "flange",
-   "itemNo": 14,
+   "itemNo": 13,
    "description": "FLANGE WELD-NECK 10\" P300 RAISED FACE",
    "designation": "FLG10-P300",
    "key": "WNF|10|P300",
@@ -1636,7 +1636,7 @@
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "kind": "gasket",
-   "itemNo": 15,
+   "itemNo": 14,
    "description": "GASKET 10\" P300 COMPRESSED SHEET",
    "designation": "GASKET10-P300",
    "key": "GSK|10|P300",
@@ -1675,7 +1675,7 @@
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "kind": "studs",
-   "itemNo": 13,
+   "itemNo": 12,
    "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P300",
    "designation": "STUDS 12×0.75x5 (10-P300)",
    "key": "STUDS|10|P300|3.250",
@@ -1715,7 +1715,7 @@
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "kind": "valve",
-   "itemNo": 16,
+   "itemNo": 15,
    "description": "VALVE, GATE, WEDGE, OS&Y 10\" P300",
    "designation": "GATE10-P300",
    "key": "VLV|GATE|10|P300",
@@ -1766,7 +1766,7 @@
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "kind": "gasket",
-   "itemNo": 15,
+   "itemNo": 14,
    "description": "GASKET 10\" P300 COMPRESSED SHEET",
    "designation": "GASKET10-P300",
    "key": "GSK|10|P300",
@@ -2288,7 +2288,7 @@
    "cls": "P300",
    "joins": [
     "10\"-P300-P-12017/p26",
-    "10\"-P300-P-12017/el27"
+    "10\"-P300-P-12017/T:6\"-P300-P-12018"
    ],
    "shopField": "shop",
    "spool": "10\"-P300-P-12017-SP03",
@@ -2297,7 +2297,7 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 357.9036,
+    "E": 464.3333,
     "N": 18,
     "EL": 1404
    },
@@ -2321,7 +2321,7 @@
    "NPS": 10,
    "cls": "P300",
    "joins": [
-    "10\"-P300-P-12017/el27",
+    "10\"-P300-P-12017/T:6\"-P300-P-12018",
     "10\"-P300-P-12017/p28"
    ],
    "shopField": "shop",
@@ -2331,8 +2331,8 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 346.1184,
-    "N": 13.1184,
+    "E": 447.6667,
+    "N": 18,
     "EL": 1404
    },
    "key": "BW|10|P300",
@@ -2365,8 +2365,8 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 313.8816,
-    "N": -19.1184,
+    "E": 352.6667,
+    "N": 18,
     "EL": 1404
    },
    "key": "BW|10|P300",
@@ -2399,8 +2399,8 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 302.0964,
-    "N": -24,
+    "E": 336,
+    "N": 1.3333,
     "EL": 1404
    },
    "key": "BW|10|P300",
@@ -2424,7 +2424,7 @@
    "cls": "P300",
    "joins": [
     "10\"-P300-P-12017/p30",
-    "10\"-P300-P-12017/T:6\"-P300-P-12018"
+    "10\"-P300-P-12017/el31"
    ],
    "shopField": "shop",
    "spool": "10\"-P300-P-12017-SP03",
@@ -2433,8 +2433,8 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 308.3333,
-    "N": -24,
+    "E": 336,
+    "N": -7.3333,
     "EL": 1404
    },
    "key": "BW|10|P300",
@@ -2457,7 +2457,7 @@
    "NPS": 10,
    "cls": "P300",
    "joins": [
-    "10\"-P300-P-12017/T:6\"-P300-P-12018",
+    "10\"-P300-P-12017/el31",
     "10\"-P300-P-12017/p32"
    ],
    "shopField": "shop",
@@ -2467,7 +2467,7 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 291.6667,
+    "E": 319.3333,
     "N": -24,
     "EL": 1404
    },
@@ -2501,7 +2501,7 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 282.9036,
+    "E": 316.6667,
     "N": -24,
     "EL": 1404
    },
@@ -2535,8 +2535,8 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 271.1184,
-    "N": -19.1184,
+    "E": 300,
+    "N": -7.3333,
     "EL": 1404
    },
    "key": "BW|10|P300",
@@ -2569,8 +2569,8 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 244.8816,
-    "N": 7.1184,
+    "E": 300,
+    "N": -4.6667,
     "EL": 1404
    },
    "key": "BW|10|P300",
@@ -2603,7 +2603,7 @@
     "10\"-P300-P-12017-SP03"
    ],
    "at": {
-    "E": 233.0964,
+    "E": 283.3333,
     "N": 12,
     "EL": 1404
    },
@@ -2656,6 +2656,26 @@
  "supports": [
   {
    "tag": "10\"-P300-P-12017/S1",
+   "line": "10\"-P300-P-12017",
+   "lineClass": "H300",
+   "type": "guide",
+   "description": "GUIDE FOR 10\" LINE (GUIDE-10)",
+   "designation": "GUIDE-10",
+   "key": "SHOE|10|P300|guide|7.000",
+   "material": "Grade 36",
+   "weight": 25.7282,
+   "spool": "loose",
+   "at": {
+    "E": 360,
+    "N": 18,
+    "EL": 1392
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "10\"-P300-P-12017/S2",
    "line": "10\"-P300-P-12017",
    "lineClass": "H300",
    "type": "anchor",
@@ -2714,11 +2734,11 @@
     "10\"-P300-P-12017/p24",
     "10\"-P300-P-12017/el25",
     "10\"-P300-P-12017/p26",
-    "10\"-P300-P-12017/el27",
+    "10\"-P300-P-12017/T:6\"-P300-P-12018",
     "10\"-P300-P-12017/p28",
     "10\"-P300-P-12017/el29",
     "10\"-P300-P-12017/p30",
-    "10\"-P300-P-12017/T:6\"-P300-P-12018",
+    "10\"-P300-P-12017/el31",
     "10\"-P300-P-12017/p32",
     "10\"-P300-P-12017/el33",
     "10\"-P300-P-12017/p34",
@@ -2747,7 +2767,7 @@
     "10\"-P300-P-12017/W23",
     "10\"-P300-P-12017/W24"
    ],
-   "weight": 2574.0567
+   "weight": 2593.0536
   },
   {
    "id": "10\"-P300-P-12017-SP04",
@@ -2806,14 +2826,14 @@
    "itemNo": 8,
    "description": "PIPE 10\" P300 BEVELLED ENDS",
    "qty": 11,
-   "length": 754.9322,
-   "weight": 2035.9773
+   "length": 710.045,
+   "weight": 1914.9218
   },
   {
    "itemNo": 9,
    "description": "ELBOW 90° R = 5/3 OD 10\" P300",
-   "qty": 4,
-   "weight": 280.4556
+   "qty": 8,
+   "weight": 560.9113
   },
   {
    "itemNo": 10,
@@ -2823,36 +2843,30 @@
   },
   {
    "itemNo": 11,
-   "description": "ELBOW 45° R = 5/3 OD 10\" P300",
-   "qty": 4,
-   "weight": 140.4033
-  },
-  {
-   "itemNo": 12,
    "description": "TEE REDUCING 10\" × 6\" P300",
    "qty": 1,
    "weight": 47.3562
   },
   {
-   "itemNo": 13,
+   "itemNo": 12,
    "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P300",
    "qty": 2,
    "weight": 21.7121
   },
   {
-   "itemNo": 14,
+   "itemNo": 13,
    "description": "FLANGE WELD-NECK 10\" P300 RAISED FACE",
    "qty": 1,
    "weight": 51.5629
   },
   {
-   "itemNo": 15,
+   "itemNo": 14,
    "description": "GASKET 10\" P300 COMPRESSED SHEET",
    "qty": 2,
    "weight": 0
   },
   {
-   "itemNo": 16,
+   "itemNo": 15,
    "description": "VALVE, GATE, WEDGE, OS&Y 10\" P300",
    "qty": 1,
    "weight": 549.2775
@@ -3104,7 +3118,7 @@
   },
   {
    "at": {
-    "E": 357.9036,
+    "E": 464.3333,
     "N": 18,
     "EL": 1404
    },
@@ -3113,62 +3127,8 @@
   },
   {
    "at": {
-    "E": 351,
+    "E": 456,
     "N": 18,
-    "EL": 1404
-   },
-   "kind": "elbow work point",
-   "ref": "10\"-P300-P-12017/el27"
-  },
-  {
-   "at": {
-    "E": 346.1184,
-    "N": 13.1184,
-    "EL": 1404
-   },
-   "kind": "elbow end",
-   "ref": "10\"-P300-P-12017/el27"
-  },
-  {
-   "at": {
-    "E": 313.8816,
-    "N": -19.1184,
-    "EL": 1404
-   },
-   "kind": "pipe end",
-   "ref": "10\"-P300-P-12017/p28"
-  },
-  {
-   "at": {
-    "E": 309.0001,
-    "N": -23.9999,
-    "EL": 1404
-   },
-   "kind": "elbow work point",
-   "ref": "10\"-P300-P-12017/el29"
-  },
-  {
-   "at": {
-    "E": 302.0964,
-    "N": -24,
-    "EL": 1404
-   },
-   "kind": "elbow end",
-   "ref": "10\"-P300-P-12017/el29"
-  },
-  {
-   "at": {
-    "E": 308.3333,
-    "N": -24,
-    "EL": 1404
-   },
-   "kind": "pipe end",
-   "ref": "10\"-P300-P-12017/p30"
-  },
-  {
-   "at": {
-    "E": 300,
-    "N": -24,
     "EL": 1404
    },
    "kind": "tee centre",
@@ -3176,8 +3136,8 @@
   },
   {
    "at": {
-    "E": 291.6667,
-    "N": -24,
+    "E": 447.6667,
+    "N": 18,
     "EL": 1404
    },
    "kind": "tee end",
@@ -3185,7 +3145,61 @@
   },
   {
    "at": {
-    "E": 282.9036,
+    "E": 352.6667,
+    "N": 18,
+    "EL": 1404
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P300-P-12017/p28"
+  },
+  {
+   "at": {
+    "E": 336,
+    "N": 18,
+    "EL": 1404
+   },
+   "kind": "elbow work point",
+   "ref": "10\"-P300-P-12017/el29"
+  },
+  {
+   "at": {
+    "E": 336,
+    "N": 1.3333,
+    "EL": 1404
+   },
+   "kind": "elbow end",
+   "ref": "10\"-P300-P-12017/el29"
+  },
+  {
+   "at": {
+    "E": 336,
+    "N": -7.3333,
+    "EL": 1404
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P300-P-12017/p30"
+  },
+  {
+   "at": {
+    "E": 336,
+    "N": -24,
+    "EL": 1404
+   },
+   "kind": "elbow work point",
+   "ref": "10\"-P300-P-12017/el31"
+  },
+  {
+   "at": {
+    "E": 319.3333,
+    "N": -24,
+    "EL": 1404
+   },
+   "kind": "elbow end",
+   "ref": "10\"-P300-P-12017/el31"
+  },
+  {
+   "at": {
+    "E": 316.6667,
     "N": -24,
     "EL": 1404
    },
@@ -3194,7 +3208,7 @@
   },
   {
    "at": {
-    "E": 276,
+    "E": 300,
     "N": -24,
     "EL": 1404
    },
@@ -3203,8 +3217,8 @@
   },
   {
    "at": {
-    "E": 271.1184,
-    "N": -19.1184,
+    "E": 300,
+    "N": -7.3333,
     "EL": 1404
    },
    "kind": "elbow end",
@@ -3212,8 +3226,8 @@
   },
   {
    "at": {
-    "E": 244.8816,
-    "N": 7.1184,
+    "E": 300,
+    "N": -4.6667,
     "EL": 1404
    },
    "kind": "pipe end",
@@ -3221,8 +3235,8 @@
   },
   {
    "at": {
-    "E": 240.0001,
-    "N": 11.9999,
+    "E": 300,
+    "N": 12,
     "EL": 1404
    },
    "kind": "elbow work point",
@@ -3230,7 +3244,7 @@
   },
   {
    "at": {
-    "E": 233.0964,
+    "E": 283.3333,
     "N": 12,
     "EL": 1404
    },
@@ -3287,8 +3301,8 @@
   "items": 42,
   "welds": 25,
   "fieldWelds": 2,
-  "supports": 1,
-  "pipeLength": 760.9322,
-  "weight": 4120.7482
+  "supports": 2,
+  "pipeLength": 716.045,
+  "weight": 4139.745
  }
 }

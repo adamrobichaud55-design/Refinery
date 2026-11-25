@@ -29,7 +29,7 @@ export type PlotKind = 'unit' | 'tower' | 'building' | 'pad' | 'spare' | 'pond';
 /** a plot: the ground a unit, a building or an item stands on. A unit's battery limit is on the side it faces. */
 export interface Plot extends Rect { id: string; name: string; unit: number; bench: string; kind: PlotKind; faces?: 'N' | 'S'; /** a building's height, ft */ height?: number }
 const P = (id: string, name: string, unit: number, b: string, kind: PlotKind, r: Rect, o: Partial<Plot> = {}): Plot => ({ id, name, unit, bench: b, kind, ...r, ...o });
-/** SW-SITE-4: the main pipeway runs east–west at z = 2,700 in a corridor 60 ft wide (the rack, 40 ft, and 10 ft either side), with the units on both sides of it */
+/** SW-SITE-4: the main pipeway runs east–west at z = 2,700 in a corridor 60 ft wide (the rack, 30 ft, and 15 ft either side), with the units on both sides of it */
 export const PIPEWAY_Z = 2700, PIPEWAY_HALF = 30;
 /** SW-SITE-5: the clear distance between neighbouring units along the pipeway, ft */
 export const UNIT_GAP = 50;
@@ -144,7 +144,7 @@ export const ROADS: Road[] = ROAD_LINES.map(([id, name, width, pts, ramp]) => ({
 /** pipeways: where lines run between units and areas (SW-SITE-4); built in the piping stage */
 export interface Pipeway { id: string; name: string; kind: 'rack' | 'sleepers' | 'trestle'; width: number; pts: [number, number][] }
 export const PIPEWAYS: Pipeway[] = [
-  { id: 'main', name: 'Main pipeway', kind: 'rack', width: 40, pts: [[990, PIPEWAY_Z], [2160, PIPEWAY_Z]] },
+  { id: 'main', name: 'Main pipeway', kind: 'rack', width: 30, pts: [[985, PIPEWAY_Z], [2145, PIPEWAY_Z]] },   // SW-PWY-2: 58 bays of 20 ft from 15 ft west of the first unit's plot
   { id: 'tanks', name: 'Tank farm pipeway', kind: 'sleepers', width: 30, pts: [[2130, N0], [2130, 2135], [2200, 1805], [2390, 1805], [2390, 1150]] },
   { id: 'southTrack', name: 'South terrace pipe track', kind: 'sleepers', width: 24, pts: [[990, 1805], [3500, 1805]] },
   { id: 'northTrack', name: 'North terrace pipe track', kind: 'sleepers', width: 24, pts: [[1050, 1150], [3110, 1150]] },

@@ -12,9 +12,9 @@ import { processModel } from './process';
 import { sizing } from './sizing';
 
 export interface SitePart { part: PartSpec; transform: Mat4; tags: string[]; unit: number }
-/** SW-CELL-1: the transform that sets a unit's frame on its plot: its battery limit on the plot's pipeway edge, its width centred */
+/** SW-CELL-1: the transform that sets a unit's frame on its plot: its battery limit on the plot's pipeway edge, its width centred to the nearest 6 in (the main pipeway's grid, §80) */
 export function cellToSite(p: Plot, c: CellModel): Mat4 {
-  const el = bench(p.bench).el * 12, mid = (c.z0 + c.z1) / 2, cx = ((p.x0 + p.x1) / 2) * 12;
+  const el = bench(p.bench).el * 12, mid = Math.round((c.z0 + c.z1) / 2 / 6) * 6, cx = ((p.x0 + p.x1) / 2) * 12;
   return p.faces === 'N' ? multiply(translate(cx + mid, el, p.z0 * 12), rotateY(-Math.PI / 2)) : multiply(translate(cx - mid, el, p.z1 * 12), rotateY(Math.PI / 2));
 }
 /** the room along a unit's rack: its plot's length, in */

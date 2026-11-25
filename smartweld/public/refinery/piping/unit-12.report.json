@@ -10,14 +10,14 @@
   3
  ],
  "tierRoom": 72,
- "seconds": 393,
+ "seconds": 347,
  "stats": {
   "lines": 60,
   "routed": 60,
   "failed": 0,
-  "comps": 1655,
-  "welds": 898,
-  "supports": 163,
+  "comps": 1637,
+  "welds": 880,
+  "supports": 167,
   "penetrations": 3
  },
  "failures": [],
@@ -30,13 +30,10 @@
   "staticClearance": [],
   "supports": [
    "48\"-P150-P-12003: unsupported span 392 in > 240 on run from 600,1716,-692",
-   "10\"-P300-P-12017: unsupported span 242 in > 240 on run from 733,204,-18",
-   "6\"-P300-P-12018: unsupported span 321 in > 240 on run from 300,204,32",
    "6\"-P300-LS-12501: unsupported span 310 in > 240 on run from 1182,396,-10",
-   "2\"-P300-SC-12504: unsupported span 196 in > 120 on run from 486,372,-45",
-   "2\"-P300-SC-12504: unsupported span 287 in > 120 on run from 486,354,172",
-   "6\"-P300-LS-12505: unsupported span 460 in > 240 on run from 456,306,506",
-   "2\"-P300-SC-12506: unsupported span 515 in > 120 on run from 540,228,-9",
+   "2\"-P300-SC-12504: unsupported span 233 in > 120 on run from 426,372,-45",
+   "6\"-P300-LS-12505: unsupported span 346 in > 240 on run from 480,348,506",
+   "2\"-P300-SC-12506: unsupported span 515 in > 120 on run from 540,222,-9",
    "3\"-P300-LS-12507: unsupported span 464 in > 180 on run from 564,318,505"
   ]
  },
@@ -45,9 +42,9 @@
    "tag": "BL-1203",
    "stream": "sour water",
    "dir": "out",
-   "line": "3\"-P300-P-12703",
+   "line": "3\"-P150-P-12703",
    "NPS": 3,
-   "cls": "P300",
+   "cls": "P150",
    "at": [
     150,
     198,
@@ -103,13 +100,13 @@
    "tag": "BL-1207",
    "stream": "vacuum gas oil pumparound return",
    "dir": "in",
-   "line": "8\"-P150-P-12020",
+   "line": "8\"-P300-P-12020",
    "NPS": 8,
-   "cls": "P150",
+   "cls": "P300",
    "at": [
     150,
     204,
-    12
+    18
    ],
    "tier": 0,
    "lane": 18
@@ -124,7 +121,7 @@
    "at": [
     150,
     204,
-    48
+    54
    ],
    "tier": 0,
    "lane": 54
@@ -133,13 +130,13 @@
    "tag": "BL-1206",
    "stream": "heavy vacuum gas oil",
    "dir": "out",
-   "line": "6\"-P300-P-12706",
+   "line": "6\"-P150-P-12706",
    "NPS": 6,
-   "cls": "P300",
+   "cls": "P150",
    "at": [
     150,
     204,
-    78
+    84
    ],
    "tier": 0
   },
@@ -147,9 +144,9 @@
    "tag": "BL-1204",
    "stream": "light vacuum gas oil",
    "dir": "out",
-   "line": "3\"-P300-P-12705",
+   "line": "3\"-P150-P-12705",
    "NPS": 3,
-   "cls": "P300",
+   "cls": "P150",
    "at": [
     150,
     270,
@@ -184,7 +181,7 @@
   {
    "tag": "CS-1203",
    "line": "3\"-P300-P-12011",
-   "after": "3\"-P300-P-12703",
+   "after": "3\"-P150-P-12703",
    "at": [
     444,
     36,
@@ -204,7 +201,7 @@
   {
    "tag": "CS-1205",
    "line": "3\"-P300-P-12015",
-   "after": "3\"-P300-P-12705",
+   "after": "3\"-P150-P-12705",
    "at": [
     528,
     36,
@@ -214,7 +211,7 @@
   {
    "tag": "CS-1206",
    "line": "6\"-P300-P-12019",
-   "after": "6\"-P300-P-12706",
+   "after": "6\"-P150-P-12706",
    "at": [
     450,
     36,
@@ -223,7 +220,7 @@
   },
   {
    "tag": "CS-1207",
-   "line": "8\"-P150-P-12020",
+   "line": "8\"-P300-P-12020",
    "after": "8\"-P150-P-12707",
    "at": [
     870,
@@ -339,10 +336,10 @@
    "designP": 50,
    "designT": 275,
    "routed": true,
-   "components": 13,
-   "welds": 10,
+   "components": 6,
+   "welds": 3,
    "supports": 0,
-   "lengthFt": 39
+   "lengthFt": 37
   },
   {
    "no": "3\"-P150-P-12005",
@@ -390,10 +387,10 @@
    "designP": 50,
    "designT": 180,
    "routed": true,
-   "components": 25,
-   "welds": 18,
+   "components": 29,
+   "welds": 22,
    "supports": 16,
-   "lengthFt": 203,
+   "lengthFt": 205,
    "tier": 1
   },
   {
@@ -442,8 +439,8 @@
    "to": "BL-1202-U",
    "NPS": 3,
    "cls": "P150",
-   "designP": 150,
-   "designT": 180,
+   "designP": 65,
+   "designT": 200,
    "routed": true,
    "components": 19,
    "welds": 12,
@@ -489,16 +486,16 @@
    "controlValve": "piped"
   },
   {
-   "no": "3\"-P300-P-12703",
+   "no": "3\"-P150-P-12703",
    "origin": "control",
    "fluid": "SW",
    "fluidName": "sour water",
    "from": "CS-1203-B",
    "to": "BL-1203-U",
    "NPS": 3,
-   "cls": "P300",
-   "designP": 160,
-   "designT": 180,
+   "cls": "P150",
+   "designP": 85,
+   "designT": 190,
    "routed": true,
    "components": 19,
    "welds": 12,
@@ -597,15 +594,15 @@
    "controlValve": "piped"
   },
   {
-   "no": "3\"-P300-P-12705",
+   "no": "3\"-P150-P-12705",
    "origin": "control",
    "fluid": "GO",
    "fluidName": "gas oil",
    "from": "CS-1205-B",
    "to": "BL-1204-U",
    "NPS": 3,
-   "cls": "P300",
-   "designP": 220,
+   "cls": "P150",
+   "designP": 105,
    "designT": 200,
    "routed": true,
    "components": 19,
@@ -646,7 +643,7 @@
    "routed": true,
    "components": 36,
    "welds": 25,
-   "supports": 1,
+   "supports": 2,
    "lengthFt": 81,
    "tier": 1
   },
@@ -662,10 +659,10 @@
    "designP": 260,
    "designT": 600,
    "routed": true,
-   "components": 11,
-   "welds": 6,
+   "components": 12,
+   "welds": 7,
    "supports": 1,
-   "lengthFt": 53
+   "lengthFt": 44
   },
   {
    "no": "6\"-P300-P-12019",
@@ -687,39 +684,39 @@
    "controlValve": "piped"
   },
   {
-   "no": "6\"-P300-P-12706",
+   "no": "6\"-P150-P-12706",
    "origin": "control",
    "fluid": "GO",
    "fluidName": "gas oil",
    "from": "CS-1206-B",
    "to": "BL-1206-U",
    "NPS": 6,
-   "cls": "P300",
-   "designP": 260,
+   "cls": "P150",
+   "designP": 125,
    "designT": 450,
    "routed": true,
-   "components": 19,
-   "welds": 12,
-   "supports": 0,
+   "components": 15,
+   "welds": 8,
+   "supports": 1,
    "lengthFt": 35,
    "station": "CS-1206"
   },
   {
-   "no": "8\"-P150-P-12020",
+   "no": "8\"-P300-P-12020",
    "origin": "process",
    "fluid": "GO",
    "fluidName": "gas oil",
    "from": "BL-1207-U",
    "to": "CS-1207-A",
    "NPS": 8,
-   "cls": "P150",
-   "designP": 135,
-   "designT": 495,
+   "cls": "P300",
+   "designP": 260,
+   "designT": 500,
    "routed": true,
-   "components": 49,
-   "welds": 30,
+   "components": 45,
+   "welds": 26,
    "supports": 1,
-   "lengthFt": 73,
+   "lengthFt": 67,
    "tier": 1,
    "station": "CS-1207",
    "controlValve": "piped"
@@ -733,8 +730,8 @@
    "to": "C-1201-N6",
    "NPS": 8,
    "cls": "P150",
-   "designP": 135,
-   "designT": 495,
+   "designP": 50,
+   "designT": 500,
    "routed": true,
    "components": 26,
    "welds": 19,
@@ -789,13 +786,13 @@
    "to": "BL-1208-U",
    "NPS": 6,
    "cls": "P600",
-   "designP": 260,
+   "designP": 155,
    "designT": 740,
    "routed": true,
-   "components": 27,
-   "welds": 20,
+   "components": 16,
+   "welds": 9,
    "supports": 3,
-   "lengthFt": 64,
+   "lengthFt": 55,
    "tier": 1,
    "station": "CS-1208"
   },
@@ -1226,7 +1223,7 @@
    "routed": true,
    "components": 26,
    "welds": 17,
-   "supports": 1,
+   "supports": 3,
    "lengthFt": 80
   },
   {
@@ -1241,10 +1238,10 @@
    "designP": 175,
    "designT": 415,
    "routed": true,
-   "components": 21,
-   "welds": 12,
+   "components": 24,
+   "welds": 15,
    "supports": 0,
-   "lengthFt": 64
+   "lengthFt": 68
   },
   {
    "no": "2\"-P300-SC-12506",
@@ -1318,11 +1315,11 @@
  "counts": {
   "components": {
    "cap": 12,
-   "elbow": 283,
+   "elbow": 273,
    "flange": 196,
    "gasket": 276,
    "olet": 3,
-   "pipe": 433,
+   "pipe": 425,
    "reducer": 38,
    "spade": 18,
    "spectacle": 1,
@@ -1330,17 +1327,17 @@
    "valve": 117
   },
   "welds": {
-   "BW, field": 129,
-   "BW, shop": 758,
+   "BW, field": 128,
+   "BW, shop": 741,
    "FW, shop": 11
   },
   "supports": {
    "anchor": 20,
-   "guide": 46,
-   "hanger": 29,
+   "guide": 47,
+   "hanger": 28,
    "shoe": 36,
-   "stanchion": 12,
-   "trunnion": 20
+   "stanchion": 14,
+   "trunnion": 22
   }
  },
  "notes": [

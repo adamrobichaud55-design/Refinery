@@ -10,6 +10,7 @@ import { processModel } from './process';
 import { sizing } from './sizing';
 import { FLUIDS } from './fluids';
 import type { UnitPiping, UnitLine } from './unitPiping';
+import { PWY, type Pipeway } from './pipeway';
 import { lineRecords, lineNumber, classify, pipeMaterial, fittingCrn, makerOf, MATERIALS, BOLTING, NOTICE, FITTING_CATEGORIES, type Category, type MaterialCode, type Source } from './registry';
 
 /** SW-REG-9: valve body labels by the line's material, recalled */
@@ -21,7 +22,8 @@ const WHAT: Record<string, [string, Registered]> = {
   flange: ['flange', 'B'], blind: ['blind flange', 'B'], spade: ['spade', 'B'], spectacle: ['spectacle blind', 'B'], valve: ['valve', 'C'], gasket: ['gasket', 'none'], studs: ['stud set', 'none'],
 };
 export interface PipingLineRecord {
-  number: string; unit: number; origin: UnitLine['origin']; /** the flowsheet line or utility connection it is, or is part of */ of?: string; from: string; to: string; fluid: string; fluidName: string; phase: string;
+  number: string; unit: number; /** a unit's line by what it is (SW-RPI-3); a pipeway's: a stream's line, a branch of one, or the valve and blind beyond a limit spool (SW-PWY-3, SW-PWY-4) */ origin: UnitLine['origin'] | 'main' | 'branch' | 'limit';
+  /** the flowsheet line or utility connection it is, or is part of */ of?: string; /** the stream between units it carries (a pipeway's line) */ stream?: string; from: string; to: string; fluid: string; fluidName: string; phase: string;
   designP: number; designT: number; size: number; pipeClass: string; lineClass: string; severity: number; fluidService: Category; examination: string; leakTest: string; material: MaterialCode;
   pipingSystemRegistration: string; /** the rack tier it runs on (SW-RPI-7), the control station it is divided at (SW-RPI-9) */ tier?: number; station?: string;
   components: number; pipeFt: number; welds: { shop: number; field: number };
@@ -37,20 +39,42 @@ export interface PipingRegister {
 }
 
 const phaseOfUtility = (fluid: string) => (['HS', 'MS', 'LS', 'FG', 'IA', 'PA', 'NI'].includes(fluid) ? 'vapour' : 'liquid');
+/** a line as the register takes it: the generator's definition, and what the model knows of it */
+export interface RegisterLine { def: { no: string; NPS: number; cls: string }; origin: PipingLineRecord['origin']; fluid: string; designP: number; designT: number; phase: string; material: MaterialCode; utility: boolean; of?: string; stream?: string; tier?: number; station?: string }
 /** SW-REG-9: the register of a unit from its line list (SW-RPI-3) and its generated model */
 export function pipingRegister(up: UnitPiping, model: PipingModel): PipingRegister {
   const unit = up.unit, sh = processModel().sheet(unit), Z = sizing().get(unit)!, base = new Map(lineRecords().filter(r => r.unit === unit).map(r => [r.number, r]));
   const flowNo = (i: number) => lineNumber(unit, i + 1, Z.lines[i].NPS, Z.lines[i].cls, sh.lines[i].s.fluid), utilNo = (i: number) => lineNumber(unit, 500 + i + 1, Z.utils[i].NPS, Z.utils[i].cls, Z.utils[i].fluid);
-  const run = new Map(model.lines.map(l => [l.no, l])), lines: PipingLineRecord[] = [], components: PipingComponentRecord[] = [], matOf = new Map<string, MaterialCode>();
-  for (const ul of up.lines) {
-    const d = ul.def, r = run.get(d.no); if (!r) throw new Error(`unit ${unit}: line ${d.no} of the line list is not in the generated model`);
-    const of = ul.flow !== undefined ? flowNo(ul.flow) : ul.util !== undefined ? utilNo(ul.util) : undefined, b = of ? base.get(of) : undefined;
+  const reg: RegisterLine[] = up.lines.map(ul => {
+    const d = ul.def, of = ul.flow !== undefined ? flowNo(ul.flow) : ul.util !== undefined ? utilNo(ul.util) : undefined, b = of ? base.get(of) : undefined;
     if (of && !b) throw new Error(`unit ${unit}: no line record ${of} for ${d.no}`);
-    const phase = b?.phase ?? phaseOfUtility(ul.fluid), mat = b?.materials.value.code ?? pipeMaterial(unit, ul.fluid, ul.designT, false), c = classify(unit, ul.fluid, phase, d.cls, ul.designP, ul.designT, mat, ul.origin === 'utility' || ul.origin === 'header');
-    matOf.set(d.no, mat);
+    return { def: d, origin: ul.origin, fluid: ul.fluid, designP: ul.designP, designT: ul.designT, phase: b?.phase ?? phaseOfUtility(ul.fluid), material: b?.materials.value.code ?? pipeMaterial(unit, ul.fluid, ul.designT, false), utility: ul.origin === 'utility' || ul.origin === 'header', ...(of && of !== d.no ? { of } : {}), ...(ul.tier !== undefined ? { tier: ul.tier } : {}), ...(ul.station ? { station: ul.station } : {}) };
+  });
+  return buildRegister(unit, sh.name, 'DESIGN_BASIS.md §76 (SW-REG-4 to SW-REG-6, SW-REG-8, SW-REG-9) and §79', reg, model, id => /^(BL|CS|RS)-/.test(id));
+}
+const MATERIAL_RANK: MaterialCode[] = ['CS', 'C1', 'C5', 'SS'];
+/** SW-REG-9, SW-PWY-10: the register of the main pipeway. A stream's line is of the material of the unit lines it joins at their limits (the highest of them) and of the stream's phase */
+export function pipewayRegister(pw: Pipeway, model: PipingModel): PipingRegister {
+  const M = processModel(), Z = sizing(), base = new Map(lineRecords().map(r => [r.number, r]));
+  const of = new Map<string, { phase: string; material: MaterialCode }>();
+  for (const t of M.transfers) {
+    let mat: MaterialCode = 'CS'; const s0 = (t.to[0] ?? t.from[0]).s;
+    for (const sh of M.sheets) sh.lines.forEach((l, i) => { if (![l.from, l.to].some(e => e.k === 'bl' && e.name === t.key)) return; const r = base.get(lineNumber(sh.no, i + 1, Z.get(sh.no)!.lines[i].NPS, Z.get(sh.no)!.lines[i].cls, l.s.fluid)); if (r && MATERIAL_RANK.indexOf(r.materials.value.code) > MATERIAL_RANK.indexOf(mat)) mat = r.materials.value.code; });
+    of.set(t.key, { phase: s0.ph === 'L' ? 'liquid' : s0.ph === 'V' ? 'vapour' : 'two-phase', material: mat });
+  }
+  const reg: RegisterLine[] = pw.lines.map(l => { const o = of.get(l.stream); if (!o) throw new Error(`the main pipeway: no stream "${l.stream}" for ${l.def.no}`); return { def: l.def, origin: l.origin, fluid: l.fluid, designP: l.designP, designT: l.designT, phase: o.phase, material: o.material, utility: false, stream: l.stream, ...(l.tier !== undefined ? { tier: l.tier } : {}) }; });
+  return buildRegister(PWY.area, 'Main pipeway', 'DESIGN_BASIS.md §76 (SW-REG-4 to SW-REG-6, SW-REG-8, SW-REG-9) and §80', reg, model, id => /^PL-/.test(id));
+}
+/** the register of a piped area: a record for every line of its list and every component the generator built on it; `isSpool`: the nozzles that are piping (spools), each half registered with the line that ends at it */
+function buildRegister(unit: number, name: string, basis: string, reg: RegisterLine[], model: PipingModel, isSpool: (id: string) => boolean): PipingRegister {
+  const run = new Map(model.lines.map(l => [l.no, l])), lines: PipingLineRecord[] = [], components: PipingComponentRecord[] = [], matOf = new Map<string, MaterialCode>();
+  for (const ul of reg) {
+    const d = ul.def, r = run.get(d.no); if (!r) throw new Error(`unit ${unit}: line ${d.no} of the line list is not in the generated model`);
+    const c = classify(unit, ul.fluid, ul.phase, d.cls, ul.designP, ul.designT, ul.material, ul.utility);
+    matOf.set(d.no, ul.material);
     lines.push({
-      number: d.no, unit, origin: ul.origin, ...(of && of !== d.no ? { of } : {}), from: r.from, to: r.to, fluid: ul.fluid, fluidName: FLUIDS[ul.fluid].name, phase, designP: ul.designP, designT: ul.designT, size: d.NPS, pipeClass: d.cls,
-      lineClass: c.lineClass, severity: c.severity.level, fluidService: c.fluidService, examination: c.examination, leakTest: c.leakTest, material: mat, pipingSystemRegistration: c.registration,
+      number: d.no, unit, origin: ul.origin, ...(ul.of ? { of: ul.of } : {}), ...(ul.stream ? { stream: ul.stream } : {}), from: r.from, to: r.to, fluid: ul.fluid, fluidName: FLUIDS[ul.fluid].name, phase: ul.phase, designP: ul.designP, designT: ul.designT, size: d.NPS, pipeClass: d.cls,
+      lineClass: c.lineClass, severity: c.severity.level, fluidService: c.fluidService, examination: c.examination, leakTest: c.leakTest, material: ul.material, pipingSystemRegistration: c.registration,
       ...(ul.tier !== undefined ? { tier: ul.tier + 1 } : {}), ...(ul.station ? { station: ul.station } : {}), components: 0, pipeFt: 0, welds: { shop: 0, field: 0 },
     });
   }
@@ -68,7 +92,7 @@ export function pipingRegister(up: UnitPiping, model: PipingModel): PipingRegist
   // the spools of the battery limit, the control stations and the branch roots are piping: each half with the line that ends at it (a pipeway side with its other half's, until the pipeways are piped)
   const endAt = new Map<string, string>(); for (const r of model.lines) { endAt.set(r.from, r.no); endAt.set(r.to, r.no); }
   for (const n of model.nozzles) {
-    if (!/^(BL|CS|RS)-/.test(n.id)) continue;                                                           // an item's own nozzle belongs to its pressure equipment record
+    if (!isSpool(n.id)) continue;                                                                       // an item's own nozzle belongs to its pressure equipment record
     const no = endAt.get(n.id) ?? endAt.get(n.id.replace(/-P$/, '-U')), line = no ? byNo.get(no) : undefined; if (!line) throw new Error(`unit ${unit}: no line ends at the spool nozzle ${n.id}`);
     for (const c of n.comps) add(line, c); for (const w of n.welds) line.welds[w.field ? 'field' : 'shop']++;
   }
@@ -76,14 +100,14 @@ export function pipingRegister(up: UnitPiping, model: PipingModel): PipingRegist
   const systems = new Map<string, PipingRegister['systems'][number]>();
   for (const l of lines) { let s = systems.get(l.lineClass); if (!s) systems.set(l.lineClass, (s = { lineClass: l.lineClass, registration: l.pipingSystemRegistration, fluidService: l.fluidService, severity: l.severity, lines: 0, pipeFt: 0, components: 0 })); s.lines++; s.pipeFt = Math.round((s.pipeFt + l.pipeFt) * 100) / 100; s.components += l.components; s.severity = Math.max(s.severity, l.severity); }
   const weldRows = (['M', 'Normal', 'D'] as Category[]).map(cat => {
-    const ls = lines.filter(l => l.fluidService === cat), ids = new Set(ls.map(l => l.number)), ws = [...model.lines.filter(r => ids.has(r.no)).flatMap(r => r.welds), ...model.nozzles.filter(n => /^(BL|CS|RS)-/.test(n.id) && ids.has(endAt.get(n.id) ?? endAt.get(n.id.replace(/-P$/, '-U')) ?? '')).flatMap(n => n.welds)];
+    const ls = lines.filter(l => l.fluidService === cat), ids = new Set(ls.map(l => l.number)), ws = [...model.lines.filter(r => ids.has(r.no)).flatMap(r => r.welds), ...model.nozzles.filter(n => isSpool(n.id) && ids.has(endAt.get(n.id) ?? endAt.get(n.id.replace(/-P$/, '-U')) ?? '')).flatMap(n => n.welds)];
     return { fluidService: cat, examination: ls[0]?.examination ?? '', lines: ls.length, butt: ws.filter(w => w.type === 'BW').length, socket: ws.filter(w => w.type === 'SW').length, fillet: ws.filter(w => w.type === 'FW').length, shop: ws.filter(w => !w.field).length, field: ws.filter(w => w.field).length };
   }).filter(r => r.lines);
   const byRegistration = { pipe: 0, A: 0, B: 0, C: 0, none: 0 } as Record<Registered, number>; for (const c of components) byRegistration[c.registered]++;
   return {
-    demonstration: true, notice: NOTICE, basis: 'DESIGN_BASIS.md §76 (SW-REG-4 to SW-REG-6, SW-REG-8, SW-REG-9) and §79', unit, name: sh.name,
+    demonstration: true, notice: NOTICE, basis, unit, name,
     sources: {
-      lines: { number: 'model', unit: 'model', origin: 'model', of: 'model', from: 'model', to: 'model', fluid: 'model', fluidName: 'model', phase: 'model', designP: 'model', designT: 'model', size: 'model', pipeClass: 'model', lineClass: 'model', severity: 'model', fluidService: 'recalled', examination: 'recalled', leakTest: 'recalled', material: 'recalled', pipingSystemRegistration: 'invented', tier: 'model', station: 'model', components: 'model', pipeFt: 'model', welds: 'model' },
+      lines: { number: 'model', unit: 'model', origin: 'model', of: 'model', stream: 'model', from: 'model', to: 'model', fluid: 'model', fluidName: 'model', phase: 'model', designP: 'model', designT: 'model', size: 'model', pipeClass: 'model', lineClass: 'model', severity: 'model', fluidService: 'recalled', examination: 'recalled', leakTest: 'recalled', material: 'recalled', pipingSystemRegistration: 'invented', tier: 'model', station: 'model', components: 'model', pipeFt: 'model', welds: 'model' },
       components: { tag: 'model', line: 'model', kind: 'model', what: 'model', designation: 'model', size: 'model', pipeClass: 'model', material: 'recalled', registered: 'recalled', maker: 'invented', registration: 'invented' },
     },
     lines, components, systems: [...systems.values()].sort((a, b) => b.severity - a.severity || a.lineClass.localeCompare(b.lineClass)), welds: weldRows,
@@ -113,12 +137,14 @@ export function pipingRegisterDocument(rs: PipingRegister[]): string {
       ['', '**all**', rs.reduce((a, r) => a + r.totals.lines, 0), num(rs.reduce((a, r) => a + r.totals.pipeFt, 0)), num(rs.reduce((a, r) => a + r.totals.components, 0)), num(rs.reduce((a, r) => a + r.totals.byRegistration.pipe, 0)), num(rs.reduce((a, r) => a + r.totals.byRegistration.A, 0)), num(rs.reduce((a, r) => a + r.totals.byRegistration.B, 0)), num(rs.reduce((a, r) => a + r.totals.byRegistration.C, 0)), num(rs.reduce((a, r) => a + r.totals.byRegistration.none, 0)), new Set(rs.flatMap(r => r.components.filter(c => c.maker).map(c => c.registration))).size, num(rs.reduce((a, r) => a + r.totals.welds, 0))]]), '');
   out.push(`Categories as recalled (SW-REG-6): ${(['A', 'B', 'C'] as const).map(c => `${c} ${FITTING_CATEGORIES[c]}`).join('; ')}. Line blanks (spades and spectacle blinds) are counted with the flanges they are clamped between.`, '');
   for (const r of rs) {
-    out.push(`## Unit ${r.unit}: ${r.name}`, '');
+    const pipewayArea = r.lines.some(l => l.origin === 'main');
+    out.push(pipewayArea ? `## Area ${r.unit}: ${r.name}` : `## Unit ${r.unit}: ${r.name}`, '');
     out.push('Piping systems: a line class in the unit, with the number its lines and their pipe carry.', '');
     out.push(table(['Line class', 'Fluid service', 'Severity', 'Piping system number', 'Lines', 'Pipe, ft', 'Components'], r.systems.map(s => [`\`${s.lineClass}\``, s.fluidService, s.severity, s.registration, s.lines, num(Math.round(s.pipeFt)), num(s.components)])), '');
     out.push(table(['Fluid service', 'Lines', 'Examination of welds (recalled)', 'Butt welds', 'Socket welds', 'Fillet welds', 'Shop', 'Field'], r.welds.map(w => [w.fluidService === 'D' ? 'Category D' : w.fluidService === 'M' ? 'Category M' : 'Normal', w.lines, w.examination, num(w.butt), num(w.socket), num(w.fillet), num(w.shop), num(w.field)])), '');
-    const byOrigin = (o: UnitLine['origin']) => r.lines.filter(l => l.origin === o).length;
-    out.push(`Lines by what they are: ${byOrigin('process')} of the flowsheet (${r.lines.filter(l => l.origin === 'process' && l.station).length} of them as far as a control station), ${byOrigin('control')} parts after a control station (${r.lines.filter(l => l.origin === 'control' && l.of && r.lines.find(q => q.number === l.of)?.pipeClass !== l.pipeClass).length} in a lower class than the line ahead: a specification break), ${byOrigin('spare')} connections of installed spares, ${byOrigin('root')} branch root connections, ${byOrigin('utility')} utility connections and ${byOrigin('header')} utility headers.`, '');
+    const byOrigin = (o: PipingLineRecord['origin']) => r.lines.filter(l => l.origin === o).length;
+    if (pipewayArea) out.push(`Lines by what they are: ${byOrigin('main')} lines of streams between units, ${byOrigin('branch')} branches to the further parties of streams that have more than two, and ${byOrigin('limit')} valves with their blinds beyond the limit spools (SW-PWY-3, SW-PWY-4). Each stream's line is of the material of the unit lines it joins.`, '');
+    else out.push(`Lines by what they are: ${byOrigin('process')} of the flowsheet (${r.lines.filter(l => l.origin === 'process' && l.station).length} of them as far as a control station), ${byOrigin('control')} parts after a control station (${r.lines.filter(l => l.origin === 'control' && l.of && r.lines.find(q => q.number === l.of)?.pipeClass !== l.pipeClass).length} in another class than the line ahead: a specification break), ${byOrigin('spare')} connections of installed spares, ${byOrigin('root')} branch root connections, ${byOrigin('utility')} utility connections and ${byOrigin('header')} utility headers.`, '');
     const kinds = new Map<string, { n: number; reg: Registered; mat: Set<string>; nums: Set<string> }>();
     for (const c of r.components) { let k = kinds.get(c.what); if (!k) kinds.set(c.what, (k = { n: 0, reg: c.registered, mat: new Set(), nums: new Set() })); k.n++; k.mat.add(c.material); if (c.maker) k.nums.add(c.registration!); }
     out.push(table(['Component', 'Count', 'Registered as', 'Material labels (recalled)', 'Fitting numbers in use'], [...kinds].sort((a, b) => b[1].n - a[1].n).map(([what, k]) => [what, num(k.n), k.reg === 'pipe' ? 'its line\'s piping system' : k.reg === 'none' ? 'not registered' : `category ${k.reg}`, [...k.mat].join('; '), k.nums.size || '—'])), '');

@@ -375,7 +375,7 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/unit-19-from-the-exchanger-side.png` | Plant 3, unit 19 (Utilities): equipment and rack, from the exchanger side; no piping yet |
 | `refinery/cooling-tower-from-the-vessel-side.png` | Plant 3, unit 19: the cooling tower with its circulating pumps |
 | `refinery/cooling-tower-from-the-exchanger-side.png` | Plant 3, unit 19: the cooling tower, from the other side |
-| `refinery/plant-from-the-south-west.png` | Plant 3: the plant on its site from the south-west; equipment, racks and tanks, no piping yet |
+| `refinery/plant-from-the-south-west.png` | Plant 3: the plant on its site from the south-west: equipment, racks and tanks, the piped units and the main pipeway with their lines |
 | `refinery/plant-from-the-south-east.png` | Plant 3: the plant from the south-east |
 | `refinery/plant-process-units-from-the-south.png` | Plant 3: the process units on both sides of the main pipeway, from the south |
 | `refinery/plant-crude-and-vacuum-units.png` | Plant 3: the crude and vacuum units |
@@ -421,3 +421,9 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/unit-12-piping-from-the-exchanger-side.png` | Plant 3, unit 12 (Vacuum distillation) piped, from the exchanger side |
 | `refinery/unit-12-piping-valve-bay.png` | Plant 3, unit 12: the valve bay at the battery limit, a block valve and spool on each line |
 | `refinery/unit-12-piping-exchangers.png` | Plant 3, unit 12: piping at the exchangers |
+| `refinery/pipeway-from-the-south-west.png` | Plant 3, the main pipeway piped, from the south-west: the rack between the two rows of units, a line for every stream between them, coloured by line class |
+| `refinery/pipeway-a-junction.png` | Plant 3, the main pipeway: where a unit's lines cross to the rack, hung from the junction frame at the unit's limit and from the rack's struts and stringers |
+| `refinery/pipeway-east-limit-bay.png` | Plant 3, the main pipeway: the east limit bay, a spool on each line with the block valve and blind that stand until the tank farms are piped |
+| `refinery/pipeway-along-the-rack.png` | Plant 3, the main pipeway from above its west end, looking east along the rack |
+| `refinery/plant-main-pipeway-and-units.png` | Plant 3: the units about the main pipeway, from above the south row: the rack between the two rows and the lines that cross to it from each unit's battery limit |
+| `refinery/plant-main-pipeway-from-above.png` | Plant 3: the west half of the process bench from above: the main rack, the junction frames at each unit's limit and the streams between units on it |

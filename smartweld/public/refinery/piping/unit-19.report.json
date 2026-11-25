@@ -10,14 +10,14 @@
   3
  ],
  "tierRoom": 84,
- "seconds": 452,
+ "seconds": 746,
  "stats": {
   "lines": 104,
   "routed": 104,
   "failed": 0,
-  "comps": 2966,
-  "welds": 1556,
-  "supports": 474,
+  "comps": 2974,
+  "welds": 1564,
+  "supports": 470,
   "penetrations": 0
  },
  "failures": [],
@@ -30,6 +30,7 @@
   "staticClearance": [],
   "supports": [
    "8\"-P300-P-19003: unsupported span 248 in > 240 on run from 3174,276,-115",
+   "6\"-P300-P-19010: unsupported span 242 in > 240 on run from 930,204,36",
    "4\"-P150-P-19704: unsupported span 251 in > 240 on run from 954,246,-43",
    "3\"-P150-P-19014: unsupported span 467 in > 180 on run from 1146,312,-607",
    "3\"-P150-P-19014: unsupported span 467 in > 180 on run from 702,318,-65",
@@ -40,7 +41,6 @@
    "3\"-P150-P-19708: unsupported span 413 in > 180 on run from 1302,168,-41",
    "3\"-P1200-P-19028: unsupported span 230 in > 180 on run from 2094,228,-355",
    "4\"-P150-P-19039: unsupported span 521 in > 240 on run from 2472,288,-605",
-   "4\"-P150-P-19039: unsupported span 245 in > 240 on run from 2483,270,-78",
    "3\"-P150-P-19040: unsupported span 431 in > 180 on run from 4584,150,49",
    "3\"-P150-P-19041: unsupported span 214 in > 180 on run from 4572,162,-487",
    "3\"-P150-P-19041: unsupported span 214 in > 180 on run from 4842,174,-17",
@@ -67,7 +67,7 @@
    "at": [
     150,
     204,
-    -126
+    -120
    ],
    "tier": 0,
    "lane": -120
@@ -82,7 +82,7 @@
    "at": [
     150,
     204,
-    -102
+    -96
    ],
    "tier": 0,
    "lane": -102
@@ -97,7 +97,7 @@
    "at": [
     150,
     204,
-    -78
+    -72
    ],
    "tier": 0,
    "lane": -84
@@ -112,7 +112,7 @@
    "at": [
     150,
     204,
-    -54
+    -48
    ],
    "tier": 0,
    "lane": -66
@@ -127,7 +127,7 @@
    "at": [
     150,
     204,
-    -30
+    -24
    ],
    "tier": 0,
    "lane": -36
@@ -142,7 +142,7 @@
    "at": [
     150,
     204,
-    -6
+    0
    ],
    "tier": 0,
    "lane": -18
@@ -157,7 +157,7 @@
    "at": [
     150,
     204,
-    18
+    24
    ],
    "tier": 0,
    "lane": 12
@@ -172,7 +172,7 @@
    "at": [
     150,
     204,
-    36
+    42
    ],
    "tier": 0,
    "lane": 36
@@ -187,7 +187,7 @@
    "at": [
     150,
     198,
-    54
+    60
    ],
    "tier": 0
   },
@@ -656,8 +656,8 @@
    "routed": true,
    "components": 33,
    "welds": 24,
-   "supports": 5,
-   "lengthFt": 157,
+   "supports": 4,
+   "lengthFt": 159,
    "tier": 1
   },
   {
@@ -1057,10 +1057,10 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 26,
-   "welds": 15,
-   "supports": 1,
-   "lengthFt": 46,
+   "components": 34,
+   "welds": 23,
+   "supports": 0,
+   "lengthFt": 52,
    "tier": 1
   },
   {
@@ -1154,7 +1154,7 @@
    "components": 33,
    "welds": 26,
    "supports": 6,
-   "lengthFt": 194,
+   "lengthFt": 195,
    "tier": 1
   },
   {
@@ -1242,7 +1242,7 @@
    "routed": true,
    "components": 33,
    "welds": 26,
-   "supports": 19,
+   "supports": 18,
    "lengthFt": 407,
    "tier": 1
   },
@@ -1347,12 +1347,12 @@
    "to": "BL-1910-U",
    "NPS": 3,
    "cls": "P150",
-   "designP": 110,
+   "designP": 55,
    "designT": 265,
    "routed": true,
-   "components": 15,
-   "welds": 8,
-   "supports": 1,
+   "components": 19,
+   "welds": 12,
+   "supports": 0,
    "lengthFt": 33,
    "station": "CS-1909"
   },
@@ -1388,7 +1388,7 @@
    "routed": true,
    "components": 36,
    "welds": 27,
-   "supports": 8,
+   "supports": 9,
    "lengthFt": 245,
    "tier": 2
   },
@@ -1458,10 +1458,10 @@
    "designP": 130,
    "designT": 150,
    "routed": true,
-   "components": 38,
-   "welds": 29,
-   "supports": 9,
-   "lengthFt": 264,
+   "components": 34,
+   "welds": 25,
+   "supports": 10,
+   "lengthFt": 261,
    "tier": 2
   },
   {
@@ -1587,7 +1587,7 @@
    "routed": true,
    "components": 52,
    "welds": 33,
-   "supports": 22,
+   "supports": 21,
    "lengthFt": 247,
    "tier": 3,
    "station": "CS-1911",
@@ -1701,8 +1701,8 @@
    "routed": true,
    "components": 38,
    "welds": 29,
-   "supports": 14,
-   "lengthFt": 300,
+   "supports": 13,
+   "lengthFt": 301,
    "tier": 1
   },
   {
@@ -1810,8 +1810,8 @@
    "to": "BL-1920-U",
    "NPS": 3,
    "cls": "P150",
-   "designP": 85,
-   "designT": 150,
+   "designP": 65,
+   "designT": 200,
    "routed": true,
    "components": 20,
    "welds": 13,
@@ -2504,11 +2504,11 @@
  "counts": {
   "components": {
    "cap": 2,
-   "elbow": 471,
+   "elbow": 475,
    "flange": 325,
    "gasket": 518,
    "olet": 4,
-   "pipe": 800,
+   "pipe": 804,
    "reducer": 60,
    "spade": 14,
    "spectacle": 28,
@@ -2516,18 +2516,18 @@
    "valve": 231
   },
   "welds": {
-   "BW, field": 256,
-   "BW, shop": 1296,
+   "BW, field": 257,
+   "BW, shop": 1303,
    "FW, shop": 4
   },
   "supports": {
-   "anchor": 43,
-   "guide": 110,
+   "anchor": 42,
+   "guide": 109,
    "hanger": 33,
-   "shoe": 212,
+   "shoe": 211,
    "stanchion": 32,
    "trapeze": 5,
-   "trunnion": 39
+   "trunnion": 38
   }
  },
  "notes": []

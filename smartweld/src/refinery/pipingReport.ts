@@ -58,18 +58,58 @@ export function elbowGap(c: Comp, o: Obstacle): number {
     best = Math.min(best, o.kind === 'box' ? Math.hypot(...[0, 1, 2].map(a => Math.max(o.mn[a] - p[a], p[a] - o.mx[a], 0))) : K.segSeg(p, p, o.a, o.b) - o.r); }
   return best - OD / 2;
 }
-/** the generator's checks (§40) on a unit's piping, against the unit's real steel and equipment */
-export function unitChecks(m: PipingModel, up: UnitPiping): UnitChecks {
+/**
+ * SW-RPI-13: the section of a steel member the checks hold as a round about its axis: the box of the member's own solids, where the member lies square to the
+ * axes (a column, a beam, a strut; not a bracing rod). `undefined` for any other obstacle.
+ */
+export function sectionBoxFn(instances: Placed[]): (o: Obstacle) => [V3, V3] | undefined {
+  const local = new WeakMap<object, [V3, V3]>(), byTag = new Map<string, Placed[]>();
+  for (const pl of instances) { const t = pl.tags.join('/'); byTag.set(t, [...(byTag.get(t) ?? []), pl]); }
+  const boxOf = (pl: Placed): [V3, V3] => {
+    let b = local.get(pl.part);
+    if (!b) { const mn: V3 = [Infinity, Infinity, Infinity], mx: V3 = [-Infinity, -Infinity, -Infinity]; for (const so of buildGeometry(pl.part).solids) for (let i = 0; i < so.mesh.positions.length; i += 3) for (let a = 0; a < 3; a++) { mn[a] = Math.min(mn[a], so.mesh.positions[i + a]); mx[a] = Math.max(mx[a], so.mesh.positions[i + a]); } b = [mn, mx]; local.set(pl.part, b); }
+    const T = pl.transform, mn: V3 = [Infinity, Infinity, Infinity], mx: V3 = [-Infinity, -Infinity, -Infinity];
+    for (let k = 0; k < 8; k++) { const p = [k & 1 ? b[1][0] : b[0][0], k & 2 ? b[1][1] : b[0][1], k & 4 ? b[1][2] : b[0][2]], w = [T[0] * p[0] + T[4] * p[1] + T[8] * p[2] + T[12], T[1] * p[0] + T[5] * p[1] + T[9] * p[2] + T[13], T[2] * p[0] + T[6] * p[1] + T[10] * p[2] + T[14]]; for (let a = 0; a < 3; a++) { mn[a] = Math.min(mn[a], w[a]); mx[a] = Math.max(mx[a], w[a]); } }
+    return [mn, mx];
+  };
+  return (o: Obstacle) => {
+    if (o.kind !== 'cap') return undefined;
+    const d = [o.b[0] - o.a[0], o.b[1] - o.a[1], o.b[2] - o.a[2]], L = Math.hypot(d[0], d[1], d[2]); if (L < 1e-6 || Math.max(...d.map(Math.abs)) < 0.999999 * L) return undefined;
+    for (const pl of byTag.get(o.tag) ?? []) { const [mn, mx] = boxOf(pl); if ([o.a, o.b].every(q => [0, 1, 2].every(k => q[k] >= mn[k] - 0.01 && q[k] <= mx[k] + 0.01))) return [mn, mx]; }
+    return undefined;
+  };
+}
+/** the generator's checks (§40) on a unit's piping, against the unit's real steel and equipment; `notes` takes what SW-RPI-13 set aside, with both distances */
+export function unitChecks(m: PipingModel, up: Pick<UnitPiping, 'cell' | 'plant'>, notes: string[] = []): UnitChecks {
   const vb = valveBoxFn(), byTag = new Map<string, Comp>(); for (const r of m.lines) for (const c of r.comps) byTag.set(c.tag, c);
   // SW-RPI-13: a pair the clearance check reports for the way it holds a piece at 45° is measured again, and stays reported if it is nearer than 3 in
   const real = (v: string) => { const t = /^\S+ (\S+) – \S+ (\S+): /.exec(v), a = t && byTag.get(t[1]), b = t && byTag.get(t[2]); if (!a || !b) return true; const g = measuredAgain(a, b, vb); return g === undefined || g < 3; };
   // SW-RPI-13: a 90° elbow reported against steel or equipment is measured again from its arc, and stays reported if that is nearer than 3 in
-  const statics = staticObstacles([], up.cell.interior.instances, true).obstacles;
+  const statics = staticObstacles([], up.cell.interior.instances, true).obstacles, section = sectionBoxFn(up.cell.interior.instances);
+  // SW-RPI-13: the gap between a piece and an obstacle, a 90° elbow by its arc, a 45° elbow by its own two legs, a member square to the axes by its own section
+  const is45 = (c: Comp) => c.kind === 'elbow' && /\|45(\||$)/.test(c.key);
+  const gapTo = (c: Comp, o: Obstacle): number => {
+    const sb = section(o), t: Obstacle = sb ? { tag: o.tag, kind: 'box', mn: sb[0], mx: sb[1] } : o;
+    if (c.kind === 'elbow' && !is45(c)) return elbowGap(c, t);
+    const OD = pipeDims(c.NPS, c.cls).OD, leg = elbowRadius(OD) * Math.tan(Math.PI / 8), corner: V3 = [c.a[0] + c.T[8] * leg, c.a[1] + c.T[9] * leg, c.a[2] + c.T[10] * leg];
+    const shapes: K.Shape[] = is45(c) ? [{ kind: 'cap', a: c.a, b: corner, r: OD / 2 }, { kind: 'cap', a: corner, b: c.b, r: OD / 2 }] : K.compShapes(c, vb);
+    const box = (sh: K.Shape): [V3, V3] => (sh.kind === 'box' ? [sh.mn, sh.mx] : [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r) as V3, [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r) as V3]);
+    return Math.min(...shapes.map(sh => (t.kind === 'box' ? (sh.kind === 'cap' ? K.segBox(sh.a, sh.b, t.mn, t.mx) - sh.r : K.boxGap(box(sh), [t.mn, t.mx])) : K.gap(sh, { kind: 'cap', a: t.a, b: t.b, r: t.r }))));
+  };
+  const stays = (v: string): boolean => {
+    const t = /^(\S+) (\S+) \((\w+)\) – (.+): ([\d.]+) in$/.exec(v), c = t && byTag.get(t[2]); if (!t || !c) return true;
+    const os = statics.filter(o => o.tag === t[4]); if (!os.length) return true;
+    if (is45(c) && !os.some(o => section(o))) return true;                                                // a 45° elbow against anything but a member's section: as the check gives it
+    if (c.kind !== 'elbow' && !os.some(o => section(o))) return true;                                    // a straight piece against anything but a member's section: the check is exact
+    const g = Math.min(...os.map(o => gapTo(c, o))); if (g < 3) return true;
+    if (os.some(o => section(o))) { const n = `${c.tag} (${c.kind}) passes ${t[4]} at ${t[5]} in from the round the check holds that member by and ${g.toFixed(2)} in from its section (SW-RPI-13)`; if (!notes.includes(n)) notes.push(n); }
+    return false;
+  };
   return {
     continuity: K.checkContinuity(m), joints: K.checkJoints(m), elbows: K.checkElbowsAndStraights(m),
     valves: K.checkNumberingAndValves(m).filter(v => !v.startsWith('bad line number')),                    // plant 3's numbers carry a five-digit sequence (SW-REF-3)
     lineClearance: [...new Set(K.checkLineClearance(m, vb).violations)].filter(real),
-    staticClearance: K.checkStaticClearance(m, statics, vb).filter(v => { const t = /^\S+ (\S+) \(elbow\) – (.+): [\d.]+ in$/.exec(v), c = t && byTag.get(t[1]); if (!c || /\|45(\||$)/.test(c.key)) return true; const os = statics.filter(o => o.tag === t![2]); return !os.length || Math.min(...os.map(o => elbowGap(c, o))) < 3; }),
+    staticClearance: K.checkStaticClearance(m, statics, vb).filter(stays),
     supports: K.checkSupports(m, up.plant.rack),
   };
 }
@@ -137,14 +177,15 @@ export function removeValves(m: PipingModel, up: Pick<UnitPiping, 'lines'>): str
     const cs = side === 'from' ? r.comps : [...r.comps].reverse(), near = 'a', far = 'b', pEnd = side === 'from' ? 'a' : 'b', end = l.def[side];
     // the last valve reached from the nozzle through nothing but the pieces of a valve stack and stubs under 12 in; the line's flange is the first after it
     let iv = -1; for (let i = 0; i < cs.length; i++) { const c = cs[i]; if (c.kind === 'valve') iv = i; else if (!(STACK.has(c.kind) || (c.kind === 'pipe' && d3(c.a, c.b) < 12))) break; }
-    const iF = iv < 0 ? -1 : cs.findIndex((c, i) => i > iv && c.kind === 'flange'), g = cs[0], fl = cs[iF], pipe = iF < 0 ? undefined : cs.slice(iF + 1).find(c => c.kind !== 'studs');
-    if (iv < 0 || !fl || g.kind !== 'gasket' || !pipe || pipe.kind !== 'pipe' || d3(pipe[pEnd], fl[far]) > 0.01) throw new Error(`${r.no}: its ${side} end is not a valve stack SW-RPI-14 knows (${cs.slice(0, 10).map(c => c.kind).join(', ')})`);
+    // behind that flange the line's pipe, or first a reducer where the line is of another size than the nozzle (it moves up with the flange)
+    const iF = iv < 0 ? -1 : cs.findIndex((c, i) => i > iv && c.kind === 'flange'), g = cs[0], fl = cs[iF], behind = iF < 0 ? [] : cs.slice(iF + 1).filter(c => c.kind !== 'studs'), red = behind[0]?.kind === 'reducer' ? behind[0] : undefined, pipe = red ? behind[1] : behind[0], last = red ?? fl;
+    if (iv < 0 || !fl || g.kind !== 'gasket' || !pipe || pipe.kind !== 'pipe' || d3(pipe[pEnd], last[far]) > 0.01 || (red && d3(red[near], fl[far]) > 0.01)) throw new Error(`${r.no}: its ${side} end is not a valve stack SW-RPI-14 knows (${cs.slice(0, 10).map(c => c.kind).join(', ')})`);
     const shift: V3 = [g[far][0] - fl[near][0], g[far][1] - fl[near][1], g[far][2] - fl[near][2]], add = (p: V3): V3 => [p[0] + shift[0], p[1] + shift[1], p[2] + shift[2]], moveT = <T extends number[]>(t: T): T => [...t.slice(0, 12), t[12] + shift[0], t[13] + shift[1], t[14] + shift[2], 1] as unknown as T;
     // the studs of the joint the flange made: those nearest its face; every other piece between the nozzle's gasket and the flange goes
     const studs = cs.slice(1, iF + 2).filter(c => c.kind === 'studs').sort((p, q) => d3([(p.a[0] + p.b[0]) / 2, (p.a[1] + p.b[1]) / 2, (p.a[2] + p.b[2]) / 2], fl[near]) - d3([(q.a[0] + q.b[0]) / 2, (q.a[1] + q.b[1]) / 2, (q.a[2] + q.b[2]) / 2], fl[near]))[0];
-    const out = new Set(cs.slice(1, iF + 2).filter(c => c !== fl && c !== studs && (c.kind !== 'pipe' || cs.indexOf(c) < iF)).map(c => c.tag)), valves = cs.filter(c => out.has(c.tag) && c.kind === 'valve').map(c => c.key.split('|').slice(1, 3).join(' '));
-    for (const wd of r.welds) if (wd.joins.includes(fl.tag) && d3(wd.at, fl[far]) < 0.01) { wd.at = add(wd.at); wd.T = moveT(wd.T); }
-    for (const c of [fl, ...(studs ? [studs] : [])]) { c.a = add(c.a); c.b = add(c.b); c.T = moveT(c.T); }
+    const out = new Set(cs.slice(1, iF + 2).filter(c => c !== fl && c !== red && c !== studs && (c.kind !== 'pipe' || cs.indexOf(c) < iF)).map(c => c.tag)), valves = cs.filter(c => out.has(c.tag) && c.kind === 'valve').map(c => c.key.split('|').slice(1, 3).join(' '));
+    for (const wd of r.welds) if ((wd.joins.includes(fl.tag) && d3(wd.at, fl[far]) < 0.01) || (red && wd.joins.includes(red.tag) && d3(wd.at, red[far]) < 0.01)) { wd.at = add(wd.at); wd.T = moveT(wd.T); }
+    for (const c of [fl, ...(red ? [red] : []), ...(studs ? [studs] : [])]) { c.a = add(c.a); c.b = add(c.b); c.T = moveT(c.T); }
     pipe[pEnd] = add(pipe[pEnd]); if (pEnd === 'a') pipe.T = [...pipe.T.slice(0, 12), pipe.a[0], pipe.a[1], pipe.a[2], 1] as typeof pipe.T;
     pipe.key = `${pipe.key.split('|').slice(0, 3).join('|')}|${d3(pipe.a, pipe.b).toFixed(3)}`;
     const welds = r.welds.filter(wd => wd.joins.some(t => out.has(t))).length;
@@ -214,7 +255,7 @@ export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watc
   // SW-RPI-7: each line that runs the rack lies in the lane it was given; one found in another is said, and so is a header (their lanes are held where they were foreseen)
   const astray = up.foreseen.flatMap(L => { const r = L.no === undefined ? undefined : model.lines.find(l => l.no === L.no), z = r && r.ok ? laneOf(r, L.t) : undefined; return z !== undefined && Math.abs(z - L.z) > 1e-6 ? [`${L.no}: given the lane at z ${L.z} on tier ${L.t + 1}, routed at z ${z}`] : []; });
   const moved = up.headers.flatMap(h => { const r = model.lines.find(l => l.no === h.line), z = r?.path[0]?.[2]; return r && h.z !== undefined && z !== undefined && Math.abs(z - h.z) > 1e-6 ? [`${h.line}: foreseen in the lane at z ${h.z}, routed at z ${z}`] : []; });
-  const checks = unitChecks(model, up), M = processModel(), sh = M.sheet(unit), count = (xs: string[]) => { const o: Record<string, number> = {}; for (const x of xs) o[x] = (o[x] ?? 0) + 1; return Object.fromEntries(Object.entries(o).sort()); };
+  const aside: string[] = [], checks = unitChecks(model, up, aside), M = processModel(), sh = M.sheet(unit), count = (xs: string[]) => { const o: Record<string, number> = {}; for (const x of xs) o[x] = (o[x] ?? 0) + 1; return Object.fromEntries(Object.entries(o).sort()); };
   const lines: PipedLine[] = up.lines.map(l => { const r = model.lines.find(q => q.no === l.def.no)!; const fl = l.flow !== undefined ? sh.lines[l.flow] : undefined;
     return { no: l.def.no, origin: l.origin, fluid: l.fluid, fluidName: FLUIDS[l.fluid].name, from: r.from, to: r.to, NPS: l.def.NPS, cls: l.def.cls, designP: l.designP, designT: l.designT, routed: r.ok, components: r.comps.filter(c => c.kind !== 'studs').length, welds: r.welds.length, supports: r.supports.length, lengthFt: Math.round(pathLen(r) / 12), ...(l.tier !== undefined ? { tier: l.tier + 1 } : {}),
       ...(l.station ? { station: l.station } : {}), ...(fl?.cv && l.origin === 'process' ? { controlValve: l.cvOmitted ? 'omitted' as const : 'piped' as const } : {}) }; });
@@ -222,7 +263,7 @@ export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watc
     demonstration: true, unit, name: sh.name, frame: 'the unit\'s own (SW-CELL-1): inches, x from its battery limit along its rack, y up from its bench, z across the rack', runs: up.runs.length, tiers: up.tiers.map(t => t + 1), tierRoom: up.tierRoom, seconds: Math.round((Date.now() - t0) / 1000),
     stats: Object.fromEntries(Object.entries(model.stats).filter(([k]) => !k.startsWith('t_'))), failures: model.failures, checks, spools: up.spools, roots: up.roots, stations: up.stations, lines,
     counts: { components: count(model.lines.flatMap(r => r.comps.filter(c => c.kind !== 'studs').map(c => c.kind))), welds: count(model.lines.flatMap(r => r.welds.map(w => `${w.type}${w.field ? ', field' : ', shop'}`))), supports: count(model.lines.flatMap(r => r.supports.map(s => s.type))) },
-    notes: [...up.notes, ...astray, ...moved, ...recut],
+    notes: [...up.notes, ...astray, ...moved, ...recut, ...aside],
   };
   return { up, model, result };
 }

@@ -3784,6 +3784,30 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   something at a higher pressure; a nozzle takes the class of its line. Storage tanks,
   basins, pits, the cooling tower, hoppers, loading arms and stacks are open to the
   atmosphere and have no design pressure; their connections are of the lowest class.
+  At a battery limit (added 2026-11-24, with §80). A stream's line (SW-REF-12) and the unit
+  lines that meet it with no control valve station between them are one run of pipe with a
+  block valve in it, and are designed together. The stream's line takes the highest design
+  pressure among the lines of the units that receive it and of the units that send it
+  without a control valve station at their limit, and the highest design temperature of all
+  the lines that meet it. Each of those unit lines takes the stream's design pressure and
+  temperature where they are higher than its own. In a unit that receives the stream, that
+  pressure is carried on from the limit as a pump's blocked-in pressure is: through
+  exchangers, filters and branches as far as the first control valve station, vessel,
+  column, tank or pump, each side of an exchanger on the way designed for it. A stream that
+  such a run then feeds at the unit's limit carries it into the next unit in the same way
+  (the vacuum gas oil pumparound leaves the vacuum unit, passes an exchanger of the crude
+  unit and returns: both lines between the units, the exchanger's shell and the return as
+  far as its control valve are designed for the pumparound pump blocked in). Reason: a
+  closed valve at the far end puts the sender's blocked-in pressure on everything up to it,
+  and a battery limit is a line on a drawing, not a break in the pipe. Not carried
+  upstream: where a receiving unit's own pump raises the pressure of a stream's line (none
+  does since the cutter stock of the fuel oil blend was put under flow control), the
+  sending unit's line at the limit takes the stream's pressure but the equipment behind it
+  does not; a test checks that no sending line is raised in this way. A connection of an
+  item open to the atmosphere still takes the class of its line where no control valve
+  station stands between (a loading arm at the end of a ship-loading pump's discharge is
+  of that pump's class); a tank filled through its level valve has its connection past
+  the valve, of the lowest class (SW-RPI-9).
 - `SW-PRC-3` Pressure class of equipment nozzles and lines: the smallest SmartWeld class
   (SW-PIPE-1) whose pressure is at least the design pressure, and one class higher where the
   design temperature is above 700 °F. Reason: SmartWeld's wall and flange rules carry no
@@ -4247,7 +4271,7 @@ company practice was consulted, and they are for the owner to tune (PROVENANCE P
   racks want level ground; a 2 : 1 slope stands in soil and weathered rock without a wall.
 - `SW-SITE-4` Where each area goes, and why.
   - Process units, on one bench at mid-height: on both sides of a main pipeway that runs
-    east–west in a corridor 60 ft wide (the rack, 40 ft, and 10 ft either side of it), each
+    east–west in a corridor 60 ft wide (the rack, 30 ft, and 15 ft either side of it), each
     unit's own rack at right angles to it, the unit's battery limit at the corridor's edge.
     (Amended 2026-11-24 at the owner's instruction, "the units are all too segregated, they
     should be together and more intertwined to where they all connect with one another":
@@ -4316,6 +4340,10 @@ their own geometry rules, which are unchanged.
   limit outward along its pipe rack, z across the rack, y up from its bench; the rack's centre line
   is z = 0. It is set on the site by a quarter turn about the vertical, a shift to its plot and its
   bench's elevation (SW-SITE-1). Equipment centres and rack bents stand on a 6 in grid (SW-LAY-2).
+  Across its plot the unit is centred to the nearest 6 in (amended 2026-11-24, with §80), so
+  that the lanes of its rack, and the spools on them at its limit, stand on the 6 in grid of
+  the main pipeway's frame: the generator pipes the pipeway on that grid (SW-RT-*), and a
+  unit centred to the fraction its own extent gave stood up to 3 in off it.
 - `SW-CELL-2` The unit's rack: bents at 20 ft, 24 ft wide, tiers at 16, 22 and 28 ft (as SW-RK-*,
   the rack of plants 1 and 2). It is 30 ft wide, or 36 ft, where the unit's lines would
   load three tiers of a narrower rack beyond 60 % of their lanes: the lines that run more
@@ -4328,6 +4356,10 @@ their own geometry rules, which are unchanged.
   from 10 ft to 30 ft from the battery limit: the valve bay, where the unit's isolation valves
   stand (SW-RPI-4). Reason: the rack is the
   unit's spine; every line between items runs on it.
+  The kit stands a caged ladder outside each end bent of a rack (SW-LAY-3). The one at the
+  battery-limit end is not built (amended 2026-11-24, with §80): the lines to the main
+  pipeway pass out between the columns there, and in the crude unit the outermost spool's
+  line ran straight into the cage. The ladder at the rack's far end stays.
 - `SW-CELL-3` Rows. From the rack outward on each side: pumps in a row, shafts square to the rack
   and suction ends 5 ft from its column line, or as far out as the largest suction valve set
   on that side needs to end outside that line (amended 2026-11-24: a 14 in suction's spade,
@@ -4714,7 +4746,11 @@ What this section adds is what that generator is given.
   as the catalogue draws them, some of them geared and wider than the flange) closer than
   3 in, the row is spread just enough, keeping
   its order and its middle, and slid as a whole to stay within the rack; each tier's row
-  stands above the one below. Where a row cannot be on its lanes within the rack's width
+  stands above the one below. Within the rack means two things (the second added
+  2026-11-24, with §80): the outermost flange 12 in inside the rack's half-width, and the
+  outermost line 3 in clear of the columns of the bay's first bent, which the pipeway's
+  line passes on its way out (a 3 in spool 18 in inside the half-width of a 24 ft rack
+  left its line 2.5 in from the column's flange, and the generator no room for it). Where a row cannot be on its lanes within the rack's width
   its spools stand a flange and 6 in apart about the centre line instead, and where that is
   still too wide, in two rows taken in turn, the second just beyond the bay's mid beam, each
   line of the first row passing between two valves of the second, a pipe's width and 4 in from
@@ -4894,6 +4930,13 @@ What this section adds is what that generator is given.
       was to stand). Reason: within one run the
       generator sets every line's first valves at its nozzles before it routes any line;
       across runs it cannot know of the later ones;
+    - the way of each later line whose two connections stand on one vertical, one facing
+      down and the other up (a tail pipe from a condenser's boot to the hotwell under it,
+      SW-RPI-2): the space straight between the two faces, a flange wide. Added
+      2026-11-24: the hotwell's gas line, which runs the rack and so is routed first,
+      crossed under the last condenser's boot on its way, and the line from that boot,
+      which is meant to drop straight into the hotwell, came down round it through a
+      12 in offset;
     - the headers' lanes, held clear until the last run with 4 ft above them for the
       valved take-offs. The headers are laid in the last run in lanes the generator gives
       them by width alone, before it looks at anything else; those lanes are worked out
@@ -4988,6 +5031,15 @@ What this section adds is what that generator is given.
   temperature where that is lower than the line's. Reason: past its letdown valve a line
   sees what it feeds, and a tank's or a low-pressure drum's nozzle is of that vessel's
   class, not of the pump's upstream (a 600 class line had arrived at an atmospheric tank).
+  Where the line's destination is the battery limit (added 2026-11-24, with §80), the part
+  after the station takes the design pressure, design temperature and class of the stream's
+  line (SW-PRC-2, SW-REF-12), higher or lower than the line's own, and the block valve and
+  spool at the limit with it. Reason: the pipeway's line bolts to that spool flange to
+  flange, and flanges of two classes do not bolt together; what stands beyond the station
+  is the stream's line in everything but its number. (Before this a sour water line left
+  the diesel hydrotreater's limit in the 1200 class, valve and spool, to join a 150 class
+  header, and 36 of the 62 streams met a unit's line of another class than their own.)
+  A test checks that every spool at a limit is of its stream's class.
 - `SW-RPI-10` No piece of pipe longer than 40 ft (added 2026-11-24). The generator cuts a
   long straight run into equal pieces of 40 ft at most (SW-RT-5) and then moves each splice
   off the rack's beams by up to 2 ft, so that every beam can carry a shoe; on a run long
@@ -5031,7 +5083,15 @@ What this section adds is what that generator is given.
   points every 5° along the arc of its centre line. A pair still nearer than 3 in stays
   in the report; every other finding of the checks stands as the generator gives it.
   Reason: the checks are the generator's and are not changed for plant 3; what is
-  reported must be what is there.
+  reported must be what is there. Amended 2026-11-24: the checks also hold a steel
+  member as a round about its axis, of its section's half-diagonal, which reaches
+  beyond the flange tips of a column or beam on every side but the diagonals. A piece
+  reported against a member that lies square to the axes (a column, a beam, a strut;
+  not a bracing rod) is measured again against that member's own section, its depth by
+  its flange width, and stays reported if that is nearer than 3 in (the crude unit: a
+  6 in line stepping round a rack column at 2.34 in from the round, 5 in from the
+  column's flange). Each finding set aside this way is written in the unit's notes
+  with both distances.
 - `SW-RPI-14` Valves not built (added 2026-11-24). The generator stands an isolation valve at
   every equipment connection (SW-LL-6), which is right for most and wrong for a few. On the
   generator's result, at the ends named here, the valve and what stands with it between the
@@ -5052,7 +5112,8 @@ What this section adds is what that generator is given.
     under the set's deck, where no one could reach a valve; each of these lines has its
     valve at the header it leaves (SW-RPI-5), and the set's own valves, at each ejector and
     each channel, belong to the set and are not drawn (SW-EQC-68).
-  The generator's own code is not changed; the correction is plant 3's, made in
+  Where the line is of another size than the nozzle, the reducer the generator stands
+  behind that flange moves up with it (added 2026-11-24, with §80). The generator's own code is not changed; the correction is plant 3's, made in
   `src/refinery/pipingReport.ts`, and each end corrected is named in the unit's notes. This
   is the second of the two ways put to the owner on 2026-11-24 (PROVENANCE P-86), taken as
   said there unless told otherwise. What it leaves as the generator made it: every other
@@ -5072,61 +5133,119 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
 - `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),
   in inches: x east along the rack from its west end, z south across it from its centre line,
   y up from the bench. It is set on the site by a shift alone. Area number 10; its lines are
-  numbered `10nnn` (SW-LL-1).
+  numbered `10nnn` (SW-LL-1): a stream's line from 10001, a branch from 10101, the valve and
+  blind beyond a limit spool from 10801.
 - `SW-PWY-2` The rack. One rack down the middle of the corridor between the two rows of units
-  (SW-SITE-4): 40 ft wide, bents at 20 ft, built as a unit's rack is (SW-RK-*, 40 psf a tier),
-  from 15 ft west of the first unit's plot to beyond the last, a whole number of bays. Tiers
-  at 19, 25 and 31 ft, midway between the tiers of the units' racks (16, 22 and 28 ft).
-  Reason: a line that turns from a unit's rack onto the main rack changes height as it
-  turns, 3 ft up or down, so that it crosses the lines already running there instead of
-  meeting them; 3 ft is two elbows of a 12 in line. The road across the pipeway (SW-SITE-6)
-  passes under the rack between two bents, 17 ft under the lowest tier's steel, and the way
-  along the pipeway is under the rack between its column lines.
-- `SW-PWY-3` What runs on it. Each stream between units (SW-REF-12) is a line of the size,
-  class and design conditions the process model gives that stream. It runs from the
-  battery-limit spool (SW-RPI-4) of each unit that sends it to the spool of each unit that
-  receives it. Where a stream has one unit at each end that is one line. Where it has more
-  (sour water from six units to one), the line runs between the two parties furthest apart
-  along the pipeway and every other party joins it by a branch from its own spool, with a tee
-  where the branch meets it. Reason: a collected or distributed stream is a header along the
-  rack with a connection at each unit it passes.
-- `SW-PWY-4` Limit spools. A party that has no battery-limit spool yet (a unit not yet piped;
-  the tank farm, the marine terminal, wastewater treatment and the other offsite areas, whose
-  pipeways are a later stage) is met at a limit spool of the pipeway's own: a flanged spool
-  12 in long closed by a blind flange, behind the block valve the generator stands at every
-  connection. Tag `PL-10{sequence}`. For a unit on the pipeway it stands at the edge of the
-  corridor on that unit's side, on the unit's centre line along the pipeway, at the elevation
-  of the unit racks' lowest tier, 2 ft from the next; for an offsite area it stands beyond
-  the end of the main rack nearest that area's pipeway (SW-SITE-4): east for the tank farm,
-  the liquefied gas bench, wastewater treatment and what lies beyond them, west for the
-  flare and the fire water tanks. Reason: every line of the pipeway can then be built whole
-  and valved off, and is met at its flange when the area beyond is piped; a blind behind a
+  (SW-SITE-4): 30 ft wide, bents at 20 ft, built as a unit's rack is (SW-RK-*, 40 psf a tier),
+  from 15 ft west of the first unit's plot to beyond the last, a whole number of bays. (First
+  drawn 40 ft wide, then 36 ft. The kit sizes a tier beam at a twentieth of its span, 24 in
+  deep at 40 ft and 22 in at 36 ft, and the generator holds a beam as a round of its
+  section's half-diagonal on a 6 in grid: at those depths the round reaches the level the
+  pipes on the tier lie at, by 0.04 in at 22 in, and no lane was free at any bent. At 30 ft
+  the beams are 18 in, as on the crude unit's rack, which the generator pipes.) Its
+  first and last bays are limit bays (SW-PWY-4); the lines run on the bays between. Tiers at
+  20, 26 and 33 ft: the lower two 4 ft above the tiers of the units' racks (16, 22 and
+  28 ft), the top one 5 ft. Reason: a line that turns from a unit's rack onto the main rack
+  changes height as it turns, so that it crosses the lines already running there instead of
+  meeting them. The lines of a unit's tier pass under the steel of the main tier above
+  them (its beams are 18 in deep, the struts along its column lines 14 in) and over the
+  lines of the main tier 2 ft below, and a line rises 4 ft to the first or falls 2 ft to the
+  second: 4 ft is two elbows of a 12 in line and a make-up piece, 2 ft two elbows of a 6 in
+  line. The top tier stands a foot higher because the crude feed, 16 in, comes off the crude
+  unit's top tier and its two elbows take 5 ft. (First written with the tiers at 19, 25 and
+  31 ft, 3 ft from the units' either way; a 6 in line then passed under the struts with
+  1 in to spare and a 16 in line not at all.) The road across the pipeway (SW-SITE-6) passes
+  under the rack between two bents, 18 ft under the lowest tier's steel, and the way along
+  the pipeway is under the rack between its column lines: no line of the pipeway runs lower
+  than the lowest tier of the units' racks.
+- `SW-PWY-3` What runs on it. Each stream between units (SW-REF-12) that has a party on the
+  process bench is a line of the size, class and design conditions the process model gives
+  that stream (SW-PRC-2). It runs from the battery-limit spool (SW-RPI-4) of each unit that
+  sends it to the spool of each unit that receives it. Where a stream has two parties that
+  is one line. Where it has more (sour water from six units to one), the line runs between
+  the two parties furthest apart along the pipeway and every other party joins it by a
+  branch from its own spool, of that spool's size, with a tee where the branch meets it;
+  where an end party's spool is smaller than the line, the line is reduced at that spool.
+  Reason: a collected or distributed stream is a header along the rack with a connection at
+  each unit it passes. A tank farm that both takes a stream and returns it (straight-run
+  naphtha to and from intermediate tankage) has two connections on the one line. A line of
+  the utilities unit to an item of its own on another plot (the cooling tower's make-up)
+  runs the pipeway in the same way. Streams with no party on the process bench (between
+  the tank farm, the marine terminal, the loading racks and wastewater treatment) are for
+  those areas' own pipeways, a later stage, and are listed as such.
+- `SW-PWY-4` Limit spools. A party that has no battery-limit spool yet is met at a limit spool
+  of the pipeway's own: two nozzles back to back, 24 in face to face, as a unit's spool is,
+  tag `PL-10{sequence}`. The pipeway's line bolts to its near face; on its far face stand a
+  block valve and a blind flange, which are the party's until it is piped. For a unit on the
+  pipeway not yet piped (the cracker; the cooling tower's plot) the spools stand in that
+  unit's valve bay where its own will, on its lowest tier, spaced as a unit's are (a
+  flange and 6 in, or the valves' handwheels and 3 in), about the rack's centre line, a
+  second row on the next tier where one is too wide. For the areas beyond the bench they
+  stand in the limit bay at that end of the main rack, each on the lane its line runs in,
+  5 ft inside the rack's last bent so that neither valve stands over a beam: at the east
+  end the tank farms, the liquefied gas bench, the loading racks and wastewater treatment,
+  whose pipeways leave from there (SW-SITE-4); at the west end the flare, the fire water
+  tanks, the raw water intake and the gas main. Reason: every line of the pipeway can then
+  be built whole, and is met at its flange when the area beyond is piped; a blind behind a
   valve is how a line is left for a later tie-in.
 - `SW-PWY-5` Tiers and lanes. Each line that runs the main rack is given its tier and lane
-  beforehand, as on a unit's rack (SW-RPI-7): the largest first, the lowest tier first,
-  each tier loaded to the same share of its width; lanes from the centre line outward on the
-  side of the rack where the line's first party stands; spacing by the same rule. A line of
-  14 in or more lies on the lowest tier.
+  beforehand, as on a unit's rack (SW-RPI-7): the largest first, each on the first tier
+  allowed it that it does not load beyond the same width as the others, the lowest first;
+  lanes from the centre line outward, on the side of the rack its parties stand on where
+  they stand on one (every lane on that side, tier by tier, before any on the far side: a
+  line on the far side crosses under the whole rack to reach it); spacing by the same rule. The top tier is kept for the utility
+  headers of the next stage (SW-PWY-10), as a unit's top tier is for its headers: a
+  process line lies on it only where its spools leave it no other tier, or where the two
+  below cannot take it. A line over 10 in that comes onto the rack from a unit lies in
+  the outermost lane on that unit's side, and the lane of the tier below its spool's level
+  is kept clear beneath where it comes in: so large a line does not cross over the lanes
+  kept on the tier 2 ft below it (the generator holds a kept lane 9 in above its pipe,
+  SW-RPI-7; the crude feed, given the centre lane of the lowest tier, found no way down to
+  it). A line may lie on the main tier 4 ft above
+  the unit tier of each of its spools or 2 ft below it where its elbows allow (SW-PWY-2);
+  one of 8 in or less may lie on any tier, rising or falling to its spool's level in the
+  strip between the rack and the unit; a larger one that can lie on neither tier next to
+  its spools lies on the lowest, and the lanes it passes on its way down are kept clear
+  where it passes. Where a valve at a limit bay would reach the lines of the tier above,
+  that tier's lane over it is kept clear too. No lane lies over a stringer (SW-PWY-9).
 - `SW-PWY-6` The generator is run once for each line that runs the rack, with the branches
   that join it, on the tier and in the lane given it, the lanes of the lines still to come
-  kept; then once for the lines between units that face each other across the corridor or
-  stand within 20 ft along it, which the generator lays direct (SW-RT-*). As SW-RPI-7.
-- `SW-PWY-7` At a unit's spool. The pipeway's line bolts to the spool's outer face flange to
-  flange: the valve the generator stands there is not built (as SW-RPI-14, by the same
-  correction on its result). Reason: the unit's own valve on the spool's inner face is the
+  kept and its own tier fenced but for its lane; then once for what remains: the lines
+  between units that face each other across the corridor or stand within 20 ft along it,
+  which the generator lays direct (SW-RT-*), and the valves and blinds beyond the limit
+  spools. As SW-RPI-7, with the same kept room for the valves of lines still to come.
+- `SW-PWY-7` At a spool. The pipeway's line bolts to the spool's face flange to flange, a
+  unit's spool or a limit spool: the valve the generator stands there is not built (as
+  SW-RPI-14, by the same correction on its result; where the line is reduced at the spool
+  the reducer moves up with the flange). Reason: the valve on the spool's other face is the
   block at the limit, and the spool between the two flanges is the piece taken out to part
-  them; a second valve a pipe's length from the first would shut nothing more. At a limit
-  spool (SW-PWY-4) the valve stays.
-- `SW-PWY-8` Where the pipeway's lines may travel. In the corridor; and, to reach a spool,
-  in the valve bay of that spool's unit between the unit's limit and the spool's face, no
-  wider than the unit's rack. Everywhere else the generator is shown the solid blocks of
-  SW-RPI-6. The first bent of each unit's rack and its spools are shown to it as they
-  stand.
-- `SW-PWY-9` Supports. The generator carries each line on the main rack's beams (SW-PS-*).
-  Between a unit's spool and the main rack a line passes over the first bent of that unit's
-  rack, on the beam of the tier it leaves the unit on: it rests on a shoe there, which is
-  added to the generator's result, since the generator knows no rack but the one it is
-  given. What remains unsupported is listed, as for a unit.
+  them; a second valve a pipe's length from the first would shut nothing more. A spool's
+  class is its stream's (SW-RPI-9), so the two flanges are of one class.
+- `SW-PWY-8` Where the pipeway's lines may travel. In the corridor, from the level of the
+  units' lowest tier upward; and, to reach a spool, in the valve bay of that spool's unit
+  between the unit's limit and the spool, no wider than the unit's rack between its column
+  lines. Everywhere else the generator is shown the solid blocks of SW-RPI-6. The steel of
+  each unit that stands in its valve bay is shown to it as it stands, except the tier
+  beams of the rack's first bent: the valve the generator stands at a spool, which is not
+  built (SW-PWY-7), would stand over such a beam with less than the clearance asked, and
+  the pipe that takes its place clears it. The result is checked against all the steel as
+  it stands, those beams included.
+- `SW-PWY-9` Supports. The generator carries each line on the main rack's beams (SW-PS-*)
+  and hangs what crosses under steel from that steel. So that a line crossing from a unit
+  has steel over it within what it spans: 2 ft inside the corridor from each unit's limit
+  stands a junction frame, two posts in line with the columns of the unit's rack and a
+  beam between them at the level of each main tier (a line may cross to the rack at any
+  of the three levels, whatever tier its spool stands on);
+  and along the main rack, under each tier, run two stringers 5 ft either side of the
+  centre line, bay by bay, as a unit's rack has one under its lowest tier (SW-CELL-6). A
+  line from a spool then hangs at the junction frame (13 ft 6 in from its flange), at the
+  rack's strut (13 ft 8 in on) and at each stringer it passes (10 ft at most): within the
+  15 ft a 3 in line spans (SW-PS-7).
+  A junction beam's depth is a twentieth of its span, to the next 2 in, and its weight
+  2.75 lb/ft for each inch of depth, to the next 5 lb; a post is of the next depth below
+  the beam's that is 10 in at least. These are SmartWeld's own proportions, from the same
+  reasoning as SW-RK-2 (depth by span); nothing was looked up. What remains unsupported is
+  listed, as for a unit.
 - `SW-PWY-10` Checks, records and exports as for a unit (§40, SW-REG-9, SW-GT-*, SW-PCF-*):
   the pipeway is one more piped area, shown with the units in every view of the plant.
   Utility headers along the main rack, with a branch to each unit's header, are the next

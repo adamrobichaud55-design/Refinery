@@ -10,6 +10,7 @@ import { cells, siteParts, cellToSite } from '../src/refinery/assemble';
 import { groundMeshes, type Cover } from '../src/refinery/terrain';
 import { siteGround, plot, bench } from '../src/refinery/site';
 import { MODEL_IMAGES } from '../src/refinery/modelReport';
+import { pipeway, pipewayToSite, PWY } from '../src/refinery/pipeway';
 
 const out = 'screenshots/refinery', only = process.argv[2], named = process.argv[3]; mkdirSync(out, { recursive: true });   // [unit | 'units' | 'site'] [part of a view's name]
 const C = (h: number): RGB => [(h >> 16) & 255, (h >> 8) & 255, h & 255], I = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
@@ -36,17 +37,28 @@ if (!only || only === 'site') {
     const m = JSON.parse(readFileSync(`${pipedDir}/unit-${p.unit}.json`, 'utf8')) as PipingModel, T = cellToSite(p, cell);
     for (const d of pipingDrawables(m, { lineColour: byLineClass, valveCells: 10 })) ds.push({ ...d, T: multiply(T, d.T) });
   }
-  console.log(`site: ${ds.length} drawables, piping of units ${piped.join(', ') || 'none'}`);
+  // the main pipeway (§80): its own steel, and its piping once it is piped
+  const pwModel = `${pipedDir}/pipeway.json`, onRack = existsSync(pwModel);
+  if (onRack) {
+    const pw = pipeway(), T = pipewayToSite();
+    for (const d of partDrawables(pw.own.map(i => ({ part: i.part, transform: i.transform })))) ds.push({ ...d, T: multiply(T, d.T) });
+    for (const d of pipingDrawables(JSON.parse(readFileSync(pwModel, 'utf8')) as PipingModel, { lineColour: byLineClass, valveCells: 10 })) ds.push({ ...d, T: multiply(T, d.T) });
+  }
+  console.log(`site: ${ds.length} drawables, piping of units ${piped.join(', ') || 'none'}${onRack ? ' and of the main pipeway' : ''}`);
   const pb = bench('process'), u11 = plot('U11');
   shot('plant-from-the-south-west', ds, { eye: ft([-300, 1100, 5300]), target: ft([2100, 60, 2350]), fovDeg: 45 });
   shot('plant-from-the-south-east', ds, { eye: ft([4700, 900, 4700]), target: ft([2200, 60, 2400]), fovDeg: 45 });
-  shot('plant-process-units-from-the-south', ds, { eye: ft([1900, 520, 4100]), target: ft([1900, pb.el + 30, 2700]), fovDeg: 45 });
+  shot('plant-process-units-from-the-south', ds, { eye: ft([(pb.x0 + pb.x1) / 2, 520, 3900]), target: ft([(pb.x0 + pb.x1) / 2, pb.el + 30, 2700]), fovDeg: 45 });   // centred on the process bench
   shot('plant-crude-and-vacuum-units', ds, { eye: ft([u11.x0 - 260, pb.el + 190, u11.z1 + 330]), target: ft([(u11.x0 + u11.x1) / 2 + 150, pb.el + 40, u11.z1 - 190]), fovDeg: 45 });
   shot('plant-tank-farm-from-the-north-east', ds, { eye: ft([3900, 520, 250]), target: ft([2100, 90, 1500]), fovDeg: 45 });
   const u15 = plot('U15');
   // from above the west end of the road between the two rows of units, looking east along it
   const u13 = plot('U13'), road = (u11.z1 + u15.z0) / 2;
   shot('plant-piped-units-along-the-pipeway', ds, { eye: ft([u13.x0 - 260, pb.el + 330, road + 40]), target: ft([u15.x1 + 60, pb.el + 15, road]), fovDeg: 50 });
+  // the units about the main pipeway, from above the south row looking north-east: the rack and the lines that cross to it from each unit
+  const u14 = plot('U14'), u12 = plot('U12');
+  shot('plant-main-pipeway-and-units', ds, { eye: ft([u14.x0 - 40, pb.el + 300, road + 360]), target: ft([u12.x0 - 40, pb.el + 20, road - 20]), fovDeg: 50 });
+  shot('plant-main-pipeway-from-above', ds, { eye: ft([PWY.west + 580, pb.el + 900, road + 330]), target: ft([PWY.west + 580, pb.el, road - 10]), fovDeg: 50 });
 }
 const idx = 'screenshots/INDEX.md', cur = existsSync(idx) ? readFileSync(idx, 'utf8').replace(/\n*$/, '').split('\n') : [], idOf = (r: string) => r.slice(0, r.indexOf('|', 2));
 for (const [name, caption] of Object.entries(MODEL_IMAGES)) { if (!existsSync(`${out}/${name}.png`)) continue; const r = `| \`refinery/${name}.png\` | ${caption} |`, k = cur.findIndex(c => idOf(c) === idOf(r)); if (k >= 0) cur[k] = r; else cur.push(r); }

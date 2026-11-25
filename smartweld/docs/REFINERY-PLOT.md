@@ -169,7 +169,7 @@ Where lines run between units and areas; the racks, sleepers and lines themselve
 
 | Pipeway | Carried on | Width, ft | Length, ft |
 |---|---|---|---|
-| Main pipeway | a pipe rack | 40 | 1,170 |
+| Main pipeway | a pipe rack | 30 | 1,160 |
 | Tank farm pipeway | sleepers at grade | 30 | 1,717 |
 | South terrace pipe track | sleepers at grade | 24 | 2,510 |
 | North terrace pipe track | sleepers at grade | 24 | 2,060 |

@@ -101,10 +101,10 @@ export class Flow {
    * End as a branch into a line: the one another stream ran last, or a line by its number. A branch into a line that
    * leaves the unit adds to what leaves, unless it is a standby source that flows instead of the main one.
    */
-  mixInto(target: Flow | number, note = '', o: { slow?: boolean; standby?: boolean } = {}): void {
+  mixInto(target: Flow | number, note = '', o: { slow?: boolean; standby?: boolean; /** joins under flow control: a control valve station on the branch */ cv?: boolean } = {}): void {
     const id = typeof target === 'number' ? target : target.lastLine, sh = this.u.sheet;
     if (id < 0 || id >= sh.lines.length) throw new Error(`unit ${sh.no}: nothing to join (${note})`);
-    this.line({ k: 'tap', line: id }, !!o.slow, false, note);
+    this.line({ k: 'tap', line: id }, !!o.slow, !!o.cv, note);
     const l = sh.lines[id];
     if (l.to.k === 'bl' && !o.standby) { l.s = { ...l.s, w: l.s.w + this.s.w }; const b = sh.blOut.get(l.to.name)!; sh.blOut.set(l.to.name, { ...b, w: b.w + this.s.w }); }
   }

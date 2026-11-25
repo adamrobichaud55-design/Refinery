@@ -1,0 +1,2751 @@
+{
+ "header": {
+  "line": "3\"-P300-P-10040",
+  "lineClass": "H300",
+  "fluid": "Hydrocarbon process",
+  "service": "P",
+  "NPS": 3,
+  "cls": "P300",
+  "designPressure": 300,
+  "insulated": false,
+  "kind": "routed",
+  "from": "PL-1013-P",
+  "to": "PL-1037-P",
+  "flow": "PL-1013-P → PL-1037-P",
+  "joint": "BW"
+ },
+ "items": [
+  {
+   "tag": "3\"-P300-P-10040/A1",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 3\" P300 COMPRESSED SHEET",
+   "designation": "GASKET3-P300",
+   "key": "GSK|3|P300",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 9618,
+    "N": 498,
+    "EL": 1398
+   },
+   "b": {
+    "E": 9618,
+    "N": 497.875,
+    "EL": 1398
+   },
+   "centre": {
+    "E": 9618,
+    "N": 497.9375,
+    "EL": 1398
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/A5",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "flange",
+   "itemNo": 2,
+   "description": "FLANGE WELD-NECK 3\" P300 RAISED FACE",
+   "designation": "FLG3-P300",
+   "key": "WNF|3|P300",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 19.3288,
+   "spool": "3\"-P300-P-10040-SP01",
+   "a": {
+    "E": 9618,
+    "N": 497.875,
+    "EL": 1398
+   },
+   "b": {
+    "E": 9618,
+    "N": 492.75,
+    "EL": 1398
+   },
+   "centre": {
+    "E": 9618,
+    "N": 495.3125,
+    "EL": 1398
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/A6",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P300",
+   "designation": "STUDS 4×0.875x5.75 (3-P300)",
+   "key": "STUDS|3|P300|3.500",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 5.6895,
+   "spool": "loose",
+   "a": {
+    "E": 9618,
+    "N": 500.8125,
+    "EL": 1398
+   },
+   "b": {
+    "E": 9618,
+    "N": 495.0625,
+    "EL": 1398
+   },
+   "centre": {
+    "E": 9618,
+    "N": 497.9375,
+    "EL": 1398
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p7",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|235.679",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 235.6789,
+   "weight": 93.2899,
+   "spool": "3\"-P300-P-10040-SP02",
+   "a": {
+    "E": 9618,
+    "N": 492.75,
+    "EL": 1398
+   },
+   "b": {
+    "E": 9618,
+    "N": 257.0711,
+    "EL": 1398
+   },
+   "centre": {
+    "E": 9618,
+    "N": 374.9106,
+    "EL": 1398
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/el8",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "elbow",
+   "itemNo": 5,
+   "description": "ELBOW 45° R = 5/3 OD 3\" P300",
+   "designation": "EL45-3-P300",
+   "key": "EL|3|P300|45",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 1.5456,
+   "spool": "3\"-P300-P-10040-SP02",
+   "a": {
+    "E": 9618,
+    "N": 257.0711,
+    "EL": 1398
+   },
+   "b": {
+    "E": 9618,
+    "N": 253.5355,
+    "EL": 1399.4645
+   },
+   "centre": {
+    "E": 9618,
+    "N": 255.3033,
+    "EL": 1398.7323
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.9239,
+    "EL": 0.3827
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p9",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|89.196",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 89.1959,
+   "weight": 35.3069,
+   "spool": "3\"-P300-P-10040-SP02",
+   "a": {
+    "E": 9618,
+    "N": 253.5355,
+    "EL": 1399.4645
+   },
+   "b": {
+    "E": 9618,
+    "N": 190.4645,
+    "EL": 1462.5355
+   },
+   "centre": {
+    "E": 9618,
+    "N": 222,
+    "EL": 1431
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": 0.7071
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/el10",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "elbow",
+   "itemNo": 5,
+   "description": "ELBOW 45° R = 5/3 OD 3\" P300",
+   "designation": "EL45-3-P300",
+   "key": "EL|3|P300|45",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 1.5456,
+   "spool": "3\"-P300-P-10040-SP02",
+   "a": {
+    "E": 9618,
+    "N": 190.4645,
+    "EL": 1462.5355
+   },
+   "b": {
+    "E": 9618,
+    "N": 186.9289,
+    "EL": 1464
+   },
+   "centre": {
+    "E": 9618,
+    "N": 188.6967,
+    "EL": 1463.2678
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.9239,
+    "EL": 0.3827
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p11",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|37.929",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 37.9289,
+   "weight": 15.0136,
+   "spool": "3\"-P300-P-10040-SP02",
+   "a": {
+    "E": 9618,
+    "N": 186.9289,
+    "EL": 1464
+   },
+   "b": {
+    "E": 9618,
+    "N": 149,
+    "EL": 1464
+   },
+   "centre": {
+    "E": 9618,
+    "N": 167.9645,
+    "EL": 1464
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/el12",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "elbow",
+   "itemNo": 6,
+   "description": "ELBOW 90° R = 5/3 OD 3\" P300",
+   "designation": "EL90-3-P300",
+   "key": "EL|3|P300|90",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 3.0873,
+   "spool": "3\"-P300-P-10040-SP02",
+   "a": {
+    "E": 9618,
+    "N": 149,
+    "EL": 1464
+   },
+   "b": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1459
+   },
+   "centre": {
+    "E": 9618,
+    "N": 146.5,
+    "EL": 1461.5
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p13",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|8.000",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 8,
+   "weight": 3.1667,
+   "spool": "3\"-P300-P-10040-SP02",
+   "a": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1459
+   },
+   "b": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1451
+   },
+   "centre": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1455
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/el14",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "elbow",
+   "itemNo": 6,
+   "description": "ELBOW 90° R = 5/3 OD 3\" P300",
+   "designation": "EL90-3-P300",
+   "key": "EL|3|P300|90",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 3.0873,
+   "spool": "3\"-P300-P-10040-SP02",
+   "a": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1451
+   },
+   "b": {
+    "E": 9623,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 9620.5,
+    "N": 144,
+    "EL": 1448.5
+   },
+   "axis": {
+    "E": 0.7071,
+    "N": 0,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p15",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|473.340",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 473.3403,
+   "weight": 187.3643,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 9623,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 10096.3403,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 9859.6702,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p16",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|449.340",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 449.3403,
+   "weight": 177.8643,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 10096.3403,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 10545.6806,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 10321.0105,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p17",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|479.340",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 479.3402,
+   "weight": 189.7393,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 10545.6806,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 11025.0208,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 10785.3507,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p18",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|467.340",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 467.3403,
+   "weight": 184.9893,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 11025.0208,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 11492.3611,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 11258.691,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p19",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|467.340",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 467.3403,
+   "weight": 184.9893,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 11492.3611,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 11959.7014,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 11726.0313,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p20",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|467.340",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 467.3403,
+   "weight": 184.9893,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 11959.7014,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 12427.0417,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 12193.3716,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p21",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|467.340",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 467.3402,
+   "weight": 184.9893,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 12427.0417,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 12894.3819,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 12660.7118,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p22",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|467.340",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 467.3403,
+   "weight": 184.9893,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 12894.3819,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 13361.7222,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 13128.0521,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p23",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|240.514",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 240.5139,
+   "weight": 95.2037,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 13361.7222,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 13602.2361,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 13481.9792,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/p24",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "pipe",
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "designation": "PIPE3-P300",
+   "key": "PIPE|3|P300|240.514",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 240.5139,
+   "weight": 95.2037,
+   "spool": "3\"-P300-P-10040-SP03",
+   "a": {
+    "E": 13602.2361,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 13842.75,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 13722.4931,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/B6",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P300",
+   "designation": "STUDS 4×0.875x5.75 (3-P300)",
+   "key": "STUDS|3|P300|3.500",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 5.6895,
+   "spool": "loose",
+   "a": {
+    "E": 13850.8125,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 13845.0625,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 13847.9375,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/B5",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "flange",
+   "itemNo": 2,
+   "description": "FLANGE WELD-NECK 3\" P300 RAISED FACE",
+   "designation": "FLG3-P300",
+   "key": "WNF|3|P300",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 19.3288,
+   "spool": "3\"-P300-P-10040-SP04",
+   "a": {
+    "E": 13847.875,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 13842.75,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 13845.3125,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/B1",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 3\" P300 COMPRESSED SHEET",
+   "designation": "GASKET3-P300",
+   "key": "GSK|3|P300",
+   "NPS": 3,
+   "cls": "P300",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 13848,
+    "N": 144,
+    "EL": 1446
+   },
+   "b": {
+    "E": 13847.875,
+    "N": 144,
+    "EL": 1446
+   },
+   "centre": {
+    "E": 13847.9375,
+    "N": 144,
+    "EL": 1446
+   },
+   "axis": {
+    "E": -1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  }
+ ],
+ "welds": [
+  {
+   "tag": "3\"-P300-P-10040/W1",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/A5",
+    "3\"-P300-P-10040/p7"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "3\"-P300-P-10040-SP01",
+    "3\"-P300-P-10040-SP02"
+   ],
+   "at": {
+    "E": 9618,
+    "N": 492.75,
+    "EL": 1398
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W2",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p7",
+    "3\"-P300-P-10040/el8"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP02",
+   "spools": [
+    "3\"-P300-P-10040-SP02",
+    "3\"-P300-P-10040-SP02"
+   ],
+   "at": {
+    "E": 9618,
+    "N": 257.0711,
+    "EL": 1398
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W3",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/el8",
+    "3\"-P300-P-10040/p9"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP02",
+   "spools": [
+    "3\"-P300-P-10040-SP02",
+    "3\"-P300-P-10040-SP02"
+   ],
+   "at": {
+    "E": 9618,
+    "N": 253.5355,
+    "EL": 1399.4645
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W4",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p9",
+    "3\"-P300-P-10040/el10"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP02",
+   "spools": [
+    "3\"-P300-P-10040-SP02",
+    "3\"-P300-P-10040-SP02"
+   ],
+   "at": {
+    "E": 9618,
+    "N": 190.4645,
+    "EL": 1462.5355
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W5",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/el10",
+    "3\"-P300-P-10040/p11"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP02",
+   "spools": [
+    "3\"-P300-P-10040-SP02",
+    "3\"-P300-P-10040-SP02"
+   ],
+   "at": {
+    "E": 9618,
+    "N": 186.9289,
+    "EL": 1464
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W6",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p11",
+    "3\"-P300-P-10040/el12"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP02",
+   "spools": [
+    "3\"-P300-P-10040-SP02",
+    "3\"-P300-P-10040-SP02"
+   ],
+   "at": {
+    "E": 9618,
+    "N": 149,
+    "EL": 1464
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W7",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/el12",
+    "3\"-P300-P-10040/p13"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP02",
+   "spools": [
+    "3\"-P300-P-10040-SP02",
+    "3\"-P300-P-10040-SP02"
+   ],
+   "at": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1459
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W8",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p13",
+    "3\"-P300-P-10040/el14"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP02",
+   "spools": [
+    "3\"-P300-P-10040-SP02",
+    "3\"-P300-P-10040-SP02"
+   ],
+   "at": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1451
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W9",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/el14",
+    "3\"-P300-P-10040/p15"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "3\"-P300-P-10040-SP02",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 9623,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W10",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p15",
+    "3\"-P300-P-10040/p16"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP03",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 10096.3403,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W11",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p16",
+    "3\"-P300-P-10040/p17"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP03",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 10545.6806,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W12",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p17",
+    "3\"-P300-P-10040/p18"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP03",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 11025.0208,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W13",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p18",
+    "3\"-P300-P-10040/p19"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP03",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 11492.3611,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W14",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p19",
+    "3\"-P300-P-10040/p20"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP03",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 11959.7014,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W15",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p20",
+    "3\"-P300-P-10040/p21"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP03",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 12427.0417,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W16",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p21",
+    "3\"-P300-P-10040/p22"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP03",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 12894.3819,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W17",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p22",
+    "3\"-P300-P-10040/p23"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP03",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 13361.7222,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W18",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p24",
+    "3\"-P300-P-10040/B5"
+   ],
+   "shopField": "field",
+   "spool": "field",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP04"
+   ],
+   "at": {
+    "E": 13842.75,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/W19",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "BW",
+   "size": 0.1563,
+   "NPS": 3,
+   "cls": "P300",
+   "joins": [
+    "3\"-P300-P-10040/p23",
+    "3\"-P300-P-10040/p24"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P300-P-10040-SP03",
+   "spools": [
+    "3\"-P300-P-10040-SP03",
+    "3\"-P300-P-10040-SP03"
+   ],
+   "at": {
+    "E": 13602.2361,
+    "N": 144,
+    "EL": 1446
+   },
+   "key": "BW|3|P300",
+   "weight": 0.0808,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  }
+ ],
+ "supports": [
+  {
+   "tag": "3\"-P300-P-10040/S1",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "hanger",
+   "description": "HANGER FOR 3\" LINE (HANGER-3x26.2)",
+   "designation": "HANGER-3x26.2",
+   "key": "HANG|3|P300|26.21",
+   "material": "Grade 36",
+   "weight": 4.6946,
+   "spool": "loose",
+   "at": {
+    "E": 9618,
+    "N": 338.0668,
+    "EL": 1398
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S2",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 9720,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S3",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "guide",
+   "description": "GUIDE FOR 3\" LINE (GUIDE-3)",
+   "designation": "GUIDE-3",
+   "key": "SHOE|3|P300|guide|4.500",
+   "material": "Grade 36",
+   "weight": 15.6634,
+   "spool": "loose",
+   "at": {
+    "E": 9840,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S4",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 9960,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S5",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 10080,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S6",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 10200,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S7",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 10320,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S8",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 10440,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S9",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 10560,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S10",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 10680,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S11",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 10800,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S12",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 10920,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S13",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 11040,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S14",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 11160,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S15",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 11280,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S16",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 11400,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S17",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "guide",
+   "description": "GUIDE FOR 3\" LINE (GUIDE-3)",
+   "designation": "GUIDE-3",
+   "key": "SHOE|3|P300|guide|4.500",
+   "material": "Grade 36",
+   "weight": 15.6634,
+   "spool": "loose",
+   "at": {
+    "E": 11520,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S18",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 11640,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S19",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "anchor",
+   "description": "ANCHOR FOR 3\" LINE (ANCHOR-3)",
+   "designation": "ANCHOR-3",
+   "key": "SHOE|3|P300|anchor|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 11760,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S20",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 11880,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S21",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "guide",
+   "description": "GUIDE FOR 3\" LINE (GUIDE-3)",
+   "designation": "GUIDE-3",
+   "key": "SHOE|3|P300|guide|4.500",
+   "material": "Grade 36",
+   "weight": 15.6634,
+   "spool": "loose",
+   "at": {
+    "E": 12000,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S22",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 12120,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S23",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 12240,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S24",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 12360,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S25",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 12480,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S26",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 12600,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S27",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 12720,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S28",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 12840,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S29",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 12960,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S30",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 13080,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S31",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 13200,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S32",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 13320,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S33",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 13440,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S34",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 13560,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-10040/S35",
+   "line": "3\"-P300-P-10040",
+   "lineClass": "H300",
+   "type": "guide",
+   "description": "GUIDE FOR 3\" LINE (GUIDE-3)",
+   "designation": "GUIDE-3",
+   "key": "SHOE|3|P300|guide|4.500",
+   "material": "Grade 36",
+   "weight": 15.6634,
+   "spool": "loose",
+   "at": {
+    "E": 13680,
+    "N": 144,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  }
+ ],
+ "spools": [
+  {
+   "id": "3\"-P300-P-10040-SP01",
+   "items": [
+    "3\"-P300-P-10040/A5"
+   ],
+   "shopWelds": [],
+   "weight": 19.3288
+  },
+  {
+   "id": "3\"-P300-P-10040-SP02",
+   "items": [
+    "3\"-P300-P-10040/p7",
+    "3\"-P300-P-10040/el8",
+    "3\"-P300-P-10040/p9",
+    "3\"-P300-P-10040/el10",
+    "3\"-P300-P-10040/p11",
+    "3\"-P300-P-10040/el12",
+    "3\"-P300-P-10040/p13",
+    "3\"-P300-P-10040/el14"
+   ],
+   "shopWelds": [
+    "3\"-P300-P-10040/W2",
+    "3\"-P300-P-10040/W3",
+    "3\"-P300-P-10040/W4",
+    "3\"-P300-P-10040/W5",
+    "3\"-P300-P-10040/W6",
+    "3\"-P300-P-10040/W7",
+    "3\"-P300-P-10040/W8"
+   ],
+   "weight": 156.6083
+  },
+  {
+   "id": "3\"-P300-P-10040-SP03",
+   "items": [
+    "3\"-P300-P-10040/p15",
+    "3\"-P300-P-10040/p16",
+    "3\"-P300-P-10040/p17",
+    "3\"-P300-P-10040/p18",
+    "3\"-P300-P-10040/p19",
+    "3\"-P300-P-10040/p20",
+    "3\"-P300-P-10040/p21",
+    "3\"-P300-P-10040/p22",
+    "3\"-P300-P-10040/p23",
+    "3\"-P300-P-10040/p24"
+   ],
+   "shopWelds": [
+    "3\"-P300-P-10040/W10",
+    "3\"-P300-P-10040/W11",
+    "3\"-P300-P-10040/W12",
+    "3\"-P300-P-10040/W13",
+    "3\"-P300-P-10040/W14",
+    "3\"-P300-P-10040/W15",
+    "3\"-P300-P-10040/W16",
+    "3\"-P300-P-10040/W17",
+    "3\"-P300-P-10040/W19"
+   ],
+   "weight": 1671.0491
+  },
+  {
+   "id": "3\"-P300-P-10040-SP04",
+   "items": [
+    "3\"-P300-P-10040/B5"
+   ],
+   "shopWelds": [],
+   "weight": 19.3288
+  }
+ ],
+ "bom": [
+  {
+   "itemNo": 1,
+   "description": "GASKET 3\" P300 COMPRESSED SHEET",
+   "qty": 2,
+   "weight": 0
+  },
+  {
+   "itemNo": 2,
+   "description": "FLANGE WELD-NECK 3\" P300 RAISED FACE",
+   "qty": 2,
+   "weight": 38.6576
+  },
+  {
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P300",
+   "qty": 2,
+   "weight": 11.379
+  },
+  {
+   "itemNo": 4,
+   "description": "PIPE 3\" P300 BEVELLED ENDS",
+   "qty": 14,
+   "length": 4590.5537,
+   "weight": 1817.0989
+  },
+  {
+   "itemNo": 5,
+   "description": "ELBOW 45° R = 5/3 OD 3\" P300",
+   "qty": 2,
+   "weight": 3.0911
+  },
+  {
+   "itemNo": 6,
+   "description": "ELBOW 90° R = 5/3 OD 3\" P300",
+   "qty": 2,
+   "weight": 6.1745
+  }
+ ],
+ "nodes": [
+  {
+   "at": {
+    "E": 9618,
+    "N": 498,
+    "EL": 1398
+   },
+   "kind": "gasket start",
+   "ref": "3\"-P300-P-10040/A1"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 497.875,
+    "EL": 1398
+   },
+   "kind": "gasket end",
+   "ref": "3\"-P300-P-10040/A1"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 492.75,
+    "EL": 1398
+   },
+   "kind": "flange end",
+   "ref": "3\"-P300-P-10040/A5"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 257.0711,
+    "EL": 1398
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p7"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 255,
+    "EL": 1398
+   },
+   "kind": "elbow work point",
+   "ref": "3\"-P300-P-10040/el8"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 253.5355,
+    "EL": 1399.4645
+   },
+   "kind": "elbow end",
+   "ref": "3\"-P300-P-10040/el8"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 190.4645,
+    "EL": 1462.5355
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p9"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 189,
+    "EL": 1464
+   },
+   "kind": "elbow work point",
+   "ref": "3\"-P300-P-10040/el10"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 186.9289,
+    "EL": 1464
+   },
+   "kind": "elbow end",
+   "ref": "3\"-P300-P-10040/el10"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 149,
+    "EL": 1464
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p11"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1464
+   },
+   "kind": "elbow work point",
+   "ref": "3\"-P300-P-10040/el12"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1459
+   },
+   "kind": "elbow end",
+   "ref": "3\"-P300-P-10040/el12"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1451
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p13"
+  },
+  {
+   "at": {
+    "E": 9618,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "elbow work point",
+   "ref": "3\"-P300-P-10040/el14"
+  },
+  {
+   "at": {
+    "E": 9623,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "elbow end",
+   "ref": "3\"-P300-P-10040/el14"
+  },
+  {
+   "at": {
+    "E": 10096.3403,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p15"
+  },
+  {
+   "at": {
+    "E": 10545.6806,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p16"
+  },
+  {
+   "at": {
+    "E": 11025.0208,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p17"
+  },
+  {
+   "at": {
+    "E": 11492.3611,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p18"
+  },
+  {
+   "at": {
+    "E": 11959.7014,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p19"
+  },
+  {
+   "at": {
+    "E": 12427.0417,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p20"
+  },
+  {
+   "at": {
+    "E": 12894.3819,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p21"
+  },
+  {
+   "at": {
+    "E": 13361.7222,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p22"
+  },
+  {
+   "at": {
+    "E": 13602.2361,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p23"
+  },
+  {
+   "at": {
+    "E": 13842.75,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P300-P-10040/p24"
+  },
+  {
+   "at": {
+    "E": 13847.875,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "flange end",
+   "ref": "3\"-P300-P-10040/B5"
+  },
+  {
+   "at": {
+    "E": 13848,
+    "N": 144,
+    "EL": 1446
+   },
+   "kind": "gasket end",
+   "ref": "3\"-P300-P-10040/B1"
+  }
+ ],
+ "totals": {
+  "items": 24,
+  "welds": 19,
+  "fieldWelds": 3,
+  "supports": 35,
+  "pipeLength": 4590.5537,
+  "weight": 1876.4012
+ }
+}

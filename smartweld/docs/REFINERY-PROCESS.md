@@ -97,8 +97,8 @@ Every stream that crosses a unit's battery limit, with the units at each end (SW
 | Straight-run diesel | diesel | 11, 21 (tank) | 16, 21 (tank) | 138,476 | 11,160 bbl/d | 140 | 80 | 6 | P150 | steady |
 | Atmospheric gas oil | gas oil | 11 | 17 | 46,509 | 3,600 bbl/d | 375 | 100 | 3 | P150 | steady |
 | Atmospheric residue | residue | 11 | 12 | 358,364 | 25,440 bbl/d | 650 | 150 | 8 | P300 | steady |
-| Vacuum gas oil pumparound return | gas oil | 11 | 12 | 322,000 | 23,591 bbl/d | 446 | 120 | 8 | P150 | steady |
-| Vacuum residue rundown | residue | 11 | 21 | 168,413 | 11,400 bbl/d | 350 | 110 | 6 | P300 | steady |
+| Vacuum gas oil pumparound return | gas oil | 11 | 12 | 322,000 | 23,591 bbl/d | 446 | 120 | 8 | P300 | steady |
+| Vacuum residue rundown | residue | 11 | 21 | 168,413 | 11,400 bbl/d | 350 | 110 | 6 | P150 | steady |
 | Crude | crude oil | 20 | 11 | 758,884 | 60,000 bbl/d | 60 | 60 | 16 | P150 | steady |
 | Stripped water | process and wash water | 18 | 11, 13, 15, 16 | 52,800 | 3,617 bbl/d | 120 | 100 | 4 | P150 | steady |
 | Vacuum gas oil pumparound supply | gas oil | 12 | 11 | 322,000 | 23,591 bbl/d | 550 | 150 | 10 | P300 | steady |
@@ -174,7 +174,7 @@ Each utility is a header (SW-REF-12). Unit 19 supplies it, or for condensate and
 
 Steam, air, water and nitrogen also serve the hose stations along every unit (SW-PRC-15), which draw no steady flow.
 
-Totals: fired heaters 242 million Btu/h fired in 8 heaters; cooling water used 11,301 of 15,060 US gallons a minute circulated; 34 air cooler bays; 63 exchanger shells; 214 pumps with 22,788 horsepower of motors installed; compressors and blowers of 11,186 horsepower of gas power running.
+Totals: fired heaters 242 million Btu/h fired in 8 heaters; cooling water used 11,301 of 15,060 US gallons a minute circulated; 34 air cooler bays; 63 exchanger shells; 214 pumps with 22,738 horsepower of motors installed; compressors and blowers of 11,186 horsepower of gas power running.
 
 ## 5. Storage
 
@@ -364,7 +364,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | F-1601 | Feed filter | vertical | 55 psi, 190 °F | P150 | 42 in inside diameter × 7 ft between tangents, vertical |
 | P-1601 | Charge pump | motor driven | 1,145 psi, 190 °F | P1200 | 409 gpm each × 2449 ft, 300 hp at 3560 rpm, 3 stages; 2 installed, 1 running |
 | E-1601 | Feed / effluent exchanger | process to process | 1,145 psi, 650 °F | P1200 | 39.6 million Btu/h, 7,591 ft²: 48 in × 20 ft, 2,161 tubes |
-| P-1602 | Lean amine booster pump | motor driven | 1,050 psi, 170 °F | P1200 | 88 gpm each × 1779 ft, 75 hp at 3560 rpm, 2 stages; 2 installed, 1 running |
+| P-1602 | Lean amine booster pump | motor driven | 995 psi, 170 °F | P1200 | 88 gpm each × 1224 ft, 50 hp at 3560 rpm, 2 stages; 2 installed, 1 running |
 | K-1601 | Recycle gas compressor | motor driven | 1,000 psi, 230 °F | P1200 | 459 ft³/min at suction, ratio 1.19, 1 stage, 368 hp of gas power; 500 hp motor; 2 installed, 1 running |
 | K-1602 | Make-up hydrogen compressor | motor driven | 1,000 psi, 300 °F | P1200 | 99 ft³/min at suction, ratio 1.80, 1 stage, 188 hp of gas power; 200 hp motor; 2 installed, 1 running |
 | H-1601 | Charge heater | vertical cylindrical | 980 psi, 660 °F | P1200 | 10.5 million Btu/h absorbed, 12.4 fired: vertical cylinder 8 ft diameter × 20 ft high |
@@ -591,7 +591,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | P-2132 | Jet fuel truck loading pump | motor driven | 160 psi, 150 °F | P300 | 651 gpm each × 247 ft, 50 hp at 3560 rpm; 2 installed, 1 running |
 | P-2123 | Diesel shipping pump | motor driven | 235 psi, 150 °F | P300 | 7817 gpm each × 402 ft, 1000 hp at 1780 rpm; 2 installed, 1 running |
 | P-2133 | Diesel truck loading pump | motor driven | 160 psi, 150 °F | P300 | 651 gpm each × 236 ft, 50 hp at 3560 rpm; 2 installed, 1 running |
-| A-2101 | Fuel oil rundown cooler | forced draught | 220 psi, 340 °F | P300 | 9.4 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
+| A-2101 | Fuel oil rundown cooler | forced draught | 135 psi, 340 °F | P150 | 9.4 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | P-2119 | Cutter stock blend pump | motor driven | 220 psi, 200 °F | P300 | 116 gpm each × 324 ft, 15 hp at 3560 rpm; 2 installed, 1 running |
 | P-2124 | Fuel oil shipping pump | motor driven | 245 psi, 250 °F | P300 | 5941 gpm each × 366 ft, 1000 hp at 1780 rpm; 2 installed, 1 running |
 | P-2125 | Asphalt truck loading pump | motor driven | 160 psi, 370 °F | P300 | 508 gpm each × 204 ft, 50 hp at 3560 rpm; 2 installed, 1 running |
@@ -685,22 +685,22 @@ Process lines of each unit by size (inches) and by class. The full list, with wh
 
 | Unit | P150 | P300 | P600 | P1200 |
 |---|---|---|---|---|
-| 11 | 29 | 25 | 12 |  |
-| 12 | 11 | 11 | 2 |  |
+| 11 | 28 | 26 | 12 |  |
+| 12 | 10 | 12 | 2 |  |
 | 13 | 14 | 13 | 12 |  |
 | 14 | 6 | 16 | 10 | 9 |
 | 15 | 12 | 6 | 14 |  |
-| 16 | 14 | 11 | 1 | 17 |
+| 16 | 13 | 11 | 2 | 17 |
 | 17 | 31 | 52 | 18 |  |
 | 18 | 47 | 6 | 6 |  |
 | 19 | 37 | 9 | 1 | 8 |
 | 20 | 18 |  |  |  |
-| 21 | 49 | 33 |  |  |
-| 22 | 11 | 2 |  |  |
+| 21 | 54 | 28 |  |  |
+| 22 | 8 | 5 |  |  |
 | 23 | 9 | 2 |  |  |
 | 24 | 20 |  |  |  |
 | 25 | 5 |  |  |  |
-| 26 | 6 | 2 |  |  |
+| 26 | 4 | 4 |  |  |
 
 The largest lines:
 

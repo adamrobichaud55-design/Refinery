@@ -32,6 +32,7 @@ export interface LineSize {
   id: number; unit: number; NPS: number; cls: PipeClass; designP: number; designT: number; vacuum: boolean; /** flowing velocity, ft/s */ v: number;
   /** which limit sized it */ by: 'suction or gravity, 4 ft/s' | 'liquid, 8 ft/s' | 'gas momentum' | 'gas, 200 ft/s' | 'smallest size'; /** parallel lines where one of 48 in is not enough */ n: number;
   /** the pump whose blocked-in pressure sets the design pressure */ pump?: string;
+  /** the stream at the battery limit whose design pressure or temperature it takes (SW-PRC-2) */ stream?: string;
 }
 const bore = (NPS: number, cls: PipeClass) => (Math.PI / 4) * (pipeDims(NPS, cls).D / 12) ** 2;
 /** size for a flowing state: the smallest size within the velocity limit */
@@ -116,16 +117,21 @@ export function sideOf(e: Equip, name: string, utility: boolean): string {
   return utility ? 'utility' : 'process';
 }
 const isEq = (e: End, tag: string, port?: string) => e.k === 'eq' && e.tag === tag && (port === undefined || e.port === port);
-/** SW-PRC-2: the lines of each pump's discharge system, with its blocked-in pressure */
-function blockedIn(sh: UnitSheet): { line: Map<number, { P: number; pump: string }>; item: Map<string, number> } {
-  const out = new Map<number, { P: number; pump: string }>(), item = new Map<string, number>();
-  for (const e of sh.equip.values()) {
-    if (e.kind !== 'pump') continue;
-    const S = e.ports.find(p => p.name === 'S')!, D = e.ports.find(p => p.name === 'D')!, shut = up(designPressure(S.s.P) + 1.25 * (D.s.P - S.s.P), 5);
-    const seen = new Set<number>(), stack = sh.lines.filter(l => isEq(l.from, e.tag, 'D')).map(l => l.id);
+/** a pressure a line is designed for that is not its own: a pump's blocked in, or a stream's at the battery limit */
+interface Shut { P: number; pump?: string; stream?: string }
+/** SW-PRC-2: what a unit's lines take from the streams they meet at its battery limit */
+export interface Limits {
+  /** lines that receive a stream: its design pressure, carried on from the limit as a pump's blocked-in pressure is */ seeds: Map<number, Shut>;
+  /** lines that meet a stream with no control valve station between: the least design pressure and temperature they have */ least: Map<number, { P: number; T: number; stream: string }>;
+}
+/** SW-PRC-2: the lines of each pump's discharge system, with its blocked-in pressure; and the lines a stream's pressure reaches from the battery limit */
+function blockedIn(sh: UnitSheet, seeds: Map<number, Shut> = new Map()): { line: Map<number, Shut>; item: Map<string, number> } {
+  const out = new Map<number, Shut>(), item = new Map<string, number>();
+  const spread = (start: number[], shut: number, by: Omit<Shut, 'P'>) => {
+    const seen = new Set<number>(), stack = [...start];
     while (stack.length) {
       const id = stack.pop()!; if (seen.has(id)) continue; seen.add(id);
-      const l = sh.lines[id], was = out.get(id); if (!was || was.P < shut) out.set(id, { P: shut, pump: e.tag });
+      const l = sh.lines[id], was = out.get(id); if (!was || was.P < shut) out.set(id, { P: shut, ...by });
       for (const b of sh.lines) if (b.from.k === 'tap' && b.from.line === id) stack.push(b.id);
       if (l.cv) continue;
       if (l.to.k === 'tap') stack.push(l.to.line);
@@ -136,8 +142,55 @@ function blockedIn(sh: UnitSheet): { line: Map<number, { P: number; pump: string
         for (const n of sh.lines) if (isEq(n.from, t.tag, port)) stack.push(n.id);
       }
     }
+  };
+  for (const e of sh.equip.values()) {
+    if (e.kind !== 'pump') continue;
+    const S = e.ports.find(p => p.name === 'S')!, D = e.ports.find(p => p.name === 'D')!, shut = up(designPressure(S.s.P) + 1.25 * (D.s.P - S.s.P), 5);
+    spread(sh.lines.filter(l => isEq(l.from, e.tag, 'D')).map(l => l.id), shut, { pump: e.tag });
   }
+  for (const [id, sd] of seeds) if (sd.P > designPressure(sh.lines[id].s.P)) spread([id], sd.P, { ...(sd.pump ? { pump: sd.pump } : {}), stream: sd.stream });
   return { line: out, item };
+}
+/** SW-PRC-2, SW-PRC-3: each line's design pressure, design temperature and what set them */
+function lineDesigns(sh: UnitSheet, shut: Map<number, Shut>, lim?: Limits): { designP: number; designT: number; pump?: string; stream?: string }[] {
+  return sh.lines.map(l => {
+    const own = designPressure(l.s.P), b = shut.get(l.id), f = lim?.least.get(l.id), ownT = metalT(l.s);
+    const designP = Math.max(own, b?.P ?? 0, f?.P ?? 0), designT = Math.max(ownT, f?.T ?? 0), byShut = b && b.P > own && b.P >= designP, byLimit = f && (f.P > Math.max(own, b?.P ?? 0) || f.T > ownT);
+    return { designP, designT, ...(byShut && b.pump ? { pump: b.pump } : {}), ...(byShut && b.stream ? { stream: b.stream } : byLimit ? { stream: f.stream } : {}) };
+  });
+}
+let limitCache: Map<number, Limits> | undefined;
+/**
+ * SW-PRC-2, at a battery limit: the design conditions each stream's line and the unit lines that meet it share. Worked out over all the units together,
+ * and again until nothing changes, because a pressure that enters one unit may leave it for another (a pumparound through another unit's exchanger).
+ */
+export function limits(): Map<number, Limits> {
+  if (limitCache) return limitCache;
+  const M = processModel(); let cur = new Map<number, Limits>(M.sheets.map(sh => [sh.no, { seeds: new Map(), least: new Map() }]));
+  for (let pass = 0; pass < 12; pass++) {
+    const stream = new Map<string, { P: number; T: number; pump?: string }>();
+    for (const sh of M.sheets) {
+      const lim = cur.get(sh.no)!, des = lineDesigns(sh, blockedIn(sh, lim.seeds).line, lim);
+      for (const l of sh.lines) for (const [e, sending] of [[l.from, false], [l.to, true]] as const) if (e.k === 'bl') {
+        const d = des[l.id], c = stream.get(e.name) ?? { P: 0, T: 0 }; c.T = Math.max(c.T, d.designT);
+        if (!(sending && l.cv) && d.designP > c.P) { c.P = d.designP; c.pump = d.pump; }
+        stream.set(e.name, c);
+      }
+    }
+    const next = new Map<number, Limits>(); let changed = false;
+    for (const sh of M.sheets) {
+      const lim: Limits = { seeds: new Map(), least: new Map() }, was = cur.get(sh.no)!;
+      for (const l of sh.lines) {
+        if (l.from.k === 'bl') { const c = stream.get(l.from.name)!; if (c.P > 0) lim.seeds.set(l.id, { P: c.P, ...(c.pump ? { pump: c.pump } : {}), stream: l.from.name }); lim.least.set(l.id, { P: c.P, T: c.T, stream: l.from.name }); }
+        if (l.to.k === 'bl' && !l.cv) { const c = stream.get(l.to.name)!; lim.least.set(l.id, { P: c.P, T: c.T, stream: l.to.name }); }
+      }
+      for (const [id, v] of lim.least) { const w = was.least.get(id); if (!w || w.P !== v.P || w.T !== v.T) changed = true; }
+      for (const [id, v] of lim.seeds) { const w = was.seeds.get(id); if (!w || w.P !== v.P) changed = true; }
+      next.set(sh.no, lim);
+    }
+    cur = next; if (!changed) { limitCache = cur; return cur; }
+  }
+  throw new Error('the design pressures at the battery limits do not settle');
 }
 
 /** the state a utility connection flows at */
@@ -150,13 +203,13 @@ export function utilState(u: Pick<Util, 'fluid' | 'w' | 'T' | 'P'>): State {
   return liquid(f, u.w, f === 'CA' ? 1.2 : 1, u.T, u.P);
 }
 
-export function sizeUnit(sh: UnitSheet): UnitSizing {
-  const shut = blockedIn(sh);
+export function sizeUnit(sh: UnitSheet, lim?: Limits): UnitSizing {
+  const shut = blockedIn(sh, lim?.seeds), des = lineDesigns(sh, shut.line, lim);
   // lines
   const lines: LineSize[] = sh.lines.map(l => {
-    const b = shut.line.get(l.id), designP = Math.max(designPressure(l.s.P), b?.P ?? 0), designT = metalT(l.s), cls = classFor(designP, designT);
+    const { designP, designT, pump, stream } = des[l.id], cls = classFor(designP, designT);
     const z = lineSize(l.s, l.slow, cls, 3);
-    return { id: l.id, unit: sh.no, NPS: z.NPS, cls, designP, designT, vacuum: l.s.P < 0, v: z.v, by: z.by, n: z.n, ...(b && b.P > designPressure(l.s.P) ? { pump: b.pump } : {}) };
+    return { id: l.id, unit: sh.no, NPS: z.NPS, cls, designP, designT, vacuum: l.s.P < 0, v: z.v, by: z.by, n: z.n, ...(pump ? { pump } : {}), ...(stream ? { stream } : {}) };
   });
   const utils = sh.utils.map(u => {
     const s = utilState(u), designP = designPressure(u.P), designT = designTemperature(u.T), cls = classFor(designP, designT), z = lineSize(s, false, cls, 2);   // SW-PRC-4: a take-off to a single item is butt-welded pipe, 2 in at least
@@ -399,11 +452,12 @@ const REACTOR_FEED: Record<string, { from: string; port: string; lhsv: number; s
 
 let cache: Map<number, UnitSizing> | undefined;
 /** every unit, sized */
-export function sizing(): Map<number, UnitSizing> { return (cache ??= new Map(processModel().sheets.map(sh => [sh.no, sizeUnit(sh)]))); }
+export function sizing(): Map<number, UnitSizing> { if (!cache) { const lim = limits(); cache = new Map(processModel().sheets.map(sh => [sh.no, sizeUnit(sh, lim.get(sh.no))])); } return cache; }
 /**
- * The line a stream between units runs in (SW-REF-12): the size of its largest end; the temperature of its hottest;
+ * The line a stream between units runs in (SW-REF-12, SW-PRC-2): the size of its largest end; the temperature of its hottest;
  * the pressure of the ends that reach it without a control valve at the battery limit, and of the units that receive it.
- * A unit's control valve station at its battery limit is where the class may change.
+ * A unit's control valve station ahead of its battery limit is where the class may change (SW-RPI-9); every other line that
+ * meets the stream is designed with it.
  */
 export function transferLine(key: string): { NPS: number; cls: PipeClass; designP: number; designT: number; opP: number } {
   const M = processModel(), Z = sizing(); let NPS = 0, designT = 0, designP = 0, opP = -ATM, found = false;

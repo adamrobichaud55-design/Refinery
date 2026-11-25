@@ -28,11 +28,12 @@
     "NPS": 16,
     "parallel": 1,
     "cls": "P150",
-    "designP": 75,
+    "designP": 120,
     "designT": 150,
     "vacuum": false,
     "velocity": 3.150892,
-    "sizedBy": "suction or gravity, 4 ft/s"
+    "sizedBy": "suction or gravity, 4 ft/s",
+    "pumpBlockedIn": "P-2001"
    },
    {
     "id": 1,
@@ -224,8 +225,8 @@
     "NPS": 4,
     "parallel": 1,
     "cls": "P150",
-    "designP": 85,
-    "designT": 160,
+    "designP": 125,
+    "designT": 170,
     "vacuum": false,
     "velocity": 2.747947,
     "sizedBy": "suction or gravity, 4 ft/s"
@@ -2001,11 +2002,12 @@
     "NPS": 8,
     "parallel": 1,
     "cls": "P300",
-    "designP": 155,
+    "designP": 260,
     "designT": 600,
     "vacuum": false,
     "velocity": 6.730214,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-1202"
    },
    {
     "id": 62,
@@ -2031,12 +2033,13 @@
     "note": "vacuum gas oil pumparound return",
     "NPS": 8,
     "parallel": 1,
-    "cls": "P150",
-    "designP": 145,
+    "cls": "P300",
+    "designP": 260,
     "designT": 500,
     "vacuum": false,
     "velocity": 6.295111,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-1202"
    },
    {
     "id": 63,
@@ -2064,7 +2067,7 @@
     "parallel": 1,
     "cls": "P600",
     "designP": 155,
-    "designT": 730,
+    "designT": 740,
     "vacuum": false,
     "velocity": 5.011146,
     "sizedBy": "liquid, 8 ft/s"
@@ -2941,12 +2944,13 @@
     "note": "",
     "NPS": 8,
     "parallel": 1,
-    "cls": "P150",
-    "designP": 135,
-    "designT": 495,
+    "cls": "P300",
+    "designP": 260,
+    "designT": 500,
     "vacuum": false,
     "velocity": 6.292646,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-1202"
    },
    {
     "id": 20,
@@ -3259,7 +3263,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 105,
-    "designT": 160,
+    "designT": 170,
     "vacuum": false,
     "velocity": 0.3400881,
     "sizedBy": "smallest size"
@@ -3578,7 +3582,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 125,
-    "designT": 160,
+    "designT": 170,
     "vacuum": false,
     "velocity": 0.2282882,
     "sizedBy": "smallest size"
@@ -4600,7 +4604,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 85,
-    "designT": 350,
+    "designT": 360,
     "vacuum": false,
     "velocity": 4.05652,
     "sizedBy": "liquid, 8 ft/s"
@@ -6229,7 +6233,7 @@
     "NPS": 3,
     "parallel": 1,
     "cls": "P600",
-    "designP": 375,
+    "designP": 395,
     "designT": 160,
     "vacuum": false,
     "velocity": 56.71888,
@@ -6259,7 +6263,7 @@
     "NPS": 3,
     "parallel": 1,
     "cls": "P600",
-    "designP": 380,
+    "designP": 395,
     "designT": 160,
     "vacuum": false,
     "velocity": 11.68308,
@@ -6484,7 +6488,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 125,
-    "designT": 160,
+    "designT": 170,
     "vacuum": false,
     "velocity": 0.1141441,
     "sizedBy": "smallest size"
@@ -7425,7 +7429,7 @@
     "phase": "L",
     "lbh": 40000,
     "T": 120,
-    "P": 60,
+    "P": 300,
     "sg": 1.03,
     "mw": 0,
     "vapourFraction": 0,
@@ -7434,8 +7438,8 @@
     "note": "",
     "NPS": 4,
     "parallel": 1,
-    "cls": "P150",
-    "designP": 85,
+    "cls": "P600",
+    "designP": 330,
     "designT": 170,
     "vacuum": false,
     "velocity": 2.486684,
@@ -7467,7 +7471,7 @@
     "NPS": 3,
     "parallel": 1,
     "cls": "P1200",
-    "designP": 1050,
+    "designP": 995,
     "designT": 170,
     "vacuum": false,
     "velocity": 4.742179,
@@ -7881,7 +7885,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 125,
-    "designT": 160,
+    "designT": 170,
     "vacuum": false,
     "velocity": 0.6848645,
     "sizedBy": "smallest size"
@@ -8679,7 +8683,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 125,
-    "designT": 420,
+    "designT": 430,
     "vacuum": false,
     "velocity": 7.027895,
     "sizedBy": "liquid, 8 ft/s"
@@ -9968,7 +9972,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 50,
-    "designT": 160,
+    "designT": 190,
     "vacuum": false,
     "velocity": 92.06846,
     "sizedBy": "gas momentum"
@@ -12340,7 +12344,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 95,
-    "designT": 185,
+    "designT": 190,
     "vacuum": false,
     "velocity": 7.726519,
     "sizedBy": "liquid, 8 ft/s"
@@ -13019,7 +13023,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 85,
-    "designT": 155,
+    "designT": 190,
     "vacuum": false,
     "velocity": 5.10803,
     "sizedBy": "liquid, 8 ft/s"
@@ -16283,7 +16287,7 @@
     "NPS": 36,
     "parallel": 1,
     "cls": "P150",
-    "designP": 115,
+    "designP": 145,
     "designT": 150,
     "vacuum": false,
     "velocity": 6.161332,
@@ -16314,7 +16318,7 @@
     "NPS": 36,
     "parallel": 1,
     "cls": "P150",
-    "designP": 115,
+    "designP": 145,
     "designT": 150,
     "vacuum": false,
     "velocity": 6.161332,
@@ -16345,7 +16349,7 @@
     "NPS": 36,
     "parallel": 1,
     "cls": "P150",
-    "designP": 115,
+    "designP": 145,
     "designT": 150,
     "vacuum": false,
     "velocity": 6.161332,
@@ -16376,7 +16380,7 @@
     "NPS": 36,
     "parallel": 1,
     "cls": "P150",
-    "designP": 115,
+    "designP": 145,
     "designT": 150,
     "vacuum": false,
     "velocity": 6.161332,
@@ -16407,7 +16411,7 @@
     "NPS": 36,
     "parallel": 1,
     "cls": "P150",
-    "designP": 115,
+    "designP": 145,
     "designT": 150,
     "vacuum": false,
     "velocity": 6.161332,
@@ -16851,7 +16855,7 @@
     "NPS": 6,
     "parallel": 1,
     "cls": "P150",
-    "designP": 75,
+    "designP": 135,
     "designT": 150,
     "vacuum": false,
     "velocity": 5.250271,
@@ -17041,7 +17045,7 @@
     "NPS": 6,
     "parallel": 1,
     "cls": "P150",
-    "designP": 75,
+    "designP": 105,
     "designT": 190,
     "vacuum": false,
     "velocity": 4.476404,
@@ -17136,7 +17140,7 @@
     "NPS": 3,
     "parallel": 1,
     "cls": "P150",
-    "designP": 75,
+    "designP": 105,
     "designT": 200,
     "vacuum": false,
     "velocity": 6.632959,
@@ -18813,13 +18817,12 @@
     "note": "",
     "NPS": 6,
     "parallel": 1,
-    "cls": "P300",
-    "designP": 220,
-    "designT": 340,
+    "cls": "P150",
+    "designP": 135,
+    "designT": 400,
     "vacuum": false,
     "velocity": 6.01921,
-    "sizedBy": "liquid, 8 ft/s",
-    "pumpBlockedIn": "P-2119"
+    "sizedBy": "liquid, 8 ft/s"
    },
    {
     "id": 63,
@@ -18846,13 +18849,12 @@
     "note": "",
     "NPS": 6,
     "parallel": 1,
-    "cls": "P300",
-    "designP": 220,
+    "cls": "P150",
+    "designP": 135,
     "designT": 250,
     "vacuum": false,
     "velocity": 4.318911,
-    "sizedBy": "liquid, 8 ft/s",
-    "pumpBlockedIn": "P-2119"
+    "sizedBy": "liquid, 8 ft/s"
    },
    {
     "id": 64,
@@ -18878,13 +18880,12 @@
     "note": "",
     "NPS": 6,
     "parallel": 1,
-    "cls": "P300",
-    "designP": 220,
+    "cls": "P150",
+    "designP": 135,
     "designT": 250,
     "vacuum": false,
     "velocity": 4.318911,
-    "sizedBy": "liquid, 8 ft/s",
-    "pumpBlockedIn": "P-2119"
+    "sizedBy": "liquid, 8 ft/s"
    },
    {
     "id": 65,
@@ -18910,13 +18911,12 @@
     "note": "",
     "NPS": 3,
     "parallel": 1,
-    "cls": "P300",
-    "designP": 220,
+    "cls": "P150",
+    "designP": 135,
     "designT": 400,
     "vacuum": false,
     "velocity": 6.987172,
-    "sizedBy": "liquid, 8 ft/s",
-    "pumpBlockedIn": "P-2119"
+    "sizedBy": "liquid, 8 ft/s"
    },
    {
     "id": 66,
@@ -18942,13 +18942,12 @@
     "note": "",
     "NPS": 3,
     "parallel": 1,
-    "cls": "P300",
-    "designP": 220,
+    "cls": "P150",
+    "designP": 135,
     "designT": 400,
     "vacuum": false,
     "velocity": 6.987172,
-    "sizedBy": "liquid, 8 ft/s",
-    "pumpBlockedIn": "P-2119"
+    "sizedBy": "liquid, 8 ft/s"
    },
    {
     "id": 67,
@@ -19062,9 +19061,9 @@
     "sg": 0.98,
     "mw": 0,
     "vapourFraction": 0,
-    "controlValve": false,
+    "controlValve": true,
     "suctionOrGravity": false,
-    "note": "cutter stock into the residue ahead of the cooler",
+    "note": "cutter stock into the residue ahead of the cooler, under flow control",
     "NPS": 3,
     "parallel": 1,
     "cls": "P300",
@@ -19291,7 +19290,7 @@
     "parallel": 1,
     "cls": "P150",
     "designP": 65,
-    "designT": 150,
+    "designT": 200,
     "vacuum": false,
     "velocity": 4.069723,
     "sizedBy": "liquid, 8 ft/s"
@@ -19703,12 +19702,13 @@
     "note": "",
     "NPS": 24,
     "parallel": 1,
-    "cls": "P150",
-    "designP": 145,
+    "cls": "P300",
+    "designP": 235,
     "designT": 150,
     "vacuum": false,
     "velocity": 5.671191,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-2121"
    },
    {
     "id": 4,
@@ -19733,12 +19733,13 @@
     "note": "jet fuel into the white products arm manifold",
     "NPS": 16,
     "parallel": 1,
-    "cls": "P150",
-    "designP": 145,
+    "cls": "P300",
+    "designP": 235,
     "designT": 150,
     "vacuum": false,
     "velocity": 6.39775,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-2122"
    },
    {
     "id": 5,
@@ -19764,12 +19765,13 @@
     "note": "",
     "NPS": 24,
     "parallel": 1,
-    "cls": "P150",
-    "designP": 145,
+    "cls": "P300",
+    "designP": 235,
     "designT": 150,
     "vacuum": false,
     "velocity": 5.671191,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-2123"
    },
    {
     "id": 6,
@@ -19796,11 +19798,12 @@
     "NPS": 18,
     "parallel": 1,
     "cls": "P300",
-    "designP": 155,
+    "designP": 245,
     "designT": 250,
     "vacuum": false,
     "velocity": 7.691021,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-2124"
    },
    {
     "id": 7,
@@ -20379,11 +20382,12 @@
     "NPS": 3,
     "parallel": 1,
     "cls": "P150",
-    "designP": 65,
+    "designP": 110,
     "designT": 160,
     "vacuum": false,
     "velocity": 4.901481,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-2002"
    },
    {
     "id": 1,
@@ -20439,11 +20443,12 @@
     "NPS": 3,
     "parallel": 1,
     "cls": "P150",
-    "designP": 55,
+    "designP": 110,
     "designT": 150,
     "vacuum": false,
     "velocity": 0.6780158,
-    "sizedBy": "smallest size"
+    "sizedBy": "smallest size",
+    "pumpBlockedIn": "P-2002"
    },
    {
     "id": 3,
@@ -21222,17 +21227,18 @@
     "sg": 1,
     "mw": 0,
     "vapourFraction": 0,
-    "controlValve": false,
+    "controlValve": true,
     "suctionOrGravity": false,
     "note": "",
     "NPS": 6,
     "parallel": 1,
-    "cls": "P150",
-    "designP": 65,
+    "cls": "P300",
+    "designP": 160,
     "designT": 150,
     "vacuum": false,
     "velocity": 6.581392,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-1901"
    },
    {
     "id": 1,
@@ -21253,17 +21259,18 @@
     "sg": 1,
     "mw": 0,
     "vapourFraction": 0,
-    "controlValve": false,
+    "controlValve": true,
     "suctionOrGravity": false,
     "note": "",
     "NPS": 6,
     "parallel": 1,
-    "cls": "P150",
-    "designP": 65,
+    "cls": "P300",
+    "designP": 160,
     "designT": 150,
     "vacuum": false,
     "velocity": 6.581392,
-    "sizedBy": "liquid, 8 ft/s"
+    "sizedBy": "liquid, 8 ft/s",
+    "pumpBlockedIn": "P-1901"
    },
    {
     "id": 2,

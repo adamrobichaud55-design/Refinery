@@ -21,7 +21,7 @@ No form of any code body is reproduced: the printable records are in SmartWeld's
 | Packaged components counted with the fittings | 6 | SW-REG-1 |
 | Lines with fluid service, line class and severity | 744 | SW-REG-4, -5, -8 |
 | Line classes | 32 | SW-REG-8 |
-| Piping system registrations (a line class in a unit) | 141 | SW-REG-6 |
+| Piping system registrations (a line class in a unit) | 142 | SW-REG-6 |
 | Fitting registrations (category × pipe class × maker) | 96 | SW-REG-6 |
 
 Outside this layer, with no record (SW-REG-1): storage tanks at atmospheric pressure, catalyst hoppers, basins and pits; pumps and compressors; structures.
@@ -47,8 +47,8 @@ SmartWeld stands in for the owner in designating each line (SW-REG-4): Category 
 | 23 | Truck loading | 11 | 0 | 11 | 0 |
 | 24 | Wastewater treatment | 20 | 4 | 16 | 0 |
 | 25 | Flare | 8 | 1 | 7 | 0 |
-| 26 | Fire water | 8 | 6 | 2 | 0 |
-|  | Plant | 744 | 115 | 614 | 15 |
+| 26 | Fire water | 8 | 4 | 4 | 0 |
+|  | Plant | 744 | 113 | 616 | 15 |
 
 | Fluid service | Examination of welds (recalled) | Leak test (recalled) | Threaded joints |
 | --- | --- | --- | --- |
@@ -66,7 +66,7 @@ A line class is written `{group}{rating}-{material}-{service}{rank}` (SW-REG-8, 
 | `H150-SS-M5` | P150 | stainless steel | M | 1 | 5 | **5** | 6 | 3 to 8 | 50 psi, 275 °F | acid gas |
 | `C1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 7 | 2 to 3 | 770 psi, 660 °F | steam condensate, boiler feed water |
 | `H1200-C1-N4` | P1200 | 1-1/4 Cr alloy steel | Normal | 4 | 4 | **4** | 11 | 8 to 14 | 1,145 psi, 1,000 °F | reactor effluent (oil and hydrogen) |
-| `H1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 14 | 3 to 10 | 1,050 psi, 700 °F | boiler feed water, amine solution, process and wash water, sour water, steam, 600 psi |
+| `H1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 14 | 3 to 10 | 1,035 psi, 700 °F | boiler feed water, amine solution, process and wash water, sour water, steam, 600 psi |
 | `H1200-CS-N3` | P1200 | carbon steel | Normal | 4 | 3 | **4** | 1 | 6 | 1,145 psi, 190 °F | diesel |
 | `H1200-CS-N4` | P1200 | carbon steel | Normal | 4 | 4 | **4** | 8 | 3 to 8 | 1,015 psi, 340 °F | hydrogen-rich gas, reactor effluent (oil and hydrogen) |
 | `H150-C5-N4` | P150 | 5 Cr alloy steel | Normal | 1 | 4 | **4** | 1 | 4 | 50 psi, 665 °F | gas oil |
@@ -77,21 +77,21 @@ A line class is written `{group}{rating}-{material}-{service}{rank}` (SW-REG-8, 
 | `H600-CS-N4` | P600 | carbon steel | Normal | 3 | 4 | **4** | 23 | 3 to 8 | 585 psi, 355 °F | hydrogen-rich gas, reactor effluent (oil and hydrogen), liquefied petroleum gas |
 | `S1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 9 | 2 to 8 | 660 psi, 700 °F | steam, 600 psi |
 | `H150-C5-N3` | P150 | 5 Cr alloy steel | Normal | 1 | 3 | **3** | 5 | 6 to 14 | 55 psi, 700 °F | gas oil, residue |
-| `H150-CS-N3` | P150 | carbon steel | Normal | 1 | 3 | **3** | 167 | 3 to 36 | 150 psi, 600 °F | crude oil, naphtha, diesel, kerosene, gas oil, residue, oily water, gasoline, reformate, slurry oil |
+| `H150-CS-N3` | P150 | carbon steel | Normal | 1 | 3 | **3** | 167 | 3 to 36 | 150 psi, 600 °F | crude oil, naphtha, diesel, kerosene, residue, oily water, gas oil, gasoline, reformate, slurry oil |
 | `H300-C5-N3` | P300 | 5 Cr alloy steel | Normal | 2 | 3 | **3** | 7 | 4 to 14 | 270 psi, 740 °F | gas oil, residue, slurry oil |
 | `H300-CS-N3` | P300 | carbon steel | Normal | 2 | 3 | **3** | 104 | 3 to 24 | 300 psi, 600 °F | oily water, crude oil, naphtha, diesel, gas oil, kerosene, residue, reformate, slurry oil, gasoline |
 | `H600-C5-N3` | P600 | 5 Cr alloy steel | Normal | 3 | 3 | **3** | 5 | 3 to 10 | 260 psi, 740 °F | residue, slurry oil |
-| `H600-CS-N2` | P600 | carbon steel | Normal | 3 | 2 | **3** | 14 | 3 to 6 | 500 psi, 305 °F | process and wash water, sour water, amine solution, caustic solution |
+| `H600-CS-N2` | P600 | carbon steel | Normal | 3 | 2 | **3** | 15 | 3 to 6 | 500 psi, 305 °F | process and wash water, sour water, amine solution, caustic solution |
 | `H600-CS-N3` | P600 | carbon steel | Normal | 3 | 3 | **3** | 26 | 3 to 12 | 595 psi, 555 °F | crude oil, naphtha, kerosene, gas oil, diesel, gasoline |
 | `C300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 9 | 2 to 3 | 275 psi, 410 °F | boiler feed water, steam condensate |
-| `H150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 44 | 2 to 42 | 150 psi, 650 °F | sour water, amine solution, process air, flue gas, caustic solution, liquid sulfur, boiler feed water |
+| `H150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 43 | 2 to 42 | 150 psi, 650 °F | sour water, amine solution, process air, flue gas, caustic solution, liquid sulfur, boiler feed water |
 | `H150-SS-N2` | P150 | stainless steel | Normal | 1 | 2 | **2** | 2 | 3 | 115 psi, 170 °F | sour water |
-| `H300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 23 | 2 to 20 | 285 psi, 450 °F | process and wash water, sour water, amine solution, caustic solution, raw and service water, demineralised water, steam, 150 psi, nitrogen, fire water |
+| `H300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 25 | 2 to 20 | 285 psi, 450 °F | process and wash water, sour water, amine solution, caustic solution, raw and service water, demineralised water, steam, 150 psi, nitrogen, fire water |
 | `S150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 2 | 10 to 14 | 75 psi, 370 °F | steam, 50 psi |
 | `S300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 12 | 2 to 10 | 175 psi, 450 °F | steam, 150 psi |
 | `C150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 9 | 2 | 65 psi, 310 °F | steam condensate |
 | `G150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 1 | 2 | 115 psi, 150 °F | instrument air |
-| `H150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 40 | 3 to 48 | 150 psi, 350 °F | process and wash water, process air, raw and service water, demineralised water, steam condensate, steam, 50 psi, cooling water return, cooling water supply, plant air, instrument air, fire water |
+| `H150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 38 | 3 to 48 | 150 psi, 350 °F | process and wash water, process air, raw and service water, demineralised water, steam condensate, steam, 50 psi, cooling water return, cooling water supply, plant air, instrument air, fire water |
 | `S150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 19 | 2 to 10 | 75 psi, 350 °F | steam, 50 psi |
 | `W150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 46 | 2 to 14 | 105 psi, 155 °F | cooling water supply, cooling water return, raw and service water |
 
@@ -99,9 +99,9 @@ A line class is written `{group}{rating}-{material}-{service}{rank}` (SW-REG-8, 
 | --- | --- |
 | 5 | 15 |
 | 4 | 194 |
-| 3 | 328 |
-| 2 | 92 |
-| 1 | 115 |
+| 3 | 329 |
+| 2 | 93 |
+| 1 | 113 |
 
 ## Pressure equipment
 
@@ -124,7 +124,7 @@ Separates the crude by boiling range into gas, naphtha, kerosene, diesel, gas oi
 | E-1112 | Brine cooler | U-1 | F9370.7 | shell side: 165 psi at 210 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
 | E-1106 | Crude / gas oil exchanger | U-1 | V9227.7 | shell side: 215 psi at 660 °F; tube side: 400 psi at 335 °F | 36 in × 20 ft | 0.625 | SA-516-70 | spot | none | -20 | 20,972 |
 | E-1107 | Crude / gas oil pumparound exchanger | U-1 | W7608.7 | shell side: 165 psi at 660 °F; tube side: 400 psi at 450 °F | 48 in × 20 ft | 0.75 | SA-516-70 | spot | none | -20 | 38,100 |
-| E-1108 | Crude / vacuum gas oil pumparound exchanger | U-1 | G5989.7 | shell side: 155 psi at 600 °F; tube side: 455 psi at 505 °F | 54 in × 20 ft | 0.875 | SA-516-70 | spot | none | -20 | 49,340 |
+| E-1108 | Crude / vacuum gas oil pumparound exchanger | U-1 | G5989.7 | shell side: 260 psi at 600 °F; tube side: 455 psi at 505 °F | 54 in × 20 ft | 0.875 | SA-516-70 | spot | none | -20 | 49,340 |
 | E-1109 | Crude / vacuum residue exchanger | U-1 | H4370.7 | shell side: 155 psi at 730 °F; tube side: 455 psi at 555 °F | 42 in × 20 ft | 0.75 | SA-516-70 | spot | none | -20 | 29,703 |
 | A-1101A | Overhead air condenser | U-1A | R5045.7 | headers and tubes: 50 psi at 300 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1101B | Overhead air condenser | U-1A | P9188.7 | headers and tubes: 50 psi at 300 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
@@ -375,7 +375,7 @@ Holds feed between units, blends gasoline from its components, and stores the fi
 | S-2103 | Four-carbon liquefied gas sphere | U-1 | R1265.7 | vessel: 85 psi at 150 °F | sphere 50 ft | 0.875 | SA-516-70 | spot | none | -20 | 404,548 |
 | S-2104 | Three-carbon loading bullet | U-1A | Y2884.7 | vessel: 205 psi at 150 °F | 120 in × 60 ft | 0.875 | SA-516-70 | spot | none | -50 | 79,189 |
 | S-2105 | Four-carbon loading bullet | U-1A | X4503.7 | vessel: 85 psi at 150 °F | 120 in × 60 ft | 0.5 | SA-516-70 | spot | none | -20 | 46,781 |
-| A-2101 | Fuel oil rundown cooler | U-1A | C5597.7 | headers and tubes: 220 psi at 340 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
+| A-2101 | Fuel oil rundown cooler | U-1A | C5597.7 | headers and tubes: 135 psi at 340 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 
 ### Unit 22: Marine terminal
 

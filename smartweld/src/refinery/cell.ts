@@ -499,6 +499,8 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
   // SW-CELL-2: where heaters stand beyond the equipment, the rack runs on toward them and ends 10 ft short of their pads, so that their lines have steel under them
   const rack: RackLayout = { x0: RACK.start, x1: rackEnd + (heat.length ? 480 : 0), bentSpacing: RACK.bent, halfWidth: hw, tiers: RACK.tiers, loadPsf: RACK.loadPsf };
   kit.rack({ ...rack, x0: RACK.start - RACK.bent });                                                      // SW-CELL-2: one bay more toward the battery limit, the valve bay (SW-RPI-4)
+  // SW-CELL-2: no ladder at the rack's battery-limit end, where the lines to the main pipeway pass out between its columns (§80); the ladder at its far end stays
+  for (let i = out.length - 1; i >= 0; i--) if (out[i].tags.includes('rack-ladder') && out[i].transform[12] < RACK.start) out.splice(i, 1);
   const notes = [`Unit ${unit}: ${spots.length} bodies of ${sh.equip.size} items; rack ${(rackEnd - RACK.start) / 12} ft long, ${(2 * hw) / 12} ft wide, tiers at ${RACK.tiers.map(t => t / 12).join(', ')} ft (SW-CELL-2, SW-CELL-3).`];
   const m: CellModel = { unit, name: sh.name, rack, spots, yard, interior: { instances: out, derived, notes, equipment }, x1: Math.max(rack.x1, xH) + 24, z0: Math.min(-hw, ...spots.map(s => s.z - s.lz / 2)) - 24, z1: Math.max(hw, ...spots.map(s => s.z + s.lz / 2)) + 24, y1: Math.max(...spots.map(s => s.h)) };
   cache.set(key, m); return m;

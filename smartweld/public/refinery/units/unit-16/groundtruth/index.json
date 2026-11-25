@@ -16,12 +16,12 @@
    "flow": "BL-1601-U → CS-1601-A",
    "joint": "BW",
    "file": "lines/6in-P150-P-16001.json",
-   "items": 45,
-   "welds": 16,
+   "items": 47,
+   "welds": 18,
    "fieldWelds": 2,
-   "supports": 0,
-   "pipeLength": 414.8788,
-   "weight": 1755.2225
+   "supports": 1,
+   "pipeLength": 414.6532,
+   "weight": 1790.0933
   },
   {
    "line": "6\"-P150-P-16701",
@@ -178,26 +178,26 @@
    "weight": 1019.8027
   },
   {
-   "line": "4\"-P150-P-16007",
-   "lineClass": "H150",
+   "line": "4\"-P600-P-16007",
+   "lineClass": "H600",
    "fluid": "Hydrocarbon process",
    "service": "P",
    "NPS": 4,
-   "cls": "P150",
-   "designPressure": 150,
+   "cls": "P600",
+   "designPressure": 600,
    "insulated": false,
    "kind": "routed",
    "from": "BL-1603-U",
    "to": "P-1602A-S",
    "flow": "BL-1603-U → P-1602A-S",
    "joint": "BW",
-   "file": "lines/4in-P150-P-16007.json",
-   "items": 36,
-   "welds": 20,
+   "file": "lines/4in-P600-P-16007.json",
+   "items": 38,
+   "welds": 22,
    "fieldWelds": 3,
    "supports": 2,
-   "pipeLength": 907.866,
-   "weight": 1035.9007
+   "pipeLength": 859.9076,
+   "weight": 1016.5399
   },
   {
    "line": "3\"-P1200-P-16008",
@@ -218,8 +218,8 @@
    "welds": 32,
    "fieldWelds": 4,
    "supports": 10,
-   "pipeLength": 1597.5993,
-   "weight": 1625.9844
+   "pipeLength": 1599.7413,
+   "weight": 1623.3312
   },
   {
    "line": "3\"-P1200-P-16703",
@@ -280,12 +280,12 @@
    "flow": "CS-1604-B → BL-1604-U",
    "joint": "BW",
    "file": "lines/3in-P150-P-16704.json",
-   "items": 23,
-   "welds": 12,
+   "items": 19,
+   "welds": 8,
    "fieldWelds": 2,
-   "supports": 1,
-   "pipeLength": 416.125,
-   "weight": 485.0814
+   "supports": 2,
+   "pipeLength": 430.125,
+   "weight": 484.4486
   },
   {
    "line": "6\"-P1200-P-16010",
@@ -324,12 +324,12 @@
    "flow": "D-1603-N2 → K-1601A-N1",
    "joint": "BW",
    "file": "lines/6in-P1200-P-16011.json",
-   "items": 31,
-   "welds": 20,
+   "items": 35,
+   "welds": 24,
    "fieldWelds": 4,
    "supports": 7,
-   "pipeLength": 1983.4875,
-   "weight": 3628.7438
+   "pipeLength": 1991.4875,
+   "weight": 3684.9075
   },
   {
    "line": "6\"-P1200-P-16012",
@@ -415,9 +415,9 @@
    "items": 28,
    "welds": 17,
    "fieldWelds": 3,
-   "supports": 7,
-   "pipeLength": 1235.4813,
-   "weight": 814.8454
+   "supports": 8,
+   "pipeLength": 1242.6527,
+   "weight": 814.6001
   },
   {
    "line": "3\"-P1200-P-16015",
@@ -592,8 +592,8 @@
    "welds": 24,
    "fieldWelds": 2,
    "supports": 4,
-   "pipeLength": 812.7566,
-   "weight": 686.2898
+   "pipeLength": 800.7566,
+   "weight": 681.5398
   },
   {
    "line": "3\"-P1200-P-16022",
@@ -662,26 +662,26 @@
    "weight": 1601.5891
   },
   {
-   "line": "3\"-P1200-P-16707",
-   "lineClass": "H1200",
+   "line": "3\"-P150-P-16707",
+   "lineClass": "H150",
    "fluid": "Hydrocarbon process",
    "service": "P",
    "NPS": 3,
-   "cls": "P1200",
-   "designPressure": 1200,
+   "cls": "P150",
+   "designPressure": 150,
    "insulated": false,
    "kind": "routed",
    "from": "CS-1607-B",
    "to": "BL-1607-U",
    "flow": "CS-1607-B → BL-1607-U",
    "joint": "BW",
-   "file": "lines/3in-P1200-P-16707.json",
+   "file": "lines/3in-P150-P-16707.json",
    "items": 21,
    "welds": 10,
    "fieldWelds": 2,
    "supports": 1,
-   "pipeLength": 373.4214,
-   "weight": 499.2923
+   "pipeLength": 366.125,
+   "weight": 462.2024
   },
   {
    "line": "6\"-P300-P-16025",
@@ -750,26 +750,26 @@
    "weight": 1564.5614
   },
   {
-   "line": "3\"-P300-P-16709",
-   "lineClass": "H300",
+   "line": "3\"-P150-P-16709",
+   "lineClass": "H150",
    "fluid": "Hydrocarbon process",
    "service": "P",
    "NPS": 3,
-   "cls": "P300",
-   "designPressure": 300,
+   "cls": "P150",
+   "designPressure": 150,
    "insulated": false,
    "kind": "routed",
    "from": "CS-1609-B",
    "to": "BL-1608-U",
    "flow": "CS-1609-B → BL-1608-U",
    "joint": "BW",
-   "file": "lines/3in-P300-P-16709.json",
+   "file": "lines/3in-P150-P-16709.json",
    "items": 25,
    "welds": 14,
    "fieldWelds": 2,
    "supports": 3,
-   "pipeLength": 620.8111,
-   "weight": 566.1067
+   "pipeLength": 622.125,
+   "weight": 569.7106
   },
   {
    "line": "6\"-P300-P-16027",
@@ -1010,24 +1010,24 @@
    "welds": 24,
    "fieldWelds": 3,
    "supports": 11,
-   "pipeLength": 1579.6704,
-   "weight": 1447.6764
+   "pipeLength": 1602.1799,
+   "weight": 1453.5032
   },
   {
-   "line": "3\"-P300-P-16712",
-   "lineClass": "H300",
+   "line": "3\"-P150-P-16712",
+   "lineClass": "H150",
    "fluid": "Hydrocarbon process",
    "service": "P",
    "NPS": 3,
-   "cls": "P300",
-   "designPressure": 300,
+   "cls": "P150",
+   "designPressure": 150,
    "insulated": false,
    "kind": "routed",
    "from": "CS-1612-B",
    "to": "BL-1609-U",
    "flow": "CS-1612-B → BL-1609-U",
    "joint": "BW",
-   "file": "lines/3in-P300-P-16712.json",
+   "file": "lines/3in-P150-P-16712.json",
    "items": 29,
    "welds": 18,
    "fieldWelds": 3,
@@ -1212,26 +1212,26 @@
    "weight": 4751.2202
   },
   {
-   "line": "6\"-P300-P-16713",
-   "lineClass": "H300",
+   "line": "6\"-P150-P-16713",
+   "lineClass": "H150",
    "fluid": "Hydrocarbon process",
    "service": "P",
    "NPS": 6,
-   "cls": "P300",
-   "designPressure": 300,
+   "cls": "P150",
+   "designPressure": 150,
    "insulated": false,
    "kind": "routed",
    "from": "CS-1613-B",
    "to": "BL-1610-U",
    "flow": "CS-1613-B → BL-1610-U",
    "joint": "BW",
-   "file": "lines/6in-P300-P-16713.json",
+   "file": "lines/6in-P150-P-16713.json",
    "items": 27,
    "welds": 16,
    "fieldWelds": 3,
-   "supports": 2,
-   "pipeLength": 594.9977,
-   "weight": 1229.2123
+   "supports": 3,
+   "pipeLength": 591.625,
+   "weight": 1232.0652
   },
   {
    "line": "3\"-P1200-P-16601",
@@ -1270,12 +1270,12 @@
    "flow": "RS-1602-A → tap 6\"-P1200-P-16012",
    "joint": "BW",
    "file": "lines/3in-P1200-P-16602.json",
-   "items": 16,
-   "welds": 11,
+   "items": 20,
+   "welds": 15,
    "fieldWelds": 2,
-   "supports": 2,
-   "pipeLength": 487.875,
-   "weight": 403.7253
+   "supports": 1,
+   "pipeLength": 467.875,
+   "weight": 401.6577
   },
   {
    "line": "3\"-P150-P-16603",
@@ -1388,26 +1388,26 @@
    "weight": 560.3558
   },
   {
-   "line": "4\"-P150-P-16303",
-   "lineClass": "H150",
+   "line": "4\"-P600-P-16303",
+   "lineClass": "H600",
    "fluid": "Hydrocarbon process",
    "service": "P",
    "NPS": 4,
-   "cls": "P150",
-   "designPressure": 150,
+   "cls": "P600",
+   "designPressure": 600,
    "insulated": false,
    "kind": "routed",
-   "from": "tap 4\"-P150-P-16007",
+   "from": "tap 4\"-P600-P-16007",
    "to": "P-1602B-S",
-   "flow": "tap 4\"-P150-P-16007 → P-1602B-S",
+   "flow": "tap 4\"-P600-P-16007 → P-1602B-S",
    "joint": "BW",
-   "file": "lines/4in-P150-P-16303.json",
-   "items": 16,
-   "welds": 6,
+   "file": "lines/4in-P600-P-16303.json",
+   "items": 18,
+   "welds": 8,
    "fieldWelds": 2,
    "supports": 0,
-   "pipeLength": 76.1372,
-   "weight": 287.1635
+   "pipeLength": 64.1788,
+   "weight": 288.8786
   },
   {
    "line": "3\"-P1200-P-16304",
@@ -1428,8 +1428,8 @@
    "welds": 7,
    "fieldWelds": 2,
    "supports": 0,
-   "pipeLength": 96.4602,
-   "weight": 203.1971
+   "pipeLength": 92.4602,
+   "weight": 201.318
   },
   {
    "line": "6\"-P1200-P-16305",
@@ -1446,12 +1446,12 @@
    "flow": "tap 6\"-P1200-P-16011 → K-1601B-N1",
    "joint": "BW",
    "file": "lines/6in-P1200-P-16305.json",
-   "items": 15,
-   "welds": 10,
+   "items": 17,
+   "welds": 12,
    "fieldWelds": 2,
    "supports": 0,
-   "pipeLength": 230.0532,
-   "weight": 703.3379
+   "pipeLength": 239.7688,
+   "weight": 761.9309
   },
   {
    "line": "6\"-P1200-P-16306",
@@ -1534,12 +1534,12 @@
    "flow": "tap 3\"-P150-P-16021 → P-1605B-S",
    "joint": "BW",
    "file": "lines/3in-P150-P-16309.json",
-   "items": 18,
-   "welds": 8,
+   "items": 16,
+   "welds": 6,
    "fieldWelds": 2,
    "supports": 0,
-   "pipeLength": 87.0227,
-   "weight": 225.6804
+   "pipeLength": 85.0227,
+   "weight": 221.8014
   },
   {
    "line": "3\"-P1200-P-16310",
@@ -1560,8 +1560,8 @@
    "welds": 12,
    "fieldWelds": 2,
    "supports": 0,
-   "pipeLength": 259.2102,
-   "weight": 290.3778
+   "pipeLength": 265.2102,
+   "weight": 293.1965
   },
   {
    "line": "3\"-P150-P-16311",

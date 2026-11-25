@@ -93,7 +93,9 @@ describe('plant 3: the piping register of a piped unit (SW-REG-9)', () => {
   it('the files on disk are what the code gives from the models on disk', () => {
     for (const u of units) { const f = new URL(`unit-${u}.json`, dir); expect(existsSync(f), `unit ${u}`).toBe(true); expect(readFileSync(f, 'utf8')).toBe(serializeRegister(registers.get(u)!) + '\n'); expect(JSON.parse(readFileSync(f, 'utf8')).totals).toEqual(registers.get(u)!.totals); }
     expect(readdirSync(dir).filter(f => /^unit-\d+\.json$/.test(f)).length).toBe(units.length);
-    expect(readFileSync(new URL('../docs/REFINERY-PIPING-REGISTER.md', import.meta.url), 'utf8')).toBe(pipingRegisterDocument([...registers.values()]) + '\n');
+    // the main pipeway's register (§80) follows the units' in the document, once the pipeway is piped; tests/refinery-pipeway.test.ts checks it against its model
+    const pw = new URL('pipeway.json', dir), all = [...registers.values(), ...(existsSync(pw) ? [JSON.parse(readFileSync(pw, 'utf8')) as PipingRegister] : [])];
+    expect(readFileSync(new URL('../docs/REFINERY-PIPING-REGISTER.md', import.meta.url), 'utf8')).toBe(pipingRegisterDocument(all) + '\n');
   });
   it('the rule is written in the design basis, and no maker is a real company', () => {
     expect(basisDoc).toContain('`SW-REG-9`'); for (const m of readFileSync(new URL('../src/refinery/pipingRegister.ts', import.meta.url), 'utf8').matchAll(/SW-[A-Z]+-\d+/g)) expect(basisDoc).toContain(`\`${m[0]}\``);

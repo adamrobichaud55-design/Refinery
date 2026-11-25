@@ -9,13 +9,13 @@
   3
  ],
  "tierRoom": 72,
- "seconds": 214,
+ "seconds": 200,
  "stats": {
   "lines": 65,
   "routed": 65,
   "failed": 0,
-  "comps": 1847,
-  "welds": 958,
+  "comps": 1846,
+  "welds": 957,
   "supports": 193,
   "penetrations": 0
  },
@@ -46,13 +46,13 @@
    "tag": "BL-1504",
    "stream": "sour water",
    "dir": "out",
-   "line": "3\"-P600-P-15703",
+   "line": "3\"-P150-P-15703",
    "NPS": 3,
-   "cls": "P600",
+   "cls": "P150",
    "at": [
     150,
     198,
-    -42
+    -48
    ],
    "tier": 0
   },
@@ -66,7 +66,7 @@
    "at": [
     150,
     198,
-    -24
+    -30
    ],
    "tier": 0,
    "lane": -24
@@ -75,13 +75,13 @@
    "tag": "BL-1507",
    "stream": "treated kerosene",
    "dir": "out",
-   "line": "4\"-P300-P-15708",
+   "line": "4\"-P150-P-15708",
    "NPS": 4,
-   "cls": "P300",
+   "cls": "P150",
    "at": [
     150,
     198,
-    -6
+    -12
    ],
    "tier": 0,
    "lane": -12
@@ -96,7 +96,7 @@
    "at": [
     150,
     198,
-    12
+    6
    ],
    "tier": 0,
    "lane": 12
@@ -105,13 +105,13 @@
    "tag": "BL-1506",
    "stream": "wild naphtha",
    "dir": "out",
-   "line": "3\"-P300-P-15707",
+   "line": "3\"-P150-P-15707",
    "NPS": 3,
-   "cls": "P300",
+   "cls": "P150",
    "at": [
     150,
     198,
-    90
+    84
    ],
    "tier": 0,
    "lane": 90
@@ -126,7 +126,7 @@
    "at": [
     150,
     198,
-    108
+    102
    ],
    "tier": 0
   },
@@ -140,7 +140,7 @@
    "at": [
     150,
     198,
-    126
+    120
    ],
    "tier": 0
   }
@@ -207,7 +207,7 @@
   {
    "tag": "CS-1503",
    "line": "3\"-P600-P-15016",
-   "after": "3\"-P600-P-15703",
+   "after": "3\"-P150-P-15703",
    "at": [
     444,
     36,
@@ -247,7 +247,7 @@
   {
    "tag": "CS-1507",
    "line": "3\"-P300-P-15025",
-   "after": "3\"-P300-P-15707",
+   "after": "3\"-P150-P-15707",
    "at": [
     528,
     36,
@@ -257,7 +257,7 @@
   {
    "tag": "CS-1508",
    "line": "4\"-P300-P-15032",
-   "after": "4\"-P300-P-15708",
+   "after": "4\"-P150-P-15708",
    "at": [
     684,
     36,
@@ -347,7 +347,7 @@
    "to": "K-1501A-N1",
    "NPS": 3,
    "cls": "P600",
-   "designP": 375,
+   "designP": 395,
    "designT": 160,
    "routed": true,
    "components": 29,
@@ -365,12 +365,12 @@
    "to": "RS-1501-B",
    "NPS": 3,
    "cls": "P600",
-   "designP": 380,
+   "designP": 395,
    "designT": 160,
    "routed": true,
    "components": 17,
    "welds": 10,
-   "supports": 2,
+   "supports": 3,
    "lengthFt": 43,
    "tier": 1
   },
@@ -511,7 +511,7 @@
    "NPS": 3,
    "cls": "P150",
    "designP": 125,
-   "designT": 160,
+   "designT": 170,
    "routed": true,
    "components": 31,
    "welds": 20,
@@ -591,19 +591,19 @@
    "controlValve": "piped"
   },
   {
-   "no": "3\"-P600-P-15703",
+   "no": "3\"-P150-P-15703",
    "origin": "control",
    "fluid": "SW",
    "fluidName": "sour water",
    "from": "CS-1503-B",
    "to": "BL-1504-U",
    "NPS": 3,
-   "cls": "P600",
-   "designP": 470,
-   "designT": 160,
+   "cls": "P150",
+   "designP": 85,
+   "designT": 190,
    "routed": true,
-   "components": 21,
-   "welds": 14,
+   "components": 19,
+   "welds": 12,
    "supports": 1,
    "lengthFt": 34,
    "station": "CS-1503"
@@ -744,13 +744,13 @@
    "to": "BL-1505-U",
    "NPS": 3,
    "cls": "P150",
-   "designP": 55,
-   "designT": 170,
+   "designP": 50,
+   "designT": 190,
    "routed": true,
    "components": 19,
    "welds": 12,
-   "supports": 2,
-   "lengthFt": 41,
+   "supports": 1,
+   "lengthFt": 38,
    "station": "CS-1505"
   },
   {
@@ -828,21 +828,21 @@
    "controlValve": "piped"
   },
   {
-   "no": "3\"-P300-P-15707",
+   "no": "3\"-P150-P-15707",
    "origin": "control",
    "fluid": "NA",
    "fluidName": "naphtha",
    "from": "CS-1507-B",
    "to": "BL-1506-U",
    "NPS": 3,
-   "cls": "P300",
-   "designP": 155,
+   "cls": "P150",
+   "designP": 105,
    "designT": 170,
    "routed": true,
-   "components": 15,
-   "welds": 8,
+   "components": 23,
+   "welds": 16,
    "supports": 3,
-   "lengthFt": 47,
+   "lengthFt": 49,
    "tier": 1,
    "station": "CS-1507"
   },
@@ -971,21 +971,21 @@
    "controlValve": "piped"
   },
   {
-   "no": "4\"-P300-P-15708",
+   "no": "4\"-P150-P-15708",
    "origin": "control",
    "fluid": "KE",
    "fluidName": "kerosene",
    "from": "CS-1508-B",
    "to": "BL-1507-U",
    "NPS": 4,
-   "cls": "P300",
-   "designP": 180,
+   "cls": "P150",
+   "designP": 75,
    "designT": 150,
    "routed": true,
-   "components": 23,
-   "welds": 16,
+   "components": 16,
+   "welds": 9,
    "supports": 3,
-   "lengthFt": 57,
+   "lengthFt": 53,
    "tier": 1,
    "station": "CS-1508"
   },
@@ -998,7 +998,7 @@
    "to": "tap 3\"-P600-P-15004",
    "NPS": 3,
    "cls": "P600",
-   "designP": 380,
+   "designP": 395,
    "designT": 160,
    "routed": true,
    "components": 11,
@@ -1083,7 +1083,7 @@
    "to": "K-1501B-N1",
    "NPS": 3,
    "cls": "P600",
-   "designP": 375,
+   "designP": 395,
    "designT": 160,
    "routed": true,
    "components": 13,
@@ -1118,7 +1118,7 @@
    "NPS": 3,
    "cls": "P150",
    "designP": 125,
-   "designT": 160,
+   "designT": 170,
    "routed": true,
    "components": 13,
    "welds": 6,
@@ -1418,7 +1418,7 @@
  "counts": {
   "components": {
    "cap": 8,
-   "elbow": 311,
+   "elbow": 310,
    "flange": 207,
    "gasket": 330,
    "olet": 3,
@@ -1431,13 +1431,13 @@
   },
   "welds": {
    "BW, field": 144,
-   "BW, shop": 799,
+   "BW, shop": 798,
    "FW, shop": 15
   },
   "supports": {
    "anchor": 23,
-   "guide": 46,
-   "hanger": 34,
+   "guide": 47,
+   "hanger": 33,
    "shoe": 48,
    "stanchion": 13,
    "trapeze": 2,
@@ -1445,6 +1445,7 @@
   }
  },
  "notes": [
+  "4\"-P150-P-15001: given the lane at z -24 on tier 1, routed at z -30",
   "8\"-P600-P-15008: no valve at H-1501-N2; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
   "8\"-P600-P-15008: no valve at R-1501-N1; GATE 8 and what stood with it left out, 5 pieces, the pipe 19.7 in longer (SW-RPI-14)",
   "4\"-P150-P-15020: no valve at C-1501-N2; GATE 4 and what stood with it left out, 5 pieces, the pipe 15.8 in longer (SW-RPI-14)",
