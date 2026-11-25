@@ -172,8 +172,8 @@ describe('plant 3: what the generator is given for the main pipeway (SW-PWY-1 to
     }
     // a piped unit's header spool of a header on the rack is a party of it; of one not on the rack (cooling water) it waits
     for (const u of PIPED) for (const sp of unitPiping(u).spools.filter(q => q.header)) { const h = pw.headers.find(q => q.key === sp.stream); if (h) expect(h.parties.some(q => q.nozzle === `${sp.tag}-P`), sp.tag).toBe(true); else expect(sp.stream).toMatch(/^cooling water/); }
-    // the cracker, not yet piped: a limit spool for each of its headers, of the size its header will be, with a valve and a blind beyond
-    for (const uh of unitHeaders(17)) { const h = pw.headers.find(q => q.fluid === uh.fluid); if (!h) continue; const q = h.parties.find(v => v.unit === 17)!, lim = pw.limits.find(v => `${v.tag}-P` === q.nozzle)!; expect(q.spool, uh.fluid).toBe(uh.NPS); expect(lim.NPS).toBe(uh.NPS); expect(lim.where).toBe('valve bay'); expect(lim.at[1]).toBe(Math.ceil((RACK.tiers[RACK.tiers.length - 1] + 4 + pipeDims(uh.NPS, h.cls).OD / 2) / 6 - 1e-9) * 6); }
+    // every unit of the process bench is piped now (the cracker with them): none of them has a limit spool on the main rack, each header's branch ends at the unit's own spool
+    for (const uh of unitHeaders(17)) { const h = pw.headers.find(q => q.fluid === uh.fluid); if (!h) continue; const q = h.parties.find(v => v.unit === 17)!; expect(q, uh.fluid).toBeDefined(); expect(pw.limits.some(v => `${v.tag}-P` === q.nozzle), uh.fluid).toBe(false); expect(unitPiping(17).spools.some(sp => sp.header && `${sp.tag}-P` === q.nozzle), uh.fluid).toBe(true); }
     // the band and the strips beside it are taken on the top tier before any stream's line is given a lane
     const z0 = Math.min(...pw.headers.map(h => h.z - pipeDims(h.NPS, h.cls).OD / 2)), z1 = Math.max(...pw.headers.map(h => h.z + pipeDims(h.NPS, h.cls).OD / 2));
     for (const a of pw.foreseen.filter(q => q.no !== undefined && q.t === top)) expect(Math.min(Math.abs(a.z - a.OD / 2 - z1), Math.abs(a.z + a.OD / 2 - z0)), a.no).toBeGreaterThanOrEqual(36);

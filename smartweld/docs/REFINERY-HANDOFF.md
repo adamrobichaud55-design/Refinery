@@ -116,8 +116,8 @@ Run on the commit before this note. The nine that fail, none altered to pass:
 | `refinery-pipeway.test.ts`: every line routed, checks and spans at zero | items 3 and 4 |
 | `refinery-pipeway.test.ts`: each rack line lies in its lane | `10034` is not routed, item 3 |
 | `refinery-pipeway.test.ts`: at every spool the line's flange meets the face | the same unrouted line has no components |
-| `refinery-pipeway.test.ts`: the utility headers ... a branch to every party (line 176, `NPS` of undefined) | **not looked into yet.** It reads a header or spool of unit 17 that it does not find; either the test's lookup or unit 17's header spools on the main rack. Look before item 4, it may be the same cause. |
-| `refinery-pipeway.test.ts`: each header in its lane, each branch comes down beside the band (line 268, 390 not below 378) | **not looked into yet.** A branch stands 12 in higher than the test allows; unit 17's rack is 30 ft wide, the others 24 ft. May be a true fault of a branch to unit 17 or a bound written for the narrower racks. |
+| `refinery-pipeway.test.ts`: the utility headers ... a branch to every party | was a test written while the cracker was not piped (it looked for unit 17's limit spools); brought up to date in the next commit, to be confirmed by a run |
+| `refinery-pipeway.test.ts`: each header in its lane, each branch comes down beside the band (line 268, 390 not below 378) | a branch crosses the rack's column line at y 390, over the top tier's steel, where the rule (SW-PWY-12) has it go out under the tier. Most likely the same fault as item 4: the two unsupported spans are branches to unit 17 at y 360, and a branch that goes out over the tier has no steel to hang from. Start item 4 here: print that branch's route and unit 17's header spools (`unitPiping(17).spools.filter(s => s.header)`), and compare their height and row with another unit's. |
 
 ### The exports
 
