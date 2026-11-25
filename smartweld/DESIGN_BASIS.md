@@ -4891,7 +4891,7 @@ What this section adds is what that generator is given.
     the other's handrail.
   - Catalyst hopper (the silo of SW-EQC-22; added 2026-11-25). Catalyst leaves, and the air
     that carries it enters, through the skirt's opening: two connections on the skirt's
-    face at the opening's mid-height (to the grid), 12 in apart about its centre line, the
+    face at the opening's mid-height (to the grid), 24 in apart about its centre line (12 in at first: the catalyst line once laid, the generator held the air connection's first point too near it), the
     catalyst's the one toward the rack. The hopper's own outlet from the foot of the cone to
     the opening is inside the skirt and is not drawn. Catalyst arriving enters through the
     roof at its centre, its flange 54 in above the roof, over the handrail. Reason: a hopper
@@ -4926,8 +4926,11 @@ What this section adds is what that generator is given.
   shut by a gate valve. So is a water connection over 12 in to or from the item it
   serves (added 2026-11-25, with the debutaniser condenser's 14 in cooling water): the
   generator stands a throttling globe valve at a water consumer (SW-LL-7), offered to
-  12 in, and has no other valve for that duty; such a connection has the gate valve at its
-  take-off and the one at the item, and is not throttled in this model. The water headers
+  12 in, and has no other valve for that duty; such a connection has a gate valve at the
+  item and is not throttled in this model. It has no valve at its take-off: one of that
+  size is as wide as two lanes of the top tier, the generator moves it along the header
+  to where the smaller take-offs' valves leave it room (3 ft 6 in from the item's station
+  for the condenser's return), and a 14 in line cannot step that little aside to meet it. The water headers
   keep their letter at any size: nothing is valved on them. What a line carries is on its
   record (§76), not in its number. An installed spare, and each further body of an item in parallel,
   joins the first body's line with a tee (SW-LL-3), numbered from unit × 1000 + 301; where
@@ -5034,6 +5037,11 @@ What this section adds is what that generator is given.
     connection up there (or one whose valve, standing up from it, reaches there) needs for
     its lines: for a vertical vessel a chase on the side that
     faces the rack, 2 ft wider than the shell on either hand and reaching 10 ft beyond it.
+    A vessel that a line routed free (SW-RPI-3) joins at its side has the wider and deeper
+    chase too (added 2026-11-25): the main fractionator's 24 in feed and the 24 in leg of
+    its overhead cross before it 10 ft from its shell, where the narrower chase ends, and
+    the lines that come down from its upper connections had no way past them but a
+    step aside the generator's search did not find.
     Such a chase holds two rows of risers 2 ft apart across its width; a vessel with more
     connections than that has one as wide as its own footprint along the rack (a column's
     platforms and 12 in on either hand) and reaching toward the rack as far as the yard's
@@ -5148,7 +5156,14 @@ What this section adds is what that generator is given.
     line takes the lane nearest the rack's centre line that is free
     over its run; where both its ends stand on one side of the rack, the lanes of that half
     are tried before the others, so that it leaves the rack on its own side and does not
-    pass under the other half's lanes to do it. On the lowest tier no lane lies nearer
+    pass under the other half's lanes to do it. A line sent to the top tier because its riser
+    would foul a beam (above), which would otherwise have had the lowest tier first, and
+    whose ends stand on the two sides of the rack, tries first
+    the half its higher end stands on (added 2026-11-25): it comes onto the rack from that
+    side, and the other half is left to the lines of that side. (In the cracking unit the wet gas line, from the receiver on one side
+    to the compressor on the other, took the last lane a 12 in pipe can have on the
+    compressor's half; the compressor's discharge to its cooler, both on that half, was
+    given a lane across the headers, which it could not reach.) On the lowest tier no lane lies nearer
     the rack's centre line than the pipe's radius and 9 in: under that line runs the
     stringer of SW-CELL-6, which the generator holds 9 in wide of its axis, and a line
     leaves the lowest tier downward where it can (a 14 in line of the reformer, given
@@ -5329,6 +5344,13 @@ What this section adds is what that generator is given.
   rack to a connection 106 ft up a column whose rack side already carried five lines, was
   more than its search found a way for (the cracking unit, 2026-11-25). From a lane the
   same line is two short searches, one at each end.
+  The stations take their places in the order their lines come; but one whose onward line
+  is not a process line, which the generator routes free however far it must go, is 3 in
+  or larger (2 in lines it has routed free for 125 ft in the units piped before), and that
+  finds no place within 20 ft along the rack of the item it serves, takes its place before
+  all the others, which are then placed again (added 2026-11-25: under the cracking unit's
+  rack, with 39 stations and every fourth bay braced, the feed water station of the slurry
+  steam generator stood 112 ft from it, and its line was not routed).
   The line as the flowsheet numbers it runs from its source to the
   spool's near face, which looks toward the source, and carries the station there; the rest
   runs from the far face to the destination under a number from unit × 1000 + 701. A branch

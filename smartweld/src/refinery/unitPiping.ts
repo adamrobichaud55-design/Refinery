@@ -339,7 +339,7 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
         if (row.length) {
           if (!frame) throw new Error(`${e.tag}: it has no skirt opening to leave through`); if (row.length > 2) throw new Error(`${e.tag}: its skirt's opening has room for two connections, and it has ${row.length}`);
           const ux: V3 = (frame.mn[0] + frame.mx[0]) / 2 > cx ? [1, 0, 0] : [-1, 0, 0], x = ux[0] > 0 ? frame.mx[0] : frame.mn[0], y = near((frame.mn[1] + frame.mx[1]) / 2), zc = near((frame.mn[2] + frame.mx[2]) / 2);
-          row.forEach((q, k) => out.set(q.port, { A: [x, y, zc + (row.length > 1 ? (k ? -1 : 1) * toRack[2] * 6 : 0)], u: ux }));
+          row.forEach((q, k) => out.set(q.port, { A: [x, y, zc + (row.length > 1 ? (k ? -1 : 1) * toRack[2] * 12 : 0)], u: ux }));
         }
         if (tops.length > 1) throw new Error(`${e.tag}: its roof has a place for one connection at its centre, and it has ${tops.length}`);
         for (const q of tops) out.set(q.port, { A: [cx, roof.mx[1], cz], u: [0, 1, 0], S: Math.max(nozzleStandout(q.NPS, q.cls), 54) });
@@ -457,8 +457,10 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
   {
     // the rack's braced bays, whose rods come down to the column bases, are left clear
     const braced = [...new Set(cell.interior.instances.filter(q => q.tags.includes('bracing')).flatMap(q => q.tags.map(t => /^rack-bay:(\d+)$/.exec(t)?.[1]).filter((n): n is string => !!n)))].map(n => RACK.start - RACK.bent + Number(n) * RACK.bent);
-    const set: { z: number; x0: number; x1: number; w: number }[] = [], zOf = (r: EndRef) => (r.k === 'nozzle' && !r.id.startsWith('BL-') ? nozzles.get(r.id)?.face[2] : undefined);
-    for (const st of stationPlans) {
+    const zOf = (r: EndRef) => (r.k === 'nozzle' && !r.id.startsWith('BL-') ? nozzles.get(r.id)?.face[2] : undefined);
+    /** the stations' places, taken in the order given */
+    const layout = (order: typeof stationPlans) => { const set: { z: number; x0: number; x1: number; w: number }[] = [], put = new Map<string, { at: V3; dirA: 1 | -1; xd: number }>();
+    for (const st of order) {
       const d = st.ahead.def, plain = 12 + gateFaceToFace(d.NPS, d.cls) + 2 * d.NPS + 24, LA = Math.max(plain, 12 + 12 * d.NPS + 96), LB = plain;
       const xd = xAt(st.after.def.to) ?? xAt(d.from) ?? cell.rack.x0 + 240, xs = xAt(d.from) ?? xd, dirA: 1 | -1 = xs <= xd ? -1 : 1, left = dirA < 0 ? LA : LB, right = dirA < 0 ? LB : LA;
       const wide = gateReach(d.NPS);       // the width a valve of its may take lying over on its side, where it cannot stand: stations side by side keep clear of each other by it
@@ -479,7 +481,15 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
       const seek = (zs: number[], steps: number) => { for (let k = 0; k <= steps && !at; k++) for (const x of k ? [near(xd) - 30 * k, near(xd) + 30 * k] : [Math.min(hi, Math.max(lo, near(xd)))]) for (const z of zs) if (!at && free(x, z)) at = [x, 36, z]; };
       seek(own, 8); seek(usable, 160);
       if (!at) throw new Error(`unit ${unit}: no room under the rack for the control station of ${d.no}`);
-      set.push({ z: at[2], x0: at[0] - left, x1: at[0] + right, w: wide });
+      set.push({ z: at[2], x0: at[0] - left, x1: at[0] + right, w: wide }); put.set(st.tag, { at, dirA, xd });
+    }
+    return put; };
+    // SW-RPI-9: in the order the lines come; but a station whose onward line is not a process line (the generator will route it free, however far) and that found no place within
+    // 20 ft of what it serves has its place before the others, and the rest are placed again
+    let put = layout(stationPlans);
+    const far = stationPlans.filter(st => st.after.def.service !== 'P' && st.after.def.NPS >= 3 && Math.abs(put.get(st.tag)!.at[0] - put.get(st.tag)!.xd) > 240);
+    if (far.length) put = layout([...far, ...stationPlans.filter(st => !far.includes(st))]);
+    for (const st of stationPlans) { const { at, dirA } = put.get(st.tag)!, d = st.ahead.def;
       addNozzle(`${st.tag}-A`, st.tag, 'control station', d.NPS, d.cls, { A: at, u: [dirA, 0, 0] }, at[2], 12);
       addNozzle(`${st.tag}-B`, st.tag, 'control station outlet', d.NPS, st.after.def.cls, { A: at, u: [-dirA, 0, 0] }, at[2], 12);
       stations.push({ tag: st.tag, line: d.no, after: st.after.def.no, at });
@@ -546,6 +556,8 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     // the half of the rack both a line's ends stand on, if they stand on one (a spool on the rack is on neither)
     const zEnd = (r: EndRef) => (r.k === 'nozzle' && !r.id.startsWith('BL-') ? nozzles.get(r.id)?.face[2] : undefined);
     const half = (d: LineDef) => { const zs = [zEnd(d.from), zEnd(d.to)].filter((v): v is number => v !== undefined); return zs.length && zs.every(z => z > 0) ? 1 : zs.length && zs.every(z => z < 0) ? -1 : 0; };
+    // a line sent to the top tier because its riser would foul a beam, its ends on the two sides of the rack: the half of its higher end first (it comes onto the rack from that side, and the half its lower end stands on is left to the lines of that side)
+    const upper = (d: LineDef) => { if (d.NPS < 12 || !item(d.from) || !item(d.to)) return 0; const p = nozzles.get((d.from as { id: string }).id)!, q = nozzles.get((d.to as { id: string }).id)!; return p.face[2] * q.face[2] >= 0 || p.face[1] === q.face[1] ? 0 : Math.sign((p.face[1] > q.face[1] ? p : q).face[2]); };
     // lanes: every 6 in across the tier, from the centre line outward; the headers first on the top tier, by the generator's own spacing among themselves (SW-RT-2, SW-RK-7)
     const cands: number[] = []; for (let z = -(HW - 24); z <= HW - 24; z += 6) cands.push(z); cands.sort((p, q) => Math.abs(p) - Math.abs(q) || p - q);
     const over = (L: RackLane, x0: number, x1: number) => !(L.x1 < x0 - 24 || L.x0 > x1 + 24);
@@ -563,10 +575,11 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
       const load = RACK.tiers.map((_, t) => new Float64Array(nx).fill(t === top ? headers.reduce((a, h) => a + h.width + 3, 0) : 0)), taken = [...headerPlan];
       for (const v of order) {
         const i0 = Math.max(0, Math.floor((Math.min(v.xa, v.xb) - 36) / CELL)), i1 = Math.min(nx - 1, Math.ceil((Math.max(v.xa, v.xb) + 36) / CELL)), w = v.OD + 3;
-        const a0 = clampX(v.xa), b0 = clampX(v.xb), x0 = Math.min(a0, b0), x1 = Math.max(a0, b0), s = half(v.l.def), zs = s ? [...cands.filter(c => c * s >= 0), ...cands.filter(c => c * s < 0)] : cands;
+        const a0 = clampX(v.xa), b0 = clampX(v.xb), x0 = Math.min(a0, b0), x1 = Math.max(a0, b0), s0 = half(v.l.def);
         // on the lowest tier no lane over the stringer that runs under the tier's centre line (SW-RK-6): a line leaves that tier downward, and the generator holds the stringer 9 in wide of its axis
         const clearOf = (t: number, c: number) => t > 0 || Math.abs(c) >= v.OD / 2 + STRINGER;
-        const d = v.l.def, rp = spoolOf.get(d.no), wide = rp ? spoolWidth(d) : 0, may = allowed(d), tiersOf = d.NPS >= 12 && may.includes(0) && ((square(d.from) && fouls(a0, v.OD)) || (square(d.to) && fouls(b0, v.OD))) ? [top] : may, topFirst = tiersOf[0] === top;
+        const d = v.l.def, rp = spoolOf.get(d.no), wide = rp ? spoolWidth(d) : 0, may = allowed(d), sent = d.NPS >= 12 && may.includes(0) && ((square(d.from) && fouls(a0, v.OD)) || (square(d.to) && fouls(b0, v.OD))), tiersOf = sent ? [top] : may, topFirst = tiersOf[0] === top;
+        const s = s0 || (sent && may[0] === 0 ? upper(d) : 0), zs = s ? [...cands.filter(c => c * s >= 0), ...cands.filter(c => c * s < 0)] : cands;
         const fits = (k: number) => { let m = 0; for (let i = i0; i <= i1; i++) m = Math.max(m, load[k][i]); return m + w <= (topFirst && k === top ? Math.max(room, most) : room); };
         let put: RackLane | undefined;
         for (const t of tiersOf) { if (!fits(t)) continue; const z = zs.find(c => clearOf(t, c) && pastColumns(t, c, d.NPS, d.cls) && free(taken, t, c, v.OD, x0 - 36, x1 + 36) && (!rp || free(taken, t, c, wide, rp.x - 60, rp.x + 60))); if (z !== undefined) { put = { t, z, OD: v.OD, x0, x1, no: d.no }; break; } }
@@ -690,7 +703,7 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
   Z.utils.forEach((u, i) => {
     if (!bodies(u.tag).length) return;
     const parts = utilParts.get(i); if (parts) { lines.push(parts.ahead, parts.after); return; }   // SW-RPI-9: divided at its control station
-    const nz: EndRef = { k: 'nozzle', id: nozzleId(u.tag, u.port) }, tap: EndRef = { k: 'tap', line: headers.find(h => h.fluid === u.fluid)!.no, valve: true }, n = 500 + i + 1;
+    const nz: EndRef = { k: 'nozzle', id: nozzleId(u.tag, u.port) }, tap: EndRef = { k: 'tap', line: headers.find(h => h.fluid === u.fluid)!.no, valve: !(u.NPS > 12 && ['CWS', 'CWR', 'W'].includes(FLUIDS[u.fluid].svc)) }, n = 500 + i + 1;   // SW-RPI-3: a water connection over 12 in has its one valve at the item
     lines.push({ def: { no: lineNumber(unit, n, u.NPS, u.cls, u.fluid), service: serviceOf(u.fluid, u.cls, true, u.NPS, true) as Service, NPS: u.NPS, cls: u.cls, from: u.dir === 'to' ? tap : nz, to: u.dir === 'to' ? nz : tap, kind: 'routed' }, unit, seq: n, fluid: u.fluid, origin: 'utility', util: i, designP: u.designP, designT: u.designT });
   });
   void designPressure; void designTemperature; void lineSize; void utilState; void classFor;
@@ -736,7 +749,8 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     if (sp.shape === 'vv') {
       // as wide as the vessel's own footprint along the rack (a column's platforms and 12 in), 2 ft beyond the shell at least; toward the rack as far as the yard's beam, under which its lines pass, 10 ft from the shell at least
       // the narrower chase holds two rows of risers 2 ft apart across it; a vessel with more connections than that has the wider and deeper one
-      const R = sp.R ?? 0, many = [...nozzles.values()].filter(q => q.equip === sp.tag).length > 2 * Math.floor((2 * R + 48) / 24);
+      const R = sp.R ?? 0, joined = lines.some(l => l.def.service === 'V' && [l.def.from, l.def.to].some(e => { const q = e.k === 'nozzle' ? nozzles.get(e.id) : undefined; return !!q && q.equip === sp.tag && q.u[1] === 0; }));   // a line routed free joins it at its side: it crosses the chase
+      const many = joined || [...nozzles.values()].filter(q => q.equip === sp.tag).length > 2 * Math.floor((2 * R + 48) / 24);
       const half = Math.max(R + 24, many && sp.lane === 'vessel' ? sp.lx / 2 : 0), yardZ = !many || sp.lane !== 'vessel' ? undefined : sp.side < 0 ? cell.yard.neg : cell.yard.pos, toYard = yardZ === undefined ? 0 : Math.abs(sp.z - yardZ) - 12;
       // and as far as the valve set on its largest connection toward the rack, and the turn after it, reach from the shell
       const sets = Math.max(0, ...[...nozzles.values()].filter(q => q.equip === sp.tag && q.u[1] === 0).map(q => valveDrop(q.NPS, q.cls)));
