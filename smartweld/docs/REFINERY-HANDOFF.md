@@ -105,6 +105,20 @@ unit's first bent are set by `supportsAtFirstBents` in `src/refinery/pipewayRepo
 (SW-PWY-8). Look first at whether unit 17's first bent is found (its rack is wider, half-width
 180) and whether the post rule (10 to 48 in over the top-tier beam) applies there.
 
+### 5. The test suite on this state: 895 of 904 pass
+
+Run on the commit before this note. The nine that fail, none altered to pass:
+
+| Test | Why |
+|---|---|
+| `refinery-piping.test.ts`: every line routed, every check at zero | unit 17, items 1 and 2 |
+| `refinery-export.test.ts` (three tests) | unit 17 has no export files, see "The exports" |
+| `refinery-pipeway.test.ts`: every line routed, checks and spans at zero | items 3 and 4 |
+| `refinery-pipeway.test.ts`: each rack line lies in its lane | `10034` is not routed, item 3 |
+| `refinery-pipeway.test.ts`: at every spool the line's flange meets the face | the same unrouted line has no components |
+| `refinery-pipeway.test.ts`: the utility headers ... a branch to every party (line 176, `NPS` of undefined) | **not looked into yet.** It reads a header or spool of unit 17 that it does not find; either the test's lookup or unit 17's header spools on the main rack. Look before item 4, it may be the same cause. |
+| `refinery-pipeway.test.ts`: each header in its lane, each branch comes down beside the band (line 268, 390 not below 378) | **not looked into yet.** A branch stands 12 in higher than the test allows; unit 17's rack is 30 ft wide, the others 24 ft. May be a true fault of a branch to unit 17 or a bound written for the narrower racks. |
+
 ### The exports
 
 `tools/refinery-export.ts` refuses a model with a line that is not routed or a failure reported,
