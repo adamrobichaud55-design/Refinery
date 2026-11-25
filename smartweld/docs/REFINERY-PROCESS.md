@@ -230,7 +230,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | E-1109 | Crude / vacuum residue exchanger | process to process | 455 psi, 730 °F | P1200 | 18.9 million Btu/h, 5,193 ft²: 42 in × 20 ft, 1,639 tubes |
 | H-1101 | Crude heater | cabin | 365 psi, 730 °F | P1200 | 104.7 million Btu/h absorbed, 123.1 fired: cabin 20 ft wide × 59 ft long, radiant section 40 ft high |
 | A-1101 | Overhead air condenser | forced draught | 50 psi, 300 °F | P150 | 48.9 million Btu/h: 4 bays of 14 ft × 32 ft, 8 fans |
-| E-1110 | Overhead trim condenser | water cooler | 85 psi, 190 °F | P150 | 6.5 million Btu/h, 3,392 ft²: 36 in × 20 ft, 1,165 tubes |
+| E-1110 | Overhead trim condenser | water cooler | 140 psi, 190 °F | P150 | 6.5 million Btu/h, 3,392 ft²: 36 in × 20 ft, 1,165 tubes |
 | P-1112 | Reflux pump | motor driven | 125 psi, 150 °F | P150 | 350 gpm each × 196 ft, 20 hp at 3560 rpm; 2 installed, 1 running |
 | P-1113 | Naphtha product pump | motor driven | 200 psi, 150 °F | P300 | 437 gpm each × 392 ft, 50 hp at 3560 rpm; 2 installed, 1 running |
 | P-1114 | Overhead sour water pump | motor driven | 150 psi, 150 °F | P150 | 31 gpm each × 186 ft, 3 hp at 3560 rpm; 2 installed, 1 running |
@@ -284,11 +284,11 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | E-1303 | Stripper feed / bottoms exchanger | process to process | 235 psi, 450 °F | P300 | 15.4 million Btu/h, 3,030 ft²: 30 in × 20 ft, 805 tubes |
 | A-1302 | Stripper overhead condenser | forced draught | 205 psi, 250 °F | P300 | 3.5 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | P-1302 | Stripper reflux pump | motor driven | 270 psi, 170 °F | P300 | 60 gpm each × 238 ft, 5 hp at 3560 rpm; 2 installed, 1 running |
-| E-1304 | Stripper reboiler | steam heater | 660 psi, 700 °F | P1200 | 7.1 million Btu/h, 805 ft²: 24 in × 20 ft, 499 tubes |
+| E-1304 | Stripper reboiler | steam heater | 685 psi, 700 °F | P1200 | 7.1 million Btu/h, 805 ft²: 24 in × 20 ft, 499 tubes |
 | A-1303 | Splitter overhead condenser | forced draught | 50 psi, 230 °F | P150 | 12.8 million Btu/h: 2 bays of 14 ft × 32 ft, 4 fans |
 | P-1303 | Splitter reflux and product pump | motor driven | 145 psi, 180 °F | P150 | 278 gpm each × 268 ft, 20 hp at 3560 rpm; 2 installed, 1 running |
 | E-1305 | Light naphtha cooler | water cooler | 145 psi, 180 °F | P150 | 0.5 million Btu/h, 430 ft²: 18 in × 20 ft, 253 tubes |
-| E-1306 | Splitter reboiler | steam heater | 175 psi, 450 °F | P300 | 7.6 million Btu/h, 1,405 ft²: 36 in × 20 ft, 1,165 tubes |
+| E-1306 | Splitter reboiler | steam heater | 185 psi, 450 °F | P300 | 7.6 million Btu/h, 1,405 ft²: 36 in × 20 ft, 1,165 tubes |
 | P-1304 | Heavy naphtha pump | motor driven | 160 psi, 360 °F | P300 | 340 gpm each × 297 ft, 30 hp at 3560 rpm; 2 installed, 1 running |
 | A-1304 | Heavy naphtha rundown cooler | forced draught | 160 psi, 360 °F | P300 | 9.4 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 
@@ -320,7 +320,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | E-1404 | Stabiliser feed / bottoms exchanger | process to process | 275 psi, 495 °F | P300 | 9.8 million Btu/h, 1,341 ft²: 24 in × 20 ft, 499 tubes |
 | E-1405 | Stabiliser condenser | water cooler | 245 psi, 210 °F | P300 | 4.2 million Btu/h, 1,375 ft²: 24 in × 20 ft, 499 tubes |
 | P-1402 | Stabiliser reflux pump | motor driven | 300 psi, 160 °F | P300 | 103 gpm each × 219 ft, 5 hp at 3560 rpm; 2 installed, 1 running |
-| E-1406 | Stabiliser reboiler | steam heater | 660 psi, 700 °F | P1200 | 10.2 million Btu/h, 2,178 ft²: 30 in × 20 ft, 805 tubes |
+| E-1406 | Stabiliser reboiler | steam heater | 685 psi, 700 °F | P1200 | 10.2 million Btu/h, 2,178 ft²: 30 in × 20 ft, 805 tubes |
 | A-1402 | Reformate air cooler | forced draught | 240 psi, 280 °F | P300 | 3.9 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | E-1407 | Reformate trim cooler | water cooler | 235 psi, 190 °F | P300 | 1.8 million Btu/h, 1,207 ft²: 24 in × 20 ft, 499 tubes |
 
@@ -423,7 +423,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | A-1702 | Light cycle oil air cooler | forced draught | 345 psi, 485 °F | P600 | 12.8 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | E-1708 | Sponge oil cooler | water cooler | 345 psi, 190 °F | P600 | 0.7 million Btu/h, 468 ft²: 18 in × 20 ft, 253 tubes |
 | A-1701 | Main column overhead condenser | forced draught | 50 psi, 320 °F | P150 | 45.5 million Btu/h: 3 bays of 14 ft × 32 ft, 6 fans |
-| E-1709 | Overhead trim condenser | water cooler | 85 psi, 190 °F | P150 | 6.9 million Btu/h, 3,593 ft²: 48 in × 20 ft, 2,161 tubes |
+| E-1709 | Overhead trim condenser | water cooler | 140 psi, 190 °F | P150 | 6.9 million Btu/h, 3,593 ft²: 48 in × 20 ft, 2,161 tubes |
 | P-1706 | Main column reflux pump | motor driven | 145 psi, 150 °F | P150 | 205 gpm each × 232 ft, 15 hp at 3560 rpm; 2 installed, 1 running |
 | P-1707 | Unstabilised gasoline pump | motor driven | 370 psi, 150 °F | P600 | 290 gpm each × 805 ft, 75 hp at 3560 rpm; 2 installed, 1 running |
 | P-1708 | Overhead sour water pump | motor driven | 155 psi, 150 °F | P300 | 60 gpm each × 193 ft, 7.5 hp at 3560 rpm; 2 installed, 1 running |
@@ -468,7 +468,7 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | E-1801 | Lean / rich amine exchanger | process to process | 445 psi, 305 °F | P600 | 9.4 million Btu/h, 2,385 ft²: 30 in × 20 ft, 805 tubes |
 | A-1801 | Regenerator overhead condenser | forced draught | 50 psi, 275 °F | P150 | 2.0 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | P-1802 | Regenerator reflux pump | motor driven | 115 psi, 170 °F | P150 | 18 gpm each × 119 ft, 1 hp at 3560 rpm; 2 installed, 1 running |
-| E-1802 | Regenerator reboiler | steam heater | 75 psi, 350 °F | P150 | 15.3 million Btu/h, 1,433 ft²: 48 in × 20 ft, 2,161 tubes |
+| E-1802 | Regenerator reboiler | steam heater | 80 psi, 370 °F | P150 | 15.3 million Btu/h, 1,433 ft²: 48 in × 20 ft, 2,161 tubes |
 | P-1803 | Lean amine pump | motor driven | 445 psi, 305 °F | P600 | 312 gpm each × 784 ft, 100 hp at 3560 rpm; 2 installed, 1 running |
 | A-1802 | Lean amine air cooler | forced draught | 445 psi, 230 °F | P600 | 5.8 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | E-1803 | Lean amine trim cooler | water cooler | 445 psi, 180 °F | P600 | 1.2 million Btu/h, 303 ft²: 18 in × 20 ft, 253 tubes |
@@ -480,15 +480,15 @@ Each item with the size its duty calls for (SW-PRC-5 to SW-PRC-17) and its desig
 | E-1804 | Stripper feed / bottoms exchanger | process to process | 185 psi, 315 °F | P300 | 8.2 million Btu/h, 980 ft²: 18 in × 20 ft, 253 tubes |
 | P-1806 | Stripper pumparound pump | motor driven | 110 psi, 240 °F | P150 | 338 gpm each × 114 ft, 15 hp at 3560 rpm; 2 installed, 1 running |
 | A-1803 | Stripper pumparound cooler | forced draught | 110 psi, 240 °F | P150 | 6.0 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
-| E-1805 | Stripper reboiler | steam heater | 75 psi, 350 °F | P150 | 14.4 million Btu/h, 1,600 ft²: 42 in × 20 ft, 1,639 tubes |
+| E-1805 | Stripper reboiler | steam heater | 80 psi, 370 °F | P150 | 14.4 million Btu/h, 1,600 ft²: 42 in × 20 ft, 1,639 tubes |
 | P-1807 | Stripped water pump | motor driven | 185 psi, 315 °F | P300 | 185 gpm each × 250 ft, 20 hp at 3560 rpm; 2 installed, 1 running |
 | A-1804 | Stripped water cooler | forced draught | 185 psi, 215 °F | P300 | 3.3 million Btu/h: 1 bay of 14 ft × 32 ft, 2 fans |
 | P-1810 | Acid gas drum water pump | motor driven | 115 psi, 170 °F | P150 | 11 gpm each × 121 ft, 1 hp at 3560 rpm; 2 installed, 1 running |
 | E-1806 | First sulfur condenser | steam generator | 50 psi, 650 °F | P150 | 0.9 million Btu/h, 406 ft²: 30 in × 20 ft, 805 tubes, the gas at 41 ft/s in them |
-| E-1807 | First reheater | steam heater | 660 psi, 700 °F | P1200 | 0.3 million Btu/h, 45 ft²: 24 in × 20 ft, 499 tubes, the gas at 53 ft/s in them |
+| E-1807 | First reheater | steam heater | 685 psi, 700 °F | P1200 | 0.3 million Btu/h, 45 ft²: 24 in × 20 ft, 499 tubes, the gas at 53 ft/s in them |
 | R-1801 | First converter | horizontal, one bed | 50 psi, 630 °F | P150 | 54 in inside diameter × 13.5 ft between tangents, horizontal, bed 3 ft deep |
 | E-1808 | Second sulfur condenser | steam generator | 50 psi, 630 °F | P150 | 0.8 million Btu/h, 377 ft²: 30 in × 20 ft, 805 tubes, the gas at 36 ft/s in them |
-| E-1809 | Second reheater | steam heater | 660 psi, 700 °F | P1200 | 0.2 million Btu/h, 25 ft²: 24 in × 20 ft, 499 tubes, the gas at 50 ft/s in them |
+| E-1809 | Second reheater | steam heater | 685 psi, 700 °F | P1200 | 0.2 million Btu/h, 25 ft²: 24 in × 20 ft, 499 tubes, the gas at 50 ft/s in them |
 | R-1802 | Second converter | horizontal, one bed | 50 psi, 495 °F | P150 | 54 in inside diameter × 13.5 ft between tangents, horizontal, bed 3 ft deep |
 | E-1810 | Final sulfur condenser | steam generator | 50 psi, 495 °F | P150 | 0.5 million Btu/h, 647 ft²: 24 in × 20 ft, 499 tubes, the gas at 51 ft/s in them |
 

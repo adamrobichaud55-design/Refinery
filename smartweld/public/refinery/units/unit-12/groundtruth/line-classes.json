@@ -1,5 +1,42 @@
 [
  {
+  "code": "C1200",
+  "group": "C",
+  "fluid": "Steam condensate",
+  "cls": "P1200",
+  "designPressure": 1200,
+  "insulated": true,
+  "materials": {
+   "pipe": "Grade 35 pipe",
+   "fittings": "Grade 35 pipe",
+   "flanges": "Grade 36 forging",
+   "valveBodies": "Grade 36 casting",
+   "studs": "Grade 90 stud",
+   "gaskets": "compressed sheet"
+  },
+  "valves": "Isolation: gate 2 in and above, floating ball below 2 in where offered; pump discharge: swing check then gate; control valves with a gate each side; relief: safety valve (SW-LL-3, SW-VLV-11)",
+  "branch": "Tee (SW-FIT-2)",
+  "rules": [
+   "SW-LC-1",
+   "SW-LC-3",
+   "SW-PIPE-1",
+   "SW-PIPE-2",
+   "SW-PIPE-3",
+   "SW-FLG-2",
+   "SW-FLG-7",
+   "SW-FIT-1",
+   "SW-FIT-2",
+   "SW-LL-3",
+   "SW-VLV-11"
+  ],
+  "lines": [
+   "2\"-P1200-SC-12404",
+   "2\"-P1200-SC-12504",
+   "2\"-P1200-SC-12506"
+  ],
+  "colour": "#5a3c78"
+ },
+ {
   "code": "C300",
   "group": "C",
   "fluid": "Steam condensate",
@@ -30,9 +67,8 @@
    "SW-VLV-11"
   ],
   "lines": [
-   "2\"-P300-SC-12404",
-   "2\"-P300-SC-12504",
-   "2\"-P300-SC-12506"
+   "2\"-P300-SC-12551",
+   "2\"-P300-SC-12552"
   ],
   "colour": "#5a3c78"
  },
@@ -252,7 +288,7 @@
    "SW-VLV-11"
   ],
   "lines": [
-   "8\"-P300-LS-12401",
+   "6\"-P300-LS-12401",
    "6\"-P300-LS-12501",
    "6\"-P300-LS-12505",
    "3\"-P300-LS-12507"

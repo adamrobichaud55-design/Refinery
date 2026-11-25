@@ -11,7 +11,8 @@
  */
 import { makeVerticalVessel, makeShellTubeExchanger, type PartSpec } from '../catalogue';
 import { processModel } from './process';
-import { sizing, allowable, designPressure, designTemperature, tubeCount, fireTubeCount, type EquipSize, type Side } from './sizing';
+import { sizing, allowable, designPressure, designTemperature, tubeCount, fireTubeCount, stationed, headerDesign, type EquipSize, type Side } from './sizing';
+import { connection } from './headers';
 import { FLUIDS } from './fluids';
 import type { Equip, End, UnitSheet } from './flowsheet';
 import { cells, siteParts } from './assemble';
@@ -166,11 +167,11 @@ const EXAMINATION: Record<Category, string> = { D: 'visual', Normal: 'visual, an
 const GROUP: Record<string, string> = { P: 'H', RV: 'H', CWS: 'W', CWR: 'W', W: 'W', LS: 'S', SC: 'C', IA: 'G', PA: 'G', N: 'G', FL: 'F' };
 const fmt = (n: number) => (n === 0.75 ? '3/4' : n === 0.5 ? '1/2' : String(n));   // as SW-LL-1 writes a size: a number's parts are split at its hyphens, so a size carries none
 /** SW-REF-3: a line's number: size, class, the generator's service letter, and unit × 1000 + a running number */
-/** SW-RPI-3: the service a line is numbered and built as: a line of the flowsheet as a process line whatever it carries; a utility header or a connection that taps one by its fluid's letter, but water and plant gases above class P300 as process lines */
-export const serviceOf = (fluid: string, cls: string, utility: boolean): string => { if (!utility) return 'P'; const sv = FLUIDS[fluid].svc; return (GROUP[sv] === 'W' || GROUP[sv] === 'G') && Number(cls.slice(1)) > 300 ? 'P' : sv; };
+/** SW-RPI-3: the service a line is numbered and built as: a line of the flowsheet as a process line whatever it carries; a utility header or a connection that taps one by its fluid's letter, but water and plant gases above class P300, and steam and condensate over 12 in, as process lines (the valves the generator gives them are not offered there, SW-VLV-11) */
+export const serviceOf = (fluid: string, cls: string, utility: boolean, NPS = 0): string => { if (!utility) return 'P'; const sv = FLUIDS[fluid].svc, g = GROUP[sv]; return ((g === 'W' || g === 'G') && Number(cls.slice(1)) > 300) || ((g === 'S' || g === 'C') && NPS > 12) ? 'P' : sv; };
 /** SW-REF-3: the running numbers 401 to 600 of a unit are its utility headers and the connections that tap them */
 export const utilitySeq = (seq: number) => seq > 400 && seq <= 600;
-export const lineNumber = (unit: number, seq: number, NPS: number, cls: string, fluid: string) => `${fmt(NPS)}"-${cls}-${serviceOf(fluid, cls, utilitySeq(seq))}-${unit * 1000 + seq}`;
+export const lineNumber = (unit: number, seq: number, NPS: number, cls: string, fluid: string) => `${fmt(NPS)}"-${cls}-${serviceOf(fluid, cls, utilitySeq(seq), NPS)}-${unit * 1000 + seq}`;
 export type MaterialCode = 'CS' | 'C1' | 'C5' | 'SS';
 export const MATERIALS: Record<MaterialCode, { name: string; pipe: string; fittings: string; flanges: string }> = {
   CS: { name: 'carbon steel', pipe: 'A106-B', fittings: 'A234-WPB', flanges: 'A105' }, C1: { name: '1-1/4 Cr alloy steel', pipe: 'A335-P11', fittings: 'A234-WP11', flanges: 'A182-F11' },
@@ -192,8 +193,8 @@ export function severity(cls: string, fluid: string, phase: string, cat: Categor
 }
 export const BOLTING = 'A193-B7 studs, A194-2H nuts';
 /** SW-REG-4, SW-REG-6, SW-REG-8: what follows from a line's fluid, phase, pipe class, design conditions and material: its fluid service, severity, line class, examination, leak test and piping system number */
-export function classify(unit: number, fluid: string, phase: string, pipeClass: string, designP: number, designT: number, mat: MaterialCode, utility: boolean) {
-  const cat = fluidService(fluid, designP, designT), sv = severity(pipeClass, fluid, phase, cat), lineClass = `${GROUP[serviceOf(fluid, pipeClass, utility)] ?? 'H'}${pipeClass.slice(1)}-${mat}-${cat === 'Normal' ? 'N' : cat}${sv.medium}`;
+export function classify(unit: number, fluid: string, phase: string, pipeClass: string, designP: number, designT: number, mat: MaterialCode, utility: boolean, NPS = 0) {
+  const cat = fluidService(fluid, designP, designT), sv = severity(pipeClass, fluid, phase, cat), lineClass = `${GROUP[serviceOf(fluid, pipeClass, utility, NPS)] ?? 'H'}${pipeClass.slice(1)}-${mat}-${cat === 'Normal' ? 'N' : cat}${sv.medium}`;
   return { fluidService: cat, severity: sv, lineClass, examination: EXAMINATION[cat], leakTest: cat === 'D' ? `hydrostatic at ${Math.ceil(1.5 * designP)} psi, or an initial service test` : `hydrostatic at ${Math.ceil(1.5 * designP)} psi`, registration: designCrn(`piping:${unit}:${lineClass}`) };
 }
 export interface LineRecord {
@@ -210,7 +211,7 @@ export function lineRecords(): LineRecord[] {
   if (lnCache) return lnCache;
   const M = processModel(), Z = sizing(), out: LineRecord[] = [];
   const rec = (sh: UnitSheet, seq: number, kind: LineRecord['kind'], from: string, to: string, fluid: string, phase: string, lbh: number, T: number, P: number, z: { NPS: number; cls: string; designP: number; designT: number; vacuum?: boolean }, overhead: boolean, boilerTag?: string): LineRecord => {
-    const unit = sh.no, mat = pipeMaterial(unit, fluid, z.designT, overhead), m = MATERIALS[mat], c = classify(unit, fluid, phase, z.cls, z.designP, z.designT, mat, utilitySeq(seq)), cat = c.fluidService, sv = c.severity, cls = c.lineClass;
+    const unit = sh.no, mat = pipeMaterial(unit, fluid, z.designT, overhead), m = MATERIALS[mat], c = classify(unit, fluid, phase, z.cls, z.designP, z.designT, mat, utilitySeq(seq), z.NPS), cat = c.fluidService, sv = c.severity, cls = c.lineClass;
     return {
       demonstration: true, number: lineNumber(unit, seq, z.NPS, z.cls, fluid), unit, kind, from, to, fluid, fluidName: FLUIDS[fluid].name, hazard: FLUIDS[fluid].hazard, phase, lbh: Math.round(lbh), operating: { T: Math.round(T), P: Math.round(P) },
       design: model({ T: z.designT, P: z.designP, fullVacuum: !!z.vacuum }), size: model(z.NPS), pipeClass: model(z.cls), lineClass: model(cls), severity: model(sv), code: recalled('ASME B31.3 Process Piping'),
@@ -227,7 +228,15 @@ export function lineRecords(): LineRecord[] {
       const bep = [l.from, l.to].find(e => e.k === 'eq' && steamGen(e.tag) && /steam|feed water|blowdown/.test(e.port));
       out.push(rec(sh, i + 1, 'process', endText(l.from, numbers), endText(l.to, numbers), l.s.fluid, l.s.ph === 'L' ? 'liquid' : l.s.ph === 'V' ? 'vapour' : 'two-phase', l.s.w, l.s.T, l.s.P, z.lines[i], overhead, bep && bep.k === 'eq' ? bep.tag : undefined));
     });
-    z.utils.forEach((u, i) => out.push(rec(sh, 500 + i + 1, 'utility connection', u.dir === 'to' ? `${FLUIDS[u.fluid].name} header` : `${u.tag} ${u.port}`, u.dir === 'to' ? `${u.tag} ${u.port}` : `${FLUIDS[u.fluid].name} header`, u.fluid, ['HS', 'MS', 'LS', 'FG', 'IA', 'PA', 'NI'].includes(u.fluid) ? 'vapour' : 'liquid', u.w, u.T, u.P, u, false, steamGen(u.tag) && /steam|feed water|blowdown/.test(u.port) ? u.tag : undefined)));
+    z.utils.forEach((u, i) => {
+      const header = `${FLUIDS[u.fluid].name} header`, item = `${u.tag} ${u.port}`, phase = ['HS', 'MS', 'LS', 'FG', 'IA', 'PA', 'NI'].includes(u.fluid) ? 'vapour' : 'liquid', bep = steamGen(u.tag) && /steam|feed water|blowdown/.test(u.port) ? u.tag : undefined;
+      if (!stationed(u)) { out.push(rec(sh, 500 + i + 1, 'utility connection', u.dir === 'to' ? header : item, u.dir === 'to' ? item : header, u.fluid, phase, u.w, u.T, u.P, u, false, bep)); return; }
+      // SW-PRC-19, SW-RPI-9: a connection with a control valve station is two lines, as it is piped: the part on the header's side of the header's class and conditions, the part on the item's side of the item's own
+      const c = connection(u), hd = headerDesign(u.fluid), own = { NPS: c.NPS, cls: u.cls, designP: u.designP, designT: u.designT }, hdr = { NPS: c.NPS, cls: hd.cls, designP: hd.designP, designT: hd.designT }, station = `control station of ${item}`;
+      const after = 551 + z.utils.slice(0, i).filter(stationed).length;
+      if (u.dir === 'to') out.push(rec(sh, 500 + i + 1, 'utility connection', header, station, u.fluid, phase, u.w, u.T, u.P, hdr, false), rec(sh, after, 'utility connection', station, item, u.fluid, phase, u.w, u.T, u.P, own, false, bep));
+      else out.push(rec(sh, 500 + i + 1, 'utility connection', item, station, u.fluid, phase, u.w, u.T, u.P, own, false, bep), rec(sh, after, 'utility connection', station, header, u.fluid, phase, u.w, u.T, u.P, hdr, false));
+    });
   }
   lnCache = out; return out;
 }

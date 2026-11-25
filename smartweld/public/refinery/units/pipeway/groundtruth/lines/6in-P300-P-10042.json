@@ -10,8 +10,8 @@
   "insulated": false,
   "kind": "routed",
   "from": "BL-1904-P",
-  "to": "PL-1039-P",
-  "flow": "BL-1904-P → PL-1039-P",
+  "to": "PL-1047-P",
+  "flow": "BL-1904-P → PL-1047-P",
   "joint": "BW"
  },
  "items": [
@@ -1521,6 +1521,26 @@
    "rules": [
     "SW-PS-1"
    ]
+  },
+  {
+   "tag": "6\"-P300-P-10042/S12",
+   "line": "6\"-P300-P-10042",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 6\" LINE (SHOE-6)",
+   "designation": "SHOE-6",
+   "key": "SHOE|6|P300|shoe|9.000",
+   "material": "Grade 36",
+   "weight": 16.3014,
+   "spool": "loose",
+   "at": {
+    "E": 2388,
+    "N": 480,
+    "EL": 1392
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
   }
  ],
  "spools": [
@@ -1811,7 +1831,7 @@
   "items": 19,
   "welds": 14,
   "fieldWelds": 2,
-  "supports": 11,
+  "supports": 12,
   "pipeLength": 2804,
   "weight": 3274.0135
  }

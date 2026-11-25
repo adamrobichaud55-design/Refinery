@@ -159,7 +159,14 @@ function lineDesigns(sh: UnitSheet, shut: Map<number, Shut>, lim?: Limits): { de
     return { designP, designT, ...(byShut && b.pump ? { pump: b.pump } : {}), ...(byShut && b.stream ? { stream: b.stream } : byLimit ? { stream: f.stream } : {}) };
   });
 }
-let limitCache: Map<number, Limits> | undefined;
+/** SW-PRC-19: a utility connection that has a control valve station: its item is fed under control (a steam generator's feed water, a process item's caustic, water or air) or drains under it (a steam heater's condensate) */
+export const stationed = (u: Pick<Util, 'fluid' | 'dir'>) => (u.dir === 'to' ? ['BW', 'CA', 'RW', 'IA'].includes(u.fluid) : u.fluid === 'CO');
+let limitCache: Map<number, Limits> | undefined, headerCache: Map<string, { designP: number; designT: number }> | undefined;
+/** SW-PRC-19: the design conditions of a utility's system: of the plant's header, of each unit's header and of every connection without a control valve station */
+export function headerDesign(fluid: string): { designP: number; designT: number; cls: PipeClass } {
+  limits(); const h = headerCache!.get(fluid); if (!h) throw new Error(`no utility header for ${fluid}`);
+  return { ...h, cls: classFor(h.designP, h.designT) };
+}
 /**
  * SW-PRC-2, at a battery limit: the design conditions each stream's line and the unit lines that meet it share. Worked out over all the units together,
  * and again until nothing changes, because a pressure that enters one unit may leave it for another (a pumparound through another unit's exchanger).
@@ -167,6 +174,7 @@ let limitCache: Map<number, Limits> | undefined;
 export function limits(): Map<number, Limits> {
   if (limitCache) return limitCache;
   const M = processModel(); let cur = new Map<number, Limits>(M.sheets.map(sh => [sh.no, { seeds: new Map(), least: new Map() }]));
+  const keyOf = new Map(M.headers.map(h => [h.fluid, h.key]));   // SW-PRC-19: a utility's system is designed together, as a stream is: unit 19's line under the header's name, and every connection without a station
   for (let pass = 0; pass < 12; pass++) {
     const stream = new Map<string, { P: number; T: number; pump?: string }>();
     for (const sh of M.sheets) {
@@ -176,6 +184,7 @@ export function limits(): Map<number, Limits> {
         if (!(sending && l.cv) && d.designP > c.P) { c.P = d.designP; c.pump = d.pump; }
         stream.set(e.name, c);
       }
+      for (const u of sh.utils) { const key = keyOf.get(u.fluid); if (!key || stationed(u)) continue; const c = stream.get(key) ?? { P: 0, T: 0 }; c.P = Math.max(c.P, designPressure(u.P)); c.T = Math.max(c.T, designTemperature(u.T)); stream.set(key, c); }
     }
     const next = new Map<number, Limits>(); let changed = false;
     for (const sh of M.sheets) {
@@ -188,7 +197,7 @@ export function limits(): Map<number, Limits> {
       for (const [id, v] of lim.seeds) { const w = was.seeds.get(id); if (!w || w.P !== v.P) changed = true; }
       next.set(sh.no, lim);
     }
-    cur = next; if (!changed) { limitCache = cur; return cur; }
+    cur = next; if (!changed) { limitCache = cur; headerCache = new Map(M.headers.map(h => { const c = stream.get(h.key)!; return [h.fluid, { designP: c.P, designT: c.T }]; })); return cur; }
   }
   throw new Error('the design pressures at the battery limits do not settle');
 }
@@ -212,7 +221,9 @@ export function sizeUnit(sh: UnitSheet, lim?: Limits): UnitSizing {
     return { id: l.id, unit: sh.no, NPS: z.NPS, cls, designP, designT, vacuum: l.s.P < 0, v: z.v, by: z.by, n: z.n, ...(pump ? { pump } : {}), ...(stream ? { stream } : {}) };
   });
   const utils = sh.utils.map(u => {
-    const s = utilState(u), designP = designPressure(u.P), designT = designTemperature(u.T), cls = classFor(designP, designT), z = lineSize(s, false, cls, 2);   // SW-PRC-4: a take-off to a single item is butt-welded pipe, 2 in at least
+    // SW-PRC-19: a connection with no control valve station is designed with its header; one with a station keeps its item's conditions (the part on the header's side is the header's, SW-RPI-9)
+    const h = lim && !stationed(u) ? headerCache?.get(u.fluid) : undefined;
+    const s = utilState(u), designP = Math.max(designPressure(u.P), h?.designP ?? 0), designT = Math.max(designTemperature(u.T), h?.designT ?? 0), cls = classFor(designP, designT), z = lineSize(s, false, cls, 2);   // SW-PRC-4: a take-off to a single item is butt-welded pipe, 2 in at least
     return { ...u, NPS: z.NPS, cls, designP, designT };
   });
   // equipment

@@ -30,12 +30,48 @@
    "SW-VLV-11"
   ],
   "lines": [
-   "2\"-P1200-SC-14405",
    "2\"-P1200-SC-14406",
    "2\"-P1200-SC-14510",
-   "2\"-P1200-SC-14513"
+   "2\"-P1200-SC-14513",
+   "2\"-P1200-SC-14552"
   ],
   "colour": "#5a3c78"
+ },
+ {
+  "code": "C150",
+  "group": "C",
+  "fluid": "Steam condensate",
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": true,
+  "materials": {
+   "pipe": "Grade 35 pipe",
+   "fittings": "Grade 35 pipe",
+   "flanges": "Grade 36 forging",
+   "valveBodies": "Grade 36 casting",
+   "studs": "Grade 90 stud",
+   "gaskets": "compressed sheet"
+  },
+  "valves": "Isolation: gate 2 in and above, floating ball below 2 in where offered; pump discharge: swing check then gate; control valves with a gate each side; relief: safety valve (SW-LL-3, SW-VLV-11)",
+  "branch": "Tee (SW-FIT-2)",
+  "rules": [
+   "SW-LC-1",
+   "SW-LC-3",
+   "SW-PIPE-1",
+   "SW-PIPE-2",
+   "SW-PIPE-3",
+   "SW-FLG-2",
+   "SW-FLG-7",
+   "SW-FIT-1",
+   "SW-FIT-2",
+   "SW-LL-3",
+   "SW-VLV-11"
+  ],
+  "lines": [
+   "2\"-P150-SC-14405",
+   "2\"-P150-SC-14551"
+  ],
+  "colour": "#8a5cb8"
  },
  {
   "code": "H1200",

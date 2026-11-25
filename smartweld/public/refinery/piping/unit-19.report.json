@@ -10,13 +10,13 @@
   3
  ],
  "tierRoom": 84,
- "seconds": 746,
+ "seconds": 693,
  "stats": {
-  "lines": 104,
+  "lines": 105,
   "routed": 104,
   "failed": 0,
-  "comps": 2974,
-  "welds": 1564,
+  "comps": 2978,
+  "welds": 1563,
   "supports": 470,
   "penetrations": 0
  },
@@ -319,12 +319,28 @@
    "NPS": 3,
    "cls": "P150",
    "at": [
-    150,
+    240,
     342,
-    -30
+    -36
    ],
    "tier": 2,
    "lane": -36
+  },
+  {
+   "tag": "BL-1921",
+   "stream": "low-pressure steam",
+   "dir": "in",
+   "line": "10\"-P150-LS-19401",
+   "NPS": 10,
+   "cls": "P150",
+   "at": [
+    150,
+    348,
+    0
+   ],
+   "tier": 2,
+   "lane": 0,
+   "header": true
   },
   {
    "tag": "BL-1917",
@@ -334,7 +350,7 @@
    "NPS": 3,
    "cls": "P150",
    "at": [
-    150,
+    240,
     342,
     24
    ],
@@ -1238,7 +1254,7 @@
    "NPS": 6,
    "cls": "P150",
    "designP": 80,
-   "designT": 350,
+   "designT": 370,
    "routed": true,
    "components": 33,
    "welds": 26,
@@ -1529,10 +1545,10 @@
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 29,
-   "welds": 18,
-   "supports": 21,
-   "lengthFt": 247,
+   "components": 36,
+   "welds": 25,
+   "supports": 20,
+   "lengthFt": 251,
    "tier": 3
   },
   {
@@ -1585,10 +1601,10 @@
    "designP": 85,
    "designT": 160,
    "routed": true,
-   "components": 52,
-   "welds": 33,
-   "supports": 21,
-   "lengthFt": 247,
+   "components": 44,
+   "welds": 25,
+   "supports": 22,
+   "lengthFt": 237,
    "tier": 3,
    "station": "CS-1911",
    "controlValve": "piped"
@@ -1626,7 +1642,7 @@
    "components": 44,
    "welds": 25,
    "supports": 22,
-   "lengthFt": 248,
+   "lengthFt": 241,
    "tier": 3,
    "station": "CS-1912",
    "controlValve": "piped"
@@ -2471,17 +2487,17 @@
    "origin": "header",
    "fluid": "LS",
    "fluidName": "steam, 50 psi",
-   "from": "cap",
+   "from": "BL-1921-U",
    "to": "cap",
    "NPS": 10,
    "cls": "P150",
-   "designP": 75,
-   "designT": 350,
+   "designP": 80,
+   "designT": 370,
    "routed": true,
-   "components": 14,
+   "components": 17,
    "welds": 13,
-   "supports": 19,
-   "lengthFt": 398
+   "supports": 20,
+   "lengthFt": 416
   },
   {
    "no": "10\"-P150-LS-19501",
@@ -2492,8 +2508,8 @@
    "to": "V-1904-N5",
    "NPS": 10,
    "cls": "P150",
-   "designP": 75,
-   "designT": 350,
+   "designP": 80,
+   "designT": 370,
    "routed": true,
    "components": 20,
    "welds": 13,
@@ -2503,32 +2519,34 @@
  ],
  "counts": {
   "components": {
-   "cap": 2,
+   "cap": 1,
    "elbow": 475,
-   "flange": 325,
-   "gasket": 518,
+   "flange": 326,
+   "gasket": 520,
    "olet": 4,
-   "pipe": 804,
+   "pipe": 803,
    "reducer": 60,
    "spade": 14,
    "spectacle": 28,
    "tee": 37,
-   "valve": 231
+   "valve": 232
   },
   "welds": {
    "BW, field": 257,
-   "BW, shop": 1303,
+   "BW, shop": 1302,
    "FW, shop": 4
   },
   "supports": {
    "anchor": 42,
    "guide": 109,
    "hanger": 33,
-   "shoe": 211,
+   "shoe": 212,
    "stanchion": 32,
    "trapeze": 5,
    "trunnion": 38
   }
  },
- "notes": []
+ "notes": [
+  "1 header carried on in line to its block valve at the battery limit, the cap there left out (SW-RPI-15): 10\"-P150-LS-19401 from BL-1921-U, its first piece 181.3 in longer, a shoe at x 360"
+ ]
 }

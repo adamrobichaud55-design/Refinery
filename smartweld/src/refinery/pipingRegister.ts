@@ -46,9 +46,9 @@ export function pipingRegister(up: UnitPiping, model: PipingModel): PipingRegist
   const unit = up.unit, sh = processModel().sheet(unit), Z = sizing().get(unit)!, base = new Map(lineRecords().filter(r => r.unit === unit).map(r => [r.number, r]));
   const flowNo = (i: number) => lineNumber(unit, i + 1, Z.lines[i].NPS, Z.lines[i].cls, sh.lines[i].s.fluid), utilNo = (i: number) => lineNumber(unit, 500 + i + 1, Z.utils[i].NPS, Z.utils[i].cls, Z.utils[i].fluid);
   const reg: RegisterLine[] = up.lines.map(ul => {
-    const d = ul.def, of = ul.flow !== undefined ? flowNo(ul.flow) : ul.util !== undefined ? utilNo(ul.util) : undefined, b = of ? base.get(of) : undefined;
+    const d = ul.def, of = ul.flow !== undefined ? flowNo(ul.flow) : ul.util !== undefined ? (base.has(d.no) ? d.no : utilNo(ul.util)) : undefined, b = of ? base.get(of) : undefined;   // a utility connection with a station is two records, each under its own number (SW-RPI-9)
     if (of && !b) throw new Error(`unit ${unit}: no line record ${of} for ${d.no}`);
-    return { def: d, origin: ul.origin, fluid: ul.fluid, designP: ul.designP, designT: ul.designT, phase: b?.phase ?? phaseOfUtility(ul.fluid), material: b?.materials.value.code ?? pipeMaterial(unit, ul.fluid, ul.designT, false), utility: ul.origin === 'utility' || ul.origin === 'header', ...(of && of !== d.no ? { of } : {}), ...(ul.tier !== undefined ? { tier: ul.tier } : {}), ...(ul.station ? { station: ul.station } : {}) };
+    return { def: d, origin: ul.origin, fluid: ul.fluid, designP: ul.designP, designT: ul.designT, phase: b?.phase ?? phaseOfUtility(ul.fluid), material: b?.materials.value.code ?? pipeMaterial(unit, ul.fluid, ul.designT, false), utility: ul.origin === 'utility' || ul.origin === 'header' || ul.util !== undefined, ...(of && of !== d.no ? { of } : {}), ...(ul.tier !== undefined ? { tier: ul.tier } : {}), ...(ul.station ? { station: ul.station } : {}) };
   });
   return buildRegister(unit, sh.name, 'DESIGN_BASIS.md §76 (SW-REG-4 to SW-REG-6, SW-REG-8, SW-REG-9) and §79', reg, model, id => /^(BL|CS|RS)-/.test(id));
 }
@@ -62,7 +62,14 @@ export function pipewayRegister(pw: Pipeway, model: PipingModel): PipingRegister
     for (const sh of M.sheets) sh.lines.forEach((l, i) => { if (![l.from, l.to].some(e => e.k === 'bl' && e.name === t.key)) return; const r = base.get(lineNumber(sh.no, i + 1, Z.get(sh.no)!.lines[i].NPS, Z.get(sh.no)!.lines[i].cls, l.s.fluid)); if (r && MATERIAL_RANK.indexOf(r.materials.value.code) > MATERIAL_RANK.indexOf(mat)) mat = r.materials.value.code; });
     of.set(t.key, { phase: s0.ph === 'L' ? 'liquid' : s0.ph === 'V' ? 'vapour' : 'two-phase', material: mat });
   }
-  const reg: RegisterLine[] = pw.lines.map(l => { const o = of.get(l.stream); if (!o) throw new Error(`the main pipeway: no stream "${l.stream}" for ${l.def.no}`); return { def: l.def, origin: l.origin, fluid: l.fluid, designP: l.designP, designT: l.designT, phase: o.phase, material: o.material, utility: false, stream: l.stream, ...(l.tier !== undefined ? { tier: l.tier } : {}) }; });
+  // SW-PWY-11: a utility header and its branches are of the material and phase of unit 19's line to it or from it
+  const utilities = new Set(M.headers.map(h => h.key));
+  for (const h of M.headers) {
+    let mat: MaterialCode = 'CS', phase = phaseOfUtility(h.fluid);
+    for (const sh of M.sheets) sh.lines.forEach((l, i) => { if (![l.from, l.to].some(e => e.k === 'bl' && e.name === h.key)) return; phase = l.s.ph === 'L' ? 'liquid' : l.s.ph === 'V' ? 'vapour' : 'two-phase'; const r = base.get(lineNumber(sh.no, i + 1, Z.get(sh.no)!.lines[i].NPS, Z.get(sh.no)!.lines[i].cls, l.s.fluid)); if (r && MATERIAL_RANK.indexOf(r.materials.value.code) > MATERIAL_RANK.indexOf(mat)) mat = r.materials.value.code; });
+    of.set(h.key, { phase, material: mat });
+  }
+  const reg: RegisterLine[] = pw.lines.map(l => { const o = of.get(l.stream); if (!o) throw new Error(`the main pipeway: no stream "${l.stream}" for ${l.def.no}`); return { def: l.def, origin: l.origin, fluid: l.fluid, designP: l.designP, designT: l.designT, phase: o.phase, material: o.material, utility: utilities.has(l.stream) && l.origin === 'header', stream: l.stream, ...(l.tier !== undefined ? { tier: l.tier } : {}) }; });
   return buildRegister(PWY.area, 'Main pipeway', 'DESIGN_BASIS.md §76 (SW-REG-4 to SW-REG-6, SW-REG-8, SW-REG-9) and §80', reg, model, id => /^PL-/.test(id));
 }
 /** the register of a piped area: a record for every line of its list and every component the generator built on it; `isSpool`: the nozzles that are piping (spools), each half registered with the line that ends at it */
@@ -70,7 +77,7 @@ function buildRegister(unit: number, name: string, basis: string, reg: RegisterL
   const run = new Map(model.lines.map(l => [l.no, l])), lines: PipingLineRecord[] = [], components: PipingComponentRecord[] = [], matOf = new Map<string, MaterialCode>();
   for (const ul of reg) {
     const d = ul.def, r = run.get(d.no); if (!r) throw new Error(`unit ${unit}: line ${d.no} of the line list is not in the generated model`);
-    const c = classify(unit, ul.fluid, ul.phase, d.cls, ul.designP, ul.designT, ul.material, ul.utility);
+    const c = classify(unit, ul.fluid, ul.phase, d.cls, ul.designP, ul.designT, ul.material, ul.utility, d.NPS);
     matOf.set(d.no, ul.material);
     lines.push({
       number: d.no, unit, origin: ul.origin, ...(ul.of ? { of: ul.of } : {}), ...(ul.stream ? { stream: ul.stream } : {}), from: r.from, to: r.to, fluid: ul.fluid, fluidName: FLUIDS[ul.fluid].name, phase: ul.phase, designP: ul.designP, designT: ul.designT, size: d.NPS, pipeClass: d.cls,

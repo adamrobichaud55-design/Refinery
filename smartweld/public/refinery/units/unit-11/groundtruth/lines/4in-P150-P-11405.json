@@ -9,39 +9,39 @@
   "designPressure": 150,
   "insulated": false,
   "kind": "header",
-  "from": "cap",
+  "from": "BL-1119-U",
   "to": "cap",
-  "flow": "cap → cap",
+  "flow": "BL-1119-U → cap",
   "joint": "BW"
  },
  "items": [
   {
-   "tag": "4\"-P150-P-11405/cap0",
+   "tag": "4\"-P150-P-11405/L1",
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
-   "kind": "cap",
+   "kind": "gasket",
    "itemNo": 1,
-   "description": "CAP 4\" P150",
-   "designation": "CAP4-P150",
-   "key": "CAP|4|P150",
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET4-P150",
+   "key": "GSK|4|P150",
    "NPS": 4,
    "cls": "P150",
-   "material": "Grade 35 pipe",
-   "ends": "BW",
-   "weight": 1.4166,
-   "spool": "4\"-P150-P-11405-SP01",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
    "a": {
-    "E": 370,
+    "E": 162,
     "N": -42,
     "EL": 1542
    },
    "b": {
-    "E": 372,
+    "E": 162.125,
     "N": -42,
     "EL": 1542
    },
    "centre": {
-    "E": 371,
+    "E": 162.0625,
     "N": -42,
     "EL": 1542
    },
@@ -51,8 +51,224 @@
     "EL": 0
    },
    "rules": [
-    "SW-FIT-4",
-    "SW-FIT-5"
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-11405/L2",
+   "line": "4\"-P150-P-11405",
+   "lineClass": "H150",
+   "kind": "valve",
+   "itemNo": 2,
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P150",
+   "designation": "GATE4-P150",
+   "key": "VLV|GATE|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 129.1601,
+   "spool": "loose",
+   "a": {
+    "E": 162.125,
+    "N": -42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 177.375,
+    "N": -42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 169.75,
+    "N": -42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-2",
+    "SW-VLV-G-1",
+    "SW-VLV-G-2",
+    "SW-VLV-G-3"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-11405/L3",
+   "line": "4\"-P150-P-11405",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "designation": "STUDS 4×1x6.25 (4-P150)",
+   "key": "STUDS|4|P150|3.750",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 158.9375,
+    "N": -42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 165.1875,
+    "N": -42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 162.0625,
+    "N": -42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-11405/L4",
+   "line": "4\"-P150-P-11405",
+   "lineClass": "H150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
+   "designation": "GASKET4-P150",
+   "key": "GSK|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 177.375,
+    "N": -42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 177.5,
+    "N": -42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 177.4375,
+    "N": -42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-11405/L5",
+   "line": "4\"-P150-P-11405",
+   "lineClass": "H150",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 4\" P150 RAISED FACE",
+   "designation": "FLG4-P150",
+   "key": "WNF|4|P150",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 28.7184,
+   "spool": "4\"-P150-P-11405-SP01",
+   "a": {
+    "E": 177.5,
+    "N": -42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 182.9375,
+    "N": -42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 180.2188,
+    "N": -42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-11405/L6",
+   "line": "4\"-P150-P-11405",
+   "lineClass": "H150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "designation": "STUDS 4×1x6.25 (4-P150)",
+   "key": "STUDS|4|P150|3.750",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 8.2064,
+   "spool": "loose",
+   "a": {
+    "E": 174.3125,
+    "N": -42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 180.5625,
+    "N": -42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 177.4375,
+    "N": -42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
    ]
   },
   {
@@ -60,19 +276,62 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 4\" P150 BEVELLED ENDS",
    "designation": "PIPE4-P150",
-   "key": "PIPE|4|P150|440.095",
+   "key": "PIPE|4|P150|314.579",
    "NPS": 4,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 440.0952,
-   "weight": 280.2591,
+   "cutLength": 314.5789,
+   "weight": 200.3287,
    "spool": "4\"-P150-P-11405-SP01",
    "a": {
-    "E": 372,
+    "E": 182.9375,
+    "N": -42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 497.5164,
+    "N": -42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 340.227,
+    "N": -42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-11405/p17",
+   "line": "4\"-P150-P-11405",
+   "lineClass": "H150",
+   "kind": "pipe",
+   "itemNo": 5,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "designation": "PIPE4-P150",
+   "key": "PIPE|4|P150|314.579",
+   "NPS": 4,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 314.5788,
+   "weight": 200.3287,
+   "spool": "4\"-P150-P-11405-SP01",
+   "a": {
+    "E": 497.5164,
     "N": -42,
     "EL": 1542
    },
@@ -82,7 +341,7 @@
     "EL": 1542
    },
    "centre": {
-    "E": 592.0476,
+    "E": 654.8058,
     "N": -42,
     "EL": 1542
    },
@@ -103,7 +362,7 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 4\" P150 BEVELLED ENDS",
    "designation": "PIPE4-P150",
    "key": "PIPE|4|P150|440.095",
@@ -146,7 +405,7 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 4\" P150 BEVELLED ENDS",
    "designation": "PIPE4-P150",
    "key": "PIPE|4|P150|440.095",
@@ -189,7 +448,7 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 4\" P150 BEVELLED ENDS",
    "designation": "PIPE4-P150",
    "key": "PIPE|4|P150|440.095",
@@ -232,7 +491,7 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 4\" P150 BEVELLED ENDS",
    "designation": "PIPE4-P150",
    "key": "PIPE|4|P150|440.095",
@@ -275,7 +534,7 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 4\" P150 BEVELLED ENDS",
    "designation": "PIPE4-P150",
    "key": "PIPE|4|P150|446.095",
@@ -318,7 +577,7 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 4\" P150 BEVELLED ENDS",
    "designation": "PIPE4-P150",
    "key": "PIPE|4|P150|434.095",
@@ -361,7 +620,7 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "tee",
-   "itemNo": 3,
+   "itemNo": 6,
    "description": "TEE EQUAL 4\" P150",
    "designation": "TEE4-P150",
    "key": "TEE|4|P150|4",
@@ -401,7 +660,7 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 4\" P150 BEVELLED ENDS",
    "designation": "PIPE4-P150",
    "key": "PIPE|4|P150|8.667",
@@ -444,7 +703,7 @@
    "line": "4\"-P150-P-11405",
    "lineClass": "H150",
    "kind": "cap",
-   "itemNo": 1,
+   "itemNo": 7,
    "description": "CAP 4\" P150",
    "designation": "CAP4-P150",
    "key": "CAP|4|P150",
@@ -490,7 +749,7 @@
    "NPS": 4,
    "cls": "P150",
    "joins": [
-    "4\"-P150-P-11405/cap0",
+    "4\"-P150-P-11405/L5",
     "4\"-P150-P-11405/p2"
    ],
    "shopField": "shop",
@@ -500,7 +759,7 @@
     "4\"-P150-P-11405-SP01"
    ],
    "at": {
-    "E": 372,
+    "E": 182.9375,
     "N": -42,
     "EL": 1542
    },
@@ -524,7 +783,7 @@
    "NPS": 4,
    "cls": "P150",
    "joins": [
-    "4\"-P150-P-11405/p2",
+    "4\"-P150-P-11405/p17",
     "4\"-P150-P-11405/p3"
    ],
    "shopField": "shop",
@@ -820,9 +1079,63 @@
     "SW-WD-4",
     "SW-WD-5"
    ]
+  },
+  {
+   "tag": "4\"-P150-P-11405/W11",
+   "line": "4\"-P150-P-11405",
+   "lineClass": "H150",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 4,
+   "cls": "P150",
+   "joins": [
+    "4\"-P150-P-11405/p2",
+    "4\"-P150-P-11405/p17"
+   ],
+   "shopField": "shop",
+   "spool": "4\"-P150-P-11405-SP01",
+   "spools": [
+    "4\"-P150-P-11405-SP01",
+    "4\"-P150-P-11405-SP01"
+   ],
+   "at": {
+    "E": 497.5164,
+    "N": -42,
+    "EL": 1542
+   },
+   "key": "BW|4|P150",
+   "weight": 0.1388,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
   }
  ],
  "supports": [
+  {
+   "tag": "4\"-P150-P-11405/S13",
+   "line": "4\"-P150-P-11405",
+   "lineClass": "H150",
+   "type": "shoe",
+   "description": "SHOE FOR 4\" LINE (SHOE-4)",
+   "designation": "SHOE-4",
+   "key": "SHOE|4|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 360,
+    "N": -42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
   {
    "tag": "4\"-P150-P-11405/S1",
    "line": "4\"-P150-P-11405",
@@ -1068,8 +1381,9 @@
   {
    "id": "4\"-P150-P-11405-SP01",
    "items": [
-    "4\"-P150-P-11405/cap0",
+    "4\"-P150-P-11405/L5",
     "4\"-P150-P-11405/p2",
+    "4\"-P150-P-11405/p17",
     "4\"-P150-P-11405/p3",
     "4\"-P150-P-11405/p4",
     "4\"-P150-P-11405/p5",
@@ -1090,50 +1404,111 @@
     "4\"-P150-P-11405/W7",
     "4\"-P150-P-11405/W8",
     "4\"-P150-P-11405/W9",
-    "4\"-P150-P-11405/W10"
+    "4\"-P150-P-11405/W10",
+    "4\"-P150-P-11405/W11"
    ],
-   "weight": 1976.6067
+   "weight": 2124.4456
   }
  ],
  "bom": [
   {
    "itemNo": 1,
-   "description": "CAP 4\" P150",
+   "description": "GASKET 4\" P150 COMPRESSED SHEET",
    "qty": 2,
-   "weight": 2.8331
+   "weight": 0
   },
   {
    "itemNo": 2,
-   "description": "PIPE 4\" P150 BEVELLED ENDS",
-   "qty": 8,
-   "length": 3089.3334,
-   "weight": 1967.3332
+   "description": "VALVE, GATE, WEDGE, OS&Y 4\" P150",
+   "qty": 1,
+   "weight": 129.1601
   },
   {
    "itemNo": 3,
+   "description": "STUD SET 4 × 1\" × 6-1/4\" WITH 2 NUTS, FOR 4\" P150",
+   "qty": 2,
+   "weight": 16.4129
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 4\" P150 RAISED FACE",
+   "qty": 1,
+   "weight": 28.7184
+  },
+  {
+   "itemNo": 5,
+   "description": "PIPE 4\" P150 BEVELLED ENDS",
+   "qty": 9,
+   "length": 3278.3959,
+   "weight": 2087.7314
+  },
+  {
+   "itemNo": 6,
    "description": "TEE EQUAL 4\" P150",
    "qty": 1,
    "weight": 5.0521
+  },
+  {
+   "itemNo": 7,
+   "description": "CAP 4\" P150",
+   "qty": 1,
+   "weight": 1.4166
   }
  ],
  "nodes": [
   {
    "at": {
-    "E": 370,
+    "E": 162,
     "N": -42,
     "EL": 1542
    },
-   "kind": "cap start",
-   "ref": "4\"-P150-P-11405/cap0"
+   "kind": "gasket start",
+   "ref": "4\"-P150-P-11405/L1"
   },
   {
    "at": {
-    "E": 372,
+    "E": 162.125,
     "N": -42,
     "EL": 1542
    },
-   "kind": "cap end",
-   "ref": "4\"-P150-P-11405/cap0"
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-11405/L1"
+  },
+  {
+   "at": {
+    "E": 177.375,
+    "N": -42,
+    "EL": 1542
+   },
+   "kind": "valve end",
+   "ref": "4\"-P150-P-11405/L2"
+  },
+  {
+   "at": {
+    "E": 177.5,
+    "N": -42,
+    "EL": 1542
+   },
+   "kind": "gasket end",
+   "ref": "4\"-P150-P-11405/L4"
+  },
+  {
+   "at": {
+    "E": 182.9375,
+    "N": -42,
+    "EL": 1542
+   },
+   "kind": "flange end",
+   "ref": "4\"-P150-P-11405/L5"
+  },
+  {
+   "at": {
+    "E": 497.5164,
+    "N": -42,
+    "EL": 1542
+   },
+   "kind": "pipe end",
+   "ref": "4\"-P150-P-11405/p2"
   },
   {
    "at": {
@@ -1142,7 +1517,7 @@
     "EL": 1542
    },
    "kind": "pipe end",
-   "ref": "4\"-P150-P-11405/p2"
+   "ref": "4\"-P150-P-11405/p17"
   },
   {
    "at": {
@@ -1236,11 +1611,11 @@
   }
  ],
  "totals": {
-  "items": 11,
-  "welds": 10,
+  "items": 17,
+  "welds": 11,
   "fieldWelds": 0,
-  "supports": 12,
-  "pipeLength": 3089.3334,
-  "weight": 1975.2184
+  "supports": 13,
+  "pipeLength": 3278.3959,
+  "weight": 2268.4914
  }
 }

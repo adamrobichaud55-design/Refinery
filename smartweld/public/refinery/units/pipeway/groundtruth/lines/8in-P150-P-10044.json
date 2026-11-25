@@ -9,9 +9,9 @@
   "designPressure": 150,
   "insulated": false,
   "kind": "routed",
-  "from": "PL-1041-P",
+  "from": "PL-1049-P",
   "to": "BL-1901-P",
-  "flow": "PL-1041-P → BL-1901-P",
+  "flow": "PL-1049-P → BL-1901-P",
   "joint": "BW"
  },
  "items": [
@@ -1292,6 +1292,26 @@
    "rules": [
     "SW-PS-9"
    ]
+  },
+  {
+   "tag": "8\"-P150-P-10044/S12",
+   "line": "8\"-P150-P-10044",
+   "lineClass": "H150",
+   "type": "shoe",
+   "description": "SHOE FOR 8\" LINE (SHOE-8)",
+   "designation": "SHOE-8",
+   "key": "SHOE|8|P150|shoe|8.000",
+   "material": "Grade 36",
+   "weight": 15.0254,
+   "spool": "loose",
+   "at": {
+    "E": 2322,
+    "N": 480,
+    "EL": 1392
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
   }
  ],
  "spools": [
@@ -1538,7 +1558,7 @@
   "items": 16,
   "welds": 11,
   "fieldWelds": 3,
-  "supports": 11,
+  "supports": 12,
   "pipeLength": 2732.1668,
   "weight": 5481.4627
  }

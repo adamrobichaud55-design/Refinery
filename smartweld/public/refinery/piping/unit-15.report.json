@@ -9,13 +9,13 @@
   3
  ],
  "tierRoom": 72,
- "seconds": 200,
+ "seconds": 198,
  "stats": {
-  "lines": 65,
+  "lines": 69,
   "routed": 65,
   "failed": 0,
-  "comps": 1846,
-  "welds": 957,
+  "comps": 1872,
+  "welds": 963,
   "supports": 193,
   "penetrations": 0
  },
@@ -143,6 +143,70 @@
     120
    ],
    "tier": 0
+  },
+  {
+   "tag": "BL-1509",
+   "stream": "cooling water return",
+   "dir": "out",
+   "line": "6\"-P150-CWR-15402",
+   "NPS": 6,
+   "cls": "P150",
+   "at": [
+    150,
+    348,
+    -24
+   ],
+   "tier": 2,
+   "lane": -24,
+   "header": true
+  },
+  {
+   "tag": "BL-1508",
+   "stream": "cooling water supply",
+   "dir": "in",
+   "line": "6\"-P150-CWS-15401",
+   "NPS": 6,
+   "cls": "P150",
+   "at": [
+    240,
+    348,
+    0
+   ],
+   "tier": 2,
+   "lane": 0,
+   "header": true
+  },
+  {
+   "tag": "BL-1510",
+   "stream": "medium-pressure steam",
+   "dir": "in",
+   "line": "3\"-P300-LS-15403",
+   "NPS": 3,
+   "cls": "P300",
+   "at": [
+    150,
+    342,
+    18
+   ],
+   "tier": 2,
+   "lane": 18,
+   "header": true
+  },
+  {
+   "tag": "BL-1511",
+   "stream": "fuel gas to users",
+   "dir": "in",
+   "line": "2\"-P150-P-15404",
+   "NPS": 2,
+   "cls": "P150",
+   "at": [
+    240,
+    342,
+    36
+   ],
+   "tier": 2,
+   "lane": 36,
+   "header": true
   }
  ],
  "roots": [
@@ -513,8 +577,8 @@
    "designP": 125,
    "designT": 170,
    "routed": true,
-   "components": 31,
-   "welds": 20,
+   "components": 33,
+   "welds": 22,
    "supports": 2,
    "lengthFt": 89
   },
@@ -1249,68 +1313,68 @@
    "origin": "header",
    "fluid": "CWS",
    "fluidName": "cooling water supply",
-   "from": "cap",
+   "from": "BL-1508-U",
    "to": "cap",
    "NPS": 6,
    "cls": "P150",
-   "designP": 85,
+   "designP": 140,
    "designT": 150,
    "routed": true,
-   "components": 8,
-   "welds": 7,
-   "supports": 8,
-   "lengthFt": 178
+   "components": 12,
+   "welds": 8,
+   "supports": 9,
+   "lengthFt": 188
   },
   {
    "no": "6\"-P150-CWR-15402",
    "origin": "header",
    "fluid": "CWR",
    "fluidName": "cooling water return",
-   "from": "cap",
+   "from": "BL-1509-U",
    "to": "cap",
    "NPS": 6,
    "cls": "P150",
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 10,
-   "welds": 9,
-   "supports": 8,
-   "lengthFt": 178
+   "components": 14,
+   "welds": 10,
+   "supports": 9,
+   "lengthFt": 196
   },
   {
    "no": "3\"-P300-LS-15403",
    "origin": "header",
    "fluid": "MS",
    "fluidName": "steam, 150 psi",
-   "from": "cap",
+   "from": "BL-1510-U",
    "to": "cap",
    "NPS": 3,
    "cls": "P300",
-   "designP": 175,
+   "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 8,
-   "welds": 7,
-   "supports": 17,
-   "lengthFt": 178
+   "components": 12,
+   "welds": 8,
+   "supports": 19,
+   "lengthFt": 196
   },
   {
    "no": "2\"-P150-P-15404",
    "origin": "header",
    "fluid": "FG",
    "fluidName": "fuel gas",
-   "from": "cap",
+   "from": "BL-1511-U",
    "to": "cap",
    "NPS": 2,
    "cls": "P150",
-   "designP": 75,
+   "designP": 85,
    "designT": 150,
    "routed": true,
-   "components": 9,
-   "welds": 8,
-   "supports": 17,
-   "lengthFt": 178
+   "components": 13,
+   "welds": 9,
+   "supports": 18,
+   "lengthFt": 188
   },
   {
    "no": "3\"-P150-CWS-15501",
@@ -1321,7 +1385,7 @@
    "to": "E-1502-N3",
    "NPS": 3,
    "cls": "P150",
-   "designP": 85,
+   "designP": 140,
    "designT": 150,
    "routed": true,
    "components": 34,
@@ -1355,7 +1419,7 @@
    "to": "E-1504-N3",
    "NPS": 4,
    "cls": "P150",
-   "designP": 85,
+   "designP": 140,
    "designT": 150,
    "routed": true,
    "components": 31,
@@ -1389,7 +1453,7 @@
    "to": "C-1501-N5",
    "NPS": 3,
    "cls": "P300",
-   "designP": 175,
+   "designP": 185,
    "designT": 450,
    "routed": true,
    "components": 20,
@@ -1406,7 +1470,7 @@
    "to": "H-1501-N3",
    "NPS": 2,
    "cls": "P150",
-   "designP": 75,
+   "designP": 85,
    "designT": 150,
    "routed": true,
    "components": 18,
@@ -1417,28 +1481,28 @@
  ],
  "counts": {
   "components": {
-   "cap": 8,
-   "elbow": 310,
-   "flange": 207,
-   "gasket": 330,
+   "cap": 4,
+   "elbow": 311,
+   "flange": 211,
+   "gasket": 338,
    "olet": 3,
-   "pipe": 463,
+   "pipe": 468,
    "reducer": 36,
    "spade": 30,
    "spectacle": 8,
    "tee": 20,
-   "valve": 139
+   "valve": 143
   },
   "welds": {
    "BW, field": 144,
-   "BW, shop": 798,
+   "BW, shop": 804,
    "FW, shop": 15
   },
   "supports": {
    "anchor": 23,
    "guide": 47,
    "hanger": 33,
-   "shoe": 48,
+   "shoe": 53,
    "stanchion": 13,
    "trapeze": 2,
    "trunnion": 27
@@ -1446,9 +1510,14 @@
  },
  "notes": [
   "4\"-P150-P-15001: given the lane at z -24 on tier 1, routed at z -30",
+  "4 headers carried on in line to their block valves at the battery limit, the cap there left out (SW-RPI-15): 6\"-P150-CWR-15402 from BL-1509-U, its first piece 203.1 in longer, a shoe at x 360; 6\"-P150-CWS-15401 from BL-1508-U, its first piece 113.1 in longer, a shoe at x 360; 3\"-P300-LS-15403 from BL-1510-U, its first piece 190.3 in longer, a shoe at x 360 and 240; 2\"-P150-P-15404 from BL-1511-U, its first piece 104.8 in longer, a shoe at x 360",
   "8\"-P600-P-15008: no valve at H-1501-N2; GATE 8 and what stood with it left out, 3 pieces, the pipe 18.7 in longer (SW-RPI-14)",
   "8\"-P600-P-15008: no valve at R-1501-N1; GATE 8 and what stood with it left out, 5 pieces, the pipe 19.7 in longer (SW-RPI-14)",
   "4\"-P150-P-15020: no valve at C-1501-N2; GATE 4 and what stood with it left out, 5 pieces, the pipe 15.8 in longer (SW-RPI-14)",
-  "4\"-P150-P-15020: no valve at A-1502-N1; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)"
+  "4\"-P150-P-15020: no valve at A-1502-N1; GATE 4 and what stood with it left out, 3 pieces, the pipe 15.4 in longer (SW-RPI-14)",
+  "6\"-P150-CWS-15401/p2 (45.2 ft, far end 802,348,0): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "6\"-P150-CWR-15402/p2 (43.5 ft, far end 691,348,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P300-LS-15403/p2 (49.0 ft, far end 770,342,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "2\"-P150-P-15404/p2 (44.1 ft, far end 796,342,36): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)"
  ]
 }

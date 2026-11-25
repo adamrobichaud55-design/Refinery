@@ -9,39 +9,39 @@
   "designPressure": 150,
   "insulated": true,
   "kind": "header",
-  "from": "cap",
+  "from": "BL-1807-U",
   "to": "cap",
-  "flow": "cap → cap",
+  "flow": "BL-1807-U → cap",
   "joint": "BW"
  },
  "items": [
   {
-   "tag": "10\"-P150-LS-18401/cap0",
+   "tag": "10\"-P150-LS-18401/L1",
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
-   "kind": "cap",
+   "kind": "gasket",
    "itemNo": 1,
-   "description": "CAP 10\" P150",
-   "designation": "CAP10-P150",
-   "key": "CAP|10|P150",
+   "description": "GASKET 10\" P150 COMPRESSED SHEET",
+   "designation": "GASKET10-P150",
+   "key": "GSK|10|P150",
    "NPS": 10,
    "cls": "P150",
-   "material": "Grade 35 pipe",
-   "ends": "BW",
-   "weight": 11.1711,
-   "spool": "10\"-P150-LS-18401-SP01",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
    "a": {
-    "E": 368.5,
+    "E": 252,
     "N": 0,
     "EL": 1548
    },
    "b": {
-    "E": 372,
+    "E": 252.125,
     "N": 0,
     "EL": 1548
    },
    "centre": {
-    "E": 370.25,
+    "E": 252.0625,
     "N": 0,
     "EL": 1548
    },
@@ -51,8 +51,223 @@
     "EL": 0
    },
    "rules": [
-    "SW-FIT-4",
-    "SW-FIT-5"
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-18401/L2",
+   "line": "10\"-P150-LS-18401",
+   "lineClass": "S150",
+   "kind": "valve",
+   "itemNo": 2,
+   "description": "VALVE, GLOBE, T-PATTERN 10\" P150",
+   "designation": "GLOBE10-P150",
+   "key": "VLV|GLOBE|10|P150",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 621.1058,
+   "spool": "loose",
+   "a": {
+    "E": 252.125,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 275.8125,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 263.9688,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-3",
+    "SW-VLV-GL-1",
+    "SW-VLV-GL-2"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-18401/L3",
+   "line": "10\"-P150-LS-18401",
+   "lineClass": "S150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P150",
+   "designation": "STUDS 12×0.75x5 (10-P150)",
+   "key": "STUDS|10|P150|3.250",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 10.856,
+   "spool": "loose",
+   "a": {
+    "E": 249.5625,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 254.5625,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 252.0625,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-18401/L4",
+   "line": "10\"-P150-LS-18401",
+   "lineClass": "S150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 10\" P150 COMPRESSED SHEET",
+   "designation": "GASKET10-P150",
+   "key": "GSK|10|P150",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 275.8125,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 275.9375,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 275.875,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-18401/L5",
+   "line": "10\"-P150-LS-18401",
+   "lineClass": "S150",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 10\" P150 RAISED FACE",
+   "designation": "FLG10-P150",
+   "key": "WNF|10|P150",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 51.5629,
+   "spool": "10\"-P150-LS-18401-SP01",
+   "a": {
+    "E": 275.9375,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 280.75,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 278.3438,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-18401/L6",
+   "line": "10\"-P150-LS-18401",
+   "lineClass": "S150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P150",
+   "designation": "STUDS 12×0.75x5 (10-P150)",
+   "key": "STUDS|10|P150|3.250",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 10.856,
+   "spool": "loose",
+   "a": {
+    "E": 273.375,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 278.375,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 275.875,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
    ]
   },
   {
@@ -60,19 +275,62 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
-   "key": "PIPE|10|P150|427.833",
+   "key": "PIPE|10|P150|259.542",
    "NPS": 10,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 427.8333,
-   "weight": 1153.8204,
+   "cutLength": 259.5417,
+   "weight": 699.9574,
    "spool": "10\"-P150-LS-18401-SP01",
    "a": {
-    "E": 372,
+    "E": 280.75,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 540.2917,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 410.5209,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-18401/p19",
+   "line": "10\"-P150-LS-18401",
+   "lineClass": "S150",
+   "kind": "pipe",
+   "itemNo": 5,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "designation": "PIPE10-P150",
+   "key": "PIPE|10|P150|259.542",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 259.5416,
+   "weight": 699.9574,
+   "spool": "10\"-P150-LS-18401-SP01",
+   "a": {
+    "E": 540.2917,
     "N": 0,
     "EL": 1548
    },
@@ -82,7 +340,7 @@
     "EL": 1548
    },
    "centre": {
-    "E": 585.9167,
+    "E": 670.0625,
     "N": 0,
     "EL": 1548
    },
@@ -103,7 +361,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|427.833",
@@ -146,7 +404,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "tee",
-   "itemNo": 3,
+   "itemNo": 6,
    "description": "TEE REDUCING 10\" × 8\" P150",
    "designation": "TEE10x8-P150",
    "key": "TEE|10|P150|8",
@@ -187,7 +445,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|450.667",
@@ -230,7 +488,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|450.667",
@@ -273,7 +531,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "tee",
-   "itemNo": 3,
+   "itemNo": 6,
    "description": "TEE REDUCING 10\" × 8\" P150",
    "designation": "TEE10x8-P150",
    "key": "TEE|10|P150|8",
@@ -314,7 +572,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|405.133",
@@ -357,7 +615,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|405.133",
@@ -400,7 +658,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|405.133",
@@ -443,7 +701,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|405.133",
@@ -486,7 +744,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|405.133",
@@ -529,7 +787,7 @@
    "line": "10\"-P150-LS-18401",
    "lineClass": "S150",
    "kind": "cap",
-   "itemNo": 1,
+   "itemNo": 7,
    "description": "CAP 10\" P150",
    "designation": "CAP10-P150",
    "key": "CAP|10|P150",
@@ -575,7 +833,7 @@
    "NPS": 10,
    "cls": "P150",
    "joins": [
-    "10\"-P150-LS-18401/cap0",
+    "10\"-P150-LS-18401/L5",
     "10\"-P150-LS-18401/p2"
    ],
    "shopField": "shop",
@@ -585,7 +843,7 @@
     "10\"-P150-LS-18401-SP01"
    ],
    "at": {
-    "E": 372,
+    "E": 280.75,
     "N": 0,
     "EL": 1548
    },
@@ -609,7 +867,7 @@
    "NPS": 10,
    "cls": "P150",
    "joins": [
-    "10\"-P150-LS-18401/p2",
+    "10\"-P150-LS-18401/p19",
     "10\"-P150-LS-18401/p3"
    ],
    "shopField": "shop",
@@ -973,9 +1231,63 @@
     "SW-WD-4",
     "SW-WD-5"
    ]
+  },
+  {
+   "tag": "10\"-P150-LS-18401/W13",
+   "line": "10\"-P150-LS-18401",
+   "lineClass": "S150",
+   "type": "BW",
+   "size": 0.3125,
+   "NPS": 10,
+   "cls": "P150",
+   "joins": [
+    "10\"-P150-LS-18401/p2",
+    "10\"-P150-LS-18401/p19"
+   ],
+   "shopField": "shop",
+   "spool": "10\"-P150-LS-18401-SP01",
+   "spools": [
+    "10\"-P150-LS-18401-SP01",
+    "10\"-P150-LS-18401-SP01"
+   ],
+   "at": {
+    "E": 540.2917,
+    "N": 0,
+    "EL": 1548
+   },
+   "key": "BW|10|P150",
+   "weight": 0.7601,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
   }
  ],
  "supports": [
+  {
+   "tag": "10\"-P150-LS-18401/S16",
+   "line": "10\"-P150-LS-18401",
+   "lineClass": "S150",
+   "type": "shoe",
+   "description": "SHOE FOR 10\" LINE (SHOE-10)",
+   "designation": "SHOE-10",
+   "key": "SHOE|10|P150|shoe|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 360,
+    "N": 0,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
   {
    "tag": "10\"-P150-LS-18401/S1",
    "line": "10\"-P150-LS-18401",
@@ -1281,8 +1593,9 @@
   {
    "id": "10\"-P150-LS-18401-SP01",
    "items": [
-    "10\"-P150-LS-18401/cap0",
+    "10\"-P150-LS-18401/L5",
     "10\"-P150-LS-18401/p2",
+    "10\"-P150-LS-18401/p19",
     "10\"-P150-LS-18401/p3",
     "10\"-P150-LS-18401/T:8\"-P150-LS-18501",
     "10\"-P150-LS-18401/p5",
@@ -1307,50 +1620,111 @@
     "10\"-P150-LS-18401/W9",
     "10\"-P150-LS-18401/W10",
     "10\"-P150-LS-18401/W11",
-    "10\"-P150-LS-18401/W12"
+    "10\"-P150-LS-18401/W12",
+    "10\"-P150-LS-18401/W13"
    ],
-   "weight": 10333.2474
+   "weight": 10620.4936
   }
  ],
  "bom": [
   {
    "itemNo": 1,
-   "description": "CAP 10\" P150",
+   "description": "GASKET 10\" P150 COMPRESSED SHEET",
    "qty": 2,
-   "weight": 22.3422
+   "weight": 0
   },
   {
    "itemNo": 2,
-   "description": "PIPE 10\" P150 BEVELLED ENDS",
-   "qty": 9,
-   "length": 3782.6668,
-   "weight": 10201.4483
+   "description": "VALVE, GLOBE, T-PATTERN 10\" P150",
+   "qty": 1,
+   "weight": 621.1058
   },
   {
    "itemNo": 3,
+   "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P150",
+   "qty": 2,
+   "weight": 21.7121
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 10\" P150 RAISED FACE",
+   "qty": 1,
+   "weight": 51.5629
+  },
+  {
+   "itemNo": 5,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "qty": 10,
+   "length": 3873.9168,
+   "weight": 10447.5426
+  },
+  {
+   "itemNo": 6,
    "description": "TEE REDUCING 10\" × 8\" P150",
    "qty": 2,
    "weight": 100.3359
+  },
+  {
+   "itemNo": 7,
+   "description": "CAP 10\" P150",
+   "qty": 1,
+   "weight": 11.1711
   }
  ],
  "nodes": [
   {
    "at": {
-    "E": 368.5,
+    "E": 252,
     "N": 0,
     "EL": 1548
    },
-   "kind": "cap start",
-   "ref": "10\"-P150-LS-18401/cap0"
+   "kind": "gasket start",
+   "ref": "10\"-P150-LS-18401/L1"
   },
   {
    "at": {
-    "E": 372,
+    "E": 252.125,
     "N": 0,
     "EL": 1548
    },
-   "kind": "cap end",
-   "ref": "10\"-P150-LS-18401/cap0"
+   "kind": "gasket end",
+   "ref": "10\"-P150-LS-18401/L1"
+  },
+  {
+   "at": {
+    "E": 275.8125,
+    "N": 0,
+    "EL": 1548
+   },
+   "kind": "valve end",
+   "ref": "10\"-P150-LS-18401/L2"
+  },
+  {
+   "at": {
+    "E": 275.9375,
+    "N": 0,
+    "EL": 1548
+   },
+   "kind": "gasket end",
+   "ref": "10\"-P150-LS-18401/L4"
+  },
+  {
+   "at": {
+    "E": 280.75,
+    "N": 0,
+    "EL": 1548
+   },
+   "kind": "flange end",
+   "ref": "10\"-P150-LS-18401/L5"
+  },
+  {
+   "at": {
+    "E": 540.2917,
+    "N": 0,
+    "EL": 1548
+   },
+   "kind": "pipe end",
+   "ref": "10\"-P150-LS-18401/p2"
   },
   {
    "at": {
@@ -1359,7 +1733,7 @@
     "EL": 1548
    },
    "kind": "pipe end",
-   "ref": "10\"-P150-LS-18401/p2"
+   "ref": "10\"-P150-LS-18401/p19"
   },
   {
    "at": {
@@ -1480,11 +1854,11 @@
   }
  ],
  "totals": {
-  "items": 13,
-  "welds": 12,
+  "items": 19,
+  "welds": 13,
   "fieldWelds": 0,
-  "supports": 15,
-  "pipeLength": 3782.6668,
-  "weight": 10324.1264
+  "supports": 16,
+  "pipeLength": 3873.9168,
+  "weight": 11253.4304
  }
 }

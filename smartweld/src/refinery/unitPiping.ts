@@ -14,6 +14,8 @@ import { interiorKit } from '../generator/interiorKit';
 import { frameFromAxes } from '../geometry/transform';
 import { processModel } from './process';
 import { sizing, lineSize, utilState, classFor, designPressure, designTemperature, sideOf, transferLine, type EquipSize } from './sizing';
+import { unitHeaders, connection } from './headers';
+import { stationed } from './sizing';
 import { FLUIDS } from './fluids';
 import type { Equip, End, UnitSheet } from './flowsheet';
 import { buildCell, valveDrop, bodySolids, RACK, RACK_COL, YARD, type CellModel, type Spot, type SolidBox } from './cell';
@@ -31,7 +33,9 @@ export interface UnitLine {
   /** SW-RPI-14: the ends at which the generator's valve is not built */ bare?: ('from' | 'to')[];
 }
 /** a battery limit spool: two nozzles back to back on a lane of the rack (SW-RPI-4) */
-export interface BlSpool { tag: string; stream: string; dir: 'in' | 'out'; line: string; NPS: number; cls: PipeClass; at: V3; /** the rack tier its line runs on (an index into the rack's tiers) */ tier: number; /** the rack lane its line is expected to run in */ lane?: number }
+export interface BlSpool { tag: string; stream: string; dir: 'in' | 'out'; line: string; NPS: number; cls: PipeClass; at: V3; /** the rack tier its line runs on (an index into the rack's tiers) */ tier: number; /** the rack lane its line is expected to run in */ lane?: number; /** SW-RPI-15: a utility header's spool: `stream` is the plant header's name, `line` the unit's header */ header?: boolean }
+/** SW-RPI-15: a header's block valve at the limit: given to the generator as a stub on its spool's inner face, and joined to the header on the generator's result */
+export interface HeaderFeed { tag: string; header: string; stub: LineDef; z: number }
 /** a control station's spool at grade under the rack (SW-RPI-9): the line as far as the station, and the part after it */
 export interface StationSpool { tag: string; line: string; after: string; at: V3 }
 /** a utility header and the lane on the top tier it is foreseen in */
@@ -39,7 +43,7 @@ export interface HeaderLane { line: string; z?: number }
 /** a branch's root spool on the rack (SW-RPI-8) */
 export interface RootSpool { tag: string; line: string; connection: string; parent: string; at: V3; tier: number }
 export interface UnitPiping {
-  unit: number; cell: CellModel; plant: PlantDef; lines: UnitLine[]; nozzles: Map<string, Nozzle>; spools: BlSpool[]; roots: RootSpool[]; stations: StationSpool[]; headers: HeaderLane[]; notes: string[];
+  unit: number; cell: CellModel; plant: PlantDef; lines: UnitLine[]; nozzles: Map<string, Nozzle>; spools: BlSpool[]; roots: RootSpool[]; stations: StationSpool[]; headers: HeaderLane[]; /** SW-RPI-15: the block valves of the headers at the limit */ feeds: HeaderFeed[]; notes: string[];
   /** the width of lanes each tier is loaded to in this unit, in */ tierRoom: number;
   /** SW-RPI-7: the rack tiers in use, lowest first (indices into the rack's tiers) */
   tiers: number[];
@@ -356,6 +360,25 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     const beyond: UnitLine = { def: { no: later, service: serviceOf(l.s.fluid, cls2, false) as Service, NPS: z.NPS, cls: cls2, from: { k: 'nozzle', id: `${tag}-B` }, to: b, kind: 'routed' }, seq: n, origin: 'control', station: tag, ...rest, ...(brk ? { designP: brk.designP, ...(brk.designT !== undefined ? { designT: brk.designT } : {}) } : {}) };
     lines.push(ahead, beyond); stationPlans.push({ tag, ahead, after: beyond }); afterStation.set(i, later);
   });
+  // ---- utility headers (SW-RPI-5, SW-PRC-19): sized here, because the top tier's lanes start with them and a connection that has a control station is divided at it ----
+  const headers = unitHeaders(unit, tag => bodies(tag).length > 0).map((h, k) => ({   // a connection of an item on another plot is that plot's
+    ...h, no: lineNumber(unit, 401 + k, h.NPS, h.cls, h.fluid),
+    // the lane a header takes is as wide as the largest flange on its valved take-offs, with 3 in each side for the valves' bodies (SW-RT-2, SW-RK-7)
+    width: Math.max(pipeDims(h.NPS, h.cls).OD, ...h.utils.map(i => { const c = connection(Z.utils[i]); return designFlange(c.NPS, c.cls).OD + 6; })), z: undefined as number | undefined,
+  }));
+  // SW-PRC-19, SW-RPI-9: a utility connection with a control station is divided at a station spool as a process line is: the part on the header's side is of the header's class and
+  // conditions, the part on the item's side of the item's own. These stations are set after the process lines', in the places those leave
+  const utilParts = new Map<number, { ahead: UnitLine; after: UnitLine }>();
+  Z.utils.forEach((u, i) => {
+    if (!bodies(u.tag).length) return; const c = connection(u); if (!c.station) return;
+    if (!offered(c.NPS, c.cls) || !offered(c.NPS, u.cls)) throw new Error(`${u.tag} ${u.port}: no control valve of ${c.NPS} in is offered for its ${u.fluid} connection`);
+    const h = headers.find(q => q.fluid === u.fluid)!, tag = `CS-${unit}${String(stationPlans.length + 1).padStart(2, '0')}`, n = 500 + i + 1, m = 551 + Z.utils.slice(0, i).filter(stationed).length;   // the part beyond the station among the utility numbers (SW-REF-3), in the order of the unit's connections that have one
+    const nz: EndRef = { k: 'nozzle', id: nozzleId(u.tag, u.port) }, tap: EndRef = { k: 'tap', line: h.no, valve: true }, A: EndRef = { k: 'nozzle', id: `${tag}-A` }, B: EndRef = { k: 'nozzle', id: `${tag}-B` };
+    const own = { cls: u.cls, designP: u.designP, designT: u.designT }, hdr = { cls: h.cls, designP: h.designP, designT: h.designT }, [c1, c2] = u.dir === 'to' ? [hdr, own] : [own, hdr];
+    const part = (seq: number, q: typeof own, from: EndRef, to: EndRef, origin: UnitLine['origin'], cv: boolean): UnitLine => ({ def: { no: lineNumber(unit, seq, c.NPS, q.cls, u.fluid), service: serviceOf(u.fluid, q.cls, true, c.NPS) as Service, NPS: c.NPS, cls: q.cls, from, to, kind: 'routed', ...(cv ? { cv: true } : {}) }, unit, seq, fluid: u.fluid, origin, util: i, station: tag, designP: q.designP, designT: q.designT });
+    const ahead = part(n, c1, u.dir === 'to' ? tap : nz, A, 'utility', true), after = part(m, c2, B, u.dir === 'to' ? nz : tap, 'control', false);
+    stationPlans.push({ tag, ahead, after }); utilParts.set(i, { ahead, after });
+  });
   // the stations: along the rack at grade, under its edge on the destination's side, as near the destination as those already set allow
   const xBay = RACK.start - RACK.bent + 30, rootX = new Map<string, number>();
   const xAt = (r: EndRef): number | undefined => (r.k !== 'nozzle' ? undefined : r.id.startsWith('BL-') ? xBay + 84 : rootX.get(r.id) ?? nozzles.get(r.id)!.face[0]);
@@ -409,15 +432,8 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
       rootX.set(`${tag}-A`, x); rootX.set(`${tag}-B`, x); rootPlans.push({ tag, x, dir, main: l, root, parent: tap.line }); lines.push(root);
     }
   }
-  // ---- utility headers (SW-RPI-5): sized here, because the top tier's lanes start with them ----
-  const byFluid = new Map<string, number[]>(); Z.utils.forEach((u, i) => { if (bodies(u.tag).length) byFluid.set(u.fluid, [...(byFluid.get(u.fluid) ?? []), i]); });   // a connection of an item on another plot is that plot's
-  const headers = [...byFluid].map(([fluid, idx]) => {
-    const us = idx.map(i => Z.utils[i]), total = us.reduce((a, u) => a + u.w, 0), P = Math.max(...us.map(u => u.P)), T = Math.max(...us.map(u => u.T)), designP = Math.max(...us.map(u => u.designP)), designT = Math.max(...us.map(u => u.designT));
-    const cls = classFor(designP, designT), NPS = Math.max(lineSize(utilState({ fluid, w: total, T, P }), false, cls, 2).NPS, ...us.map(u => u.NPS));
-    return { fluid, NPS, cls, designP, designT, width: Math.max(pipeDims(NPS, cls).OD, ...us.map(u => designFlange(u.NPS, u.cls).OD + 6)), z: undefined as number | undefined };   // the lane a header takes is as wide as the largest flange on its valved take-offs, with 3 in each side for the valves' bodies (SW-RT-2, SW-RK-7)
-  });
   // ---- SW-RPI-7: the tier and the lane of each line that runs the rack; then the battery limit spools in the valve bay (SW-RPI-4) ----
-  const tierOf = new Map<string, number>(), laneOf = new Map<string, number>(), top = RACK.tiers.length - 1; let tierRoom = TIER_ROOM;
+  const tierOf = new Map<string, number>(), laneOf = new Map<string, number>(), top = RACK.tiers.length - 1, feeds: HeaderFeed[] = []; let tierRoom = TIER_ROOM;
   /** the lanes on each tier: the headers', each rack line's, each root spool's */
   const foreseen: RackLane[] = [];
   {
@@ -440,6 +456,8 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     const cands: number[] = []; for (let z = -(HW - 24); z <= HW - 24; z += 6) cands.push(z); cands.sort((p, q) => Math.abs(p) - Math.abs(q) || p - q);
     const over = (L: RackLane, x0: number, x1: number) => !(L.x1 < x0 - 24 || L.x0 > x1 + 24);
     for (const h of headers) { const z = cands.find(c => foreseen.every(L => Math.abs(L.z - c) >= (L.OD + h.width) / 2 + 3)); if (z !== undefined) { foreseen.push({ t: top, z, OD: h.width, x0: cell.rack.x0, x1: cell.rack.x1 }); h.z = z; } }
+    // SW-RPI-15: in the valve bay a header is as wide as its flange (its block valve stands there): a line that passes it keeps a pipe's width and 4 in from that flange
+    for (const h of headers) if (h.z !== undefined) foreseen.push({ t: top, z: h.z, OD: designFlange(h.NPS, h.cls).OD + 2, x0: RACK.start - RACK.bent, x1: cell.rack.x0 });
     const headerPlan = [...foreseen];
     /** a lane's centre far enough from every lane taken on its tier over the stretch (the line `own` apart) */
     const free = (taken: RackLane[], t: number, z: number, OD: number, x0: number, x1: number, own?: string) => taken.every(L => L.t !== t || (own !== undefined && L.no === own) || !over(L, x0, x1) || Math.abs(L.z - z) >= laneSpacing(L.OD, OD));
@@ -488,7 +506,35 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     const lineAt = (tag: string) => lines.find(l => [l.def.from, l.def.to].some(en => en.k === 'nozzle' && en.id === `${tag}-U`))!.def;
     const spoolTier = (d: LineDef) => tierOf.get(d.no) ?? (tallAtLimit(d) ? highest : 0);
     const farZ = (d: LineDef) => { const en = [d.from, d.to].find(q => !(q.k === 'nozzle' && q.id.startsWith('BL-'))); return en && en.k === 'nozzle' ? nozzles.get(en.id)?.face[2] ?? 0 : 0; };
+    // SW-RPI-4, SW-RPI-15: on the top tier every spool stands on its own lane, a header's in its header's lane, and the spools are taken in turn across the rack into two
+    // rows, the second at the bay's middle: neighbours' valves then stand 7 ft 6 in apart along the rack. A spool with no lane stands beyond the row's end
+    const topRow = () => {
+      type S = { tag: string; stream: string; dir: 'in' | 'out'; no: string; NPS: number; cls: PipeClass; lane?: number; far: number; header: boolean };
+      const od = (q: S) => pipeDims(q.NPS, q.cls).OD, f = (q: S) => designFlange(q.NPS, q.cls).OD, w = (q: S) => gateWidth(q.NPS, q.cls), e = (q: S) => Math.max(f(q) / 2, od(q) / 2 + 3 + RACK_COL - 12);
+      // two spools of one row a flange and 6 in apart, or their handwheels and 3 in; a line passing a spool of the other row a pipe's width and 4 in from its flange
+      const beside = (a: S, b: S) => Math.max((f(a) + f(b)) / 2 + 6, (w(a) + w(b)) / 2 + 3), past = (a: S, b: S) => Math.max(od(a) + f(b), f(a) + od(b)) / 2 + 4;
+      const all: S[] = [...pending.map(q => ({ q, d: lineAt(q.tag) })).filter(v => spoolTier(v.d) === top).map(v => ({ tag: v.q.tag, stream: v.q.stream, dir: v.q.dir, no: v.d.no, NPS: v.d.NPS, cls: v.d.cls, lane: laneOf.get(v.d.no), far: farZ(v.d), header: false })),
+        ...headers.filter(h => h.z !== undefined).map((h, k) => ({ tag: `BL-${unit}${String(pending.length + k + 1).padStart(2, '0')}`, stream: h.key, dir: (h.takes >= h.makes ? 'in' : 'out') as 'in' | 'out', no: h.no, NPS: h.NPS, cls: h.cls, lane: h.z, far: 0, header: true }))];
+      const row = all.filter(q => q.lane !== undefined).sort((a, b) => a.lane! - b.lane!), zOf = new Map<S, number>(row.map(q => [q, q.lane!]));
+      for (const q of all.filter(v => v.lane === undefined)) {
+        if (!row.length) { zOf.set(q, 0); row.push(q); }
+        else if (q.far >= 0) { const hi = row[row.length - 1]; zOf.set(q, zOf.get(hi)! + up(beside(hi, q))); row.push(q); }
+        else { const lo = row[0]; zOf.set(q, zOf.get(lo)! - up(beside(lo, q))); row.unshift(q); }
+      }
+      row.forEach((q, k) => {
+        const z = zOf.get(q)!, at: V3 = [k % 2 ? RACK.start - RACK.bent / 2 : xS, tierY(top, q.NPS, q.cls), z];
+        if (k > 0 && z - zOf.get(row[k - 1])! < past(row[k - 1], q) - 1e-6) throw new Error(`unit ${unit}: on the top tier the spools ${row[k - 1].tag} and ${q.tag} stand ${z - zOf.get(row[k - 1])!} in apart on their lanes, and a line passing a flange needs ${past(row[k - 1], q).toFixed(1)} (SW-RPI-4)`);
+        if (k > 1 && z - zOf.get(row[k - 2])! < beside(row[k - 2], q) - 1e-6) throw new Error(`unit ${unit}: on the top tier the spools ${row[k - 2].tag} and ${q.tag}, of one row, stand ${z - zOf.get(row[k - 2])!} in apart on their lanes, and their valves need ${beside(row[k - 2], q).toFixed(1)} (SW-RPI-4)`);
+        if (Math.abs(z) + e(q) > HW - 12 + 1e-6) throw new Error(`unit ${unit}: the top tier's battery limit spools do not fit the rack's width (${q.tag} at ${z} in)`);
+        addNozzle(`${q.tag}-U`, q.tag, q.dir === 'in' ? 'battery limit in' : 'battery limit out', q.NPS, q.cls, { A: at, u: [1, 0, 0] }, z, 12);
+        addNozzle(`${q.tag}-P`, q.tag, 'pipeway side', q.NPS, q.cls, { A: at, u: [-1, 0, 0] }, z, 12);
+        spools.push({ tag: q.tag, stream: q.stream, dir: q.dir, line: q.no, NPS: q.NPS, cls: q.cls, at, tier: top, ...(q.lane !== undefined ? { lane: q.lane } : {}), ...(q.header ? { header: true } : {}) });
+        // SW-RPI-15: a header's block valve, a stub on the spool's inner face
+        if (q.header) { const h = headers.find(v => v.no === q.no)!; feeds.push({ tag: q.tag, header: q.no, z, stub: { no: lineNumber(unit, 451 + headers.indexOf(h), q.NPS, q.cls, h.fluid), service: serviceOf(h.fluid, q.cls, true, q.NPS) as Service, NPS: q.NPS, cls: q.cls, from: { k: 'nozzle', id: `${q.tag}-U` }, to: { k: 'blind' }, kind: 'stub' } }); }
+      });
+    };
     for (const t of RACK.tiers.keys()) {
+      if (t === top) { topRow(); continue; }
       // `e`: how far a spool reaches toward the rack's edge: its flange, or its line with the 3 in it keeps from the columns of the bay's first bent (which stand RACK_COL inside the half-width, 12 in further than the flanges' limit)
       const want = pending.map(q => ({ p: q, d: lineAt(q.tag) })).filter(q => spoolTier(q.d) === t).map(q => ({ ...q, lane: laneOf.get(q.d.no), f: designFlange(q.d.NPS, q.d.cls).OD, w: gateWidth(q.d.NPS, q.d.cls), e: Math.max(designFlange(q.d.NPS, q.d.cls).OD / 2, pipeDims(q.d.NPS, q.d.cls).OD / 2 + 3 + RACK_COL - 12) })); if (!want.length) continue;
       type W = typeof want[number];
@@ -541,18 +587,18 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     }
   });
   // ---- utility headers on the rack's top tier and the connections that tap them (SW-RPI-5) ----
-  let hSeq = 400; const header = new Map<string, string>(), headerLanes: HeaderLane[] = [];
-  for (const h of headers) {
-    const n = ++hSeq, hno = lineNumber(unit, n, h.NPS, h.cls, h.fluid);
-    header.set(h.fluid, hno); headerLanes.push({ line: hno, z: h.z });
-    lines.push({ def: { no: hno, service: serviceOf(h.fluid, h.cls, true) as Service, NPS: h.NPS, cls: h.cls, from: { k: 'blind' }, to: { k: 'blind' }, kind: 'header' }, unit, seq: n, fluid: h.fluid, origin: 'header', designP: h.designP, designT: h.designT });
-  }
+  const headerLanes: HeaderLane[] = [];
+  headers.forEach((h, k) => {
+    headerLanes.push({ line: h.no, z: h.z });
+    lines.push({ def: { no: h.no, service: serviceOf(h.fluid, h.cls, true, h.NPS) as Service, NPS: h.NPS, cls: h.cls, from: { k: 'blind' }, to: { k: 'blind' }, kind: 'header' }, unit, seq: 401 + k, fluid: h.fluid, origin: 'header', designP: h.designP, designT: h.designT });
+  });
   Z.utils.forEach((u, i) => {
     if (!bodies(u.tag).length) return;
-    const nz: EndRef = { k: 'nozzle', id: nozzleId(u.tag, u.port) }, tap: EndRef = { k: 'tap', line: header.get(u.fluid)!, valve: true }, n = 500 + i + 1;
-    lines.push({ def: { no: lineNumber(unit, n, u.NPS, u.cls, u.fluid), service: serviceOf(u.fluid, u.cls, true) as Service, NPS: u.NPS, cls: u.cls, from: u.dir === 'to' ? tap : nz, to: u.dir === 'to' ? nz : tap, kind: 'routed' }, unit, seq: n, fluid: u.fluid, origin: 'utility', util: i, designP: u.designP, designT: u.designT });
+    const parts = utilParts.get(i); if (parts) { lines.push(parts.ahead, parts.after); return; }   // SW-RPI-9: divided at its control station
+    const nz: EndRef = { k: 'nozzle', id: nozzleId(u.tag, u.port) }, tap: EndRef = { k: 'tap', line: headers.find(h => h.fluid === u.fluid)!.no, valve: true }, n = 500 + i + 1;
+    lines.push({ def: { no: lineNumber(unit, n, u.NPS, u.cls, u.fluid), service: serviceOf(u.fluid, u.cls, true, u.NPS) as Service, NPS: u.NPS, cls: u.cls, from: u.dir === 'to' ? tap : nz, to: u.dir === 'to' ? nz : tap, kind: 'routed' }, unit, seq: n, fluid: u.fluid, origin: 'utility', util: i, designP: u.designP, designT: u.designT });
   });
-  void designPressure; void designTemperature;
+  void designPressure; void designTemperature; void lineSize; void utilState; void classFor;
 
   // ---- before the generator runs: no two nozzles' valve stacks may stand in each other's way (SW-RPI-2) ----
   { const all = [...nozzles.values()].filter(q => q.service !== 'pipeway side'), env = (q: Nozzle) => { const f = designFlange(q.NPS, q.cls); return { a: q.face, b: [q.face[0] + q.u[0] * (gateFaceToFace(q.NPS, q.cls) + 12), q.face[1] + q.u[1] * (gateFaceToFace(q.NPS, q.cls) + 12), q.face[2] + q.u[2] * (gateFaceToFace(q.NPS, q.cls) + 12)] as V3, r: f.OD / 2 }; };
@@ -571,7 +617,7 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
       if (ends.length) l.bare = ends;
     }
   }
-  const list = lines.map(l => l.def), byNo = new Map(list.map(l => [l.no, l]));
+  const list = [...lines.map(l => l.def), ...feeds.map(f => f.stub)], byNo = new Map(list.map(l => [l.no, l]));   // SW-RPI-15: with each header's block valve at the limit, a stub
   // a unit has no building: its "drawing" is its plot's extent, for what frames a view of it
   const building: BuildingModel = { instances: [], derived: {}, notes: [], drawing: { bays: Math.ceil(cell.x1 / RACK.bent), bayFt: RACK.bent / 12, widthFt: Math.ceil(2 * Math.max(-cell.z0, cell.z1) / 12), eaveFt: 0, slopeRisePer12: 0, slabIn: 0 } } as unknown as BuildingModel;
   // ---- SW-RPI-6: where lines may travel. The generator is shown solid blocks (not part of the model) that leave open only where
@@ -692,7 +738,10 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
   };
   const runPlant = (k: number, prior: Placed[], whole = false): PlantDef => {
     const run = runs[k], rest = run.kind === 'rest', mine = new Set(run.lines);
-    const held = lines.filter(l => runOf.get(l.def.no)! > k).flatMap(l => [[l.def.from, false] as const, [l.def.to, true] as const].filter(([e]) => e.k === 'nozzle').flatMap(([e, dest]) => reserve(l, (e as Extract<EndRef, { k: 'nozzle' }>).id, dest)));
+    const held = [...lines.filter(l => runOf.get(l.def.no)! > k).flatMap(l => [[l.def.from, false] as const, [l.def.to, true] as const].filter(([e]) => e.k === 'nozzle').flatMap(([e, dest]) => reserve(l, (e as Extract<EndRef, { k: 'nozzle' }>).id, dest))),
+      ...feeds.filter(f => runOf.get(f.stub.no)! > k).flatMap(f => reserve({ def: f.stub } as UnitLine, `${f.tag}-U`, false))];
+    // SW-RPI-15: where each header's first piece will lie once it is carried back to its block valve, from the valve's blind to the header's cap
+    const pieces = feeds.map(f => { const q = nozzles.get(`${f.tag}-U`)!, r = pipeDims(q.NPS, q.cls).OD / 2; return block([q.face[0] + gateFaceToFace(q.NPS, q.cls) + 18, q.face[1] - r, f.z - r], [cell.rack.x0 + (rest ? 0 : 12), q.face[1] + r, f.z + r], 'header piece'); });
     // the headers are laid in the last run, in lanes the generator gives without looking: until then their lanes are held, with room above for their valved take-offs
     const lanesHeld = rest ? [] : headers.filter(h => h.z !== undefined).map(h => { const y = tierY(top, h.NPS, h.cls), r = pipeDims(h.NPS, h.cls).OD / 2; return block([cell.rack.x0 + 12, y - r, h.z! - h.width / 2], [cell.rack.x1 - 12, y + r + 48, h.z! + h.width / 2], 'header lane'); });
     const lanesKept = foreseen.filter(L => L.no !== undefined && runOf.get(L.no)! > k).flatMap(L => kept(L, !run.lane || run.lane.t !== L.t)), gates = run.lane ? fence(run.lane, mine) : [];
@@ -706,7 +755,7 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     // in the last run the headers are laid without a look at what is there, and their end caps are not held on the generator's grid: a block about each cap keeps the
     // lines of that run, which pass the rack's two ends on the top tier, clear of it (SW-RPI-12)
     const caps = !rest ? [] : headers.filter(h => h.z !== undefined).flatMap(h => { const y = tierY(top, h.NPS, h.cls), q = pipeDims(h.NPS, h.cls).OD / 2 + 3; return [block([cell.rack.x0 + 3, y - q, h.z! - q], [cell.rack.x0 + 12, y + q, h.z! + q], 'header cap'), block([cell.rack.x1 - 12, y - q, h.z! - q], [cell.rack.x1 - 3, y + q, h.z! + q], 'header cap')]; });
-    const inst = [...shown.instances, ...held, ...ways, ...lanesHeld, ...lanesKept, ...gates, ...caps, ...prior];
+    const inst = [...shown.instances, ...held, ...ways, ...lanesHeld, ...pieces, ...lanesKept, ...gates, ...caps, ...prior];
     // the grid cut to the run: 30 ft beyond its connections along and across the rack, its lane included, and 20 ft above the highest of them or of the rack's top tier
     const ends = lines.filter(l => mine.has(l.def.no)).flatMap(l => [l.def.from, l.def.to]).filter((e): e is Extract<EndRef, { k: 'nozzle' }> => e.k === 'nozzle').map(e => nozzles.get(e.id)!);
     const xs = ends.flatMap(q => [q.A[0], q.face[0]]), ys = ends.flatMap(q => [q.A[1], q.face[1]]), zs = [...ends.flatMap(q => [q.A[2], q.face[2]]), ...(run.lane ? [run.lane.z] : [])];
@@ -714,5 +763,5 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     const grid = whole || !ends.length ? full : rest ? { ...full, y1 } : { x0: Math.max(G.x0, down(Math.min(...xs) - 360)), x1: Math.min(G.x1, up(Math.max(...xs) + 360)), y1, z0: Math.max(G.z0, down(Math.min(...zs) - 360)), z1: Math.min(G.z1, up(Math.max(...zs) + 360)) };
     return { ...plant, grid, rack: { ...cell.rack, tiers: cell.rack.tiers.slice(run.lane ? run.lane.t : rest ? top : 0) }, interior: () => ({ ...shown, instances: inst }) };
   };
-  return { unit, cell, plant, lines, nozzles, spools, roots, stations, headers: headerLanes, notes, tierRoom, tiers, runs, runOf, runPlant, foreseen };
+  return { unit, cell, plant, lines, nozzles, spools, roots, stations, headers: headerLanes, feeds, notes, tierRoom, tiers, runs, runOf, runPlant, foreseen };
 }

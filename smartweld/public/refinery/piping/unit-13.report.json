@@ -10,14 +10,14 @@
   3
  ],
  "tierRoom": 72,
- "seconds": 521,
+ "seconds": 333,
  "stats": {
-  "lines": 84,
-  "routed": 84,
+  "lines": 92,
+  "routed": 86,
   "failed": 0,
-  "comps": 2418,
-  "welds": 1276,
-  "supports": 267,
+  "comps": 2540,
+  "welds": 1310,
+  "supports": 279,
   "penetrations": 0
  },
  "failures": [],
@@ -39,7 +39,6 @@
    "6\"-P300-P-13018: unsupported span 658 in > 240 on run from 1026,168,614",
    "4\"-P300-P-13020: unsupported span 245 in > 240 on run from 1075,342,90",
    "3\"-P300-P-13021: unsupported span 458 in > 180 on run from 2022,216,-535",
-   "3\"-P300-P-13707: unsupported span 323 in > 180 on run from 1344,144,-41",
    "6\"-P300-P-13026: unsupported span 287 in > 240 on run from 1026,144,64",
    "3\"-P150-P-13032: unsupported span 297 in > 180 on run from 1134,234,5",
    "6\"-P150-P-13711: unsupported span 242 in > 240 on run from 626,204,36",
@@ -47,14 +46,10 @@
    "3\"-P600-P-13304: unsupported span 248 in > 180 on run from 769,126,378",
    "6\"-P150-CWR-13502: unsupported span 592 in > 240 on run from 888,300,614",
    "4\"-P1200-LS-13503: unsupported span 336 in > 240 on run from 1470,354,-318",
-   "2\"-P1200-SC-13504: unsupported span 425 in > 120 on run from 1446,354,-657",
-   "2\"-P1200-SC-13504: unsupported span 132 in > 120 on run from 1470,372,-225",
    "2\"-P150-CWS-13505: unsupported span 245 in > 120 on run from 1134,372,3",
    "2\"-P150-CWS-13505: unsupported span 330 in > 120 on run from 1158,216,255",
    "2\"-P150-CWR-13506: unsupported span 623 in > 120 on run from 1122,282,615",
-   "4\"-P300-LS-13507: unsupported span 323 in > 240 on run from 1812,384,41",
-   "4\"-P300-LS-13507: unsupported span 332 in > 240 on run from 1788,174,-295",
-   "2\"-P300-SC-13508: unsupported span 605 in > 120 on run from 1836,318,-663",
+   "4\"-P300-LS-13507: unsupported span 332 in > 240 on run from 1842,174,-211",
    "2\"-P150-P-13509: unsupported span 137 in > 120 on run from 3216,372,-57",
    "2\"-P150-P-13509: unsupported span 221 in > 120 on run from 3219,372,84"
   ]
@@ -191,6 +186,102 @@
    ],
    "tier": 1,
    "lane": -12
+  },
+  {
+   "tag": "BL-1315",
+   "stream": "fuel gas to users",
+   "dir": "in",
+   "line": "2\"-P150-P-13406",
+   "NPS": 2,
+   "cls": "P150",
+   "at": [
+    150,
+    342,
+    -60
+   ],
+   "tier": 2,
+   "lane": -60,
+   "header": true
+  },
+  {
+   "tag": "BL-1313",
+   "stream": "condensate",
+   "dir": "out",
+   "line": "2\"-P150-SC-13404",
+   "NPS": 2,
+   "cls": "P150",
+   "at": [
+    240,
+    342,
+    -42
+   ],
+   "tier": 2,
+   "lane": -42,
+   "header": true
+  },
+  {
+   "tag": "BL-1311",
+   "stream": "cooling water return",
+   "dir": "out",
+   "line": "6\"-P150-CWR-13402",
+   "NPS": 6,
+   "cls": "P150",
+   "at": [
+    150,
+    348,
+    -24
+   ],
+   "tier": 2,
+   "lane": -24,
+   "header": true
+  },
+  {
+   "tag": "BL-1310",
+   "stream": "cooling water supply",
+   "dir": "in",
+   "line": "6\"-P150-CWS-13401",
+   "NPS": 6,
+   "cls": "P150",
+   "at": [
+    240,
+    348,
+    0
+   ],
+   "tier": 2,
+   "lane": 0,
+   "header": true
+  },
+  {
+   "tag": "BL-1312",
+   "stream": "high-pressure steam",
+   "dir": "in",
+   "line": "4\"-P1200-LS-13403",
+   "NPS": 4,
+   "cls": "P1200",
+   "at": [
+    150,
+    342,
+    24
+   ],
+   "tier": 2,
+   "lane": 24,
+   "header": true
+  },
+  {
+   "tag": "BL-1314",
+   "stream": "medium-pressure steam",
+   "dir": "in",
+   "line": "4\"-P300-LS-13405",
+   "NPS": 4,
+   "cls": "P300",
+   "at": [
+    240,
+    342,
+    48
+   ],
+   "tier": 2,
+   "lane": 48,
+   "header": true
   }
  ],
  "roots": [
@@ -338,6 +429,26 @@
     684,
     36,
     108
+   ]
+  },
+  {
+   "tag": "CS-1313",
+   "line": "2\"-P1200-SC-13504",
+   "after": "2\"-P150-SC-13551",
+   "at": [
+    1470,
+    36,
+    36
+   ]
+  },
+  {
+   "tag": "CS-1314",
+   "line": "2\"-P300-SC-13508",
+   "after": "2\"-P150-SC-13552",
+   "at": [
+    1806,
+    36,
+    36
    ]
   }
  ],
@@ -609,9 +720,9 @@
    "designP": 125,
    "designT": 170,
    "routed": true,
-   "components": 33,
-   "welds": 22,
-   "supports": 2,
+   "components": 35,
+   "welds": 24,
+   "supports": 1,
    "lengthFt": 71
   },
   {
@@ -883,7 +994,7 @@
    "routed": true,
    "components": 22,
    "welds": 13,
-   "supports": 2,
+   "supports": 4,
    "lengthFt": 113,
    "station": "CS-1307"
   },
@@ -1042,10 +1153,10 @@
    "designP": 145,
    "designT": 180,
    "routed": true,
-   "components": 52,
-   "welds": 29,
+   "components": 54,
+   "welds": 31,
    "supports": 2,
-   "lengthFt": 77,
+   "lengthFt": 80,
    "tier": 1,
    "station": "CS-1309",
    "controlValve": "piped"
@@ -1582,102 +1693,102 @@
    "origin": "header",
    "fluid": "CWS",
    "fluidName": "cooling water supply",
-   "from": "cap",
+   "from": "BL-1310-U",
    "to": "cap",
    "NPS": 6,
    "cls": "P150",
-   "designP": 85,
+   "designP": 140,
    "designT": 150,
    "routed": true,
-   "components": 10,
+   "components": 13,
    "welds": 9,
-   "supports": 11,
-   "lengthFt": 238
+   "supports": 12,
+   "lengthFt": 248
   },
   {
    "no": "6\"-P150-CWR-13402",
    "origin": "header",
    "fluid": "CWR",
    "fluidName": "cooling water return",
-   "from": "cap",
+   "from": "BL-1311-U",
    "to": "cap",
    "NPS": 6,
    "cls": "P150",
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 10,
+   "components": 13,
    "welds": 9,
-   "supports": 11,
-   "lengthFt": 238
+   "supports": 12,
+   "lengthFt": 256
   },
   {
    "no": "4\"-P1200-LS-13403",
    "origin": "header",
    "fluid": "HS",
    "fluidName": "steam, 600 psi",
-   "from": "cap",
+   "from": "BL-1312-U",
    "to": "cap",
    "NPS": 4,
    "cls": "P1200",
-   "designP": 660,
+   "designP": 685,
    "designT": 700,
    "routed": true,
-   "components": 10,
-   "welds": 9,
-   "supports": 11,
-   "lengthFt": 238
+   "components": 14,
+   "welds": 10,
+   "supports": 12,
+   "lengthFt": 256
   },
   {
-   "no": "2\"-P1200-SC-13404",
+   "no": "2\"-P150-SC-13404",
    "origin": "header",
    "fluid": "CO",
    "fluidName": "steam condensate",
-   "from": "cap",
+   "from": "BL-1313-U",
    "to": "cap",
    "NPS": 2,
-   "cls": "P1200",
-   "designP": 650,
-   "designT": 660,
+   "cls": "P150",
+   "designP": 55,
+   "designT": 280,
    "routed": true,
-   "components": 12,
+   "components": 15,
    "welds": 11,
-   "supports": 23,
-   "lengthFt": 238
+   "supports": 24,
+   "lengthFt": 248
   },
   {
    "no": "4\"-P300-LS-13405",
    "origin": "header",
    "fluid": "MS",
    "fluidName": "steam, 150 psi",
-   "from": "cap",
+   "from": "BL-1314-U",
    "to": "cap",
    "NPS": 4,
    "cls": "P300",
-   "designP": 175,
+   "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 11,
+   "components": 14,
    "welds": 10,
-   "supports": 11,
-   "lengthFt": 238
+   "supports": 12,
+   "lengthFt": 248
   },
   {
    "no": "2\"-P150-P-13406",
    "origin": "header",
    "fluid": "FG",
    "fluidName": "fuel gas",
-   "from": "cap",
+   "from": "BL-1315-U",
    "to": "cap",
    "NPS": 2,
    "cls": "P150",
-   "designP": 75,
+   "designP": 85,
    "designT": 150,
    "routed": true,
-   "components": 11,
-   "welds": 10,
-   "supports": 23,
-   "lengthFt": 238
+   "components": 15,
+   "welds": 11,
+   "supports": 25,
+   "lengthFt": 256
   },
   {
    "no": "6\"-P150-CWS-13501",
@@ -1688,7 +1799,7 @@
    "to": "E-1302-N3",
    "NPS": 6,
    "cls": "P150",
-   "designP": 85,
+   "designP": 140,
    "designT": 150,
    "routed": true,
    "components": 33,
@@ -1722,7 +1833,7 @@
    "to": "E-1304-N3",
    "NPS": 4,
    "cls": "P1200",
-   "designP": 660,
+   "designP": 685,
    "designT": 700,
    "routed": true,
    "components": 20,
@@ -1736,16 +1847,35 @@
    "fluid": "CO",
    "fluidName": "steam condensate",
    "from": "E-1304-N4",
-   "to": "tap 2\"-P1200-SC-13404",
+   "to": "CS-1313-A",
    "NPS": 2,
    "cls": "P1200",
    "designP": 650,
    "designT": 660,
    "routed": true,
-   "components": 26,
-   "welds": 17,
+   "components": 42,
+   "welds": 21,
+   "supports": 5,
+   "lengthFt": 78,
+   "station": "CS-1313"
+  },
+  {
+   "no": "2\"-P150-SC-13551",
+   "origin": "control",
+   "fluid": "CO",
+   "fluidName": "steam condensate",
+   "from": "CS-1313-B",
+   "to": "tap 2\"-P150-SC-13404",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 55,
+   "designT": 280,
+   "routed": true,
+   "components": 18,
+   "welds": 11,
    "supports": 1,
-   "lengthFt": 83
+   "lengthFt": 38,
+   "station": "CS-1313"
   },
   {
    "no": "2\"-P150-CWS-13505",
@@ -1756,7 +1886,7 @@
    "to": "E-1305-N3",
    "NPS": 2,
    "cls": "P150",
-   "designP": 85,
+   "designP": 140,
    "designT": 150,
    "routed": true,
    "components": 33,
@@ -1790,13 +1920,13 @@
    "to": "E-1306-N3",
    "NPS": 4,
    "cls": "P300",
-   "designP": 175,
+   "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 24,
-   "welds": 15,
+   "components": 25,
+   "welds": 16,
    "supports": 1,
-   "lengthFt": 81
+   "lengthFt": 83
   },
   {
    "no": "2\"-P300-SC-13508",
@@ -1804,16 +1934,35 @@
    "fluid": "CO",
    "fluidName": "steam condensate",
    "from": "E-1306-N4",
-   "to": "tap 2\"-P1200-SC-13404",
+   "to": "CS-1314-A",
    "NPS": 2,
    "cls": "P300",
    "designP": 165,
    "designT": 410,
    "routed": true,
-   "components": 27,
-   "welds": 18,
-   "supports": 0,
-   "lengthFt": 82
+   "components": 42,
+   "welds": 21,
+   "supports": 5,
+   "lengthFt": 77,
+   "station": "CS-1314"
+  },
+  {
+   "no": "2\"-P150-SC-13552",
+   "origin": "control",
+   "fluid": "CO",
+   "fluidName": "steam condensate",
+   "from": "CS-1314-B",
+   "to": "tap 2\"-P150-SC-13404",
+   "NPS": 2,
+   "cls": "P150",
+   "designP": 55,
+   "designT": 280,
+   "routed": true,
+   "components": 16,
+   "welds": 9,
+   "supports": 1,
+   "lengthFt": 35,
+   "station": "CS-1314"
   },
   {
    "no": "2\"-P150-P-13509",
@@ -1824,7 +1973,7 @@
    "to": "H-1301-N3",
    "NPS": 2,
    "cls": "P150",
-   "designP": 75,
+   "designP": 85,
    "designT": 150,
    "routed": true,
    "components": 18,
@@ -1835,40 +1984,44 @@
  ],
  "counts": {
   "components": {
-   "cap": 12,
-   "elbow": 419,
-   "flange": 264,
-   "gasket": 422,
+   "cap": 6,
+   "elbow": 426,
+   "flange": 286,
+   "gasket": 454,
    "olet": 6,
-   "pipe": 628,
+   "pipe": 647,
    "reducer": 42,
    "spade": 34,
    "spectacle": 14,
    "tee": 24,
-   "valve": 179
+   "valve": 195
   },
   "welds": {
-   "BW, field": 192,
-   "BW, shop": 1070,
+   "BW, field": 196,
+   "BW, shop": 1100,
    "FW, shop": 14
   },
   "supports": {
-   "anchor": 34,
+   "anchor": 33,
    "guide": 63,
-   "hanger": 41,
-   "shoe": 85,
-   "stanchion": 8,
+   "hanger": 42,
+   "shoe": 92,
+   "stanchion": 18,
    "trapeze": 3,
-   "trunnion": 33
+   "trunnion": 35
   }
  },
  "notes": [
   "6\"-P150-P-13001: given the lane at z -36 on tier 1, routed at z -48",
+  "6 headers carried on in line to their block valves at the battery limit, the cap there left out (SW-RPI-15): 2\"-P150-P-13406 from BL-1315-U, its first piece 194.8 in longer, a shoe at x 360 and 240; 2\"-P150-SC-13404 from BL-1313-U, its first piece 104.6 in longer, a shoe at x 360; 6\"-P150-CWR-13402 from BL-1311-U, its first piece 203.1 in longer, a shoe at x 360; 6\"-P150-CWS-13401 from BL-1310-U, its first piece 113.1 in longer, a shoe at x 360; 4\"-P1200-LS-13403 from BL-1312-U, its first piece 188.1 in longer, a shoe at x 360; 4\"-P300-LS-13405 from BL-1314-U, its first piece 98.0 in longer, a shoe at x 360",
   "10\"-P600-P-13009: no valve at H-1301-N2; GATE 10 and what stood with it left out, 3 pieces, the pipe 20.0 in longer (SW-RPI-14)",
   "10\"-P600-P-13009: no valve at R-1301-N1; GATE 10 and what stood with it left out, 5 pieces, the pipe 21.1 in longer (SW-RPI-14)",
   "6\"-P300-P-13019: no valve at C-1301-N2; GATE 6 and what stood with it left out, 5 pieces, the pipe 14.8 in longer (SW-RPI-14)",
   "6\"-P300-P-13019: no valve at A-1302-N1; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-RPI-14)",
   "12\"-P150-P-13028: no valve at C-1302-N2; GATE 12 and what stood with it left out, 5 pieces, the pipe 23.4 in longer (SW-RPI-14)",
-  "12\"-P150-P-13028: no valve at A-1303A-N1; GATE 12 and what stood with it left out, 3 pieces, the pipe 22.6 in longer (SW-RPI-14)"
+  "12\"-P150-P-13028: no valve at A-1303A-N1; GATE 12 and what stood with it left out, 3 pieces, the pipe 22.6 in longer (SW-RPI-14)",
+  "4\"-P1200-LS-13403/p2 (46.1 ft, far end 737,342,24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "2\"-P150-SC-13404/p2 (40.2 ft, far end 749,342,-42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "2\"-P150-P-13406/p2 (50.1 ft, far end 778,342,-60): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)"
  ]
 }

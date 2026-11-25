@@ -10,14 +10,14 @@
   3
  ],
  "tierRoom": 72,
- "seconds": 347,
+ "seconds": 390,
  "stats": {
-  "lines": 60,
-  "routed": 60,
+  "lines": 68,
+  "routed": 62,
   "failed": 0,
-  "comps": 1637,
-  "welds": 880,
-  "supports": 167,
+  "comps": 1757,
+  "welds": 912,
+  "supports": 182,
   "penetrations": 3
  },
  "failures": [],
@@ -30,11 +30,9 @@
   "staticClearance": [],
   "supports": [
    "48\"-P150-P-12003: unsupported span 392 in > 240 on run from 600,1716,-692",
-   "6\"-P300-LS-12501: unsupported span 310 in > 240 on run from 1182,396,-10",
-   "2\"-P300-SC-12504: unsupported span 233 in > 120 on run from 426,372,-45",
-   "6\"-P300-LS-12505: unsupported span 346 in > 240 on run from 480,348,506",
-   "2\"-P300-SC-12506: unsupported span 515 in > 120 on run from 540,222,-9",
-   "3\"-P300-LS-12507: unsupported span 464 in > 180 on run from 564,318,505"
+   "6\"-P300-LS-12501: unsupported span 286 in > 240 on run from 1182,390,-10",
+   "6\"-P300-LS-12505: unsupported span 298 in > 240 on run from 432,324,506",
+   "3\"-P300-LS-12507: unsupported span 488 in > 180 on run from 564,318,505"
   ]
  },
  "spools": [
@@ -154,6 +152,102 @@
    ],
    "tier": 1,
    "lane": 12
+  },
+  {
+   "tag": "BL-1214",
+   "stream": "fuel gas to users",
+   "dir": "in",
+   "line": "3\"-P150-P-12406",
+   "NPS": 3,
+   "cls": "P150",
+   "at": [
+    150,
+    342,
+    -66
+   ],
+   "tier": 2,
+   "lane": -66,
+   "header": true
+  },
+  {
+   "tag": "BL-1212",
+   "stream": "boiler feed water",
+   "dir": "in",
+   "line": "2\"-P1200-SC-12404",
+   "NPS": 2,
+   "cls": "P1200",
+   "at": [
+    240,
+    342,
+    -48
+   ],
+   "tier": 2,
+   "lane": -48,
+   "header": true
+  },
+  {
+   "tag": "BL-1210",
+   "stream": "cooling water supply",
+   "dir": "in",
+   "line": "12\"-P150-CWS-12402",
+   "NPS": 12,
+   "cls": "P150",
+   "at": [
+    150,
+    348,
+    -24
+   ],
+   "tier": 2,
+   "lane": -24,
+   "header": true
+  },
+  {
+   "tag": "BL-1209",
+   "stream": "medium-pressure steam",
+   "dir": "out",
+   "line": "6\"-P300-LS-12401",
+   "NPS": 6,
+   "cls": "P300",
+   "at": [
+    240,
+    348,
+    0
+   ],
+   "tier": 2,
+   "lane": 0,
+   "header": true
+  },
+  {
+   "tag": "BL-1211",
+   "stream": "cooling water return",
+   "dir": "out",
+   "line": "12\"-P150-CWR-12403",
+   "NPS": 12,
+   "cls": "P150",
+   "at": [
+    150,
+    348,
+    24
+   ],
+   "tier": 2,
+   "lane": 24,
+   "header": true
+  },
+  {
+   "tag": "BL-1213",
+   "stream": "low-pressure steam",
+   "dir": "in",
+   "line": "4\"-P150-LS-12405",
+   "NPS": 4,
+   "cls": "P150",
+   "at": [
+    240,
+    342,
+    48
+   ],
+   "tier": 2,
+   "lane": 48,
+   "header": true
   }
  ],
  "roots": [],
@@ -246,6 +340,26 @@
     1500,
     36,
     -108
+   ]
+  },
+  {
+   "tag": "CS-1210",
+   "line": "2\"-P1200-SC-12504",
+   "after": "2\"-P300-SC-12551",
+   "at": [
+    1476,
+    36,
+    108
+   ]
+  },
+  {
+   "tag": "CS-1211",
+   "line": "2\"-P1200-SC-12506",
+   "after": "2\"-P300-SC-12552",
+   "at": [
+    1014,
+    36,
+    108
    ]
   }
  ],
@@ -1057,117 +1171,117 @@
    "lengthFt": 6
   },
   {
-   "no": "8\"-P300-LS-12401",
+   "no": "6\"-P300-LS-12401",
    "origin": "header",
    "fluid": "MS",
    "fluidName": "steam, 150 psi",
-   "from": "cap",
+   "from": "BL-1209-U",
    "to": "cap",
-   "NPS": 8,
+   "NPS": 6,
    "cls": "P300",
-   "designP": 175,
+   "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 9,
+   "components": 12,
    "welds": 8,
-   "supports": 6,
-   "lengthFt": 138
+   "supports": 7,
+   "lengthFt": 148
   },
   {
    "no": "12\"-P150-CWS-12402",
    "origin": "header",
    "fluid": "CWS",
    "fluidName": "cooling water supply",
-   "from": "cap",
+   "from": "BL-1210-U",
    "to": "cap",
    "NPS": 12,
    "cls": "P150",
-   "designP": 85,
+   "designP": 140,
    "designT": 150,
    "routed": true,
-   "components": 7,
-   "welds": 6,
-   "supports": 6,
-   "lengthFt": 138
+   "components": 11,
+   "welds": 7,
+   "supports": 7,
+   "lengthFt": 156
   },
   {
    "no": "12\"-P150-CWR-12403",
    "origin": "header",
    "fluid": "CWR",
    "fluidName": "cooling water return",
-   "from": "cap",
+   "from": "BL-1211-U",
    "to": "cap",
    "NPS": 12,
    "cls": "P150",
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 7,
-   "welds": 6,
-   "supports": 6,
-   "lengthFt": 138
+   "components": 11,
+   "welds": 7,
+   "supports": 7,
+   "lengthFt": 156
   },
   {
-   "no": "2\"-P300-SC-12404",
+   "no": "2\"-P1200-SC-12404",
    "origin": "header",
    "fluid": "BW",
    "fluidName": "boiler feed water",
-   "from": "cap",
+   "from": "BL-1212-U",
    "to": "cap",
    "NPS": 2,
-   "cls": "P300",
-   "designP": 275,
+   "cls": "P1200",
+   "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 10,
+   "components": 13,
    "welds": 9,
-   "supports": 13,
-   "lengthFt": 138
+   "supports": 14,
+   "lengthFt": 148
   },
   {
    "no": "4\"-P150-LS-12405",
    "origin": "header",
    "fluid": "LS",
    "fluidName": "steam, 50 psi",
-   "from": "cap",
+   "from": "BL-1213-U",
    "to": "cap",
    "NPS": 4,
    "cls": "P150",
-   "designP": 75,
-   "designT": 350,
+   "designP": 80,
+   "designT": 370,
    "routed": true,
-   "components": 8,
+   "components": 11,
    "welds": 7,
-   "supports": 6,
-   "lengthFt": 138
+   "supports": 7,
+   "lengthFt": 148
   },
   {
    "no": "3\"-P150-P-12406",
    "origin": "header",
    "fluid": "FG",
    "fluidName": "fuel gas",
-   "from": "cap",
+   "from": "BL-1214-U",
    "to": "cap",
    "NPS": 3,
    "cls": "P150",
-   "designP": 75,
+   "designP": 85,
    "designT": 150,
    "routed": true,
-   "components": 8,
-   "welds": 7,
-   "supports": 13,
-   "lengthFt": 138
+   "components": 12,
+   "welds": 8,
+   "supports": 15,
+   "lengthFt": 156
   },
   {
    "no": "6\"-P300-LS-12501",
    "origin": "utility",
    "fluid": "MS",
    "fluidName": "steam, 150 psi",
-   "from": "tap 8\"-P300-LS-12401",
+   "from": "tap 6\"-P300-LS-12401",
    "to": "J-1201-N5",
    "NPS": 6,
    "cls": "P300",
-   "designP": 175,
+   "designP": 185,
    "designT": 450,
    "routed": true,
    "components": 17,
@@ -1184,7 +1298,7 @@
    "to": "J-1201-N6",
    "NPS": 12,
    "cls": "P150",
-   "designP": 85,
+   "designP": 140,
    "designT": 150,
    "routed": true,
    "components": 18,
@@ -1210,21 +1324,40 @@
    "lengthFt": 108
   },
   {
-   "no": "2\"-P300-SC-12504",
+   "no": "2\"-P1200-SC-12504",
    "origin": "utility",
    "fluid": "BW",
    "fluidName": "boiler feed water",
-   "from": "tap 2\"-P300-SC-12404",
+   "from": "tap 2\"-P1200-SC-12404",
+   "to": "CS-1210-A",
+   "NPS": 2,
+   "cls": "P1200",
+   "designP": 1035,
+   "designT": 300,
+   "routed": true,
+   "components": 36,
+   "welds": 17,
+   "supports": 1,
+   "lengthFt": 41,
+   "station": "CS-1210"
+  },
+  {
+   "no": "2\"-P300-SC-12551",
+   "origin": "control",
+   "fluid": "BW",
+   "fluidName": "boiler feed water",
+   "from": "CS-1210-B",
    "to": "E-1201-N3",
    "NPS": 2,
    "cls": "P300",
    "designP": 275,
    "designT": 300,
    "routed": true,
-   "components": 26,
-   "welds": 17,
-   "supports": 3,
-   "lengthFt": 80
+   "components": 25,
+   "welds": 16,
+   "supports": 10,
+   "lengthFt": 135,
+   "station": "CS-1210"
   },
   {
    "no": "6\"-P300-LS-12505",
@@ -1232,11 +1365,11 @@
    "fluid": "MS",
    "fluidName": "steam, 150 psi",
    "from": "E-1201-N4",
-   "to": "tap 8\"-P300-LS-12401",
+   "to": "tap 6\"-P300-LS-12401",
    "NPS": 6,
    "cls": "P300",
-   "designP": 175,
-   "designT": 415,
+   "designP": 185,
+   "designT": 450,
    "routed": true,
    "components": 24,
    "welds": 15,
@@ -1244,21 +1377,40 @@
    "lengthFt": 68
   },
   {
-   "no": "2\"-P300-SC-12506",
+   "no": "2\"-P1200-SC-12506",
    "origin": "utility",
    "fluid": "BW",
    "fluidName": "boiler feed water",
-   "from": "tap 2\"-P300-SC-12404",
+   "from": "tap 2\"-P1200-SC-12404",
+   "to": "CS-1211-A",
+   "NPS": 2,
+   "cls": "P1200",
+   "designP": 1035,
+   "designT": 300,
+   "routed": true,
+   "components": 36,
+   "welds": 17,
+   "supports": 1,
+   "lengthFt": 41,
+   "station": "CS-1211"
+  },
+  {
+   "no": "2\"-P300-SC-12552",
+   "origin": "control",
+   "fluid": "BW",
+   "fluidName": "boiler feed water",
+   "from": "CS-1211-B",
    "to": "E-1202-N3",
    "NPS": 2,
    "cls": "P300",
    "designP": 275,
    "designT": 300,
    "routed": true,
-   "components": 27,
-   "welds": 18,
-   "supports": 0,
-   "lengthFt": 79
+   "components": 23,
+   "welds": 14,
+   "supports": 6,
+   "lengthFt": 85,
+   "station": "CS-1211"
   },
   {
    "no": "3\"-P300-LS-12507",
@@ -1266,11 +1418,11 @@
    "fluid": "MS",
    "fluidName": "steam, 150 psi",
    "from": "E-1202-N4",
-   "to": "tap 8\"-P300-LS-12401",
+   "to": "tap 6\"-P300-LS-12401",
    "NPS": 3,
    "cls": "P300",
-   "designP": 175,
-   "designT": 415,
+   "designP": 185,
+   "designT": 450,
    "routed": true,
    "components": 22,
    "welds": 13,
@@ -1286,8 +1438,8 @@
    "to": "C-1201-N9",
    "NPS": 4,
    "cls": "P150",
-   "designP": 75,
-   "designT": 350,
+   "designP": 80,
+   "designT": 370,
    "routed": true,
    "components": 24,
    "welds": 17,
@@ -1303,7 +1455,7 @@
    "to": "H-1201-N4",
    "NPS": 3,
    "cls": "P150",
-   "designP": 75,
+   "designP": 85,
    "designT": 150,
    "routed": true,
    "components": 18,
@@ -1314,33 +1466,34 @@
  ],
  "counts": {
   "components": {
-   "cap": 12,
-   "elbow": 273,
-   "flange": 196,
-   "gasket": 276,
+   "cap": 6,
+   "elbow": 279,
+   "flange": 218,
+   "gasket": 308,
    "olet": 3,
-   "pipe": 425,
+   "pipe": 443,
    "reducer": 38,
    "spade": 18,
    "spectacle": 1,
    "tee": 21,
-   "valve": 117
+   "valve": 133
   },
   "welds": {
-   "BW, field": 128,
-   "BW, shop": 741,
+   "BW, field": 132,
+   "BW, shop": 769,
    "FW, shop": 11
   },
   "supports": {
    "anchor": 20,
    "guide": 47,
    "hanger": 28,
-   "shoe": 36,
-   "stanchion": 14,
-   "trunnion": 22
+   "shoe": 43,
+   "stanchion": 28,
+   "trunnion": 23
   }
  },
  "notes": [
+  "6 headers carried on in line to their block valves at the battery limit, the cap there left out (SW-RPI-15): 3\"-P150-P-12406 from BL-1214-U, its first piece 191.1 in longer, a shoe at x 360 and 240; 2\"-P1200-SC-12404 from BL-1212-U, its first piece 103.7 in longer, a shoe at x 360; 12\"-P150-CWS-12402 from BL-1210-U, its first piece 200.1 in longer, a shoe at x 360; 6\"-P300-LS-12401 from BL-1209-U, its first piece 99.8 in longer, a shoe at x 360; 12\"-P150-CWR-12403 from BL-1211-U, its first piece 200.1 in longer, a shoe at x 360; 4\"-P150-LS-12405 from BL-1213-U, its first piece 98.0 in longer, a shoe at x 360",
   "36\"-P300-P-12002: no valve at H-1201-N2; GATE 36 and what stood with it left out, 3 pieces, the pipe 50.7 in longer (SW-RPI-14)",
   "36\"-P300-P-12002: no valve at C-1201-N1; GATE 36 and what stood with it left out, 5 pieces, the pipe 53.3 in longer (SW-RPI-14)",
   "48\"-P150-P-12003: no valve at C-1201-N2; GATE 48 and what stood with it left out, 5 pieces, the pipe 68.2 in longer (SW-RPI-14)",
@@ -1353,6 +1506,9 @@
   "3\"-P150-P-12006: no valve at D-1201-N3; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "6\"-P300-LS-12501: no valve at J-1201-N5; GLOBE 6 and what stood with it left out, 3 pieces, the pipe 16.2 in longer (SW-RPI-14)",
   "12\"-P150-CWS-12502: no valve at J-1201-N6; BFLY 12 and GLOBE 12 and what stood with them left out, 11 pieces, the pipe 48.3 in longer (SW-RPI-14)",
-  "12\"-P150-CWR-12503: no valve at J-1201-N7; BFLY 12 and GLOBE 12 and what stood with them left out, 11 pieces, the pipe 48.3 in longer (SW-RPI-14)"
+  "12\"-P150-CWR-12503: no valve at J-1201-N7; BFLY 12 and GLOBE 12 and what stood with them left out, 11 pieces, the pipe 48.3 in longer (SW-RPI-14)",
+  "12\"-P150-CWS-12402/p2 (51.0 ft, far end 784,348,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "12\"-P150-CWR-12403/p2 (51.0 ft, far end 784,348,24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-12406/p2 (50.1 ft, far end 782,342,-66): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)"
  ]
 }

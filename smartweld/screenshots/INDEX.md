@@ -427,3 +427,4 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/pipeway-along-the-rack.png` | Plant 3, the main pipeway from above its west end, looking east along the rack |
 | `refinery/plant-main-pipeway-and-units.png` | Plant 3: the units about the main pipeway, from above the south row: the rack between the two rows and the lines that cross to it from each unit's battery limit |
 | `refinery/plant-main-pipeway-from-above.png` | Plant 3: the west half of the process bench from above: the main rack, the junction frames at each unit's limit and the streams between units on it |
+| `refinery/pipeway-utility-headers.png` | Plant 3, the main pipeway: the utility headers on the top tier, and their branches rising from the top of each, crossing to the edge of the band and coming down to cross out under the tier to a unit's valve bay |

@@ -9,39 +9,39 @@
   "designPressure": 1200,
   "insulated": true,
   "kind": "header",
-  "from": "cap",
+  "from": "BL-1409-U",
   "to": "cap",
-  "flow": "cap → cap",
+  "flow": "BL-1409-U → cap",
   "joint": "BW"
  },
  "items": [
   {
-   "tag": "8\"-P1200-LS-14401/cap0",
+   "tag": "8\"-P1200-LS-14401/L1",
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
-   "kind": "cap",
+   "kind": "gasket",
    "itemNo": 1,
-   "description": "CAP 8\" P1200",
-   "designation": "CAP8-P1200",
-   "key": "CAP|8|P1200",
+   "description": "GASKET 8\" P1200 COMPRESSED SHEET",
+   "designation": "GASKET8-P1200",
+   "key": "GSK|8|P1200",
    "NPS": 8,
    "cls": "P1200",
-   "material": "Grade 35 pipe",
-   "ends": "BW",
-   "weight": 8.1307,
-   "spool": "8\"-P1200-LS-14401-SP01",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
    "a": {
-    "E": 369,
+    "E": 252,
     "N": 0,
     "EL": 1548
    },
    "b": {
-    "E": 372,
+    "E": 252.125,
     "N": 0,
     "EL": 1548
    },
    "centre": {
-    "E": 370.5,
+    "E": 252.0625,
     "N": 0,
     "EL": 1548
    },
@@ -51,8 +51,223 @@
     "EL": 0
    },
    "rules": [
-    "SW-FIT-4",
-    "SW-FIT-5"
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "8\"-P1200-LS-14401/L2",
+   "line": "8\"-P1200-LS-14401",
+   "lineClass": "S1200",
+   "kind": "valve",
+   "itemNo": 2,
+   "description": "VALVE, GLOBE, T-PATTERN 8\" P1200",
+   "designation": "GLOBE8-P1200",
+   "key": "VLV|GLOBE|8|P1200",
+   "NPS": 8,
+   "cls": "P1200",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 907.1041,
+   "spool": "loose",
+   "a": {
+    "E": 252.125,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 273.3438,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 262.7344,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-3",
+    "SW-VLV-GL-1",
+    "SW-VLV-GL-2"
+   ]
+  },
+  {
+   "tag": "8\"-P1200-LS-14401/L3",
+   "line": "8\"-P1200-LS-14401",
+   "lineClass": "S1200",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 8 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 8\" P1200",
+   "designation": "STUDS 8×0.875x5.75 (8-P1200)",
+   "key": "STUDS|8|P1200|3.500",
+   "NPS": 8,
+   "cls": "P1200",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 11.379,
+   "spool": "loose",
+   "a": {
+    "E": 249.1875,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 254.9375,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 252.0625,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "8\"-P1200-LS-14401/L4",
+   "line": "8\"-P1200-LS-14401",
+   "lineClass": "S1200",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 8\" P1200 COMPRESSED SHEET",
+   "designation": "GASKET8-P1200",
+   "key": "GSK|8|P1200",
+   "NPS": 8,
+   "cls": "P1200",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 273.3438,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 273.4688,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 273.4063,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "8\"-P1200-LS-14401/L5",
+   "line": "8\"-P1200-LS-14401",
+   "lineClass": "S1200",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 8\" P1200 RAISED FACE",
+   "designation": "FLG8-P1200",
+   "key": "WNF|8|P1200",
+   "NPS": 8,
+   "cls": "P1200",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 48.6928,
+   "spool": "8\"-P1200-LS-14401-SP01",
+   "a": {
+    "E": 273.4688,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 278.5938,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 276.0313,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "8\"-P1200-LS-14401/L6",
+   "line": "8\"-P1200-LS-14401",
+   "lineClass": "S1200",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 8 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 8\" P1200",
+   "designation": "STUDS 8×0.875x5.75 (8-P1200)",
+   "key": "STUDS|8|P1200|3.500",
+   "NPS": 8,
+   "cls": "P1200",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 11.379,
+   "spool": "loose",
+   "a": {
+    "E": 270.5313,
+    "N": 0,
+    "EL": 1548
+   },
+   "b": {
+    "E": 276.2813,
+    "N": 0,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 273.4063,
+    "N": 0,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
    ]
   },
   {
@@ -60,19 +275,19 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 8\" P1200 BEVELLED ENDS",
    "designation": "PIPE8-P1200",
-   "key": "PIPE|8|P1200|245.333",
+   "key": "PIPE|8|P1200|338.740",
    "NPS": 8,
    "cls": "P1200",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 245.3333,
-   "weight": 575.1975,
+   "cutLength": 338.7395,
+   "weight": 794.1957,
    "spool": "8\"-P1200-LS-14401-SP01",
    "a": {
-    "E": 372,
+    "E": 278.5938,
     "N": 0,
     "EL": 1548
    },
@@ -82,7 +297,7 @@
     "EL": 1548
    },
    "centre": {
-    "E": 494.6667,
+    "E": 447.9636,
     "N": 0,
     "EL": 1548
    },
@@ -103,7 +318,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "tee",
-   "itemNo": 3,
+   "itemNo": 6,
    "description": "TEE REDUCING 8\" × 6\" P1200",
    "designation": "TEE8x6-P1200",
    "key": "TEE|8|P1200|6",
@@ -144,7 +359,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 8\" P1200 BEVELLED ENDS",
    "designation": "PIPE8-P1200",
    "key": "PIPE|8|P1200|420.933",
@@ -187,7 +402,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 8\" P1200 BEVELLED ENDS",
    "designation": "PIPE8-P1200",
    "key": "PIPE|8|P1200|420.933",
@@ -230,7 +445,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 8\" P1200 BEVELLED ENDS",
    "designation": "PIPE8-P1200",
    "key": "PIPE|8|P1200|420.933",
@@ -273,7 +488,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 8\" P1200 BEVELLED ENDS",
    "designation": "PIPE8-P1200",
    "key": "PIPE|8|P1200|420.933",
@@ -316,7 +531,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 8\" P1200 BEVELLED ENDS",
    "designation": "PIPE8-P1200",
    "key": "PIPE|8|P1200|420.933",
@@ -359,7 +574,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "tee",
-   "itemNo": 3,
+   "itemNo": 6,
    "description": "TEE REDUCING 8\" × 6\" P1200",
    "designation": "TEE8x6-P1200",
    "key": "TEE|8|P1200|6",
@@ -400,7 +615,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 8\" P1200 BEVELLED ENDS",
    "designation": "PIPE8-P1200",
    "key": "PIPE|8|P1200|319.778",
@@ -443,7 +658,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 8\" P1200 BEVELLED ENDS",
    "designation": "PIPE8-P1200",
    "key": "PIPE|8|P1200|319.778",
@@ -486,7 +701,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 8\" P1200 BEVELLED ENDS",
    "designation": "PIPE8-P1200",
    "key": "PIPE|8|P1200|319.778",
@@ -529,7 +744,7 @@
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
    "kind": "cap",
-   "itemNo": 1,
+   "itemNo": 7,
    "description": "CAP 8\" P1200",
    "designation": "CAP8-P1200",
    "key": "CAP|8|P1200",
@@ -575,7 +790,7 @@
    "NPS": 8,
    "cls": "P1200",
    "joins": [
-    "8\"-P1200-LS-14401/cap0",
+    "8\"-P1200-LS-14401/L5",
     "8\"-P1200-LS-14401/p2"
    ],
    "shopField": "shop",
@@ -585,7 +800,7 @@
     "8\"-P1200-LS-14401-SP01"
    ],
    "at": {
-    "E": 372,
+    "E": 278.5938,
     "N": 0,
     "EL": 1548
    },
@@ -977,6 +1192,26 @@
  ],
  "supports": [
   {
+   "tag": "8\"-P1200-LS-14401/S14",
+   "line": "8\"-P1200-LS-14401",
+   "lineClass": "S1200",
+   "type": "shoe",
+   "description": "SHOE FOR 8\" LINE (SHOE-8)",
+   "designation": "SHOE-8",
+   "key": "SHOE|8|P1200|shoe|8.000",
+   "material": "Grade 36",
+   "weight": 15.0254,
+   "spool": "loose",
+   "at": {
+    "E": 360,
+    "N": 0,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
    "tag": "8\"-P1200-LS-14401/S1",
    "line": "8\"-P1200-LS-14401",
    "lineClass": "S1200",
@@ -1241,7 +1476,7 @@
   {
    "id": "8\"-P1200-LS-14401-SP01",
    "items": [
-    "8\"-P1200-LS-14401/cap0",
+    "8\"-P1200-LS-14401/L5",
     "8\"-P1200-LS-14401/p2",
     "8\"-P1200-LS-14401/T:6\"-P1200-LS-14501",
     "8\"-P1200-LS-14401/p4",
@@ -1269,48 +1504,99 @@
     "8\"-P1200-LS-14401/W11",
     "8\"-P1200-LS-14401/W12"
    ],
-   "weight": 7851.3727
+   "weight": 8110.9329
   }
  ],
  "bom": [
   {
    "itemNo": 1,
-   "description": "CAP 8\" P1200",
+   "description": "GASKET 8\" P1200 COMPRESSED SHEET",
    "qty": 2,
-   "weight": 16.2615
+   "weight": 0
   },
   {
    "itemNo": 2,
-   "description": "PIPE 8\" P1200 BEVELLED ENDS",
-   "qty": 9,
-   "length": 3309.3332,
-   "weight": 7758.9216
+   "description": "VALVE, GLOBE, T-PATTERN 8\" P1200",
+   "qty": 1,
+   "weight": 907.1041
   },
   {
    "itemNo": 3,
+   "description": "STUD SET 8 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 8\" P1200",
+   "qty": 2,
+   "weight": 22.758
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 8\" P1200 RAISED FACE",
+   "qty": 1,
+   "weight": 48.6928
+  },
+  {
+   "itemNo": 5,
+   "description": "PIPE 8\" P1200 BEVELLED ENDS",
+   "qty": 9,
+   "length": 3402.7394,
+   "weight": 7977.9198
+  },
+  {
+   "itemNo": 6,
    "description": "TEE REDUCING 8\" × 6\" P1200",
    "qty": 2,
    "weight": 67.7846
+  },
+  {
+   "itemNo": 7,
+   "description": "CAP 8\" P1200",
+   "qty": 1,
+   "weight": 8.1307
   }
  ],
  "nodes": [
   {
    "at": {
-    "E": 369,
+    "E": 252,
     "N": 0,
     "EL": 1548
    },
-   "kind": "cap start",
-   "ref": "8\"-P1200-LS-14401/cap0"
+   "kind": "gasket start",
+   "ref": "8\"-P1200-LS-14401/L1"
   },
   {
    "at": {
-    "E": 372,
+    "E": 252.125,
     "N": 0,
     "EL": 1548
    },
-   "kind": "cap end",
-   "ref": "8\"-P1200-LS-14401/cap0"
+   "kind": "gasket end",
+   "ref": "8\"-P1200-LS-14401/L1"
+  },
+  {
+   "at": {
+    "E": 273.3438,
+    "N": 0,
+    "EL": 1548
+   },
+   "kind": "valve end",
+   "ref": "8\"-P1200-LS-14401/L2"
+  },
+  {
+   "at": {
+    "E": 273.4688,
+    "N": 0,
+    "EL": 1548
+   },
+   "kind": "gasket end",
+   "ref": "8\"-P1200-LS-14401/L4"
+  },
+  {
+   "at": {
+    "E": 278.5938,
+    "N": 0,
+    "EL": 1548
+   },
+   "kind": "flange end",
+   "ref": "8\"-P1200-LS-14401/L5"
   },
   {
    "at": {
@@ -1440,11 +1726,11 @@
   }
  ],
  "totals": {
-  "items": 13,
+  "items": 18,
   "welds": 12,
   "fieldWelds": 0,
-  "supports": 13,
-  "pipeLength": 3309.3332,
-  "weight": 7842.9677
+  "supports": 14,
+  "pipeLength": 3402.7394,
+  "weight": 9032.39
  }
 }

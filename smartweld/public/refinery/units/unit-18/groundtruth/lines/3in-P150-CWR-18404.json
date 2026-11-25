@@ -9,39 +9,39 @@
   "designPressure": 150,
   "insulated": false,
   "kind": "header",
-  "from": "cap",
+  "from": "BL-1810-U",
   "to": "cap",
-  "flow": "cap → cap",
+  "flow": "BL-1810-U → cap",
   "joint": "BW"
  },
  "items": [
   {
-   "tag": "3\"-P150-CWR-18404/cap0",
+   "tag": "3\"-P150-CWR-18404/L1",
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
-   "kind": "cap",
+   "kind": "gasket",
    "itemNo": 1,
-   "description": "CAP 3\" P150",
-   "designation": "CAP3-P150",
-   "key": "CAP|3|P150",
+   "description": "GASKET 3\" P150 COMPRESSED SHEET",
+   "designation": "GASKET3-P150",
+   "key": "GSK|3|P150",
    "NPS": 3,
    "cls": "P150",
-   "material": "Grade 35 pipe",
-   "ends": "BW",
-   "weight": 0.756,
-   "spool": "3\"-P150-CWR-18404-SP01",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
    "a": {
-    "E": 370.25,
+    "E": 252,
     "N": 42,
     "EL": 1542
    },
    "b": {
-    "E": 372,
+    "E": 252.125,
     "N": 42,
     "EL": 1542
    },
    "centre": {
-    "E": 371.125,
+    "E": 252.0625,
     "N": 42,
     "EL": 1542
    },
@@ -51,8 +51,222 @@
     "EL": 0
    },
    "rules": [
-    "SW-FIT-4",
-    "SW-FIT-5"
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "3\"-P150-CWR-18404/L2",
+   "line": "3\"-P150-CWR-18404",
+   "lineClass": "W150",
+   "kind": "valve",
+   "itemNo": 2,
+   "description": "VALVE, BUTTERFLY, WAFER 3\" P150",
+   "designation": "BFLY3-P150",
+   "key": "VLV|BFLY|3|P150",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 11.4322,
+   "spool": "loose",
+   "a": {
+    "E": 252.125,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 254.0563,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 253.0906,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-BF-1",
+    "SW-VLV-F-7"
+   ]
+  },
+  {
+   "tag": "3\"-P150-CWR-18404/L3",
+   "line": "3\"-P150-CWR-18404",
+   "lineClass": "W150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P150",
+   "designation": "STUDS 4×0.875x5.75 (3-P150)",
+   "key": "STUDS|3|P150|3.500",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 5.6895,
+   "spool": "loose",
+   "a": {
+    "E": 249.1875,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 254.9375,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 252.0625,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "3\"-P150-CWR-18404/L4",
+   "line": "3\"-P150-CWR-18404",
+   "lineClass": "W150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 3\" P150 COMPRESSED SHEET",
+   "designation": "GASKET3-P150",
+   "key": "GSK|3|P150",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 254.0563,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 254.1813,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 254.1188,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "3\"-P150-CWR-18404/L5",
+   "line": "3\"-P150-CWR-18404",
+   "lineClass": "W150",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 3\" P150 RAISED FACE",
+   "designation": "FLG3-P150",
+   "key": "WNF|3|P150",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 19.3288,
+   "spool": "3\"-P150-CWR-18404-SP01",
+   "a": {
+    "E": 254.1813,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 259.3063,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 256.7438,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "3\"-P150-CWR-18404/L6",
+   "line": "3\"-P150-CWR-18404",
+   "lineClass": "W150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P150",
+   "designation": "STUDS 4×0.875x5.75 (3-P150)",
+   "key": "STUDS|3|P150|3.500",
+   "NPS": 3,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 5.6895,
+   "spool": "loose",
+   "a": {
+    "E": 251.2438,
+    "N": 42,
+    "EL": 1542
+   },
+   "b": {
+    "E": 256.9938,
+    "N": 42,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 254.1188,
+    "N": 42,
+    "EL": 1542
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
    ]
   },
   {
@@ -60,19 +274,19 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 3\" P150 BEVELLED ENDS",
    "designation": "PIPE3-P150",
-   "key": "PIPE|3|P150|279.500",
+   "key": "PIPE|3|P150|392.194",
    "NPS": 3,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 279.5,
-   "weight": 110.6357,
+   "cutLength": 392.1937,
+   "weight": 155.2439,
    "spool": "3\"-P150-CWR-18404-SP01",
    "a": {
-    "E": 372,
+    "E": 259.3063,
     "N": 42,
     "EL": 1542
    },
@@ -82,7 +296,7 @@
     "EL": 1542
    },
    "centre": {
-    "E": 511.75,
+    "E": 455.4032,
     "N": 42,
     "EL": 1542
    },
@@ -103,7 +317,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "tee",
-   "itemNo": 3,
+   "itemNo": 6,
    "description": "TEE EQUAL 3\" P150",
    "designation": "TEE3-P150",
    "key": "TEE|3|P150|3",
@@ -143,7 +357,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 3\" P150 BEVELLED ENDS",
    "designation": "PIPE3-P150",
    "key": "PIPE|3|P150|441.438",
@@ -186,7 +400,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 3\" P150 BEVELLED ENDS",
    "designation": "PIPE3-P150",
    "key": "PIPE|3|P150|441.438",
@@ -229,7 +443,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 3\" P150 BEVELLED ENDS",
    "designation": "PIPE3-P150",
    "key": "PIPE|3|P150|441.438",
@@ -272,7 +486,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 3\" P150 BEVELLED ENDS",
    "designation": "PIPE3-P150",
    "key": "PIPE|3|P150|441.438",
@@ -315,7 +529,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 3\" P150 BEVELLED ENDS",
    "designation": "PIPE3-P150",
    "key": "PIPE|3|P150|441.438",
@@ -358,7 +572,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 3\" P150 BEVELLED ENDS",
    "designation": "PIPE3-P150",
    "key": "PIPE|3|P150|441.438",
@@ -401,7 +615,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 3\" P150 BEVELLED ENDS",
    "designation": "PIPE3-P150",
    "key": "PIPE|3|P150|441.438",
@@ -444,7 +658,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 3\" P150 BEVELLED ENDS",
    "designation": "PIPE3-P150",
    "key": "PIPE|3|P150|441.438",
@@ -487,7 +701,7 @@
    "line": "3\"-P150-CWR-18404",
    "lineClass": "W150",
    "kind": "cap",
-   "itemNo": 1,
+   "itemNo": 7,
    "description": "CAP 3\" P150",
    "designation": "CAP3-P150",
    "key": "CAP|3|P150",
@@ -533,7 +747,7 @@
    "NPS": 3,
    "cls": "P150",
    "joins": [
-    "3\"-P150-CWR-18404/cap0",
+    "3\"-P150-CWR-18404/L5",
     "3\"-P150-CWR-18404/p2"
    ],
    "shopField": "shop",
@@ -543,7 +757,7 @@
     "3\"-P150-CWR-18404-SP01"
    ],
    "at": {
-    "E": 372,
+    "E": 259.3063,
     "N": 42,
     "EL": 1542
    },
@@ -900,6 +1114,26 @@
   }
  ],
  "supports": [
+  {
+   "tag": "3\"-P150-CWR-18404/S32",
+   "line": "3\"-P150-CWR-18404",
+   "lineClass": "W150",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P150|shoe|4.500",
+   "material": "Grade 36",
+   "weight": 10.5592,
+   "spool": "loose",
+   "at": {
+    "E": 360,
+    "N": 42,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
   {
    "tag": "3\"-P150-CWR-18404/S1",
    "line": "3\"-P150-CWR-18404",
@@ -1525,7 +1759,7 @@
   {
    "id": "3\"-P150-CWR-18404-SP01",
    "items": [
-    "3\"-P150-CWR-18404/cap0",
+    "3\"-P150-CWR-18404/L5",
     "3\"-P150-CWR-18404/p2",
     "3\"-P150-CWR-18404/T:3\"-P150-CWR-18504",
     "3\"-P150-CWR-18404/p4",
@@ -1551,48 +1785,99 @@
     "3\"-P150-CWR-18404/W10",
     "3\"-P150-CWR-18404/W11"
    ],
-   "weight": 1513.275
+   "weight": 1576.456
   }
  ],
  "bom": [
   {
    "itemNo": 1,
-   "description": "CAP 3\" P150",
+   "description": "GASKET 3\" P150 COMPRESSED SHEET",
    "qty": 2,
-   "weight": 1.512
+   "weight": 0
   },
   {
    "itemNo": 2,
-   "description": "PIPE 3\" P150 BEVELLED ENDS",
-   "qty": 9,
-   "length": 3811,
-   "weight": 1508.5269
+   "description": "VALVE, BUTTERFLY, WAFER 3\" P150",
+   "qty": 1,
+   "weight": 11.4322
   },
   {
    "itemNo": 3,
+   "description": "STUD SET 4 × 0.875\" × 5-3/4\" WITH 2 NUTS, FOR 3\" P150",
+   "qty": 2,
+   "weight": 11.379
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 3\" P150 RAISED FACE",
+   "qty": 1,
+   "weight": 19.3288
+  },
+  {
+   "itemNo": 5,
+   "description": "PIPE 3\" P150 BEVELLED ENDS",
+   "qty": 9,
+   "length": 3923.6937,
+   "weight": 1553.1351
+  },
+  {
+   "itemNo": 6,
    "description": "TEE EQUAL 3\" P150",
    "qty": 1,
    "weight": 2.3473
+  },
+  {
+   "itemNo": 7,
+   "description": "CAP 3\" P150",
+   "qty": 1,
+   "weight": 0.756
   }
  ],
  "nodes": [
   {
    "at": {
-    "E": 370.25,
+    "E": 252,
     "N": 42,
     "EL": 1542
    },
-   "kind": "cap start",
-   "ref": "3\"-P150-CWR-18404/cap0"
+   "kind": "gasket start",
+   "ref": "3\"-P150-CWR-18404/L1"
   },
   {
    "at": {
-    "E": 372,
+    "E": 252.125,
     "N": 42,
     "EL": 1542
    },
-   "kind": "cap end",
-   "ref": "3\"-P150-CWR-18404/cap0"
+   "kind": "gasket end",
+   "ref": "3\"-P150-CWR-18404/L1"
+  },
+  {
+   "at": {
+    "E": 254.0563,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "valve end",
+   "ref": "3\"-P150-CWR-18404/L2"
+  },
+  {
+   "at": {
+    "E": 254.1813,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "gasket end",
+   "ref": "3\"-P150-CWR-18404/L4"
+  },
+  {
+   "at": {
+    "E": 259.3063,
+    "N": 42,
+    "EL": 1542
+   },
+   "kind": "flange end",
+   "ref": "3\"-P150-CWR-18404/L5"
   },
   {
    "at": {
@@ -1704,11 +1989,11 @@
   }
  ],
  "totals": {
-  "items": 12,
+  "items": 17,
   "welds": 11,
   "fieldWelds": 0,
-  "supports": 31,
-  "pipeLength": 3811,
-  "weight": 1512.3862
+  "supports": 32,
+  "pipeLength": 3923.6937,
+  "weight": 1598.3784
  }
 }

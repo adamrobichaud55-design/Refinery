@@ -6,7 +6,7 @@
 import { generatePiping, partFromKey, staticObstacles, type PipingModel, type Comp, type LineRun, type Obstacle } from '../generator/piping';
 import * as K from '../generator/pipingCheck';
 import { buildGeometry } from '../geometry/partGeometry';
-import { pipeDims, elbowRadius } from '../catalogue';
+import { pipeDims, elbowRadius, designFlange } from '../catalogue';
 import type { V3 } from '../generator/router';
 import { unitPiping, block, type UnitPiping, type UnitLine, type BlSpool, type RootSpool, type StationSpool } from './unitPiping';
 import type { Placed } from '../generator/building';
@@ -137,14 +137,18 @@ export function runSolids(m: PipingModel, vb: (c: Comp) => [V3, V3]): Placed[] {
   return out;
 }
 /** SW-RPI-7: the generator run once for each column's overhead line and each line that runs the rack, on the lane given it, then once for the rest; each run sees the ones before it; the runs' results as one model */
-export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, notes: string[] = []): PipingModel {
+/** a place to keep each single-line run's result and take it from again when the same run is made (a tool's aid while a later run is worked on; a final result is made without one) */
+export interface RunCache { get: (k: number, lines: string[]) => PipingModel | undefined; put: (k: number, lines: string[], m: PipingModel) => void }
+export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, notes: string[] = [], cache?: RunCache): PipingModel {
   const vb = valveBoxFn(), models: PipingModel[] = [], prior: Placed[] = [], t00 = Date.now(); let routed = 0, failed = 0;
   for (const [k, run] of up.runs.entries()) {
     const mine = new Set(run.lines), only = (l: { no: string }) => mine.has(l.no), t0 = Date.now();
-    let plant = up.runPlant(k, prior); watch?.(plant);
-    let m = generatePiping({ plant, only });
+    const kept = run.kind !== 'rest' ? cache?.get(k, run.lines) : undefined;
+    let plant = up.runPlant(k, prior); if (!kept) watch?.(plant);
+    let m = kept ?? generatePiping({ plant, only });
     // a line that finds no way in its cut grid is run again on the unit's whole grid before it is reported
     if (m.failures.length && run.kind !== 'rest') { plant = up.runPlant(k, prior, true); watch?.(plant); const again = generatePiping({ plant, only }); if (again.failures.length < m.failures.length) { m = again; notes.push(`${run.lines[0]}: routed on the unit's whole grid, having found no way in the grid cut to it (SW-RPI-7)`); } }
+    if (!kept && run.kind !== 'rest') cache?.put(k, run.lines, m);
     models.push(m); routed += m.stats.routed ?? 0; failed += m.failures.length;
     if (run.kind === 'rest') log(`unit ${up.unit}: the rest, ${m.stats.routed} of ${m.lines.filter(l => l.kind !== 'stub').length} lines routed, ${m.failures.length} failures, ${((Date.now() - t0) / 1000).toFixed(0)} s`);
     else if (m.failures.length) log(`unit ${up.unit}: run ${k + 1} of ${up.runs.length}, ${run.lines[0]}${run.lane ? ` on tier ${run.lane.t + 1} in the lane at z ${run.lane.z}` : ''}: ${m.failures.length} failure${m.failures.length > 1 ? 's' : ''}, ${((Date.now() - t0) / 1000).toFixed(0)} s`);
@@ -156,12 +160,48 @@ export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}
   if (models.length > 1) {
     const byNo = new Map(models.flatMap(m => m.lines.map(r => [r.no, r] as const))), stats: Record<string, number> = {};
     for (const m of models) for (const [key, v] of Object.entries(m.stats)) stats[key] = (stats[key] ?? 0) + v;
-    model = { ...models[models.length - 1], lines: up.lines.map(l => byNo.get(l.def.no)!).filter(Boolean), failures: models.flatMap(m => m.failures), stats, cuts: models.flatMap(m => m.cuts ?? []) };
+    model = { ...models[models.length - 1], lines: [...up.lines.map(l => l.def.no), ...(up.feeds ?? []).map(f => f.stub.no)].map(no => byNo.get(no)!).filter(Boolean), failures: models.flatMap(m => m.failures), stats, cuts: models.flatMap(m => m.cuts ?? []) };
   }
+  const joined = joinHeaders(model, up); if (joined.length) { notes.push(`${joined.length} header${joined.length > 1 ? 's' : ''} carried on in line to ${joined.length > 1 ? 'their block valves' : 'its block valve'} at the battery limit, the cap there left out (SW-RPI-15): ${joined.join('; ')}`); log(`unit ${up.unit}: ${joined.length} header${joined.length > 1 ? 's' : ''} joined to ${joined.length > 1 ? 'their valves' : 'its valve'} at the limit (SW-RPI-15)`); }
   const bared = removeValves(model, up); if (bared.length) { notes.push(...bared.map(c => `${c} (SW-RPI-14)`)); log(`unit ${up.unit}: ${bared.length} connection${bared.length > 1 ? 's' : ''} left without the generator's valve (SW-RPI-14)`); }
   const made = lengthenShortPieces(model); if (made.length) { notes.push(...made.map(c => `${c}: a make-up piece under 2 in beside a 45° offset, the offset moved along the run to make it 2 in (SW-RPI-11)`)); log(`unit ${up.unit}: ${made.length} make-up piece${made.length > 1 ? 's' : ''} under 2 in lengthened (SW-RPI-11)`); }
   const cut = cutLongPipes(model); if (cut.length) { notes.push(...cut.map(c => `${c}: a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)`)); log(`unit ${up.unit}: ${cut.length} piece${cut.length > 1 ? 's' : ''} of pipe over 40 ft cut again (SW-RPI-10)`); }
   return model;
+}
+/**
+ * SW-RPI-15: a header at the battery limit. The generator lays a header from cap to cap and builds its block valve at the limit as a stub on the spool's inner face
+ * (gasket, valve, gasket, blind). Here the two are made one line: the blind becomes a weld-neck flange on the same gasket and studs; the header's cap at that end is
+ * taken off; its first piece is carried back to the flange and welded to it as it was welded to the cap; the valve's pieces go to the head of the header's list, and the
+ * stub is no longer a line. A shoe like the header's others is set on each beam the lengthened piece crosses: the tier beam of the rack's first full bent, and the valve
+ * bay's mid-bay beam for a header the generator carries at mid-bay too. Returns the headers joined.
+ */
+export function joinHeaders(m: PipingModel, up: Pick<UnitPiping, 'feeds' | 'cell'>): string[] {
+  const done: string[] = [], d3 = (p: V3, q: V3) => Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+  for (const f of up.feeds ?? []) {
+    const H = m.lines.find(r => r.no === f.header), S = m.lines.find(r => r.no === f.stub.no); if (!H || !S) throw new Error(`${f.header}: the header or the stub of its valve at ${f.tag} is not in the generator's result (SW-RPI-15)`);
+    const blind = S.comps.find(c => c.kind === 'blind'), cap = H.comps[0], pipe = H.comps[1], weld = cap && pipe ? H.welds.find(wd => wd.joins.includes(cap.tag) && wd.joins.includes(pipe.tag)) : undefined;
+    if (!blind || S.comps[0].kind !== 'gasket' || !S.comps.some(c => c.kind === 'valve') || S.welds.length || cap?.kind !== 'cap' || pipe?.kind !== 'pipe' || !weld || d3(cap.b, pipe.a) > 0.01)
+      throw new Error(`${f.header}: not a capped header and a valve stub SW-RPI-15 knows (${S.comps.map(c => c.kind).join(', ')}; ${H.comps.slice(0, 2).map(c => c.kind).join(', ')})`);
+    // the flange in the blind's place: the generator sets either from the face it bolts by, in one frame
+    const L0 = d3(blind.a, blind.b), w: V3 = [(blind.b[0] - blind.a[0]) / L0, (blind.b[1] - blind.a[1]) / L0, (blind.b[2] - blind.a[2]) / L0], fd = designFlange(blind.NPS, blind.cls), len = fd.rfH + fd.tf + fd.hubLen + fd.neckLen;
+    const end: V3 = [blind.a[0] + w[0] * len, blind.a[1] + w[1] * len, blind.a[2] + w[2] * len], along = (pipe.a[0] - end[0]) * w[0] + (pipe.a[1] - end[1]) * w[1] + (pipe.a[2] - end[2]) * w[2];
+    if (along < 2 || Math.abs(d3(pipe.a, end) - along) > 0.01 || blind.NPS !== pipe.NPS || blind.cls !== pipe.cls) throw new Error(`${f.header}: its valve at ${f.tag} does not stand in line with it (${along.toFixed(2)} in along, ${d3(pipe.a, end).toFixed(2)} in off)`);
+    const was = pipe.a, tagOf = (i: number) => `${H.no}/L${i + 1}`, moveTo = <T extends number[]>(t: T, o: V3): T => [...t.slice(0, 12), o[0], o[1], o[2], 1] as unknown as T;
+    const head: Comp[] = S.comps.map((c, i) => (c === blind ? { ...c, tag: tagOf(i), kind: 'flange', key: `WNF|${c.NPS}|${c.cls}`, b: end, e1: 'RF', e2: 'BW' } : { ...c, tag: tagOf(i) }));
+    pipe.a = end; pipe.T = moveTo(pipe.T, end); pipe.key = `${pipe.key.split('|').slice(0, 3).join('|')}|${d3(pipe.a, pipe.b).toFixed(3)}`;
+    weld.at = end; weld.T = moveTo(weld.T, end); weld.joins = [head[S.comps.indexOf(blind)].tag, pipe.tag];
+    H.comps = [...head, ...H.comps.slice(1)]; H.from = S.from; H.path = [S.path[0], ...H.path.slice(1)];
+    // a shoe on each beam the lengthened piece crosses, 6 in at least from the new weld
+    const shoe = H.supports.find(sp => sp.type === 'shoe'), x0 = up.cell.rack.x0, bent = up.cell.rack.bentSpacing, midBay = H.supports.some(sp => Math.abs((((sp.at[0] - x0) % bent) + bent) % bent - bent / 2) < 1), added: number[] = [];
+    if (shoe) for (const x of [x0, ...(midBay ? [x0 - bent / 2] : [])]) {
+      if (x < end[0] + 6 || x > was[0] + 1e-6 || H.supports.some(sp => Math.abs(sp.at[0] - x) < 1)) continue;
+      const ids = new Set(H.supports.map(sp => sp.id)); let k = H.supports.length + 1; while (ids.has(`${H.no}/S${k}`)) k++;
+      H.supports.unshift({ ...shoe, id: `${H.no}/S${k}`, at: [x, shoe.at[1], shoe.at[2]], T: moveTo(shoe.T, [x, shoe.T[13], shoe.T[14]]) }); added.push(x);
+    }
+    m.lines = m.lines.filter(r => r !== S); m.stats.comps = (m.stats.comps ?? 0) - 1;
+    done.push(`${H.no} from ${S.from}, its first piece ${(was[0] - end[0]).toFixed(1)} in longer${added.length ? `, a shoe at x ${added.join(' and ')}` : ''}`);
+  }
+  return done;
 }
 /**
  * SW-RPI-14: valves not built. At each end a line names (`UnitLine.bare`), what the generator stood between the nozzle and the line's own flange is taken out:
@@ -296,8 +336,10 @@ export function pipingDocument(all: PipedUnit[]): string {
     if (u.checks.supports.length) out.push('These runs are longer than a pipe of their size spans and no steel stands where a support would go: lines that cross the yard or run beside the rack away from the support beams. They are listed, not hidden, and want pipe supports of their own.', '');
     out.push('### Battery limit', '', table(['Spool', 'Stream', 'Direction', 'Line', 'Stands at (x, y, z), in', 'Tier', 'Lane'], u.spools.map(s => [s.tag, s.stream, s.dir, s.line, s.at.join(', '), s.tier + 1, s.lane ?? '—'])), '');
     if (u.roots.length) out.push('### Branch roots', '', 'Branches that travel the rack start at a spool on it, a block valve on each face (SW-RPI-8).', '', table(['Spool', 'Branch', 'Connection to the tee', 'On', 'Stands at (x, y, z), in', 'Tier'], u.roots.map(r => [r.tag, r.line, r.connection, r.parent, r.at.join(', '), r.tier + 1])), '');
-    const cv = u.lines.filter(l => l.controlValve);
-    if (cv.length) out.push('### Control valve stations', '', 'Each stands at grade under the rack, on a spool that divides its line (SW-RPI-9).', '', table(['Line', 'Station', 'Spool', 'Stands at (x, y, z), in', 'The line after it'], cv.map(l => { const st = u.stations.find(q => q.line === l.no); return [l.no, l.controlValve!, st?.tag ?? '—', st ? st.at.join(', ') : '—', st?.after ?? '—']; })), '');
+    const cv = u.lines.filter(l => l.controlValve || (l.origin === 'utility' && l.station));
+    if (cv.length) out.push('### Control valve stations', '', 'Each stands at grade under the rack, on a spool that divides its line (SW-RPI-9): the flowsheet\'s control valves, and those of the utility connections that are fed or drained under control (boiler feed water to a steam generator, condensate from a steam heater: SW-PRC-19).', '', table(['Line', 'Station', 'Spool', 'Stands at (x, y, z), in', 'The line after it'], cv.map(l => { const st = u.stations.find(q => q.line === l.no); return [l.no, l.controlValve ?? 'piped', st?.tag ?? '—', st ? st.at.join(', ') : '—', st?.after ?? '—']; })), '');
+    const joined = (u.notes ?? []).find(n => n.includes('(SW-RPI-15)'));
+    if (joined) out.push('### Headers at the battery limit', '', `Each utility header ends at the limit in a block valve and a spool on the top tier, in its own lane, and runs straight through the valve; the plant's header joins it on the pipeway's side (SW-RPI-15, SW-PWY-12). ${joined.replace(' (SW-RPI-15)', '')}.`, '');
     const bare = (u.notes ?? []).filter(n => n.endsWith('(SW-RPI-14)'));
     if (bare.length) out.push('### Connections without a valve', '', 'At these ends the valve the generator stands at every equipment connection is not built, and the line\'s own flange meets the nozzle (SW-RPI-14): a transfer line from a fired heater, a line from a column\'s top, an ejector set\'s drains and its connections under its deck.', '', ...bare.map(n => `- ${n.replace(' (SW-RPI-14)', '')}`), '');
     if (u.stats.penetrations) out.push(`${u.stats.penetrations} floor penetration${u.stats.penetrations > 1 ? 's' : ''}: a sleeve where a line passes down through a deck's grating (SW-PEN-1).`, '');

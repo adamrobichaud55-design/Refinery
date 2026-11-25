@@ -1,5 +1,157 @@
 [
  {
+  "code": "C1200",
+  "group": "C",
+  "fluid": "Steam condensate",
+  "cls": "P1200",
+  "designPressure": 1200,
+  "insulated": true,
+  "materials": {
+   "pipe": "Grade 35 pipe",
+   "fittings": "Grade 35 pipe",
+   "flanges": "Grade 36 forging",
+   "valveBodies": "Grade 36 casting",
+   "studs": "Grade 90 stud",
+   "gaskets": "compressed sheet"
+  },
+  "valves": "Isolation: gate 2 in and above, floating ball below 2 in where offered; pump discharge: swing check then gate; control valves with a gate each side; relief: safety valve (SW-LL-3, SW-VLV-11)",
+  "branch": "Tee (SW-FIT-2)",
+  "rules": [
+   "SW-LC-1",
+   "SW-LC-3",
+   "SW-PIPE-1",
+   "SW-PIPE-2",
+   "SW-PIPE-3",
+   "SW-FLG-2",
+   "SW-FLG-7",
+   "SW-FIT-1",
+   "SW-FIT-2",
+   "SW-LL-3",
+   "SW-VLV-11"
+  ],
+  "lines": [
+   "8\"-P1200-SC-10404"
+  ],
+  "colour": "#5a3c78"
+ },
+ {
+  "code": "C150",
+  "group": "C",
+  "fluid": "Steam condensate",
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": true,
+  "materials": {
+   "pipe": "Grade 35 pipe",
+   "fittings": "Grade 35 pipe",
+   "flanges": "Grade 36 forging",
+   "valveBodies": "Grade 36 casting",
+   "studs": "Grade 90 stud",
+   "gaskets": "compressed sheet"
+  },
+  "valves": "Isolation: gate 2 in and above, floating ball below 2 in where offered; pump discharge: swing check then gate; control valves with a gate each side; relief: safety valve (SW-LL-3, SW-VLV-11)",
+  "branch": "Tee (SW-FIT-2)",
+  "rules": [
+   "SW-LC-1",
+   "SW-LC-3",
+   "SW-PIPE-1",
+   "SW-PIPE-2",
+   "SW-PIPE-3",
+   "SW-FLG-2",
+   "SW-FLG-7",
+   "SW-FIT-1",
+   "SW-FIT-2",
+   "SW-LL-3",
+   "SW-VLV-11"
+  ],
+  "lines": [
+   "4\"-P150-SC-10406"
+  ],
+  "colour": "#8a5cb8"
+ },
+ {
+  "code": "G150",
+  "group": "G",
+  "fluid": "Air and gases",
+  "cls": "P150",
+  "designPressure": 150,
+  "insulated": false,
+  "materials": {
+   "pipe": "Grade 35 pipe",
+   "fittings": "Grade 35 pipe",
+   "flanges": "Grade 36 forging",
+   "valveBodies": "Grade 36 casting",
+   "studs": "Grade 90 stud",
+   "gaskets": "compressed sheet"
+  },
+  "valves": "Isolation: gate 2 in and above, floating ball below 2 in where offered; pump discharge: swing check then gate; control valves with a gate each side; relief: safety valve (SW-LL-3, SW-VLV-11)",
+  "branch": "Tee (SW-FIT-2)",
+  "rules": [
+   "SW-LC-1",
+   "SW-LC-3",
+   "SW-PIPE-1",
+   "SW-PIPE-2",
+   "SW-PIPE-3",
+   "SW-FLG-2",
+   "SW-FLG-7",
+   "SW-FIT-1",
+   "SW-FIT-2",
+   "SW-LL-3",
+   "SW-VLV-11"
+  ],
+  "lines": [
+   "4\"-P150-IA-10407"
+  ],
+  "colour": "#3a9e5c"
+ },
+ {
+  "code": "H1200",
+  "group": "H",
+  "fluid": "Hydrocarbon process",
+  "cls": "P1200",
+  "designPressure": 1200,
+  "insulated": false,
+  "materials": {
+   "pipe": "Grade 35 pipe",
+   "fittings": "Grade 35 pipe",
+   "flanges": "Grade 36 forging",
+   "valveBodies": "Grade 36 casting",
+   "studs": "Grade 90 stud",
+   "gaskets": "compressed sheet"
+  },
+  "valves": "Isolation: gate 2 in and above, floating ball below 2 in where offered; pump discharge: swing check then gate; control valves with a gate each side; relief: safety valve (SW-LL-3, SW-VLV-11)",
+  "branch": "Tee (SW-FIT-2)",
+  "rules": [
+   "SW-LC-1",
+   "SW-LC-3",
+   "SW-PIPE-1",
+   "SW-PIPE-2",
+   "SW-PIPE-3",
+   "SW-FLG-2",
+   "SW-FLG-7",
+   "SW-FIT-1",
+   "SW-FIT-2",
+   "SW-LL-3",
+   "SW-VLV-11"
+  ],
+  "lines": [
+   "8\"-P1200-P-10604",
+   "4\"-P1200-P-10606",
+   "4\"-P1200-P-10609",
+   "3\"-P1200-P-10614",
+   "3\"-P1200-P-10616",
+   "10\"-P1200-P-10620",
+   "8\"-P1200-P-10624",
+   "8\"-P1200-P-10626",
+   "8\"-P1200-P-10847",
+   "4\"-P1200-P-10633",
+   "4\"-P1200-P-10848",
+   "3\"-P1200-P-10638",
+   "3\"-P1200-P-10641"
+  ],
+  "colour": "#824b1b"
+ },
+ {
   "code": "H150",
   "group": "H",
   "fluid": "Hydrocarbon process",
@@ -118,7 +270,34 @@
    "8\"-P150-P-10044",
    "8\"-P150-P-10841",
    "6\"-P150-P-10045",
-   "6\"-P150-P-10842"
+   "6\"-P150-P-10842",
+   "14\"-P150-P-10401",
+   "8\"-P150-P-10405",
+   "8\"-P150-P-10602",
+   "4\"-P150-P-10607",
+   "4\"-P150-P-10608",
+   "3\"-P150-P-10611",
+   "3\"-P150-P-10612",
+   "3\"-P150-P-10613",
+   "3\"-P150-P-10615",
+   "3\"-P150-P-10617",
+   "2\"-P150-P-10844",
+   "14\"-P150-P-10619",
+   "14\"-P150-P-10846",
+   "10\"-P150-P-10621",
+   "10\"-P150-P-10622",
+   "10\"-P150-P-10623",
+   "8\"-P150-P-10625",
+   "6\"-P150-P-10627",
+   "4\"-P150-P-10629",
+   "4\"-P150-P-10632",
+   "3\"-P150-P-10634",
+   "3\"-P150-P-10637",
+   "3\"-P150-P-10639",
+   "3\"-P150-P-10640",
+   "3\"-P150-P-10642",
+   "3\"-P150-P-10643",
+   "2\"-P150-P-10850"
   ],
   "colour": "#c8742a"
  },
@@ -165,7 +344,17 @@
    "3\"-P300-P-10836",
    "3\"-P300-P-10837",
    "6\"-P300-P-10042",
-   "6\"-P300-P-10839"
+   "6\"-P300-P-10839",
+   "10\"-P300-P-10601",
+   "10\"-P300-P-10843",
+   "8\"-P300-P-10603",
+   "6\"-P300-P-10605",
+   "4\"-P300-P-10628",
+   "4\"-P300-P-10630",
+   "4\"-P300-P-10631",
+   "3\"-P300-P-10635",
+   "3\"-P300-P-10636",
+   "3\"-P300-P-10849"
   ],
   "colour": "#824b1b"
  },
@@ -206,8 +395,117 @@
    "3\"-P600-P-10024",
    "6\"-P600-P-10034",
    "6\"-P600-P-10122",
-   "4\"-P600-P-10826"
+   "4\"-P600-P-10826",
+   "3\"-P600-P-10409",
+   "3\"-P600-P-10610",
+   "3\"-P600-P-10618",
+   "2\"-P600-P-10845"
   ],
   "colour": "#824b1b"
+ },
+ {
+  "code": "S1200",
+  "group": "S",
+  "fluid": "Low-pressure steam",
+  "cls": "P1200",
+  "designPressure": 1200,
+  "insulated": true,
+  "materials": {
+   "pipe": "Grade 35 pipe",
+   "fittings": "Grade 35 pipe",
+   "flanges": "Grade 36 forging",
+   "valveBodies": "Grade 36 casting",
+   "studs": "Grade 90 stud",
+   "gaskets": "compressed sheet"
+  },
+  "valves": "Isolation: gate 2 in and above, floating ball below 2 in where offered; pump discharge: swing check then gate; control valves with a gate each side; relief: safety valve (SW-LL-3, SW-VLV-11)",
+  "branch": "Tee (SW-FIT-2)",
+  "rules": [
+   "SW-LC-1",
+   "SW-LC-3",
+   "SW-PIPE-1",
+   "SW-PIPE-2",
+   "SW-PIPE-3",
+   "SW-FLG-2",
+   "SW-FLG-7",
+   "SW-FIT-1",
+   "SW-FIT-2",
+   "SW-LL-3",
+   "SW-VLV-11"
+  ],
+  "lines": [
+   "10\"-P1200-LS-10402"
+  ],
+  "colour": "#782626"
+ },
+ {
+  "code": "S300",
+  "group": "S",
+  "fluid": "Low-pressure steam",
+  "cls": "P300",
+  "designPressure": 300,
+  "insulated": true,
+  "materials": {
+   "pipe": "Grade 35 pipe",
+   "fittings": "Grade 35 pipe",
+   "flanges": "Grade 36 forging",
+   "valveBodies": "Grade 36 casting",
+   "studs": "Grade 90 stud",
+   "gaskets": "compressed sheet"
+  },
+  "valves": "Isolation: gate 2 in and above, floating ball below 2 in where offered; pump discharge: swing check then gate; control valves with a gate each side; relief: safety valve (SW-LL-3, SW-VLV-11)",
+  "branch": "Tee (SW-FIT-2)",
+  "rules": [
+   "SW-LC-1",
+   "SW-LC-3",
+   "SW-PIPE-1",
+   "SW-PIPE-2",
+   "SW-PIPE-3",
+   "SW-FLG-2",
+   "SW-FLG-7",
+   "SW-FIT-1",
+   "SW-FIT-2",
+   "SW-LL-3",
+   "SW-VLV-11"
+  ],
+  "lines": [
+   "10\"-P300-LS-10403"
+  ],
+  "colour": "#782626"
+ },
+ {
+  "code": "W300",
+  "group": "W",
+  "fluid": "Water (cooling and process)",
+  "cls": "P300",
+  "designPressure": 300,
+  "insulated": false,
+  "materials": {
+   "pipe": "Grade 35 pipe",
+   "fittings": "Grade 35 pipe",
+   "flanges": "Grade 36 forging",
+   "valveBodies": "Grade 36 casting",
+   "studs": "Grade 90 stud",
+   "gaskets": "compressed sheet"
+  },
+  "valves": "Isolation: gate 2 in and above, floating ball below 2 in where offered; pump discharge: swing check then gate; control valves with a gate each side; relief: safety valve (SW-LL-3, SW-VLV-11)",
+  "branch": "Tee (SW-FIT-2)",
+  "rules": [
+   "SW-LC-1",
+   "SW-LC-3",
+   "SW-PIPE-1",
+   "SW-PIPE-2",
+   "SW-PIPE-3",
+   "SW-FLG-2",
+   "SW-FLG-7",
+   "SW-FIT-1",
+   "SW-FIT-2",
+   "SW-LL-3",
+   "SW-VLV-11"
+  ],
+  "lines": [
+   "4\"-P300-W-10408"
+  ],
+  "colour": "#1f537d"
  }
 ]

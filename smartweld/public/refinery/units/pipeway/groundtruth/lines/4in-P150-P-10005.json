@@ -1250,15 +1250,15 @@
    "line": "4\"-P150-P-10005",
    "lineClass": "H150",
    "type": "hanger",
-   "description": "HANGER FOR 4\" LINE (HANGER-4x29.6)",
-   "designation": "HANGER-4x29.6",
-   "key": "HANG|4|P150|29.59",
+   "description": "HANGER FOR 4\" LINE (HANGER-4x178.7)",
+   "designation": "HANGER-4x178.7",
+   "key": "HANG|4|P150|178.67",
    "material": "Grade 36",
-   "weight": 5.0892,
+   "weight": 9.705,
    "spool": "loose",
    "at": {
     "E": 4128,
-    "N": 166.4653,
+    "N": 96,
     "EL": 1398
    },
    "rules": [
@@ -1267,26 +1267,6 @@
   },
   {
    "tag": "4\"-P150-P-10005/S3",
-   "line": "4\"-P150-P-10005",
-   "lineClass": "H150",
-   "type": "hanger",
-   "description": "HANGER FOR 4\" LINE (HANGER-4x22.7)",
-   "designation": "HANGER-4x22.7",
-   "key": "HANG|4|P150|22.67",
-   "material": "Grade 36",
-   "weight": 4.8749,
-   "spool": "loose",
-   "at": {
-    "E": 4128,
-    "N": 59.566,
-    "EL": 1398
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
-   "tag": "4\"-P150-P-10005/S4",
    "line": "4\"-P150-P-10005",
    "lineClass": "H150",
    "type": "guide",
@@ -1306,7 +1286,7 @@
    ]
   },
   {
-   "tag": "4\"-P150-P-10005/S5",
+   "tag": "4\"-P150-P-10005/S4",
    "line": "4\"-P150-P-10005",
    "lineClass": "H150",
    "type": "anchor",
@@ -1326,7 +1306,7 @@
    ]
   },
   {
-   "tag": "4\"-P150-P-10005/S6",
+   "tag": "4\"-P150-P-10005/S5",
    "line": "4\"-P150-P-10005",
    "lineClass": "H150",
    "type": "guide",
@@ -1346,7 +1326,7 @@
    ]
   },
   {
-   "tag": "4\"-P150-P-10005/S7",
+   "tag": "4\"-P150-P-10005/S6",
    "line": "4\"-P150-P-10005",
    "lineClass": "H150",
    "type": "guide",
@@ -1366,7 +1346,7 @@
    ]
   },
   {
-   "tag": "4\"-P150-P-10005/S8",
+   "tag": "4\"-P150-P-10005/S7",
    "line": "4\"-P150-P-10005",
    "lineClass": "H150",
    "type": "hanger",
@@ -1383,6 +1363,46 @@
    },
    "rules": [
     "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-10005/S8",
+   "line": "4\"-P150-P-10005",
+   "lineClass": "H150",
+   "type": "shoe",
+   "description": "SHOE FOR 4\" LINE (SHOE-4)",
+   "designation": "SHOE-4",
+   "key": "SHOE|4|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 4128,
+    "N": 480,
+    "EL": 1392
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-10005/S9",
+   "line": "4\"-P150-P-10005",
+   "lineClass": "H150",
+   "type": "shoe",
+   "description": "SHOE FOR 4\" LINE (SHOE-4)",
+   "designation": "SHOE-4",
+   "key": "SHOE|4|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 5094,
+    "N": -480,
+    "EL": 1392
+   },
+   "rules": [
+    "SW-PS-1"
    ]
   }
  ],
@@ -1677,7 +1697,7 @@
   "items": 18,
   "welds": 13,
   "fieldWelds": 4,
-  "supports": 8,
+  "supports": 9,
   "pipeLength": 1993.5414,
   "weight": 1369.8581
  }

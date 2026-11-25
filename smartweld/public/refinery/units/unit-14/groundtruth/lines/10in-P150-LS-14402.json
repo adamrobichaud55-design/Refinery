@@ -9,39 +9,39 @@
   "designPressure": 150,
   "insulated": true,
   "kind": "header",
-  "from": "cap",
+  "from": "BL-1410-U",
   "to": "cap",
-  "flow": "cap → cap",
+  "flow": "BL-1410-U → cap",
   "joint": "BW"
  },
  "items": [
   {
-   "tag": "10\"-P150-LS-14402/cap0",
+   "tag": "10\"-P150-LS-14402/L1",
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
-   "kind": "cap",
+   "kind": "gasket",
    "itemNo": 1,
-   "description": "CAP 10\" P150",
-   "designation": "CAP10-P150",
-   "key": "CAP|10|P150",
+   "description": "GASKET 10\" P150 COMPRESSED SHEET",
+   "designation": "GASKET10-P150",
+   "key": "GSK|10|P150",
    "NPS": 10,
    "cls": "P150",
-   "material": "Grade 35 pipe",
-   "ends": "BW",
-   "weight": 11.1711,
-   "spool": "10\"-P150-LS-14402-SP01",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
    "a": {
-    "E": 368.5,
+    "E": 162,
     "N": 24,
     "EL": 1548
    },
    "b": {
-    "E": 372,
+    "E": 162.125,
     "N": 24,
     "EL": 1548
    },
    "centre": {
-    "E": 370.25,
+    "E": 162.0625,
     "N": 24,
     "EL": 1548
    },
@@ -51,8 +51,223 @@
     "EL": 0
    },
    "rules": [
-    "SW-FIT-4",
-    "SW-FIT-5"
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-14402/L2",
+   "line": "10\"-P150-LS-14402",
+   "lineClass": "S150",
+   "kind": "valve",
+   "itemNo": 2,
+   "description": "VALVE, GLOBE, T-PATTERN 10\" P150",
+   "designation": "GLOBE10-P150",
+   "key": "VLV|GLOBE|10|P150",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 36 casting",
+   "ends": "RF×RF",
+   "weight": 621.1058,
+   "spool": "loose",
+   "a": {
+    "E": 162.125,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 185.8125,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 173.9688,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-VLV-1",
+    "SW-VLV-10",
+    "SW-VLV-2",
+    "SW-VLV-4",
+    "SW-VLV-5",
+    "SW-VLV-9",
+    "SW-VLV-F-3",
+    "SW-VLV-GL-1",
+    "SW-VLV-GL-2"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-14402/L3",
+   "line": "10\"-P150-LS-14402",
+   "lineClass": "S150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P150",
+   "designation": "STUDS 12×0.75x5 (10-P150)",
+   "key": "STUDS|10|P150|3.250",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 10.856,
+   "spool": "loose",
+   "a": {
+    "E": 159.5625,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 164.5625,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 162.0625,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-14402/L4",
+   "line": "10\"-P150-LS-14402",
+   "lineClass": "S150",
+   "kind": "gasket",
+   "itemNo": 1,
+   "description": "GASKET 10\" P150 COMPRESSED SHEET",
+   "designation": "GASKET10-P150",
+   "key": "GSK|10|P150",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "compressed sheet (non-steel)",
+   "ends": "—",
+   "weight": 0,
+   "spool": "loose",
+   "a": {
+    "E": 185.8125,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 185.9375,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 185.875,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-2"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-14402/L5",
+   "line": "10\"-P150-LS-14402",
+   "lineClass": "S150",
+   "kind": "flange",
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 10\" P150 RAISED FACE",
+   "designation": "FLG10-P150",
+   "key": "WNF|10|P150",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 36 forging",
+   "ends": "BW×RF",
+   "flangeType": "WN",
+   "weight": 51.5629,
+   "spool": "10\"-P150-LS-14402-SP01",
+   "a": {
+    "E": 185.9375,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 190.75,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 188.3438,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-1",
+    "SW-FLG-2",
+    "SW-FLG-3",
+    "SW-FLG-4",
+    "SW-FLG-5",
+    "SW-FLG-6",
+    "SW-FLG-7",
+    "SW-FLG-9"
+   ]
+  },
+  {
+   "tag": "10\"-P150-LS-14402/L6",
+   "line": "10\"-P150-LS-14402",
+   "lineClass": "S150",
+   "kind": "studs",
+   "itemNo": 3,
+   "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P150",
+   "designation": "STUDS 12×0.75x5 (10-P150)",
+   "key": "STUDS|10|P150|3.250",
+   "NPS": 10,
+   "cls": "P150",
+   "material": "Grade 90 stud",
+   "ends": "—",
+   "weight": 10.856,
+   "spool": "loose",
+   "a": {
+    "E": 183.375,
+    "N": 24,
+    "EL": 1548
+   },
+   "b": {
+    "E": 188.375,
+    "N": 24,
+    "EL": 1548
+   },
+   "centre": {
+    "E": 185.875,
+    "N": 24,
+    "EL": 1548
+   },
+   "axis": {
+    "E": 1,
+    "N": 0,
+    "EL": 0
+   },
+   "rules": [
+    "SW-FLG-4",
+    "SW-FLG-7"
    ]
   },
   {
@@ -60,19 +275,19 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
-   "key": "PIPE|10|P150|165.667",
+   "key": "PIPE|10|P150|346.917",
    "NPS": 10,
    "cls": "P150",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 165.6667,
-   "weight": 446.7864,
+   "cutLength": 346.9167,
+   "weight": 935.5985,
    "spool": "10\"-P150-LS-14402-SP01",
    "a": {
-    "E": 372,
+    "E": 190.75,
     "N": 24,
     "EL": 1548
    },
@@ -82,7 +297,7 @@
     "EL": 1548
    },
    "centre": {
-    "E": 454.8334,
+    "E": 364.2084,
     "N": 24,
     "EL": 1548
    },
@@ -103,7 +318,7 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "tee",
-   "itemNo": 3,
+   "itemNo": 6,
    "description": "TEE EQUAL 10\" P150",
    "designation": "TEE10-P150",
    "key": "TEE|10|P150|10",
@@ -143,7 +358,7 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|450.524",
@@ -186,7 +401,7 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|450.524",
@@ -229,7 +444,7 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|450.524",
@@ -272,7 +487,7 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|450.524",
@@ -315,7 +530,7 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|450.524",
@@ -358,7 +573,7 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|450.524",
@@ -401,7 +616,7 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "pipe",
-   "itemNo": 2,
+   "itemNo": 5,
    "description": "PIPE 10\" P150 BEVELLED ENDS",
    "designation": "PIPE10-P150",
    "key": "PIPE|10|P150|450.524",
@@ -444,7 +659,7 @@
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
    "kind": "cap",
-   "itemNo": 1,
+   "itemNo": 7,
    "description": "CAP 10\" P150",
    "designation": "CAP10-P150",
    "key": "CAP|10|P150",
@@ -490,7 +705,7 @@
    "NPS": 10,
    "cls": "P150",
    "joins": [
-    "10\"-P150-LS-14402/cap0",
+    "10\"-P150-LS-14402/L5",
     "10\"-P150-LS-14402/p2"
    ],
    "shopField": "shop",
@@ -500,7 +715,7 @@
     "10\"-P150-LS-14402-SP01"
    ],
    "at": {
-    "E": 372,
+    "E": 190.75,
     "N": 24,
     "EL": 1548
    },
@@ -824,6 +1039,26 @@
  ],
  "supports": [
   {
+   "tag": "10\"-P150-LS-14402/S14",
+   "line": "10\"-P150-LS-14402",
+   "lineClass": "S150",
+   "type": "shoe",
+   "description": "SHOE FOR 10\" LINE (SHOE-10)",
+   "designation": "SHOE-10",
+   "key": "SHOE|10|P150|shoe|7.000",
+   "material": "Grade 36",
+   "weight": 20.624,
+   "spool": "loose",
+   "at": {
+    "E": 360,
+    "N": 24,
+    "EL": 1536
+   },
+   "rules": [
+    "SW-PS-1"
+   ]
+  },
+  {
    "tag": "10\"-P150-LS-14402/S1",
    "line": "10\"-P150-LS-14402",
    "lineClass": "S150",
@@ -1088,7 +1323,7 @@
   {
    "id": "10\"-P150-LS-14402-SP01",
    "items": [
-    "10\"-P150-LS-14402/cap0",
+    "10\"-P150-LS-14402/L5",
     "10\"-P150-LS-14402/p2",
     "10\"-P150-LS-14402/T:10\"-P150-LS-14502",
     "10\"-P150-LS-14402/p4",
@@ -1112,48 +1347,99 @@
     "10\"-P150-LS-14402/W9",
     "10\"-P150-LS-14402/W10"
    ],
-   "weight": 9036.5018
+   "weight": 9565.7057
   }
  ],
  "bom": [
   {
    "itemNo": 1,
-   "description": "CAP 10\" P150",
+   "description": "GASKET 10\" P150 COMPRESSED SHEET",
    "qty": 2,
-   "weight": 22.3422
+   "weight": 0
   },
   {
    "itemNo": 2,
-   "description": "PIPE 10\" P150 BEVELLED ENDS",
-   "qty": 8,
-   "length": 3319.3334,
-   "weight": 8951.8962
+   "description": "VALVE, GLOBE, T-PATTERN 10\" P150",
+   "qty": 1,
+   "weight": 621.1058
   },
   {
    "itemNo": 3,
+   "description": "STUD SET 12 × 0.75\" × 5\" WITH 2 NUTS, FOR 10\" P150",
+   "qty": 2,
+   "weight": 21.7121
+  },
+  {
+   "itemNo": 4,
+   "description": "FLANGE WELD-NECK 10\" P150 RAISED FACE",
+   "qty": 1,
+   "weight": 51.5629
+  },
+  {
+   "itemNo": 5,
+   "description": "PIPE 10\" P150 BEVELLED ENDS",
+   "qty": 8,
+   "length": 3500.5834,
+   "weight": 9440.7083
+  },
+  {
+   "itemNo": 6,
    "description": "TEE EQUAL 10\" P150",
    "qty": 1,
    "weight": 54.6625
+  },
+  {
+   "itemNo": 7,
+   "description": "CAP 10\" P150",
+   "qty": 1,
+   "weight": 11.1711
   }
  ],
  "nodes": [
   {
    "at": {
-    "E": 368.5,
+    "E": 162,
     "N": 24,
     "EL": 1548
    },
-   "kind": "cap start",
-   "ref": "10\"-P150-LS-14402/cap0"
+   "kind": "gasket start",
+   "ref": "10\"-P150-LS-14402/L1"
   },
   {
    "at": {
-    "E": 372,
+    "E": 162.125,
     "N": 24,
     "EL": 1548
    },
-   "kind": "cap end",
-   "ref": "10\"-P150-LS-14402/cap0"
+   "kind": "gasket end",
+   "ref": "10\"-P150-LS-14402/L1"
+  },
+  {
+   "at": {
+    "E": 185.8125,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "valve end",
+   "ref": "10\"-P150-LS-14402/L2"
+  },
+  {
+   "at": {
+    "E": 185.9375,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "gasket end",
+   "ref": "10\"-P150-LS-14402/L4"
+  },
+  {
+   "at": {
+    "E": 190.75,
+    "N": 24,
+    "EL": 1548
+   },
+   "kind": "flange end",
+   "ref": "10\"-P150-LS-14402/L5"
   },
   {
    "at": {
@@ -1256,11 +1542,11 @@
   }
  ],
  "totals": {
-  "items": 11,
+  "items": 16,
   "welds": 10,
   "fieldWelds": 0,
-  "supports": 13,
-  "pipeLength": 3319.3334,
-  "weight": 9028.9009
+  "supports": 14,
+  "pipeLength": 3500.5834,
+  "weight": 10200.9227
  }
 }

@@ -6,10 +6,11 @@ import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync, readdirSync } from 'node:fs';
 import { unitPiping, gateReach, gateWidth, laneSpacing, heldAs, BIG, TIER_ROOM, TIER_SHARE, type UnitLine } from '../src/refinery/unitPiping';
 import { processModel } from '../src/refinery/process';
-import { sizing } from '../src/refinery/sizing';
+import { sizing, headerDesign, stationed } from '../src/refinery/sizing';
+import { unitHeaders, connection } from '../src/refinery/headers';
 import { serviceOf } from '../src/refinery/registry';
 import { RACK, PAD, valveDrop, bodySolids } from '../src/refinery/cell';
-import { pipingDocument, cutLongPipes, lengthenShortPieces, removeValves, measuredAgain, elbowGap, valveBoxFn, runSolids, PIPING_IMAGES, type PipedUnit } from '../src/refinery/pipingReport';
+import { pipingDocument, cutLongPipes, lengthenShortPieces, removeValves, joinHeaders, measuredAgain, elbowGap, valveBoxFn, runSolids, PIPING_IMAGES, type PipedUnit } from '../src/refinery/pipingReport';
 import * as K from '../src/generator/pipingCheck';
 import { makeValve, gateFaceToFace, globeFaceToFace, designFlange, pipeDims, elbowRadius } from '../src/catalogue';
 import { worldBox, type PipingModel } from '../src/generator/piping';
@@ -92,9 +93,75 @@ describe('plant 3: what the generator is given for a unit (SW-RPI-1 to SW-RPI-5)
     for (const h of headers) { expect(h.def.kind).toBe('header'); const taps = up.lines.filter(l => l.origin === 'utility' && l.fluid === h.fluid); expect(taps.length).toBeGreaterThan(0); for (const t of taps) { expect(h.def.NPS).toBeGreaterThanOrEqual(t.def.NPS); const tap = t.def.from.k === 'tap' ? t.def.from : t.def.to; expect(tap.k === 'tap' && tap.line === h.def.no && tap.valve).toBe(true); } }
     expect(up.lines.filter(l => l.origin === 'utility').length).toBe(z.utils.length);
   });
+  it('a header is of its plant header\'s class and conditions, sized for the larger of what is taken and made; a connection fed or drained under control is divided at a station (SW-PRC-19, SW-RPI-5, SW-RPI-9)', () => {
+    expect(stationed({ fluid: 'BW', dir: 'to' })).toBe(true); expect(stationed({ fluid: 'CO', dir: 'from' })).toBe(true); expect(stationed({ fluid: 'CA', dir: 'to' })).toBe(true);
+    for (const f of ['HS', 'MS', 'LS', 'CWS', 'FG']) expect(stationed({ fluid: f, dir: 'to' }), f).toBe(false); expect(stationed({ fluid: 'CWR', dir: 'from' })).toBe(false); expect(stationed({ fluid: 'LS', dir: 'from' })).toBe(false);
+    // the system's conditions: no lower than unit 19's line or any connection without a station; a connection without a station has them, and its item's side with it
+    const s19 = M.sheet(19), z19 = Z.get(19)!;
+    for (const h of M.headers) {
+      const hd = headerDesign(h.fluid), i = s19.lines.findIndex(l => [l.from, l.to].some(e => e.k === 'bl' && e.name === h.key)); expect(i, h.key).toBeGreaterThanOrEqual(0);
+      expect(z19.lines[i].designP, h.key).toBe(hd.designP); expect(z19.lines[i].designT, h.key).toBe(hd.designT); expect(z19.lines[i].cls).toBe(hd.cls);
+      for (const sheet of M.sheets) for (const u of Z.get(sheet.no)!.utils.filter(q => q.fluid === h.fluid)) {
+        if (stationed(u)) continue;
+        expect(u.designP, `${u.tag} ${u.port}`).toBe(hd.designP); expect(u.designT).toBe(hd.designT); expect(u.cls).toBe(hd.cls);
+        const side = Z.get(sheet.no)!.equip.get(u.tag)!.sides; if (Object.keys(side).length) expect(Math.max(...Object.values(side).map(q => q.designP)), `${u.tag} side`).toBeGreaterThanOrEqual(hd.designP);
+      }
+    }
+    expect(headerDesign('BW').cls).toBe('P1200'); expect(headerDesign('CO').cls).toBe('P150'); expect(headerDesign('HS').designP).toBeGreaterThan(headerDesign('MS').designP);
+    let stations = 0;
+    for (const u of [11, 12, 13, 14, 15, 16, 18, 19]) {
+      const q = u === U ? up : unitPiping(u), zu = Z.get(u)!, hs = unitHeaders(u, tag => q.cell.spots.some(sp => sp.item === tag));
+      expect(q.lines.filter(l => l.origin === 'header').map(l => l.def.no)).toEqual(q.headers.map(h => h.line)); expect(hs.length).toBe(q.headers.length);
+      for (const [k, h] of hs.entries()) {
+        const l = q.lines.find(x => x.def.no === q.headers[k].line)!, hd = headerDesign(h.fluid), us = h.utils.map(i => zu.utils[i]);
+        expect(l.fluid).toBe(h.fluid); expect(l.def.cls, `unit ${u} ${h.fluid}`).toBe(hd.cls); expect(l.designP).toBe(hd.designP); expect(l.designT).toBe(hd.designT); expect(l.def.NPS).toBe(h.NPS);
+        expect(h.takes).toBeCloseTo(us.filter(x => x.dir === 'to').reduce((a, x) => a + x.w, 0), 6); expect(h.makes).toBeCloseTo(us.filter(x => x.dir === 'from').reduce((a, x) => a + x.w, 0), 6);
+        for (const x of us) expect(h.NPS, `unit ${u} ${h.fluid}`).toBeGreaterThanOrEqual(connection(x).NPS);
+        // each connection taps the header through a valve in the header's class: itself, or the part of it on the header's side of its station
+        for (const i of h.utils) {
+          const x = zu.utils[i], parts = q.lines.filter(v => v.util === i), tapped = parts.filter(v => [v.def.from, v.def.to].some(e => e.k === 'tap' && e.line === l.def.no && e.valve));
+          expect(tapped.length, `unit ${u} ${x.tag} ${x.port}`).toBe(1); expect(tapped[0].def.cls).toBe(hd.cls); expect(tapped[0].designP).toBe(hd.designP);
+          if (!stationed(x)) { expect(parts.length).toBe(1); expect(parts[0].station).toBeUndefined(); continue; }
+          stations++; expect(parts.length).toBe(2); const ahead = parts.find(v => v.origin === 'utility')!, after = parts.find(v => v.origin === 'control')!, st = q.stations.find(v => v.tag === ahead.station)!;
+          expect(ahead.def.cv).toBe(true); expect(ahead.def.to).toEqual({ k: 'nozzle', id: `${st.tag}-A` }); expect(after.def.from).toEqual({ k: 'nozzle', id: `${st.tag}-B` }); expect(st.line).toBe(ahead.def.no); expect(st.after).toBe(after.def.no);
+          expect(after.def.NPS).toBe(ahead.def.NPS); expect(q.nozzles.get(`${st.tag}-A`)!.cls).toBe(ahead.def.cls); expect(q.nozzles.get(`${st.tag}-B`)!.cls).toBe(after.def.cls);
+          const item = x.dir === 'to' ? after : ahead, own = x.dir === 'to' ? ahead : after; expect(item.def.cls).toBe(x.cls); expect(item.designP).toBe(x.designP); expect(own).toBe(tapped[0]);
+          expect(Number(ahead.def.no.slice(-5)) - u * 1000).toBe(500 + i + 1); const n = Number(after.def.no.slice(-5)) - u * 1000; expect(n).toBeGreaterThan(550); expect(n).toBeLessThanOrEqual(600);
+          expect(st.at[1]).toBe(36);
+        }
+      }
+    }
+    expect(stations).toBe(16);   // eight feed water connections to steam generators and eight condensate connections from steam heaters, in the units piped
+  }, 240_000);
+  it('ends each header at the limit in a spool on the top tier, in its own lane, the top tier\'s spools taken in turn into two rows (SW-RPI-4, SW-RPI-15)', () => {
+    const top = RACK.tiers.length - 1, od = (q: { NPS: number; cls: never }) => pipeDims(q.NPS, q.cls).OD, f = (q: { NPS: number; cls: never }) => designFlange(q.NPS, q.cls).OD, w = (q: { NPS: number; cls: never }) => gateWidth(q.NPS, q.cls);
+    for (const u of [11, 12, 13, 14, 15, 16, 18, 19]) {
+      const q = u === U ? up : unitPiping(u), row = q.spools.filter(s => s.tier === top).sort((a, b) => a.at[2] - b.at[2]) as (typeof q.spools[number] & { cls: never })[], heads = row.filter(s => s.header);
+      expect(heads.length, `unit ${u}`).toBe(q.headers.length); expect(q.feeds.length).toBe(heads.length); expect(q.spools.filter(s => s.header && s.tier !== top).length).toBe(0);
+      for (const [i, s] of row.entries()) {
+        expect(s.at[0], `unit ${u} ${s.tag}`).toBe(i % 2 ? RACK.start - RACK.bent / 2 : RACK.start - RACK.bent + 30); expect(s.at[1]).toBe(Math.ceil((RACK.tiers[top] + 4 + od(s) / 2) / 6 - 1e-9) * 6);
+        if (s.lane !== undefined) expect(s.at[2], s.tag).toBe(s.lane);                                                                          // on its lane, not moved
+        if (i) expect(s.at[2] - row[i - 1].at[2], `unit ${u} ${s.tag} past its neighbour`).toBeGreaterThanOrEqual(Math.max(od(s) + f(row[i - 1]), f(s) + od(row[i - 1])) / 2 + 4 - 1e-9);
+        if (i > 1) expect(s.at[2] - row[i - 2].at[2], `unit ${u} ${s.tag} beside the next of its row`).toBeGreaterThanOrEqual(Math.max((f(s) + f(row[i - 2])) / 2 + 6, (w(s) + w(row[i - 2])) / 2 + 3) - 1e-9);
+        expect(Math.abs(s.at[2]) + f(s) / 2).toBeLessThanOrEqual(q.cell.rack.halfWidth - 12);
+        const inner = q.nozzles.get(`${s.tag}-U`)!, outer = q.nozzles.get(`${s.tag}-P`)!; expect(inner.u).toEqual([1, 0, 0]); expect(outer.u).toEqual([-1, 0, 0]); expect(inner.face[0] - outer.face[0]).toBe(24);
+      }
+      for (const s of heads) {
+        const h = q.headers.find(x => x.line === s.line)!, l = q.lines.find(x => x.def.no === s.line)!, fd = q.feeds.find(x => x.tag === s.tag)!, hz = unitHeaders(u, tag => q.cell.spots.some(sp => sp.item === tag)).find(x => x.fluid === l.fluid)!;
+        expect(s.at[2]).toBe(h.z); expect(s.lane).toBe(h.z); expect(s.NPS).toBe(l.def.NPS); expect(s.cls).toBe(l.def.cls); expect(s.stream).toBe(hz.key); expect(s.dir).toBe(hz.takes >= hz.makes ? 'in' : 'out');
+        expect(Number(s.tag.slice(-2))).toBeGreaterThan(q.spools.filter(x => !x.header).length);                                               // tagged after the unit's other spools
+        // its valve: a stub on the spool's inner face, of the header's size and class, in the last run; not a line of the unit's list
+        expect(fd.header).toBe(l.def.no); expect(fd.stub).toMatchObject({ kind: 'stub', NPS: l.def.NPS, cls: l.def.cls, service: l.def.service, from: { k: 'nozzle', id: `${s.tag}-U` }, to: { k: 'blind' } });
+        expect(q.lines.some(x => x.def.no === fd.stub.no)).toBe(false); expect(q.plant.lines().some(x => x.no === fd.stub.no)).toBe(true); expect(q.runs[q.runOf.get(fd.stub.no)!].kind).toBe('rest');
+        const n = Number(fd.stub.no.slice(-5)) - u * 1000; expect(n).toBeGreaterThan(450); expect(n).toBeLessThan(500);
+      }
+      // a line of the top tier that passes the valve bay keeps a pipe's width and 4 in from a header's flange there
+      for (const L of q.foreseen.filter(x => x.t === top && x.no !== undefined && x.x0 <= q.cell.rack.x0 + 12)) for (const s of heads) expect(Math.abs(L.z - s.at[2]), `unit ${u} ${L.no} past ${s.tag}`).toBeGreaterThanOrEqual((L.OD + f(s)) / 2 + 4 - 1e-9);
+    }
+  }, 240_000);
   it('ends every stream at the battery limit in a spool in the valve bay, on its line\'s lane, a flange apart, at its line\'s elevation (SW-RPI-4)', () => {
-    const bl = sh.lines.filter(l => l.from.k === 'bl' || l.to.k === 'bl').length; expect(up.spools.length).toBe(bl);
-    for (const t of RACK.tiers.keys()) {
+    const bl = sh.lines.filter(l => l.from.k === 'bl' || l.to.k === 'bl').length; expect(up.spools.filter(s => !s.header).length).toBe(bl);
+    for (const t of [...RACK.tiers.keys()].slice(0, -1)) {   // the top tier, where the headers' spools stand too, has a test of its own (SW-RPI-15)
       const row = up.spools.filter(s => s.tier === t).sort((a, b) => a.at[2] - b.at[2]);
       for (const [i, s] of row.entries()) {
         expect(s.at[0]).toBeGreaterThan(RACK.start - RACK.bent); expect(s.at[0]).toBeLessThan(RACK.start - 60); expect(s.at[1]).toBe(Math.ceil((RACK.tiers[t] + 4 + pipeDims(s.NPS, s.cls).OD / 2) / 6 - 1e-9) * 6);
@@ -176,6 +243,8 @@ describe('plant 3: what the generator is given for a unit (SW-RPI-1 to SW-RPI-5)
       // no two lanes of a tier nearer over the same stretch than lets a pipe in either pass the other held as a box; headers among themselves by the generator's spacing; a root spool's place is in its branch's own lane
       for (let i = 0; i < lanes.length; i++) for (let j = i + 1; j < lanes.length; j++) { const a = lanes[i], b = lanes[j]; if (a.t !== b.t || a.x1 < b.x0 - 24 || a.x0 > b.x1 + 24) continue;
         const spool = (L: typeof a, M: typeof a) => L.no === undefined && !isHeader(L) && M.no !== undefined && q.roots.some(r => r.line === M.no && r.at[2] === L.z && Math.abs(r.at[0] - (L.x0 + L.x1) / 2) < 1); if (spool(a, b) || spool(b, a)) { expect(a.z).toBe(b.z); continue; }
+        // SW-RPI-15: a header's stretch in the valve bay, as wide as its flange there: it is its own header's lane carried on, and beside another header's it is a matter of the spools' two rows, which the spools' test checks
+        const inBay = (L: typeof a) => L.no === undefined && L.x0 === RACK.start - RACK.bent && L.x1 === q.cell.rack.x0; if ((inBay(a) || inBay(b)) && a.no === undefined && b.no === undefined) continue;
         expect(Math.abs(a.z - b.z), `unit ${u} tier ${a.t + 1}: ${a.no ?? 'header or spool'} at ${a.z}, ${b.no ?? 'header or spool'} at ${b.z}`).toBeGreaterThanOrEqual(isHeader(a) && isHeader(b) ? (a.OD + b.OD) / 2 + 3 : laneSpacing(a.OD, b.OD)); }
       // each root spool of a branch that runs the rack stands in that branch's lane (SW-RPI-8)
       for (const r of q.roots) { const L = lanes.find(x => x.no === r.line); if (L) { expect(r.at[2], `unit ${u} ${r.tag}`).toBe(L.z); expect(r.tier).toBe(L.t); } }
@@ -191,7 +260,7 @@ describe('plant 3: what the generator is given for a unit (SW-RPI-1 to SW-RPI-5)
     }
     // the runs: every line in one; first the overheads, then each line of the rack with the branches that tap it, the largest first, then the rest
     expect(up.tiers).toEqual([...new Set(onRack.map(l => l.tier!))].sort((a, b) => a - b));
-    const kinds = up.runs.map(r => r.kind); expect(kinds.join(',')).toMatch(/^(overhead,)*((rack|chase),)+rest$/); expect(up.runs.flatMap(r => r.lines).sort()).toEqual(up.lines.map(l => l.def.no).sort());
+    const kinds = up.runs.map(r => r.kind); expect(kinds.join(',')).toMatch(/^(overhead,)*((rack|chase),)+rest$/); expect(up.runs.flatMap(r => r.lines).sort()).toEqual([...up.lines.map(l => l.def.no), ...up.feeds.map(f => f.stub.no)].sort());   // with the stubs of the headers' valves at the limit (SW-RPI-15)
     for (const [k, r] of up.runs.entries()) for (const no of r.lines) expect(up.runOf.get(no)).toBe(k);
     const rackRuns = up.runs.filter(r => r.kind === 'rack'), size = (no: string) => up.lines.find(l => l.def.no === no)!.def.NPS; expect(rackRuns.length).toBe(onRack.length);
     for (const [i, r] of rackRuns.entries()) { const l = up.lines.find(x => x.def.no === r.lines[0])!; expect(l.tier).toBe(r.lane!.t); expect(r.lane!.no).toBe(l.def.no); expect(r.lane).toBe(up.foreseen.find(L => L.no === l.def.no)); if (i) expect(size(r.lines[0])).toBeLessThanOrEqual(size(rackRuns[i - 1].lines[0])); }
@@ -207,17 +276,17 @@ describe('plant 3: what the generator is given for a unit (SW-RPI-1 to SW-RPI-5)
     const base = up.plant.interior().instances.length, full = up.plant.grid, cells = (g: typeof full) => ((g.x1 - g.x0) / 6 + 1) * (g.y1 / 6 + 1) * ((g.z1 - g.z0) / 6 + 1);
     for (const [k, r] of up.runs.entries()) {
       const pl = up.runPlant(k, []), later = up.lines.filter(l => up.runOf.get(l.def.no)! > k).flatMap(l => [l.def.from, l.def.to].filter(e => e.k === 'nozzle')).reduce((a, e) => a + (/^(BL|RS|CS)-/.test((e as { id: string }).id) ? 2 : 1), 0), rest = r.kind === 'rest';   // a room at each nozzle of a later line, and at a spool a second, as wide as the valve's handwheel and as high as its stem
-      const keptLanes = up.foreseen.filter(L => L.no !== undefined && up.runOf.get(L.no)! > k).length, extra = pl.interior().instances.length - base - later;
+      const keptLanes = up.foreseen.filter(L => L.no !== undefined && up.runOf.get(L.no)! > k).length, fN = up.feeds.length, extra = pl.interior().instances.length - base - later - (rest ? 1 : 3) * fN;   // SW-RPI-15: until the last run the room of each header's valve at the limit, two boxes, and always where the header's first piece will lie
       expect(pl.rack.tiers).toEqual(RACK.tiers.slice(r.lane ? r.lane.t : rest ? top : 0));
       const gates = extra - (rest ? 2 : 1) * up.headers.filter(h => h.z !== undefined).length - keptLanes;                                     // in the last run a block about each header's two caps instead (SW-RPI-12)
       if (!r.lane) expect(gates, `run ${k + 1}`).toBe(0); else expect(gates).toBeGreaterThanOrEqual(2);                                              // the fence: the tier closed either side of the lane's slot, in more pieces where a root spool's opening cuts it
       const g = pl.grid; expect(g.x0 % 6).toBe(0); expect(g.z0 % 6 === 0).toBe(true); expect(g.x0).toBeGreaterThanOrEqual(full.x0); expect(g.x1).toBeLessThanOrEqual(full.x1); expect(g.y1).toBeLessThanOrEqual(full.y1); expect(g.z0).toBeGreaterThanOrEqual(full.z0); expect(g.z1).toBeLessThanOrEqual(full.z1);
-      for (const no of r.lines) for (const e of [up.lines.find(l => l.def.no === no)!.def.from, up.lines.find(l => l.def.no === no)!.def.to]) if (e.k === 'nozzle') { const n = up.nozzles.get(e.id)!; expect(n.face[0]).toBeGreaterThanOrEqual(g.x0); expect(n.face[0]).toBeLessThanOrEqual(g.x1); expect(n.face[1]).toBeLessThan(g.y1); expect(n.face[2]).toBeGreaterThanOrEqual(g.z0); expect(n.face[2]).toBeLessThanOrEqual(g.z1); }
+      for (const no of r.lines) for (const e of (d => [d.from, d.to])(up.lines.find(l => l.def.no === no)?.def ?? up.feeds.find(f => f.stub.no === no)!.stub)) if (e.k === 'nozzle') { const n = up.nozzles.get(e.id)!; expect(n.face[0]).toBeGreaterThanOrEqual(g.x0); expect(n.face[0]).toBeLessThanOrEqual(g.x1); expect(n.face[1]).toBeLessThan(g.y1); expect(n.face[2]).toBeGreaterThanOrEqual(g.z0); expect(n.face[2]).toBeLessThanOrEqual(g.z1); }
       if (r.lane) { expect(g.z0).toBeLessThan(r.lane.z); expect(g.z1).toBeGreaterThan(r.lane.z); expect(cells(g)).toBeLessThan(cells(full)); }
       expect(up.runPlant(k, [], true).grid).toEqual(full);
     }
     // the fence of a rack line's run: its tier closed from end to end at the height its pipes lie at, but for a slot along its lane, wide enough for its pipe and 3 in clear of each side as the grid holds it, and shutting the lanes 6 in either side
-    for (const r of rackRuns.slice(0, 8)) { const L = r.lane!, k = up.runs.indexOf(r), mineN = up.lines.filter(l => up.runOf.get(l.def.no)! > k).flatMap(l => [l.def.from, l.def.to].filter(e => e.k === 'nozzle')).reduce((a, e) => a + (/^(BL|RS|CS)-/.test((e as { id: string }).id) ? 2 : 1), 0), hN = up.headers.filter(h => h.z !== undefined).length, kN = up.foreseen.filter(x => x.no !== undefined && up.runOf.get(x.no)! > k).length;
+    for (const r of rackRuns.slice(0, 8)) { const L = r.lane!, k = up.runs.indexOf(r), mineN = up.lines.filter(l => up.runOf.get(l.def.no)! > k).flatMap(l => [l.def.from, l.def.to].filter(e => e.k === 'nozzle')).reduce((a, e) => a + (/^(BL|RS|CS)-/.test((e as { id: string }).id) ? 2 : 1), 0), hN = up.headers.filter(h => h.z !== undefined).length + 3 * up.feeds.length, kN = up.foreseen.filter(x => x.no !== undefined && up.runOf.get(x.no)! > k).length;
       const walls = up.runPlant(k, []).interior().instances.slice(base + mineN + hN + kN).map(q => worldBox(q.part, q.transform)!); expect(walls.length).toBeGreaterThanOrEqual(2);
       for (const b of walls) { expect(b[0][1]).toBeCloseTo(RACK.tiers[L.t] + 4, 6); expect(b[1][1]).toBeGreaterThanOrEqual(RACK.tiers[L.t] + 4 + L.OD - 1e-6); }
       const lo = Math.max(...walls.filter(b => b[1][2] <= L.z).map(b => b[1][2])), hi = Math.min(...walls.filter(b => b[0][2] >= L.z).map(b => b[0][2])), grid = (v: number, dir: 1 | -1) => (dir > 0 ? Math.ceil(v / 6 - 1e-9) : Math.floor(v / 6 + 1e-9)) * 6;
@@ -293,6 +362,27 @@ describe('plant 3: the piped units on disk', () => {
     const cv = r.lines.filter(l => l.controlValve); expect(cv.length).toBe(sh.lines.filter(l => l.cv).length); expect(cv.filter(l => l.controlValve === 'piped').length).toBeGreaterThan(cv.length / 2);
     expect(r.counts.components.valve).toBeGreaterThan(100); expect(Object.values(r.counts.welds).reduce((a, b) => a + b, 0)).toBeGreaterThan(600);
   });
+  it('each header runs in line from its spool at the limit through its block valve to its far cap, and the valve\'s stub is no longer a line (SW-RPI-15)', () => {
+    const d3 = (p: number[], q: number[]) => Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+    for (const r of reports) {
+      const q = r.unit === U ? up : unitPiping(r.unit), m = JSON.parse(readFileSync(new URL(`unit-${r.unit}.json`, dir), 'utf8')) as PipingModel;
+      expect(q.feeds.length, `unit ${r.unit}`).toBe(q.headers.length); expect(m.lines.some(l => q.feeds.some(f => f.stub.no === l.no))).toBe(false);
+      for (const f of q.feeds) {
+        const run = m.lines.find(l => l.no === f.header)!, n = q.nozzles.get(`${f.tag}-U`)!, kinds = run.comps.filter(c => c.kind !== 'studs').map(c => c.kind);
+        expect(run.from, f.header).toBe(`${f.tag}-U`); expect(run.to).toBe('cap'); expect(kinds.slice(0, 5)).toEqual(['gasket', 'valve', 'gasket', 'flange', 'pipe']); expect(kinds[kinds.length - 1]).toBe('cap'); expect(kinds.filter(k => k === 'cap').length).toBe(1);
+        expect(d3(run.comps[0].a, n.face)).toBeLessThan(0.01); expect(run.comps.filter(c => c.kind === 'studs').length).toBe(2);
+        const fl = run.comps.find(c => c.kind === 'flange')!, pipe = run.comps.find(c => c.kind === 'pipe')!; expect(fl.key).toBe(`WNF|${n.NPS}|${n.cls}`); expect(d3(fl.b, pipe.a)).toBeLessThan(0.01);
+        expect(d3(fl.a, fl.b)).toBeCloseTo((f2 => f2.rfH + f2.tf + f2.hubLen + f2.neckLen)(designFlange(n.NPS, n.cls)), 6);
+        expect(run.welds.filter(w => w.joins.includes(fl.tag) && w.joins.includes(pipe.tag) && d3(w.at, fl.b) < 0.01).length).toBe(1);
+        // every piece of pipe on the header's axis, none over 40 ft; a shoe on the tier beam of the rack's first full bent
+        for (const c of run.comps.filter(c => c.kind === 'pipe')) { expect(c.a[2]).toBe(f.z); expect(c.a[1]).toBe(n.face[1]); expect(d3(c.a, c.b)).toBeLessThanOrEqual(480 + 1e-6); }
+        expect(run.supports.filter(sp => sp.at[0] === q.cell.rack.x0 && sp.type === 'shoe' && sp.at[2] === f.z).length, `${f.header}: a shoe at the first full bent`).toBe(1);
+        expect(new Set(run.comps.map(c => c.tag)).size).toBe(run.comps.length); expect(new Set(run.supports.map(sp => sp.id)).size).toBe(run.supports.length);
+      }
+      const note = r.notes.find(x => x.includes('(SW-RPI-15)')); expect(note, `unit ${r.unit}`).toBeDefined(); for (const f of q.feeds) expect(note, f.header).toContain(f.header);
+    }
+    void joinHeaders;
+  }, 240_000);
   it('at every end SW-RPI-14 names, the saved model has the line\'s flange on the nozzle\'s gasket and no valve; each is named in the report', () => {
     let ends = 0;
     for (const r of reports) {

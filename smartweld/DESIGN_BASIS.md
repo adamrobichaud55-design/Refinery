@@ -4024,6 +4024,45 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
     the flowsheet states the length, and a test checks it against the set as built.
   Reason: each figure is what the service asks, as stated with it; the ratios and
   temperature differences are round figures of general practice, SmartWeld's own choice.
+- `SW-PRC-19` The plant's utility headers (added 2026-11-25, with SW-PWY-11). Each utility of
+  SW-REF-10 is one system of pipe: unit 19's line to it or from it, a header the length of
+  the main rack, and the header of each unit that takes from it or makes into it
+  (SW-RPI-5), with nothing between them but block valves.
+  - Design conditions. As a stream at a battery limit (SW-PRC-2), the system is designed
+    together: every header of it, every connection to it and the side of each item so
+    connected take the highest design pressure and the highest design temperature among
+    unit 19's line and the connections of the items on it. Reason: with the valves open,
+    the boiler feed water pump blocked in, or the boilers' steam, stands on every flange
+    of its system. (Before this a unit's header took the class of its own items: the
+    crude unit's boiler feed water header, 300 class, would have bolted to the 1200 class
+    line that feeds it.)
+  - Control stations. A connection whose item is fed under control, or drains under it,
+    has a control valve station (SW-RPI-9), which is its specification break: boiler feed
+    water to a steam generator (the generator's level); condensate from a steam heater
+    (the level of its condensate pot); caustic, service water and instrument air to a
+    process item (a flow). Between header and station the connection is of the header's
+    conditions; beyond the station of the item's own, as it was. Steam, cooling water and
+    fuel gas connections have none: a heater's steam side, a cooler's water side and a
+    burner's gas side see their header. Reason: feed water at 800 psi enters a generator
+    raising steam at 150 psi through its level valve and no other way; condensate at a
+    heater's pressure reaches a header at 30 psi through the valve that holds the
+    heater's level.
+  - Size. A header is the size of unit 19's line to it or from it, which is sized for
+    what unit 19 can send or take (SW-PRC-4); or larger where a stretch of it carries
+    more (the parties in their order along the rack, each with what it makes less what it
+    takes and unit 19's line with the balance: the largest running total), or where a
+    unit's header that joins it is larger. It keeps that size from end to end. Reason:
+    the low-pressure steam is mostly made in the units (the cracker's turbine exhausts
+    60,000 lb/h of it) and crosses the plant to the deaerator and the sulfur block, more
+    than unit 19's own let-down sends; a branch cannot be larger than what it joins; and
+    one size lets a unit be joined anywhere along the rack.
+  - Not modelled, and said so where the headers are listed: more low-pressure steam is
+    made than used in this balance, and what a plant does with the rest (a vent
+    condenser) is not drawn; the steam that flashes from condensate let down to its
+    header is not sized for; and the growth of a hot header (by general knowledge a steel
+    line 1,100 ft long at 650 °F grows about 4 ft) would be taken up in expansion loops,
+    which this model does not draw.
+  These are SmartWeld's own rules from the reasoning given; nothing was looked up.
 
 ## 76. Plant 3: the code layer (`SW-REG-*`) — recalled from general knowledge, flagged, for the owner to verify
 
@@ -4723,7 +4762,10 @@ What this section adds is what that generator is given.
   that tap them (SW-RPI-5), which the generator valves by their service; of those, water
   and plant gases of class P600 and above are built as process lines too: the butterfly
   valves the generator gives water and air lines are offered to class P300 only
-  (SW-VLV-11). What a line carries is on its record (§76), not in its number. An installed spare, and each further body of an item in parallel,
+  (SW-VLV-11). So are steam and condensate lines over 12 in (added 2026-11-25, with the
+  plant's 14 in low-pressure steam header, SW-PWY-11): the globe valves the generator
+  gives steam and condensate lines are offered to 12 in, and a line larger than that is
+  shut by a gate valve. What a line carries is on its record (§76), not in its number. An installed spare, and each further body of an item in parallel,
   joins the first body's line with a tee (SW-LL-3), numbered from unit × 1000 + 301; where
   the first body's line is itself a branch that ends at a tee on another line, the further
   body joins that other line with a tee of its own (amended 2026-11-24: an injection
@@ -4759,7 +4801,17 @@ What this section adds is what that generator is given.
   side of the rack its far end is on. A valve at the limit stands stem up, the only way its
   neighbours leave it room: a line whose valve would then reach within 1 ft of the tier
   above (a gate valve's reach against the tiers' 6 ft: 14 in and larger) runs on the top
-  tier, and one with no lane has its spool on the highest tier in use. The lanes
+  tier, and one with no lane has its spool on the highest tier in use.
+  On the top tier (amended 2026-11-25, with SW-RPI-15) every spool stands on its own lane
+  and none is moved off it: a header's spool can stand nowhere but in its header's lane.
+  The spools are taken in turn across the rack into two rows, the first 30 in inside the
+  bay's first bent and the second at the bay's middle, so that neighbours' valves stand
+  7 ft 6 in apart along the rack: a line then passes its neighbour's flange a pipe's width
+  and 4 in off, and only every second spool stands beside it, a flange and 6 in or the
+  handwheels and 3 in away. (Side by side, two 10 in gate valves, whose handwheels the
+  catalogue draws 26 in wide, want 30 in, and their headers' lanes are 24 in apart.) A
+  spool with no lane stands beyond the row's end as on the other tiers. A row that does
+  not meet those distances on its lanes is an error, not spread. The lanes
   are those each line is given beforehand (SW-RPI-7; amended 2026-11-24: they were the
   generator's own choice, worked out beforehand by its rule, and where a run showed a line
   in another lane the spools were set again and the unit piped a second time). Reason: a
@@ -4771,6 +4823,15 @@ What this section adds is what that generator is given.
   the rack's top tier, sized for the sum of what they take and not smaller than its largest
   take-off, of the class of its most demanding take-off; each item's connection taps it through
   a valve, numbered from unit × 1000 + 501; headers are numbered from unit × 1000 + 401.
+  Amended 2026-11-25 (SW-PRC-19): a header's class and design conditions are those of the
+  plant's header it joins, not of its own take-offs; a connection that has a control
+  station is divided at it as a process line is (SW-RPI-9); and each header ends at the
+  unit's limit in a block valve and a spool (SW-RPI-15). A header is sized for the
+  larger of what its items take from it and what they make into it, not for the sum of
+  the two as before: no stretch of a header carries more than the larger, and the sum
+  gave a unit that both makes steam and uses it (the crude unit, the vacuum unit, the
+  cracker) a header a size or two larger than any flow in it, and the plant's header,
+  which is no smaller than a header that joins it (SW-PRC-19), with it.
 - `SW-RPI-6` Where lines may travel. The generator's routing takes the shortest way with the
   fewest turns, which from a column's top is as readily straight out over the unit as down the
   column. A pipe is carried by steel, so the generator is shown solid blocks that leave open
@@ -5040,6 +5101,15 @@ What this section adds is what that generator is given.
   the diesel hydrotreater's limit in the 1200 class, valve and spool, to join a 150 class
   header, and 36 of the 62 streams met a unit's line of another class than their own.)
   A test checks that every spool at a limit is of its stream's class.
+  A utility connection with a control station (SW-PRC-19; added 2026-11-25) is divided in
+  the same way. One that takes from a header: the part from the header's take-off valve to
+  the spool is of the header's class and conditions and carries the station; the part
+  beyond is the item's own. One that returns to a header: the part from the item to the
+  spool is the item's own and carries the station; the part beyond, to the header's
+  valve, is of the header's. Both parts are of one size, the larger of what each alone
+  would be. The part beyond the station is numbered from unit × 1000 + 551, among the
+  utility numbers (SW-REF-3). Their stations are set after those of the process lines, in
+  the places those leave.
 - `SW-RPI-10` No piece of pipe longer than 40 ft (added 2026-11-24). The generator cuts a
   long straight run into equal pieces of 40 ft at most (SW-RT-5) and then moves each splice
   off the rack's beams by up to 2 ft, so that every beam can carry a shoe; on a run long
@@ -5119,6 +5189,30 @@ What this section adds is what that generator is given.
   said there unless told otherwise. What it leaves as the generator made it: every other
   equipment connection has its valve, including those a designer would leave out for a
   relief path's sake, since this model carries no relief valves (SW-RPI-3).
+- `SW-RPI-15` A header at the battery limit (added 2026-11-25, with SW-PWY-11). Each utility
+  header of a unit ends at the limit in a block valve and a spool, as every other line does
+  (SW-RPI-4): the spool on the top tier in the valve bay, in the header's own lane, so
+  that the header runs straight through its valve; tag `BL-{unit}{sequence}`, after the
+  unit's other spools. The plant's header joins it on the pipeway's side (SW-PWY-12).
+  The generator lays a header from cap to cap along the rack (SW-RT-1) and has no valve to
+  set in its length. It is given the valve as a stub on the spool's inner face (gasket,
+  valve, gasket and a blind, SW-LL-6), and on its result the two are made one line: the
+  blind becomes a weld-neck flange of the header's size and class on the same gasket and
+  studs; the header's cap at that end is taken off; its first piece is carried back to the
+  flange and welded to it as it was welded to the cap; the valve's pieces go to the head
+  of the header's list, and the header then runs from the spool to its far cap. A shoe
+  like the header's others is set on each beam the lengthened piece crosses: the tier beam
+  of the rack's first full bent and, for a header the generator carries at mid-bay too
+  (SW-PS-7), the valve bay's mid-bay beam. The piece is cut again if that made it longer
+  than 40 ft (SW-RPI-10). While the generator runs, a block stands where the piece will
+  lie, from the spool to the cap, so that no line routed through the valve bay takes its
+  place; as the other blocks (SW-RPI-6), it is no part of the model.
+  Reason: a unit is cut off from the plant's steam, water and gas at its limit as from
+  every stream; and in line, because the header already lies on the axis the plant's
+  branch arrives on: a branch into its side would rise over it and come down again
+  through a tee to reach the place where its end already is. The generator's own code is
+  not changed; the correction is plant 3's, made in `src/refinery/pipingReport.ts`, and
+  each unit's notes name the headers joined.
 
 ## 80. Plant 3: the main pipeway and the lines between units (`SW-PWY-*`)
 
@@ -5207,13 +5301,20 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   strip between the rack and the unit; a larger one that can lie on neither tier next to
   its spools lies on the lowest, and the lanes it passes on its way down are kept clear
   where it passes. Where a valve at a limit bay would reach the lines of the tier above,
-  that tier's lane over it is kept clear too. No lane lies over a stringer (SW-PWY-9).
+  that tier's lane over it is kept clear too. No lane lies over a stringer (SW-PWY-9),
+  nor under one of the tier above (added 2026-11-25, when the top tier's stringers were
+  moved, SW-PWY-12: a 3 in line of the middle tier, in a lane under one of them, could
+  not rise at its ends to its units' top tiers).
+  The middle of the top tier is the utility headers' (SW-PWY-11, added 2026-11-25): the
+  band their lanes take, and 3 ft either side of it where their branches come down
+  (SW-PWY-12), are no lane of any other line.
 - `SW-PWY-6` The generator is run once for each line that runs the rack, with the branches
   that join it, on the tier and in the lane given it, the lanes of the lines still to come
   kept and its own tier fenced but for its lane; then once for what remains: the lines
   between units that face each other across the corridor or stand within 20 ft along it,
-  which the generator lays direct (SW-RT-*), and the valves and blinds beyond the limit
-  spools. As SW-RPI-7, with the same kept room for the valves of lines still to come.
+  which the generator lays direct (SW-RT-*), the valves and blinds beyond the limit
+  spools, and the utility headers with their branches (SW-PWY-11, SW-PWY-12; added
+  2026-11-25). As SW-RPI-7, with the same kept room for the valves of lines still to come.
 - `SW-PWY-7` At a spool. The pipeway's line bolts to the spool's face flange to flange, a
   unit's spool or a limit spool: the valve the generator stands there is not built (as
   SW-RPI-14, by the same correction on its result; where the line is reduced at the spool
@@ -5229,7 +5330,33 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   beams of the rack's first bent: the valve the generator stands at a spool, which is not
   built (SW-PWY-7), would stand over such a beam with less than the clearance asked, and
   the pipe that takes its place clears it. The result is checked against all the steel as
-  it stands, those beams included.
+  it stands, those beams included. A line that passes over one of those beams on its way
+  to its spool rests on it: a shoe is set there on the generator's result, as the
+  generator sets one on a rack beam (added 2026-11-25: with a unit's top-tier spools in
+  two rows, SW-RPI-4, a line to the further row ran 21 ft from the junction frame to its
+  flange with that beam under it and no support on it). Where the line passes over the
+  first bent's top-tier beam higher than a shoe stands, by 4 ft at most, and nothing lies
+  between, a post stands on the beam under it, as the generator stands one on a top-tier
+  beam of a rack (SW-PS-9). And the run is stepped again from there. The generator steps
+  along a run from its start and, where a step finds no steel within what the line spans,
+  leaves the rest of the run as it is (SW-PS-7); not shown the first bent, it finds none
+  from a spool of the further row, though the junction frame, the rack's strut and the
+  stringers stand over the run further on. So, on the result, on a run that crosses a
+  first bent: where the stretch between two supports, or from a support to the run's end,
+  is longer than the line spans, a hanger is set at a member that crosses over the run
+  within the span of the support before, the one nearest the equal division of what
+  remains, and so on along the stretch, from its other end where nothing is found from
+  the first. The conditions are the generator's own (SW-PS-9): steel a rod can hang from,
+  its underside more than 6 in above the pipe and not more than 20 ft over its centre
+  line; the rod's way up clear of every other line by 1 in; the place more than 5 in from
+  every weld and fitting of the line. Where a weld stands at the member's line the hanger
+  moves along the run under the member, half an inch at a time, no further from the
+  member's line than the generator itself takes steel to reach (six tenths of the round
+  it holds the member by). What this does not close stays in the list of spans (added
+  2026-11-25: three 3 in condensate branches from spools of the further row stood 45 ft
+  with one shoe; a 3 in line's splice weld stood 1 in from the strut's line, where its
+  hanger belonged; a 4 in line was 0.2 in over its span once the valve at its spool was
+  left out, SW-RPI-14; a boiler feed water branch passed 28 in over the first bent).
 - `SW-PWY-9` Supports. The generator carries each line on the main rack's beams (SW-PS-*)
   and hangs what crosses under steel from that steel. So that a line crossing from a unit
   has steel over it within what it spans: 2 ft inside the corridor from each unit's limit
@@ -5237,9 +5364,12 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   beam between them at the level of each main tier (a line may cross to the rack at any
   of the three levels, whatever tier its spool stands on);
   and along the main rack, under each tier, run two stringers 5 ft either side of the
-  centre line, bay by bay, as a unit's rack has one under its lowest tier (SW-CELL-6). A
+  centre line, bay by bay, as a unit's rack has one under its lowest tier (SW-CELL-6);
+  under the top tier three, on the centre line and 8 ft either side of it (amended
+  2026-11-25: at 5 ft they stood under the very places where the branches of the utility
+  headers come down beside their band, SW-PWY-12). A
   line from a spool then hangs at the junction frame (13 ft 6 in from its flange), at the
-  rack's strut (13 ft 8 in on) and at each stringer it passes (10 ft at most): within the
+  rack's strut (13 ft 9 in on) and at each stringer it passes (10 ft at most): within the
   15 ft a 3 in line spans (SW-PS-7).
   A junction beam's depth is a twentieth of its span, to the next 2 in, and its weight
   2.75 lb/ft for each inch of depth, to the next 5 lb; a post is of the next depth below
@@ -5248,5 +5378,80 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   listed, as for a unit.
 - `SW-PWY-10` Checks, records and exports as for a unit (§40, SW-REG-9, SW-GT-*, SW-PCF-*):
   the pipeway is one more piped area, shown with the units in every view of the plant.
-  Utility headers along the main rack, with a branch to each unit's header, are the next
-  stage: until then a unit's headers end capped at its battery limit (SW-RPI-12).
+  (Until 2026-11-25 a unit's headers ended capped at its battery limit, SW-RPI-12; they
+  are now joined to the plant's headers, SW-PWY-11.)
+- `SW-PWY-11` Utility headers (added 2026-11-25). On the top tier lies a header for each
+  utility (SW-PRC-19) that a unit on the pipeway other than unit 19 takes or makes: high-,
+  medium- and low-pressure steam, condensate, boiler feed water and fuel gas; and
+  instrument air, service water and caustic, which only the cracker takes. Each is laid by
+  the generator as it lays a unit's headers (SW-RT-1, SW-RPI-5): straight, from a cap 1 ft
+  inside the first bent beyond the west limit bay to a cap 1 ft inside the last before the
+  east one, in lanes from the centre line outward by the generator's own spacing, the
+  largest first, carried on every bent's top tier beam. Lines from 10401. Reason: a
+  header the length of the rack passes every unit on it, and one that is added later.
+  Not on the rack:
+  - Plant air and nitrogen. No unit's flowsheet takes either yet (hose stations and purge
+    connections are a later stage); their lines end at unit 19's spools.
+  - Cooling water. Its two mains are 30 in, and the pair of them full weighs 1,055 lb a
+    foot (the catalogue's pipe, K-1, K-5) against the 1,200 lb a foot a tier is built for
+    (SW-PWY-13). They start at the cooling tower, whose plot is not piped yet. Where they
+    run (buried along the corridor below the frost, as mains of that size commonly are,
+    or on sleepers beside the rack) is put to the owner with that stage. Each unit's
+    cooling water headers end at their valves and spools meanwhile (SW-RPI-15).
+  - What the areas beyond the bench take (the flare's steam, gas and water; the tank
+    farm's heating steam, and its condensate back): each header ends in a cap at either
+    limit bay and is carried on from there with those areas' pipeways.
+- `SW-PWY-12` A header's branches (added 2026-11-25). Each party joins its header by a
+  branch of its spool's size, 3 in at least (a 2 in pipe spans 10 ft, SW-PS-7, and from
+  the rack's strut to the junction frame is 14 ft: the first run left thirteen 2 in
+  branches with no support the generator could give; a smaller spool is met with a
+  reducer at its flange, as SW-PWY-3): unit 19's spool for that utility, the header spool of each
+  unit (SW-RPI-15), and for a unit not yet piped a limit spool on its top tier (SW-PWY-4)
+  of the size its header will be (SW-RPI-5). A branch leaves the top of the header (the
+  generator's rule for a header's take-offs: a tee, or a branch fitting where the branch
+  is half the header's size or less), with no valve there: the block valve is at the
+  unit's limit 40 ft on, and one on the main rack's top tier, 34 ft up, could not be
+  reached. It rises, crosses over the headers that lie between it and the edge of their
+  band on its party's side, comes down beside the band to the level of the unit's top
+  tier, 5 ft below, and crosses out under the main rack's top tier to its spool as the
+  lines between units do, hung from the same steel (SW-PWY-9). The generator finds that
+  way because the space over the top tier is shown to it closed (SW-PWY-8, SW-RPI-6):
+  everywhere from 6 ft above the tier, and from the tier's level upward outside the
+  headers' band and the 3 ft either side of it, as far as the junction frames. Reason:
+  steam, air and gas are taken from the top of a header so that what condenses or settles
+  in it stays out of the branch, and the water lines are taken the same way for one rule.
+  Over the top tier there is no steel to carry a pipe across the rack; under it there is.
+  The generator keeps head room over each tier of a rack and lets a line through it only
+  within 6 ft of that line's own end (SW-RT-3). A branch therefore comes down within 6 ft
+  of its header: beside the band on the side nearer its header, and from there under the
+  band to a unit on the other side. Each header has such a place: 12 in clear of the
+  band, 18 in from a stringer of the top tier and 18 in inside the strip (first run: the
+  low-pressure steam header, on the centre line, had its only places over the stringers,
+  which then stood 5 ft either side, and five of its seven branches found no way down).
+  A branch has no valve of its own, and the service of a line decides nothing else in the
+  generator but its valves: so a branch, and the valve and blind beyond a limit spool, are
+  numbered and built as process lines (SW-RPI-3), branches from 10601. (As steam lines
+  they were given globe valves at their spools, to be taken out again, SW-PWY-7; one, longer
+  than a gate valve, struck a column of the unit's first bent.)
+  Three things make the way of a branch across the centre line from its header, the
+  longest there is, one the generator finds within its search (each added after a run in
+  which such a branch found none). Those branches are routed first, the largest first,
+  and the others after them. In the last run, where only the headers and their branches
+  are routed, the space under the rack is shown closed from the lowest tier's level to
+  6 in below the units' top tiers: a branch crosses under the top tier, and has nothing
+  to do under the tiers below (one had gone under the lowest tier and up through two
+  tiers of lanes). And the limit spools of a unit not yet piped, for its headers, stand
+  in one row at the middle of its valve bay, a valve's width apart and each 2 ft at least
+  from the line of a bent or mid-bay beam of the main rack, past which its branch must
+  go where it comes through the top tier; those of the headers across the centre line
+  from the unit stand last, at the row's east end. The headers and their branches are routed in the
+  generator's last run (SW-PWY-6). Until then the band and the strips beside it are held
+  on the top tier (SW-RPI-7); in the last run a block stands about each cap (SW-RPI-12).
+- `SW-PWY-13` Tier loads (added 2026-11-25). For each tier of the main rack, the weight of
+  the pipe that lies along it and of what it holds (a liquid or two-phase line full of
+  its liquid, a steam or gas line empty; insulation and the branches that cross the
+  rack are not weighed, SW-PSP-18), bay by bay, is set against what the
+  tier is built for: 40 psf over the rack's width (SW-PWY-2), 1,200 lb a foot. The
+  heaviest bay of each tier is given in the pipeway's document, and a tier over its
+  figure is listed there. Reason: the kit sizes a tier's beams for that load whatever is
+  laid on them (SW-RK-2), so what is laid on them is checked against it.

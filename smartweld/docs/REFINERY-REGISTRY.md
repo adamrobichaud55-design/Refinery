@@ -19,9 +19,9 @@ No form of any code body is reproduced: the printable records are in SmartWeld's
 | Boiler records, designation P-3 (drums as P-4 parts, external piping P-4A) | 3 | SW-REG-1, -2, -3 |
 | Fired heater coils | 9 | SW-REG-1 |
 | Packaged components counted with the fittings | 6 | SW-REG-1 |
-| Lines with fluid service, line class and severity | 744 | SW-REG-4, -5, -8 |
+| Lines with fluid service, line class and severity | 775 | SW-REG-4, -5, -8 |
 | Line classes | 32 | SW-REG-8 |
-| Piping system registrations (a line class in a unit) | 142 | SW-REG-6 |
+| Piping system registrations (a line class in a unit) | 148 | SW-REG-6 |
 | Fitting registrations (category × pipe class × maker) | 96 | SW-REG-6 |
 
 Outside this layer, with no record (SW-REG-1): storage tanks at atmospheric pressure, catalyst hoppers, basins and pits; pumps and compressors; structures.
@@ -32,23 +32,23 @@ SmartWeld stands in for the owner in designating each line (SW-REG-4): Category 
 
 | Unit | Name | Lines | Category D | Normal | Category M |
 | --- | --- | --- | --- | --- | --- |
-| 11 | Crude distillation | 79 | 12 | 67 | 0 |
-| 12 | Vacuum distillation | 33 | 3 | 30 | 0 |
-| 13 | Naphtha hydrotreater and splitter | 48 | 5 | 43 | 0 |
-| 14 | Catalytic reformer and hydrogen purification | 58 | 8 | 50 | 0 |
+| 11 | Crude distillation | 80 | 7 | 73 | 0 |
+| 12 | Vacuum distillation | 35 | 2 | 33 | 0 |
+| 13 | Naphtha hydrotreater and splitter | 50 | 7 | 43 | 0 |
+| 14 | Catalytic reformer and hydrogen purification | 60 | 9 | 51 | 0 |
 | 15 | Kerosene hydrotreater | 38 | 5 | 33 | 0 |
 | 16 | Diesel hydrotreater | 47 | 3 | 44 | 0 |
-| 17 | Fluid catalytic cracker and gas concentration | 133 | 19 | 114 | 0 |
-| 18 | Sulfur block | 80 | 13 | 52 | 15 |
-| 19 | Utilities | 56 | 24 | 32 | 0 |
+| 17 | Fluid catalytic cracker and gas concentration | 141 | 21 | 120 | 0 |
+| 18 | Sulfur block | 89 | 12 | 62 | 15 |
+| 19 | Utilities | 56 | 22 | 34 | 0 |
 | 20 | Crude tank farm | 18 | 0 | 18 | 0 |
-| 21 | Intermediate and product tank farm | 94 | 12 | 82 | 0 |
+| 21 | Intermediate and product tank farm | 100 | 12 | 88 | 0 |
 | 22 | Marine terminal | 13 | 0 | 13 | 0 |
 | 23 | Truck loading | 11 | 0 | 11 | 0 |
 | 24 | Wastewater treatment | 20 | 4 | 16 | 0 |
-| 25 | Flare | 8 | 1 | 7 | 0 |
+| 25 | Flare | 9 | 1 | 8 | 0 |
 | 26 | Fire water | 8 | 4 | 4 | 0 |
-|  | Plant | 744 | 113 | 616 | 15 |
+|  | Plant | 775 | 109 | 651 | 15 |
 
 | Fluid service | Examination of welds (recalled) | Leak test (recalled) | Threaded joints |
 | --- | --- | --- | --- |
@@ -64,7 +64,7 @@ A line class is written `{group}{rating}-{material}-{service}{rank}` (SW-REG-8, 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `H150-CS-M5` | P150 | carbon steel | M | 1 | 5 | **5** | 9 | 3 to 10 | 50 psi, 650 °F | acid gas |
 | `H150-SS-M5` | P150 | stainless steel | M | 1 | 5 | **5** | 6 | 3 to 8 | 50 psi, 275 °F | acid gas |
-| `C1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 7 | 2 to 3 | 770 psi, 660 °F | steam condensate, boiler feed water |
+| `C1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 17 | 2 to 3 | 1,035 psi, 660 °F | boiler feed water, steam condensate |
 | `H1200-C1-N4` | P1200 | 1-1/4 Cr alloy steel | Normal | 4 | 4 | **4** | 11 | 8 to 14 | 1,145 psi, 1,000 °F | reactor effluent (oil and hydrogen) |
 | `H1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 14 | 3 to 10 | 1,035 psi, 700 °F | boiler feed water, amine solution, process and wash water, sour water, steam, 600 psi |
 | `H1200-CS-N3` | P1200 | carbon steel | Normal | 4 | 3 | **4** | 1 | 6 | 1,145 psi, 190 °F | diesel |
@@ -75,33 +75,33 @@ A line class is written `{group}{rating}-{material}-{service}{rank}` (SW-REG-8, 
 | `H300-CS-N4` | P300 | carbon steel | Normal | 2 | 4 | **4** | 52 | 3 to 12 | 300 psi, 495 °F | hydrocarbon gas, naphtha, hydrogen-rich gas, liquefied petroleum gas, fuel gas, reformate, gasoline |
 | `H600-C1-N4` | P600 | 1-1/4 Cr alloy steel | Normal | 3 | 4 | **4** | 8 | 6 to 12 | 595 psi, 665 °F | reactor effluent (oil and hydrogen) |
 | `H600-CS-N4` | P600 | carbon steel | Normal | 3 | 4 | **4** | 23 | 3 to 8 | 585 psi, 355 °F | hydrogen-rich gas, reactor effluent (oil and hydrogen), liquefied petroleum gas |
-| `S1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 9 | 2 to 8 | 660 psi, 700 °F | steam, 600 psi |
+| `S1200-CS-N2` | P1200 | carbon steel | Normal | 4 | 2 | **4** | 9 | 2 to 8 | 685 psi, 700 °F | steam, 600 psi |
 | `H150-C5-N3` | P150 | 5 Cr alloy steel | Normal | 1 | 3 | **3** | 5 | 6 to 14 | 55 psi, 700 °F | gas oil, residue |
 | `H150-CS-N3` | P150 | carbon steel | Normal | 1 | 3 | **3** | 167 | 3 to 36 | 150 psi, 600 °F | crude oil, naphtha, diesel, kerosene, residue, oily water, gas oil, gasoline, reformate, slurry oil |
 | `H300-C5-N3` | P300 | 5 Cr alloy steel | Normal | 2 | 3 | **3** | 7 | 4 to 14 | 270 psi, 740 °F | gas oil, residue, slurry oil |
 | `H300-CS-N3` | P300 | carbon steel | Normal | 2 | 3 | **3** | 104 | 3 to 24 | 300 psi, 600 °F | oily water, crude oil, naphtha, diesel, gas oil, kerosene, residue, reformate, slurry oil, gasoline |
 | `H600-C5-N3` | P600 | 5 Cr alloy steel | Normal | 3 | 3 | **3** | 5 | 3 to 10 | 260 psi, 740 °F | residue, slurry oil |
-| `H600-CS-N2` | P600 | carbon steel | Normal | 3 | 2 | **3** | 15 | 3 to 6 | 500 psi, 305 °F | process and wash water, sour water, amine solution, caustic solution |
+| `H600-CS-N2` | P600 | carbon steel | Normal | 3 | 2 | **3** | 18 | 2 to 6 | 500 psi, 305 °F | process and wash water, sour water, amine solution, caustic solution |
 | `H600-CS-N3` | P600 | carbon steel | Normal | 3 | 3 | **3** | 26 | 3 to 12 | 595 psi, 555 °F | crude oil, naphtha, kerosene, gas oil, diesel, gasoline |
 | `C300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 9 | 2 to 3 | 275 psi, 410 °F | boiler feed water, steam condensate |
-| `H150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 43 | 2 to 42 | 150 psi, 650 °F | sour water, amine solution, process air, flue gas, caustic solution, liquid sulfur, boiler feed water |
+| `H150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 45 | 2 to 42 | 150 psi, 650 °F | sour water, amine solution, process air, flue gas, caustic solution, steam, 50 psi, liquid sulfur, boiler feed water |
 | `H150-SS-N2` | P150 | stainless steel | Normal | 1 | 2 | **2** | 2 | 3 | 115 psi, 170 °F | sour water |
 | `H300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 25 | 2 to 20 | 285 psi, 450 °F | process and wash water, sour water, amine solution, caustic solution, raw and service water, demineralised water, steam, 150 psi, nitrogen, fire water |
-| `S150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 2 | 10 to 14 | 75 psi, 370 °F | steam, 50 psi |
-| `S300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 12 | 2 to 10 | 175 psi, 450 °F | steam, 150 psi |
-| `C150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 9 | 2 | 65 psi, 310 °F | steam condensate |
-| `G150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 1 | 2 | 115 psi, 150 °F | instrument air |
-| `H150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 38 | 3 to 48 | 150 psi, 350 °F | process and wash water, process air, raw and service water, demineralised water, steam condensate, steam, 50 psi, cooling water return, cooling water supply, plant air, instrument air, fire water |
-| `S150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 19 | 2 to 10 | 75 psi, 350 °F | steam, 50 psi |
-| `W150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 46 | 2 to 14 | 105 psi, 155 °F | cooling water supply, cooling water return, raw and service water |
+| `S150-CS-N2` | P150 | carbon steel | Normal | 1 | 2 | **2** | 20 | 2 to 10 | 80 psi, 370 °F | steam, 50 psi |
+| `S300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 12 | 2 to 10 | 185 psi, 450 °F | steam, 150 psi |
+| `W300-CS-N2` | P300 | carbon steel | Normal | 2 | 2 | **2** | 2 | 2 to 3 | 160 psi, 150 °F | raw and service water |
+| `C150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 24 | 2 | 65 psi, 310 °F | steam condensate |
+| `G150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 2 | 2 | 130 psi, 150 °F | instrument air |
+| `H150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 37 | 3 to 48 | 150 psi, 315 °F | process and wash water, process air, raw and service water, demineralised water, steam condensate, steam, 50 psi, cooling water return, cooling water supply, plant air, instrument air, fire water |
+| `W150-CS-D1` | P150 | carbon steel | D | 1 | 1 | **1** | 46 | 2 to 14 | 140 psi, 155 °F | cooling water supply, cooling water return, raw and service water |
 
 | Severity | Lines |
 | --- | --- |
 | 5 | 15 |
-| 4 | 194 |
-| 3 | 329 |
-| 2 | 93 |
-| 1 | 113 |
+| 4 | 204 |
+| 3 | 332 |
+| 2 | 115 |
+| 1 | 109 |
 
 ## Pressure equipment
 
@@ -121,7 +121,7 @@ Separates the crude by boiling range into gas, naphtha, kerosene, diesel, gas oi
 | E-1103 | Crude / diesel exchanger | U-1 | B5084.7 | shell side: 215 psi at 580 °F; tube side: 390 psi at 235 °F | 36 in × 20 ft | 0.625 | SA-516-70 | spot | none | -20 | 20,972 |
 | E-1104 | Crude / diesel pumparound exchanger | U-1 | T3465.7 | shell side: 165 psi at 550 °F; tube side: 390 psi at 320 °F | 36 in × 20 ft | 0.625 | SA-516-70 | spot | none | -20 | 20,972 |
 | E-1105 | Wash water / brine exchanger | U-1 | U1846.7 | shell side: 175 psi at 320 °F; tube side: 285 psi at 270 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
-| E-1112 | Brine cooler | U-1 | F9370.7 | shell side: 165 psi at 210 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
+| E-1112 | Brine cooler | U-1 | F9370.7 | shell side: 165 psi at 210 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
 | E-1106 | Crude / gas oil exchanger | U-1 | V9227.7 | shell side: 215 psi at 660 °F; tube side: 400 psi at 335 °F | 36 in × 20 ft | 0.625 | SA-516-70 | spot | none | -20 | 20,972 |
 | E-1107 | Crude / gas oil pumparound exchanger | U-1 | W7608.7 | shell side: 165 psi at 660 °F; tube side: 400 psi at 450 °F | 48 in × 20 ft | 0.75 | SA-516-70 | spot | none | -20 | 38,100 |
 | E-1108 | Crude / vacuum gas oil pumparound exchanger | U-1 | G5989.7 | shell side: 260 psi at 600 °F; tube side: 455 psi at 505 °F | 54 in × 20 ft | 0.875 | SA-516-70 | spot | none | -20 | 49,340 |
@@ -130,11 +130,11 @@ Separates the crude by boiling range into gas, naphtha, kerosene, diesel, gas oi
 | A-1101B | Overhead air condenser | U-1A | P9188.7 | headers and tubes: 50 psi at 300 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1101C | Overhead air condenser | U-1A | N1807.7 | headers and tubes: 50 psi at 300 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1101D | Overhead air condenser | U-1A | W5950.7 | headers and tubes: 50 psi at 300 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1110 | Overhead trim condenser | U-1 | H6132.7 | shell side: 50 psi at 190 °F; tube side: 85 psi at 155 °F | 36 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,716 |
+| E-1110 | Overhead trim condenser | U-1 | H6132.7 | shell side: 50 psi at 190 °F; tube side: 140 psi at 155 °F | 36 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,716 |
 | A-1102 | Top pumparound air cooler | U-1A | N3523.7 | headers and tubes: 165 psi at 295 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1111 | Kerosene trim cooler | U-1 | G7751.7 | shell side: 215 psi at 250 °F; tube side: 85 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
+| E-1111 | Kerosene trim cooler | U-1 | G7751.7 | shell side: 215 psi at 250 °F; tube side: 140 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
 | A-1103 | Diesel air cooler | U-1A | P1904.7 | headers and tubes: 215 psi at 285 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1113 | Vacuum residue steam generator | U-1 | E1989.7 | shell side: 145 psi at 560 °F; tube side: 175 psi at 350 °F | 36 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,716 |
+| E-1113 | Vacuum residue steam generator | U-1 | E1989.7 | shell side: 145 psi at 560 °F; tube side: 175 psi at 370 °F | 36 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,716 |
 
 ### Unit 12: Vacuum distillation
 
@@ -144,13 +144,13 @@ Distils the atmospheric residue again under vacuum, so that gas oil for the crac
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | C-1201 | Vacuum column | U-1 | C6025.7 | vessel: 50 psi and full vacuum at 800 °F | 228 in × 101.5 ft | 1.625 | SA-516-70 | full | post-weld heat treated | -20 | 414,458 |
 | D-1201 | Ejector hotwell | U-1A | H6546.7 | vessel: 50 psi at 275 °F | 36 in × 15 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 2,968 |
-| J-1201-C1 | Vacuum ejector set, three stages with condensers: condenser 1 | U-1 | V3179.7 | shell side: 50 psi and full vacuum at 330 °F; tube side: 85 psi at 155 °F | 60 in × 20 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 70,260 |
-| J-1201-C2 | Vacuum ejector set, three stages with condensers: condenser 2 | U-1 | Y4798.7 | shell side: 50 psi and full vacuum at 265 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 5,653 |
-| J-1201-C3 | Vacuum ejector set, three stages with condensers: condenser 3 | U-1 | X6417.7 | shell side: 50 psi and full vacuum at 275 °F; tube side: 85 psi at 155 °F | 12 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 2,756 |
+| J-1201-C1 | Vacuum ejector set, three stages with condensers: condenser 1 | U-1 | V3179.7 | shell side: 50 psi and full vacuum at 330 °F; tube side: 140 psi at 155 °F | 60 in × 20 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 70,260 |
+| J-1201-C2 | Vacuum ejector set, three stages with condensers: condenser 2 | U-1 | Y4798.7 | shell side: 50 psi and full vacuum at 265 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 5,653 |
+| J-1201-C3 | Vacuum ejector set, three stages with condensers: condenser 3 | U-1 | X6417.7 | shell side: 50 psi and full vacuum at 275 °F; tube side: 140 psi at 155 °F | 12 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 2,756 |
 | A-1201A | Light vacuum gas oil cooler | U-1A | P4670.7 | headers and tubes: 220 psi at 350 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1201B | Light vacuum gas oil cooler | U-1A | L3051.7 | headers and tubes: 220 psi at 350 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1201 | Heavy vacuum gas oil steam generator | U-1 | R2335.7 | shell side: 260 psi at 600 °F; tube side: 275 psi at 415 °F | 36 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 19,840 |
-| E-1202 | Quench cooler (steam generator) | U-1 | P3954.7 | shell side: 260 psi at 740 °F; tube side: 275 psi at 415 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
+| E-1201 | Heavy vacuum gas oil steam generator | U-1 | R2335.7 | shell side: 260 psi at 600 °F; tube side: 275 psi at 450 °F | 36 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 19,840 |
+| E-1202 | Quench cooler (steam generator) | U-1 | P3954.7 | shell side: 260 psi at 740 °F; tube side: 275 psi at 450 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
 
 ### Unit 13: Naphtha hydrotreater and splitter
 
@@ -168,14 +168,14 @@ Removes sulfur and nitrogen from the naphtha with hydrogen over a catalyst, beca
 | R-1301 | Hydrotreating reactor | U-1 | V7215.7 | vessel: 455 psi at 660 °F | 78 in × 22.5 ft | 1.25 | SA-387-11 | spot | none | -20 | 38,703 |
 | A-1301A | Reactor effluent air cooler | U-1A | N7395.7 | headers and tubes: 500 psi at 355 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1301B | Reactor effluent air cooler | U-1A | S9014.7 | headers and tubes: 500 psi at 355 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1302 | Effluent trim cooler | U-1 | V2965.7 | shell side: 500 psi at 190 °F; tube side: 85 psi at 155 °F | 30 in × 20 ft | 0.625 | SA-516-70 | spot | none | -20 | 15,149 |
+| E-1302 | Effluent trim cooler | U-1 | V2965.7 | shell side: 500 psi at 190 °F; tube side: 140 psi at 155 °F | 30 in × 20 ft | 0.625 | SA-516-70 | spot | none | -20 | 15,149 |
 | E-1303 | Stripper feed / bottoms exchanger | U-1 | W1346.7 | shell side: 210 psi at 450 °F; tube side: 235 psi at 350 °F | 30 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 13,296 |
 | A-1302 | Stripper overhead condenser | U-1A | G4489.7 | headers and tubes: 205 psi at 250 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1304 | Stripper reboiler | U-1 | T2251.7 | shell side: 210 psi at 450 °F; tube side: 660 psi at 700 °F | 24 in × 20 ft | 0.625 | SA-516-70 | spot | none | -20 | 10,150 |
+| E-1304 | Stripper reboiler | U-1 | T2251.7 | shell side: 210 psi at 450 °F; tube side: 685 psi at 700 °F | 24 in × 20 ft | 0.625 | SA-516-70 | spot | none | -20 | 10,150 |
 | A-1303A | Splitter overhead condenser | U-1A | V1397.7 | headers and tubes: 50 psi at 230 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1303B | Splitter overhead condenser | U-1A | U5540.7 | headers and tubes: 50 psi at 230 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1305 | Light naphtha cooler | U-1 | U9632.7 | shell side: 145 psi at 180 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
-| E-1306 | Splitter reboiler | U-1 | R5489.7 | shell side: 50 psi at 360 °F; tube side: 175 psi at 450 °F | 36 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,716 |
+| E-1305 | Light naphtha cooler | U-1 | U9632.7 | shell side: 145 psi at 180 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
+| E-1306 | Splitter reboiler | U-1 | R5489.7 | shell side: 50 psi at 360 °F; tube side: 185 psi at 450 °F | 36 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,716 |
 | A-1304 | Heavy naphtha rundown cooler | U-1A | N7727.7 | headers and tubes: 160 psi at 360 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 
 ### Unit 14: Catalytic reformer and hydrogen purification
@@ -201,13 +201,13 @@ Rearranges heavy naphtha into high-octane reformate for gasoline, and in doing s
 | R-1403 | Third reforming reactor | U-1 | D4888.7 | vessel: 360 psi at 1,000 °F | 96 in × 21.5 ft | 2.125 | SA-387-11 | full | post-weld heat treated | -20 | 63,379 |
 | A-1401A | Product condenser | U-1A | U8772.7 | headers and tubes: 340 psi at 580 °F | 268 tubes of 1 in × 32 ft | — | SA-387-11 | spot | none | -20 | 16,243 |
 | A-1401B | Product condenser | U-1A | V4629.7 | headers and tubes: 340 psi at 580 °F | 268 tubes of 1 in × 32 ft | — | SA-387-11 | spot | none | -20 | 16,243 |
-| E-1402 | Product trim cooler | U-1 | W2616.7 | shell side: 335 psi at 190 °F; tube side: 85 psi at 155 °F | 30 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 14,219 |
-| E-1403 | Net gas cooler | U-1 | V4235.7 | shell side: 585 psi at 280 °F; tube side: 85 psi at 155 °F | 12 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 2,377 |
+| E-1402 | Product trim cooler | U-1 | W2616.7 | shell side: 335 psi at 190 °F; tube side: 140 psi at 155 °F | 30 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 14,219 |
+| E-1403 | Net gas cooler | U-1 | V4235.7 | shell side: 585 psi at 280 °F; tube side: 140 psi at 155 °F | 12 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 2,377 |
 | E-1404 | Stabiliser feed / bottoms exchanger | U-1 | Y3330.7 | shell side: 250 psi at 495 °F; tube side: 275 psi at 350 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
-| E-1405 | Stabiliser condenser | U-1 | X4949.7 | shell side: 245 psi at 210 °F; tube side: 85 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
-| E-1406 | Stabiliser reboiler | U-1 | B9092.7 | shell side: 250 psi at 495 °F; tube side: 660 psi at 700 °F | 30 in × 20 ft | 0.75 | SA-516-70 | spot | none | -20 | 16,087 |
+| E-1405 | Stabiliser condenser | U-1 | X4949.7 | shell side: 245 psi at 210 °F; tube side: 140 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
+| E-1406 | Stabiliser reboiler | U-1 | B9092.7 | shell side: 250 psi at 495 °F; tube side: 685 psi at 700 °F | 30 in × 20 ft | 0.75 | SA-516-70 | spot | none | -20 | 16,087 |
 | A-1402 | Reformate air cooler | U-1A | W5940.7 | headers and tubes: 240 psi at 280 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1407 | Reformate trim cooler | U-1 | A1711.7 | shell side: 235 psi at 190 °F; tube side: 85 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
+| E-1407 | Reformate trim cooler | U-1 | A1711.7 | shell side: 235 psi at 190 °F; tube side: 140 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
 
 ### Unit 15: Kerosene hydrotreater
 
@@ -223,10 +223,10 @@ Removes sulfur from kerosene with hydrogen so that it meets jet fuel quality.
 | R-1501 | Hydrotreating reactor | U-1 | V7057.7 | vessel: 455 psi at 665 °F | 72 in × 23.5 ft | 1.125 | SA-387-11 | spot | none | -20 | 34,052 |
 | E-1505 | Reactor effluent / stripper feed exchanger | U-1 | K9722.7 | shell side: 420 psi at 665 °F; tube side: 85 psi at 435 °F | 24 in × 20 ft | 0.5 | SA-387-11 | spot | none | -20 | 9,414 |
 | A-1501 | Reactor effluent air cooler | U-1A | B2866.7 | headers and tubes: 500 psi at 315 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1502 | Effluent trim cooler | U-1 | G1627.7 | shell side: 500 psi at 190 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
+| E-1502 | Effluent trim cooler | U-1 | G1627.7 | shell side: 500 psi at 190 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
 | E-1503 | Stripper feed / bottoms exchanger | U-1 | H9008.7 | shell side: 180 psi at 420 °F; tube side: 95 psi at 370 °F | 36 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,716 |
 | A-1502 | Stripper overhead condenser | U-1A | C1247.7 | headers and tubes: 65 psi at 300 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1504 | Kerosene trim cooler | U-1 | J2341.7 | shell side: 180 psi at 210 °F; tube side: 85 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
+| E-1504 | Kerosene trim cooler | U-1 | J2341.7 | shell side: 180 psi at 210 °F; tube side: 140 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
 | F-1501 | Product coalescer | U-1A | X5429.7 | vessel: 180 psi at 150 °F | 30 in × 5 ft | 0.375 | SA-516-70 | spot | none | -20 | 1,470 |
 
 ### Unit 16: Diesel hydrotreater
@@ -250,7 +250,7 @@ Removes sulfur from diesel and light cycle oil with hydrogen at high pressure to
 | E-1602 | Stripper feed / bottoms exchanger | U-1 | M7286.7 | shell side: 225 psi at 470 °F; tube side: 165 psi at 420 °F | 48 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 34,977 |
 | A-1602 | Stripper overhead condenser | U-1A | B2202.7 | headers and tubes: 125 psi at 350 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1603 | Diesel air cooler | U-1A | A3821.7 | headers and tubes: 225 psi at 240 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1603 | Diesel trim cooler | U-1 | L8905.7 | shell side: 225 psi at 190 °F; tube side: 85 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
+| E-1603 | Diesel trim cooler | U-1 | L8905.7 | shell side: 225 psi at 190 °F; tube side: 140 psi at 155 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
 | F-1602 | Product coalescer and salt dryer | U-1A | A4389.7 | vessel: 225 psi at 160 °F | 42 in × 7 ft | 0.5 | SA-516-70 | spot | none | -20 | 3,082 |
 
 ### Unit 17: Fluid catalytic cracker and gas concentration
@@ -279,30 +279,30 @@ Cracks gas oil on hot fluidised catalyst into gasoline and liquefied gas, burnin
 | D-1707 | Depropaniser receiver | U-1A | E7287.7 | vessel: 235 psi at 160 °F | 72 in × 18 ft | 0.625 | SA-516-70 | spot | none | -20 | 12,140 |
 | E-1701 | Feed / light cycle oil pumparound exchanger | U-1 | W6736.7 | shell side: 210 psi at 500 °F; tube side: 330 psi at 450 °F | 36 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 19,840 |
 | E-1702 | Feed / slurry exchanger | U-1 | X2593.7 | shell side: 210 psi at 730 °F; tube side: 330 psi at 500 °F | 30 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 14,219 |
-| E-1703 | Flue gas cooler (steam generator) | P-3 | Y9974.7 | steam and water side (shell and steam drum): 770 psi at 540 °F; gas side (tubes and channels): 50 psi at 650 °F | 126 in × 20 ft | 2.875 | SA-516-70 | full | post-weld heat treated | -20 | 313,612 |
-| E-1704 | Slurry steam generator | U-1 | A5831.7 | shell side: 210 psi at 710 °F; tube side: 275 psi at 415 °F | 48 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 34,977 |
-| E-1705 | Slurry product cooler | U-1 | B4212.7 | shell side: 210 psi at 530 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
+| E-1703 | Flue gas cooler (steam generator) | P-3 | Y9974.7 | steam and water side (shell and steam drum): 770 psi at 700 °F; gas side (tubes and channels): 50 psi at 650 °F | 126 in × 20 ft | 3.125 | SA-516-70 | full | post-weld heat treated | -20 | 328,404 |
+| E-1704 | Slurry steam generator | U-1 | A5831.7 | shell side: 210 psi at 710 °F; tube side: 275 psi at 450 °F | 48 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 34,977 |
+| E-1705 | Slurry product cooler | U-1 | B4212.7 | shell side: 210 psi at 530 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
 | F-1701 | Slurry filter | U-1A | X1335.7 | vessel: 210 psi at 250 °F | 24 in × 4 ft | 0.375 | SA-516-70 | spot | none | -20 | 1,015 |
 | E-1715 | Debutaniser reboiler | U-1 | A8689.7 | shell side: 210 psi at 650 °F; tube side: 185 psi at 435 °F | 36 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 18,716 |
 | E-1707 | Stripper reboiler | U-1 | Y7450.7 | shell side: 210 psi at 440 °F; tube side: 240 psi at 335 °F | 30 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 13,296 |
 | A-1702 | Light cycle oil air cooler | U-1A | G4861.7 | headers and tubes: 345 psi at 485 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1708 | Sponge oil cooler | U-1 | E4403.7 | shell side: 345 psi at 190 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
+| E-1708 | Sponge oil cooler | U-1 | E4403.7 | shell side: 345 psi at 190 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
 | A-1701A | Main column overhead condenser | U-1A | J9311.7 | headers and tubes: 50 psi at 320 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1701B | Main column overhead condenser | U-1A | M1930.7 | headers and tubes: 50 psi at 320 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1701C | Main column overhead condenser | U-1A | L3549.7 | headers and tubes: 50 psi at 320 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1709 | Overhead trim condenser | U-1 | F2784.7 | shell side: 50 psi at 190 °F; tube side: 85 psi at 155 °F | 48 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 33,428 |
+| E-1709 | Overhead trim condenser | U-1 | F2784.7 | shell side: 50 psi at 190 °F; tube side: 140 psi at 155 °F | 48 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 33,428 |
 | A-1703 | Interstage cooler | U-1A | H3242.7 | headers and tubes: 85 psi at 250 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
 | A-1704 | High-pressure cooler | U-1A | E4147.7 | headers and tubes: 300 psi at 280 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1710 | High-pressure trim cooler | U-1 | F4546.7 | shell side: 300 psi at 180 °F; tube side: 85 psi at 155 °F | 36 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 19,840 |
+| E-1710 | High-pressure trim cooler | U-1 | F4546.7 | shell side: 300 psi at 180 °F; tube side: 140 psi at 155 °F | 36 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 19,840 |
 | E-1711 | Stripper feed / debutaniser bottoms exchanger | U-1 | E6165.7 | shell side: 185 psi at 400 °F; tube side: 315 psi at 230 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
-| E-1712 | Debutaniser condenser | U-1 | H1308.7 | shell side: 175 psi at 190 °F; tube side: 85 psi at 155 °F | 54 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 43,971 |
+| E-1712 | Debutaniser condenser | U-1 | H1308.7 | shell side: 175 psi at 190 °F; tube side: 140 psi at 155 °F | 54 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 43,971 |
 | A-1705 | Gasoline air cooler | U-1A | F2528.7 | headers and tubes: 175 psi at 285 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1717 | Gasoline trim cooler | U-1 | C5451.7 | shell side: 170 psi at 190 °F; tube side: 85 psi at 155 °F | 30 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 13,296 |
+| E-1717 | Gasoline trim cooler | U-1 | C5451.7 | shell side: 170 psi at 190 °F; tube side: 140 psi at 155 °F | 30 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 13,296 |
 | V-1704 | Gasoline caustic wash drum | U-1A | F8560.7 | vessel: 160 psi at 150 °F | 72 in × 15 ft | 0.5 | SA-516-70 | spot | none | -20 | 9,048 |
 | V-1703 | Liquefied gas caustic wash drum | U-1A | X1893.7 | vessel: 260 psi at 160 °F | 66 in × 13.75 ft | 0.625 | SA-516-70 | spot | none | -20 | 9,299 |
-| E-1713 | Depropaniser condenser | U-1 | G2927.7 | shell side: 240 psi at 170 °F; tube side: 85 psi at 155 °F | 48 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 34,977 |
-| E-1714 | Depropaniser reboiler | U-1 | B7070.7 | shell side: 250 psi at 285 °F; tube side: 175 psi at 450 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
-| E-1716 | Four-carbon cooler | U-1 | D3832.7 | shell side: 250 psi at 285 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
+| E-1713 | Depropaniser condenser | U-1 | G2927.7 | shell side: 240 psi at 170 °F; tube side: 140 psi at 155 °F | 48 in × 20 ft | 0.5 | SA-516-70 | spot | none | -20 | 34,977 |
+| E-1714 | Depropaniser reboiler | U-1 | B7070.7 | shell side: 250 psi at 285 °F; tube side: 185 psi at 450 °F | 24 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 8,685 |
+| E-1716 | Four-carbon cooler | U-1 | D3832.7 | shell side: 250 psi at 285 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | none | -20 | 4,929 |
 
 ### Unit 18: Sulfur block
 
@@ -317,24 +317,24 @@ Takes the hydrogen sulfide out of circulation: regenerates the amine that washes
 | D-1804 | Sour water degassing drum | U-1A | X1763.7 | vessel: 50 psi at 230 °F | 72 in × 18 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 7,841 |
 | D-1805 | Stripper gas knock-out drum | U-1A | Y9144.7 | vessel: 50 psi at 230 °F | 36 in × 9 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 2,412 |
 | C-1802 | Sour water stripper | U-1 | U9230.7 | vessel: 55 psi at 315 °F | 54 in × 80 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 37,336 |
-| H-1801 | Reaction furnace with waste heat boiler | U-1 | M6152.7 | furnace chamber and boiler tubes: 50 psi at 650 °F; waste heat boiler shell: 770 psi at 540 °F | 72 in × 30 ft | 0.75 | SA-516-70 | full | post-weld heat treated | -20 | 113,264 |
+| H-1801 | Reaction furnace with waste heat boiler | U-1 | M6152.7 | furnace chamber and boiler tubes: 50 psi at 650 °F; waste heat boiler shell: 770 psi at 700 °F | 72 in × 30 ft | 0.75 | SA-516-70 | full | post-weld heat treated | -20 | 115,833 |
 | E-1801 | Lean / rich amine exchanger | U-1 | G5581.7 | shell side: 445 psi at 305 °F; tube side: 150 psi at 260 °F | 30 in × 20 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 14,219 |
 | A-1801 | Regenerator overhead condenser | U-1A | J2169.7 | headers and tubes: 50 psi at 275 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | full | post-weld heat treated | -20 | 16,243 |
-| E-1802 | Regenerator reboiler | U-1 | K9724.7 | shell side: 50 psi at 305 °F; tube side: 75 psi at 350 °F | 48 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 33,428 |
+| E-1802 | Regenerator reboiler | U-1 | K9724.7 | shell side: 50 psi at 305 °F; tube side: 80 psi at 370 °F | 48 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 33,428 |
 | A-1802 | Lean amine air cooler | U-1A | M6312.7 | headers and tubes: 445 psi at 230 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | post-weld heat treated | -20 | 16,243 |
-| E-1803 | Lean amine trim cooler | U-1 | J2343.7 | shell side: 445 psi at 180 °F; tube side: 85 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 4,929 |
+| E-1803 | Lean amine trim cooler | U-1 | J2343.7 | shell side: 445 psi at 180 °F; tube side: 140 psi at 155 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 4,929 |
 | F-1801 | Lean amine filter | U-1A | Y3094.7 | vessel: 445 psi at 170 °F | 24 in × 4 ft | 0.5 | SA-516-70 | spot | post-weld heat treated | -20 | 1,201 |
 | E-1804 | Stripper feed / bottoms exchanger | U-1 | D6486.7 | shell side: 185 psi at 315 °F; tube side: 160 psi at 250 °F | 18 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 4,929 |
 | A-1803 | Stripper pumparound cooler | U-1A | L7931.7 | headers and tubes: 110 psi at 240 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | post-weld heat treated | -20 | 16,243 |
-| E-1805 | Stripper reboiler | U-1 | C8105.7 | shell side: 55 psi at 315 °F; tube side: 75 psi at 350 °F | 42 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 25,679 |
+| E-1805 | Stripper reboiler | U-1 | C8105.7 | shell side: 55 psi at 315 °F; tube side: 80 psi at 370 °F | 42 in × 20 ft | 0.375 | SA-516-70 | spot | post-weld heat treated | -20 | 25,679 |
 | A-1804 | Stripped water cooler | U-1A | P7026.7 | headers and tubes: 185 psi at 215 °F | 268 tubes of 1 in × 32 ft | — | SA-516-70 | spot | none | -20 | 16,243 |
-| E-1806 | First sulfur condenser | U-1 | F3248.7 | shell side: 175 psi at 350 °F; tube side: 50 psi at 650 °F | 30 in × 20 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 13,296 |
-| E-1807 | First reheater | U-1 | E4867.7 | shell side: 660 psi at 700 °F; tube side: 50 psi at 500 °F | 24 in × 20 ft | 0.625 | SA-516-70 | full | post-weld heat treated | -20 | 10,150 |
+| E-1806 | First sulfur condenser | U-1 | F3248.7 | shell side: 175 psi at 370 °F; tube side: 50 psi at 650 °F | 30 in × 20 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 13,296 |
+| E-1807 | First reheater | U-1 | E4867.7 | shell side: 685 psi at 700 °F; tube side: 50 psi at 500 °F | 24 in × 20 ft | 0.625 | SA-516-70 | full | post-weld heat treated | -20 | 10,150 |
 | R-1801 | First converter | U-1 | F8426.7 | vessel: 50 psi at 630 °F | 54 in × 13.5 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 4,511 |
-| E-1808 | Second sulfur condenser | U-1 | S9010.7 | shell side: 175 psi at 350 °F; tube side: 50 psi at 630 °F | 30 in × 20 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 13,296 |
-| E-1809 | Second reheater | U-1 | R1629.7 | shell side: 660 psi at 700 °F; tube side: 50 psi at 470 °F | 24 in × 20 ft | 0.625 | SA-516-70 | full | post-weld heat treated | -20 | 10,150 |
+| E-1808 | Second sulfur condenser | U-1 | S9010.7 | shell side: 175 psi at 370 °F; tube side: 50 psi at 630 °F | 30 in × 20 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 13,296 |
+| E-1809 | Second reheater | U-1 | R1629.7 | shell side: 685 psi at 700 °F; tube side: 50 psi at 470 °F | 24 in × 20 ft | 0.625 | SA-516-70 | full | post-weld heat treated | -20 | 10,150 |
 | R-1802 | Second converter | U-1 | G6807.7 | vessel: 50 psi at 495 °F | 54 in × 13.5 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 4,511 |
-| E-1810 | Final sulfur condenser | U-1 | X9963.7 | shell side: 175 psi at 350 °F; tube side: 50 psi at 495 °F | 24 in × 20 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 8,685 |
+| E-1810 | Final sulfur condenser | U-1 | X9963.7 | shell side: 175 psi at 370 °F; tube side: 50 psi at 495 °F | 24 in × 20 ft | 0.375 | SA-516-70 | full | post-weld heat treated | -20 | 8,685 |
 
 ### Unit 19: Utilities
 
@@ -435,7 +435,7 @@ Boiler external piping (8 lines): from a Section I boiler to its first stop valv
 
 | Line | From | To | Fluid |
 | --- | --- | --- | --- |
-| 3"-P1200-SC-17502 | boiler feed water header | E-1703 feed water in | boiler feed water |
+| 3"-P1200-SC-17552 | control station of E-1703 feed water in | E-1703 feed water in | boiler feed water |
 | 8"-P1200-LS-17503 | E-1703 steam out | steam, 600 psi header | steam, 600 psi |
 | 4"-P1200-P-19019 | line 8"-P1200-P-19018 | B-1901 feed water | boiler feed water |
 | 4"-P1200-P-19020 | line 4"-P1200-P-19019 | B-1902 feed water | boiler feed water |

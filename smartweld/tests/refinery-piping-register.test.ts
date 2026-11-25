@@ -7,7 +7,7 @@ import type { PipingModel } from '../src/generator/piping';
 import { unitPiping } from '../src/refinery/unitPiping';
 import { pipingRegister, pipingRegisterDocument, serializeRegister, VALVE_BODY, type PipingRegister } from '../src/refinery/pipingRegister';
 import { lineRecords, lineNumber, fittingCrn, designCrn, fluidService, serviceOf, utilitySeq, MAKERS, MATERIALS, BOLTING } from '../src/refinery/registry';
-import { sizing } from '../src/refinery/sizing';
+import { sizing, headerDesign } from '../src/refinery/sizing';
 import { processModel } from '../src/refinery/process';
 
 const src = new URL('../public/refinery/piping/', import.meta.url), dir = new URL('../public/refinery/registry/piping/', import.meta.url);
@@ -29,19 +29,24 @@ describe('plant 3: the piping register of a piped unit (SW-REG-9)', () => {
     const M = processModel(), Z = sizing();
     for (const u of units) {
       const r = registers.get(u)!, base = new Map(lineRecords().filter(q => q.unit === u).map(q => [q.number, q])), sh = M.sheet(u), z = Z.get(u)!;
-      for (const l of r.lines.filter(q => q.origin === 'process' || q.origin === 'utility')) {
+      // a utility connection with a control station is two lines of the code layer's register (SW-RPI-9): the part beyond the station has its own record too
+      for (const l of r.lines.filter(q => q.origin === 'process' || q.origin === 'utility' || (q.origin === 'control' && base.has(q.number)))) {
         const b = base.get(l.number)!; expect(b, l.number).toBeDefined(); expect(l.of).toBeUndefined();
         expect(l.lineClass).toBe(b.lineClass.value); expect(l.fluidService).toBe(b.fluidService.value); expect(l.severity).toBe(b.severity.value.level); expect(l.pipingSystemRegistration).toBe(b.pipingSystemRegistration.value); expect(l.material).toBe(b.materials.value.code); expect(l.examination).toBe(b.examination.value);
       }
       // the part after a control station: the flowsheet line's fluid and material; its own class, never higher than the line ahead
-      for (const l of r.lines.filter(q => q.origin === 'control')) { const a = r.lines.find(q => q.number === l.of)!; expect(a, l.number).toBeDefined(); expect(a.station).toBe(l.station); expect(l.fluid).toBe(a.fluid); expect(l.material).toBe(a.material); expect(Number(l.pipeClass.slice(1))).toBeLessThanOrEqual(Number(a.pipeClass.slice(1))); expect(l.designP).toBeLessThanOrEqual(a.designP); }
+      for (const l of r.lines.filter(q => q.origin === 'control')) { const a = base.has(l.number) ? r.lines.find(q => q.origin === 'utility' && q.station === l.station)! : r.lines.find(q => q.number === l.of)!; expect(a, l.number).toBeDefined(); expect(l.station).toBeTruthy(); expect(a.station).toBe(l.station); expect(l.fluid).toBe(a.fluid); expect(l.material).toBe(a.material); expect(Number(l.pipeClass.slice(1))).toBeLessThanOrEqual(Number(a.pipeClass.slice(1))); expect(l.designP).toBeLessThanOrEqual(a.designP); }
       for (const l of r.lines.filter(q => q.origin === 'spare' || q.origin === 'root')) { expect(l.of, l.number).toBeDefined(); expect(base.has(l.of!)).toBe(true); expect(l.fluid).toBe(base.get(l.of!)!.fluid); }
-      // a header: its fluid's group letter, at the largest design conditions of its connections
-      for (const h of r.lines.filter(q => q.origin === 'header')) { const taps = r.lines.filter(q => q.origin === 'utility' && q.fluid === h.fluid); expect(taps.length).toBeGreaterThan(0); expect(h.designP).toBe(Math.max(...taps.map(t => t.designP))); expect(h.designT).toBe(Math.max(...taps.map(t => t.designT))); expect(h.number).toContain(`-${serviceOf(h.fluid, h.pipeClass, true)}-`); }
+      // a header: its fluid's group letter, of its whole system's conditions and class (SW-PRC-19); a connection without a control station is designed for no less
+      for (const h of r.lines.filter(q => q.origin === 'header')) {
+        const hd = headerDesign(h.fluid), taps = r.lines.filter(q => q.origin === 'utility' && q.fluid === h.fluid); expect(taps.length).toBeGreaterThan(0);
+        expect(h.designP).toBe(hd.designP); expect(h.designT).toBe(hd.designT); expect(h.pipeClass).toBe(hd.cls); expect(h.number).toContain(`-${serviceOf(h.fluid, h.pipeClass, true, h.size)}-`);
+        for (const c of taps.filter(q => !q.station)) { expect(c.designP, c.number).toBeGreaterThanOrEqual(hd.designP); expect(c.designT, c.number).toBeGreaterThanOrEqual(hd.designT); }
+      }
       // numbers: a flowsheet line is a process line whatever it carries, and every one piped on this plot is in the register (a line wholly of another plot, the cooling tower's, is that plot's); the utility numbers are 401 to 600
       const piped = new Set(unitPiping(u).lines.filter(l => l.origin === 'process').map(l => l.flow!)); expect(piped.size).toBeGreaterThan(0.8 * sh.lines.length);
       sh.lines.forEach((f, i) => { const no = lineNumber(u, i + 1, z.lines[i].NPS, z.lines[i].cls, f.s.fluid); expect(no).toContain('-P-'); expect(r.lines.some(q => q.number === no), no).toBe(piped.has(i)); });
-      for (const l of r.lines) expect(utilitySeq(Number(l.number.slice(-5)) - u * 1000), l.number).toBe(l.origin === 'utility' || l.origin === 'header');
+      for (const l of r.lines) expect(utilitySeq(Number(l.number.slice(-5)) - u * 1000), l.number).toBe(l.origin === 'utility' || l.origin === 'header' || (l.origin === 'control' && base.has(l.number)));
     }
   });
   it('has a record for every component of every line and of every spool, each once', () => {

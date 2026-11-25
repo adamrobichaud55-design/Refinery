@@ -5,7 +5,7 @@
 import { describe, it, expect } from 'vitest';
 import { readFileSync, existsSync } from 'node:fs';
 import { processModel } from '../src/refinery/process';
-import { sizing, allowable, wall, sphereWall, fireTubeCount } from '../src/refinery/sizing';
+import { sizing, allowable, wall, sphereWall, fireTubeCount, stationed, headerDesign } from '../src/refinery/sizing';
 import { cells, siteParts } from '../src/refinery/assemble';
 import { FLUIDS } from '../src/refinery/fluids';
 import { equipmentRecords, lineRecords, lineClasses, coilRecords, componentRecords, registrationIndex, stressCheck, fluidService, severity, designCrn, fittingCrn, FITTING_CATEGORIES, MAKERS, NOTICE } from '../src/refinery/registry';
@@ -132,9 +132,23 @@ describe('plant 3: what a record says (SW-REG-3)', () => {
 
 describe('plant 3: lines, their fluid service, line class and severity (SW-REG-4, SW-REG-5, SW-REG-8)', () => {
   it('has a record for every process line and utility connection, each numbered once', () => {
-    expect(L.length).toBe(M.sheets.reduce((a, s) => a + s.lines.length, 0) + [...Z.values()].reduce((a, z) => a + z.utils.length, 0));
+    // a utility connection with a control valve station is two records, as it is piped (SW-PRC-19, SW-RPI-9)
+    expect(L.length).toBe(M.sheets.reduce((a, s) => a + s.lines.length, 0) + [...Z.values()].reduce((a, z) => a + z.utils.length + z.utils.filter(stationed).length, 0));
     expect(new Set(L.map(l => l.number)).size).toBe(L.length);
     for (const l of L) { expect(l.number).toMatch(/^(\d+(\.\d+)?|1\/2|3\/4)"-P\d+-[A-Z]+-\d{5}$/); /* a size as SW-LL-1 writes it, with no hyphen of its own */ expect(Math.floor(Number(l.number.slice(-5)) / 1000)).toBe(l.unit); expect(l.code.value).toBe('ASME B31.3 Process Piping'); expect(l.demonstration).toBe(true); }
+  });
+  it('a utility connection with a control valve station is two lines: the part on the header\'s side of the header\'s class and conditions, the part on the item\'s side of the item\'s own (SW-PRC-19, SW-RPI-9)', () => {
+    let n = 0;
+    for (const [unit, z] of Z) z.utils.forEach((u, i) => {
+      const first = L.filter(l => l.unit === unit && Number(l.number.slice(-5)) === unit * 1000 + 501 + i); expect(first.length, `${u.tag} ${u.port}`).toBe(1);
+      if (!stationed(u)) { expect(first[0].pipeClass.value).toBe(u.cls); expect(first[0].design.value.P).toBe(u.designP); return; }
+      n++; const second = L.find(l => l.unit === unit && Number(l.number.slice(-5)) === unit * 1000 + 551 + z.utils.slice(0, i).filter(stationed).length)!, hd = headerDesign(u.fluid);
+      const [own, hdr] = u.dir === 'to' ? [second, first[0]] : [first[0], second];
+      expect(first[0].to).toBe(`control station of ${u.tag} ${u.port}`); expect(second.from).toBe(first[0].to); expect(second.size.value).toBe(first[0].size.value);
+      expect(hdr.pipeClass.value).toBe(hd.cls); expect(hdr.design.value.P).toBe(hd.designP); expect(hdr.design.value.T).toBe(hd.designT); expect(own.pipeClass.value).toBe(u.cls); expect(own.design.value.P).toBe(u.designP);
+      expect(u.dir === 'to' ? second.to : first[0].from).toBe(`${u.tag} ${u.port}`);
+    });
+    expect(n).toBeGreaterThan(16);
   });
   it('designates the fluid service by the fluid and the design conditions', () => {
     expect(fluidService('CWS', 100, 150)).toBe('D'); expect(fluidService('CWS', 155, 150)).toBe('Normal'); expect(fluidService('LS', 80, 350)).toBe('D'); expect(fluidService('LS', 80, 370)).toBe('Normal');
