@@ -5612,6 +5612,11 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   which the generator lays direct (SW-RT-*), the valves and blinds beyond the limit
   spools, and the utility headers with their branches (SW-PWY-11, SW-PWY-12; added
   2026-11-25). As SW-RPI-7, with the same kept room for the valves of lines still to come.
+  A lane kept for a line still to be laid is held, while a line of another tier is routed,
+  as a solid a pipe's radius and 6 in to either side of its centre (amended 2026-11-25 from
+  the pipe's radius alone: with the cracking unit joined, a 4 in line coming down from the
+  tier above at unit 18's limit passed 6 in from the centre of the lane kept for the lean
+  amine line to the cracker, and that line then found its lane shut).
 - `SW-PWY-7` At a spool. The pipeway's line bolts to the spool's face flange to flange, a
   unit's spool or a limit spool: the valve the generator stands there is not built (as
   SW-RPI-14, by the same correction on its result; where the line is reduced at the spool

@@ -437,7 +437,7 @@ export function pipeway(): Pipeway {
   /** SW-RPI-7: the lane kept for a line not yet routed */
   const kept = (L: RackLane, wideTo: boolean): Placed[] => {
     const d = byNo.get(L.no!)!, lo = xAt(d.from) <= xAt(d.to) ? d.from : d.to, hi = lo === d.from ? d.to : d.from, a = L.x0 + (atEnd(lo) ? 24 : -36), b = L.x1 + (atEnd(hi) ? -24 : 36);
-    const y = laneY(L), r = L.OD / 2, h = keptReach(r), w = wideTo ? Math.max(r, h) : r;
+    const y = laneY(L), r = L.OD / 2, h = keptReach(r), w = wideTo ? Math.max(r, h, r + 6) : r;   // (a pipe's radius and 6 in: a line of another tier that passes this lane on its way down keeps the generator's clearance from the pipe to come)
     return b - a >= 12 ? [block([Math.max(rack.x0 + 6, a), y - h, L.z - w], [Math.min(rack.x1 - 6, b), y + h, L.z + w], 'lane kept')] : [];
   };
   const widest = (t: number) => Math.max(0, ...foreseen.filter(L => L.t === t && L.no !== undefined).map(L => L.OD));
