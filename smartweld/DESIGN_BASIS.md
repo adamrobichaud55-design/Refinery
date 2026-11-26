@@ -1396,6 +1396,15 @@ bore is continuous and every end is a butt-weld bevel.
   sways little; the 20 ft limit stands for heavier lines).
   Reason: the end bay and the rack top of plant 2 left runs with no floor path and no hot-rolled
   steel above.
+  Amended (2026-11-25, plant 3): a stanchion taller than 14 ft is a support post: its round
+  post is the smallest of the post sizes whose outside diameter is at least a fortieth of its
+  height (and no smaller than the post above), on a base plate as wide as the post and 6 in,
+  held by four anchor rods. Reason: a post of the size below a small pipe, at 20 ft or more,
+  would be a wand that sways when touched; at a fortieth of its height a round post is about
+  as stocky as the shortest columns of the rack (a post's radius of gyration is about a third
+  of its diameter, so its height is about 115 of them), and it carries a pipe's weight over a
+  span many times over. No stanchion of plant 1 or plant 2 is taller than 12.5 ft, so none is
+  changed.
 - `SW-PS-10` Vertical runs longer than 10 ft get a trunnion (SW-PS-4) under their lowest elbow,
   standing on a stanchion base when that elbow is at most 10 ft up; otherwise they hang from the
   hanger nearest their top. (Plant 2: vertical runs longer than 6 ft, since its small-bore risers
@@ -5568,6 +5577,26 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   routed by themselves it stood clear: the discharge valve, routed in an earlier run, had
   its stem toward the suction and over it; and two 8 in steam take-off valves turned their
   stems toward a 20 in water header and stood 2.7 in from it.
+- `SW-RPI-17` Supports where the generator's stepping stopped (added 2026-11-25). The generator
+  sets the supports of a run by stepping along it from its start (SW-PS-9) and stops at the
+  first stretch where it finds no steel above and no floor within reach; what lies beyond is
+  left unsupported, though steel may cross it further on. Plant 3's own correction, on the
+  finished model, takes each stretch of a horizontal run longer than its line's span and steps
+  along it from both its ends, as the generator steps (each support at the equal division of
+  what remains, never more than a span from the last, moved in 6 in steps to clear fittings
+  and welds by 5 in), and at each place sets the first of these that stands clear:
+  - a hanger, from a horizontal member of steel above whose bottom is at least the pipe's
+    radius and 6 in over the pipe's axis and at most 20 ft over it, its rod 1 in clear of
+    every line and solid on its way up (SW-PS-9);
+  - a stanchion on a horizontal member of steel directly below (a strut, an intermediate or
+    tier beam of a rack, a yard beam), its base plate on the member's top, at most 10 ft under
+    the pipe, its post 1 in clear of every line and solid, as plant 2's rule stands one on a
+    top-tier beam (SW-PS-9 as amended for plant 2);
+  - a stanchion from the floor below, the top of a pad or grade, where its post, as wide as
+    its base plate, is 1 in clear of every line and solid from the floor to the pipe; to 10 ft
+    the stanchion of SW-PS-9, taller a support post (SW-PS-9 as amended 2026-11-25), to 50 ft.
+  Where no place within a span has either, the stretch is still listed. The correction adds
+  supports only: no line, joint or component moves.
 - `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),
   in inches: x east along the rack from its west end, z south across it from its centre line,
   y up from the bench. It is set on the site by a shift alone. Area number 10; its lines are

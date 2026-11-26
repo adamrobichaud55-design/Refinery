@@ -381,7 +381,28 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "36\"-P150-V-17012/S1",
+   "line": "36\"-P150-V-17012",
+   "lineClass": "H150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 36\" LINE (STANCHION-36x234.0)",
+   "designation": "STANCHION-36x234.0",
+   "key": "STAN|36|P150|234.00",
+   "material": "Grade 36",
+   "weight": 29695.4786,
+   "spool": "loose",
+   "at": {
+    "E": 3741.28,
+    "N": 618,
+    "EL": 1452
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "36\"-P150-V-17012-SP01",
@@ -495,7 +516,7 @@
   "items": 7,
   "welds": 2,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 1,
   "pipeLength": 275.2526,
   "weight": 9767.1372
  }

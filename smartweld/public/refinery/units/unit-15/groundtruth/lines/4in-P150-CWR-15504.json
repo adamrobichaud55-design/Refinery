@@ -2348,7 +2348,48 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "4\"-P150-CWR-15504/S1",
+   "line": "4\"-P150-CWR-15504",
+   "lineClass": "W150",
+   "type": "hanger",
+   "description": "HANGER FOR 4\" LINE (HANGER-4x145.0)",
+   "designation": "HANGER-4x145.0",
+   "key": "HANG|4|P150|145.02",
+   "material": "Grade 36",
+   "weight": 8.6631,
+   "spool": "loose",
+   "at": {
+    "E": 1218,
+    "N": -282,
+    "EL": 1422
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-CWR-15504/S2",
+   "line": "4\"-P150-CWR-15504",
+   "lineClass": "W150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 4\" LINE (STANCHION-4x220.0)",
+   "designation": "STANCHION-4x220.0",
+   "key": "STAN|4|P150|220.00",
+   "material": "Grade 36",
+   "weight": 1755.5275,
+   "spool": "loose",
+   "at": {
+    "E": 1218,
+    "N": -350.6667,
+    "EL": 1422
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "4\"-P150-CWR-15504-SP01",
@@ -2842,7 +2883,7 @@
   "items": 38,
   "welds": 21,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 2,
   "pipeLength": 822.2621,
   "weight": 911.6798
  }

@@ -1147,7 +1147,28 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "24\"-P300-V-17013/S1",
+   "line": "24\"-P300-V-17013",
+   "lineClass": "H300",
+   "type": "stanchion",
+   "description": "STANCHION FOR 24\" LINE (STANCHION-24x486.0)",
+   "designation": "STANCHION-24x486.0",
+   "key": "STAN|24|P300|486.00",
+   "material": "Grade 36",
+   "weight": 42820.6052,
+   "spool": "loose",
+   "at": {
+    "E": 2127,
+    "N": 438,
+    "EL": 1698
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "24\"-P300-V-17013-SP01",
@@ -1414,7 +1435,7 @@
   "items": 17,
   "welds": 12,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 1,
   "pipeLength": 1507.6937,
   "weight": 25579.3351
  }

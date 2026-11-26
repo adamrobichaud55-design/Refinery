@@ -149,14 +149,17 @@ export function makeShoe(id: string, NPS: number, cls: PipeClass, kind: 'shoe' |
 }
 /** Stanchion (SW-PS-9): post from the floor (y = 0) up to a saddle under the pipe bottom at y = h. */
 export function makeStanchion(id: string, NPS: number, cls: PipeClass, h: number): PartSpec {
-  const p = pipeDims(NPS, cls), rp = Math.max(1, (pipeDims(Math.max(2, prevSize(NPS)), cls).OD) / 2), tb = 0.375, sb = 2 * rp + 6;
+  const p = pipeDims(NPS, cls), tall = h > 168, small = Math.max(1, (pipeDims(Math.max(2, prevSize(NPS)), cls).OD) / 2);
+  // SW-PS-9 (amended 2026-11-25): a post taller than 14 ft is the smallest post size whose OD is at least a fortieth of its height, on four anchor rods
+  const rp = tall ? Math.max(small, pipeDims(SIZES_FOR_POST.find(s => pipeDims(s, 'P150').OD >= h / 40) ?? SIZES_FOR_POST[SIZES_FOR_POST.length - 1], 'P150').OD / 2) : small, tb = 0.375, sb = 2 * rp + 6;
+  const rods = tall ? [[-1, -1], [1, -1], [-1, 1], [1, 1]].map(([i, k]) => cylYM(0.25, -0.5, tb + 0.6, i * (sb / 2 - 1.25), k * (sb / 2 - 1.25))) : [cylYM(0.25, -0.5, tb + 0.6, -sb / 2 + 1.25, 0), cylYM(0.25, -0.5, tb + 0.6, sb / 2 - 1.25, 0)];
   const solids: FitSolid[] = [
     { name: 'base plate', mesh: boxM(-sb / 2, 0, -sb / 2, sb / 2, tb, sb / 2), role: 'steel' },
     { name: 'post', mesh: cylYM(rp, tb, h - 0.375), role: 'steel' },
     { name: 'saddle', mesh: boxM(-p.OD * 0.4, h - 0.375, -3, p.OD * 0.4, h, 3), role: 'steel' },
-    { name: 'anchor rods 2 × 1/2', mesh: mergeMeshes([cylYM(0.25, -0.5, tb + 0.6, -sb / 2 + 1.25, 0), cylYM(0.25, -0.5, tb + 0.6, sb / 2 - 1.25, 0)]), role: 'hardware' },
+    { name: tall ? 'anchor rods 4 × 1/2' : 'anchor rods 2 × 1/2', mesh: mergeMeshes(rods), role: 'hardware' },
   ];
-  return finish(id, 'SUPPORT', `STANCHION-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), post: rule(2 * rp, 'SW-PS-9', 'Post OD'), H: rule(h, 'SW-PS-9', 'Height to saddle') }, solids, 'SW-PS-9', { supportKind: 'stanchion' }, undefined, DEFAULT_MATERIAL);
+  return finish(id, 'SUPPORT', `STANCHION-${NPS}x${h.toFixed(1)}`, { NPS: drawing(NPS, 'Pipe size'), post: rule(2 * rp, 'SW-PS-9', tall ? 'Post OD (at least a fortieth of the height)' : 'Post OD'), H: rule(h, 'SW-PS-9', 'Height to saddle') }, solids, 'SW-PS-9', { supportKind: 'stanchion' }, undefined, DEFAULT_MATERIAL);
 }
 const SIZES_FOR_POST = [2, 2.5, 3, 4, 5, 6, 8, 10, 12, 14, 16, 18, 20, 24];
 const prevSize = (NPS: number) => { let best = 2; for (const s of SIZES_FOR_POST) if (s < NPS) best = s; return best; };

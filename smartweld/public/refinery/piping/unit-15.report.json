@@ -28,17 +28,11 @@
   "lineClearance": [],
   "staticClearance": [],
   "supports": [
-   "6\"-P600-P-15007: unsupported span 550 in > 240 on run from 432,162,614",
-   "8\"-P600-P-15009: unsupported span 266 in > 240 on run from 912,162,31",
-   "4\"-P600-P-15014: unsupported span 292 in > 240 on run from 1014,312,61",
-   "4\"-P150-P-15019: unsupported span 713 in > 240 on run from 858,144,611",
-   "3\"-P150-P-15706: unsupported span 308 in > 180 on run from 1338,348,-113",
-   "4\"-P300-P-15029: unsupported span 299 in > 240 on run from 1098,144,-215",
-   "3\"-P150-CWS-15501: unsupported span 329 in > 180 on run from 1002,288,71",
-   "4\"-P150-CWR-15502: unsupported span 455 in > 240 on run from 996,348,611",
+   "6\"-P600-P-15007: unsupported span 262 in > 240 on run from 432,162,614",
+   "3\"-P150-CWS-15501: unsupported span 279 in > 180 on run from 1002,288,71",
+   "4\"-P150-CWR-15502: unsupported span 329 in > 240 on run from 996,348,611",
    "4\"-P150-CWS-15503: unsupported span 359 in > 240 on run from 1236,246,259",
-   "4\"-P150-CWR-15504: unsupported span 563 in > 240 on run from 1218,222,611",
-   "2\"-P150-P-15506: unsupported span 203 in > 120 on run from 2499,372,36"
+   "4\"-P150-CWR-15504: unsupported span 261 in > 240 on run from 1218,222,611"
   ]
  },
  "spools": [
@@ -469,7 +463,7 @@
    "routed": true,
    "components": 48,
    "welds": 27,
-   "supports": 7,
+   "supports": 9,
    "lengthFt": 191,
    "tier": 1,
    "station": "CS-1502",
@@ -526,7 +520,7 @@
    "routed": true,
    "components": 25,
    "welds": 14,
-   "supports": 7,
+   "supports": 8,
    "lengthFt": 155,
    "tier": 1
   },
@@ -613,7 +607,7 @@
    "routed": true,
    "components": 26,
    "welds": 17,
-   "supports": 3,
+   "supports": 4,
    "lengthFt": 118,
    "tier": 3
   },
@@ -720,7 +714,7 @@
    "routed": true,
    "components": 40,
    "welds": 19,
-   "supports": 1,
+   "supports": 3,
    "lengthFt": 76,
    "station": "CS-1504",
    "controlValve": "piped"
@@ -867,7 +861,7 @@
    "routed": true,
    "components": 23,
    "welds": 14,
-   "supports": 1,
+   "supports": 3,
    "lengthFt": 106,
    "station": "CS-1506"
   },
@@ -976,7 +970,7 @@
    "routed": true,
    "components": 29,
    "welds": 16,
-   "supports": 3,
+   "supports": 4,
    "lengthFt": 75
   },
   {
@@ -1390,7 +1384,7 @@
    "routed": true,
    "components": 34,
    "welds": 21,
-   "supports": 2,
+   "supports": 3,
    "lengthFt": 82
   },
   {
@@ -1407,7 +1401,7 @@
    "routed": true,
    "components": 32,
    "welds": 21,
-   "supports": 0,
+   "supports": 1,
    "lengthFt": 73
   },
   {
@@ -1441,7 +1435,7 @@
    "routed": true,
    "components": 32,
    "welds": 21,
-   "supports": 0,
+   "supports": 2,
    "lengthFt": 73
   },
   {
@@ -1475,7 +1469,7 @@
    "routed": true,
    "components": 18,
    "welds": 11,
-   "supports": 1,
+   "supports": 3,
    "lengthFt": 44
   }
  ],
@@ -1501,9 +1495,9 @@
   "supports": {
    "anchor": 23,
    "guide": 47,
-   "hanger": 33,
+   "hanger": 38,
    "shoe": 53,
-   "stanchion": 13,
+   "stanchion": 23,
    "trapeze": 2,
    "trunnion": 27
   }
@@ -1518,6 +1512,7 @@
   "6\"-P150-CWS-15401/p2 (45.2 ft, far end 802,348,0): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "6\"-P150-CWR-15402/p2 (43.5 ft, far end 691,348,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "3\"-P300-LS-15403/p2 (49.0 ft, far end 770,342,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "2\"-P150-P-15404/p2 (44.1 ft, far end 796,342,36): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)"
+  "2\"-P150-P-15404/p2 (44.1 ft, far end 796,342,36): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "15 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 2 stanchions on steel below, 4 stanchions and 4 support posts from the floor, on 10 lines"
  ]
 }

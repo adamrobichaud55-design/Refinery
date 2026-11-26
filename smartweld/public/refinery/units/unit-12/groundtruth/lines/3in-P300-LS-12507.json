@@ -1564,7 +1564,48 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "3\"-P300-LS-12507/S1",
+   "line": "3\"-P300-LS-12507",
+   "lineClass": "S300",
+   "type": "stanchion",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x54.0)",
+   "designation": "STANCHION-3x54.0",
+   "key": "STAN|3|P300|53.98",
+   "material": "Grade 36",
+   "weight": 82.6262,
+   "spool": "loose",
+   "at": {
+    "E": 564,
+    "N": -136.935,
+    "EL": 1518
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "3\"-P300-LS-12507/S2",
+   "line": "3\"-P300-LS-12507",
+   "lineClass": "S300",
+   "type": "hanger",
+   "description": "HANGER FOR 3\" LINE (HANGER-3x49.0)",
+   "designation": "HANGER-3x49.0",
+   "key": "HANG|3|P300|49.02",
+   "material": "Grade 36",
+   "weight": 5.4009,
+   "spool": "loose",
+   "at": {
+    "E": 564,
+    "N": -222,
+    "EL": 1518
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "3\"-P300-LS-12507-SP01",
@@ -1927,7 +1968,7 @@
   "items": 26,
   "welds": 13,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 2,
   "pipeLength": 766.5937,
   "weight": 639.533
  }

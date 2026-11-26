@@ -1718,7 +1718,108 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "14\"-P1200-P-14013/S1",
+   "line": "14\"-P1200-P-14013",
+   "lineClass": "H1200",
+   "type": "stanchion",
+   "description": "STANCHION FOR 14\" LINE (STANCHION-14x221.0)",
+   "designation": "STANCHION-14x221.0",
+   "key": "STAN|14|P1200|221.00",
+   "material": "Grade 36",
+   "weight": 7025.0233,
+   "spool": "loose",
+   "at": {
+    "E": 402,
+    "N": 413.2,
+    "EL": 1428
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "14\"-P1200-P-14013/S2",
+   "line": "14\"-P1200-P-14013",
+   "lineClass": "H1200",
+   "type": "hanger",
+   "description": "HANGER FOR 14\" LINE (HANGER-14x139.0)",
+   "designation": "HANGER-14x139.0",
+   "key": "HANG|14|P1200|139.02",
+   "material": "Grade 36",
+   "weight": 25.927,
+   "spool": "loose",
+   "at": {
+    "E": 402,
+    "N": 324,
+    "EL": 1428
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "14\"-P1200-P-14013/S3",
+   "line": "14\"-P1200-P-14013",
+   "lineClass": "H1200",
+   "type": "hanger",
+   "description": "HANGER FOR 14\" LINE (HANGER-14x25.4)",
+   "designation": "HANGER-14x25.4",
+   "key": "HANG|14|P1200|25.38",
+   "material": "Grade 36",
+   "weight": 11.8528,
+   "spool": "loose",
+   "at": {
+    "E": 402,
+    "N": 136.935,
+    "EL": 1428
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "14\"-P1200-P-14013/S4",
+   "line": "14\"-P1200-P-14013",
+   "lineClass": "H1200",
+   "type": "stanchion",
+   "description": "STANCHION FOR 14\" LINE (STANCHION-14x29.7)",
+   "designation": "STANCHION-14x29.7",
+   "key": "STAN|14|P1200|29.67",
+   "material": "Grade 36",
+   "weight": 958.6796,
+   "spool": "loose",
+   "at": {
+    "E": 402,
+    "N": 0,
+    "EL": 1428
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "14\"-P1200-P-14013/S5",
+   "line": "14\"-P1200-P-14013",
+   "lineClass": "H1200",
+   "type": "hanger",
+   "description": "HANGER FOR 14\" LINE (HANGER-14x139.0)",
+   "designation": "HANGER-14x139.0",
+   "key": "HANG|14|P1200|139.02",
+   "material": "Grade 36",
+   "weight": 25.927,
+   "spool": "loose",
+   "at": {
+    "E": 402,
+    "N": -222,
+    "EL": 1428
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "14\"-P1200-P-14013-SP01",
@@ -2112,7 +2213,7 @@
   "items": 29,
   "welds": 14,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 5,
   "pipeLength": 1222.292,
   "weight": 14941.7081
  }

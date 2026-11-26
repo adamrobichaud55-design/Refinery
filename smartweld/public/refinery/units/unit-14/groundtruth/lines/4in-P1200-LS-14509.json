@@ -1487,7 +1487,48 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "4\"-P1200-LS-14509/S1",
+   "line": "4\"-P1200-LS-14509",
+   "lineClass": "S1200",
+   "type": "stanchion",
+   "description": "STANCHION FOR 4\" LINE (STANCHION-4x59.5)",
+   "designation": "STANCHION-4x59.5",
+   "key": "STAN|4|P1200|59.48",
+   "material": "Grade 36",
+   "weight": 127.1957,
+   "spool": "loose",
+   "at": {
+    "E": 2310,
+    "N": 136.935,
+    "EL": 1596
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "4\"-P1200-LS-14509/S2",
+   "line": "4\"-P1200-LS-14509",
+   "lineClass": "S1200",
+   "type": "stanchion",
+   "description": "STANCHION FOR 4\" LINE (STANCHION-4x352.0)",
+   "designation": "STANCHION-4x352.0",
+   "key": "STAN|4|P1200|352.00",
+   "material": "Grade 36",
+   "weight": 7763.268,
+   "spool": "loose",
+   "at": {
+    "E": 2310,
+    "N": 389.5473,
+    "EL": 1554
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "4\"-P1200-LS-14509-SP01",
@@ -1845,7 +1886,7 @@
   "items": 25,
   "welds": 12,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 2,
   "pipeLength": 862.1533,
   "weight": 1188.0846
  }

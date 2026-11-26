@@ -2348,7 +2348,48 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "6\"-P150-CWR-14504/S1",
+   "line": "6\"-P150-CWR-14504",
+   "lineClass": "W150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 6\" LINE (STANCHION-6x291.0)",
+   "designation": "STANCHION-6x291.0",
+   "key": "STAN|6|P150|291.00",
+   "material": "Grade 36",
+   "weight": 4114.2172,
+   "spool": "loose",
+   "at": {
+    "E": 756,
+    "N": -336.6667,
+    "EL": 1500
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "6\"-P150-CWR-14504/S2",
+   "line": "6\"-P150-CWR-14504",
+   "lineClass": "W150",
+   "type": "hanger",
+   "description": "HANGER FOR 6\" LINE (HANGER-6x133.0)",
+   "designation": "HANGER-6x133.0",
+   "key": "HANG|6|P150|133.02",
+   "material": "Grade 36",
+   "weight": 11.9664,
+   "spool": "loose",
+   "at": {
+    "E": 756,
+    "N": -180,
+    "EL": 1500
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "6\"-P150-CWR-14504-SP01",
@@ -2842,7 +2883,7 @@
   "items": 38,
   "welds": 21,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 2,
   "pipeLength": 731.9333,
   "weight": 1307.6545
  }

@@ -767,7 +767,28 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "3\"-P600-P-13304/S1",
+   "line": "3\"-P600-P-13304",
+   "lineClass": "H600",
+   "type": "stanchion",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x109.1)",
+   "designation": "STANCHION-3x109.1",
+   "key": "STAN|3|P600|109.14",
+   "material": "Grade 36",
+   "weight": 158.5319,
+   "spool": "loose",
+   "at": {
+    "E": 645,
+    "N": -378,
+    "EL": 1326
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "3\"-P600-P-13304-SP01",
@@ -971,7 +992,7 @@
   "items": 12,
   "welds": 7,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 1,
   "pipeLength": 308.2187,
   "weight": 283.126
  }

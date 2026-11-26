@@ -2281,7 +2281,48 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "4\"-P150-CWR-11502/S1",
+   "line": "4\"-P150-CWR-11502",
+   "lineClass": "W150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 4\" LINE (STANCHION-4x244.0)",
+   "designation": "STANCHION-4x244.0",
+   "key": "STAN|4|P150|244.00",
+   "material": "Grade 36",
+   "weight": 3450.9072,
+   "spool": "loose",
+   "at": {
+    "E": 1026,
+    "N": -408,
+    "EL": 1446
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-CWR-11502/S2",
+   "line": "4\"-P150-CWR-11502",
+   "lineClass": "W150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 4\" LINE (STANCHION-4x244.0)",
+   "designation": "STANCHION-4x244.0",
+   "key": "STAN|4|P150|244.00",
+   "material": "Grade 36",
+   "weight": 3450.9072,
+   "spool": "loose",
+   "at": {
+    "E": 1026,
+    "N": -470.6667,
+    "EL": 1446
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "4\"-P150-CWR-11502-SP01",
@@ -2779,7 +2820,7 @@
   "items": 38,
   "welds": 19,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 2,
   "pipeLength": 947.3871,
   "weight": 1002.7994
  }

@@ -1794,7 +1794,68 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "10\"-P300-LS-17508/S1",
+   "line": "10\"-P300-LS-17508",
+   "lineClass": "S300",
+   "type": "hanger",
+   "description": "HANGER FOR 10\" LINE (HANGER-10x127.0)",
+   "designation": "HANGER-10x127.0",
+   "key": "HANG|10|P300|127.02",
+   "material": "Grade 36",
+   "weight": 17.3555,
+   "spool": "loose",
+   "at": {
+    "E": 1134,
+    "N": -182,
+    "EL": 1506
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "10\"-P300-LS-17508/S2",
+   "line": "10\"-P300-LS-17508",
+   "lineClass": "S300",
+   "type": "hanger",
+   "description": "HANGER FOR 10\" LINE (HANGER-10x61.0)",
+   "designation": "HANGER-10x61.0",
+   "key": "HANG|10|P300|61.02",
+   "material": "Grade 36",
+   "weight": 11.6791,
+   "spool": "loose",
+   "at": {
+    "E": 1134,
+    "N": -360,
+    "EL": 1506
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "10\"-P300-LS-17508/S3",
+   "line": "10\"-P300-LS-17508",
+   "lineClass": "S300",
+   "type": "stanchion",
+   "description": "STANCHION FOR 10\" LINE (STANCHION-10x301.0)",
+   "designation": "STANCHION-10x301.0",
+   "key": "STAN|10|P300|301.00",
+   "material": "Grade 36",
+   "weight": 4257.1715,
+   "spool": "loose",
+   "at": {
+    "E": 1134,
+    "N": -426.6667,
+    "EL": 1506
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "10\"-P300-LS-17508-SP01",
@@ -2201,7 +2262,7 @@
   "items": 29,
   "welds": 16,
   "fieldWelds": 3,
-  "supports": 0,
+  "supports": 3,
   "pipeLength": 917.1663,
   "weight": 4532.0039
  }

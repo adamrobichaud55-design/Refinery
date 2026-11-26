@@ -1794,7 +1794,48 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "8\"-P150-LS-11508/S1",
+   "line": "8\"-P150-LS-11508",
+   "lineClass": "S150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 8\" LINE (STANCHION-8x338.0)",
+   "designation": "STANCHION-8x338.0",
+   "key": "STAN|8|P150|338.00",
+   "material": "Grade 36",
+   "weight": 7457.0633,
+   "spool": "loose",
+   "at": {
+    "E": 1842,
+    "N": -575.9521,
+    "EL": 1548
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "8\"-P150-LS-11508/S2",
+   "line": "8\"-P150-LS-11508",
+   "lineClass": "S150",
+   "type": "hanger",
+   "description": "HANGER FOR 8\" LINE (HANGER-8x19.0)",
+   "designation": "HANGER-8x19.0",
+   "key": "HANG|8|P150|19.02",
+   "material": "Grade 36",
+   "weight": 6.247,
+   "spool": "loose",
+   "at": {
+    "E": 1842,
+    "N": -408,
+    "EL": 1548
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "8\"-P150-LS-11508-SP01",
@@ -2207,7 +2248,7 @@
   "items": 29,
   "welds": 16,
   "fieldWelds": 3,
-  "supports": 0,
+  "supports": 2,
   "pipeLength": 963.4121,
   "weight": 3085.4875
  }

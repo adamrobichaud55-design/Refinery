@@ -7,10 +7,12 @@ import { render3d, type Camera } from '../src/render/view3d';
 import { partDrawables, pipingDrawables, byLineClass, type Drawable } from '../src/render/scene';
 import type { RGB } from '../src/render/raster';
 import { pipeUnit, pipingDocument, PIPING_IMAGES, type PipedUnit } from '../src/refinery/pipingReport';
+import { unitPiping } from '../src/refinery/unitPiping';
 
 const dir = 'public/refinery/piping', shots = 'screenshots/refinery'; mkdirSync(dir, { recursive: true }); mkdirSync(shots, { recursive: true });
 const C = (h: number): RGB => [(h >> 16) & 255, (h >> 8) & 255, h & 255], I = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
-for (const unit of process.argv.slice(2).map(Number)) {
+const imagesOnly = process.argv[2] === 'images';   // `images <unit> ...`: draw the models and reports on disk again, routing nothing
+for (const unit of process.argv.slice(imagesOnly ? 3 : 2).map(Number)) {
   // REFINERY_TRACE=<file>: which line the generator is on (it asks the plant for a line's joint whenever it works on that line), for finding a line that holds a run up
   const trace = process.env.REFINERY_TRACE, t0 = Date.now(); if (trace) writeFileSync(trace, '');
   const watch = trace ? (plant: { joint: (l: never, m: never) => unknown }) => { let cur = ''; const j = plant.joint; plant.joint = ((l: { no: string }, m: never) => { if (l.no !== cur) { cur = l.no; appendFileSync(trace, `${((Date.now() - t0) / 1000).toFixed(1)} s: ${l.no}\n`); } return j(l as never, m); }) as never; } : undefined;
@@ -18,9 +20,9 @@ for (const unit of process.argv.slice(2).map(Number)) {
   const runs = process.env.REFINERY_RUNS; if (runs) mkdirSync(runs, { recursive: true }); let taken = 0;
   const cache = runs ? { get: (k: number, lines: string[]) => { const f = `${runs}/unit-${unit}-run-${k}.json`; if (!existsSync(f)) return undefined; const q = JSON.parse(readFileSync(f, 'utf8')) as { lines: string[]; model: never }; if (JSON.stringify(q.lines) !== JSON.stringify(lines)) return undefined; taken++; return q.model; },
     put: (k: number, lines: string[], m: never) => writeFileSync(`${runs}/unit-${unit}-run-${k}.json`, `{"lines":${JSON.stringify(lines)},"model":${serializePiping(m)}}`) } : undefined;
-  const { up, model, result } = pipeUnit(unit, s => console.log(s), watch as never, cache as never), cell = up.cell;
+  const { up, model, result } = imagesOnly ? { up: unitPiping(unit), model: JSON.parse(readFileSync(`${dir}/unit-${unit}.json`, 'utf8')), result: JSON.parse(readFileSync(`${dir}/unit-${unit}.report.json`, 'utf8')) as PipedUnit } : pipeUnit(unit, s => console.log(s), watch as never, cache as never), cell = up.cell;
   if (taken) { result.notes.push(`${taken} runs were taken from results kept earlier, not made in this run: not a result to keep.`); console.log(`${taken} runs taken from ${runs}: this result is not one to keep`); }
-  writeFileSync(`${dir}/unit-${unit}.json`, serializePiping(model) + '\n'); writeFileSync(`${dir}/unit-${unit}.report.json`, JSON.stringify(result, null, 1) + '\n');
+  if (!imagesOnly) { writeFileSync(`${dir}/unit-${unit}.json`, serializePiping(model) + '\n'); writeFileSync(`${dir}/unit-${unit}.report.json`, JSON.stringify(result, null, 1) + '\n'); }
   console.log(`unit ${unit}: ${result.lines.filter(l => l.routed).length} of ${result.lines.length} lines routed in ${result.seconds} s; failures ${result.failures.length}; checks ${Object.entries(result.checks).map(([k, v]) => `${k} ${v.length}`).join(', ')}`);
   const ds: Drawable[] = [...partDrawables(cell.interior.instances.map(i => ({ part: i.part, transform: i.transform }))), ...pipingDrawables(model, { lineColour: byLineClass, valveCells: 40 })];
   ds.push({ mesh: { positions: [-240, -1, cell.z0 - 240, cell.x1 + 240, -1, cell.z0 - 240, cell.x1 + 240, -1, cell.z1 + 240, -240, -1, cell.z1 + 240], indices: [0, 2, 1, 0, 3, 2] }, T: I as never, color: C(0xcdc6b3) });
