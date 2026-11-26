@@ -199,6 +199,8 @@ function restAgain(up: UnitPiping, k: number, prior0: Placed[], m: PipingModel, 
   const run = up.runs[k], mine = new Set(run.lines), defs = new Map(up.lines.map(l => [l.def.no, l.def]));
   // the lines named, and the lines they tap, first
   const firstSet = new Set<string>(); for (const no of named) { firstSet.add(no); const d = defs.get(no); for (const e of d ? [d.from, d.to] : []) if (e.k === 'tap' && mine.has(e.line)) firstSet.add(e.line); }
+  // and the branches of a line routed first, with theirs: the generator plans a branch's take-off on its parent in the same run (a main of the cooling water mains, SW-CWM-4)
+  for (let grew = true; grew;) { grew = false; for (const l of up.lines) if (mine.has(l.def.no) && !firstSet.has(l.def.no) && [l.def.from, l.def.to].some(e => e.k === 'tap' && firstSet.has(e.line))) { firstSet.add(l.def.no); grew = true; } }
   const first = firstSet.size ? generatePiping({ plant: up.runPlant(k, prior), only: l => firstSet.has(l.no) }) : { ...m, lines: [], failures: [], stats: {}, cuts: [] } as PipingModel;
   // a strip 3 in thick along the side of each header a valve came near, facing the valve
   const strips: Placed[] = near.flatMap(({ valve, header }) => {

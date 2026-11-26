@@ -5562,7 +5562,10 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   (the "rest") reports a valve that strikes in every stem direction, or a valve less than
   3 in from a header, that run is made again, once, and the second result kept where it
   has fewer findings:
-  - the lines named in a failure, with the lines they tap, are routed first, in a run of
+  - the lines named in a failure, with the lines they tap and the branches that tap them
+    (amended 2026-11-26: the generator plans a branch's take-off on its parent in the same
+    run, and a main of the cooling water mains, SW-CWM-4, was the first line named that has
+    branches), are routed first, in a run of
     their own on the same plant, and stand as solids for the rest of the run;
   - beside a header that a valve came within 3 in of, a solid 3 in thick is laid along the
     header's side facing the valve, as long as the valve's box and 3 in more each way and
@@ -5754,6 +5757,17 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   with one shoe; a 3 in line's splice weld stood 1 in from the strut's line, where its
   hanger belonged; a 4 in line was 0.2 in over its span once the valve at its spool was
   left out, SW-RPI-14; a boiler feed water branch passed 28 in over the first bent).
+  Each unit's cooling water header spools (SW-RPI-15), which the cooling water mains join
+  (§81), stand as solids while the pipeway is routed (added 2026-11-26), and with each the
+  room its branch from the mains will need in front of its face: from 3 in behind its far
+  face to a gate valve's length, 6 in, an elbow's radius and 12 in beyond its near face, as
+  wide and as high as its flange and 3 in each way. Reason: routed without them, three of
+  the pipeway's branches lay against the bodies of spools that stood unconnected (a 3 in
+  branch 0.3 in under the 20 in return spool of the cracking unit, a 4 in one through the
+  12 in return spool of the vacuum unit, a 4 in one beside the 6 in supply spool of unit
+  16), and another stood where the 20 in supply branch of the cracking unit has to leave
+  its spool. The pipeway's checks did not look at the units' spools; these were found when
+  the mains were checked against everything built.
 - `SW-PWY-9` Supports. The generator carries each line on the main rack's beams (SW-PS-*)
   and hangs what crosses under steel from that steel. So that a line crossing from a unit
   has steel over it within what it spans: 2 ft inside the corridor from each unit's limit
@@ -5852,3 +5866,97 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   heaviest bay of each tier is given in the pipeway's document, and a tier over its
   figure is listed there. Reason: the kit sizes a tier's beams for that load whatever is
   laid on them (SW-RK-2), so what is laid on them is checked against it.
+
+## 81. Plant 3: the cooling water mains (`SW-CWM-*`)
+
+Written 2026-11-26 at the owner's instruction for this stage: the cooling water mains and the
+tower's piping, in one day, on sleepers at grade along the corridor (the owner accepted
+sleepers over buried mains), joined to each unit's existing supply and return header spools at
+its limit so that no unit is routed again. The figures are SmartWeld's own, from the reasoning
+given; nothing was looked up (PROVENANCE P-94). The mains are piped by the generator of plants
+1 and 2, unchanged, as the pipeway is (§80).
+
+- `SW-CWM-1` The area. The two mains, cooling water supply and cooling water return, and the
+  branches from them to the units are area 27 of the line numbers (20 to 26 are the areas beyond the bench, SW-PWY-4),
+  numbered and built as process lines (`30"-P150-P-27001`), as the pipeway's streams and
+  branches are (SW-PWY-12): the service decides nothing in the generator but its valves, and
+  a line of the process letter is the one it lays in a rack lane (SW-RT-2),
+  piped as a plant of their own in the main pipeway's frame moved 234 in north, so that the
+  supply's lane is its centre line (the generator gives a rack line its lane outward from the
+  rack's centre line, SW-RT-2). Each is of its plant header's conditions
+  and size (SW-PRC-19: 30 in, class 150). Reason: the pipeway's top tier does not take them
+  (SW-PWY-11, SW-PWY-13: each is about 410 lb a foot full of water, the pair two thirds of
+  what a whole tier is built for), and the pipeway is routed clean as it stands: a plant of
+  their own leaves it, and the units, as they are.
+- `SW-CWM-2` Where they lie: on concrete sleepers at grade in the corridor's north strip,
+  between the main rack's north column line and the junction frames at the north units'
+  limits: the supply 234 in north of the rack's centre line, the return 54 in further north
+  (a 30 in valve's pitch, SW-PWY-4: the valves at the mains' west ends and beyond their
+  spools stand side by side). The supply then clears a column of the rack by more than 2 ft
+  and the return a junction frame's post by more than 2 ft. North, because the cooling tower stands north of the corridor (SW-SITE-*). A sleeper
+  is a plain concrete beam on grade square to the way, 12 in along it, as long as the two
+  pipes and 12 in beyond each (one that would come within 3 in of the steel of a junction
+  frame is left out, and the next carries the span), its top 11 in above grade; one on each bent line of the main
+  rack over the way's length (20 ft apart: the span of SW-PS-7 for a pipe of 3.5 in and
+  more). Each main rests on a 4 in shoe on each sleeper (SW-PS-1), its axis 30 in above
+  grade and its bottom 15 in: room to paint it and to look under it, and the generator's
+  rule for a line on a tier (the tier, 4 in, the pipe's radius, on the 6 in grid) gives
+  that height from an 11 in top. The generator would give the return the next lane, 3 in
+  clear of the supply (SW-RT-2), too close for those valves: while the return is routed, a
+  fence along the way between the two lanes, at the mains' height, holds it in its own,
+  from 20 ft east of the west spools (clear of their valves) to 10 ft short of the tower's.
+  The way is given to the generator as a rack 16 ft wide, so that the return's lane is
+  among those it tries.
+- `SW-CWM-3` Their ends. Each main runs from a limit spool at the edge of the cooling
+  tower's plot to a limit spool 20 ft west of its westernmost branch, on its lane, facing
+  east; each spool is two nozzles back to back, 24 in face to face, as SW-PWY-4's, tag
+  `PL-27{sequence}`, and on its far face stand a block valve and a blind flange. At the
+  tower's plot the two spools stand on its south edge, facing the corridor, at the height
+  the mains lie at, about the middle of the plot's width, the supply east of the return by
+  a flange and 6 in or the valves' width and 3 in (SW-PWY-4's pitch), so that neither line
+  crosses the other where they turn along the way. The valve and blind beyond the tower's
+  spools are the plot's until it is piped; those at the west end are where the mains are
+  carried on to the areas beyond the bench. The generator's valve at each spool's near
+  face is not built (SW-PWY-7).
+- `SW-CWM-4` The branches. Each unit's supply and return header spools at its limit
+  (SW-RPI-15) are joined by a branch from the main of that service, of the spool's size
+  (3 in at least, SW-PWY-12), with no valve of its own: the unit's block valve stands
+  behind its spool. The generator routes each branch from a take-off it chooses on the main
+  to the spool's face, the largest first: from the main up to the level of the unit's top
+  tier and across into its valve bay for a north unit; for a south unit, across under the
+  main rack at low level and up in the south strip. The generator's valve at the spool is
+  not built (SW-PWY-7).
+- `SW-CWM-5` Where the lines may travel: in the corridor from grade to 6 ft above the
+  units' top tiers, or as high as the stem of the generator's valve at a unit's spool
+  reaches and 6 in where that is higher (the pipeway's headers lie above, as solids), in the valve bays of the
+  units that have cooling water spools as far as their spools and 18 in beyond, and over
+  the open ground between the corridor and the tower's plot within 10 ft either side of
+  the two tower spools. Everything the pipeway and the units have built stands as a solid:
+  the rack, its stringers and junction frames, the units' steel in their valve bays, every
+  piece and support of the pipeway's lines and of the units' lines in their valve bays (as
+  the checks hold them, SW-RPI-7), but the pieces of each cooling water spool itself, which
+  the branch bolts to.
+- `SW-CWM-6` Two runs. The supply's main with its branches and the valves beyond its
+  spools are routed first; the generator's valves that are not built are taken out of the
+  result (SW-PWY-7); then that result stands as solids (SW-RPI-7) while the return's lines
+  are routed. Reason: the generator stands a valve at every spool while it routes, and the
+  supply and return spools of a unit stand two to seven feet apart, too close for two such
+  valves at once (in the first run of both together, the generator found every stem
+  direction struck at the spools of units 12 and 17). For the same reason, while it routes
+  the generator is shown the tier beams of the units' first bents only as solids 4 in
+  short of their tops (SW-PWY-8 keeps them from the pipeway's runs altogether; a branch
+  routed with them kept away passed through one), nor any piece of the pipeway's or a unit's lines that
+  stands where its valve at a unit's spool stands with its stem up: from the spool's face
+  the valve's length and 6 in, its width and 3 in either side, from a flange's half below
+  its axis to its stem's reach and 3 in above, and 3 in more all round (the generator holds
+  a box out to 3 in). Nor is it shown the sleepers: it holds a box out to 3 in, and a main
+  on its 4 in shoe is 4 in over a sleeper's top, as a rack line is over its tier's beam
+  (which the generator holds by its axis, not as a box). The checks are made against them
+  all.
+- `SW-CWM-7` Supports and checks as for a unit (§40, SW-RPI-17): the mains on their
+  sleepers as on a rack tier, the branches by the generator's own stepping and then
+  SW-RPI-17's correction. The checks are run against the area's own lines and against
+  everything SW-CWM-5 shows as solid, the first bents' beams included, so a clash with the pipeway or a unit is found.
+- `SW-CWM-8` Not in this stage: the tower plot's own piping (basin outlet, the four
+  circulating pumps, the side-stream filter, blowdown and make-up); the mains end at its
+  edge (SW-CWM-3). Each unit's header spools for cooling water stay as they are.

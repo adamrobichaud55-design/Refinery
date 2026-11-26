@@ -77,7 +77,7 @@ const rot = (m: Mat4, p: V3): V3 => [m[0] * p[0] + m[4] * p[1] + m[8] * p[2], m[
 /** SW-PWY-1: the pipeway's frame set on the site */
 export const pipewayToSite = (): Mat4 => translate(PWY.west * 12, bench('process').el * 12, PIPEWAY_Z * 12);
 /** a unit's frame in the pipeway's */
-const unitToPipeway = (p: Plot, c: CellModel): Mat4 => multiply(translate(-PWY.west * 12, -bench(p.bench).el * 12, -PIPEWAY_Z * 12), cellToSite(p, c));
+export const unitToPipeway = (p: Plot, c: CellModel): Mat4 => multiply(translate(-PWY.west * 12, -bench(p.bench).el * 12, -PIPEWAY_Z * 12), cellToSite(p, c));
 /** the height a line of this size lies at on a tier of the main rack, and on a tier of a unit's rack (SW-RT-2) */
 /** SW-PWY-9: the stringers under a tier, z in */
 export const stringersOf = (t: number): readonly number[] => (t === PWY.tiers.length - 1 ? PWY.topStringers : PWY.stringers);
@@ -404,6 +404,12 @@ export function pipeway(): Pipeway {
     let x = G.x0; const zin = side * 360, zout = side * G.z1, z0 = Math.min(zin, zout), z1 = Math.max(zin, zout);
     for (const h of holes) { if (h.x0 > x) keepOut.push(block([x, low, z0], [h.x0, gridTop, z1])); const zd = side * (360 + h.depth); keepOut.push(block([h.x0, low, Math.min(zd, zout)], [h.x1, gridTop, Math.max(zd, zout)])); x = h.x1; }
     if (x < G.x1) keepOut.push(block([x, low, z0], [G.x1, gridTop, z1]));
+  }
+  // SW-PWY-8 (amended 2026-11-26): each unit's cooling water header spools, which the cooling water mains join (§81), and the room in front of each that its branch will need
+  for (const U of units.filter(u => u.piped)) for (const sp of piping.get(U.unit)!.spools.filter(q => q.header && M.headers.some(h => h.key === q.stream && (h.fluid === 'CWS' || h.fluid === 'CWR')))) {
+    const q = piping.get(U.unit)!.nozzles.get(`${sp.tag}-P`)!, A = xf(U.T, q.A as V3), u = rot(U.T, q.u as V3), w = designFlange(sp.NPS, sp.cls).OD / 2 + 3;
+    const L = q.S + gateFaceToFace(sp.NPS, sp.cls) + 6 + elbowRadius(pipeDims(sp.NPS, sp.cls).OD) + 12, a: V3 = [A[0] - u[0] * (q.S + 3), A[1], A[2] - u[2] * (q.S + 3)], b: V3 = [A[0] + u[0] * L, A[1], A[2] + u[2] * L];
+    keepOut.push(block([Math.min(a[0], b[0]) - (u[0] ? 0 : w), A[1] - w, Math.min(a[2], b[2]) - (u[2] ? 0 : w)], [Math.max(a[0], b[0]) + (u[0] ? 0 : w), A[1] + w, Math.max(a[2], b[2]) + (u[2] ? 0 : w)], 'cooling water spool'));
   }
   const shown: InteriorModel = { ...interior, instances: [...own, ...unitSteel, ...keepOut] };
   const building: BuildingModel = { instances: [], derived: {}, notes: [], drawing: { bays: PWY.bays, bayFt: PWY.bent / 12, widthFt: (2 * HW) / 12, eaveFt: 0, slopeRisePer12: 0, slabIn: 0 } } as unknown as BuildingModel;
