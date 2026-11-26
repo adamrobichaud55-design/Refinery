@@ -9,7 +9,7 @@ import { buildGeometry } from '../geometry/partGeometry';
 import { pipeDims, elbowRadius, designFlange } from '../catalogue';
 import type { V3 } from '../generator/router';
 import { frameFromAxes } from '../geometry/transform';
-import { supportsAlongSpans, type SpanSupports } from './supports';
+import { supportsAlongSpans, type SpanSupports, type FrameSpec } from './supports';
 import { unitPiping, block, laneSpacing, type UnitPiping, type UnitLine, type BlSpool, type RootSpool, type StationSpool } from './unitPiping';
 import type { Placed } from '../generator/building';
 import { processModel } from './process';
@@ -18,7 +18,9 @@ import { RACK } from './cell';
 
 export interface UnitChecks { continuity: string[]; joints: string[]; elbows: string[]; valves: string[]; lineClearance: string[]; staticClearance: string[]; supports: string[] }
 export interface PipedLine { no: string; origin: UnitLine['origin']; fluid: string; fluidName: string; from: string; to: string; NPS: number; cls: string; designP: number; designT: number; routed: boolean; components: number; welds: number; supports: number; lengthFt: number; /** the rack tier it runs on, 1 the lowest (SW-RPI-7) */ tier?: number; /** the control station it is divided at (SW-RPI-9) */ station?: string; controlValve?: 'piped' | 'omitted' }
-export interface PipedUnit { demonstration: true; unit: number; name: string; frame: string; /** the runs of the generator (SW-RPI-7): one for each line that runs the rack and each column's overhead line, and one for the rest */ runs: number; /** the rack tiers its lines run on, 1 the lowest (SW-RPI-7) */ tiers: number[]; /** the width of lanes each tier is loaded to, in */ tierRoom: number; seconds: number; stats: Record<string, number>; failures: string[]; checks: UnitChecks; spools: BlSpool[]; /** branch root spools (SW-RPI-8) */ roots: RootSpool[]; /** control station spools (SW-RPI-9) */ stations: StationSpool[]; lines: PipedLine[]; counts: { components: Record<string, number>; welds: Record<string, number>; supports: Record<string, number> }; notes: string[] }
+export interface PipedUnit {
+  /** SW-RPI-17: plant 3's own pipe frames, which the generator's model has no place for */
+  frames?: FrameSpec[]; demonstration: true; unit: number; name: string; frame: string; /** the runs of the generator (SW-RPI-7): one for each line that runs the rack and each column's overhead line, and one for the rest */ runs: number; /** the rack tiers its lines run on, 1 the lowest (SW-RPI-7) */ tiers: number[]; /** the width of lanes each tier is loaded to, in */ tierRoom: number; seconds: number; stats: Record<string, number>; failures: string[]; checks: UnitChecks; spools: BlSpool[]; /** branch root spools (SW-RPI-8) */ roots: RootSpool[]; /** control station spools (SW-RPI-9) */ stations: StationSpool[]; lines: PipedLine[]; counts: { components: Record<string, number>; welds: Record<string, number>; supports: Record<string, number> }; notes: string[] }
 
 /** a valve's box in the plant, from its drawn solids (as the generator's tools take it) */
 export function valveBoxFn(): (c: Comp) => [V3, V3] {
@@ -142,7 +144,7 @@ export function runSolids(m: PipingModel, vb: (c: Comp) => [V3, V3]): Placed[] {
 /** a place to keep each single-line run's result and take it from again when the same run is made (a tool's aid while a later run is worked on; a final result is made without one) */
 export interface RunCache { get: (k: number, lines: string[]) => PipingModel | undefined; put: (k: number, lines: string[], m: PipingModel) => void }
 /** SW-RPI-17: the note on the supports set where the generator's stepping stopped */
-export const spanNote = (s: SpanSupports) => `${s.hangers + s.stanchions + s.posts + s.onSteel} supports set where the generator's stepping along a run had stopped (SW-RPI-17): ${s.hangers} hangers from steel above, ${s.onSteel} stanchions on steel below, ${s.stanchions} stanchions and ${s.posts} support posts from the floor`;
+export const spanNote = (s: SpanSupports) => `${s.hangers + s.stanchions + s.posts + s.onSteel + s.frames.length} supports set where the generator's stepping along a run had stopped (SW-RPI-17): ${s.hangers} hangers from steel above, ${s.onSteel} stanchions on steel below, ${s.stanchions} stanchions and ${s.posts} support posts from the floor, and ${s.frames.length} pipe frames`;
 /** SW-RPI-7: another lane for a run whose line found its own shut at the outset */
 function laneAgain(up: UnitPiping, k: number, prior: Placed[], m: PipingModel): { m: PipingModel; note: string } | undefined {
   const run = up.runs[k], L = run.lane!, main = run.lines[0];
@@ -370,7 +372,7 @@ export function cutLongPipes(m: PipingModel, most = 480): string[] {
 export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, cache?: RunCache): { up: UnitPiping; model: PipingModel; result: PipedUnit } {
   const t0 = Date.now(), recut: string[] = [], up = unitPiping(unit), model = generateUnit(up, log, watch, recut, cache);
   // SW-RPI-17: supports where the generator's stepping stopped
-  { const s = supportsAlongSpans(model, up.plant, valveBoxFn()); const n = s.hangers + s.stanchions + s.posts + s.onSteel; if (n) { recut.push(spanNote(s)); log(`unit ${unit}: ${spanNote(s)}`); } }
+  const sup = supportsAlongSpans(model, up.plant, valveBoxFn()); { const n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { recut.push(spanNote(sup)); log(`unit ${unit}: ${spanNote(sup)}`); } }
   // SW-RPI-7: each line that runs the rack lies in the lane it was given; one found in another is said, and so is a header (their lanes are held where they were foreseen)
   const astray = up.foreseen.flatMap(L => { const r = L.no === undefined ? undefined : model.lines.find(l => l.no === L.no), z = r && r.ok ? laneOf(r, L.t) : undefined; return z !== undefined && Math.abs(z - L.z) > 1e-6 ? [`${L.no}: given the lane at z ${L.z} on tier ${L.t + 1}, routed at z ${z}`] : []; });
   const moved = up.headers.flatMap(h => { const r = model.lines.find(l => l.no === h.line), z = r?.path[0]?.[2]; return r && h.z !== undefined && z !== undefined && Math.abs(z - h.z) > 1e-6 ? [`${h.line}: foreseen in the lane at z ${h.z}, routed at z ${z}`] : []; });
@@ -382,7 +384,7 @@ export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watc
     demonstration: true, unit, name: sh.name, frame: 'the unit\'s own (SW-CELL-1): inches, x from its battery limit along its rack, y up from its bench, z across the rack', runs: up.runs.length, tiers: up.tiers.map(t => t + 1), tierRoom: up.tierRoom, seconds: Math.round((Date.now() - t0) / 1000),
     stats: Object.fromEntries(Object.entries(model.stats).filter(([k]) => !k.startsWith('t_'))), failures: model.failures, checks, spools: up.spools, roots: up.roots, stations: up.stations, lines,
     counts: { components: count(model.lines.flatMap(r => r.comps.filter(c => c.kind !== 'studs').map(c => c.kind))), welds: count(model.lines.flatMap(r => r.welds.map(w => `${w.type}${w.field ? ', field' : ', shop'}`))), supports: count(model.lines.flatMap(r => r.supports.map(s => s.type))) },
-    notes: [...up.notes, ...astray, ...moved, ...recut, ...aside],
+    notes: [...up.notes, ...astray, ...moved, ...recut, ...aside], frames: sup.frames,
   };
   return { up, model, result };
 }

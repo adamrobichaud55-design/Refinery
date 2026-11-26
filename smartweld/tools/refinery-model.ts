@@ -10,6 +10,7 @@ import { cells, siteParts, cellToSite } from '../src/refinery/assemble';
 import { groundMeshes, type Cover } from '../src/refinery/terrain';
 import { siteGround, plot, bench } from '../src/refinery/site';
 import { MODEL_IMAGES } from '../src/refinery/modelReport';
+import { framePlaced, type FrameSpec } from '../src/refinery/supports';
 import { pipeway, pipewayToSite, PWY } from '../src/refinery/pipeway';
 
 const out = 'screenshots/refinery', only = process.argv[2], named = process.argv[3]; mkdirSync(out, { recursive: true });   // [unit | 'units' | 'site'] [part of a view's name]
@@ -36,6 +37,9 @@ if (!only || only === 'site') {
     if (p.id === 'CT' || !piped.includes(p.unit!)) continue;
     const m = JSON.parse(readFileSync(`${pipedDir}/unit-${p.unit}.json`, 'utf8')) as PipingModel, T = cellToSite(p, cell);
     for (const d of pipingDrawables(m, { lineColour: byLineClass, valveCells: 10 })) ds.push({ ...d, T: multiply(T, d.T) });
+    // SW-RPI-17: the unit's pipe frames, plant 3's own steel, from its report
+    const rep = `${pipedDir}/unit-${p.unit}.report.json`, frames = existsSync(rep) ? ((JSON.parse(readFileSync(rep, 'utf8')) as { frames?: FrameSpec[] }).frames ?? []) : [];
+    for (const d of partDrawables(frames.flatMap(f => framePlaced(f)).map(i => ({ part: i.part, transform: i.transform })))) ds.push({ ...d, T: multiply(T, d.T) });
   }
   // the main pipeway (§80): its own steel, and its piping once it is piped
   const pwModel = `${pipedDir}/pipeway.json`, onRack = existsSync(pwModel);

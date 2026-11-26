@@ -29,8 +29,7 @@
   "lineClearance": [],
   "staticClearance": [],
   "supports": [
-   "48\"-P150-P-12003: unsupported span 392 in > 240 on run from 600,1716,-692",
-   "3\"-P300-LS-12507: unsupported span 283 in > 180 on run from 564,318,505"
+   "48\"-P150-P-12003: unsupported span 392 in > 240 on run from 600,1716,-692"
   ]
  },
  "spools": [
@@ -1424,7 +1423,7 @@
    "routed": true,
    "components": 22,
    "welds": 13,
-   "supports": 2,
+   "supports": 3,
    "lengthFt": 66
   },
   {
@@ -1485,7 +1484,7 @@
    "anchor": 20,
    "guide": 47,
    "hanger": 30,
-   "shoe": 43,
+   "shoe": 44,
    "stanchion": 32,
    "trunnion": 23
   }
@@ -1508,6 +1507,32 @@
   "12\"-P150-CWS-12402/p2 (51.0 ft, far end 784,348,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "12\"-P150-CWR-12403/p2 (51.0 ft, far end 784,348,24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "3\"-P150-P-12406/p2 (50.1 ft, far end 782,342,-66): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "6 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 2 stanchions on steel below, 0 stanchions and 2 support posts from the floor"
+  "7 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 2 stanchions on steel below, 0 stanchions and 2 support posts from the floor, and 1 pipe frames"
+ ],
+ "frames": [
+  {
+   "line": "3\"-P300-LS-12507",
+   "at": [
+    564,
+    318,
+    363.5
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    36
+   ],
+   "floors": [
+    6,
+    0
+   ],
+   "top": 312.5,
+   "post": "W8x31",
+   "rad": 1.5
+  }
  ]
 }

@@ -29,9 +29,7 @@
   "lineClearance": [],
   "staticClearance": [],
   "supports": [
-   "8\"-P300-P-19003: unsupported span 248 in > 240 on run from 3174,276,-115",
-   "4\"-P1200-P-19707: unsupported span 446 in > 240 on run from 1920,108,-43",
-   "3\"-P300-P-19044: unsupported span 216 in > 180 on run from 4950,150,37"
+   "4\"-P1200-P-19707: unsupported span 446 in > 240 on run from 1920,108,-43"
   ]
  },
  "spools": [
@@ -685,7 +683,7 @@
    "routed": true,
    "components": 45,
    "welds": 34,
-   "supports": 11,
+   "supports": 12,
    "lengthFt": 269,
    "tier": 1
   },
@@ -1472,7 +1470,7 @@
    "routed": true,
    "components": 27,
    "welds": 20,
-   "supports": 22,
+   "supports": 23,
    "lengthFt": 290,
    "tier": 1
   },
@@ -2518,7 +2516,7 @@
    "anchor": 42,
    "guide": 109,
    "hanger": 45,
-   "shoe": 212,
+   "shoe": 214,
    "stanchion": 60,
    "trapeze": 5,
    "trunnion": 38
@@ -2526,6 +2524,56 @@
  },
  "notes": [
   "1 header carried on in line to its block valve at the battery limit, the cap there left out (SW-RPI-15): 10\"-P150-LS-19401 from BL-1921-U, its first piece 181.3 in longer, a shoe at x 360",
-  "40 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 12 hangers from steel above, 2 stanchions on steel below, 14 stanchions and 12 support posts from the floor"
+  "42 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 12 hangers from steel above, 2 stanchions on steel below, 14 stanchions and 12 support posts from the floor, and 2 pipe frames"
+ ],
+ "frames": [
+  {
+   "line": "8\"-P300-P-19003",
+   "at": [
+    3174,
+    276,
+    -474.61115
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    18
+   ],
+   "floors": [
+    0,
+    0
+   ],
+   "top": 268,
+   "post": "W8x31",
+   "rad": 4
+  },
+  {
+   "line": "3\"-P300-P-19044",
+   "at": [
+    4950,
+    150,
+    -460.06485
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    18
+   ],
+   "floors": [
+    0,
+    0
+   ],
+   "top": 144.5,
+   "post": "W8x31",
+   "rad": 1.5
+  }
  ]
 }

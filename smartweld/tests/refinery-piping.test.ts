@@ -10,6 +10,7 @@ import { sizing, headerDesign, stationed } from '../src/refinery/sizing';
 import { unitHeaders, connection } from '../src/refinery/headers';
 import { serviceOf, lineNumber, routedFree } from '../src/refinery/registry';
 import { FLUIDS } from '../src/refinery/fluids';
+import { framePlaced } from '../src/refinery/supports';
 import { RACK, PAD, valveDrop, bodySolids } from '../src/refinery/cell';
 import { pipingDocument, cutLongPipes, lengthenShortPieces, removeValves, joinHeaders, measuredAgain, elbowGap, valveBoxFn, runSolids, PIPING_IMAGES, type PipedUnit } from '../src/refinery/pipingReport';
 import * as K from '../src/generator/pipingCheck';
@@ -517,6 +518,20 @@ describe('plant 3: the piped units on disk', () => {
     expect((m.cuts ?? []).length).toBe(3); for (const c of m.cuts ?? []) { expect(Math.abs(c.y - J.yt!)).toBeLessThan(1e-6); expect(J.holes!.some(hh => Math.abs(hh.x - c.x) < 1e-6 && Math.abs(hh.z - c.z) < 1e-6 && Math.abs(hh.r - c.r) < 1e-6), JSON.stringify(c)).toBe(true); }
     expect(r.stats.penetrations).toBe(3);
   }, 300_000);
+  it('a pipe frame carries its line on a shoe, its posts on the floor, its parts 1 in clear of every other line (SW-RPI-17)', () => {
+    let n = 0; const vb = valveBoxFn();
+    for (const r of reports) {
+      const m = JSON.parse(readFileSync(new URL(`../public/refinery/piping/unit-${r.unit}.json`, import.meta.url), 'utf8')) as PipingModel, items = m.lines.flatMap(l => l.comps.filter(c => c.kind !== 'studs').flatMap(c => K.compShapes(c, vb).map(s => ({ line: l.no, s }))));
+      for (const f of r.frames ?? []) {
+        n++; const line = m.lines.find(l => l.no === f.line)!; expect(line, f.line).toBeDefined();
+        expect(line.supports.some(s => s.type === 'shoe' && Math.hypot(s.at[0] - f.at[0], s.at[2] - f.at[2]) < 0.01 && Math.abs(s.at[1] - f.top) < 0.01), `${f.line}: a shoe on its frame`).toBe(true);
+        const reach = (d: number) => (d > 0 ? d + 4 : (f.rad ?? 0) + 4); expect(reach(f.d[0]) + reach(f.d[1])).toBeLessThanOrEqual(368); expect(f.d.some(d => d > 0)).toBe(true); if (f.d.some(d => d <= 0)) expect(Math.max(...f.d)).toBeLessThanOrEqual(48);
+        for (const q of framePlaced(f)) { const b = worldBox(q.part, q.transform as never)!; if (q.tags.includes('post')) expect(b[1][1] - b[0][1]).toBeLessThanOrEqual(600 + 1e-6);
+          const sh: K.Shape = { kind: 'box', mn: b[0], mx: b[1] }; for (const it of items) if (it.line !== f.line) expect(K.gap(it.s, sh), `${f.line} frame ${q.tags.join('/')} beside ${it.line}`).toBeGreaterThanOrEqual(1 - 1e-6); }
+      }
+    }
+    expect(n).toBeGreaterThan(0);
+  }, 600_000);
   it('what is not at zero is said: support spans where no steel stands are listed in the report and the document', () => {
     const doc = readFileSync(new URL('../docs/REFINERY-PIPING.md', import.meta.url), 'utf8'); expect(doc).toBe(pipingDocument(reports) + '\n');
     for (const r of reports) for (const s of r.checks.supports) expect(doc).toContain(s);

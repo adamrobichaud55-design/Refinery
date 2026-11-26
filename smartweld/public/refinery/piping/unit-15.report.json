@@ -27,11 +27,7 @@
   "valves": [],
   "lineClearance": [],
   "staticClearance": [],
-  "supports": [
-   "3\"-P150-CWS-15501: unsupported span 279 in > 180 on run from 1002,288,71",
-   "4\"-P150-CWR-15502: unsupported span 329 in > 240 on run from 996,348,611",
-   "4\"-P150-CWS-15503: unsupported span 359 in > 240 on run from 1236,246,259"
-  ]
+  "supports": []
  },
  "spools": [
   {
@@ -1382,7 +1378,7 @@
    "routed": true,
    "components": 34,
    "welds": 21,
-   "supports": 3,
+   "supports": 4,
    "lengthFt": 82
   },
   {
@@ -1399,7 +1395,7 @@
    "routed": true,
    "components": 32,
    "welds": 21,
-   "supports": 1,
+   "supports": 2,
    "lengthFt": 73
   },
   {
@@ -1416,7 +1412,7 @@
    "routed": true,
    "components": 31,
    "welds": 20,
-   "supports": 2,
+   "supports": 3,
    "lengthFt": 85
   },
   {
@@ -1494,7 +1490,7 @@
    "anchor": 23,
    "guide": 47,
    "hanger": 38,
-   "shoe": 53,
+   "shoe": 56,
    "stanchion": 25,
    "trapeze": 2,
    "trunnion": 27
@@ -1511,6 +1507,80 @@
   "6\"-P150-CWR-15402/p2 (43.5 ft, far end 691,348,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "3\"-P300-LS-15403/p2 (49.0 ft, far end 770,342,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "2\"-P150-P-15404/p2 (44.1 ft, far end 796,342,36): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "17 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 2 stanchions on steel below, 5 stanchions and 5 support posts from the floor"
+  "20 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 2 stanchions on steel below, 5 stanchions and 5 support posts from the floor, and 3 pipe frames"
+ ],
+ "frames": [
+  {
+   "line": "3\"-P150-CWS-15501",
+   "at": [
+    1002,
+    288,
+    473.75
+   ],
+   "u": [
+    -1,
+    0,
+    0
+   ],
+   "d": [
+    30,
+    24
+   ],
+   "floors": [
+    6,
+    0
+   ],
+   "top": 282.5,
+   "post": "W8x31",
+   "rad": 1.5
+  },
+  {
+   "line": "4\"-P150-CWR-15502",
+   "at": [
+    996,
+    348,
+    446.66665
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    36
+   ],
+   "floors": [
+    0,
+    6
+   ],
+   "top": 342,
+   "post": "W8x31",
+   "rad": 2
+  },
+  {
+   "line": "4\"-P150-CWS-15503",
+   "at": [
+    1236,
+    246,
+    461.66665
+   ],
+   "u": [
+    -1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    54
+   ],
+   "floors": [
+    6,
+    0
+   ],
+   "top": 240,
+   "post": "W8x31",
+   "rad": 2
+  }
  ]
 }

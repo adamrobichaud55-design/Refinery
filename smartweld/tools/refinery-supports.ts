@@ -13,9 +13,9 @@ const units = process.argv.slice(2).map(Number); for (const u of units.length ? 
   // made again on a model that has had it, the counts are added to the note already there
   const was = r.notes.findIndex(n => n.includes('(SW-RPI-17)')), num = (re: RegExp) => (was >= 0 ? Number(re.exec(r.notes[was])?.[1] ?? 0) : 0);
   const before = r.checks.supports.length, s = supportsAlongSpans(m, up.plant, vb), aside: string[] = [], checks = unitChecks(m, up, aside);
-  if (was >= 0) { s.hangers += num(/(\d+) hangers/); s.onSteel += num(/(\d+) stanchions on steel/); s.stanchions += num(/, (\d+) stanchions and/); s.posts += num(/(\d+) support posts/); r.notes.splice(was, 1); }
+  if (was >= 0) { s.hangers += num(/(\d+) hangers/); s.onSteel += num(/(\d+) stanchions on steel/); s.stanchions += num(/, (\d+) stanchions and/); s.posts += num(/(\d+) support posts/); s.frames = [...(r.frames ?? []), ...s.frames]; r.notes.splice(was, 1); }
   for (const k of ['continuity', 'joints', 'elbows', 'valves', 'lineClearance', 'staticClearance'] as const) if (checks[k].length !== r.checks[k].length) throw new Error(`unit ${u}: ${k} changed from ${r.checks[k].length} to ${checks[k].length}: the correction must add supports only`);
-  r.checks = checks; r.notes.push(spanNote(s));
+  r.checks = checks; r.notes.push(spanNote(s)); r.frames = s.frames;
   const count = (xs: string[]) => { const o: Record<string, number> = {}; for (const x of xs) o[x] = (o[x] ?? 0) + 1; return Object.fromEntries(Object.entries(o).sort()); };
   r.counts.supports = count(m.lines.flatMap(l => l.supports.map(q => q.type))); for (const l of r.lines) l.supports = m.lines.find(q => q.no === l.no)!.supports.length;
   writeFileSync(`${dir}/unit-${u}.json`, serializePiping(m) + '\n'); writeFileSync(`${dir}/unit-${u}.report.json`, JSON.stringify(r, null, 1) + '\n');

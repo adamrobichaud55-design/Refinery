@@ -5595,8 +5595,27 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   - a stanchion from the floor below, the top of a pad or grade, where its post, as wide as
     its base plate, is 1 in clear of every line and solid from the floor to the pipe; to 10 ft
     the stanchion of SW-PS-9, taller a support post (SW-PS-9 as amended 2026-11-25), to 50 ft.
-  Where no place within a span has either, the stretch is still listed. The correction adds
-  supports only: no line, joint or component moves.
+  Where no place within a span has any of these, a pipe frame is set (added 2026-11-26, the
+  owner's choice for the stretches left): a goalpost square to the run, two posts and a beam
+  across under the pipe, the pipe on a shoe on the beam (SW-PS-1, 4 in high). The beam's top
+  is the shoe's height under the pipe; each post stands on the floor below its own place, a
+  concrete pedestal 20 in square and 6 in high on grade or the top of a pad, and is set out
+  from the pipe on its own side, the nearest place, from the pipe's radius and 1 ft out to
+  15 ft in 6 in steps, where the post and its pedestal are 1 in clear of every line and solid;
+  the beam, as long as the two posts are apart and 4 in more each end, 30 ft at most, must be
+  1 in clear of everything but the shoe. Posts `W8x31` to 30 ft, `W10x49` taller, to 50 ft;
+  beam `W8x31` to 20 ft long, `W12x40` longer (the yard support's beam). Reason: the stretches left run over another line or an item of equipment,
+  with no steel above; a post cannot stand under them, but one beside the line below, or
+  beside the item, can, and a beam across carries the pipe over what lies beneath, as a pipe
+  is carried across an access way. The sections are those of the yard support steel
+  (SW-CELL-6), the posts' heavier for heights a yard post does not reach. Frames are plant 3's
+  own steel: the generator's model has no place for them, so a unit's report lists each with
+  its parts, and the views and documents draw and count them.
+  Where a post can stand on one side only, within 4 ft of the pipe's axis, the frame is that
+  post and its beam cantilevered from it, reaching 4 in past the pipe (as the bracket of
+  SW-PS-6 reaches from a column): a short arm of `W8x31` under one pipe.
+  Where no frame either stands clear, the stretch is still listed. The correction adds
+  supports and frames only: no line, joint or component moves.
 - `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),
   in inches: x east along the rack from its west end, z south across it from its centre line,
   y up from the bench. It is set on the site by a shift alone. Area number 10; its lines are

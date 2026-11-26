@@ -29,10 +29,7 @@
   "lineClearance": [],
   "staticClearance": [],
   "supports": [
-   "3\"-P150-P-16704: no shoe at bent x=360",
-   "8\"-P1200-P-16016: unsupported span 329 in > 240 on run from 432,234,635",
-   "8\"-P1200-P-16023: unsupported span 274 in > 240 on run from 726,240,245",
-   "6\"-P300-P-16027: unsupported span 358 in > 240 on run from 1446,228,46"
+   "3\"-P150-P-16704: no shoe at bent x=360"
   ]
  },
  "spools": [
@@ -822,7 +819,7 @@
    "routed": true,
    "components": 52,
    "welds": 31,
-   "supports": 14,
+   "supports": 15,
    "lengthFt": 326,
    "tier": 1,
    "station": "CS-1606",
@@ -967,7 +964,7 @@
    "routed": true,
    "components": 20,
    "welds": 11,
-   "supports": 4,
+   "supports": 5,
    "lengthFt": 115
   },
   {
@@ -1099,7 +1096,7 @@
    "routed": true,
    "components": 32,
    "welds": 23,
-   "supports": 7,
+   "supports": 8,
    "lengthFt": 167,
    "tier": 1
   },
@@ -1986,7 +1983,7 @@
    "anchor": 39,
    "guide": 92,
    "hanger": 64,
-   "shoe": 127,
+   "shoe": 130,
    "stanchion": 31,
    "trapeze": 1,
    "trunnion": 41
@@ -2005,6 +2002,80 @@
   "6\"-P150-CWR-16402/p2 (42.8 ft, far end 772,348,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "4\"-P300-LS-16403/p2 (42.6 ft, far end 785,342,24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "2\"-P150-P-16404/p2 (50.8 ft, far end 787,342,-42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "37 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 13 hangers from steel above, 3 stanchions on steel below, 8 stanchions and 13 support posts from the floor"
+  "40 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 13 hangers from steel above, 3 stanchions on steel below, 8 stanchions and 13 support posts from the floor, and 3 pipe frames"
+ ],
+ "frames": [
+  {
+   "line": "8\"-P1200-P-16016",
+   "at": [
+    432,
+    234,
+    470.33335
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    24,
+    66
+   ],
+   "floors": [
+    0,
+    6
+   ],
+   "top": 226,
+   "post": "W8x31",
+   "rad": 4
+  },
+  {
+   "line": "8\"-P1200-P-16023",
+   "at": [
+    726,
+    240,
+    12
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    18
+   ],
+   "floors": [
+    0,
+    0
+   ],
+   "top": 232,
+   "post": "W8x31",
+   "rad": 4
+  },
+  {
+   "line": "6\"-P300-P-16027",
+   "at": [
+    1446,
+    228,
+    488.7778
+   ],
+   "u": [
+    -1,
+    0,
+    0
+   ],
+   "d": [
+    30,
+    30
+   ],
+   "floors": [
+    6,
+    6
+   ],
+   "top": 221,
+   "post": "W8x31",
+   "rad": 3
+  }
  ]
 }

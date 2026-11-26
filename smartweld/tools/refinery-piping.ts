@@ -8,6 +8,7 @@ import { partDrawables, pipingDrawables, byLineClass, type Drawable } from '../s
 import type { RGB } from '../src/render/raster';
 import { pipeUnit, pipingDocument, PIPING_IMAGES, type PipedUnit } from '../src/refinery/pipingReport';
 import { unitPiping } from '../src/refinery/unitPiping';
+import { framePlaced } from '../src/refinery/supports';
 
 const dir = 'public/refinery/piping', shots = 'screenshots/refinery'; mkdirSync(dir, { recursive: true }); mkdirSync(shots, { recursive: true });
 const C = (h: number): RGB => [(h >> 16) & 255, (h >> 8) & 255, h & 255], I = [1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1];
@@ -24,7 +25,7 @@ for (const unit of process.argv.slice(imagesOnly ? 3 : 2).map(Number)) {
   if (taken) { result.notes.push(`${taken} runs were taken from results kept earlier, not made in this run: not a result to keep.`); console.log(`${taken} runs taken from ${runs}: this result is not one to keep`); }
   if (!imagesOnly) { writeFileSync(`${dir}/unit-${unit}.json`, serializePiping(model) + '\n'); writeFileSync(`${dir}/unit-${unit}.report.json`, JSON.stringify(result, null, 1) + '\n'); }
   console.log(`unit ${unit}: ${result.lines.filter(l => l.routed).length} of ${result.lines.length} lines routed in ${result.seconds} s; failures ${result.failures.length}; checks ${Object.entries(result.checks).map(([k, v]) => `${k} ${v.length}`).join(', ')}`);
-  const ds: Drawable[] = [...partDrawables(cell.interior.instances.map(i => ({ part: i.part, transform: i.transform }))), ...pipingDrawables(model, { lineColour: byLineClass, valveCells: 40 })];
+  const ds: Drawable[] = [...partDrawables([...cell.interior.instances, ...(result.frames ?? []).flatMap(f => framePlaced(f))].map(i => ({ part: i.part, transform: i.transform }))), ...pipingDrawables(model, { lineColour: byLineClass, valveCells: 40 })];   // with the unit's pipe frames (SW-RPI-17)
   ds.push({ mesh: { positions: [-240, -1, cell.z0 - 240, cell.x1 + 240, -1, cell.z0 - 240, cell.x1 + 240, -1, cell.z1 + 240, -240, -1, cell.z1 + 240], indices: [0, 2, 1, 0, 3, 2] }, T: I as never, color: C(0xcdc6b3) });
   const shot = (name: string, cam: Camera) => { writeFileSync(`${shots}/${name}.png`, render3d(ds, cam, 1800, 1100, 2)); console.log(' ', name); };
   const cx = cell.x1 / 2, cz = (cell.z0 + cell.z1) / 2, span = Math.max(cell.x1, cell.z1 - cell.z0), ex = cell.spots.filter(s => s.kind === 'hx'), ex0 = ex.length ? ex.reduce((a, s) => a + s.x, 0) / ex.length : cx;

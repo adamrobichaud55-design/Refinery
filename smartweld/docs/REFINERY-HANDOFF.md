@@ -55,7 +55,7 @@ commit `b437c6f`.
 
 ## What is still to do
 
-Later stages, not started: supports for the 94 spans still listed after SW-RPI-17 (each has another line or equipment directly below and no steel above); the cooling tower's plot and the cooling water mains (where the two
+Later stages, not started: supports for the 26 spans still listed after SW-RPI-17 (each has another line or equipment directly below and no steel above); the cooling tower's plot and the cooling water mains (where the two
 30 in mains run is a question put to the owner: buried along the corridor with a riser at each
 unit is recommended); tank farm, jetty, flare and relief piping; offsite pipeways; expansion
 loops on the hot headers; a viewer entry for the pipeway.
