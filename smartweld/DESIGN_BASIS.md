@@ -5767,7 +5767,10 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   12 in return spool of the vacuum unit, a 4 in one beside the 6 in supply spool of unit
   16), and another stood where the 20 in supply branch of the cracking unit has to leave
   its spool. The pipeway's checks did not look at the units' spools; these were found when
-  the mains were checked against everything built.
+  the mains were checked against everything built. A post the pipeway sets on a first
+  bent's beam (above) stands 1 in clear of these too: one, under a 4 in branch that the
+  spool's room had moved up over unit 16's supply spool, came down through the place of
+  the mains' branch.
 - `SW-PWY-9` Supports. The generator carries each line on the main rack's beams (SW-PS-*)
   and hangs what crosses under steel from that steel. So that a line crossing from a unit
   has steel over it within what it spans: 2 ft inside the corridor from each unit's limit

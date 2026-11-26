@@ -57,7 +57,7 @@ const spanOf = (OD: number) => (OD >= 3.5 ? 240 : OD >= 2.375 ? 180 : 120);
  * the run has: a hanger at a member crossing over the run wherever a stretch is longer than the line spans, by the generator's own conditions (SW-PS-9). Returns how
  * many of each were set and, for the posts and hangers, on which lines.
  */
-export function supportsAtFirstBents(m: PipingModel, pw: Pick<Pipeway, 'units' | 'interior'>): { shoes: number; posts: number; hangers: number; where: string[] } {
+export function supportsAtFirstBents(m: PipingModel, pw: Pick<Pipeway, 'units' | 'interior'> & { plant?: Pipeway['plant'] }): { shoes: number; posts: number; hangers: number; where: string[] } {
   const shoes = shoesAtFirstBents(m, pw), vb = valveBoxFn(), topT = RACK.tiers[RACK.tiers.length - 1], where = new Map<string, { posts: number; hangers: number }>();
   type Member = Extract<Obstacle, { kind: 'cap' }>;
   const statics = staticObstacles([], pw.interior.instances, true).obstacles;
@@ -65,7 +65,9 @@ export function supportsAtFirstBents(m: PipingModel, pw: Pick<Pipeway, 'units' |
   const boxOf = (s: K.Shape): [V3, V3] => (s.kind === 'box' ? [s.mn, s.mx] : [[0, 1, 2].map(k => Math.min(s.a[k], s.b[k]) - s.r) as V3, [0, 1, 2].map(k => Math.max(s.a[k], s.b[k]) + s.r) as V3]);
   const items = m.lines.flatMap(r => r.comps.flatMap(c => K.compShapes(c, vb).map(s => ({ line: r.no, s, box: boxOf(s) }))));
   /** a solid standing in the box b is 1 in clear of every other line */
-  const boxClear = (no: string, b: [V3, V3]) => items.every(q => q.line === no || K.boxGap(b, q.box) >= 1 || (q.s.kind !== 'box' && K.gap(q.s, { kind: 'box', mn: b[0], mx: b[1] }) >= 1));
+  // and of each unit's cooling water spool and the room in front of it, where the mains' branch will stand (SW-PWY-8 as amended 2026-11-26)
+  const cwRooms = (pw.plant?.interior().instances ?? []).filter(pl => pl.tags.some(t => t === 'cooling water spool')).flatMap(pl => { const b = worldBox(pl.part, pl.transform); return b ? [b as [V3, V3]] : []; });
+  const boxClear = (no: string, b: [V3, V3]) => cwRooms.every(q => K.boxGap(b, q) >= 1) && items.every(q => q.line === no || K.boxGap(b, q.box) >= 1 || (q.s.kind !== 'box' && K.gap(q.s, { kind: 'box', mn: b[0], mx: b[1] }) >= 1));
   /** a rod's way up, from y0 to y1 over (x, z), is 1 in clear of every other line and passes through no solid of the steel */
   const rodClear = (no: string, x: number, z: number, y0: number, y1: number) => {
     if (y1 <= y0) return true; const rod: K.Shape = { kind: 'cap', a: [x, y0, z], b: [x, y1, z], r: 0.25 };
