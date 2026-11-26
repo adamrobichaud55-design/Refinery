@@ -6,7 +6,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 
 | Lines | Routed | Components | Welds | Supports | Pipe, ft | Failures | Checks not at zero |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 18 | 18 | 283 | 245 | 149 | 3,403 | 0 | none |
+| 18 | 18 | 282 | 244 | 147 | 3,396 | 0 | none |
 
 ## Mains
 
@@ -52,14 +52,14 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | flange | 20 |
 | gasket | 28 |
 | olet | 14 |
-| pipe | 146 |
+| pipe | 145 |
 | tee | 2 |
 | valve | 4 |
 
 | Welds | Count |
 | --- | --- |
 | BW, field | 38 |
-| BW, shop | 193 |
+| BW, shop | 192 |
 | FW, shop | 14 |
 
 | Supports | Count |
@@ -69,7 +69,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | hanger | 29 |
 | shoe | 88 |
 | stanchion | 15 |
-| trunnion | 7 |
+| trunnion | 5 |
 
 ## Checks
 
@@ -85,7 +85,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 
 ## Notes
 
-- 83 solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).
+- 66 solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).
 - 30"-P150-P-27001: no valve at PL-2701-P; GATE 30 and what stood with it left out, 3 pieces, the pipe 43.0 in longer (SW-PWY-7)
 - 30"-P150-P-27001: no valve at PL-2702-P; GATE 30 and what stood with it left out, 3 pieces, the pipe 43.0 in longer (SW-PWY-7)
 - 20"-P150-P-27101: no valve at BL-1717-P; GATE 20 and what stood with it left out, 3 pieces, the pipe 30.6 in longer (SW-PWY-7)

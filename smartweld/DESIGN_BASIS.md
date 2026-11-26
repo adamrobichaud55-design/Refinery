@@ -5956,8 +5956,9 @@ given; nothing was looked up (PROVENANCE P-94). The mains are piped by the gener
   direction struck at the spools of units 12 and 17). For the same reason, while it routes
   the generator is shown the tier beams of the units' first bents only as solids 4 in
   short of their tops (SW-PWY-8 keeps them from the pipeway's runs altogether; a branch
-  routed with them kept away passed through one), nor any piece of the pipeway's or a unit's lines that
-  stands where its valve at a unit's spool stands with its stem up: from the spool's face
+  routed with them kept away passed through one), nor the part of any piece of the pipeway's or a unit's lines that
+  stands where its valve at a unit's spool stands with its stem up (only that part: a 3 in
+  pipe hidden whole, its end in that space, let a 20 in elbow pass 0.5 in over it): from the spool's face
   the valve's length and 6 in, its width and 3 in either side, from a flange's half below
   its axis to its stem's reach and 3 in above, and 3 in more all round (the generator holds
   a box out to 3 in). Nor is it shown the sleepers: it holds a box out to 3 in, and a main

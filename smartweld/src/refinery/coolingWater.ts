@@ -191,6 +191,20 @@ export function coolingWater(root = '.'): CoolingWater {
   const lineSolid = (pl: Placed) => pl.tags.some(t => t === 'pipeway line' || / line$/.test(t) && t.startsWith('unit-'));
   const inRoom = (pl: Placed) => { const b = placedBox(pl); return room.some(([mn, mx]) => b[0].every((v, k) => v < mx[k]) && b[1].every((v, k) => v > mn[k])); };
   const routed = shown.instances.filter(pl => !pl.tags.includes('first bent') && !pl.tags.includes('sleeper') && !(lineSolid(pl) && inRoom(pl)));
+  // of a piece that reaches into that space only the part inside it is hidden: the rest stands (a 15 ft pipe with its end in it had been hidden whole)
+  const minus = (b: [V3, V3], r: [V3, V3]): [V3, V3][] => {
+    if (!b[0].every((v, k) => v < r[1][k]) || !b[1].every((v, k) => v > r[0][k])) return [b];
+    const out: [V3, V3][] = []; let mn = [...b[0]] as V3; const mx = [...b[1]] as V3;
+    for (let k = 0; k < 3; k++) {
+      if (mn[k] < r[0][k]) { const hi = [...mx] as V3; hi[k] = r[0][k]; out.push([[...mn] as V3, hi]); mn[k] = r[0][k]; }
+      if (mx[k] > r[1][k]) { const lo = [...mn] as V3; lo[k] = r[1][k]; out.push([lo, [...mx] as V3]); mx[k] = r[1][k]; }
+    }
+    return out.filter(q => [0, 1, 2].every(k => q[1][k] - q[0][k] > 0.05));
+  };
+  for (const pl of shown.instances.filter(q => lineSolid(q) && inRoom(q))) {
+    let parts: [V3, V3][] = [placedBox(pl)]; for (const r of room) parts = parts.flatMap(q => minus(q, r));
+    for (const [mn, mx] of parts) routed.push({ ...block(mn, mx, 'a line outside the valve room'), tags: [...pl.tags] });
+  }
   const hiddenCount = shown.instances.length - routed.length;
   // a first bent's tier beam is shown as a solid 4 in short of its top: no pipe passes through it, and the valve over it (a flange's half and 3 in) stands clear
   for (const pl of shown.instances.filter(q => q.tags.includes('first bent'))) { const [mn, mx] = placedBox(pl); routed.push(block(mn, [mx[0], mx[1] - 4, mx[2]], 'first bent beam, below its top')); }
