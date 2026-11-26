@@ -2,11 +2,11 @@
 
 > **Demonstration data.** Written by `tools/refinery-cooling-water.ts`; do not edit by hand.
 
-The two cooling water mains (DESIGN_BASIS.md §81) lie on 54 concrete sleepers at grade in the corridor's north strip, 234 in north of the main rack's centre line, from the cooling tower plot's south edge to 20 ft east of the rack's west end, with a branch to each unit's cooling water header spool at its limit. Piped by the generator of plants 1 and 2, unchanged; frame: the main pipeway's (SW-PWY-1) moved 234 in north (SW-CWM-1): inches, x east from the rack's west end, y up from the bench, z south from the sleeper way's centre line.
+The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers at grade in the corridor's north strip, 234 in north of the main rack's centre line, from the cooling tower plot's south edge to 20 ft east of the rack's west end, with a branch to each unit's cooling water header spool at its limit. Piped by the generator of plants 1 and 2, unchanged; frame: the main pipeway's (SW-PWY-1) moved 234 in north (SW-CWM-1): inches, x east from the rack's west end, y up from the bench, z south from the sleeper way's centre line.
 
 | Lines | Routed | Components | Welds | Supports | Pipe, ft | Failures | Checks not at zero |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 18 | 18 | 301 | 263 | 150 | 3,458 | 0 | staticClearance 1 |
+| 18 | 18 | 283 | 245 | 149 | 3,403 | 0 | none |
 
 ## Mains
 
@@ -48,18 +48,18 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 54 concrete sleepers a
 | Component | Count |
 | --- | --- |
 | blind | 4 |
-| elbow | 74 |
+| elbow | 65 |
 | flange | 20 |
 | gasket | 28 |
 | olet | 14 |
-| pipe | 155 |
+| pipe | 146 |
 | tee | 2 |
 | valve | 4 |
 
 | Welds | Count |
 | --- | --- |
-| BW, field | 39 |
-| BW, shop | 210 |
+| BW, field | 38 |
+| BW, shop | 193 |
 | FW, shop | 14 |
 
 | Supports | Count |
@@ -67,7 +67,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 54 concrete sleepers a
 | anchor | 2 |
 | guide | 8 |
 | hanger | 29 |
-| shoe | 89 |
+| shoe | 88 |
 | stanchion | 15 |
 | trunnion | 7 |
 
@@ -80,16 +80,12 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 54 concrete sleepers a
 | elbows | 0 |
 | valves | 0 |
 | lineClearance | 0 |
-| staticClearance | 1 |
+| staticClearance | 0 |
 | supports | 0 |
-
-Not at zero, staticClearance:
-
-- 6"-P150-P-27113 6"-P150-P-27113/p6 (pipe) – keep-out/cladding/pipeway line: -1.50 in
 
 ## Notes
 
-- 87 solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).
+- 83 solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).
 - 30"-P150-P-27001: no valve at PL-2701-P; GATE 30 and what stood with it left out, 3 pieces, the pipe 43.0 in longer (SW-PWY-7)
 - 30"-P150-P-27001: no valve at PL-2702-P; GATE 30 and what stood with it left out, 3 pieces, the pipe 43.0 in longer (SW-PWY-7)
 - 20"-P150-P-27101: no valve at BL-1717-P; GATE 20 and what stood with it left out, 3 pieces, the pipe 30.6 in longer (SW-PWY-7)
@@ -110,9 +106,8 @@ Not at zero, staticClearance:
 - 6"-P150-P-27112: no valve at BL-1509-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)
 - 6"-P150-P-27114: no valve at BL-1612-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)
 - 3"-P150-P-27116: no valve at BL-1810-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-PWY-7)
-- 1 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)
+- 2 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)
 - 14 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 9 stanchions on steel below, 0 stanchions and 0 support posts from the floor, and 0 pipe frames
-- 30"-P150-P-27002: foreseen in the lane at z -54, laid at z -60 (SW-CWM-2)
 
 Not in this stage (SW-CWM-8): the cooling tower plot's own piping; the mains end at its edge, each at a limit spool with its block valve and blind.
 

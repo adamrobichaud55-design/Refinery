@@ -432,3 +432,6 @@ Rendered by SmartWeld's own renderer (`tools/render-views.ts`, DESIGN_BASIS.md Â
 | `refinery/unit-17-piping-from-the-exchanger-side.png` | Plant 3, unit 17 (Fluid catalytic cracker and gas concentration) piped, from the exchanger side |
 | `refinery/unit-17-piping-valve-bay.png` | Plant 3, unit 17: the valve bay at the battery limit, a block valve and spool on each line |
 | `refinery/unit-17-piping-exchangers.png` | Plant 3, unit 17: piping at the exchangers |
+| `refinery/cooling-water-from-the-tower.png` | Plant 3, the cooling water mains: the two 30 in mains leaving the cooling tower plot's limit spools and turning west along the corridor on their sleepers |
+| `refinery/cooling-water-risers.png` | Plant 3, the cooling water mains: a unit's supply and return branches rising from the mains to its header spools at its limit, the main rack beyond |
+| `refinery/cooling-water-along-the-way.png` | Plant 3, the cooling water mains from their west end, looking east along the sleeper way under the main rack's north columns |

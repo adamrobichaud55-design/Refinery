@@ -3,11 +3,11 @@
  "area": 27,
  "name": "Cooling water mains",
  "frame": "the main pipeway's (SW-PWY-1) moved 234 in north (SW-CWM-1): inches, x east from the rack's west end, y up from the bench, z south from the sleeper way's centre line",
- "seconds": 466,
- "sleepers": 54,
+ "seconds": 428,
+ "sleepers": 51,
  "way": {
   "x0": 240,
-  "x1": 12960,
+  "x1": 12456,
   "centreZ": -234,
   "sleeperTopIn": 11
  },
@@ -15,9 +15,9 @@
   "lines": 22,
   "routed": 18,
   "failed": 0,
-  "comps": 329,
-  "welds": 263,
-  "supports": 136,
+  "comps": 311,
+  "welds": 245,
+  "supports": 135,
   "penetrations": 0
  },
  "failures": [],
@@ -27,9 +27,7 @@
   "elbows": [],
   "valves": [],
   "lineClearance": [],
-  "staticClearance": [
-   "6\"-P150-P-27113 6\"-P150-P-27113/p6 (pipe) – keep-out/cladding/pipeway line: -1.50 in"
-  ],
+  "staticClearance": [],
   "supports": []
  },
  "mains": [
@@ -286,9 +284,9 @@
    "designP": 140,
    "designT": 150,
    "routed": true,
-   "components": 41,
-   "welds": 38,
-   "supports": 53,
+   "components": 43,
+   "welds": 40,
+   "supports": 52,
    "lengthFt": 1088
   },
   {
@@ -304,10 +302,10 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 54,
-   "welds": 51,
+   "components": 42,
+   "welds": 39,
    "supports": 52,
-   "lengthFt": 1130
+   "lengthFt": 1079
   },
   {
    "no": "20\"-P150-P-27101",
@@ -343,7 +341,7 @@
    "components": 15,
    "welds": 14,
    "supports": 1,
-   "lengthFt": 45
+   "lengthFt": 46
   },
   {
    "no": "12\"-P150-P-27103",
@@ -376,8 +374,8 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 18,
-   "welds": 17,
+   "components": 16,
+   "welds": 15,
    "supports": 1,
    "lengthFt": 56
   },
@@ -451,7 +449,7 @@
    "components": 11,
    "welds": 10,
    "supports": 3,
-   "lengthFt": 109
+   "lengthFt": 108
   },
   {
    "no": "6\"-P150-P-27109",
@@ -484,10 +482,10 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 13,
-   "welds": 12,
+   "components": 7,
+   "welds": 6,
    "supports": 4,
-   "lengthFt": 90
+   "lengthFt": 87
   },
   {
    "no": "6\"-P150-P-27111",
@@ -559,7 +557,7 @@
    "components": 11,
    "welds": 10,
    "supports": 4,
-   "lengthFt": 108
+   "lengthFt": 107
   },
   {
    "no": "3\"-P150-P-27115",
@@ -673,30 +671,30 @@
  "counts": {
   "components": {
    "blind": 4,
-   "elbow": 74,
+   "elbow": 65,
    "flange": 20,
    "gasket": 28,
    "olet": 14,
-   "pipe": 155,
+   "pipe": 146,
    "tee": 2,
    "valve": 4
   },
   "welds": {
-   "BW, field": 39,
-   "BW, shop": 210,
+   "BW, field": 38,
+   "BW, shop": 193,
    "FW, shop": 14
   },
   "supports": {
    "anchor": 2,
    "guide": 8,
    "hanger": 29,
-   "shoe": 89,
+   "shoe": 88,
    "stanchion": 15,
    "trunnion": 7
   }
  },
  "notes": [
-  "87 solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).",
+  "83 solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).",
   "30\"-P150-P-27001: no valve at PL-2701-P; GATE 30 and what stood with it left out, 3 pieces, the pipe 43.0 in longer (SW-PWY-7)",
   "30\"-P150-P-27001: no valve at PL-2702-P; GATE 30 and what stood with it left out, 3 pieces, the pipe 43.0 in longer (SW-PWY-7)",
   "20\"-P150-P-27101: no valve at BL-1717-P; GATE 20 and what stood with it left out, 3 pieces, the pipe 30.6 in longer (SW-PWY-7)",
@@ -717,9 +715,8 @@
   "6\"-P150-P-27112: no valve at BL-1509-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)",
   "6\"-P150-P-27114: no valve at BL-1612-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)",
   "3\"-P150-P-27116: no valve at BL-1810-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-PWY-7)",
-  "1 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)",
-  "14 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 9 stanchions on steel below, 0 stanchions and 0 support posts from the floor, and 0 pipe frames",
-  "30\"-P150-P-27002: foreseen in the lane at z -54, laid at z -60 (SW-CWM-2)"
+  "2 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)",
+  "14 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 9 stanchions on steel below, 0 stanchions and 0 support posts from the floor, and 0 pipe frames"
  ],
  "frames": []
 }
