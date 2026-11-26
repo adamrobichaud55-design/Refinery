@@ -30,6 +30,7 @@
   "staticClearance": [],
   "supports": [
    "3\"-P150-P-13704: no shoe at bent x=360",
+   "6\"-P150-CWS-13501: unsupported span 256 in > 240 on run from 942,108,256",
    "2\"-P150-CWS-13505: unsupported span 134 in > 120 on run from 1134,372,3"
   ]
  },
@@ -504,7 +505,7 @@
    "routed": true,
    "components": 20,
    "welds": 13,
-   "supports": 4,
+   "supports": 5,
    "lengthFt": 67,
    "station": "CS-1302"
   },
@@ -666,7 +667,7 @@
    "routed": true,
    "components": 35,
    "welds": 24,
-   "supports": 12,
+   "supports": 11,
    "lengthFt": 275,
    "tier": 1
   },
@@ -1783,7 +1784,7 @@
    "routed": true,
    "components": 33,
    "welds": 22,
-   "supports": 2,
+   "supports": 3,
    "lengthFt": 86
   },
   {
@@ -1983,10 +1984,10 @@
   "supports": {
    "anchor": 33,
    "guide": 63,
-   "hanger": 55,
+   "hanger": 51,
    "shoe": 101,
-   "stanchion": 39,
-   "trapeze": 3,
+   "stanchion": 45,
+   "trapeze": 2,
    "trunnion": 35
   }
  },
@@ -2002,7 +2003,9 @@
   "4\"-P1200-LS-13403/p2 (46.1 ft, far end 737,342,24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "2\"-P150-SC-13404/p2 (40.2 ft, far end 749,342,-42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "2\"-P150-P-13406/p2 (50.1 ft, far end 778,342,-60): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "43 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 13 hangers from steel above, 3 stanchions on steel below, 4 stanchions and 14 support posts from the floor, and 9 pipe frames"
+  "2 valves turned where their stem or handwheel struck (SW-RPI-19): 6\"-P300-P-13024/B4: struck E-1304/pad; stem turned to 1,0,0; 6\"-P150-P-13034/B4: struck E-1306/pad; stem turned to 1,0,0",
+  "7 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-13702/S1 (hanger): its rod through rack-bay:1/strut; 10\"-P600-P-13010/S11 (hanger): its rod through 10\"-P600-P-13008; 3\"-P300-P-13707/S2 (trapeze): its post through 6\"-P300-P-13019; 6\"-P300-P-13026/S5 (hanger): its rod through 6\"-P300-P-13018; 3\"-P150-P-13033/S2 (hanger): its rod through rack-bay:4/strut; 8\"-P150-P-13036/S1 (hanger): its rod through 12\"-P150-P-13028; 6\"-P150-CWS-13501/S1 (stanchion): its post through E-1302/pad",
+  "51 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 14 hangers from steel above, 4 stanchions on steel below, 8 stanchions and 16 support posts from the floor, and 9 pipe frames"
  ],
  "frames": [
   {

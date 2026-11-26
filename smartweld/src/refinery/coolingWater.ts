@@ -136,7 +136,7 @@ export function coolingWater(root = '.'): CoolingWater {
   const firstBent = `rack-bent:${RACK.start - RACK.bent}`, hiddenBeam = (pl: Placed) => pl.tags.includes('beam') && pl.tags.includes(firstBent) && pl.tags.some(t => t.startsWith('unit-'));
   for (const pl of pw.interior.instances) solids.push({ part: pl.part, transform: multiply(SHIFT, pl.transform), tags: [...pl.tags, ...(hiddenBeam(pl) ? ['first bent'] : [])] });
   const pm = JSON.parse(readFileSync(`${root}/public/refinery/piping/pipeway.json`, 'utf8')) as PipingModel;
-  for (const b of runSolids(pm, vb)) solids.push({ ...b, transform: multiply(SHIFT, b.transform), tags: [...(b.tags ?? []), 'pipeway line'] });
+  for (const b of runSolids(pm, vb)) solids.push({ ...b, transform: multiply(SHIFT, b.transform), tags: ['solid', 'cladding', 'pipeway line'] });   // real, not a routing aid: not 'keep-out' (SW-RPI-17 sees it), and nothing hangs from it
   for (const U of units) {
     const bay = bays.find(b => b.unit === U.unit); if (!bay) continue;
     const um = JSON.parse(readFileSync(`${root}/public/refinery/piping/unit-${U.unit}.json`, 'utf8')) as PipingModel;
@@ -144,7 +144,7 @@ export function coolingWater(root = '.'): CoolingWater {
     const inBay = (p: V3) => p[0] < RACK.start + 24 && Math.abs(p[2]) < U.cell.rack.halfWidth + 36;
     const near: PipingModel = { ...um, lines: [...um.lines.map(r => ({ ...r, comps: r.comps.filter(c => inBay(c.a) || inBay(c.b)), supports: r.supports.filter(s => inBay(s.at as V3)), side: (r.side ?? []).filter(c => inBay(c.a) || inBay(c.b)) })),
       { no: 'spools', comps: um.nozzles.filter(n => !cwTags.has(n.equip)).flatMap(n => n.comps ?? []).filter(c => inBay(c.a) || inBay(c.b)), supports: [], welds: [], path: [] } as unknown as PipingModel['lines'][number]] };
-    for (const b of runSolids(near, vb)) solids.push({ ...b, transform: multiply(SHIFT, multiply(U.T, b.transform)), tags: [...(b.tags ?? []), `unit-${U.unit} line`] });
+    for (const b of runSolids(near, vb)) solids.push({ ...b, transform: multiply(SHIFT, multiply(U.T, b.transform)), tags: ['solid', 'cladding', `unit-${U.unit} line`] });
   }
   // sleepers, each where it stands 3 in clear of the steel (a junction frame's post)
   const sleepers: CoolingWater['sleepers'] = [], zs0 = Math.min(...lanes) - OD / 2 - CWM.sleeperOver, zs1 = Math.max(...lanes) + OD / 2 + CWM.sleeperOver;

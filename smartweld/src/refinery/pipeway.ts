@@ -5,6 +5,8 @@
  * given the rack, a nozzle schedule, a line list and where lines may travel, and is run once for each line in a lane
  * given it beforehand, as in a unit (SW-RPI-7).
  */
+import { readFileSync, existsSync } from 'node:fs';
+import { worldBox, partFromKey } from '../generator/piping';
 import { pipeDims, designFlange, gateFaceToFace, makeWideFlange, elbowRadius, type PipeClass } from '../catalogue';
 import { buildGeometry } from '../geometry/partGeometry';
 import type { PlantDef } from '../generator/plant';
@@ -411,7 +413,17 @@ export function pipeway(): Pipeway {
     const L = q.S + gateFaceToFace(sp.NPS, sp.cls) + 6 + elbowRadius(pipeDims(sp.NPS, sp.cls).OD) + 12, a: V3 = [A[0] - u[0] * (q.S + 3), A[1], A[2] - u[2] * (q.S + 3)], b: V3 = [A[0] + u[0] * L, A[1], A[2] + u[2] * L];
     keepOut.push({ ...block([Math.min(a[0], b[0]) - (u[0] ? 0 : w), A[1] - w, Math.min(a[2], b[2]) - (u[2] ? 0 : w)], [Math.max(a[0], b[0]) + (u[0] ? 0 : w), A[1] + w, Math.max(a[2], b[2]) + (u[2] ? 0 : w)], 'cooling water spool'), tags: ['keep-out', 'cladding', 'cooling water spool'] });
   }
-  const shown: InteriorModel = { ...interior, instances: [...own, ...unitSteel, ...keepOut] };
+  // SW-PWY-8 (amended 2026-11-26): what each unit has built in its valve bay stands as solid: its lines' pieces and supports, and the bodies of its spools but those the
+  // pipeway's own lines bolt to (one of its branches had been routed through a unit's cooling water return header, which the pipeway had never been shown)
+  const unitBuilt: Placed[] = [], bolted = new Set([...nozzles.keys()].map(id => id.replace(/-[PU]$/, '')));
+  for (const U of units.filter(u => u.piped)) {
+    const f = `public/refinery/piping/unit-${U.unit}.json`; if (!existsSync(f)) continue;
+    const um = JSON.parse(readFileSync(f, 'utf8')) as { lines: { comps: { key: string; T: number[]; a: V3; b: V3 }[]; supports: { key: string; T: number[]; at: V3 }[] }[]; nozzles: { equip: string; comps?: { key: string; T: number[]; a: V3; b: V3 }[] }[] };
+    const inBay = (p: V3) => p[0] < RACK.start + 48 && Math.abs(p[2]) < U.half + 36;
+    const pieces = [...um.lines.flatMap(r => [...r.comps.filter(c => inBay(c.a) || inBay(c.b)), ...r.supports.filter(sp => inBay(sp.at))]), ...um.nozzles.filter(n => !bolted.has(n.equip)).flatMap(n => (n.comps ?? []).filter(c => inBay(c.a) || inBay(c.b)))];
+    for (const c of pieces) { const bx = worldBox(partFromKey(c.key), multiply(U.T, c.T as Mat4)); if (bx) unitBuilt.push({ ...block(bx[0] as V3, bx[1] as V3, 'unit piece'), tags: ['solid', 'cladding', `unit-${U.unit} line`] }); }
+  }
+  const shown: InteriorModel = { ...interior, instances: [...own, ...unitSteel, ...keepOut, ...unitBuilt] };
   const building: BuildingModel = { instances: [], derived: {}, notes: [], drawing: { bays: PWY.bays, bayFt: PWY.bent / 12, widthFt: (2 * HW) / 12, eaveFt: 0, slopeRisePer12: 0, slabIn: 0 } } as unknown as BuildingModel;
   const plant: PlantDef = {
     id: `R${PWY.area}`, name: 'SmartWeld coastal refinery (plant 3), area 10: the main pipeway',

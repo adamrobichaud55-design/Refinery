@@ -1197,6 +1197,13 @@ rules of sections 29–32.
   locating ears with clearance holes at four of the line studs; the lugged body has bosses of
   diameter 2 d at every line stud, drilled through. Double-offset: the same neck and boss on a body between
   two integral flanges. Reason: the neck lifts the operator clear of pipe insulation.
+  Amended 2026-11-26 (owner's decision, P-95): a wafer or lugged body sits between two pipe
+  flanges, so within their reach (the flange's outside diameter and 1/8 in about the axis)
+  nothing of the body stands beyond its face-to-face width: the neck and the bottom boss are
+  cut to the two faces there and keep their full round above and below it. Reason: drawn
+  whole, the neck (at least 1 in in radius) and the boss stood out of a 2 in to 6 in body by
+  up to 1/2 in each side and into the flanges it is clamped between; an independent clash
+  check of plant 3 found it at every such valve (the disc, inside the bore, is not affected).
 - `F-8` Plug: a cast body that is a rounded square prism (superellipse exponent 4) around the
   taper, blended into the run tubes, closed by a round gland cover; square wrench head and a
   wrench lever. Diaphragm: run tubes into a rounded square body with a low weir across the
@@ -5619,6 +5626,29 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   SW-PS-6 reaches from a column): a short arm of `W8x31` under one pipe.
   Where no frame either stands clear, the stretch is still listed. The correction adds
   supports and frames only: no line, joint or component moves.
+- `SW-RPI-18` Supports that strike (added 2026-11-26). The generator tests a hanger's rod
+  against what it has routed when it sets it, and a line routed later, or another line's
+  support set at the same place, may still pass through it; nor does it test a stanchion's
+  post or a trunnion's leg against every line. A clash check of the whole plant found 42
+  rods through other lines' pipes (to 7.4 in), 22 pairs of hangers in one place and rods
+  through rack struts. Plant 3's own correction, on the finished model and before SW-RPI-17,
+  takes each hanger, stanchion, trunnion and trapeze and tests the tall member of its part (a
+  rod, a post or a leg), less 3 in at each of its ends where it bears or is clamped, against
+  every piece of every other line, every solid of the steel, concrete and equipment, and
+  the tall member of every support set before it: where it overlaps any of them, the support
+  is taken out. SW-RPI-17 then sets a support where the span that leaves is longer than the
+  line's span, clear by its own 1 in. Only supports move; no line or component does.
+- `SW-RPI-19` Valves that strike (added 2026-11-26). The generator turns a valve's stem to
+  the first direction in which its box strikes nothing it has planned, and does not see the
+  true parts of what it is shown as cells: a clash check of the whole plant found 14 valves
+  whose handwheels stood inside the concrete pier of the exchanger they serve (to 11.8 in).
+  Plant 3's own correction, on the finished model: a valve whose body, bonnet, stem or
+  handwheel (its part's solids) overlaps a solid of the steel, concrete or equipment or a
+  piece of another line is turned about its own run to the first other direction square to
+  the run, up first, in which none of its solids comes within 1 in of a solid of the plant
+  or within 3 in of another line (SW-RT-3; with 1 in, a valve turned in unit 19 came within
+  the generator's 3 in of a line); the valve and its joints stay where they are. A valve with
+  no such direction stays, and is listed.
 - `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),
   in inches: x east along the rack from its west end, z south across it from its centre line,
   y up from the bench. It is set on the site by a shift alone. Area number 10; its lines are
@@ -5773,6 +5803,13 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   bent's beam (above) stands 1 in clear of these too: one, under a 4 in branch that the
   spool's room had moved up over unit 16's supply spool, came down through the place of
   the mains' branch.
+  Every piece each unit has built in its valve bay stands as a solid while the pipeway is
+  routed, as its steel does (added 2026-11-26): its lines' pieces and supports, and the
+  bodies of its spools but those the pipeway's own lines bolt to, each held by its box.
+  Reason: the pipeway had been shown only the units' steel; with the spools' room added, one
+  of its branches was routed through the vacuum unit's 12 in cooling water return header
+  behind its spool, which a clash check of the whole plant found (the generator's checks
+  look at one model at a time).
 - `SW-PWY-9` Supports. The generator carries each line on the main rack's beams (SW-PS-*)
   and hangs what crosses under steel from that steel. So that a line crossing from a unit
   has steel over it within what it spans: 2 ft inside the corridor from each unit's limit
@@ -5968,7 +6005,9 @@ given; nothing was looked up (PROVENANCE P-94). The mains are piped by the gener
 - `SW-CWM-7` Supports and checks as for a unit (§40, SW-RPI-17): the mains on their
   sleepers as on a rack tier, the branches by the generator's own stepping and then
   SW-RPI-17's correction. The checks are run against the area's own lines and against
-  everything SW-CWM-5 shows as solid, the first bents' beams included, so a clash with the pipeway or a unit is found.
+  everything SW-CWM-5 shows as solid, the first bents' beams included. Those solids are
+  real, not routing aids: SW-RPI-17 sets no support through them (held as aids at first,
+  a stanchion it set for the mains stood through the pipeway's 14 in steam header), so a clash with the pipeway or a unit is found.
 - `SW-CWM-8` Not in this stage: the tower plot's own piping (basin outlet, the four
   circulating pumps, the side-stream filter, blowdown and make-up); the mains end at its
   edge (SW-CWM-3). Each unit's header spools for cooling water stay as they are.

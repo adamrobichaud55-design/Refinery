@@ -640,7 +640,10 @@ function butterflyCast(b: ValveSolid[], c: Common, Ro: number, zLo: number, zHi:
   const pts = circlePts(f.BC / 2, f.n);
   if (lugs) for (const [x, y] of pts) { parts.push(S.rcylZ(f.d, zLo, zHi, 0.2, x, y)); holes.push(S.cylZ(f.holeD / 2, zLo - 1, zHi + 1, x, y)); }
   if (mode === 'wafer') for (const i of [0, 1, 2, 3].map(q => Math.floor((q * f.n) / 4))) { const [x, y] = pts[i], m = (zHi - zLo) * 0.15; parts.push(S.rcylZ(f.d * 0.9 + 0.15, zLo + m, zHi - m, 0.15, x, y)); holes.push(S.cylZ(f.holeD / 2, zLo - 1, zHi + 1, x, y)); }   // F-7 locating ears
-  const outer = S.union(S.blend(Math.max(0.4, 0.04 * D), ...parts), S.roundBox(xOff, Ro + hn + tp / 2, 0, sp / 2, tp / 2, sp / 2, 0.12));
+  const whole = S.union(S.blend(Math.max(0.4, 0.04 * D), ...parts), S.roundBox(xOff, Ro + hn + tp / 2, 0, sp / 2, tp / 2, sp / 2, 0.12));
+  // F-7 (amended): a body clamped between pipe flanges stands no wider than its faces within their reach; the neck and boss keep their round beyond it
+  const yF = f.OD / 2 + 0.125, BIG = 1000;
+  const outer = mode === 'flanged' ? whole : S.subtract(whole, S.roundBox(0, 0, zHi + BIG / 2, BIG, yF, BIG / 2), S.roundBox(0, 0, zLo - BIG / 2, BIG, yF, BIG / 2));
   const cav = S.union(S.cylZ(D / 2 + liner, zLo - 1, zHi + 1), S.cylY(ds / 2 + 0.03, -(Ro + 1), yTop + 1, xOff), ...holes);
   const x = (mode === 'flanged' ? Ro : f.BC / 2 + f.d) + 0.5;
   castPart(b, 'body', S.subtract(outer, cav), [-Math.max(x, sp / 2 + Math.abs(xOff)), -Math.max(x, Ro + 0.75) - 0.3, zLo - 0.1], [Math.max(x, sp / 2 + Math.abs(xOff)), yTop + 0.2, zHi + 0.1], Math.min(tb, (zHi - zLo) / 2));

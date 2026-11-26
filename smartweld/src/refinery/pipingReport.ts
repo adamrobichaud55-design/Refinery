@@ -9,7 +9,7 @@ import { buildGeometry } from '../geometry/partGeometry';
 import { pipeDims, elbowRadius, designFlange } from '../catalogue';
 import type { V3 } from '../generator/router';
 import { frameFromAxes } from '../geometry/transform';
-import { supportsAlongSpans, type SpanSupports, type FrameSpec } from './supports';
+import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, type SpanSupports, type FrameSpec } from './supports';
 import { unitPiping, block, laneSpacing, type UnitPiping, type UnitLine, type BlSpool, type RootSpool, type StationSpool } from './unitPiping';
 import type { Placed } from '../generator/building';
 import { processModel } from './process';
@@ -374,6 +374,8 @@ export function cutLongPipes(m: PipingModel, most = 480): string[] {
 export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, cache?: RunCache): { up: UnitPiping; model: PipingModel; result: PipedUnit } {
   const t0 = Date.now(), recut: string[] = [], up = unitPiping(unit), model = generateUnit(up, log, watch, recut, cache);
   // SW-RPI-17: supports where the generator's stepping stopped
+  { const vt = valvesThatStrike(model, up.plant, valveBoxFn()); if (vt.turned.length || vt.stuck.length) recut.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`); }
+  const struck = supportsThatStrike(model, up.plant, valveBoxFn()); if (struck.length) { recut.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`); log(`unit ${unit}: ${struck.length} supports that strike taken out (SW-RPI-18)`); }
   const sup = supportsAlongSpans(model, up.plant, valveBoxFn()); { const n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { recut.push(spanNote(sup)); log(`unit ${unit}: ${spanNote(sup)}`); } }
   // SW-RPI-7: each line that runs the rack lies in the lane it was given; one found in another is said, and so is a header (their lanes are held where they were foreseen)
   const astray = up.foreseen.flatMap(L => { const r = L.no === undefined ? undefined : model.lines.find(l => l.no === L.no), z = r && r.ok ? laneOf(r, L.t) : undefined; return z !== undefined && Math.abs(z - L.z) > 1e-6 ? [`${L.no}: given the lane at z ${L.z} on tier ${L.t + 1}, routed at z ${z}`] : []; });

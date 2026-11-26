@@ -30,7 +30,6 @@
   "staticClearance": [],
   "supports": [
    "16\"-P150-P-17038: unsupported span 301 in > 240 on run from 1362,300,-255",
-   "3\"-P300-P-17056: unsupported span 231 in > 180 on run from 1038,294,-289",
    "4\"-P300-P-17064: unsupported span 282 in > 240 on run from 1500,294,-893",
    "6\"-P300-P-17081: unsupported span 241 in > 240 on run from 1686,294,452",
    "6\"-P300-P-17081: unsupported span 241 in > 240 on run from 1194,618,-206",
@@ -1986,7 +1985,7 @@
    "routed": true,
    "components": 39,
    "welds": 30,
-   "supports": 4,
+   "supports": 3,
    "lengthFt": 189,
    "tier": 2,
    "station": "CS-1715"
@@ -2258,7 +2257,7 @@
    "routed": true,
    "components": 19,
    "welds": 12,
-   "supports": 4,
+   "supports": 5,
    "lengthFt": 60
   },
   {
@@ -3134,7 +3133,7 @@
    "routed": true,
    "components": 32,
    "welds": 29,
-   "supports": 14,
+   "supports": 13,
    "lengthFt": 412,
    "tier": 1
   },
@@ -3316,7 +3315,7 @@
    "routed": true,
    "components": 50,
    "welds": 29,
-   "supports": 8,
+   "supports": 7,
    "lengthFt": 150,
    "station": "CS-1731",
    "controlValve": "piped"
@@ -4605,7 +4604,7 @@
    "routed": true,
    "components": 33,
    "welds": 20,
-   "supports": 3,
+   "supports": 4,
    "lengthFt": 93
   },
   {
@@ -4909,10 +4908,10 @@
   "supports": {
    "anchor": 78,
    "guide": 201,
-   "hanger": 172,
+   "hanger": 162,
    "shoe": 509,
-   "stanchion": 134,
-   "trapeze": 4,
+   "stanchion": 146,
+   "trapeze": 1,
    "trunnion": 98
   }
  },
@@ -4952,7 +4951,9 @@
   "14\"-P150-P-17409/p13 (40.4 ft, far end 5148,348,-102): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "2\"-P150-SC-17410/p2 (49.0 ft, far end 855,342,108): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "2\"-P150-SC-17410/p4 (40.3 ft, far end 1785,342,108): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "143 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 33 hangers from steel above, 15 stanchions on steel below, 20 stanchions and 50 support posts from the floor, and 25 pipe frames"
+  "1 valves turned where their stem or handwheel struck (SW-RPI-19): 14\"-P150-P-17521/B4: struck E-1712/pad; stem turned to 1,0,0; 1 with no clear direction, left: 3\"-P150-P-17009/A2: strikes V-1701/equipment and has no clear direction",
+  "23 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-17010/S1 (hanger): its rod through 3\"-P150-P-17009; 8\"-P150-P-17708/S1 (hanger): its rod through 8\"-P150-P-17707; 6\"-P150-P-17030/S1 (hanger): its rod through 6\"-P150-P-17029; 3\"-P600-P-17034/S6 (hanger): its rod through rack-bay:5/strut; 3\"-P300-P-17712/S3 (stanchion): its post through D-1702/pad; 16\"-P150-P-17039/S1 (hanger): its rod through 16\"-P150-P-17038; 4\"-P150-P-17715/S2 (hanger): its rod through 6\"-P150-P-17029; 4\"-P150-P-17715/S3 (hanger): its rod through 6\"-P150-P-17029; 6\"-P300-P-17060/S2 (hanger): its rod through rack-bay:4/strut; 4\"-P300-P-17061/S2 (hanger): its rod through 14\"-P150-P-17048; 4\"-P300-P-17061/S3 (hanger): its rod through 14\"-P150-P-17048; 4\"-P300-P-17718/S3 (hanger): its rod through rack-bay:5/strut; 3\"-P150-P-17066/S2 (stanchion): its post through D-1701/pad; 10\"-P300-P-17067/S1 (stanchion): its post through D-1701/pad; 6\"-P300-P-17723/S2 (hanger): its rod through 6\"-P300-P-17080; 6\"-P300-P-17080/S10 (hanger): its rod through 8\"-P600-P-17068; 6\"-P300-P-17081/S2 (hanger): its rod through rack-bay:6/strut; 8\"-P300-P-17093/S12 (hanger): its rod through rack-bay:7/strut; 3\"-P300-P-17100/S1 (hanger): its rod through 8\"-P300-P-17093; 3\"-P300-P-17101/S1 (trapeze): its post through 3\"-P300-P-17100; 6\"-P300-LS-17506/S1 (trapeze): its post through 8\"-P150-P-17704; 6\"-P300-LS-17506/S2 (trapeze): its post through 8\"-P150-P-17704; 6\"-P150-CWS-17519/S2 (stanchion): its post through E-1710/pad",
+  "165 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 39 hangers from steel above, 15 stanchions on steel below, 31 stanchions and 55 support posts from the floor, and 25 pipe frames"
  ],
  "frames": [
   {

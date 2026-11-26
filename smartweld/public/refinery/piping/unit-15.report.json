@@ -1489,10 +1489,10 @@
   "supports": {
    "anchor": 23,
    "guide": 47,
-   "hanger": 38,
-   "shoe": 56,
-   "stanchion": 25,
-   "trapeze": 2,
+   "hanger": 35,
+   "shoe": 57,
+   "stanchion": 28,
+   "trapeze": 1,
    "trunnion": 27
   }
  },
@@ -1507,7 +1507,8 @@
   "6\"-P150-CWR-15402/p2 (43.5 ft, far end 691,348,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "3\"-P300-LS-15403/p2 (49.0 ft, far end 770,342,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "2\"-P150-P-15404/p2 (44.1 ft, far end 796,342,36): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "20 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 2 stanchions on steel below, 5 stanchions and 5 support posts from the floor, and 3 pipe frames"
+  "4 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 8\"-P600-P-15009/S1 (hanger): its rod through 8\"-P600-P-15008; 3\"-P600-P-15027/S1 (hanger): its rod through rack-bay:6/strut; 6\"-P150-P-15028/S1 (trapeze): its post through 4\"-P150-P-15020; 3\"-P300-LS-15505/S2 (hanger): its rod through 4\"-P150-P-15020",
+  "24 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 2 stanchions on steel below, 6 stanchions and 7 support posts from the floor, and 4 pipe frames"
  ],
  "frames": [
   {
@@ -1581,6 +1582,30 @@
    "top": 240,
    "post": "W8x31",
    "rad": 2
+  },
+  {
+   "line": "3\"-P300-LS-15505",
+   "at": [
+    1170,
+    282,
+    -306
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    18
+   ],
+   "floors": [
+    0,
+    0
+   ],
+   "top": 276.5,
+   "post": "W8x31",
+   "rad": 1.5
   }
  ]
 }

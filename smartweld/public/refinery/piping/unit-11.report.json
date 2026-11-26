@@ -29,13 +29,15 @@
   "lineClearance": [],
   "staticClearance": [],
   "supports": [
-   "24\"-P300-P-11022: unsupported span 443 in > 240 on run from 558,486,32",
+   "12\"-P600-P-11019: unsupported span 260 in > 240 on run from 1350,108,-16",
+   "24\"-P300-P-11022: unsupported span 426 in > 240 on run from 558,486,32",
    "8\"-P300-P-11036: unsupported span 269 in > 240 on run from 1446,414,245",
    "8\"-P150-P-11712: unsupported span 255 in > 240 on run from 888,234,95",
    "4\"-P150-P-11056: unsupported span 245 in > 240 on run from 558,654,89",
    "24\"-P150-P-11310: unsupported span 280 in > 240 on run from 694,774,-198",
    "24\"-P150-P-11311: unsupported span 544 in > 240 on run from 610,684,-114",
-   "6\"-P150-LS-11509: unsupported span 454 in > 240 on run from 558,444,-58"
+   "6\"-P150-LS-11509: unsupported span 454 in > 240 on run from 558,444,-58",
+   "3\"-P150-LS-11511: unsupported span 188 in > 180 on run from 858,348,-377"
   ]
  },
  "spools": [
@@ -868,7 +870,7 @@
    "routed": true,
    "components": 38,
    "welds": 25,
-   "supports": 5,
+   "supports": 6,
    "lengthFt": 164,
    "tier": 1
   },
@@ -942,7 +944,7 @@
    "routed": true,
    "components": 22,
    "welds": 19,
-   "supports": 15,
+   "supports": 16,
    "lengthFt": 333,
    "tier": 3
   },
@@ -1376,7 +1378,7 @@
    "routed": true,
    "components": 38,
    "welds": 25,
-   "supports": 5,
+   "supports": 4,
    "lengthFt": 139,
    "tier": 1
   },
@@ -1524,7 +1526,7 @@
    "routed": true,
    "components": 32,
    "welds": 21,
-   "supports": 11,
+   "supports": 10,
    "lengthFt": 222,
    "tier": 2
   },
@@ -1731,7 +1733,7 @@
    "routed": true,
    "components": 49,
    "welds": 30,
-   "supports": 6,
+   "supports": 5,
    "lengthFt": 184,
    "tier": 2,
    "station": "CS-1114",
@@ -1751,7 +1753,7 @@
    "routed": true,
    "components": 32,
    "welds": 25,
-   "supports": 6,
+   "supports": 5,
    "lengthFt": 159,
    "tier": 2,
    "station": "CS-1114"
@@ -1788,7 +1790,7 @@
    "routed": true,
    "components": 41,
    "welds": 30,
-   "supports": 5,
+   "supports": 4,
    "lengthFt": 147,
    "tier": 2
   },
@@ -2741,7 +2743,7 @@
    "routed": true,
    "components": 33,
    "welds": 22,
-   "supports": 3,
+   "supports": 4,
    "lengthFt": 95
   },
   {
@@ -2862,7 +2864,7 @@
    "routed": true,
    "components": 27,
    "welds": 20,
-   "supports": 3,
+   "supports": 2,
    "lengthFt": 75
   },
   {
@@ -2922,10 +2924,9 @@
   "supports": {
    "anchor": 58,
    "guide": 127,
-   "hanger": 113,
-   "shoe": 130,
-   "stanchion": 64,
-   "trapeze": 2,
+   "hanger": 101,
+   "shoe": 131,
+   "stanchion": 74,
    "trunnion": 57
   }
  },
@@ -2939,7 +2940,9 @@
   "10\"-P150-CWR-11402/p2 (44.4 ft, far end 793,348,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "2\"-P1200-SC-11403/p2 (46.3 ft, far end 823,342,24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "4\"-P150-P-11405/p2 (52.4 ft, far end 812,342,42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "82 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 16 hangers from steel above, 6 stanchions on steel below, 7 stanchions and 33 support posts from the floor, and 20 pipe frames"
+  "8 valves turned where their stem or handwheel struck (SW-RPI-19): 12\"-P600-P-11002/B4: struck E-1101/pad; stem turned to -1,0,0; 12\"-P600-P-11003/B4: struck E-1102/pad; stem turned to 1,0,0; 12\"-P600-P-11004/B4: struck E-1103/pad; stem turned to 1,0,0; 12\"-P600-P-11005/B4: struck E-1104/pad; stem turned to 1,0,0; 12\"-P600-P-11014/B4: struck E-1106/pad; stem turned to 1,0,0; 12\"-P600-P-11015/B4: struck E-1107/pad; stem turned to 1,0,0; 12\"-P600-P-11019/B4: struck E-1108/pad; stem turned to 1,0,0; 12\"-P600-P-11020/B4: struck E-1109/pad; stem turned to 1,0,0",
+  "20 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P300-P-11010/S8 (hanger): its rod through 3\"-P300-P-11008; 12\"-P600-P-11019/S5 (stanchion): its post through E-1108/pad; 8\"-P150-P-11707/S1 (hanger): its rod through rack-bay:2/strut; 10\"-P300-P-11041/S3 (hanger): its rod through 12\"-P600-P-11016; 10\"-P300-P-11041/S4 (hanger): its rod through 12\"-P600-P-11016; 10\"-P300-P-11042/S2 (hanger): its rod through rack-bay:4/strut; 6\"-P150-P-11044/S2 (hanger): its rod through rack-bay:3/strut; 4\"-P300-P-11047/S1 (hanger): its rod through 4\"-P300-P-11046; 6\"-P150-P-11050/S1 (hanger): its rod through 6\"-P150-P-11045; 6\"-P150-P-11050/S2 (hanger): its rod through 6\"-P150-P-11045; 8\"-P150-P-11051/S1 (hanger): its rod through 8\"-P150-P-11712; 6\"-P300-P-11053/S2 (hanger): its rod through rack-bay:2/strut; 6\"-P150-P-11055/S1 (hanger): its rod through 10\"-P150-P-11709; 6\"-P150-P-11714/S4 (hanger): its rod through rack-bay:3/strut; 6\"-P150-P-11057/S1 (hanger): its rod through 6\"-P150-P-11044; 6\"-P150-P-11057/S2 (hanger): its rod through 6\"-P150-P-11044; 8\"-P300-P-11063/S1 (hanger): its rod through 8\"-P300-P-11062; 6\"-P150-CWS-11505/S2 (stanchion): its post through E-1111/pad; 3\"-P150-LS-11511/S2 (trapeze): its post through 3\"-P150-LS-11510; 3\"-P150-LS-11512/S2 (trapeze): its post through 3\"-P150-LS-11510",
+  "99 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 20 hangers from steel above, 7 stanchions on steel below, 14 stanchions and 37 support posts from the floor, and 21 pipe frames"
  ],
  "frames": [
   {
@@ -3421,6 +3424,30 @@
    "top": 384.5,
    "post": "W10x49",
    "rad": 1.5
+  },
+  {
+   "line": "24\"-P300-P-11022",
+   "at": [
+    558,
+    486,
+    -117.16665
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    48,
+    0
+   ],
+   "floors": [
+    0,
+    0
+   ],
+   "top": 470,
+   "post": "W10x49",
+   "rad": 12
   }
  ]
 }

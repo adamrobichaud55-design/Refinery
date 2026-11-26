@@ -6,7 +6,8 @@
 import { staticObstacles, partFromKey, worldBox, type PipingModel, type LineRun, type Obstacle } from '../generator/piping';
 import * as K from '../generator/pipingCheck';
 import type { V3 } from '../generator/router';
-import { generateUnit, unitChecks, valveBoxFn, type UnitChecks, type RunCache } from './pipingReport';
+import { generateUnit, unitChecks, valveBoxFn, spanNote, type UnitChecks, type RunCache } from './pipingReport';
+import { supportsThatStrike, supportsAlongSpans, valvesThatStrike, type FrameSpec } from './supports';
 import type { UnitPiping } from './unitPiping';
 import { pipeway, PWY, type Pipeway, type LimitSpool, type Junction, type StreamPlan, type PipewayLine, type HeaderPlan, type TierLoad } from './pipeway';
 import { FLUIDS } from './fluids';
@@ -18,7 +19,7 @@ export interface PipewayLineRec { no: string; origin: PipewayLine['origin']; str
 export interface PipedPipeway {
   demonstration: true; area: number; name: string; frame: string; rack: { lengthFt: number; widthFt: number; tiersFt: number[]; bays: number }; runs: number; tiers: number[]; tierRoom: number; seconds: number;
   stats: Record<string, number>; failures: string[]; checks: UnitChecks; limits: LimitSpool[]; junctions: Junction[]; streams: StreamPlan[]; /** SW-PWY-11, SW-PWY-13 */ headers: HeaderPlan[]; loads: TierLoad[]; skipped: Pipeway['skipped']; lines: PipewayLineRec[];
-  counts: { components: Record<string, number>; welds: Record<string, number>; supports: Record<string, number> }; notes: string[];
+  counts: { components: Record<string, number>; welds: Record<string, number>; supports: Record<string, number> }; notes: string[]; /** SW-RPI-17: pipe frames of plant 3's own */ frames?: FrameSpec[];
 }
 const pathLen = (r: LineRun) => r.path.reduce((s, p, i) => (i ? s + Math.hypot(p[0] - r.path[i - 1][0], p[1] - r.path[i - 1][1], p[2] - r.path[i - 1][2]) : 0), 0);
 /** the lane a line runs in on a tier of the main rack: where its longest stretch along the rack at that tier's elevation lies, if that is 8 ft or more */
@@ -141,7 +142,11 @@ export function supportsAtFirstBents(m: PipingModel, pw: Pick<Pipeway, 'units' |
 export function pipePipeway(log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, cache?: RunCache): { pw: Pipeway; model: PipingModel; result: PipedPipeway } {
   const t0 = Date.now(), pw = pipeway(), up = asUnit(pw), notes: string[] = [];
   const model = generateUnit(up, log, watch, notes, cache);
-  const set = supportsAtFirstBents(model, pw);
+  const set = supportsAtFirstBents(model, pw), frames: FrameSpec[] = [];
+  // SW-RPI-18 and SW-RPI-17, as for a unit: supports whose rod, post or leg strikes are taken out, and supports set where a span is then too long
+  { const vt = valvesThatStrike(model, pw.plant, valveBoxFn()); if (vt.turned.length || vt.stuck.length) notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`); }
+  { const vbx = valveBoxFn(), struck = supportsThatStrike(model, pw.plant, vbx); if (struck.length) { notes.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`); log(`unit ${PWY.area}: ${struck.length} supports that strike taken out (SW-RPI-18)`); }
+    const sup = supportsAlongSpans(model, pw.plant, vbx), n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { notes.push(spanNote(sup)); log(`unit ${PWY.area}: ${spanNote(sup)}`); } frames.push(...sup.frames); }
   if (set.shoes) notes.push(`${set.shoes} shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).`);
   if (set.posts || set.hangers) notes.push(`${set.posts} ${set.posts === 1 ? 'post' : 'posts'} set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and ${set.hangers} hangers set where the generator's stepping along a run had stopped for want of that steel: ${set.where.join('; ')} (SW-PWY-8).`);
   if (set.shoes || set.posts || set.hangers) log(`unit ${PWY.area}: ${set.shoes} shoes, ${set.posts} posts and ${set.hangers} hangers at and from the units' first bents (SW-PWY-8)`);
@@ -159,7 +164,7 @@ export function pipePipeway(log: (s: string) => void = () => {}, watch?: (plant:
     rack: { lengthFt: (PWY.bays * PWY.bent) / 12, widthFt: (2 * PWY.half) / 12, tiersFt: PWY.tiers.map(t => t / 12), bays: PWY.bays }, runs: pw.runs.length, tiers: pw.tiers.map(t => t + 1), tierRoom: pw.tierRoom, seconds: Math.round((Date.now() - t0) / 1000),
     stats: Object.fromEntries(Object.entries(model.stats).filter(([k]) => !k.startsWith('t_'))), failures: model.failures, checks, limits: pw.limits, junctions: pw.junctions, streams: pw.streams, headers: pw.headers, loads: pw.loads, skipped: pw.skipped, lines,
     counts: { components: count(model.lines.flatMap(r => r.comps.filter(c => c.kind !== 'studs').map(c => c.kind))), welds: count(model.lines.flatMap(r => r.welds.map(w => `${w.type}${w.field ? ', field' : ', shop'}`))), supports: count(model.lines.flatMap(r => r.supports.map(s => s.type))) },
-    notes: [...pw.notes, ...astray, ...moved, ...notes, ...aside],
+    notes: [...pw.notes, ...astray, ...moved, ...notes, ...aside], frames,
   };
   return { pw, model, result };
 }
