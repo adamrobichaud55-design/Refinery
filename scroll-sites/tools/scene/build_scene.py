@@ -152,10 +152,9 @@ def grow(m, k):
     for _ in range(k): p_ = np.pad(m, 1); m = p_[1:-1, 1:-1] | p_[:-2, 1:-1] | p_[2:, 1:-1] | p_[1:-1, :-2] | p_[1:-1, 2:]
     return m
 shrink = lambda m, k: ~grow(~m, k)
-wall = (grid((S3[:, 1] > 0.2) & (S3[:, 1] < 0.8)) >= 30) & (grid((S3[:, 1] > 0.9) & (S3[:, 1] < 1.5)) >= 30) & (grid((S3[:, 1] > 1.6) & (S3[:, 1] < 2.2)) >= 30)      # a surface standing from the floor to above head height: a wall, a door, a curtain (a worktop or a bed is not, so rooms are measured wall to wall)
+wall = grid((S3[:, 1] > 1.5) & (S3[:, 1] < 2.0)) >= 25                    # what stands at head height, above the furniture and below the tops of the doorways: walls, curtains, wardrobes
 solid = grid((S3[:, 1] > 0.3) & (S3[:, 1] < 1.8)) >= 10                   # ... and anything a person would walk into
 seen = grid(S3[:, 1] < 0.12) >= 3; ta, tb = to_plan(Cw[:, 0], Cw[:, 2]); track = np.zeros((PH, PW), bool); track[np.clip(((tb - b0) / CP).astype(int), 0, PH - 1), np.clip(((ta - a0) / CP).astype(int), 0, PW - 1)] = True
-inside = shrink(grow(seen | grow(track, 8), 26), 26) & ~wall             # the floor that was seen or walked, with the footprints of beds and sofas filled in
 def edt(free):
     """how far each free cell is from the nearest cell that is not free, in metres"""
     edge = ~free & grow(free, 1); ey, ex = np.nonzero(edge); fy, fx = np.nonzero(free); D = np.zeros(free.shape, np.float32)
@@ -172,6 +171,10 @@ def parts(m):
             for ny, nx in ((cy + 1, cx), (cy - 1, cx), (cy, cx + 1), (cy, cx - 1)):
                 if 0 <= ny < m.shape[0] and 0 <= nx < m.shape[1] and m[ny, nx] and not lab[ny, nx]: lab[ny, nx] = n_; stack.append((ny, nx))
     return lab, n_
+# The floor of the home: what was seen of it or walked on, plus whatever that and the walls enclose (the footprint of a
+# bed or a sofa, which hides its own floor). What lies outside the walls is not floor, however near.
+known = grow(seen | grow(track, 8) | wall, 3); lab_, n_ = parts(~known); edge_ = set(lab_[0]) | set(lab_[-1]) | set(lab_[:, 0]) | set(lab_[:, -1]); edge_.discard(0)
+inside = shrink(known | ((lab_ > 0) & ~np.isin(lab_, list(edge_))), 3) & ~wall
 DW = edt(inside)
 # A room is a place wide enough to stand well clear of the walls; a doorway is too narrow for that, so it parts two rooms.
 # Passages (a hallway) are narrower than rooms but wider than doorways: they are found second, where no room already is.
@@ -303,5 +306,6 @@ for k, i in enumerate(keys):
     metas.append({'pack': pack, 'at': at, 'w': im.size[0], 'h': im.size[1], 'f': [round(float(K[0, 0] / W0), 5), round(float(K[1, 1] / H0), 5)], 'c': [round(float(K[0, 2] / W0), 5), round(float(K[1, 2] / H0), 5)],
                   'g': gain, 'room': int(krooms[k]), 'p': [round(float(x), 4) for x in Cw[i]], 'r': [round(float(x), 5) for x in Rw[i].T.reshape(-1)]})      # r: the world seen from this camera (rows: its right, its down, its forward)
 plan_img.save(os.path.join(out, 'plan.webp'), 'WEBP', quality=88, method=6)
-json.dump({'mesh': 'mesh.glb', 'eye': round(EYE, 3), 'plan': {'img': 'plan.webp', 'px': IP, 'origin': [round(a0, 3), round(b0, 3)], 'turn': round(ANG, 5), 'w': IW, 'h': IH, 'area': round(float(sum(r_['area'] for r_ in plan_rooms)), 1), 'rooms': plan_rooms}, 'size': [round(float(x), 2) for x in (VX.max(0) - VX.min(0))], 'keys': metas, 'path': cams, 'chapters': chapters}, open(os.path.join(out, 'scene.json'), 'w'), separators=(',', ':'))
+Image.fromarray(room.astype(np.uint8)).save(os.path.join(out, 'rooms.png'))          # which room each 4 cm square of floor belongs to (0: none), for tools that need the layout
+json.dump({'mesh': 'mesh.glb', 'eye': round(EYE, 3), 'plan': {'img': 'plan.webp', 'px': IP, 'origin': [round(a0, 3), round(b0, 3)], 'turn': round(ANG, 5), 'w': IW, 'h': IH, 'grid': {'img': 'rooms.png', 'cell': CP, 'w': PW, 'h': PH}, 'ceiling': round(float(np.percentile(VX[:, 1], 98.5)), 2), 'area': round(float(sum(r_['area'] for r_ in plan_rooms)), 1), 'rooms': plan_rooms}, 'size': [round(float(x), 2) for x in (VX.max(0) - VX.min(0))], 'keys': metas, 'path': cams, 'chapters': chapters}, open(os.path.join(out, 'scene.json'), 'w'), separators=(',', ':'))
 print(f'\nwritten to {out}: mesh.glb ({os.path.getsize(os.path.join(out, "mesh.glb")) / 1e6:.1f} MB), {len(keys)} photographs in {(len(keys) + 15) // 16} files, a route of {len(cams)} steps' + (f", rooms: {[c['label'] for c in chapters]}" if chapters else ''))

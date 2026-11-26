@@ -115,6 +115,22 @@ What to expect: thin things the depth sensor misses (a pendant lamp, chair legs,
 mirrors, windows and screens confuse it; and anything the scan never looked at shows as a soft patch. A slow,
 thorough scan is the cure for all three. The VR button has not been tried on a headset yet.
 
+**Fitting a model that already exists.** If the client has a model of the place (an architect's, a CAD export,
+something built in Blender), `tools/scene/align_model.py` finds where it sits in the scan, which way round, and at
+what size, whatever its units:
+
+```
+python3 -I tools/scene/align_model.py property-listing/scene client-model.obj fitted/ --merge 0.06
+```
+
+It writes the placement (`fit.json`), the model moved into place (`model.ply`) and, with `--merge`, a `mesh.glb`
+that uses the client's model wherever the scan agrees with it and the scan everywhere else. In a test where a
+plain shell of the scanned apartment was moved, turned and rescaled five ways (metres, millimetres, feet, inches,
+one third size), it was put back to within 1.4 cm and 0.11% of its size every time. That shell came from the same
+scan, so it matched by construction; a model drawn separately has not been tried yet. It expects a place with a
+floor and upright surfaces. Merging only improves the picture where the model is more accurate than the scan: the
+plain shell (`tools/scene/shell_from_scan.py`, flat ceiling, no detail) made this apartment's ceiling worse.
+
 With no `scene/` folder the page falls back to the photo walk described next.
 
 ## A house tour from a client's video or photographs (property-listing)
