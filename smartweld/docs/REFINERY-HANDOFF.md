@@ -31,113 +31,34 @@ Read the standing rules below before changing anything.
 - Piping through the unchanged generator, each unit in its own frame, one run per rack line:
   - units 11, 12, 13, 14, 15, 16, 18, 19: 775 of 775 lines routed, every check of continuity,
     joints, elbows, valves and clearances at zero; unsupported spans listed.
-  - unit 17 (cracking): 222 of 222 lines routed; **not clean**, see below.
+  - unit 17 (cracking): 222 of 222 lines routed, every check at zero; unsupported spans listed.
 - The main pipeway joining the units, with the plant's nine utility headers on its top tier.
-  Re-run with unit 17 joined: 143 of 145 lines routed; **not clean**, see below.
+  Re-run with unit 17 joined: 145 of 145 lines routed, every check at zero.
 
-## Open items, in the order to take them
+## The cracking unit and the main pipeway: closed 2026-11-25
 
-### 1. Unit 17: the spare stripper feed pump's suction valve
+The four items this file first listed as open are closed, each by a rule written first
+(PROVENANCE P-91):
 
-Report: `10"-P300-P-17325: a valve at P-1711B-S strikes line 10"-P300-P-17067 in every stem
-direction`, and with it one line clearance, `17325/B9 – 17326/A10: 0.00 in`.
+- the spare stripper feed pump's suction valve and the steam take-off valves 2.7 in from the
+  cooling water header: the unit's last run made again (SW-RPI-16), the blocking valve's stem
+  turned, the striking lines routed first, a strip laid beside the header;
+- the lean amine line's lane shut by a hanger rod of an earlier run: the line given the nearest
+  free lane, the move reported (SW-RPI-7), and the pipeway's lane test checks the new lane;
+- the two unsupported spans and the branch out over the top tier at unit 17's limit: the
+  cracker's 14 in header is given to the generator early enough that its spool clears the main
+  rack's columns (SW-RPI-5).
 
-Facts. Pumps P-1711A and B stand at x 540 and 618 (78 in apart), suction nozzles 8 in facing the
-rack at y 24, the suction line 10 in. Each suction carries a 10 in gate valve (reach 48 in). The
-spare's discharge stack (check valve, 6 in gate) stands 40 in from its suction valve.
+From fresh runs: unit 17, 222 of 222 lines, every check at zero but the listed spans; the main
+pipeway, 145 of 145, every check at zero. The eight units routed before compare identical to
+commit `b437c6f`.
 
-Tried. The four lines of the two pumps routed by themselves in the whole plant
-(`tools/refinery-diag/few-lines.ts`, `LINES=17067,17325,17068,17326`) give no failure. In the
-unit's last run (the "rest" run) the clash appears. So it depends on the order the stacks are
-planned in that run and on what already stands there, not on the geometry alone.
+## What is still to do
 
-Next to try. (a) Give the pump pair its own run before the last one, as the `chase` runs are
-made, and see which stem directions are then free. (b) If the pitch of the pair is the cause,
-a rule in SW-CELL-3 that a pump and its spare stand apart by their suction valve's reach where
-the suction line is larger than the pump's nozzle. Check with the plan digest (below) that the
-other eight units do not change.
-
-### 2. Unit 17: a steam valve 2.7 in from the cooling water header
-
-Report: three line clearances of 2.70 in between the 20 in cooling water supply header (z 72)
-and the 8 in class P1200 globe valves on the take-offs of the high-pressure steam header (z 24):
-`17517/A3` and `17503/B3`.
-
-Facts. The valve stands on a vertical take-off above its header; the generator turned its stem
-toward +z, toward the 20 in header. Toward −z and along the header the way is free. The
-generator takes the first stem direction that strikes nothing; it does not look for 3 in.
-
-Next to try. A second pass in `pipingReport.ts`, plant 3's own, as SW-RPI-13 to -15 are: where
-the clearance check finds a take-off valve nearer than 3 in to a header, lay a strip 3 in thick
-beside that header there and run the last run again, so the generator finds that direction
-struck and takes another. It acts only where there is a finding, so the eight clean units are
-not touched. Write the rule first.
-
-### 3. Main pipeway: the lean amine line to unit 17
-
-Report: `6"-P600-P-10034: no rack lane with clear drops:` with nothing after the colon, and
-`6"-P600-P-10122: no tap position on 6"-P600-P-10034` (its branch from unit 18, which fails
-only because its parent does).
-
-Facts. The line runs from unit 16's spool (x 6924, +z side) to unit 17's (x 9462, −z side), in
-the lane given it on the lowest tier at z 90, y 252. An empty reason means the generator's lane
-test failed before any route was tried: something static stands within the pipe's radius and
-3 in of the lane's centre line between the two ends.
-
-Ruled out. The 4 in line 10012, whose riser at unit 18's limit stands 6 in from the lane, is
-routed after this line, not before. Holding kept lanes 6 in wider (SW-PWY-6, amended) changed
-nothing.
-
-Next to try. Replay the generator's lane test on the pipeway's grid, as
-`tools/refinery-diag/lane-test.ts` does for a unit (it would need the pipeway's plan in place of
-`unitPiping`; `pipeway()` in `src/refinery/pipeway.ts` returns `runs`, `lines`, `nozzles` and a
-`runPlant` of the same shape). Suspects: the junction frame or first bent of unit 17 or of
-unit 18, which the lane passes; the fence's slot, if the lane's width in the plan is narrower
-than the pipe the generator lays (the unit plan had exactly this fault with its columns, see
-SW-RPI-7 "Lane").
-
-### 4. Main pipeway: two unsupported spans at unit 17's limit
-
-Report: `10617` and `10618`, span 219 in against 180 in, from (9528, 360, 55).
-
-These are 3 in branches from the utility headers to unit 17 on the top tier. The supports at a
-unit's first bent are set by `supportsAtFirstBents` in `src/refinery/pipewayReport.ts`
-(SW-PWY-8). Look first at whether unit 17's first bent is found (its rack is wider, half-width
-180) and whether the post rule (10 to 48 in over the top-tier beam) applies there.
-
-### 5. The test suite on this state: 895 of 904 pass
-
-Run on the commit before this note. The nine that fail, none altered to pass:
-
-| Test | Why |
-|---|---|
-| `refinery-piping.test.ts`: every line routed, every check at zero | unit 17, items 1 and 2 |
-| `refinery-export.test.ts` (three tests) | unit 17 has no export files, see "The exports" |
-| `refinery-pipeway.test.ts`: every line routed, checks and spans at zero | items 3 and 4 |
-| `refinery-pipeway.test.ts`: each rack line lies in its lane | `10034` is not routed, item 3 |
-| `refinery-pipeway.test.ts`: at every spool the line's flange meets the face | the same unrouted line has no components |
-| `refinery-pipeway.test.ts`: the utility headers ... a branch to every party | was a test written while the cracker was not piped (it looked for unit 17's limit spools); brought up to date in the next commit, to be confirmed by a run |
-| `refinery-pipeway.test.ts`: each header in its lane, each branch comes down beside the band (line 268, 390 not below 378) | a branch crosses the rack's column line at y 390, over the top tier's steel, where the rule (SW-PWY-12) has it go out under the tier. Most likely the same fault as item 4: the two unsupported spans are branches to unit 17 at y 360, and a branch that goes out over the tier has no steel to hang from. Start item 4 here: print that branch's route and unit 17's header spools (`unitPiping(17).spools.filter(s => s.header)`), and compare their height and row with another unit's. |
-
-### The exports
-
-`tools/refinery-export.ts` refuses a model with a line that is not routed or a failure reported,
-and rightly. So unit 17 has no ground truth or piping component files yet, and the main
-pipeway's files under `public/refinery/units/` are those of the run before unit 17 joined (169
-lines), not of the model now on disk (145 lines). Both are written once items 1 to 4 are done.
-
-### After these
-
-Run the unit and the pipeway again, then `tools/refinery-piping-register.ts`,
-`tools/refinery-export.ts`, `tools/refinery-model.ts`, and the full test suite. The test
-"every line is routed, and the generator's own checks ... are at zero" in
-`tests/refinery-piping.test.ts` fails for unit 17 until items 1 and 2 are done; it must not be
-changed to pass.
-
-Later stages, not started: the cooling tower's plot and the cooling water mains (where the two
+Later stages, not started: supports for the 293 listed spans of the units; the cooling tower's plot and the cooling water mains (where the two
 30 in mains run is a question put to the owner: buried along the corridor with a riser at each
 unit is recommended); tank farm, jetty, flare and relief piping; offsite pipeways; expansion
-loops on the hot headers; supports for the units' listed spans; a viewer entry for the pipeway.
+loops on the hot headers; a viewer entry for the pipeway.
 
 ## How to work on it
 

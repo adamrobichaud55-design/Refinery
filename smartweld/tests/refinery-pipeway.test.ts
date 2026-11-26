@@ -9,7 +9,7 @@ import { pipeway, PWY, PIPED, mainY, turnHeight, pipewayToSite, stringersOf, str
 import { pipewayDocument, mainLaneOf, asUnit, supportsAtFirstBents, PIPEWAY_IMAGES, type PipedPipeway } from '../src/refinery/pipewayReport';
 import { unitChecks } from '../src/refinery/pipingReport';
 import { pipewayRegister, serializeRegister } from '../src/refinery/pipingRegister';
-import { unitPiping, laneSpacing, STRINGER } from '../src/refinery/unitPiping';
+import { unitPiping, laneSpacing, STRINGER, mainColumnRound } from '../src/refinery/unitPiping';
 import { processModel } from '../src/refinery/process';
 import { sizing, transferLine, limits, headerDesign } from '../src/refinery/sizing';
 import { plantHeaders, unitHeaders } from '../src/refinery/headers';
@@ -242,9 +242,22 @@ describe('plant 3: the piped pipeway on disk', () => {
     // the checks run again here on the saved model give what the report says
     const again = unitChecks(m, asUnit(pw)); for (const k of ['continuity', 'joints', 'elbows', 'valves', 'lineClearance', 'staticClearance', 'supports'] as const) expect(again[k], k).toEqual(r.checks[k]);
   }, 600_000);
+  it('a unit header of 12 in and more has its spool clear of the main rack\'s columns by what its branch needs to pass one (SW-RPI-5)', () => {
+    const colR = mainColumnRound(); let big = 0;
+    for (const h of pw.headers) for (const q of h.parties) { const n = pw.nozzles.get(q.nozzle); if (!n || !PIPED.includes(q.unit) || n.NPS < 12) continue; big++; const x = n.face[0], d = Math.abs(x - Math.round(x / PWY.bent) * PWY.bent); expect(d, `${q.nozzle}`).toBeGreaterThanOrEqual(pipeDims(n.NPS, h.cls).OD / 2 + 3 + colR + 3); }
+    expect(big).toBeGreaterThan(0);
+  });
   it('each line that runs the rack lies in the lane it was given, on its tier', () => {
     if (!r || !m) return;
-    for (const a of pw.foreseen.filter(q => q.no !== undefined)) { const run = m.lines.find(l => l.no === a.no)!; expect(mainLaneOf(run, a.t), a.no).toBe(a.z); }
+    // SW-RPI-7: a line whose lane was found shut by what an earlier run left lies in the lane the report names, and that lane keeps the spacing from every other lane of its tier over its stretch
+    const moved = new Map(r.notes.flatMap(s => { const q = /^(\S+): the lane given it at z (-?\d+) on tier (\d+) was found shut by what an earlier run left; routed in the lane at z (-?\d+) \(SW-RPI-7\)$/.exec(s); return q ? [[q[1], { from: Number(q[2]), t: Number(q[3]) - 1, z: Number(q[4]) }] as const] : []; }));
+    for (const a of pw.foreseen.filter(q => q.no !== undefined)) {
+      const run = m.lines.find(l => l.no === a.no)!, mv = moved.get(a.no!);
+      if (!mv) { expect(mainLaneOf(run, a.t), a.no).toBe(a.z); continue; }
+      expect(mv.from).toBe(a.z); expect(mv.t).toBe(a.t); expect(mainLaneOf(run, a.t), a.no).toBe(mv.z); expect(Math.abs(mv.z)).toBeLessThanOrEqual(pw.rack.halfWidth - 24);
+      for (const o of pw.foreseen.filter(q => q !== a && q.t === a.t && !(q.x1 < a.x0 - 24 || q.x0 > a.x1 + 24))) { const oz = moved.get(o.no!)?.z ?? o.z; expect(Math.abs(oz - mv.z), `${a.no} beside ${o.no ?? 'a header'}`).toBeGreaterThanOrEqual(laneSpacing(o.OD, a.OD)); }
+    }
+    expect(moved.size).toBeLessThanOrEqual(1);   // the lean amine line to the cracking unit, as on 2026-11-25
   });
   it('each header lies in its lane on the top tier from cap to cap; each branch leaves its top, comes down beside the band and goes out under the tier (SW-PWY-11, SW-PWY-12)', () => {
     if (!r || !m) return;

@@ -5037,6 +5037,18 @@ What this section adds is what that generator is given.
   gave a unit that both makes steam and uses it (the crude unit, the vacuum unit, the
   cracker) a header a size or two larger than any flow in it, and the plant's header,
   which is no smaller than a header that joins it (SW-PRC-19), with it.
+  The generator lays a unit's headers in the order it is given them, each in the first lane
+  from the centre line that is free; a header of 12 in and larger whose lane would so set its
+  spool at the limit, where the unit meets the main pipeway, nearer a column of the main
+  rack than its branch can pass is given to it earlier, at the first place in the order where
+  every such header is clear (the headers are numbered in that order): the branch's radius, the 3 in of SW-RT-3, the round the
+  generator holds the column by (half the diagonal of its section) and half a square of
+  its grid (added 2026-11-25). Such a branch comes off the main rack straight at its
+  spool's station, for it cannot step aside by less than two of its elbows' radii; a
+  smaller one steps round a column within its elbows. Reason: the cracking unit's 14 in
+  low-pressure steam header was first given the lane whose spool stood 12 in from a column;
+  its branch stepped 5 ft aside to pass the column, into the way of three smaller branches
+  beside it, which were then left one unsupported and one over the top tier.
 - `SW-RPI-6` Where lines may travel. The generator's routing takes the shortest way with the
   fewest turns, which from a column's top is as readily straight out over the unit as down the
   column. A pipe is carried by steel, so the generator is shown solid blocks that leave open
@@ -5293,6 +5305,19 @@ What this section adds is what that generator is given.
     because the lanes beside it are solid, and a tier is never loaded beyond the lanes it
     has. The second pass of a unit, made where lines had taken other lanes than foreseen
     so that their spools could be moved under them, is no longer needed.
+  A line whose lane the generator finds shut at the outset (it reports no lane with clear
+  drops and names no route it tried) is given another, once all three grids of a run have
+  failed (added 2026-11-25): the nearest lane on the same tier, on the 6 in grid and no nearer
+  the rack's edge than 2 ft, that keeps from every other lane given on that tier over the
+  same stretch the spacing above, and that nothing the earlier runs left stands within the
+  pipe's radius and 9 in of over the run. The run is made again on it; the move is kept where
+  the line is then routed, and the report names it (the lane given, the lane taken, why).
+  Reason: the generator sets a hanger where a run crosses steel, and a rod hung from the top
+  tier's stringers passes down through the tiers below it without regard to the lanes held
+  there for lines still to come: on the main pipeway, with the cracking unit joined, the rod
+  of a 6 in branch crossing under the rack stood 7 in from the centre of the lane held for
+  the lean amine line to the cracker, and that line found its lane shut. Which runs will
+  leave a rod where is not known when the lanes are given.
 - `SW-RPI-8` Branch roots (added 2026-11-24). The generator runs a line in a lane of the rack
   only if both its ends are nozzles (SW-RT-1); a line that leaves or joins another at a tee
   it routes as it finds its way, which serves the short connections of plants 1 and 2 and
@@ -5521,6 +5546,28 @@ battery-limit spools as connections and a line for every stream between units. N
 looked up; the arrangement and its round figures are SmartWeld's own, from the reasoning given
 (PROVENANCE P-88).
 
+- `SW-RPI-16` The last run tried again (added 2026-11-25). The generator plans every end of
+  every line of a run before it routes any, and each valve's stem takes the first direction
+  in which the valve strikes nothing planned before it; it does not look for the 3 in of
+  SW-RT-3, nor does it plan a pump's two suction valves together. Where the unit's last run
+  (the "rest") reports a valve that strikes in every stem direction, or a valve less than
+  3 in from a header, that run is made again, once, and the second result kept where it
+  has fewer findings:
+  - the lines named in a failure, with the lines they tap, are routed first, in a run of
+    their own on the same plant, and stand as solids for the rest of the run;
+  - beside a header that a valve came within 3 in of, a solid 3 in thick is laid along the
+    header's side facing the valve, as long as the valve's box and 3 in more each way and
+    as high as the header, so that the valve's stem is turned another way.
+  - where the valve that strikes, as it stands, meets a valve an earlier run left, that
+    valve's stem is first turned to the first other direction square to its run in which it
+    comes within 3 in of nothing (a correction on the earlier run's result: the valve, its
+    run and its joints stay where they are);
+  A run with no such finding is not made again, so a unit routed clean is untouched.
+  Reason: in the cracking unit the spare stripper feed pump's suction valve, planned after
+  its discharge stack, found every direction struck, though with the two pumps' four lines
+  routed by themselves it stood clear: the discharge valve, routed in an earlier run, had
+  its stem toward the suction and over it; and two 8 in steam take-off valves turned their
+  stems toward a 20 in water header and stood 2.7 in from it.
 - `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),
   in inches: x east along the rack from its west end, z south across it from its centre line,
   y up from the bench. It is set on the site by a shift alone. Area number 10; its lines are

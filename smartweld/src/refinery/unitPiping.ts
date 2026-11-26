@@ -23,7 +23,8 @@ import type { Equip, End, UnitSheet } from './flowsheet';
 import { buildCell, valveDrop, bodySolids, RACK, RACK_COL, YARD, type CellModel, type Spot, type SolidBox } from './cell';
 import { lineNumber, serviceOf, routedFree } from './registry';
 import { PLOTS } from './site';
-import { plotLength } from './assemble';
+import { plotLength, cellToSite } from './assemble';
+import { PWY } from './pipeway';
 
 export type V3 = [number, number, number];
 const SUFFIX = 'ABCDEFGH', near = (v: number, s = 6) => Math.round(v / s) * s, up = (v: number, s = 6) => Math.ceil(v / s - 1e-9) * s, down = (v: number, s = 6) => Math.floor(v / s + 1e-9) * s;
@@ -62,6 +63,12 @@ export interface UnitRun { kind: 'overhead' | 'rack' | 'chase' | 'rest'; lines: 
 export interface RackLane { t: number; z: number; OD: number; x0: number; x1: number; no?: string }
 /** SW-RPI-7: a line of this size and larger cannot turn out of the rack between two tiers, and runs on the lowest or the top */
 export const BIG = 14;
+/** SW-RPI-5: the round the generator holds a column of the main rack by: half the diagonal of the section the main rack is built with */
+let mainColumn: number | undefined;
+export function mainColumnRound(): number {
+  if (mainColumn === undefined) { const own: Placed[] = [], kit = interiorKit({ pedestal: PWY.PAD, padHeight: PWY.PAD }, own, {}), b = kit.rack({ x0: PWY.bent, x1: 3 * PWY.bent, bentSpacing: PWY.bent, halfWidth: PWY.half, tiers: PWY.tiers as unknown as number[], loadPsf: PWY.loadPsf }); mainColumn = Math.hypot(b.cd.d, b.cd.bf) / 2; }
+  return mainColumn;
+}
 /** SW-RPI-7: how far from the lowest tier's centre line, beyond its own radius, a lane's axis lies at least: the stringer under that line is held by the generator as a round of its section's half-diagonal, to the grid cell beyond it */
 export const STRINGER = 9;
 /** SW-RPI-7: the half-width the generator's 6 in grid holds a box of half-width `b` by: the cells whose centres are within 3 in of it, each taken to reach 3 in beyond its centre */
@@ -433,11 +440,25 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     lines.push(ahead, beyond); stationPlans.push({ tag, ahead, after: beyond }); afterStation.set(i, later);
   });
   // ---- utility headers (SW-RPI-5, SW-PRC-19): sized here, because the top tier's lanes start with them and a connection that has a control station is divided at it ----
-  const headers = unitHeaders(unit, tag => bodies(tag).length > 0).map((h, k) => ({   // a connection of an item on another plot is that plot's
-    ...h, no: lineNumber(unit, 401 + k, h.NPS, h.cls, h.fluid),
-    // the lane a header takes is as wide as the largest flange on its valved take-offs, with 3 in each side for the valves' bodies (SW-RT-2, SW-RK-7)
-    width: Math.max(pipeDims(h.NPS, h.cls).OD, ...h.utils.filter(i => !(Z.utils[i].NPS > 12 && ['CWS', 'CWR', 'W'].includes(FLUIDS[Z.utils[i].fluid].svc))).map(i => { const c = connection(Z.utils[i]); return designFlange(c.NPS, c.cls).OD + 6; })), z: undefined as number | undefined,   // (a water connection over 12 in has no valve at its take-off, SW-RPI-3, and the generator widens a header's lane for valved take-offs only)
-  }));
+  // the lane a header takes is as wide as the largest flange on its valved take-offs, with 3 in each side for the valves' bodies (SW-RT-2, SW-RK-7)
+  // (a water connection over 12 in has no valve at its take-off, SW-RPI-3, and the generator widens a header's lane for valved take-offs only)
+  const widthOf = (h: ReturnType<typeof unitHeaders>[number]) => Math.max(pipeDims(h.NPS, h.cls).OD, ...h.utils.filter(i => !(Z.utils[i].NPS > 12 && ['CWS', 'CWR', 'W'].includes(FLUIDS[Z.utils[i].fluid].svc))).map(i => { const c = connection(Z.utils[i]); return designFlange(c.NPS, c.cls).OD + 6; }));
+  let heads = unitHeaders(unit, tag => bodies(tag).length > 0);   // a connection of an item on another plot is that plot's
+  // SW-RPI-5: the generator lays the headers in the order given, each in the first lane from the centre line that is free; a header of 12 in and more whose spool would then stand nearer a
+  // column of the main rack than its branch can pass is laid earlier, at the first place in the order where every such header is clear
+  {
+    const HWh = cell.rack.halfWidth, lanesOf = (order: typeof heads) => { const cs: number[] = []; for (let z = -(HWh - 24); z <= HWh - 24; z += 6) cs.push(z); cs.sort((p, q) => Math.abs(p) - Math.abs(q) || p - q); const put: { z: number; w: number }[] = []; return order.map(h => { const w = widthOf(h), z = cs.find(c => put.every(L => Math.abs(L.z - c) >= (L.w + w) / 2 + 3)); if (z !== undefined) put.push({ z, w }); return z; }); };
+    const plotOf = PLOTS.find(q => q.unit === unit && q.kind === 'unit'), colR = mainColumnRound();
+    const toX = (z: number) => { if (!plotOf) return undefined; const T = cellToSite(plotOf, cell); return T[8] * z + T[12] - PWY.west * 12; };
+    const fine = (order: typeof heads) => lanesOf(order).every((z, k) => { const h = order[k]; if (h.NPS < 12 || z === undefined) return true; const x = toX(z); if (x === undefined) return true; const n = Math.round(x / PWY.bent); return Math.abs(x - n * PWY.bent) >= pipeDims(h.NPS, h.cls).OD / 2 + 3 + colR + 3; });
+    if (!fine(heads)) {
+      let found: typeof heads | undefined;
+      for (const h of heads.filter(q => q.NPS >= 12)) { for (let at = 0; at < heads.length && !found; at++) { const rest = heads.filter(q => q !== h), order = [...rest.slice(0, at), h, ...rest.slice(at)]; if (fine(order)) found = order; } if (found) break; }
+      if (!found) throw new Error(`unit ${unit}: no order of its headers keeps the spool of each of 12 in and more clear of the main rack's columns (SW-RPI-5)`);
+      heads = found;
+    }
+  }
+  const headers = heads.map((h, k) => ({ ...h, no: lineNumber(unit, 401 + k, h.NPS, h.cls, h.fluid), width: widthOf(h), z: undefined as number | undefined }));
   // SW-PRC-19, SW-RPI-9: a utility connection with a control station is divided at a station spool as a process line is: the part on the header's side is of the header's class and
   // conditions, the part on the item's side of the item's own. These stations are set after the process lines', in the places those leave
   const utilParts = new Map<number, { ahead: UnitLine; after: UnitLine }>();

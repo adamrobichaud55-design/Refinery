@@ -235,13 +235,13 @@
    "itemNo": 2,
    "description": "PIPE 3\" P1200 BEVELLED ENDS",
    "designation": "PIPE3-P1200",
-   "key": "PIPE|3|P1200|74.000",
+   "key": "PIPE|3|P1200|56.000",
    "NPS": 3,
    "cls": "P1200",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 74,
-   "weight": 34.7638,
+   "cutLength": 56,
+   "weight": 26.3078,
    "spool": "3\"-P1200-P-10614-SP02",
    "a": {
     "E": 2742,
@@ -251,12 +251,12 @@
    "b": {
     "E": 2742,
     "N": 66,
-    "EL": 1547
+    "EL": 1565
    },
    "centre": {
     "E": 2742,
     "N": 66,
-    "EL": 1584
+    "EL": 1593
    },
    "axis": {
     "E": 0,
@@ -288,17 +288,17 @@
    "a": {
     "E": 2742,
     "N": 66,
-    "EL": 1547
+    "EL": 1565
    },
    "b": {
     "E": 2742,
     "N": 61,
-    "EL": 1542
+    "EL": 1560
    },
    "centre": {
     "E": 2742,
     "N": 63.5,
-    "EL": 1544.5
+    "EL": 1562.5
    },
    "axis": {
     "E": 0,
@@ -320,28 +320,28 @@
    "itemNo": 2,
    "description": "PIPE 3\" P1200 BEVELLED ENDS",
    "designation": "PIPE3-P1200",
-   "key": "PIPE|3|P1200|269.293",
+   "key": "PIPE|3|P1200|262.000",
    "NPS": 3,
    "cls": "P1200",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 269.2926,
-   "weight": 126.5089,
+   "cutLength": 262,
+   "weight": 123.0828,
    "spool": "3\"-P1200-P-10614-SP02",
    "a": {
     "E": 2742,
     "N": 61,
-    "EL": 1542
+    "EL": 1560
    },
    "b": {
     "E": 2742,
-    "N": -208.2926,
-    "EL": 1542
+    "N": -201,
+    "EL": 1560
    },
    "centre": {
     "E": 2742,
-    "N": -73.6463,
-    "EL": 1542
+    "N": -70,
+    "EL": 1560
    },
    "axis": {
     "E": 0,
@@ -363,17 +363,187 @@
    "itemNo": 2,
    "description": "PIPE 3\" P1200 BEVELLED ENDS",
    "designation": "PIPE3-P1200",
-   "key": "PIPE|3|P1200|280.730",
+   "key": "PIPE|3|P1200|262.000",
    "NPS": 3,
    "cls": "P1200",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 280.7301,
-   "weight": 131.8818,
+   "cutLength": 262,
+   "weight": 123.0828,
    "spool": "3\"-P1200-P-10614-SP02",
    "a": {
     "E": 2742,
-    "N": -208.2926,
+    "N": -201,
+    "EL": 1560
+   },
+   "b": {
+    "E": 2742,
+    "N": -463,
+    "EL": 1560
+   },
+   "centre": {
+    "E": 2742,
+    "N": -332,
+    "EL": 1560
+   },
+   "axis": {
+    "E": 0,
+    "N": -1,
+    "EL": 0
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P1200-P-10614/el9",
+   "line": "3\"-P1200-P-10614",
+   "lineClass": "H1200",
+   "kind": "elbow",
+   "itemNo": 3,
+   "description": "ELBOW 90° R = 5/3 OD 3\" P1200",
+   "designation": "EL90-3-P1200",
+   "key": "EL|3|P1200|90",
+   "NPS": 3,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 3.664,
+   "spool": "3\"-P1200-P-10614-SP02",
+   "a": {
+    "E": 2742,
+    "N": -463,
+    "EL": 1560
+   },
+   "b": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1555
+   },
+   "centre": {
+    "E": 2742,
+    "N": -465.5,
+    "EL": 1557.5
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "3\"-P1200-P-10614/p10",
+   "line": "3\"-P1200-P-10614",
+   "lineClass": "H1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 3\" P1200 BEVELLED ENDS",
+   "designation": "PIPE3-P1200",
+   "key": "PIPE|3|P1200|8.000",
+   "NPS": 3,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 8,
+   "weight": 3.7583,
+   "spool": "3\"-P1200-P-10614-SP02",
+   "a": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1555
+   },
+   "b": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1547
+   },
+   "centre": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1551
+   },
+   "axis": {
+    "E": 0,
+    "N": 0,
+    "EL": -1
+   },
+   "rules": [
+    "SW-PIPE-2",
+    "SW-PIPE-3",
+    "SW-PIPE-4",
+    "SW-PIPE-5"
+   ]
+  },
+  {
+   "tag": "3\"-P1200-P-10614/el11",
+   "line": "3\"-P1200-P-10614",
+   "lineClass": "H1200",
+   "kind": "elbow",
+   "itemNo": 3,
+   "description": "ELBOW 90° R = 5/3 OD 3\" P1200",
+   "designation": "EL90-3-P1200",
+   "key": "EL|3|P1200|90",
+   "NPS": 3,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "weight": 3.664,
+   "spool": "3\"-P1200-P-10614-SP02",
+   "a": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1547
+   },
+   "b": {
+    "E": 2742,
+    "N": -473,
+    "EL": 1542
+   },
+   "centre": {
+    "E": 2742,
+    "N": -470.5,
+    "EL": 1544.5
+   },
+   "axis": {
+    "E": 0,
+    "N": -0.7071,
+    "EL": -0.7071
+   },
+   "rules": [
+    "SW-FIT-1",
+    "SW-FIT-5",
+    "SW-PIPE-2",
+    "SW-PIPE-3"
+   ]
+  },
+  {
+   "tag": "3\"-P1200-P-10614/p12",
+   "line": "3\"-P1200-P-10614",
+   "lineClass": "H1200",
+   "kind": "pipe",
+   "itemNo": 2,
+   "description": "PIPE 3\" P1200 BEVELLED ENDS",
+   "designation": "PIPE3-P1200",
+   "key": "PIPE|3|P1200|16.023",
+   "NPS": 3,
+   "cls": "P1200",
+   "material": "Grade 35 pipe",
+   "ends": "BW×BW",
+   "cutLength": 16.0227,
+   "weight": 7.5273,
+   "spool": "3\"-P1200-P-10614-SP02",
+   "a": {
+    "E": 2742,
+    "N": -473,
     "EL": 1542
    },
    "b": {
@@ -383,7 +553,7 @@
    },
    "centre": {
     "E": 2742,
-    "N": -348.6576,
+    "N": -481.0113,
     "EL": 1542
    },
    "axis": {
@@ -792,7 +962,7 @@
    "at": {
     "E": 2742,
     "N": 66,
-    "EL": 1547
+    "EL": 1565
    },
    "key": "BW|3|P1200",
    "weight": 0.1024,
@@ -826,7 +996,7 @@
    "at": {
     "E": 2742,
     "N": 61,
-    "EL": 1542
+    "EL": 1560
    },
    "key": "BW|3|P1200",
    "weight": 0.1024,
@@ -859,8 +1029,8 @@
    ],
    "at": {
     "E": 2742,
-    "N": -208.2926,
-    "EL": 1542
+    "N": -201,
+    "EL": 1560
    },
    "key": "BW|3|P1200",
    "weight": 0.1024,
@@ -883,6 +1053,142 @@
    "cls": "P1200",
    "joins": [
     "3\"-P1200-P-10614/p8",
+    "3\"-P1200-P-10614/el9"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P1200-P-10614-SP02",
+   "spools": [
+    "3\"-P1200-P-10614-SP02",
+    "3\"-P1200-P-10614-SP02"
+   ],
+   "at": {
+    "E": 2742,
+    "N": -463,
+    "EL": 1560
+   },
+   "key": "BW|3|P1200",
+   "weight": 0.1024,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P1200-P-10614/W11",
+   "line": "3\"-P1200-P-10614",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 3,
+   "cls": "P1200",
+   "joins": [
+    "3\"-P1200-P-10614/el9",
+    "3\"-P1200-P-10614/p10"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P1200-P-10614-SP02",
+   "spools": [
+    "3\"-P1200-P-10614-SP02",
+    "3\"-P1200-P-10614-SP02"
+   ],
+   "at": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1555
+   },
+   "key": "BW|3|P1200",
+   "weight": 0.1024,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P1200-P-10614/W12",
+   "line": "3\"-P1200-P-10614",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 3,
+   "cls": "P1200",
+   "joins": [
+    "3\"-P1200-P-10614/p10",
+    "3\"-P1200-P-10614/el11"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P1200-P-10614-SP02",
+   "spools": [
+    "3\"-P1200-P-10614-SP02",
+    "3\"-P1200-P-10614-SP02"
+   ],
+   "at": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1547
+   },
+   "key": "BW|3|P1200",
+   "weight": 0.1024,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P1200-P-10614/W13",
+   "line": "3\"-P1200-P-10614",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 3,
+   "cls": "P1200",
+   "joins": [
+    "3\"-P1200-P-10614/el11",
+    "3\"-P1200-P-10614/p12"
+   ],
+   "shopField": "shop",
+   "spool": "3\"-P1200-P-10614-SP02",
+   "spools": [
+    "3\"-P1200-P-10614-SP02",
+    "3\"-P1200-P-10614-SP02"
+   ],
+   "at": {
+    "E": 2742,
+    "N": -473,
+    "EL": 1542
+   },
+   "key": "BW|3|P1200",
+   "weight": 0.1024,
+   "rules": [
+    "SW-PW-1",
+    "SW-PW-2",
+    "SW-PW-3",
+    "SW-PIPE-3",
+    "SW-WD-4",
+    "SW-WD-5"
+   ]
+  },
+  {
+   "tag": "3\"-P1200-P-10614/W14",
+   "line": "3\"-P1200-P-10614",
+   "lineClass": "H1200",
+   "type": "BW",
+   "size": 0.1875,
+   "NPS": 3,
+   "cls": "P1200",
+   "joins": [
+    "3\"-P1200-P-10614/p12",
     "3\"-P1200-P-10614/B7"
    ],
    "shopField": "field",
@@ -908,7 +1214,7 @@
    ]
   },
   {
-   "tag": "3\"-P1200-P-10614/W11",
+   "tag": "3\"-P1200-P-10614/W15",
    "line": "3\"-P1200-P-10614",
    "lineClass": "H1200",
    "type": "BW",
@@ -948,16 +1254,16 @@
    "line": "3\"-P1200-P-10614",
    "lineClass": "H1200",
    "type": "hanger",
-   "description": "HANGER FOR 3\" LINE (HANGER-3x34.7)",
-   "designation": "HANGER-3x34.7",
-   "key": "HANG|3|P1200|34.67",
+   "description": "HANGER FOR 3\" LINE (HANGER-3x16.7)",
+   "designation": "HANGER-3x16.7",
+   "key": "HANG|3|P1200|16.67",
    "material": "Grade 36",
-   "weight": 4.9566,
+   "weight": 4.3992,
    "spool": "loose",
    "at": {
     "E": 2742,
     "N": -96,
-    "EL": 1542
+    "EL": 1560
    },
    "rules": [
     "SW-PS-9"
@@ -968,16 +1274,16 @@
    "line": "3\"-P1200-P-10614",
    "lineClass": "H1200",
    "type": "hanger",
-   "description": "HANGER FOR 3\" LINE (HANGER-3x41.6)",
-   "designation": "HANGER-3x41.6",
-   "key": "HANG|3|P1200|41.59",
+   "description": "HANGER FOR 3\" LINE (HANGER-3x23.6)",
+   "designation": "HANGER-3x23.6",
+   "key": "HANG|3|P1200|23.59",
    "material": "Grade 36",
-   "weight": 5.1708,
+   "weight": 4.6135,
    "spool": "loose",
    "at": {
     "E": 2742,
-    "N": -175.1951,
-    "EL": 1542
+    "N": -170.995,
+    "EL": 1560
    },
    "rules": [
     "SW-PS-9"
@@ -988,16 +1294,16 @@
    "line": "3\"-P1200-P-10614",
    "lineClass": "H1200",
    "type": "hanger",
-   "description": "HANGER FOR 3\" LINE (HANGER-3x39.9)",
-   "designation": "HANGER-3x39.9",
-   "key": "HANG|3|P1200|39.90",
+   "description": "HANGER FOR 3\" LINE (HANGER-3x21.9)",
+   "designation": "HANGER-3x21.9",
+   "key": "HANG|3|P1200|21.90",
    "material": "Grade 36",
-   "weight": 5.1185,
+   "weight": 4.5612,
    "spool": "loose",
    "at": {
     "E": 2742,
-    "N": -332.3901,
-    "EL": 1542
+    "N": -334.9975,
+    "EL": 1560
    },
    "rules": [
     "SW-PS-9"
@@ -1043,7 +1349,11 @@
     "3\"-P1200-P-10614/p5",
     "3\"-P1200-P-10614/el6",
     "3\"-P1200-P-10614/p7",
-    "3\"-P1200-P-10614/p8"
+    "3\"-P1200-P-10614/p8",
+    "3\"-P1200-P-10614/el9",
+    "3\"-P1200-P-10614/p10",
+    "3\"-P1200-P-10614/el11",
+    "3\"-P1200-P-10614/p12"
    ],
    "shopWelds": [
     "3\"-P1200-P-10614/W3",
@@ -1052,9 +1362,13 @@
     "3\"-P1200-P-10614/W6",
     "3\"-P1200-P-10614/W7",
     "3\"-P1200-P-10614/W8",
-    "3\"-P1200-P-10614/W9"
+    "3\"-P1200-P-10614/W9",
+    "3\"-P1200-P-10614/W10",
+    "3\"-P1200-P-10614/W11",
+    "3\"-P1200-P-10614/W12",
+    "3\"-P1200-P-10614/W13"
    ],
-   "weight": 320.2488
+   "weight": 318.5909
   },
   {
    "id": "3\"-P1200-P-10614-SP03",
@@ -1063,7 +1377,7 @@
     "3\"-P1200-P-10614/B5"
    ],
    "shopWelds": [
-    "3\"-P1200-P-10614/W11"
+    "3\"-P1200-P-10614/W15"
    ],
    "weight": 11.1294
   }
@@ -1078,15 +1392,15 @@
   {
    "itemNo": 2,
    "description": "PIPE 3\" P1200 BEVELLED ENDS",
-   "qty": 5,
-   "length": 656.7727,
-   "weight": 308.5399
+   "qty": 7,
+   "length": 636.7727,
+   "weight": 299.1442
   },
   {
    "itemNo": 3,
    "description": "ELBOW 90° R = 5/3 OD 3\" P1200",
-   "qty": 3,
-   "weight": 10.9921
+   "qty": 5,
+   "weight": 18.3201
   },
   {
    "itemNo": 4,
@@ -1190,7 +1504,7 @@
    "at": {
     "E": 2742,
     "N": 66,
-    "EL": 1547
+    "EL": 1565
    },
    "kind": "pipe end",
    "ref": "3\"-P1200-P-10614/p5"
@@ -1199,7 +1513,7 @@
    "at": {
     "E": 2742,
     "N": 66,
-    "EL": 1542
+    "EL": 1560
    },
    "kind": "elbow work point",
    "ref": "3\"-P1200-P-10614/el6"
@@ -1208,7 +1522,7 @@
    "at": {
     "E": 2742,
     "N": 61,
-    "EL": 1542
+    "EL": 1560
    },
    "kind": "elbow end",
    "ref": "3\"-P1200-P-10614/el6"
@@ -1216,11 +1530,65 @@
   {
    "at": {
     "E": 2742,
-    "N": -208.2926,
-    "EL": 1542
+    "N": -201,
+    "EL": 1560
    },
    "kind": "pipe end",
    "ref": "3\"-P1200-P-10614/p7"
+  },
+  {
+   "at": {
+    "E": 2742,
+    "N": -463,
+    "EL": 1560
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P1200-P-10614/p8"
+  },
+  {
+   "at": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1560
+   },
+   "kind": "elbow work point",
+   "ref": "3\"-P1200-P-10614/el9"
+  },
+  {
+   "at": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1555
+   },
+   "kind": "elbow end",
+   "ref": "3\"-P1200-P-10614/el9"
+  },
+  {
+   "at": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1547
+   },
+   "kind": "pipe end",
+   "ref": "3\"-P1200-P-10614/p10"
+  },
+  {
+   "at": {
+    "E": 2742,
+    "N": -468,
+    "EL": 1542
+   },
+   "kind": "elbow work point",
+   "ref": "3\"-P1200-P-10614/el11"
+  },
+  {
+   "at": {
+    "E": 2742,
+    "N": -473,
+    "EL": 1542
+   },
+   "kind": "elbow end",
+   "ref": "3\"-P1200-P-10614/el11"
   },
   {
    "at": {
@@ -1229,7 +1597,7 @@
     "EL": 1542
    },
    "kind": "pipe end",
-   "ref": "3\"-P1200-P-10614/p8"
+   "ref": "3\"-P1200-P-10614/p12"
   },
   {
    "at": {
@@ -1260,11 +1628,11 @@
   }
  ],
  "totals": {
-  "items": 13,
-  "welds": 11,
+  "items": 17,
+  "welds": 15,
   "fieldWelds": 2,
   "supports": 4,
-  "pipeLength": 656.7727,
-  "weight": 336.2147
+  "pipeLength": 636.7727,
+  "weight": 334.1471
  }
 }

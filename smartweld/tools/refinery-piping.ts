@@ -14,7 +14,12 @@ for (const unit of process.argv.slice(2).map(Number)) {
   // REFINERY_TRACE=<file>: which line the generator is on (it asks the plant for a line's joint whenever it works on that line), for finding a line that holds a run up
   const trace = process.env.REFINERY_TRACE, t0 = Date.now(); if (trace) writeFileSync(trace, '');
   const watch = trace ? (plant: { joint: (l: never, m: never) => unknown }) => { let cur = ''; const j = plant.joint; plant.joint = ((l: { no: string }, m: never) => { if (l.no !== cur) { cur = l.no; appendFileSync(trace, `${((Date.now() - t0) / 1000).toFixed(1)} s: ${l.no}\n`); } return j(l as never, m); }) as never; } : undefined;
-  const { up, model, result } = pipeUnit(unit, s => console.log(s), watch as never), cell = up.cell;
+  // REFINERY_RUNS=<dir>: keep each run but the last and take it from there again (for working on the last run; a result to be kept is made without it)
+  const runs = process.env.REFINERY_RUNS; if (runs) mkdirSync(runs, { recursive: true }); let taken = 0;
+  const cache = runs ? { get: (k: number, lines: string[]) => { const f = `${runs}/unit-${unit}-run-${k}.json`; if (!existsSync(f)) return undefined; const q = JSON.parse(readFileSync(f, 'utf8')) as { lines: string[]; model: never }; if (JSON.stringify(q.lines) !== JSON.stringify(lines)) return undefined; taken++; return q.model; },
+    put: (k: number, lines: string[], m: never) => writeFileSync(`${runs}/unit-${unit}-run-${k}.json`, `{"lines":${JSON.stringify(lines)},"model":${serializePiping(m)}}`) } : undefined;
+  const { up, model, result } = pipeUnit(unit, s => console.log(s), watch as never, cache as never), cell = up.cell;
+  if (taken) { result.notes.push(`${taken} runs were taken from results kept earlier, not made in this run: not a result to keep.`); console.log(`${taken} runs taken from ${runs}: this result is not one to keep`); }
   writeFileSync(`${dir}/unit-${unit}.json`, serializePiping(model) + '\n'); writeFileSync(`${dir}/unit-${unit}.report.json`, JSON.stringify(result, null, 1) + '\n');
   console.log(`unit ${unit}: ${result.lines.filter(l => l.routed).length} of ${result.lines.length} lines routed in ${result.seconds} s; failures ${result.failures.length}; checks ${Object.entries(result.checks).map(([k, v]) => `${k} ${v.length}`).join(', ')}`);
   const ds: Drawable[] = [...partDrawables(cell.interior.instances.map(i => ({ part: i.part, transform: i.transform }))), ...pipingDrawables(model, { lineColour: byLineClass, valveCells: 40 })];

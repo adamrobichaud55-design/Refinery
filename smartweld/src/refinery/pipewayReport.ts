@@ -28,7 +28,7 @@ export function mainLaneOf(r: LineRun, tier: number): number | undefined {
   return z;
 }
 /** the pipeway as the generator's runner and checks take a unit (SW-PWY-6): its runs, its lines, its steel as it stands */
-export const asUnit = (pw: Pipeway): UnitPiping => ({ unit: PWY.area, runs: pw.runs, runPlant: pw.runPlant, lines: pw.lines, cell: { interior: pw.interior }, plant: pw.plant } as unknown as UnitPiping);
+export const asUnit = (pw: Pipeway): UnitPiping => ({ unit: PWY.area, runs: pw.runs, runPlant: pw.runPlant, lines: pw.lines, cell: { interior: pw.interior }, plant: pw.plant, foreseen: pw.foreseen } as unknown as UnitPiping);
 
 /**
  * SW-PWY-8: the tier beams of each unit's first bent are not shown to the generator while it routes, so it sets no support on them. They are steel all the same: where a
@@ -137,7 +137,8 @@ export function supportsAtFirstBents(m: PipingModel, pw: Pick<Pipeway, 'units' |
 }
 /** SW-PWY-6, SW-PWY-7: pipe the main pipeway */
 export function pipePipeway(log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, cache?: RunCache): { pw: Pipeway; model: PipingModel; result: PipedPipeway } {
-  const t0 = Date.now(), pw = pipeway(), up = asUnit(pw), notes: string[] = [], model = generateUnit(up, log, watch, notes, cache);
+  const t0 = Date.now(), pw = pipeway(), up = asUnit(pw), notes: string[] = [];
+  const model = generateUnit(up, log, watch, notes, cache);
   const set = supportsAtFirstBents(model, pw);
   if (set.shoes) notes.push(`${set.shoes} shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).`);
   if (set.posts || set.hangers) notes.push(`${set.posts} ${set.posts === 1 ? 'post' : 'posts'} set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and ${set.hangers} hangers set where the generator's stepping along a run had stopped for want of that steel: ${set.where.join('; ')} (SW-PWY-8).`);

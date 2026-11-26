@@ -212,8 +212,11 @@ describe('plant 3: what the generator is given for a unit (SW-RPI-1 to SW-RPI-5)
     for (const u of [11, 12, 13, 14, 15, 16, 17, 18, 19]) {
       const q = u === U ? up : unitPiping(u), zu = Z.get(u)!, hs = unitHeaders(u, tag => q.cell.spots.some(sp => sp.item === tag));
       expect(q.lines.filter(l => l.origin === 'header').map(l => l.def.no)).toEqual(q.headers.map(h => h.line)); expect(hs.length).toBe(q.headers.length);
-      for (const [k, h] of hs.entries()) {
-        const l = q.lines.find(x => x.def.no === q.headers[k].line)!, hd = headerDesign(h.fluid), us = h.utils.map(i => zu.utils[i]);
+      // SW-RPI-5: the headers are those of the unit's utilities, in the order given to the generator (a header of 12 in and more may be given earlier, to keep its spool clear of the main rack's columns)
+      const fluidOf = (x: { line: string }) => q.lines.find(v => v.def.no === x.line)!.fluid;
+      expect(q.headers.map(fluidOf).sort()).toEqual(hs.map(x => x.fluid).sort());
+      for (const h of hs) {
+        const k = q.headers.findIndex(x => fluidOf(x) === h.fluid), l = q.lines.find(x => x.def.no === q.headers[k].line)!, hd = headerDesign(h.fluid), us = h.utils.map(i => zu.utils[i]);
         expect(l.fluid).toBe(h.fluid); expect(l.def.cls, `unit ${u} ${h.fluid}`).toBe(hd.cls); expect(l.designP).toBe(hd.designP); expect(l.designT).toBe(hd.designT); expect(l.def.NPS).toBe(h.NPS);
         expect(h.takes).toBeCloseTo(us.filter(x => x.dir === 'to').reduce((a, x) => a + x.w, 0), 6); expect(h.makes).toBeCloseTo(us.filter(x => x.dir === 'from').reduce((a, x) => a + x.w, 0), 6);
         for (const x of us) expect(h.NPS, `unit ${u} ${h.fluid}`).toBeGreaterThanOrEqual(connection(x).NPS);

@@ -3,12 +3,13 @@
  * spools on the lanes it gave (SW-RPI-4), runs that generator's own checks (§40) on the result, and writes what is found:
  * nothing is hidden, and a check that does not come to zero is listed.
  */
-import { generatePiping, partFromKey, staticObstacles, type PipingModel, type Comp, type LineRun, type Obstacle } from '../generator/piping';
+import { generatePiping, partFromKey, staticObstacles, worldBox, type PipingModel, type Comp, type LineRun, type Obstacle } from '../generator/piping';
 import * as K from '../generator/pipingCheck';
 import { buildGeometry } from '../geometry/partGeometry';
 import { pipeDims, elbowRadius, designFlange } from '../catalogue';
 import type { V3 } from '../generator/router';
-import { unitPiping, block, type UnitPiping, type UnitLine, type BlSpool, type RootSpool, type StationSpool } from './unitPiping';
+import { frameFromAxes } from '../geometry/transform';
+import { unitPiping, block, laneSpacing, type UnitPiping, type UnitLine, type BlSpool, type RootSpool, type StationSpool } from './unitPiping';
 import type { Placed } from '../generator/building';
 import { processModel } from './process';
 import { FLUIDS } from './fluids';
@@ -139,6 +140,73 @@ export function runSolids(m: PipingModel, vb: (c: Comp) => [V3, V3]): Placed[] {
 /** SW-RPI-7: the generator run once for each column's overhead line and each line that runs the rack, on the lane given it, then once for the rest; each run sees the ones before it; the runs' results as one model */
 /** a place to keep each single-line run's result and take it from again when the same run is made (a tool's aid while a later run is worked on; a final result is made without one) */
 export interface RunCache { get: (k: number, lines: string[]) => PipingModel | undefined; put: (k: number, lines: string[], m: PipingModel) => void }
+/** SW-RPI-7: another lane for a run whose line found its own shut at the outset */
+function laneAgain(up: UnitPiping, k: number, prior: Placed[], m: PipingModel): { m: PipingModel; note: string } | undefined {
+  const run = up.runs[k], L = run.lane!, main = run.lines[0];
+  if (!m.failures.some(f => f.startsWith(`${main}: no rack lane with clear drops: `) && f.trim().endsWith(':'))) return undefined;
+  const foreseen = up.foreseen ?? [], rk = up.plant.rack, HW = rk.halfWidth, r = L.OD / 2, y = Math.ceil((rk.tiers[L.t] + 4 + r) / 6 - 1e-9) * 6, x0 = L.x0 + 36, x1 = L.x1 - 36, was = L.z;
+  const others = foreseen.filter(q => q !== L && q.t === L.t && !(q.x1 < L.x0 - 24 || q.x0 > L.x1 + 24));
+  const boxes = prior.flatMap(p => { const b = worldBox(p.part, p.transform); return b && b[1][0] > x0 && b[0][0] < x1 && b[1][1] > y - r - 9 && b[0][1] < y + r + 9 ? [b] : []; });
+  const clear = (z: number) => boxes.every(b => b[1][2] < z - r - 9 || b[0][2] > z + r + 9);
+  const cands: number[] = []; for (let z = -(HW - 24); z <= HW - 24; z += 6) if (Math.abs(z - was) > 1e-6) cands.push(z); cands.sort((p, q) => Math.abs(p - was) - Math.abs(q - was) || p - q);
+  let tries = 0;
+  for (const z of cands) {
+    if (!others.every(q => Math.abs(q.z - z) >= laneSpacing(q.OD, L.OD)) || !clear(z)) continue;
+    if (++tries > 4) break;
+    L.z = z; const mine = new Set(run.lines), again = generatePiping({ plant: up.runPlant(k, prior), only: l => mine.has(l.no) });
+    if (again.failures.length < m.failures.length) return { m: again, note: `${main}: the lane given it at z ${was} on tier ${L.t + 1} was found shut by what an earlier run left; routed in the lane at z ${z} (SW-RPI-7)` };
+  }
+  L.z = was; return undefined;
+}
+/** SW-RPI-16: what the last run reports that it is made again for: the lines named where a valve strikes in every stem direction, and each valve within 3 in of a header pipe */
+function restFindings(up: UnitPiping, m: PipingModel, vb: (c: Comp) => [V3, V3]) {
+  const named = [...new Set(m.failures.flatMap(f => { const q = /^(\S+): a valve at .* in every stem direction/.exec(f); return q ? [q[1]] : []; }))];
+  const heads = new Set(up.lines.filter(l => l.origin === 'header').map(l => l.def.no)), pipes = m.lines.filter(r => heads.has(r.no)).flatMap(r => r.comps.filter(c => c.kind === 'pipe').map(c => ({ line: r.no, c, s: K.compShapes(c, vb)[0] })));
+  const near: { valve: Comp; line: string; header: Comp }[] = [];
+  for (const r of m.lines) { if (heads.has(r.no)) continue; for (const c of r.comps) { if (c.kind !== 'valve') continue; const vs = K.compShapes(c, vb); for (const p of pipes) if (vs.some(s => K.gap(s, p.s) < 3 - 1e-6)) near.push({ valve: c, line: r.no, header: p.c }); } }
+  return { named, near };
+}
+function findingsOf(up: UnitPiping, m: PipingModel, vb: (c: Comp) => [V3, V3]) { const f = restFindings(up, m, vb); return m.failures.length + f.near.length; }
+function restAgain(up: UnitPiping, k: number, prior0: Placed[], m: PipingModel, vb: (c: Comp) => [V3, V3], earlier: PipingModel[] = []): { first: PipingModel; rest: PipingModel; why: string; after: number } | undefined {
+  const { named, near } = restFindings(up, m, vb); if (!named.length && !near.length) return undefined;
+  // a valve of an earlier run that the striking valve meets as it stands: its stem turned to the first other direction square to its run in which it comes within 3 in of nothing
+  const turned: string[] = [];
+  if (named.length) {
+    const others = earlier.flatMap(q => q.lines.flatMap(r => r.comps.filter(c => c.kind !== 'studs').map(c => ({ line: r.no, c, s: K.compShapes(c, vb) }))));
+    const here = m.lines.filter(r => !named.includes(r.no)).flatMap(r => r.comps.filter(c => c.kind !== 'studs').map(c => ({ line: r.no, c, s: K.compShapes(c, vb) })));
+    const statics = up.runPlant(k, []).interior().instances.flatMap(p => { const b = worldBox(p.part, p.transform); return b ? [b] : []; });
+    for (const no of named) for (const v of m.lines.find(r => r.no === no)?.comps.filter(c => c.kind === 'valve') ?? []) {
+      const vs = K.compShapes(v, vb);
+      for (const o of others) {
+        if (o.c.kind !== 'valve' || !o.s.some(s => vs.some(w => K.gap(s, w) < 1))) continue;
+        const c = o.c, L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), f: V3 = [(c.b[0] - c.a[0]) / L, (c.b[1] - c.a[1]) / L, (c.b[2] - c.a[2]) / L], stem: V3 = [c.T[4], c.T[5], c.T[6]], at: V3 = [c.T[12], c.T[13], c.T[14]];
+        const dirs: V3[] = ([[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1], [0, -1, 0]] as V3[]).filter(d => Math.abs(d[0] * f[0] + d[1] * f[1] + d[2] * f[2]) < 1e-6 && Math.hypot(d[0] - stem[0], d[1] - stem[1], d[2] - stem[2]) > 1e-6);
+        for (const d of dirs) {
+          const T = frameFromAxes(at, d, f) as number[], tried = { ...c, T } as Comp, ts = K.compShapes(tried, vb), [mn, mx] = vb(tried);
+          const clear = [...others, ...here].every(q => q.line === o.line || q.s.every(s => ts.every(w => K.gap(s, w) >= 3))) && vs.every(w => ts.every(s => K.gap(s, w) >= 3)) && statics.every(b => b[1][0] < mn[0] || b[0][0] > mx[0] || b[1][1] < mn[1] || b[0][1] > mx[1] || b[1][2] < mn[2] || b[0][2] > mx[2]);
+          if (!clear) continue;
+          c.T = T as never; turned.push(`${o.line}'s valve ${c.tag.split('/').pop()} turned stem ${d.join(',')}`); break;
+        }
+      }
+    }
+  }
+  const prior = turned.length ? earlier.flatMap(q => runSolids(q, vb)) : prior0;
+  const run = up.runs[k], mine = new Set(run.lines), defs = new Map(up.lines.map(l => [l.def.no, l.def]));
+  // the lines named, and the lines they tap, first
+  const firstSet = new Set<string>(); for (const no of named) { firstSet.add(no); const d = defs.get(no); for (const e of d ? [d.from, d.to] : []) if (e.k === 'tap' && mine.has(e.line)) firstSet.add(e.line); }
+  const first = firstSet.size ? generatePiping({ plant: up.runPlant(k, prior), only: l => firstSet.has(l.no) }) : { ...m, lines: [], failures: [], stats: {}, cuts: [] } as PipingModel;
+  // a strip 3 in thick along the side of each header a valve came near, facing the valve
+  const strips: Placed[] = near.flatMap(({ valve, header }) => {
+    if (Math.abs(header.a[1] - header.b[1]) > 1e-6 || Math.abs(header.a[2] - header.b[2]) > 1e-6) return [];
+    const r = pipeDims(header.NPS, header.cls as never).OD / 2, [mn, mx] = vb(valve), hz = header.a[2], hy = header.a[1], sg = Math.sign((mn[2] + mx[2]) / 2 - hz) || 1;
+    const x0 = Math.max(Math.min(header.a[0], header.b[0]), mn[0] - 3), x1 = Math.min(Math.max(header.a[0], header.b[0]), mx[0] + 3); if (x1 - x0 < 1) return [];
+    return [block([x0, hy - r, sg > 0 ? hz + r : hz - r - 3], [x1, hy + r, sg > 0 ? hz + r + 3 : hz - r], 'valve kept clear of a header')];
+  });
+  const rest = generatePiping({ plant: up.runPlant(k, [...prior, ...runSolids(first, vb), ...strips]), only: l => mine.has(l.no) && !firstSet.has(l.no) });
+  const both: PipingModel = { ...rest, lines: [...first.lines, ...rest.lines], failures: [...first.failures, ...rest.failures] }, after = findingsOf(up, both, vb);
+  if (after >= m.failures.length + near.length) return undefined;
+  return { first, rest, why: [...turned, named.length ? `${named.join(', ')} with ${[...firstSet].filter(x => !named.includes(x)).join(', ') || 'no parent'} routed first` : '', near.length ? `${strips.length} strip${strips.length > 1 ? 's' : ''} beside header${strips.length > 1 ? 's' : ''} where ${near.length} valve${near.length > 1 ? 's' : ''} came within 3 in` : ''].filter(Boolean).join('; '), after };
+}
 export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, notes: string[] = [], cache?: RunCache): PipingModel {
   const vb = valveBoxFn(), models: PipingModel[] = [], prior: Placed[] = [], t00 = Date.now(); let routed = 0, failed = 0;
   for (const [k, run] of up.runs.entries()) {
@@ -150,6 +218,10 @@ export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}
     if (m.failures.length && run.kind !== 'rest') { plant = up.runPlant(k, prior, true); watch?.(plant); const again = generatePiping({ plant, only }); if (again.failures.length < m.failures.length) { m = again; notes.push(`${run.lines[0]}: routed on the unit's whole grid, having found no way in the grid cut to it (SW-RPI-7)`); } }
     // and one that finds none there either, on a grid cut close to it, 10 ft beyond its connections: the generator's search looks at a limited number of places, and the less ground it is shown the further that number goes
     if (m.failures.length && run.kind !== 'rest') { plant = up.runPlant(k, prior, 'close'); watch?.(plant); const again = generatePiping({ plant, only }); if (again.failures.length < m.failures.length) { m = again; notes.push(`${run.lines[0]}: routed on a grid cut close to it, 10 ft beyond its connections, having found no way in the grid first cut to it nor in the unit's whole grid (SW-RPI-7)`); } }
+    // SW-RPI-16: the last run made again, once, where it reports a valve that strikes in every direction or a valve within 3 in of a header
+    if (run.kind === 'rest') { const again = restAgain(up, k, prior, m, vb, models); if (again) { const was = findingsOf(up, again.first.lines.length ? m : m, vb); m = again.rest; models.push(again.first); notes.push(`the last run made again (SW-RPI-16): ${again.why}; ${was} findings before, ${again.after} after`); log(`unit ${up.unit}: the last run made again (SW-RPI-16): ${again.why}; findings ${was} → ${again.after}`); } }
+    // SW-RPI-7: a line whose lane is shut at the outset, given the nearest other lane that is free and clear of what the earlier runs left
+    if (m.failures.length && run.kind === 'rack' && run.lane && !kept) { const again = laneAgain(up, k, prior, m); if (again) { m = again.m; notes.push(again.note); log(`unit ${up.unit}: ${again.note}`); } }
     if (!kept && run.kind !== 'rest') cache?.put(k, run.lines, m);
     models.push(m); routed += m.stats.routed ?? 0; failed += m.failures.length;
     if (run.kind === 'rest') log(`unit ${up.unit}: the rest, ${m.stats.routed} of ${m.lines.filter(l => l.kind !== 'stub').length} lines routed, ${m.failures.length} failures, ${((Date.now() - t0) / 1000).toFixed(0)} s`);
@@ -292,8 +364,8 @@ export function cutLongPipes(m: PipingModel, most = 480): string[] {
 }
 
 /** SW-RPI-1, SW-RPI-7: pipe a unit */
-export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void): { up: UnitPiping; model: PipingModel; result: PipedUnit } {
-  const t0 = Date.now(), recut: string[] = [], up = unitPiping(unit), model = generateUnit(up, log, watch, recut);
+export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, cache?: RunCache): { up: UnitPiping; model: PipingModel; result: PipedUnit } {
+  const t0 = Date.now(), recut: string[] = [], up = unitPiping(unit), model = generateUnit(up, log, watch, recut, cache);
   // SW-RPI-7: each line that runs the rack lies in the lane it was given; one found in another is said, and so is a header (their lanes are held where they were foreseen)
   const astray = up.foreseen.flatMap(L => { const r = L.no === undefined ? undefined : model.lines.find(l => l.no === L.no), z = r && r.ok ? laneOf(r, L.t) : undefined; return z !== undefined && Math.abs(z - L.z) > 1e-6 ? [`${L.no}: given the lane at z ${L.z} on tier ${L.t + 1}, routed at z ${z}`] : []; });
   const moved = up.headers.flatMap(h => { const r = model.lines.find(l => l.no === h.line), z = r?.path[0]?.[2]; return r && h.z !== undefined && z !== undefined && Math.abs(z - h.z) > 1e-6 ? [`${h.line}: foreseen in the lane at z ${h.z}, routed at z ${z}`] : []; });
