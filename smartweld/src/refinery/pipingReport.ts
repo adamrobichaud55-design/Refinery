@@ -142,7 +142,7 @@ export function runSolids(m: PipingModel, vb: (c: Comp) => [V3, V3]): Placed[] {
 /** a place to keep each single-line run's result and take it from again when the same run is made (a tool's aid while a later run is worked on; a final result is made without one) */
 export interface RunCache { get: (k: number, lines: string[]) => PipingModel | undefined; put: (k: number, lines: string[], m: PipingModel) => void }
 /** SW-RPI-17: the note on the supports set where the generator's stepping stopped */
-export const spanNote = (s: SpanSupports) => `${s.hangers + s.stanchions + s.posts + s.onSteel} supports set where the generator's stepping along a run had stopped (SW-RPI-17): ${s.hangers} hangers from steel above, ${s.onSteel} stanchions on steel below, ${s.stanchions} stanchions and ${s.posts} support posts from the floor, on ${s.lines.length} lines`;
+export const spanNote = (s: SpanSupports) => `${s.hangers + s.stanchions + s.posts + s.onSteel} supports set where the generator's stepping along a run had stopped (SW-RPI-17): ${s.hangers} hangers from steel above, ${s.onSteel} stanchions on steel below, ${s.stanchions} stanchions and ${s.posts} support posts from the floor`;
 /** SW-RPI-7: another lane for a run whose line found its own shut at the outset */
 function laneAgain(up: UnitPiping, k: number, prior: Placed[], m: PipingModel): { m: PipingModel; note: string } | undefined {
   const run = up.runs[k], L = run.lane!, main = run.lines[0];

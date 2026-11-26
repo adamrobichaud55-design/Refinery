@@ -41,6 +41,16 @@ export function supportsAlongSpans(m: PipingModel, plant: PlantDef, vb: (c: Comp
     const si = solidBoxes.findIndex((q, i) => statics[i] !== except && near(q.box, b, 1) && !(floorTop !== undefined && q.s.kind === 'box' && Math.abs(q.s.mx[1] - floorTop) < 0.01) && K.gap(q.s, sh) < 1); if (si >= 0) { lastBlock = `solid ${statics[si].tag}`; return false; }
     return true;
   };
+  /** a post's true shape 1 in clear: its base plate (with the rods' nuts) as a box on the floor, its post as a round from there to under the pipe */
+  const postClear = (no: string, key: string, base: V3, top: number, floorTop?: number, except?: Obstacle) => {
+    const part = partFromKey(key), rp = (part.dims.post?.value ?? 2) / 2, sb = 2 * rp + 6, shapes: K.Shape[] = [{ kind: 'box', mn: [base[0] - sb / 2, base[1], base[2] - sb / 2], mx: [base[0] + sb / 2, base[1] + 1.25, base[2] + sb / 2] }, { kind: 'cap', a: [base[0], base[1] + 1.25, base[2]], b: [base[0], top, base[2]], r: rp }];
+    for (const sh of shapes) {
+      const b = boxOfShape(sh);
+      const li = items.find(q => q.line !== no && near(q.box, b, 1) && K.gap(q.s, sh) < 1); if (li) { lastBlock = `line ${li.line}`; return false; }
+      const si = solidBoxes.findIndex((q, i) => statics[i] !== except && near(q.box, b, 1) && !(floorTop !== undefined && q.s.kind === 'box' && Math.abs(q.s.mx[1] - floorTop) < 0.01) && K.gap(q.s, sh) < 1); if (si >= 0) { lastBlock = `solid ${statics[si].tag}`; return false; }
+    }
+    return true;
+  };
   const rodClear = (no: string, x: number, z: number, y0: number, y1: number) => y1 <= y0 || clearBox(no, [[x - 0.25, y0, z - 0.25], [x + 0.25, y1, z + 0.25]]);
   const steelOver = (p: V3, rad: number, no: string): number | undefined => {
     let best = Infinity;
@@ -78,10 +88,10 @@ export function supportsAlongSpans(m: PipingModel, plant: PlantDef, vb: (c: Comp
         // on steel directly below, at most 10 ft under the pipe: the highest member whose axis passes under it
         let sb = -Infinity, sm: Obstacle | undefined; for (const o of members) { const dx = o.b[0] - o.a[0], dz = o.b[2] - o.a[2], u = Math.max(0, Math.min(1, ((p[0] - o.a[0]) * dx + (p[2] - o.a[2]) * dz) / (dx * dx + dz * dz || 1))), q = [o.a[0] + dx * u, o.a[1] + (o.b[1] - o.a[1]) * u, o.a[2] + dz * u]; if (Math.hypot(q[0] - p[0], q[2] - p[2]) > o.r * 0.6) continue; const tp = q[1] + o.r * 0.7; if (tp < p[1] - rad - 6 && tp > sb) { sb = tp; sm = o; } }
         if (isFinite(sb) && p[1] - rad - sb <= 120) { const h2 = p[1] - rad - sb, key = `STAN|${r.NPS}|${r.cls}|${h2.toFixed(2)}`, T = frameFromAxes([p[0], sb, p[2]], [0, 1, 0], w), b = worldBox(partFromKey(key), T as never);
-          if (b && clearBox(r.no, [[b[0][0], sb + 0.5, b[0][2]], [b[1][0], p[1] - rad - 0.5, b[1][2]]], undefined, sm)) { push(key, T, 'stanchion', p); out.onSteel++; return true; } }
+          if (b && postClear(r.no, key, [p[0], sb + 0.5, p[2]], p[1] - rad - 0.5, undefined, sm)) { push(key, T, 'stanchion', p); out.onSteel++; return true; } }
         const f = floorUnder(p), h = p[1] - rad - f; if (h < 6 || h > POST_MAX) { why(r.no, `at ${p.map(Math.round)}: no steel above, ${isFinite(sb) ? `steel below at ${sb.toFixed(0)} (blocked by ${lastBlock})` : 'no steel below'}, floor ${f} out of reach`); return false; }
         const key = `STAN|${r.NPS}|${r.cls}|${h.toFixed(2)}`, T = frameFromAxes([p[0], f, p[2]], [0, 1, 0], w), b = worldBox(partFromKey(key), T as never);
-        if (!b || !clearBox(r.no, [b[0], [b[1][0], p[1] - rad - 0.5, b[1][2]]], f)) { why(r.no, `at ${p.map(Math.round)}: no steel above, ${isFinite(sb) ? `steel below at ${sb.toFixed(0)}` : 'no steel below'}; a post from ${f} blocked by ${lastBlock}`); return false; }
+        if (!b || !postClear(r.no, key, [p[0], f, p[2]], p[1] - rad - 0.5, f)) { why(r.no, `at ${p.map(Math.round)}: no steel above, ${isFinite(sb) ? `steel below at ${sb.toFixed(0)}` : 'no steel below'}; a post from ${f} blocked by ${lastBlock}`); return false; }
         push(key, T, 'stanchion', p); if (h > 168) out.posts++; else out.stanchions++; return true;
       };
       const push = (key: string, T: number[], type: 'hanger' | 'stanchion', p: V3) => {

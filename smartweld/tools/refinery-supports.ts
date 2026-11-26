@@ -10,8 +10,10 @@ import { supportsAlongSpans } from '../src/refinery/supports';
 const dir = 'public/refinery/piping', vb = valveBoxFn();
 const units = process.argv.slice(2).map(Number); for (const u of units.length ? units : [11, 12, 13, 14, 15, 16, 17, 18, 19]) {
   const m = JSON.parse(readFileSync(`${dir}/unit-${u}.json`, 'utf8')) as PipingModel, r = JSON.parse(readFileSync(`${dir}/unit-${u}.report.json`, 'utf8')) as PipedUnit, up = unitPiping(u);
-  if (r.notes.some(n => n.includes('(SW-RPI-17)'))) { console.log(`unit ${u}: already has its SW-RPI-17 supports`); continue; }
+  // made again on a model that has had it, the counts are added to the note already there
+  const was = r.notes.findIndex(n => n.includes('(SW-RPI-17)')), num = (re: RegExp) => (was >= 0 ? Number(re.exec(r.notes[was])?.[1] ?? 0) : 0);
   const before = r.checks.supports.length, s = supportsAlongSpans(m, up.plant, vb), aside: string[] = [], checks = unitChecks(m, up, aside);
+  if (was >= 0) { s.hangers += num(/(\d+) hangers/); s.onSteel += num(/(\d+) stanchions on steel/); s.stanchions += num(/, (\d+) stanchions and/); s.posts += num(/(\d+) support posts/); r.notes.splice(was, 1); }
   for (const k of ['continuity', 'joints', 'elbows', 'valves', 'lineClearance', 'staticClearance'] as const) if (checks[k].length !== r.checks[k].length) throw new Error(`unit ${u}: ${k} changed from ${r.checks[k].length} to ${checks[k].length}: the correction must add supports only`);
   r.checks = checks; r.notes.push(spanNote(s));
   const count = (xs: string[]) => { const o: Record<string, number> = {}; for (const x of xs) o[x] = (o[x] ?? 0) + 1; return Object.fromEntries(Object.entries(o).sort()); };
