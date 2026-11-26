@@ -1,8 +1,8 @@
 # Plant 3, the coastal refinery: where the work stands and how to carry it on
 
-Written 2026-11-25 for whoever takes this up next, person or assistant. It says what is done,
+Written 2026-11-25, brought up to date 2026-11-26, for whoever takes this up next, person or assistant. It says what is done,
 what is open, what has been tried, and how to work on it. The rules of the work are in
-`DESIGN_BASIS.md` (§75 to §80 for plant 3) and the audit log is `PROVENANCE.md` (P-79 to P-91).
+`DESIGN_BASIS.md` (§75 to §81 for plant 3) and the audit log is `PROVENANCE.md` (P-79 to P-94).
 Read the standing rules below before changing anything.
 
 ## Standing rules (the owner's, unchanged)
@@ -33,7 +33,15 @@ Read the standing rules below before changing anything.
     joints, elbows, valves and clearances at zero; unsupported spans listed.
   - unit 17 (cracking): 222 of 222 lines routed, every check at zero; unsupported spans listed.
 - The main pipeway joining the units, with the plant's nine utility headers on its top tier.
-  Re-run with unit 17 joined: 145 of 145 lines routed, every check at zero.
+  Re-run with unit 17 joined: 145 of 145 lines routed, every check at zero. Routed again
+  2026-11-26 with the units' cooling water spools in view (SW-PWY-8 amended): 145 of 145,
+  every check at zero.
+- Supports where the generator's stepping stopped (SW-RPI-17): hangers, posts and pipe
+  frames; 26 spans still listed.
+- The cooling water mains (§81, P-94): two 30 in mains on sleepers in the corridor's north
+  strip from the cooling tower plot's edge, a branch to every unit's cooling water header
+  spool; 22 of 22 lines routed, every check at zero against everything built.
+  `tools/refinery-cooling-water.ts`, about 8 minutes; model `public/refinery/piping/cooling-water.json`.
 
 ## The cracking unit and the main pipeway: closed 2026-11-25
 
@@ -55,10 +63,15 @@ commit `b437c6f`.
 
 ## What is still to do
 
-Later stages, not started: supports for the 26 spans still listed after SW-RPI-17 (each has another line or equipment directly below and no steel above); the cooling tower's plot and the cooling water mains (where the two
-30 in mains run is a question put to the owner: buried along the corridor with a riser at each
-unit is recommended); tank farm, jetty, flare and relief piping; offsite pipeways; expansion
-loops on the hot headers; a viewer entry for the pipeway.
+**Next stage, the owner's choice: the flare and relief system** (relief valves on the items
+that need them, the headers to the flare knock-out drum and the flare, area 25 at the west end
+of the main rack, SW-PWY-4). Then, not started: the cooling tower plot's own piping (basin
+outlet, the four circulating pumps, side-stream filter, blowdown, make-up; the mains wait at
+its edge behind block valves and blinds, SW-CWM-8); registers and exports for the cooling
+water mains; supports for the 26 spans still listed after SW-RPI-17 (each has another line
+or equipment directly below and no steel above); tank farm and jetty piping (they stand
+unpiped, the owner's choice); offsite pipeways; expansion loops on the hot headers; a viewer
+entry for the pipeway.
 
 ## How to work on it
 
@@ -68,6 +81,7 @@ Everything runs from `smartweld/` with `npx vite-node <tool>`.
 |---|---|---|
 | `tools/refinery-piping.ts 17` | routes unit 17, writes its model, report, images, `docs/REFINERY-PIPING.md` | about 30 min |
 | `tools/refinery-pipeway.ts` | routes the main pipeway, writes its model, report, images, document | about 28 min |
+| `tools/refinery-cooling-water.ts` | routes the cooling water mains against the pipeway and units on disk; run it after the pipeway | about 8 min |
 | `tools/refinery-piping-register.ts`, `refinery-export.ts`, `refinery-process.ts`, `refinery-registry.ts`, `refinery-model.ts` | registers, exports, process and registry files, plant views | minutes each |
 | `npx vitest run` | the whole suite | about 25 min |
 
@@ -107,5 +121,9 @@ Diagnostics, `tools/refinery-diag/` (read-only; they keep single runs in the fol
 - It stands a valve stack at every nozzle while it routes, even where SW-RPI-14 removes the
   valve afterwards.
 - It picks a valve's stem direction by what it strikes, not by 3 in of clearance.
+- Away from a rack it keeps every line 8 ft above the ground except within 4 ft of the line's
+  own ends (SW-RT-3): a line can lie at grade only on something given it as a rack.
+- It stands a valve at every nozzle while it routes; two spools closer than two such valves
+  need separate runs, the valves taken out of the first run's result before it stands as solid.
 - Each run sees the earlier runs as solid boxes. A fix for one line can move another: check the
   whole unit again after every change, and the other eight units with the digest.

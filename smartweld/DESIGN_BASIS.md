@@ -5761,7 +5761,9 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   (§81), stand as solids while the pipeway is routed (added 2026-11-26), and with each the
   room its branch from the mains will need in front of its face: from 3 in behind its far
   face to a gate valve's length, 6 in, an elbow's radius and 12 in beyond its near face, as
-  wide and as high as its flange and 3 in each way. Reason: routed without them, three of
+  wide and as high as its flange (the generator keeps its 3 in from it besides; with 3 in
+  more each way, two small branches of the cracking unit, in the lanes beside its 20 in
+  spools, were sent up over them to 18 in under the main rack's top tier). Reason: routed without them, three of
   the pipeway's branches lay against the bodies of spools that stood unconnected (a 3 in
   branch 0.3 in under the 20 in return spool of the cracking unit, a 4 in one through the
   12 in return spool of the vacuum unit, a 4 in one beside the 6 in supply spool of unit
@@ -5901,12 +5903,18 @@ given; nothing was looked up (PROVENANCE P-94). The mains are piped by the gener
   pipes and 12 in beyond each (one that would come within 3 in of the steel of a junction
   frame is left out, and the next carries the span), its top 11 in above grade; one on each bent line of the main
   rack over the way's length (20 ft apart: the span of SW-PS-7 for a pipe of 3.5 in and
-  more). Each main rests on a 4 in shoe on each sleeper (SW-PS-1), its axis 30 in above
+  more), from a bent line west of the west spools to 10 ft short of the tower's spools.
+  Between the corridor and the tower's plot, off the way, the mains cross the open ground
+  at 11 ft on posts and come down onto the way where it ends: away from a rack the
+  generator keeps every line 8 ft clear of the ground but within 4 ft of its own ends
+  (SW-RT-3), which here keeps that ground open to walk and drive across. Each main rests on a 4 in shoe on each sleeper (SW-PS-1), its axis 30 in above
   grade and its bottom 15 in: room to paint it and to look under it, and the generator's
   rule for a line on a tier (the tier, 4 in, the pipe's radius, on the 6 in grid) gives
   that height from an 11 in top. The generator would give the return the next lane, 3 in
   clear of the supply (SW-RT-2), too close for those valves: while the return is routed, a
-  fence along the way between the two lanes, at the mains' height, holds it in its own,
+  fence along the way between the two lanes, at the mains' height and 12 in clear of the
+  return's pipe (6 in and the generator held the lane itself shut, gave the return the next
+  lane 6 in further out and looped it back to its west spool), holds it in its own,
   from 20 ft east of the west spools (clear of their valves) to 10 ft short of the tower's.
   The way is given to the generator as a rack 16 ft wide, so that the return's lane is
   among those it tries.

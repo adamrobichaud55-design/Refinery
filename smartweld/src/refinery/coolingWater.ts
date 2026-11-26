@@ -127,7 +127,7 @@ export function coolingWater(root = '.'): CoolingWater {
   const list = lines.map(l => l.def), byNo = new Map(list.map(l => [l.no, l]));
 
   // ---- SW-CWM-2: the sleeper way, a rack of one tier, and its sleepers on the main rack's bent lines ----
-  const rack = { x0: down(westX - PWY.bent, PWY.bent), x1: Math.min(LENGTH, up(Math.max(...towerX) + PWY.bent, PWY.bent)), bentSpacing: PWY.bent, halfWidth: 96, tiers: [CWM.sleeperTop], loadPsf: 0 };
+  const rack = { x0: down(westX - PWY.bent, PWY.bent), x1: down(Math.min(...towerX) - CWM.approach), bentSpacing: PWY.bent, halfWidth: 96, tiers: [CWM.sleeperTop], loadPsf: 0 };
   const own: Placed[] = [], derived: InteriorModel['derived'] = {}, kit = interiorKit({ pedestal: 6, padHeight: 6 }, own, derived);
 
   // ---- SW-CWM-5: what stands: the pipeway's steel, and as solids every piece of the pipeway's lines and of the units' lines in their valve bays ----
@@ -150,7 +150,7 @@ export function coolingWater(root = '.'): CoolingWater {
   const sleepers: CoolingWater['sleepers'] = [], zs0 = Math.min(...lanes) - OD / 2 - CWM.sleeperOver, zs1 = Math.max(...lanes) + OD / 2 + CWM.sleeperOver;
   const steelBoxes = pw.interior.instances.filter(pl => pl.tags.includes('junction') || pl.tags.some(t => t.startsWith('rack'))).map(pl => { const b = placedBox(pl); return [[b[0][0], b[0][1], b[0][2] - CWM.way], [b[1][0], b[1][1], b[1][2] - CWM.way]] as [V3, V3]; });
   let left = 0;
-  for (let x = rack.x0; x <= rack.x1 + 1e-6; x += PWY.bent) {
+  for (let x = rack.x0; x <= rack.x1 - CWM.sleeperW / 2 + 1e-6; x += PWY.bent) {
     const mn: V3 = [x - CWM.sleeperW / 2 - 3, 0, zs0 - 3], mx: V3 = [x + CWM.sleeperW / 2 + 3, CWM.sleeperTop + 3, zs1 + 3];
     if (steelBoxes.some(b => b[0].every((v, k) => v < mx[k]) && b[1].every((v, k) => v > mn[k]))) { left++; continue; }
     own.push({ part: kit.concrete('sleeper', CWM.sleeperW, CWM.sleeperTop, zs1 - zs0), transform: frameFromAxes([x, CWM.sleeperTop / 2, zs0], [0, 1, 0], [0, 0, 1]), tags: ['sleeper', 'pad', `sleeper:${x}`] });
@@ -196,7 +196,7 @@ export function coolingWater(root = '.'): CoolingWater {
   for (const pl of shown.instances.filter(q => q.tags.includes('first bent'))) { const [mn, mx] = placedBox(pl); routed.push(block(mn, [mx[0], mx[1] - 4, mx[2]], 'first bent beam, below its top')); }
   // the fence that holds the return in its lane: either side of the centre line, between the supply's pipe and the return's lane, along the way short of the tower's drops
   const r = OD / 2, fx1 = Math.min(...towerX) - CWM.approach;
-  const fx0 = westX + CWM.westBeyond, fence = [block([fx0, y - r, -pitch + r + 6], [fx1, y + r, -r], 'lane fence'), block([fx0, y - r, r], [fx1, y + r, pitch - r - 6], 'lane fence')];
+  const fx0 = westX + CWM.westBeyond, fence = [block([fx0, y - r, -pitch + r + 12], [fx1, y + r, -r], 'lane fence'), block([fx0, y - r, r], [fx1, y + r, pitch - r - 12], 'lane fence')];
   const runPlant = (k: number, prior: Placed[]): PlantDef => ({ ...plant, interior: () => ({ ...shown, instances: [...routed, ...(k > 0 ? fence : []), ...prior] }) });
   notes.push(`${hiddenCount} solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).`);
   cache = { plant, lines, nozzles, runs, runOf, runPlant, foreseen: [], interior, mains, branches, spools, sleepers, notes, rack, toPipeway: translate(0, 0, CWM.way) };

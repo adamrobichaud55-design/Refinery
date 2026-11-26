@@ -407,7 +407,7 @@ export function pipeway(): Pipeway {
   }
   // SW-PWY-8 (amended 2026-11-26): each unit's cooling water header spools, which the cooling water mains join (§81), and the room in front of each that its branch will need
   for (const U of units.filter(u => u.piped)) for (const sp of piping.get(U.unit)!.spools.filter(q => q.header && M.headers.some(h => h.key === q.stream && (h.fluid === 'CWS' || h.fluid === 'CWR')))) {
-    const q = piping.get(U.unit)!.nozzles.get(`${sp.tag}-P`)!, A = xf(U.T, q.A as V3), u = rot(U.T, q.u as V3), w = designFlange(sp.NPS, sp.cls).OD / 2 + 3;
+    const q = piping.get(U.unit)!.nozzles.get(`${sp.tag}-P`)!, A = xf(U.T, q.A as V3), u = rot(U.T, q.u as V3), w = designFlange(sp.NPS, sp.cls).OD / 2;   // the generator keeps its own 3 in from it besides
     const L = q.S + gateFaceToFace(sp.NPS, sp.cls) + 6 + elbowRadius(pipeDims(sp.NPS, sp.cls).OD) + 12, a: V3 = [A[0] - u[0] * (q.S + 3), A[1], A[2] - u[2] * (q.S + 3)], b: V3 = [A[0] + u[0] * L, A[1], A[2] + u[2] * L];
     keepOut.push({ ...block([Math.min(a[0], b[0]) - (u[0] ? 0 : w), A[1] - w, Math.min(a[2], b[2]) - (u[2] ? 0 : w)], [Math.max(a[0], b[0]) + (u[0] ? 0 : w), A[1] + w, Math.max(a[2], b[2]) + (u[2] ? 0 : w)], 'cooling water spool'), tags: ['keep-out', 'cladding', 'cooling water spool'] });
   }

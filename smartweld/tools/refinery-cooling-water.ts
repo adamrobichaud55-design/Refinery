@@ -38,7 +38,7 @@ if (only !== 'document' && !process.env.NO_IMAGES) {
   const tower = cw.spools.filter(s => s.unit === 19), tx = tower.reduce((a, s) => a + s.at[0], 0) / Math.max(1, tower.length), tz = tower.length ? tower[0].at[2] : 0;
   shot('cooling-water-from-the-tower', { eye: [tx + 900, 700, tz - 600], target: [tx - 1400, 60, 0], fovDeg: 44 });
   const b = cw.branches.find(q => q.unit === 11) ?? cw.branches[0], bz = cw.nozzles.get(`${b.spool}-P`)!.face;
-  shot('cooling-water-risers', { eye: [bz[0] + 520, 420, bz[2] + 640], target: [bz[0], 180, (bz[2] + 0) / 2], fovDeg: 44 });
+  shot('cooling-water-risers', { eye: [bz[0] + 620, 150, -60], target: [bz[0] - 40, 190, bz[2] / 2], fovDeg: 50 });
   shot('cooling-water-along-the-way', { eye: [-500, 380, -260], target: [4000, 40, 40], fovDeg: 40 });
   const idx = 'screenshots/INDEX.md', cur = existsSync(idx) ? readFileSync(idx, 'utf8').replace(/\n*$/, '').split('\n') : [], idOf = (r: string) => r.slice(0, r.indexOf('|', 2));
   for (const [name, caption] of Object.entries(COOLING_WATER_IMAGES)) { const r = `| \`refinery/${name}.png\` | ${caption} |`, k = cur.findIndex(c => idOf(c) === idOf(r)); if (k >= 0) cur[k] = r; else cur.push(r); }
