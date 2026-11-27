@@ -7,7 +7,7 @@
  */
 import { readFileSync, existsSync } from 'node:fs';
 import { worldBox, partFromKey } from '../generator/piping';
-import { pipeDims, designFlange, gateFaceToFace, makeWideFlange, elbowRadius, type PipeClass } from '../catalogue';
+import { pipeDims, designFlange, gateFaceToFace, makeWideFlange, makeShoe, elbowRadius, type PipeClass } from '../catalogue';
 import { buildGeometry } from '../geometry/partGeometry';
 import type { PlantDef } from '../generator/plant';
 import { jointBySpec, flangeBySpec, lineGroup } from '../generator/plant';
@@ -232,6 +232,12 @@ export function pipeway(): Pipeway {
   const built = kit.rack({ ...rack, x0: 0, x1: LENGTH });
   // how far from the centre line a pipe's side may lie: 3 in short of the round the generator holds a column by (its section's half-diagonal about its axis)
   const edge = PWY.half - built.cd.d / 2 - Math.hypot(built.cd.d, built.cd.bf) / 2 - 3;
+  // SW-PWY-5 (amended 2026-11-27): a lane's centre no nearer the rack's edge than leaves a guide's outer angle (SW-PS-2, as the catalogue draws it) 1 in clear of the toe of the
+  // fillet weld at a tier beam's end plate, on the first bent as drawn
+  const guideReach = (() => { const b = worldBox(makeShoe('guide-reach', 3, 'P150', 'guide'), translate(0, 0, 0)); return b ? Math.max(Math.abs(b[0][0]), Math.abs(b[1][0])) : 0; })();
+  const kneeWelds = own.filter(p => p.tags.includes(`rack-bent:${built.bents[0]}`) && p.tags.includes('weld')).map(p => worldBox(p.part, p.transform)).filter((b): b is [V3, V3] => !!b && PWY.tiers.some(y => Math.abs(b[1][1] - y) < 2));
+  if (!kneeWelds.length || !guideReach) throw new Error('the main pipeway: no beam end weld or guide drawn to keep the lanes clear of (SW-PWY-5)');
+  const guideRoom = Math.min(...kneeWelds.map(b => b[0][2] > 0 ? b[0][2] : -b[1][2])) - 1 - guideReach;
   const foreseen: RackLane[] = [], tierOf = new Map<Plan, number>(), laneOf = new Map<Plan, number>(); let tierRoom = 72;
   const HW = PWY.half, top = PWY.tiers.length - 1, clampX = (x: number) => Math.min(rack.x1 - 12, Math.max(rack.x0 + 12, up(x)));
   // SW-PWY-11: the headers' band, and 3 ft either side of it where their branches come down (SW-PWY-12), are no lane of any other line; a strip reaches 8 ft from the
@@ -280,7 +286,7 @@ export function pipeway(): Pipeway {
         const tiersOk = allowed(p, topToo).filter(fits), tries: [number, number][] = [...tiersOk.flatMap(t => zs.filter(c => !s || c * s >= 0).map(z => [t, z] as [number, number])), ...tiersOk.flatMap(t => zs.filter(c => s && c * s < 0).map(z => [t, z] as [number, number]))];
         for (const [t, z] of tries) {
           {
-            if (Math.abs(z) + v.OD / 2 > edge || stringersBy(t).some(q => Math.abs(z - q) < v.OD / 2 + STRINGER) || !free(taken, t, z, v.OD, v.x0 - 36, v.x1 + 36)) continue;
+            if (Math.abs(z) + v.OD / 2 > edge || Math.abs(z) > guideRoom || stringersBy(t).some(q => Math.abs(z - q) < v.OD / 2 + STRINGER) || !free(taken, t, z, v.OD, v.x0 - 36, v.x1 + 36)) continue;
             const more: RackLane[] = [], sideZ = new Map<Conn, number>(); let ok = true;
             const hold = (tt: number, zz: number, OD: number, x0: number, x1: number) => { if (!free([...taken, ...more], tt, zz, OD, x0, x1)) ok = false; else more.push({ t: tt, z: zz, OD, x0, x1 }); };
             for (const c of [p.a, p.b]) {
@@ -294,7 +300,7 @@ export function pipeway(): Pipeway {
             }
             // a second connection at the same limit bay stands beside the line's own, a valve's width off, on whichever side is free
             for (const c of p.rest.filter(q => q.end)) { const xe = c.end === 'west' ? 0 : LENGTH, x0 = Math.min(xe, c.end === 'west' ? rack.x0 + 60 : rack.x1 - 60), x1 = Math.max(xe, c.end === 'west' ? rack.x0 + 60 : rack.x1 - 60), wd = wide(c.NPS, c.cls), step = up(Math.max(wd, wide(p.L.NPS, p.L.cls)) / 2 + wd / 2 + 3);
-              const zz = [z + step, z - step, z + 2 * step, z - 2 * step].find(q => Math.abs(q) + designFlange(c.NPS, c.cls).OD / 2 <= edge && !stringersBy(t).some(st => Math.abs(q - st) < designFlange(c.NPS, c.cls).OD / 2 + STRINGER) && free([...taken, ...more], t, q, wd, x0, x1));
+              const zz = [z + step, z - step, z + 2 * step, z - 2 * step].find(q => Math.abs(q) + designFlange(c.NPS, c.cls).OD / 2 <= edge && Math.abs(q) <= guideRoom && !stringersBy(t).some(st => Math.abs(q - st) < designFlange(c.NPS, c.cls).OD / 2 + STRINGER) && free([...taken, ...more], t, q, wd, x0, x1));
               if (zz === undefined) ok = false; else { more.push({ t, z: zz, OD: wd, x0, x1 }); sideZ.set(c, zz); } }
             if (ok) { got = { t, z, OD: v.OD, x0: v.x0, x1: v.x1, no: p.t.key }; extra = more; side2 = sideZ; break; }
           }

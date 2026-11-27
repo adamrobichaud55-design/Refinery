@@ -6408,6 +6408,19 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   The middle of the top tier is the utility headers' (SW-PWY-11, added 2026-11-25): the
   band their lanes take, and 3 ft either side of it where their branches come down
   (SW-PWY-12), are no lane of any other line.
+  Amended 2026-11-27: no lane lies so near a bent's end that a guide in it (SW-PS-2, the
+  outer edges of its angles 5 1/8 in from the pipe's axis, as the catalogue draws them)
+  would stand on the beam's end connection: a lane's centre is no nearer the rack's edge
+  than leaves the guide's outer angle 1 in clear of the toe of the fillet weld at the
+  beam's end plate, measured on the bent as drawn. Reason: the generator sets a guide at
+  any bent of a line's run (next to its anchor, at the run's ends), so every lane may
+  carry one; the pipeway's columns, deeper than a unit's because its top tier is higher
+  (SW-RK-2), bring the beam's end plate 19 in inside the rack's edge, and in the lane 2 ft
+  inside it a guide's outer angle stood 0.2 in in that weld at every bent it was set on
+  (four guides of one line, found by SW-RPI-28's test, P-95), where no place along the run
+  could clear it: the weld spans the beam's whole flange. A unit's rack, its columns
+  shallower, leaves the guide clear in its outermost lane (measured, P-95), and no unit's
+  lane changes by this.
 - `SW-PWY-6` The generator is run once for each line that runs the rack, with the branches
   that join it, on the tier and in the lane given it, the lanes of the lines still to come
   kept and its own tier fenced but for its lane; then once for what remains: the lines
