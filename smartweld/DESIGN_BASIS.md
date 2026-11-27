@@ -5865,7 +5865,9 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   posts and beam against every piece of every line but the run its shoe carries, every
   solid of the plant, and the frames tested before it; a frame that overlaps any of them by
   more than 0.02 in is taken out with its shoe, and SW-RPI-17 may then set another support
-  there. A part's tall members
+  there; SW-RPI-17 sets no frame whose parts would be taken out so (amended the same day:
+  frames it set stood with a post through a support of another line, and were taken out
+  only at the next making). A part's tall members
   are each of its solids that stands more than 6.5 in and is taller than it is wide, each
   tested on its own (amended the same day: the tallest solid alone had been taken, and on a
   line of 12 in or more that is a hanger's clamp ring, as tall as it is wide, so the test had

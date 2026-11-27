@@ -15,8 +15,8 @@
   "lines": 105,
   "routed": 104,
   "failed": 0,
-  "comps": 2963,
-  "welds": 1548,
+  "comps": 2959,
+  "welds": 1544,
   "supports": 471,
   "penetrations": 0
  },
@@ -28,9 +28,7 @@
   "valves": [],
   "lineClearance": [],
   "staticClearance": [],
-  "ownClearance": [
-   "4\"-P1200-P-19020 4\"-P1200-P-19020/p7 (pipe) – 4\"-P1200-P-19020/p13 (pipe): 4.00 in"
-  ],
+  "ownClearance": [],
   "supports": [
    "4\"-P1200-P-19707: unsupported span 446 in > 240 on run from 1920,108,-43"
   ]
@@ -1108,10 +1106,10 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 39,
-   "welds": 20,
+   "components": 35,
+   "welds": 16,
    "supports": 2,
-   "lengthFt": 58,
+   "lengthFt": 51,
    "tier": 2,
    "station": "CS-1907",
    "controlValve": "piped"
@@ -2499,11 +2497,11 @@
  "counts": {
   "components": {
    "cap": 1,
-   "elbow": 467,
+   "elbow": 465,
    "flange": 326,
    "gasket": 520,
    "olet": 4,
-   "pipe": 796,
+   "pipe": 794,
    "reducer": 60,
    "spade": 14,
    "spectacle": 28,
@@ -2511,8 +2509,8 @@
    "valve": 232
   },
   "welds": {
-   "BW, field": 253,
-   "BW, shop": 1291,
+   "BW, field": 252,
+   "BW, shop": 1288,
    "FW, shop": 4
   },
   "supports": {
@@ -2538,6 +2536,8 @@
   "1 pipe frames taken out with their shoes where they struck (SW-RPI-18): the pipe frame of 4\"-P150-P-19704 at 954, 246, -178: its post through 12\"-P150-P-19302 (12\"-P150-P-19302/el4)",
   "1 valves turned where their stem or handwheel struck (SW-RPI-19): 3\"-P300-P-19044/A2: struck nozzle T-1903; stem turned to 0,1,0",
   "1 valves turned where their stem or handwheel struck (SW-RPI-19): 3\"-P300-P-19044/A2: struck nozzle T-1903; stem turned to 1,0,0",
+  "4\"-P1200-P-19020: its route crossed its own leg; the 3 corners of the loop taken out, the line turning at 1782, 270, -102 (SW-RPI-23 (e))",
+  "4 butt welds set square to their joints (SW-RPI-24)",
   "46 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 12 hangers from steel above, 0 stanchions on steel below, 16 stanchions and 15 support posts from the floor, and 3 pipe frames"
  ],
  "frames": [

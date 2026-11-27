@@ -144,6 +144,9 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
         const shoeKey = `SHOE|${r.NPS}|${r.cls}|shoe|${SHOE_H.toFixed(3)}`, shoeT = frameFromAxes([p[0], p[1] - rad, p[2]], [0, 1, 0], w) as number[];
         if (!freeOf(shoeKey, shoeT)) { why(r.no, `at ${p.map(Math.round)}: no frame (its shoe on ${lastBlock})`); return false; }
         const spec: FrameSpec = { line: r.no, at: [p[0], p[1], p[2]], u, d: [A.d, B.d], floors: [A.floor, B.floor], top, post: A.post === 'W10x49' || B.post === 'W10x49' ? 'W10x49' : 'W8x31', rad };
+        // SW-RPI-18 (amended): its posts, pedestals and beam clear of every support already set, as the frames test holds them
+        const hit = framePlaced(spec).map(q => worldBox(q.part, q.transform)).find(b => b && keptAll.some(k => k.solids.some(x => deep(x, b))));
+        if (hit) { why(r.no, `at ${p.map(Math.round)}: no frame (a part of it through a support)`); return false; }
         out.frames.push(spec); for (const q of framePlaced(spec)) { const b = worldBox(q.part, q.transform as never); if (b) items.push({ line: `frame:${r.no}`, s: { kind: 'box', mn: b[0], mx: b[1] }, box: b }); }
         push(`SHOE|${r.NPS}|${r.cls}|shoe|${SHOE_H.toFixed(3)}`, frameFromAxes([p[0], p[1] - rad, p[2]], [0, 1, 0], w) as number[], 'shoe', [p[0], top, p[2]]); return true;
       };
