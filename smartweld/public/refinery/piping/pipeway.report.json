@@ -19,15 +19,15 @@
   2,
   3
  ],
- "tierRoom": 96,
- "seconds": 1522,
+ "tierRoom": 265.2,
+ "seconds": 1305,
  "stats": {
   "lines": 145,
   "routed": 119,
   "failed": 0,
-  "comps": 2713,
-  "welds": 2193,
-  "supports": 2306,
+  "comps": 2641,
+  "welds": 2121,
+  "supports": 2302,
   "penetrations": 0
  },
  "failures": [],
@@ -55,7 +55,7 @@
    "at": [
     13860,
     318,
-    -132
+    -72
    ],
    "where": "east limit bay"
   },
@@ -174,7 +174,7 @@
    "at": [
     13860,
     318,
-    -84
+    -24
    ],
    "where": "east limit bay"
   },
@@ -190,8 +190,8 @@
    "cls": "P150",
    "at": [
     13860,
-    402,
-    114
+    318,
+    -108
    ],
    "where": "east limit bay"
   },
@@ -207,8 +207,8 @@
    "cls": "P150",
    "at": [
     13860,
-    402,
-    150
+    318,
+    -144
    ],
    "where": "east limit bay"
   },
@@ -225,7 +225,7 @@
    "at": [
     13860,
     318,
-    84
+    72
    ],
    "where": "east limit bay"
   },
@@ -258,8 +258,8 @@
    "cls": "P150",
    "at": [
     13860,
-    246,
-    138
+    318,
+    12
    ],
    "where": "east limit bay"
   },
@@ -293,7 +293,7 @@
    "at": [
     13860,
     318,
-    48
+    36
    ],
    "where": "east limit bay"
   },
@@ -309,8 +309,8 @@
    "cls": "P150",
    "at": [
     13860,
-    324,
-    12
+    252,
+    138
    ],
    "where": "east limit bay"
   },
@@ -326,8 +326,8 @@
    "cls": "P150",
    "at": [
     13860,
-    402,
-    -114
+    246,
+    -144
    ],
    "where": "east limit bay"
   },
@@ -377,8 +377,8 @@
    "cls": "P300",
    "at": [
     13860,
-    318,
-    -30
+    402,
+    -114
    ],
    "where": "east limit bay"
   },
@@ -394,8 +394,8 @@
    "cls": "P300",
    "at": [
     13860,
-    246,
-    -144
+    318,
+    132
    ],
    "where": "east limit bay"
   },
@@ -412,7 +412,7 @@
    "at": [
     13860,
     318,
-    120
+    108
    ],
    "where": "east limit bay"
   },
@@ -446,7 +446,7 @@
    "at": [
     13860,
     318,
-    -108
+    -48
    ],
    "where": "east limit bay"
   },
@@ -2580,23 +2580,23 @@
  "loads": [
   {
    "tier": 1,
-   "lines": 19,
-   "most": 278,
+   "lines": 26,
+   "most": 337,
    "bay": 20,
    "limit": 1200
   },
   {
    "tier": 2,
-   "lines": 18,
-   "most": 160,
-   "bay": 30,
+   "lines": 17,
+   "most": 106,
+   "bay": 31,
    "limit": 1200
   },
   {
    "tier": 3,
-   "lines": 17,
-   "most": 417,
-   "bay": 31,
+   "lines": 11,
+   "most": 397,
+   "bay": 41,
    "limit": 1200
   }
  ],
@@ -2704,12 +2704,12 @@
    "designP": 110,
    "designT": 160,
    "routed": true,
-   "components": 29,
-   "welds": 26,
-   "supports": 81,
-   "lengthFt": 823,
+   "components": 33,
+   "welds": 30,
+   "supports": 80,
+   "lengthFt": 828,
    "tier": 2,
-   "lane": -132
+   "lane": -72
   },
   {
    "no": "3\"-P150-P-10801",
@@ -2742,12 +2742,12 @@
    "designP": 50,
    "designT": 150,
    "routed": true,
-   "components": 31,
-   "welds": 28,
+   "components": 23,
+   "welds": 20,
    "supports": 48,
-   "lengthFt": 507,
-   "tier": 3,
-   "lane": -108
+   "lengthFt": 497,
+   "tier": 2,
+   "lane": -84
   },
   {
    "no": "6\"-P150-P-10003",
@@ -2856,10 +2856,10 @@
    "routed": true,
    "components": 41,
    "welds": 38,
-   "supports": 42,
-   "lengthFt": 817,
-   "tier": 2,
-   "lane": -48
+   "supports": 41,
+   "lengthFt": 805,
+   "tier": 1,
+   "lane": -150
   },
   {
    "no": "3\"-P150-P-10103",
@@ -2874,10 +2874,10 @@
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 9,
-   "welds": 8,
+   "components": 5,
+   "welds": 4,
    "supports": 3,
-   "lengthFt": 44
+   "lengthFt": 30
   },
   {
    "no": "3\"-P150-P-10104",
@@ -2892,10 +2892,10 @@
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 9,
-   "welds": 8,
-   "supports": 3,
-   "lengthFt": 52
+   "components": 6,
+   "welds": 5,
+   "supports": 4,
+   "lengthFt": 55
   },
   {
    "no": "3\"-P150-P-10105",
@@ -2910,10 +2910,10 @@
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 9,
-   "welds": 8,
-   "supports": 3,
-   "lengthFt": 52
+   "components": 6,
+   "welds": 5,
+   "supports": 4,
+   "lengthFt": 55
   },
   {
    "no": "3\"-P150-P-10106",
@@ -2928,10 +2928,10 @@
    "designP": 85,
    "designT": 190,
    "routed": true,
-   "components": 9,
-   "welds": 8,
+   "components": 5,
+   "welds": 4,
    "supports": 3,
-   "lengthFt": 44
+   "lengthFt": 30
   },
   {
    "no": "4\"-P150-P-10107",
@@ -2948,8 +2948,8 @@
    "routed": true,
    "components": 6,
    "welds": 5,
-   "supports": 3,
-   "lengthFt": 46
+   "supports": 4,
+   "lengthFt": 52
   },
   {
    "no": "4\"-P150-P-10005",
@@ -2964,12 +2964,12 @@
    "designP": 105,
    "designT": 150,
    "routed": true,
-   "components": 24,
-   "welds": 21,
+   "components": 16,
+   "welds": 13,
    "supports": 9,
-   "lengthFt": 179,
-   "tier": 2,
-   "lane": 12
+   "lengthFt": 167,
+   "tier": 1,
+   "lane": 90
   },
   {
    "no": "6\"-P150-P-10006",
@@ -3076,11 +3076,11 @@
    "designP": 125,
    "designT": 430,
    "routed": true,
-   "components": 35,
-   "welds": 32,
-   "supports": 47,
-   "lengthFt": 506,
-   "tier": 3,
+   "components": 27,
+   "welds": 24,
+   "supports": 48,
+   "lengthFt": 490,
+   "tier": 2,
    "lane": -120
   },
   {
@@ -3212,12 +3212,12 @@
    "designP": 125,
    "designT": 170,
    "routed": true,
-   "components": 44,
-   "welds": 41,
-   "supports": 39,
-   "lengthFt": 786,
+   "components": 41,
+   "welds": 38,
+   "supports": 40,
+   "lengthFt": 794,
    "tier": 2,
-   "lane": 72
+   "lane": 24
   },
   {
    "no": "4\"-P150-P-10110",
@@ -3235,7 +3235,7 @@
    "components": 14,
    "welds": 13,
    "supports": 2,
-   "lengthFt": 57
+   "lengthFt": 53
   },
   {
    "no": "3\"-P150-P-10111",
@@ -3250,10 +3250,10 @@
    "designP": 125,
    "designT": 170,
    "routed": true,
-   "components": 9,
-   "welds": 8,
+   "components": 10,
+   "welds": 9,
    "supports": 3,
-   "lengthFt": 42
+   "lengthFt": 46
   },
   {
    "no": "3\"-P150-P-10112",
@@ -3268,10 +3268,10 @@
    "designP": 125,
    "designT": 170,
    "routed": true,
-   "components": 11,
-   "welds": 10,
+   "components": 9,
+   "welds": 8,
    "supports": 3,
-   "lengthFt": 37
+   "lengthFt": 41
   },
   {
    "no": "10\"-P300-P-10013",
@@ -3306,12 +3306,12 @@
    "designP": 155,
    "designT": 740,
    "routed": true,
-   "components": 26,
-   "welds": 23,
-   "supports": 18,
-   "lengthFt": 333,
-   "tier": 2,
-   "lane": -30
+   "components": 27,
+   "welds": 24,
+   "supports": 16,
+   "lengthFt": 312,
+   "tier": 1,
+   "lane": -132
   },
   {
    "no": "3\"-P150-P-10015",
@@ -3329,9 +3329,9 @@
    "components": 40,
    "welds": 37,
    "supports": 97,
-   "lengthFt": 988,
+   "lengthFt": 993,
    "tier": 2,
-   "lane": -84
+   "lane": -24
   },
   {
    "no": "3\"-P150-P-10113",
@@ -3349,7 +3349,7 @@
    "components": 11,
    "welds": 10,
    "supports": 2,
-   "lengthFt": 42
+   "lengthFt": 47
   },
   {
    "no": "3\"-P150-P-10114",
@@ -3364,10 +3364,10 @@
    "designP": 65,
    "designT": 200,
    "routed": true,
-   "components": 11,
-   "welds": 10,
+   "components": 9,
+   "welds": 8,
    "supports": 3,
-   "lengthFt": 57
+   "lengthFt": 52
   },
   {
    "no": "3\"-P150-P-10808",
@@ -3400,12 +3400,12 @@
    "designP": 105,
    "designT": 200,
    "routed": true,
-   "components": 27,
-   "welds": 24,
-   "supports": 59,
-   "lengthFt": 615,
-   "tier": 3,
-   "lane": 114
+   "components": 26,
+   "welds": 23,
+   "supports": 58,
+   "lengthFt": 590,
+   "tier": 2,
+   "lane": -108
   },
   {
    "no": "3\"-P150-P-10115",
@@ -3420,10 +3420,10 @@
    "designP": 105,
    "designT": 200,
    "routed": true,
-   "components": 12,
-   "welds": 11,
-   "supports": 4,
-   "lengthFt": 66
+   "components": 11,
+   "welds": 10,
+   "supports": 3,
+   "lengthFt": 41
   },
   {
    "no": "3\"-P150-P-10116",
@@ -3492,9 +3492,9 @@
    "designP": 125,
    "designT": 450,
    "routed": true,
-   "components": 22,
-   "welds": 19,
-   "supports": 14,
+   "components": 21,
+   "welds": 18,
+   "supports": 15,
    "lengthFt": 278,
    "tier": 1,
    "lane": 0
@@ -3571,9 +3571,9 @@
    "components": 42,
    "welds": 39,
    "supports": 109,
-   "lengthFt": 1117,
+   "lengthFt": 1118,
    "tier": 2,
-   "lane": 84
+   "lane": 72
   },
   {
    "no": "3\"-P150-P-10811",
@@ -3664,12 +3664,12 @@
    "designP": 105,
    "designT": 170,
    "routed": true,
-   "components": 29,
-   "welds": 26,
-   "supports": 57,
-   "lengthFt": 592,
-   "tier": 3,
-   "lane": 108
+   "components": 31,
+   "welds": 28,
+   "supports": 56,
+   "lengthFt": 590,
+   "tier": 2,
+   "lane": 48
   },
   {
    "no": "3\"-P150-P-10119",
@@ -3686,8 +3686,8 @@
    "routed": true,
    "components": 9,
    "welds": 8,
-   "supports": 3,
-   "lengthFt": 46
+   "supports": 2,
+   "lengthFt": 44
   },
   {
    "no": "3\"-P600-P-10023",
@@ -3702,12 +3702,12 @@
    "designP": 395,
    "designT": 160,
    "routed": true,
-   "components": 28,
-   "welds": 25,
+   "components": 23,
+   "welds": 20,
    "supports": 42,
-   "lengthFt": 448,
-   "tier": 2,
-   "lane": 24
+   "lengthFt": 418,
+   "tier": 1,
+   "lane": 132
   },
   {
    "no": "3\"-P600-P-10120",
@@ -3722,10 +3722,10 @@
    "designP": 395,
    "designT": 160,
    "routed": true,
-   "components": 6,
-   "welds": 5,
+   "components": 5,
+   "welds": 4,
    "supports": 3,
-   "lengthFt": 40
+   "lengthFt": 29
   },
   {
    "no": "3\"-P600-P-10024",
@@ -3743,9 +3743,9 @@
    "components": 27,
    "welds": 24,
    "supports": 40,
-   "lengthFt": 444,
-   "tier": 3,
-   "lane": 120
+   "lengthFt": 417,
+   "tier": 1,
+   "lane": 144
   },
   {
    "no": "3\"-P150-P-10025",
@@ -3760,10 +3760,10 @@
    "designP": 85,
    "designT": 160,
    "routed": true,
-   "components": 27,
-   "welds": 24,
-   "supports": 10,
-   "lengthFt": 140,
+   "components": 22,
+   "welds": 19,
+   "supports": 11,
+   "lengthFt": 142,
    "tier": 1,
    "lane": -48
   },
@@ -3785,7 +3785,7 @@
    "supports": 10,
    "lengthFt": 130,
    "tier": 2,
-   "lane": 12
+   "lane": -12
   },
   {
    "no": "3\"-P300-P-10027",
@@ -3800,12 +3800,12 @@
    "designP": 275,
    "designT": 160,
    "routed": true,
-   "components": 39,
-   "welds": 36,
+   "components": 37,
+   "welds": 34,
    "supports": 62,
-   "lengthFt": 658,
+   "lengthFt": 664,
    "tier": 2,
-   "lane": -114
+   "lane": -36
   },
   {
    "no": "4\"-P150-P-10028",
@@ -3820,12 +3820,12 @@
    "designP": 75,
    "designT": 150,
    "routed": true,
-   "components": 32,
-   "welds": 29,
+   "components": 36,
+   "welds": 33,
    "supports": 48,
-   "lengthFt": 945,
-   "tier": 1,
-   "lane": 138
+   "lengthFt": 962,
+   "tier": 2,
+   "lane": 12
   },
   {
    "no": "4\"-P150-P-10813",
@@ -3899,9 +3899,9 @@
    "components": 31,
    "welds": 28,
    "supports": 38,
-   "lengthFt": 774,
+   "lengthFt": 775,
    "tier": 2,
-   "lane": 48
+   "lane": 36
   },
   {
    "no": "4\"-P150-P-10815",
@@ -3934,12 +3934,12 @@
    "designP": 95,
    "designT": 190,
    "routed": true,
-   "components": 28,
-   "welds": 25,
-   "supports": 15,
+   "components": 25,
+   "welds": 22,
+   "supports": 16,
    "lengthFt": 317,
    "tier": 2,
-   "lane": -72
+   "lane": -12
   },
   {
    "no": "4\"-P150-P-10121",
@@ -3957,7 +3957,7 @@
    "components": 14,
    "welds": 13,
    "supports": 2,
-   "lengthFt": 57
+   "lengthFt": 52
   },
   {
    "no": "6\"-P150-P-10032",
@@ -3972,12 +3972,12 @@
    "designP": 75,
    "designT": 160,
    "routed": true,
-   "components": 27,
-   "welds": 24,
+   "components": 23,
+   "welds": 20,
    "supports": 30,
-   "lengthFt": 614,
-   "tier": 2,
-   "lane": 12
+   "lengthFt": 598,
+   "tier": 1,
+   "lane": 138
   },
   {
    "no": "6\"-P150-P-10816",
@@ -4010,12 +4010,12 @@
    "designP": 105,
    "designT": 190,
    "routed": true,
-   "components": 22,
-   "welds": 19,
-   "supports": 27,
-   "lengthFt": 319,
-   "tier": 3,
-   "lane": 126
+   "components": 19,
+   "welds": 16,
+   "supports": 28,
+   "lengthFt": 305,
+   "tier": 2,
+   "lane": 84
   },
   {
    "no": "6\"-P600-P-10034",
@@ -4032,10 +4032,10 @@
    "routed": true,
    "components": 29,
    "welds": 26,
-   "supports": 14,
-   "lengthFt": 309,
-   "tier": 2,
-   "lane": 30
+   "supports": 11,
+   "lengthFt": 305,
+   "tier": 1,
+   "lane": -54
   },
   {
    "no": "6\"-P600-P-10122",
@@ -4050,10 +4050,10 @@
    "designP": 330,
    "designT": 170,
    "routed": true,
-   "components": 9,
-   "welds": 8,
-   "supports": 2,
-   "lengthFt": 45
+   "components": 10,
+   "welds": 9,
+   "supports": 3,
+   "lengthFt": 46
   },
   {
    "no": "3\"-P150-P-10035",
@@ -4068,12 +4068,12 @@
    "designP": 85,
    "designT": 250,
    "routed": true,
-   "components": 23,
-   "welds": 20,
+   "components": 26,
+   "welds": 23,
    "supports": 36,
-   "lengthFt": 402,
-   "tier": 3,
-   "lane": -114
+   "lengthFt": 389,
+   "tier": 1,
+   "lane": -144
   },
   {
    "no": "3\"-P150-P-10817",
@@ -4144,12 +4144,12 @@
    "designP": 95,
    "designT": 165,
    "routed": true,
-   "components": 33,
-   "welds": 30,
-   "supports": 35,
-   "lengthFt": 683,
-   "tier": 2,
-   "lane": -12
+   "components": 28,
+   "welds": 25,
+   "supports": 33,
+   "lengthFt": 658,
+   "tier": 1,
+   "lane": -114
   },
   {
    "no": "6\"-P150-P-10038",
@@ -4202,12 +4202,12 @@
    "designP": 265,
    "designT": 160,
    "routed": true,
-   "components": 19,
-   "welds": 16,
+   "components": 22,
+   "welds": 19,
    "supports": 39,
    "lengthFt": 413,
-   "tier": 2,
-   "lane": -30
+   "tier": 3,
+   "lane": -114
   },
   {
    "no": "3\"-P300-P-10820",
@@ -4240,12 +4240,12 @@
    "designP": 225,
    "designT": 150,
    "routed": true,
-   "components": 18,
-   "welds": 15,
-   "supports": 39,
-   "lengthFt": 399,
-   "tier": 1,
-   "lane": -144
+   "components": 22,
+   "welds": 19,
+   "supports": 40,
+   "lengthFt": 428,
+   "tier": 2,
+   "lane": 132
   },
   {
    "no": "3\"-P300-P-10821",
@@ -4281,9 +4281,9 @@
    "components": 22,
    "welds": 19,
    "supports": 40,
-   "lengthFt": 427,
+   "lengthFt": 428,
    "tier": 2,
-   "lane": 120
+   "lane": 108
   },
   {
    "no": "3\"-P150-P-10822",
@@ -4354,12 +4354,12 @@
    "designP": 55,
    "designT": 265,
    "routed": true,
-   "components": 45,
-   "welds": 42,
-   "supports": 99,
-   "lengthFt": 1033,
+   "components": 42,
+   "welds": 39,
+   "supports": 96,
+   "lengthFt": 995,
    "tier": 2,
-   "lane": 138
+   "lane": -48
   },
   {
    "no": "3\"-P150-P-10824",
@@ -4648,10 +4648,10 @@
    "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 15,
-   "welds": 14,
+   "components": 10,
+   "welds": 9,
    "supports": 3,
-   "lengthFt": 72
+   "lengthFt": 62
   },
   {
    "no": "8\"-P150-P-10602",
@@ -4759,7 +4759,7 @@
    "components": 18,
    "welds": 17,
    "supports": 3,
-   "lengthFt": 64
+   "lengthFt": 62
   },
   {
    "no": "4\"-P150-P-10608",
@@ -4810,8 +4810,8 @@
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 14,
-   "welds": 13,
+   "components": 20,
+   "welds": 19,
    "supports": 4,
    "lengthFt": 55
   },
@@ -4846,10 +4846,10 @@
    "designP": 55,
    "designT": 280,
    "routed": true,
-   "components": 17,
-   "welds": 16,
-   "supports": 3,
-   "lengthFt": 58
+   "components": 14,
+   "welds": 13,
+   "supports": 4,
+   "lengthFt": 55
   },
   {
    "no": "3\"-P150-P-10613",
@@ -4882,10 +4882,10 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 18,
-   "welds": 17,
+   "components": 12,
+   "welds": 11,
    "supports": 4,
-   "lengthFt": 57
+   "lengthFt": 55
   },
   {
    "no": "3\"-P150-P-10615",
@@ -4936,10 +4936,10 @@
    "designP": 130,
    "designT": 150,
    "routed": true,
-   "components": 16,
-   "welds": 15,
+   "components": 11,
+   "welds": 10,
    "supports": 4,
-   "lengthFt": 65
+   "lengthFt": 59
   },
   {
    "no": "3\"-P600-P-10618",
@@ -4954,8 +4954,8 @@
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 16,
-   "welds": 15,
+   "components": 17,
+   "welds": 16,
    "supports": 3,
    "lengthFt": 61
   },
@@ -4972,10 +4972,10 @@
    "designP": 80,
    "designT": 370,
    "routed": true,
-   "components": 15,
-   "welds": 14,
+   "components": 19,
+   "welds": 18,
    "supports": 1,
-   "lengthFt": 57
+   "lengthFt": 63
   },
   {
    "no": "10\"-P1200-P-10620",
@@ -4992,7 +4992,7 @@
    "routed": true,
    "components": 13,
    "welds": 12,
-   "supports": 2,
+   "supports": 1,
    "lengthFt": 56
   },
   {
@@ -5010,8 +5010,8 @@
    "routed": true,
    "components": 16,
    "welds": 15,
-   "supports": 3,
-   "lengthFt": 63
+   "supports": 4,
+   "lengthFt": 65
   },
   {
    "no": "10\"-P150-P-10622",
@@ -5098,10 +5098,10 @@
    "designP": 685,
    "designT": 700,
    "routed": true,
-   "components": 25,
-   "welds": 24,
-   "supports": 2,
-   "lengthFt": 59
+   "components": 9,
+   "welds": 8,
+   "supports": 3,
+   "lengthFt": 44
   },
   {
    "no": "6\"-P150-P-10627",
@@ -5188,10 +5188,10 @@
    "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 11,
-   "welds": 10,
-   "supports": 3,
-   "lengthFt": 52
+   "components": 19,
+   "welds": 18,
+   "supports": 2,
+   "lengthFt": 55
   },
   {
    "no": "4\"-P150-P-10632",
@@ -5414,33 +5414,33 @@
   "components": {
    "blind": 26,
    "cap": 18,
-   "elbow": 502,
+   "elbow": 461,
    "flange": 155,
    "gasket": 207,
    "olet": 21,
-   "pipe": 1483,
+   "pipe": 1452,
    "reducer": 24,
    "tee": 44,
    "valve": 26
   },
   "welds": {
-   "BW, field": 273,
-   "BW, shop": 1899,
+   "BW, field": 274,
+   "BW, shop": 1826,
    "FW, shop": 21
   },
   "supports": {
    "anchor": 54,
    "guide": 209,
-   "hanger": 223,
-   "shoe": 1944
+   "hanger": 217,
+   "shoe": 1941,
+   "stanchion": 5
   }
  },
  "notes": [
   "Carried on from the headers' caps with the pipeways of the areas beyond the bench, not from the main rack (SW-PWY-11): medium-pressure steam: the flare; low-pressure steam: the product tankage; condensate: the product tankage; fuel gas to users: the flare; service water: the flare.",
   "Not on the main pipeway, though their streams are: slop oil: the marine terminal; slop oil: the truck loading; slop oil: the wastewater treatment; slop oil: the flare. What an area beyond the bench sends to another such area, or takes from one, runs on those areas' own pipeways (SW-PWY-3).",
-  "3\"-P150-P-10025: routed again with rack-bent:120/beam/unit-19 held 3 in larger, having passed within 3 in of it (SW-RPI-29): 3\"-P150-P-10025 3\"-P150-P-10025/p25 (pipe) – rack-bent:120/beam/unit-19: -0.14 in",
-  "3\"-P150-P-10043: the lane given it at z -108 on tier 2 was found shut by what an earlier run left; routed in the lane at z 138 (SW-RPI-7)",
-  "3\"-P300-P-10027: the lane given it at z 108 on tier 2 was found shut by what an earlier run left; routed in the lane at z -114 (SW-RPI-7)",
+  "The two lower tiers could not take \"three-carbon liquefied gas\" (3 in, 9426 to 13668; tiers it may lie on: 1, 2; unit 17 tier 1 to the product tankage) within 265 in of lanes: it, and only what then found no lane below, lie on the top tier (SW-PWY-5): three-carbon liquefied gas.",
+  "6\"-P600-P-10034: the lane given it at z 90 on tier 1 was found shut by what an earlier run left; routed in the lane at z -54 (SW-RPI-7)",
   "3\"-P150-P-10001: no valve at BL-1103-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10001: no valve at PL-1001-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
   "3\"-P150-P-10002: no valve at BL-1104-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
@@ -5596,17 +5596,21 @@
   "3\"-P1200-P-10641: no valve at BL-1212-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 11.4 in longer (SW-RPI-14)",
   "3\"-P150-P-10642: no valve at BL-1813-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
   "3\"-P150-P-10643: no valve at BL-1726-P; GATE 2 and what stood with it left out, 3 pieces, the pipe 10.9 in longer (SW-RPI-14)",
-  "3\"-P150-P-10001/p30 (40.4 ft, far end 13843,318,-132): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10001/p34 (40.4 ft, far end 13843,318,-72): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "16\"-P150-P-10011/p8 (41.3 ft, far end 13336,408,-150): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P150-P-10015/p41 (40.5 ft, far end 13843,318,-84): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P150-P-10019/p43 (40.9 ft, far end 13843,318,84): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10015/p41 (40.5 ft, far end 13843,318,-24): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10019/p43 (40.9 ft, far end 13843,318,72): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "6\"-P150-P-10021/p22 (40.1 ft, far end 4577,252,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "4\"-P150-P-10028/p33 (41.0 ft, far end 13842,246,138): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "4\"-P150-P-10028/p37 (41.0 ft, far end 13842,318,12): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "6\"-P150-P-10029/p7 (41.0 ft, far end 13352,252,114): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P150-P-10035/p15 (40.6 ft, far end 10098,402,-114): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P150-P-10035/p23 (40.2 ft, far end 13843,402,-114): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10035/p27 (40.1 ft, far end 13843,246,-144): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "6\"-P150-P-10038/p25 (40.4 ft, far end 13844,252,-6): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P150-P-10043/p27 (40.1 ft, far end 8540,318,138): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p16 (40.1 ft, far end 3380,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p18 (40.1 ft, far end 4336,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p19 (40.1 ft, far end 4817,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p21 (40.1 ft, far end 5744,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p22 (40.1 ft, far end 6225,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p38 (40.7 ft, far end 13843,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "10\"-P1200-LS-10402/p33 (40.1 ft, far end 13217,408,-18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "10\"-P300-LS-10403/p34 (40.3 ft, far end 13668,408,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "8\"-P1200-SC-10404/p31 (40.5 ft, far end 13668,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
@@ -5615,17 +5619,17 @@
   "8\"-P150-P-10405/p28 (40.2 ft, far end 12258,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "8\"-P150-P-10405/p31 (40.7 ft, far end 13668,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "4\"-P150-IA-10407/p32 (40.4 ft, far end 13219,402,42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "502 butt welds set square to their joints (SW-RPI-24)",
-  "2 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6\"-P150-P-10018/S39 (hanger): its rod through 6\"-P150-P-10006; 4\"-P150-P-10121/S1 (hanger): its rod through rack-bay:38/intermediate-beam",
-  "3 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 3 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 0 support posts from the floor, and 0 pipe frames",
-  "6 shoes and guides moved along their runs, off the welds of the steel they stand on and wholly onto one straight pipe of their line (SW-RPI-28): 3\"-P150-P-10111/S3 +1 in; 3\"-P150-P-10112/S3 +1 in; 10\"-P300-P-10013/S15 +4 in; 3\"-P150-P-10115/S4 -1 in; 3\"-P1200-P-10614/S4 +1 in; 3\"-P300-P-10635/S3 +1 in",
-  "225 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
-  "118 shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).",
-  "0 posts set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 5 hangers set where the generator's stepping along a run had stopped for want of that steel: 3\"-P150-P-10613 3 hangers; 3\"-P150-P-10615 2 hangers (SW-PWY-8).",
-  "4\"-P150-P-10110/el7 (elbow) passes rack-bent:120/beam/unit-11 at 2.91 in from the round the check holds that member by and 6.40 in from its section (SW-RPI-13)",
+  "461 butt welds set square to their joints (SW-RPI-24)",
+  "5 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-10104/S3 (hanger): its rod through 10\"-P300-P-10013; 3\"-P150-P-10105/S3 (hanger): its rod through 10\"-P300-P-10013; 6\"-P150-P-10018/S39 (hanger): its rod through 6\"-P150-P-10006; 10\"-P150-P-10621/S1 (trapeze): its rod through 3\"-P150-P-10025; 10\"-P150-P-10621/S2 (trapeze): its part overlaps the support 3\"-P150-P-10025/S9",
+  "8 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 3 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 4 support posts from the floor, and 1 pipe frames",
+  "5 shoes and guides moved along their runs, off the welds of the steel they stand on and wholly onto one straight pipe of their line (SW-RPI-28): 3\"-P150-P-10111/S3 +1 in; 10\"-P300-P-10013/S15 +4 in; 3\"-P150-P-10115/S3 -1 in; 3\"-P600-P-10610/S4 -1 in; 3\"-P300-P-10635/S3 +1 in",
+  "222 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "1 hangers or trapezes taken out where their rods could not be cut to the steel's underside with 3 in of rod clear (SW-RPI-20, SW-RPI-18): 8\"-P1200-P-10626/S2, a hanger whose rod hangs from nothing (SW-RPI-20, SW-RPI-18)",
+  "115 shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).",
+  "1 post set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 6 hangers set where the generator's stepping along a run had stopped for want of that steel: 3\"-P150-P-10613 3 hangers; 3\"-P150-P-10615 2 hangers; 3\"-P150-P-10643 1 hanger; 3\"-P150-P-10025 1 post (SW-PWY-8).",
   "4\"-P150-P-10110/p8 (pipe) passes rack-bent:120/beam/unit-11 at 0.30 in from the round the check holds that member by and 6.40 in from its section (SW-RPI-13)",
-  "3\"-P150-P-10111/p5 (pipe) passes rack-bent:120/beam/unit-15 at 1.87 in from the round the check holds that member by and 7.30 in from its section (SW-RPI-13)",
-  "3\"-P150-P-10115/p8 (pipe) passes rack-bent:120/beam/unit-17 at 0.80 in from the round the check holds that member by and 6.90 in from its section (SW-RPI-13)",
+  "3\"-P150-P-10111/p6 (pipe) passes rack-bent:120/beam/unit-15 at 1.87 in from the round the check holds that member by and 7.30 in from its section (SW-RPI-13)",
+  "3\"-P150-P-10115/p5 (pipe) passes rack-bent:120/beam/unit-17 at 0.80 in from the round the check holds that member by and 6.90 in from its section (SW-RPI-13)",
   "6\"-P150-P-10018/A7 (reducer) passes rack-bent:120/beam/unit-13 at 2.86 in from the round the check holds that member by and 3.02 in from its section (SW-RPI-13)",
   "6\"-P150-P-10018/p8 (pipe) passes rack-bent:120/beam/unit-13 at 2.38 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
   "4\"-P150-P-10121/p8 (pipe) passes rack-bent:120/beam/unit-18 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)",
@@ -5634,5 +5638,30 @@
   "6\"-P150-P-10037/p8 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
   "4\"-P150-P-10629/p9 (pipe) passes rack-bent:120/beam/unit-19 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)"
  ],
- "frames": []
+ "frames": [
+  {
+   "line": "10\"-P150-P-10621",
+   "at": [
+    2298,
+    348,
+    -352
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    54
+   ],
+   "floors": [
+    0,
+    0
+   ],
+   "top": 339,
+   "post": "W8x31",
+   "rad": 5
+  }
+ ]
 }
