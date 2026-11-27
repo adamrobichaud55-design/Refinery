@@ -108,6 +108,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 - 3"-P150-P-27116: no valve at BL-1810-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-PWY-7)
 - 2 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)
 - 14 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 9 stanchions on steel below, 0 stanchions and 0 support posts from the floor, and 0 pipe frames
+- 21 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
 
 Not in this stage (SW-CWM-8): the cooling tower plot's own piping; the mains end at its edge, each at a limit spool with its block valve and blind.
 
