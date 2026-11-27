@@ -4,13 +4,14 @@
  * nothing is hidden, and a check that does not come to zero is listed.
  */
 import { generatePiping, partFromKey, staticObstacles, worldBox, type PipingModel, type Comp, type LineRun, type Obstacle } from '../generator/piping';
+import { squareWelds } from './welds';
 import * as K from '../generator/pipingCheck';
 import { buildGeometry } from '../geometry/partGeometry';
 import { pipeDims, elbowRadius, designFlange } from '../catalogue';
 import type { V3 } from '../generator/router';
 import { frameFromAxes } from '../geometry/transform';
 import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, hangerTops, waferStuds, type SpanSupports, type FrameSpec } from './supports';
-import { ownClearance } from './ownLine';
+import { ownClearance, ownClashes, shapesOf, arcMeetsBox, selfCorrections } from './ownLine';
 import { unitPiping, block, laneSpacing, type UnitPiping, type UnitLine, type BlSpool, type RootSpool, type StationSpool } from './unitPiping';
 import type { Placed } from '../generator/building';
 import { processModel } from './process';
@@ -165,17 +166,73 @@ function laneAgain(up: UnitPiping, k: number, prior: Placed[], m: PipingModel): 
   }
   L.z = was; return undefined;
 }
-/** SW-RPI-16: what the last run reports that it is made again for: the lines named where a valve strikes in every stem direction, and each valve within 3 in of a header pipe */
-function restFindings(up: UnitPiping, m: PipingModel, vb: (c: Comp) => [V3, V3]) {
+/** SW-RPI-16 (amended, SW-RPI-22): a line of the last run that passes through the body of a valve of its own end stack, or through its own nozzle's flange or neck;
+ *  with what it passed through, and the solids held while it is routed again: each by its box, the equipment's the stack is bolted to */
+interface OwnThrough { line: string; what: string[]; solids: { equip: string; mn: V3; mx: V3 }[] }
+/**
+ * SW-RPI-16: what the last run reports that it is made again for: the lines named where a valve strikes in every stem direction, and each valve within 3 in of a header pipe.
+ * Amended (SW-RPI-22): and each line that passes, by more than 0.05 in, through the body of a valve of the stack at a nozzle it ends at (a solid of the valve's part that holds
+ * the valve's own run axis) or through that nozzle's own flange or neck, which no turn of a stem clears
+ */
+export function restFindings(up: Pick<UnitPiping, 'lines'>, m: PipingModel, vb: (c: Comp) => [V3, V3]) {
   const named = [...new Set(m.failures.flatMap(f => { const q = /^(\S+): a valve at .* in every stem direction/.exec(f); return q ? [q[1]] : []; }))];
   const heads = new Set(up.lines.filter(l => l.origin === 'header').map(l => l.def.no)), pipes = m.lines.filter(r => heads.has(r.no)).flatMap(r => r.comps.filter(c => c.kind === 'pipe').map(c => ({ line: r.no, c, s: K.compShapes(c, vb)[0] })));
   const near: { valve: Comp; line: string; header: Comp }[] = [];
   for (const r of m.lines) { if (heads.has(r.no)) continue; for (const c of r.comps) { if (c.kind !== 'valve') continue; const vs = K.compShapes(c, vb); for (const p of pipes) if (vs.some(s => K.gap(s, p.s) < 3 - 1e-6)) near.push({ valve: c, line: r.no, header: p.c }); } }
-  return { named, near };
+  // SW-RPI-22's measure: two pieces share more than 0.05 in where a point lies inside both by more than 0.025 in from each one's surface. A box is drawn in by that much and set against
+  // the piece's own shapes: a cylinder square to the axes by its length and its round, flat at its ends; one askew by its axis and radius; a 90° elbow by the tube of its arc
+  const TOL = 0.025, meets = (p: Comp, b: [V3, V3]): boolean => {
+    const lo = b[0].map(v => v + TOL) as V3, hi = b[1].map(v => v - TOL) as V3; if ([0, 1, 2].some(i => hi[i] <= lo[i])) return false;
+    return shapesOf(p).some(s => {
+      if (s.k === 'box') return [0, 1, 2].every(i => Math.min(s.mx[i] - TOL, hi[i]) > Math.max(s.mn[i] + TOL, lo[i]));
+      if (s.k === 'arc') return arcMeetsBox(p)(lo, hi);
+      const d = [0, 1, 2].map(i => s.b[i] - s.a[i]), L = Math.hypot(d[0], d[1], d[2]), k = [0, 1, 2].find(i => Math.abs(d[i]) > L - 1e-6);
+      if (k === undefined) return K.segBox(s.a, s.b, lo, hi) < s.r - TOL;
+      if (Math.min(Math.max(s.a[k], s.b[k]) - TOL, hi[k]) <= Math.max(Math.min(s.a[k], s.b[k]) + TOL, lo[k])) return false;
+      return Math.hypot(...[0, 1, 2].filter(i => i !== k).map(i => Math.max(lo[i] - s.a[i], s.a[i] - hi[i], 0))) < s.r - TOL;
+    });
+  };
+  // a valve's body: the solids of its part that hold its own run axis, which stay where they are whichever way its stem is turned
+  const bodyOf = (v: Comp) => shapesOf(v).flatMap(s => (s.k === 'box' && K.segBox(v.a, v.b, s.mn, s.mx) < 1e-6 ? [[s.mn, s.mx] as [V3, V3]] : []));
+  // a box by its cylinders' reach along each axis
+  const boxesOf = (c: Comp): [V3, V3][] => shapesOf(c).flatMap((s): [V3, V3][] => {
+    if (s.k === 'box') return [[s.mn, s.mx]]; if (s.k !== 'cyl') return [];
+    const d = [0, 1, 2].map(i => s.b[i] - s.a[i]), L = Math.hypot(d[0], d[1], d[2]) || 1, e = d.map(v => s.r * Math.sqrt(Math.max(0, 1 - (v / L) ** 2)));
+    return [[[0, 1, 2].map(i => Math.min(s.a[i], s.b[i]) - e[i]) as V3, [0, 1, 2].map(i => Math.max(s.a[i], s.b[i]) + e[i]) as V3]];
+  });
+  const nozzles = new Map(m.nozzles.map(n => [n.id, n] as const)), own: OwnThrough[] = [];
+  type End = { n: PipingModel['nozzles'][number]; lead: V3 };
+  for (const r of m.lines) {
+    if (!r.ok || !r.path.length) continue;
+    // the nozzles the line ends at, each with the stack's lead point: the first or last point of the line's way
+    const ends: End[] = ([[r.from, r.path[0]], [r.to, r.path[r.path.length - 1]]] as [string, V3][]).flatMap(([id, lead]) => { const n = nozzles.get(id); return n ? [{ n, lead }] : []; });
+    if (!ends.length) continue;
+    const along = (e: End, p: V3) => [0, 1, 2].reduce((s, i) => s + (p[i] - e.n.face[i]) * e.n.u[i], 0);
+    // a valve of the stack at a nozzle: its middle on the nozzle's axis, between the face and the stack's lead point
+    const stackOf = (v: Comp) => ends.find(e => { const p = [0, 1, 2].map(i => (v.a[i] + v.b[i]) / 2) as V3, t = along(e, p); return t > 0 && t < along(e, e.lead) && Math.hypot(...[0, 1, 2].map(i => p[i] - e.n.face[i] - e.n.u[i] * t)) < 0.05; });
+    const nozzleOf = (c: Comp) => ends.find(e => e.n.comps.includes(c)), rad = pipeDims(r.NPS, r.cls).OD / 2;
+    // stopping the pipe's radius and 6 in short of the stack's lead point, along the nozzle's axis
+    const trim = (e: End, b: [V3, V3]): [V3, V3] | undefined => {
+      const mn = [...b[0]] as V3, mx = [...b[1]] as V3, k = [0, 1, 2].reduce((q, i) => (Math.abs(e.n.u[i]) > Math.abs(e.n.u[q]) ? i : q), 0), stop = e.lead[k] - Math.sign(e.n.u[k]) * (rad + 6);
+      if (e.n.u[k] > 0) mx[k] = Math.min(mx[k], stop); else mn[k] = Math.max(mn[k], stop);
+      return [0, 1, 2].every(i => mx[i] - mn[i] > 0.05) ? [mn, mx] : undefined;
+    };
+    const what = new Map<string, string>(), solids = new Map<string, { equip: string; mn: V3; mx: V3 }[]>();
+    const hold = (e: End, key: string, boxes: [V3, V3][]) => { if (!solids.has(key)) solids.set(key, boxes.flatMap(b => { const t = trim(e, b); return t ? [{ equip: e.n.equip, mn: t[0], mx: t[1] }] : []; })); };
+    for (const f of ownClashes(r, nozzles)) for (const [x, y] of [[f.ca, f.cb], [f.cb, f.ca]]) {
+      if (nozzleOf(y)) continue;
+      const ne = nozzleOf(x), ve = !ne && x.kind === 'valve' ? stackOf(x) : undefined;
+      if (ne) { what.set(`nozzle ${ne.n.id} ${x.kind}`, `its own nozzle ${ne.n.id}'s ${x.kind === 'pipe' ? 'neck' : x.kind}`); hold(ne, `nozzle ${ne.n.id}`, ne.n.comps.flatMap(boxesOf)); }
+      else if (ve && bodyOf(x).some(b => meets(y, b))) { what.set(`valve ${x.tag}`, `the body of its own valve ${x.tag.split('/').pop()}`); hold(ve, `valve ${x.tag}`, [vb(x)]); hold(ve, `nozzle ${ve.n.id}`, ve.n.comps.flatMap(boxesOf)); }
+    }
+    if (what.size) own.push({ line: r.no, what: [...what.values()], solids: [...solids.values()].flat() });
+  }
+  return { named, near, own };
 }
-function findingsOf(up: UnitPiping, m: PipingModel, vb: (c: Comp) => [V3, V3]) { const f = restFindings(up, m, vb); return m.failures.length + f.near.length; }
+/** SW-RPI-16: the findings a making of the last run is judged by: its failures, its valves within 3 in of a header, and (amended) its lines through their own end stack's valve or nozzle */
+function findingsOf(up: UnitPiping, m: PipingModel, vb: (c: Comp) => [V3, V3]) { const f = restFindings(up, m, vb); return m.failures.length + f.near.length + f.own.length; }
 function restAgain(up: UnitPiping, k: number, prior0: Placed[], m: PipingModel, vb: (c: Comp) => [V3, V3], earlier: PipingModel[] = []): { first: PipingModel; rest: PipingModel; why: string; after: number } | undefined {
-  const { named, near } = restFindings(up, m, vb); if (!named.length && !near.length) return undefined;
+  const { named, near, own } = restFindings(up, m, vb); if (!named.length && !near.length && !own.length) return undefined;
   // a valve of an earlier run that the striking valve meets as it stands: its stem turned to the first other direction square to its run in which it comes within 3 in of nothing
   const turned: string[] = [];
   if (named.length) {
@@ -200,11 +257,16 @@ function restAgain(up: UnitPiping, k: number, prior0: Placed[], m: PipingModel, 
   }
   const prior = turned.length ? earlier.flatMap(q => runSolids(q, vb)) : prior0;
   const run = up.runs[k], mine = new Set(run.lines), defs = new Map(up.lines.map(l => [l.def.no, l.def]));
-  // the lines named, and the lines they tap, first
-  const firstSet = new Set<string>(); for (const no of named) { firstSet.add(no); const d = defs.get(no); for (const e of d ? [d.from, d.to] : []) if (e.k === 'tap' && mine.has(e.line)) firstSet.add(e.line); }
+  // the lines named, and those through their own end stack's valve or nozzle (SW-RPI-16 as amended), and the lines they tap, first
+  const firstOf = [...new Set([...named, ...own.map(o => o.line)])];
+  const firstSet = new Set<string>(); for (const no of firstOf) { firstSet.add(no); const d = defs.get(no); for (const e of d ? [d.from, d.to] : []) if (e.k === 'tap' && mine.has(e.line)) firstSet.add(e.line); }
   // and the branches of a line routed first, with theirs: the generator plans a branch's take-off on its parent in the same run (a main of the cooling water mains, SW-CWM-4)
   for (let grew = true; grew;) { grew = false; for (const l of up.lines) if (mine.has(l.def.no) && !firstSet.has(l.def.no) && [l.def.from, l.def.to].some(e => e.k === 'tap' && firstSet.has(e.line))) { firstSet.add(l.def.no); grew = true; } }
-  const first = firstSet.size ? generatePiping({ plant: up.runPlant(k, prior), only: l => firstSet.has(l.no) }) : { ...m, lines: [], failures: [], stats: {}, cuts: [] } as PipingModel;
+  // SW-RPI-16 (amended): while they are routed first, the valve's box and the nozzle's flange and neck that a line passed through are held as solids, tagged as part of the
+  // equipment its stack is bolted to (the generator's test of that stack's own valves passes that equipment's solids, so they keep their stems: piping.ts boxClear), stopping
+  // the pipe's radius and 6 in short of the stack's lead point; they are no part of the model, and the rest of the run sees only what the first making laid
+  const held: Placed[] = own.flatMap(o => o.solids.map(s => ({ ...block(s.mn, s.mx, 'own envelope'), tags: [s.equip, 'own envelope', 'cladding'] })));
+  const first = firstSet.size ? generatePiping({ plant: up.runPlant(k, [...prior, ...held]), only: l => firstSet.has(l.no) }) : { ...m, lines: [], failures: [], stats: {}, cuts: [] } as PipingModel;
   // a strip 3 in thick along the side of each header a valve came near, facing the valve
   const strips: Placed[] = near.flatMap(({ valve, header }) => {
     if (Math.abs(header.a[1] - header.b[1]) > 1e-6 || Math.abs(header.a[2] - header.b[2]) > 1e-6) return [];
@@ -214,8 +276,9 @@ function restAgain(up: UnitPiping, k: number, prior0: Placed[], m: PipingModel, 
   });
   const rest = generatePiping({ plant: up.runPlant(k, [...prior, ...runSolids(first, vb), ...strips]), only: l => mine.has(l.no) && !firstSet.has(l.no) });
   const both: PipingModel = { ...rest, lines: [...first.lines, ...rest.lines], failures: [...first.failures, ...rest.failures] }, after = findingsOf(up, both, vb);
-  if (after >= m.failures.length + near.length) return undefined;
-  return { first, rest, why: [...turned, named.length ? `${named.join(', ')} with ${[...firstSet].filter(x => !named.includes(x)).join(', ') || 'no parent'} routed first` : '', near.length ? `${strips.length} strip${strips.length > 1 ? 's' : ''} beside header${strips.length > 1 ? 's' : ''} where ${near.length} valve${near.length > 1 ? 's' : ''} came within 3 in` : ''].filter(Boolean).join('; '), after };
+  if (after >= m.failures.length + near.length + own.length) return undefined;
+  return { first, rest, why: [...turned, firstOf.length ? `${firstOf.join(', ')} with ${[...firstSet].filter(x => !firstOf.includes(x)).join(', ') || 'no parent'} routed first` : '',
+    own.length ? `${own.map(o => `${o.line} through ${o.what.join(' and ')}`).join('; ')} (SW-RPI-22), held as ${held.length} solid${held.length === 1 ? '' : 's'} of ${[...new Set(held.map(h => h.tags[0]))].join(', ')} while the first were routed` : '', near.length ? `${strips.length} strip${strips.length > 1 ? 's' : ''} beside header${strips.length > 1 ? 's' : ''} where ${near.length} valve${near.length > 1 ? 's' : ''} came within 3 in` : ''].filter(Boolean).join('; '), after };
 }
 export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, notes: string[] = [], cache?: RunCache): PipingModel {
   const vb = valveBoxFn(), models: PipingModel[] = [], prior: Placed[] = [], t00 = Date.now(); let routed = 0, failed = 0;
@@ -248,6 +311,8 @@ export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}
   }
   const joined = joinHeaders(model, up); if (joined.length) { notes.push(`${joined.length} header${joined.length > 1 ? 's' : ''} carried on in line to ${joined.length > 1 ? 'their block valves' : 'its block valve'} at the battery limit, the cap there left out (SW-RPI-15): ${joined.join('; ')}`); log(`unit ${up.unit}: ${joined.length} header${joined.length > 1 ? 's' : ''} joined to ${joined.length > 1 ? 'their valves' : 'its valve'} at the limit (SW-RPI-15)`); }
   const bared = removeValves(model, up); if (bared.length) { notes.push(...bared.map(c => `${c} (SW-RPI-14)`)); log(`unit ${up.unit}: ${bared.length} connection${bared.length > 1 ? 's' : ''} left without the generator's valve (SW-RPI-14)`); }
+  // SW-RPI-23: a line SW-RPI-22 finds through itself, corrected on the merged model, after SW-RPI-14 and before SW-RPI-11 and SW-RPI-10
+  const selfx = selfCorrections(model, up, vb); if (selfx.length) { notes.push(...selfx); log(`unit ${up.unit}: SW-RPI-23 on the lines through themselves: ${selfx.length} note${selfx.length > 1 ? 's' : ''}`); }
   const made = lengthenShortPieces(model); if (made.length) { notes.push(...made.map(c => `${c}: a make-up piece under 2 in beside a 45° offset, the offset moved along the run to make it 2 in (SW-RPI-11)`)); log(`unit ${up.unit}: ${made.length} make-up piece${made.length > 1 ? 's' : ''} under 2 in lengthened (SW-RPI-11)`); }
   const cut = cutLongPipes(model); if (cut.length) { notes.push(...cut.map(c => `${c}: a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)`)); log(`unit ${up.unit}: ${cut.length} piece${cut.length > 1 ? 's' : ''} of pipe over 40 ft cut again (SW-RPI-10)`); }
   return model;
@@ -378,6 +443,7 @@ export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watc
   const t0 = Date.now(), recut: string[] = [], up = unitPiping(unit), model = generateUnit(up, log, watch, recut, cache);
   // SW-RPI-17: supports where the generator's stepping stopped
   { const vt = valvesThatStrike(model, up.plant, valveBoxFn()); if (vt.turned.length || vt.stuck.length) recut.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`); }
+  { const sw = squareWelds(model); if (sw.length) recut.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`); }
   const struck = supportsThatStrike(model, up.plant, valveBoxFn()); if (struck.length) { recut.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`); log(`unit ${unit}: ${struck.length} supports that strike taken out (SW-RPI-18)`); }
   const sup = supportsAlongSpans(model, up.plant, valveBoxFn()); { const n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { recut.push(spanNote(sup)); log(`unit ${unit}: ${spanNote(sup)}`); } }
   { const ht = hangerTops(model, up.plant), ws = waferStuds(model); if (ht.length) recut.push(`${ht.length} hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)`); if (ws.length) recut.push(`${ws.length} wafer valves bolted with one stud set through both flanges (SW-RPI-21)`); }

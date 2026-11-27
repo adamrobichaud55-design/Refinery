@@ -98,12 +98,16 @@ export function makeHorizontalVessel(inp: VesselHInput, material: Material = DEF
 export const makeExchanger = (inp: VesselHInput, material?: Material) => makeHorizontalVessel(inp, material, inp.ID / 2, Math.max(1, inp.ID / 12));
 
 export interface PumpInput { tag: string; baseW: number; baseL: number; casingD: number; casingW: number; motorD: number; motorL: number; nozzles?: NozzleSpec[] }
+/** SW-EQ-4 (amended 2026-11-27): the shaft centreline above the baseplate's underside: 4 in over the casing's underside, or half the
+ *  motor's diameter over the baseplate's top where the motor is the larger, so that the motor rests on the baseplate, not through it */
+export const pumpShaftY = (casingD: number, motorD: number) => 1 + Math.max(casingD / 2 + 4, motorD / 2);
 /** Centrifugal pump (SW-EQ-4). Local z along the shaft (motor at +z), x across, y up from the baseplate underside. */
 export function makePump(inp: PumpInput, material: Material = DEFAULT_MATERIAL): PartSpec {
   const solids: { name: string; mesh: MeshData }[] = [];
   solids.push({ name: 'baseplate', mesh: transformMesh(extrude({ outer: rect(-inp.baseW / 2, 0, inp.baseW / 2, 1) }, inp.baseL), translate(0, 0, -inp.baseL / 2)) });
-  const shaftY = 1 + inp.casingD / 2 + 4;
-  solids.push({ name: 'pump pedestal', mesh: transformMesh(extrude({ outer: rect(-inp.casingD / 3, 1, inp.casingD / 3, shaftY - 2) }, inp.casingW + 4), translate(0, 0, -inp.baseL / 2 + 4)) });
+  const shaftY = pumpShaftY(inp.casingD, inp.motorD);
+  // SW-EQ-4 (amended 2026-11-27): the pedestal starts at the casing's suction face, where the suction neck leaves it, and ends 2 in behind the casing
+  solids.push({ name: 'pump pedestal', mesh: transformMesh(extrude({ outer: rect(-inp.casingD / 3, 1, inp.casingD / 3, shaftY - 2) }, inp.casingW + 2), translate(0, 0, -inp.baseL / 2 + 6)) });
   solids.push({ name: 'casing', mesh: transformMesh(extrude({ outer: circle(0, shaftY, inp.casingD / 2, 32) }, inp.casingW), translate(0, 0, -inp.baseL / 2 + 6)) });
   solids.push({ name: 'coupling guard', mesh: transformMesh(extrude({ outer: rect(-3, shaftY - 3, 3, shaftY + 3) }, 8), translate(0, 0, -inp.baseL / 2 + 6 + inp.casingW)) });
   const mz = -inp.baseL / 2 + 14 + inp.casingW;

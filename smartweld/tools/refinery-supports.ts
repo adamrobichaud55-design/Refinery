@@ -6,17 +6,20 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { serializePiping, type PipingModel } from '../src/generator/piping';
 import { unitPiping } from '../src/refinery/unitPiping';
 import { unitChecks, valveBoxFn, spanNote, type PipedUnit } from '../src/refinery/pipingReport';
-import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, hangerTops, waferStuds } from '../src/refinery/supports';
+import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, hangerTops, waferStuds, withFrames } from '../src/refinery/supports';
+import { squareWelds } from '../src/refinery/welds';
 // PIPING_DIR: another folder of unit models to correct in place of the repository's (a copy, to try the correction on)
 const dir = process.env.PIPING_DIR ?? 'public/refinery/piping', vb = valveBoxFn();
 const units = process.argv.slice(2).map(Number); for (const u of units.length ? units : [11, 12, 13, 14, 15, 16, 17, 18, 19]) {
   const m = JSON.parse(readFileSync(`${dir}/unit-${u}.json`, 'utf8')) as PipingModel, r = JSON.parse(readFileSync(`${dir}/unit-${u}.report.json`, 'utf8')) as PipedUnit, up = unitPiping(u);
   // made again on a model that has had it, the counts are added to the note already there
   const was = r.notes.findIndex(n => n.includes('(SW-RPI-17)')), num = (re: RegExp) => (was >= 0 ? Number(re.exec(r.notes[was])?.[1] ?? 0) : 0);
-  const vt = valvesThatStrike(m, up.plant, vb);   // SW-RPI-19: valves whose stem or handwheel strikes, turned
+  const pf = withFrames(up.plant, r.frames ?? []);   // SW-RPI-18 (amended): the frames already set are solids for the tests and for SW-RPI-17
+  const sw = squareWelds(m); if (sw.length) r.notes.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`);
+  const vt = valvesThatStrike(m, pf, vb);   // SW-RPI-19: valves whose stem or handwheel strikes, turned
   if (vt.turned.length || vt.stuck.length) r.notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`);
-  const struck = supportsThatStrike(m, up.plant, vb);   // SW-RPI-18 first: supports whose rod, post or leg strikes are taken out
-  const before = r.checks.supports.length, s = supportsAlongSpans(m, up.plant, vb), ht = hangerTops(m, up.plant), ws = waferStuds(m), aside: string[] = [], checks = unitChecks(m, up, aside);
+  const struck = supportsThatStrike(m, pf, vb);   // SW-RPI-18 first: supports whose rod, post or leg strikes are taken out
+  const before = r.checks.supports.length, s = supportsAlongSpans(m, pf, vb), ht = hangerTops(m, pf), ws = waferStuds(m), aside: string[] = [], checks = unitChecks(m, up, aside);
   if (ht.length) r.notes.push(`${ht.length} hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)`); if (ws.length) r.notes.push(`${ws.length} wafer valves bolted with one stud set through both flanges (SW-RPI-21)`);
   if (struck.length) r.notes.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`);
   if (was >= 0) { s.hangers += num(/(\d+) hangers/); s.onSteel += num(/(\d+) stanchions on steel/); s.stanchions += num(/, (\d+) stanchions and/); s.posts += num(/(\d+) support posts/); s.frames = [...(r.frames ?? []), ...s.frames]; r.notes.splice(was, 1); }

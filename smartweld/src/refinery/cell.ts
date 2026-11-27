@@ -5,7 +5,7 @@
  * unchanged; nozzles are not part of a body (the piping stage adds them).
  */
 import {
-  makeVerticalVessel, makeHorizontalVessel, makeExchanger, makePump, makeAirCooler, makeFiredHeater, makeCompressorPackage, makeBlower,
+  makeVerticalVessel, makeHorizontalVessel, makeExchanger, makePump, pumpShaftY, makeAirCooler, makeFiredHeater, makeCompressorPackage, makeBlower,
   makePlatformedColumn, makeSwagedTower, makeCabinHeater, makeConeRoofTank, makeCatCracker, makeWetScrubber, makeFlueGasCooler, makeSulfurFurnace,
   makeSulfurCondenser, makeIncinerator, makeWaterTubeBoiler, makeTurbineCompressor, makeLoadingStation, makeCoolingTower, makeSilo, makeDeaerator, makeEjector, makeSulfurPit, makeSeparatorBasin,
   makeEjectorSet, ejectorSetLayout, makeShellTubeExchanger, makeGrating, makeRod, GRATING, type EjectorSetInput, type Cut,
@@ -248,7 +248,7 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
   switch (e.kind) {
     case 'pump': return tags(z.count).map(tag => {
       const D = Math.max(6, d.impeller), casingD = Math.max(10, up(1.5 * D, 1)), casingW = Math.max(6, up(0.5 * D * d.stages, 1)), motorD = Math.max(8, Math.round(d.motorFrame)), motorL = up(1.8 * motorD, 1);
-      const baseW = up(Math.max(casingD, motorD) + 12, 6), baseL = up(14 + casingW + motorL + 6, 12), shaftY = 1 + casingD / 2 + 4;
+      const baseW = up(Math.max(casingD, motorD) + 12, 6), baseL = up(14 + casingW + motorL + 6, 12), shaftY = pumpShaftY(casingD, motorD);   // SW-CELL-4 (amended 2026-11-27): the catalogue's shaft height
       // SW-CELL-4: the pad is raised until the shaft stands on the grid, and the pump set along its shaft until the casing's centre plane does
       const padH = up(PUMP_PAD + shaftY) - shaftY, dz = up(casingW / 2) - casingW / 2;
       const nS = z.nozzles.find(q => q.port === 'S'), iS = sh.lines.findIndex(l => l.to.k === 'eq' && l.to.tag === e.tag && l.to.port === 'S'), reach = nS ? suctionReach(iS >= 0 ? sizing().get(sh.no)!.lines[iS].NPS : nS.NPS, nS.NPS, nS.cls) : 0;

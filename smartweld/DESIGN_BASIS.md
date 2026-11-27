@@ -678,6 +678,23 @@ once the pipe interface decision is made; each item carries its nozzle schedule 
   pump casing modeled as a cylinder of stated diameter and width on a pedestal
   box; motor as a cylinder of stated diameter and length on a box foot; coupling guard a
   box between. Reason: envelope only.
+  Amended 2026-11-27 (owner's decision, P-95): the pedestal (two thirds of the casing's
+  diameter wide, from the baseplate to 2 in below the shaft) starts at the casing's suction
+  face and ends 2 in behind the casing as before; it no longer starts 2 in ahead of the face.
+  And the shaft stands high enough for the motor as well as for the casing: 4 in above the
+  casing's underside, or, where the motor is the larger, half the motor's diameter above the
+  baseplate, so that the motor's round rests on the baseplate with its foot under it, and the
+  pump is lifted on a taller pedestal to meet the motor; no higher than that. Reason: the
+  suction nozzle's neck leaves the casing's face on the shaft's line, and the pedestal standing
+  2 in ahead of the face stood under the first 2 in of every neck larger than 4 in; and with
+  the shaft set by the casing alone, a motor more than 8 in larger than its casing was drawn
+  into its baseplate, and more than 10 in larger through it into the pad, its foot drawn
+  downward from the baseplate's top into the pad (up to 6 in) and weighed as steel. An
+  independent clash check of plant 3 found a suction neck 1 in (a 6 in neck) to 2 in deep in
+  its pump's pedestal at 58 pumps, and a motor 1/2 in to 7 in down in its own pad at 16.
+  Plants 1 and 2 (a 20 in casing, an 18 in motor, 3 in and 4 in suction necks) had neither;
+  they keep their shaft at 15 in, and each of their pumps weighs 91 lb less by its shorter
+  pedestal.
 - `SW-EQ-5` Flat-bottom storage tank: cylindrical shell of stated diameter, height and
   thickness on the slab, a cone roof of 3/4 in rise per 12 in of 3/16 in plate, and a
   `L2x2x1/4` top curb angle. Reason: the shallow cone
@@ -841,6 +858,25 @@ on the closure member and the effort a person can apply. Every internal is a rea
 - `SW-VLV-1` Identification: `{TYPE}{NPS}-{class}` with TYPE one of `GATE`, `GLOBE`, `CHECK`,
   `BALL`, `BFLY`. Bore D = the pipe bore of the class (full port). Ends: integral flanges with
   the SW-FLG pattern of the size and class (BFLY is a wafer body between pipe flanges).
+  Amended 2026-11-27 (owner's decision, P-95): behind each end flange the valve leaves room
+  for the studs and nuts of its joint (SW-FLG-7). Over the nuts' reach behind the back of the
+  flange (half the stud length less half the joint, that is the two flanges, their raised
+  faces and the gasket: the nut and the end of the stud beyond it), the hub and the tube, neck
+  or flare that carries it stand no further from the axis than half the bolt circle less half
+  the nut's width across corners (SW-B-2, SW-B-3), and come back to their own size beyond that
+  reach on a 45° shoulder. The cut never leaves less wall over the bore than SW-VLV-2 gives
+  the bore itself (D_c = D). The end flange keeps its n holes of the stud diameter plus 1/8 in
+  on the bolt circle (SW-FLG-4), drilled as the pipe flange it bolts to; face-to-face, flange
+  diameter and thickness are unchanged. Reason: a nut seats on the back of the flange, so the
+  casting behind it must stop short of the nut; drawn whole, the hub (twice the body wall at
+  the flange) stood where the nuts on the valve's side sit, and an independent clash check of
+  plant 3 found the stud set inside the body of every flanged gate, globe, check and control
+  valve from 2 in to 14 in (4,040 findings at 72 valve sizes, up to 0.6 in deep; at 12 in
+  class 1200 the control valve's hub stood beyond the bolt circle itself). The holes were
+  already drilled and the studs clear of them. In classes 2400 and 4800 (69 offered valves,
+  none in any plant) the wall comes first and the nuts still meet the hub, by up to 1/4 in:
+  there the bolt circle of SW-FLG-4 is too small for the hub, as it is for the pipe flanges'
+  own hubs, and is to be reviewed with the flange rules.
 - `SW-VLV-2` Body wall: t_b = roundup( max( 1/4 in + D/50, P D_c / (2 S_c) + 1/8 in ), 1/16 in ) with
   S_c = F_y / 2.5 = 14,400 psi ("Grade 36 casting", drawing) and D_c the body cavity diameter.
   Reason: hoop stress with a larger factor for a casting (porosity, surface defects) plus a
@@ -4567,6 +4603,15 @@ their own geometry rules, which are unchanged.
     half the impeller for each stage, 6 in least; motor of SW-PRC-5's frame diameter, 1.8
     diameters long; a baseplate 12 in wider than the larger of them and long enough for both and
     the coupling; a concrete pad 9 in high, 6 in larger all round.
+    Amended 2026-11-27 (owner's decision, P-95): the shaft's height above the baseplate is the
+    catalogue's (SW-EQ-4, amended the same day), taken from it rather than worked out again
+    here, and the pad, 9 in at least, is still raised until the shaft is on the 6 in grid
+    (SW-RPI-2). Reason: the cell had set the shaft by the casing alone, as the catalogue did,
+    and so stood 16 pumps' motors in their own pads (P-1104A/B by 7 in). A pump whose motor is
+    the larger now stands higher on its pedestal: of the 18 such pumps, 12 keep their shaft
+    where it was on a pad made up less (9 1/2 in to 10 1/2 in high), and in unit 11 the shafts
+    of P-1101A/B and P-1103A/B rise 6 in and those of P-1104A/B 12 in, their suction and
+    discharge nozzles with them, so the lines to those six are routed again.
   - Horizontal drums (SW-EQ-2) and the desalter and deaerator (SW-EQC-47, -50): the shell's
     underside 4 ft above grade, and 10 ft where a pump draws from the drum, on concrete piers
     under the saddles; higher where a connection underneath needs more for its valve and
@@ -5662,6 +5707,16 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   is taken out. So is one whose base plate (a stanchion's or a trunnion's) lies more than
   0.05 in inside a solid of the plant rather than on it (amended the same day: stanchions
   set at grade stood with their base plates up to 3.5 in inside an equipment pad).
+  The base is every solid of the part within 1 in of its lowest point and no more than 1 in
+  high, its plate (amended 2026-11-27: the anchor rods, which go into the member or the
+  foundation by design and are not tested, reach 1/2 in below the plate, and the plate itself
+  had gone untested: posts stood up to 1.7 in inside channels and pads); and the pipe frames of
+  SW-RPI-17, which stand in a unit's report and not among its cell's solids, are solids of
+  the plant for this test and for SW-RPI-17 (supports set later stood up to 2.2 in inside
+  a frame's pedestal). The tall member is tested against the pieces of its own line too
+  (amended the same day: 30 posts stood through a valve or flange of the line they carry);
+  its ends, left out, hold the piece it carries; a trunnion's leg, welded into its own elbow,
+  is tested against other lines only.
   SW-RPI-17 sets no support this test would take out (amended the same day): a stanchion on
   steel stands on the member's true top, from its own box, not on the generator's estimate
   of it (the centre and seven tenths of the round it holds the member by, which for a 12 in
@@ -5702,6 +5757,14 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   stud set, so that the two sets' nuts met inside the joint, in the same holes (116 found).
   Plant 3's own correction: the two sets are made one, from the back of one flange to the
   back of the other, its length by the catalogue's rule for a stack (SW-FLG-13).
+- `SW-RPI-24` A weld bead square to its joint (added 2026-11-27). The generator orients the
+  weld at a joint by the direction from one end of the second piece to its other end, which
+  at an elbow is the elbow's chord, 45° off the pipe's own direction at that end: the bead,
+  drawn as a ring square to that, stood tilted through the elbow and the piece beside it (an
+  independent clash check found 123 such beads at elbows, to 2 in). Plant 3's own
+  correction, on the finished model: each weld is set square to the axis of the joint it
+  closes, the direction of the straight piece it joins (a pipe, flange, reducer or tee run),
+  or, between two elbows, the elbows' common tangent there; its place stays.
 - `SW-RPI-22` Pieces of one line clear of each other (added 2026-11-27). The generator keeps
   a line 3 in from every other line but never measures a line against itself: its search
   passes every cell held under the line's own number (its end stacks, their valves' boxes

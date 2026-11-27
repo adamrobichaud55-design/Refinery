@@ -203,35 +203,47 @@ export function strikeTest(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box
   const TALL = new Set(['hanger', 'stanchion', 'trunnion', 'trapeze']);
   const statics = staticObstacles(plant.building().instances, plant.interior().instances, true).obstacles.filter(o => !/keep-out/.test(o.tag));
   const xfp = (T: number[], p: V3): V3 => [T[0] * p[0] + T[4] * p[1] + T[8] * p[2] + T[12], T[1] * p[0] + T[5] * p[1] + T[9] * p[2] + T[13], T[2] * p[0] + T[6] * p[1] + T[10] * p[2] + T[14]];
-  /** the tall member's box in the world, trimmed 3 in at each end along its height */
-  const tallOf = (key: string, T: number[]): Box | undefined => {
-    const bs = solidBoxes(partFromKey(key)); if (!bs.length) return undefined;
-    const world = bs.map(b => { const cs: V3[] = []; for (const x of [b[0][0], b[1][0]]) for (const y of [b[0][1], b[1][1]]) for (const z of [b[0][2], b[1][2]]) cs.push(xfp(T, [x, y, z])); return [[0, 1, 2].map(k => Math.min(...cs.map(c => c[k]))), [0, 1, 2].map(k => Math.max(...cs.map(c => c[k])))] as Box; });
-    const t = world.reduce((a, b) => (b[1][1] - b[0][1] > a[1][1] - a[0][1] ? b : a));
-    if (t[1][1] - t[0][1] <= 6.5) return undefined;
-    return [[t[0][0], t[0][1] + 3, t[0][2]], [t[1][0], t[1][1] - 3, t[1][2]]];
+  const toWorld = (T: number[], q: Box): Box => { const cs: V3[] = []; for (const x of [q[0][0], q[1][0]]) for (const y of [q[0][1], q[1][1]]) for (const z of [q[0][2], q[1][2]]) cs.push(xfp(T, [x, y, z])); return [[0, 1, 2].map(k => Math.min(...cs.map(c => c[k]))), [0, 1, 2].map(k => Math.max(...cs.map(c => c[k])))] as Box; };
+  /** SW-RPI-18 (amended): the tall members of a support's part in the world, each trimmed 3 in at each end along its height: every solid standing
+   *  more than 6.5 in and taller than it is wide (a hanger's rod, a stanchion's post, a trunnion's leg; not a hanger's clamp ring, as tall as it
+   *  is wide); a trapeze's two rods, which its part holds as one solid, one by one, each at its side of that solid, as wide as the solid is thick
+   *  and as long as its own rod (the key's two heights) */
+  const tallOf = (key: string, T: number[]): Box[] => {
+    const out: Box[] = [], k = key.split('|');
+    for (const q of solidBoxes(partFromKey(key))) {
+      const h = q[1][1] - q[0][1], wx = q[1][0] - q[0][0], wz = q[1][2] - q[0][2];
+      if (h <= 6.5 || h <= Math.max(wx, wz)) continue;
+      const each: Box[] = k[0] === 'TRAP' && wx > 2 * wz ? [[[q[0][0], q[0][1], q[0][2]], [q[0][0] + wz, Number(k[3]), q[1][2]]], [[q[1][0] - wz, q[0][1], q[0][2]], [q[1][0], Number(k[4]), q[1][2]]]] : [q];
+      for (const e of each) { const t = toWorld(T, e); if (t[1][1] - t[0][1] > 6.5) out.push([[t[0][0], t[0][1] + 3, t[0][2]], [t[1][0], t[1][1] - 3, t[1][2]]]); }
+    }
+    return out;
   };
   /** the lowest of a part's solids in the world: a stanchion's or trunnion's base plate */
-  const lowestOf = (key: string, T: number[]): Box | undefined => { const bs = solidBoxes(partFromKey(key)); if (!bs.length) return undefined; const world = bs.map(q => { const cs: V3[] = []; for (const x of [q[0][0], q[1][0]]) for (const y of [q[0][1], q[1][1]]) for (const z of [q[0][2], q[1][2]]) cs.push(xfp(T, [x, y, z])); return [[0, 1, 2].map(k => Math.min(...cs.map(c => c[k]))), [0, 1, 2].map(k => Math.max(...cs.map(c => c[k])))] as Box; }); return world.reduce((lo, q) => (q[0][1] < lo[0][1] ? q : lo)); };
+  /** SW-RPI-18 (amended): the base of a part, every solid within 1 in of its lowest point and no more than 1 in high: its plate */
+  const baseOf = (key: string, T: number[]): Box[] => { const bs = solidBoxes(partFromKey(key)); if (!bs.length) return []; const world = bs.map(q => toWorld(T, q as Box)); const lo = Math.min(...world.map(q => q[0][1])); return world.filter(q => q[0][1] <= lo + 1 && q[1][1] - q[0][1] <= 1); };   // the plate, not the anchor rods (they go into the member by design)
   const ov = (a: Box, b: Box) => [0, 1, 2].every(k => a[0][k] < b[1][k] && b[0][k] < a[1][k]);
   const pieces = m.lines.flatMap(r => r.comps.filter(c => c.kind !== 'studs').flatMap(c => K.compShapes(c, vb).map(sh => ({ line: r.no, sh, box: (sh.kind === 'box' ? [sh.mn, sh.mx] : [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r), [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r)]) as Box }))));
   const sBox = statics.map(o => ({ o, box: (o.kind === 'box' ? [o.mn, o.mx] : [[0, 1, 2].map(k => Math.min(o.a[k], o.b[k]) - o.r), [0, 1, 2].map(k => Math.max(o.a[k], o.b[k]) + o.r)]) as Box }));
   return (sp, no, kept = []) => {
     {
       const r = { no };
-      const b = TALL.has(sp.type) ? tallOf(sp.key, sp.T as unknown as number[]) : undefined;
-      if (!b) return undefined;
-      // a pipe or round piece overlaps the member where its axis comes nearer the member's box than its radius (the library's gap to a box is never below 0)
-      const hits = (q: (typeof pieces)[number]) => (q.sh.kind === 'box' ? true : K.segBox(q.sh.a, q.sh.b, b[0], b[1]) < q.sh.r - 0.02);
+      const talls = TALL.has(sp.type) ? tallOf(sp.key, sp.T as unknown as number[]) : [];
+      if (!talls.length) return undefined;
       // SW-RPI-18 (amended): its base plate (the lowest of its part's solids) on a solid, not inside one by more than 0.05 in
-      const base = sp.type === 'stanchion' || sp.type === 'trunnion' ? lowestOf(sp.key, sp.T as unknown as number[]) : undefined;
-      const sunk = base ? sBox.find(q => [0, 1, 2].every(k => Math.min(base[1][k], q.box[1][k]) - Math.max(base[0][k], q.box[0][k]) > 0.05) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, base[0], base[1]) < q.o.r - 0.05)) : undefined;
+      const bases = sp.type === 'stanchion' || sp.type === 'trunnion' ? baseOf(sp.key, sp.T as unknown as number[]) : [];
+      const sunk = bases.map(base => sBox.find(q => [0, 1, 2].every(k => Math.min(base[1][k], q.box[1][k]) - Math.max(base[0][k], q.box[0][k]) > 0.05) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, base[0], base[1]) < q.o.r - 0.05))).find(Boolean);
       if (sunk) return `its base plate inside ${sunk.o.tag}`;
-      const line = pieces.find(q => q.line !== r.no && ov(q.box, b) && hits(q));
-      const solid = line ? undefined : sBox.find(q => ov(q.box, b) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, b[0], b[1]) < q.o.r));
-      const other = line || solid ? undefined : kept.find(q => q.line !== r.no && ov(q.box, b));
-      if (line || solid || other) return `its ${sp.type === 'hanger' ? 'rod' : sp.type === 'trunnion' ? 'leg' : 'post'} ${line ? `through ${line.line}` : solid ? `through ${solid.o.tag}` : `through the support of ${other!.line} in the same place`}`;
-      kept.push({ line: r.no, box: b }); return undefined;
+      for (const b of talls) {
+        // a pipe or round piece overlaps the member where its axis comes nearer the member's box than its radius (the library's gap to a box is never below 0)
+        const hits = (q: (typeof pieces)[number]) => (q.sh.kind === 'box' ? true : K.segBox(q.sh.a, q.sh.b, b[0], b[1]) < q.sh.r - 0.02);
+        // other lines' pieces, and its own line's too but for a trunnion (its leg is welded into its own elbow); its trimmed ends hold the piece it carries (SW-RPI-18 amended)
+        const line = pieces.find(q => (q.line !== r.no || sp.type !== 'trunnion') && ov(q.box, b) && hits(q));
+        const solid = line ? undefined : sBox.find(q => ov(q.box, b) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, b[0], b[1]) < q.o.r));
+        const other = line || solid ? undefined : kept.find(q => q.line !== r.no && ov(q.box, b));
+        if (line || solid || other) return `its ${sp.type === 'hanger' || sp.type === 'trapeze' ? 'rod' : sp.type === 'trunnion' ? 'leg' : 'post'} ${line ? `through ${line.line}` : solid ? `through ${solid.o.tag}` : `through the support of ${other!.line} in the same place`}`;
+      }
+      for (const b of talls) kept.push({ line: r.no, box: b });
+      return undefined;
     }
   };
 }
@@ -329,4 +341,11 @@ export function waferStuds(m: PipingModel): string[] {
     r.comps = r.comps.filter(c => c !== drop); out.push(`${v.tag}: one stud set of ${stack.toFixed(3)} in through both flanges`);
   }
   return out;
+}
+
+/** SW-RPI-18 (amended): a plant with the pipe frames a model already has (from its report) among its solids, for the tests and for SW-RPI-17 */
+export function withFrames(plant: PlantDef, frames: FrameSpec[]): PlantDef {
+  if (!frames.length) return plant;
+  const placed = frames.flatMap(f => framePlaced(f));
+  return { ...plant, interior: () => { const i = plant.interior(); return { ...i, instances: [...i.instances, ...placed] }; } };
 }

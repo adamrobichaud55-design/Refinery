@@ -228,13 +228,54 @@ function endFlanges(b: ValveSolid[], c: Common, zFace = c.F2F / 2, f = c.f, D = 
     push(b, 'raised face', s > 0 ? ringZ(f.rfOD / 2, D / 2, zFace, zFace + f.rfH) : ringZ(f.rfOD / 2, D / 2, -zFace - f.rfH, -zFace));
   }
 }
-/** run tube and tapered hubs ending at the flange backs ±zi (SW-FLG-6) */
+// ---- room for the end joints' nuts (SW-VLV-1, amended 2026-11-27) ------------------------------------------
+/** the clearance kept round the nuts: the bolt hole's own clearance on its stud (SW-FLG-4, hole d + 1/8 in), 1/16 in */
+const nutGap = (f: FlangeDesign) => (f.holeD - f.d) / 2;
+/** the nuts' reach behind the back of an end flange: half the stud length less half the joint (two flanges, their raised faces and the gasket), i.e. the nut and the stud's end beyond it (SW-FLG-7), and the clearance */
+const nutReach = (f: FlangeDesign) => (f.studLen - (2 * (f.tf + f.rfH) + f.gasketT)) / 2 + nutGap(f);
+/** SW-VLV-2's wall for the bore itself (D_c = D) */
+const boreWall = (D: number, P: number) => roundUpTo(Math.max(0.25 + D / 50, (P * D) / (2 * ((CASTING.Fy.value * 1000) / 2.5)) + 0.125), 1 / 16);
+/** the radius the hub stands within over the nuts' reach: half the bolt circle less half the nut's across-corners (SW-B-2/3) and the clearance, never inside the bore's own wall */
+const nutClearR = (f: FlangeDesign, D: number) => Math.max((f.BC - hexHardware(f.d).C) / 2 - nutGap(f), D / 2 + boreWall(D, f.P));
+/** the room for the nuts behind an end flange whose back stands at sb along the outward axis (`ax`, sign `sg`): the ring between the clear radius and
+ *  half the bolt circle plus half the nut's across-corners and the clearance, from the nuts' reach behind the back through the flange's thickness */
+function nutRoom(f: FlangeDesign, D: number, ax: 'x' | 'y' | 'z', sg: 1 | -1, sb: number): SDF {
+  const rc = nutClearR(f, D), ro = (f.BC + hexHardware(f.d).C) / 2 + nutGap(f), R = nutReach(f);
+  return (x, y, z) => {
+    const s = sg * (ax === 'x' ? x : ax === 'y' ? y : z) - sb, r = ax === 'x' ? Math.hypot(y, z) : ax === 'y' ? Math.hypot(x, z) : Math.hypot(x, y);
+    return Math.max(rc - r, r - ro, -R - s, s - f.tf);
+  };
+}
+/** a round pocket about every bolt hole of an end flange (radius half the nut's across-corners and the clearance) over the same reach: what else of a casting
+ *  (a body or cover flange) stands where a nut or stud end would is cut back round it. Holes as flangeRing draws them: at (i + 1/2) 360°/n from x in the
+ *  x–y plane for an end along z, and from x toward −z for an end along y (flangeRing turned by toY); never nearer the axis than the bore's own wall */
+function nutPockets(f: FlangeDesign, D: number, ax: 'y' | 'z', sg: 1 | -1, sb: number): SDF {
+  const rp = hexHardware(f.d).C / 2 + nutGap(f), rf = D / 2 + boreWall(D, f.P), R = nutReach(f), step = (2 * Math.PI) / f.n;
+  return (x, y, z) => {
+    const s = sg * (ax === 'y' ? y : z) - sb, u = x, v = ax === 'y' ? -z : y, r = Math.hypot(u, v);
+    const a = Math.atan2(v, u), la = a - (Math.floor(a / step) + 0.5) * step;               // angle from the nearest hole
+    return Math.max(Math.hypot(r * Math.cos(la) - f.BC / 2, r * Math.sin(la)) - rp, rf - r, -R - s, s - f.tf);
+  };
+}
+/** a revolved hub's outer line (r against rising z, ending at the flange back zb) held within the clear radius over the nuts' reach (SW-VLV-1, amended 2026-11-27) */
+function clipToNutRoom(outer: { r: number; z: number }[], f: FlangeDesign, D: number, zb: number): { r: number; z: number }[] {
+  const rc = nutClearR(f, D), z0 = zb - nutReach(f);
+  const line = (z: number) => { for (let i = 0; i + 1 < outer.length; i++) { const a = outer[i], q = outer[i + 1]; if (z <= q.z + 1e-12) return q.z - a.z < 1e-12 ? Math.max(a.r, q.r) : a.r + ((q.r - a.r) * (z - a.z)) / (q.z - a.z); } return outer[outer.length - 1].r; };
+  const zs = [...new Set([...outer.map(p => p.z), z0])].filter(z => z >= outer[0].z && z <= outer[outer.length - 1].z).sort((a, b) => a - b), all = [...zs];
+  for (let i = 0; i + 1 < zs.length; i++) if (zs[i] >= z0) { const d0 = line(zs[i]) - rc, d1 = line(zs[i + 1]) - rc; if (d0 * d1 < 0) all.push(zs[i] + ((zs[i + 1] - zs[i]) * d0) / (d0 - d1)); }
+  const out: { r: number; z: number }[] = [];
+  for (const z of all.sort((a, b) => a - b)) { if (z <= z0) out.push({ r: line(z), z }); if (z >= z0) out.push({ r: Math.min(line(z), rc), z }); }   // a plain step at the end of the reach
+  return dedupeRZ(out);
+}
+/** run tube and tapered hubs ending at the flange backs ±zi (SW-FLG-6), held clear of the end joints' nuts (SW-VLV-1) */
 const runSDF = (c: Common, zi: number, zLo = -zi, zHi = zi): SDF => {
-  const { D, tb, f } = c, parts: SDF[] = [S.cylZ(D / 2 + tb, zLo, zHi)];
-  if (zHi === zi) parts.push(S.frustumZ(D / 2 + tb, zi - f.hubLen, D / 2 + 2 * tb, zi));
-  if (zLo === -zi) parts.push(S.frustumZ(D / 2 + 2 * tb, -zi, D / 2 + tb, -zi + f.hubLen));
-  return S.union(...parts);
+  const { D, tb, f } = c, parts: SDF[] = [S.cylZ(D / 2 + tb, zLo, zHi)], room: SDF[] = [];
+  if (zHi === zi) { parts.push(S.frustumZ(D / 2 + tb, zi - f.hubLen, D / 2 + 2 * tb, zi)); room.push(nutRoom(f, D, 'z', 1, zi)); }
+  if (zLo === -zi) { parts.push(S.frustumZ(D / 2 + 2 * tb, -zi, D / 2 + tb, -zi + f.hubLen)); room.push(nutRoom(f, D, 'z', -1, zi)); }
+  return S.subtract(S.union(...parts), ...room);
 };
+/** the bolt-hole pockets of the run's end flanges at ±zi (SW-VLV-1), cut from the whole body casting */
+const runPockets = (c: Common, zi: number, zLo = -zi, zHi = zi): SDF[] => [...(zHi === zi ? [nutPockets(c.f, c.D, 'z', 1, zi)] : []), ...(zLo === -zi ? [nutPockets(c.f, c.D, 'z', -1, zi)] : [])];
 const boreSDF = (c: Common, zi: number) => S.cylZ(c.D / 2, -zi - 1, zi + 1);
 
 /** bolts of a cast joint along y (F-1): nut and stick-out below yBot, head above yTop; shank inside the flanges not drawn */
@@ -330,7 +371,7 @@ function globeBodySDF(c: Common, zi: number, tilt = 0): { body: SDF; info: Globe
     parts.length = 0; parts.push(plateT, S.roundBox(0, Rs / 2, -(0.6 * D + tb / 2), Rs, Rs / 2, tb / 2, 0), S.roundBox(0, -Rs / 2, 0.6 * D + tb / 2, Rs, Rs / 2, tb / 2, 0));
   }
   cavity = S.subtract(cavity, ...parts);
-  return { body: S.subtract(outer, cavity), info: { Rs, Rn, fb, yB, yS: tb / 2 } };
+  return { body: S.subtract(outer, cavity, ...runPockets(c, zi)), info: { Rs, Rn, fb, yB, yS: tb / 2 } };   // SW-VLV-1
 }
 
 // =====================================================================================================
@@ -473,7 +514,7 @@ const buildGate: Build = (b, NPS, cls, dims) => {
   const yB0 = D / 2 + 0.6 * D + fb.tf, yJ = yB0 - fb.tf;
   const outer = S.union(S.blend(k, runSDF(c, zi), S.superCylY(ai + tb, bi + tb, -D / 2, yJ, 2), S.ellipsoid(0, -D / 2, 0, ai + tb, 0.15 * D + tb, bi + tb)), S.rsuperCylY(aF, bF, yJ, yB0, edgeR(fb.tf), 2));
   const cav = S.union(boreSDF(c, zi), S.superCylY(ai, bi, -D / 2, yB0 + 1, 2), S.ellipsoid(0, -D / 2, 0, ai, 0.15 * D, bi));
-  castPart(b, 'body', S.subtract(outer, cav), [-(aF + 0.5), -(0.65 * D + tb + 0.5), -(zi + 0.1)], [aF + 0.5, yB0 + 0.1, zi + 0.1], tb);
+  castPart(b, 'body', S.subtract(outer, cav, ...runPockets(c, zi)), [-(aF + 0.5), -(0.65 * D + tb + 0.5), -(zi + 0.1)], [aF + 0.5, yB0 + 0.1, zi + 0.1], tb);
   ovalGasket(b, ab - 0.7 * fb.d, bbz - 0.7 * fb.d, ai + 0.06, bi + 0.06, yB0, fb.gasketT);
   // closure, seats
   const sw = Math.max(0.25, 0.1 * D), tw = 0.25 * D, tan5 = Math.tan((5 * Math.PI) / 180), stroke = 1.05 * D;
@@ -545,11 +586,11 @@ const buildAGlobe: Build = (b, NPS, cls, dims, notes) => {
   push(b, 'end flange', flangeRing(f, -CF, D)); push(b, 'raised face', ringZ(f.rfOD / 2, D / 2, -CF - f.rfH, -CF));
   push(b, 'end flange', transformMesh(flangeRing(f, 0, D), multiply(translate(0, -CF, 0), toY)));
   push(b, 'raised face', ringY(f.rfOD / 2, D / 2, -CF - f.rfH, -CF));
-  const outlet = S.union(S.cylY(D / 2 + tb, -zi, 0), S.frustumY(D / 2 + 2 * tb, -zi, D / 2 + tb, -zi + f.hubLen));
+  const outlet = S.subtract(S.union(S.cylY(D / 2 + tb, -zi, 0), S.frustumY(D / 2 + 2 * tb, -zi, D / 2 + tb, -zi + f.hubLen)), nutRoom(f, D, 'y', -1, zi));   // SW-VLV-1
   const outer = S.union(S.blend(k, runSDF(c, zi, -zi, 0), outlet, S.ellipsoid(0, 0, 0, Rs, 0.9 * Rs, Rs), S.cylY(Rn + tb, 0, yB - fb.tf)), S.rcylY(fb.OD / 2, yB - fb.tf, yB, edgeR(fb.tf)));
   const cav = S.union(S.cylZ(D / 2, -zi - 1, 0), S.cylY(D / 2, -zi - 1, 0), S.ellipsoid(0, 0, 0, Rs - tb, 0.9 * Rs - tb, Rs - tb), S.cylY(Rn, 0, yB + 1));
   const x = Math.max(Rs, fb.OD / 2, f.OD / 2) + 0.5;
-  castPart(b, 'body', S.subtract(outer, cav), [-x, -zi - 0.1, -zi - 0.1], [x, yB + 0.1, Rs + 0.5], tb);
+  castPart(b, 'body', S.subtract(outer, cav, nutPockets(f, D, 'z', -1, zi), nutPockets(f, D, 'y', -1, zi)), [-x, -zi - 0.1, -zi - 0.1], [x, yB + 0.1, Rs + 0.5], tb);   // SW-VLV-1
   const info: GlobeBody = { Rs, Rn, fb, yB, yS: -(0.9 * Rs - tb) };
   const r = globeTop(b, c, info, dims, -(0.9 * Rs - tb));
   dims.CF = rule(CF, 'SW-VLV-GA-1', 'Centre to face (both ends)');
@@ -568,7 +609,7 @@ const buildCheck: Build = (b, NPS, cls, dims) => {
     S.cylX(pin / 2 + 0.35 + 0.05 * D, -(ax + tb + 0.35), ax + tb + 0.35, yPin, zPin)), S.rcylY(fb.OD / 2, yC - fb.tf, yC, edgeR(fb.tf)));
   const cav = S.union(boreSDF(c, zi), S.superCylY(ax, az, -0.3 * D, 0.5 * D, 2), S.ellipsoid(0, -0.3 * D, 0, ax, 0.4 * D, az), S.cylY(Rn, 0.3 * D, yC + 1));
   const x = Math.max(fb.OD / 2, ax + tb + 0.5, c.f.OD / 2) + 0.5;
-  castPart(b, 'body', S.subtract(outer, cav), [-x, -(0.7 * D + tb + 0.5), -(zi + 0.1)], [x, yC + 0.1, zi + 0.1], tb);
+  castPart(b, 'body', S.subtract(outer, cav, ...runPockets(c, zi)), [-x, -(0.7 * D + tb + 0.5), -(zi + 0.1)], [x, yC + 0.1, zi + 0.1], tb);   // SW-VLV-1: the cover flange's edge round the nuts
   push(b, 'seat ring', ringZ(0.6 * D, D / 2, zs - 0.05 * D, zs), 'stem', BAR);
   push(b, 'disc', cylZ(0.6 * D, zs, zs + tDisc), 'closure');
   push(b, 'disc nut', transformMesh(extrude({ outer: regularHexagon(0.25 * D) }, 0.1 * D), translate(0, 0, zs + tDisc)), 'hardware', STUDM);
@@ -615,8 +656,8 @@ const buildBall: Build = (b, NPS, cls, dims) => {
   const outer = S.blend(k, S.sphere(0, 0, 0, Rs), runSDF(c, zi, -zi, 0), S.rcylZ(Db / 2, zj - Lc, zj, edgeR(Lc)), S.cylY(rp, 0, yPad), S.cylY(ds + 0.45, yPad - 0.2, yNeck));
   const cav = S.union(S.sphere(0, 0, 0, Rc), S.cylZ(Rc, 0, zj + 1), S.cylZ(D / 2, -zi - 1, 0), S.cylY(ds / 2 + 0.03, 0, yNeck + 1));
   const xb = Math.max(Db / 2, Rs, rp) + 0.5;
-  castPart(b, 'body', S.subtract(outer, cav), [-xb, -Math.max(Db / 2, Rs) - 0.5, -zi - 0.1], [xb, yNeck + 0.1, zj + 0.1], tb);
-  const conn = S.subtract(S.blend(Math.max(0.25, tb / 2), S.rcylZ(Db / 2, zj + fe.gasketT, z1, edgeR(fe.tf)), S.frustumZ(rT, z1 - 0.05, rN, z1 + Lt), S.cylZ(rN, z1 + Lt - 0.05, zi)), S.cylZ(D / 2, zj - 1, zi + 1));
+  castPart(b, 'body', S.subtract(outer, cav, ...runPockets(c, zi, -zi, 0)), [-xb, -Math.max(Db / 2, Rs) - 0.5, -zi - 0.1], [xb, yNeck + 0.1, zj + 0.1], tb);
+  const conn = S.subtract(S.blend(Math.max(0.25, tb / 2), S.rcylZ(Db / 2, zj + fe.gasketT, z1, edgeR(fe.tf)), S.frustumZ(rT, z1 - 0.05, rN, z1 + Lt), S.cylZ(rN, z1 + Lt - 0.05, zi)), S.cylZ(D / 2, zj - 1, zi + 1), nutRoom(f, D, 'z', 1, zi), nutPockets(f, D, 'z', 1, zi));   // SW-VLV-1
   castPart(b, 'end connector', conn, [-Db / 2 - 0.3, -Db / 2 - 0.3, zj + fe.gasketT - 0.05], [Db / 2 + 0.3, Db / 2 + 0.3, zi + 0.05], Math.min(tb, fe.tf));
   push(b, 'connector gasket', ringZ((fe.gasketID + 2 * fe.wg) / 2, fe.gasketID / 2, zj, zj + fe.gasketT), 'polymer', 'compressed sheet');
   const nutProf = ringAroundHole(regularHexagon(h.F), { x: 0, y: 0 }, fe.d / 2, 24), st: MeshData[] = [];
@@ -637,6 +678,7 @@ function butterflyCast(b: ValveSolid[], c: Common, Ro: number, zLo: number, zHi:
   const lugs = mode === 'lug';
   const { D, f, tb } = c, liner = c.cls === 'P150' || c.cls === 'P300' ? 0.125 : 0, rn = Math.max(1, ds / 2 + 0.6, 0.1 * D + 0.6), hn = Math.max(2.5, 0.25 * D), tp = Math.max(0.5, tb), sp = 2.6 * rn;
   const yTop = Ro + hn + tp, holes: SDF[] = [], parts: SDF[] = [S.rcylZ(Ro, zLo, zHi, Math.min(0.3, (zHi - zLo) * 0.2)), S.cylY(rn, Ro - 1, Ro + hn, xOff), S.cylY(0.8 * rn, -(Ro + 0.75), -(Ro - 1), xOff)];
+  if (mode === 'flanged') parts[0] = S.subtract(parts[0], nutRoom(f, D, 'z', 1, zHi), nutRoom(f, D, 'z', -1, -zLo));   // SW-VLV-1: the ring between two end flanges clear of their nuts
   const pts = circlePts(f.BC / 2, f.n);
   if (lugs) for (const [x, y] of pts) { parts.push(S.rcylZ(f.d, zLo, zHi, 0.2, x, y)); holes.push(S.cylZ(f.holeD / 2, zLo - 1, zHi + 1, x, y)); }
   if (mode === 'wafer') for (const i of [0, 1, 2, 3].map(q => Math.floor((q * f.n) / 4))) { const [x, y] = pts[i], m = (zHi - zLo) * 0.15; parts.push(S.rcylZ(f.d * 0.9 + 0.15, zLo + m, zHi - m, 0.15, x, y)); holes.push(S.cylZ(f.holeD / 2, zLo - 1, zHi + 1, x, y)); }   // F-7 locating ears
@@ -646,7 +688,7 @@ function butterflyCast(b: ValveSolid[], c: Common, Ro: number, zLo: number, zHi:
   const outer = mode === 'flanged' ? whole : S.subtract(whole, S.roundBox(0, 0, zHi + BIG / 2, BIG, yF, BIG / 2), S.roundBox(0, 0, zLo - BIG / 2, BIG, yF, BIG / 2));
   const cav = S.union(S.cylZ(D / 2 + liner, zLo - 1, zHi + 1), S.cylY(ds / 2 + 0.03, -(Ro + 1), yTop + 1, xOff), ...holes);
   const x = (mode === 'flanged' ? Ro : f.BC / 2 + f.d) + 0.5;
-  castPart(b, 'body', S.subtract(outer, cav), [-Math.max(x, sp / 2 + Math.abs(xOff)), -Math.max(x, Ro + 0.75) - 0.3, zLo - 0.1], [Math.max(x, sp / 2 + Math.abs(xOff)), yTop + 0.2, zHi + 0.1], Math.min(tb, (zHi - zLo) / 2));
+  castPart(b, 'body', S.subtract(outer, cav, ...(mode === 'flanged' ? [nutPockets(f, D, 'z', 1, zHi), nutPockets(f, D, 'z', -1, -zLo)] : [])), [-Math.max(x, sp / 2 + Math.abs(xOff)), -Math.max(x, Ro + 0.75) - 0.3, zLo - 0.1], [Math.max(x, sp / 2 + Math.abs(xOff)), yTop + 0.2, zHi + 0.1], Math.min(tb, (zHi - zLo) / 2));
   if (liner) push(b, 'liner', ringZ(D / 2 + liner, D / 2, zLo, zHi), 'polymer', 'polymer');
   push(b, `shaft ${ds} in`, cylY(ds / 2, -(Ro + 0.5), yTop + 1, xOff), 'stem', BAR);
   return { yTop, liner };
@@ -726,7 +768,8 @@ const buildDiaph: Build = (b, NPS, cls, dims, notes) => {
   // F-8: the body flares from each flange hub into the body (no bare run tube)
   const rH = D / 2 + 2 * tb, rBf = 0.75 * (Ro + tb), zb = Ro + tb;
   const flares = [S.frustumZ(rBf, 0.5 * zb, rH, zi), S.frustumZ(rH, -zi, rBf, -0.5 * zb)];
-  const outer = S.union(S.blend(1.5 * k, runSDF(c, zi), ...flares, S.roundBox(0, (yLo + yHi) / 2, 0, Ro + tb, (yHi - yLo) / 2, Ro + tb, Math.min(0.35 * D, 0.4 * (Ro + tb)))), S.roundBox(0, yF - fb.tf / 2, 0, hs, fb.tf / 2, hs, 0.25));
+  const outer = S.union(S.subtract(S.blend(1.5 * k, runSDF(c, zi), ...flares, S.roundBox(0, (yLo + yHi) / 2, 0, Ro + tb, (yHi - yLo) / 2, Ro + tb, Math.min(0.35 * D, 0.4 * (Ro + tb)))), nutRoom(c.f, D, 'z', 1, zi), nutRoom(c.f, D, 'z', -1, zi)),   // SW-VLV-1: the flares too
+    S.roundBox(0, yF - fb.tf / 2, 0, hs, fb.tf / 2, hs, 0.25));
   const weir = S.roundBox(0, -D / 2 + 0.3 * D - 0.5, 0, Ro + 1, 0.3 * D + 0.5, 0.12 * D, 0.08 * D);
   const cav = S.subtract(S.union(boreSDF(c, zi), S.superCylY(Ro, Ro, -0.1 * D, yF + 1, 4)), weir);
   castPart(b, 'body', S.subtract(outer, cav), [-hs - 0.5, yLo - 0.5, -(zi + 0.1)], [hs + 0.5, yF + 0.1, zi + 0.1], tb);
@@ -763,8 +806,9 @@ const buildPSV: Build = (b, NPS, cls, dims, notes) => {
   push(b, 'outlet flange', flangeRing(fo, CFout - fo.tf, Do));
   push(b, 'raised face', ringZ(fo.rfOD / 2, Do / 2, CFout, CFout + fo.rfH));
   const yi = -(CFin - f.tf), zo = CFout - fo.tf;
-  const outer = S.union(S.blend(k, S.cylY(D / 2 + tb, yi, 0), S.frustumY(D / 2 + 2 * tb, yi, D / 2 + tb, yi + f.hubLen), S.ellipsoid(0, 0.1 * D, 0, Rbowl + tb, Rbowl + tb, Rbowl + tb),
-    S.cylZ(Do / 2 + tb, 0, zo), S.frustumZ(Do / 2 + tb, zo - fo.hubLen, Do / 2 + 2 * tb, zo), S.cylY(Rh + tb, 0.3 * D, yBody - fbj.tf)), S.rcylY(fbj.OD / 2, yBody - fbj.tf, yBody, edgeR(fbj.tf)));
+  const outer = S.union(S.subtract(S.blend(k, S.cylY(D / 2 + tb, yi, 0), S.frustumY(D / 2 + 2 * tb, yi, D / 2 + tb, yi + f.hubLen), S.ellipsoid(0, 0.1 * D, 0, Rbowl + tb, Rbowl + tb, Rbowl + tb),
+    S.cylZ(Do / 2 + tb, 0, zo), S.frustumZ(Do / 2 + tb, zo - fo.hubLen, Do / 2 + 2 * tb, zo), S.cylY(Rh + tb, 0.3 * D, yBody - fbj.tf)), nutRoom(f, D, 'y', -1, -yi), nutRoom(fo, Do, 'z', 1, zo)),   // SW-VLV-1
+    S.rcylY(fbj.OD / 2, yBody - fbj.tf, yBody, edgeR(fbj.tf)));
   const cav = S.union(S.cylY(D / 2, yi - 1, 0.2 * D), S.ellipsoid(0, 0.1 * D, 0, Rbowl, Rbowl, Rbowl), S.cylZ(Do / 2, 0, zo + 1), S.cylY(Rh, 0.3 * D, yBody + 1));
   const x = Math.max(Rbowl + tb, fbj.OD / 2, Do / 2 + 2 * tb) + 0.5;
   castPart(b, 'body', S.subtract(outer, cav), [-x, yi - 0.1, -x], [x, yBody + 0.1, zo + 0.1], tb);
@@ -835,8 +879,8 @@ const buildControl: Build = (b, NPS, cls, dims, notes) => {
 
 // ---- side ports (3W-1, 4W-1): a hub and end along ±x from the body, the same end form as the run ----
 function sidePort(b: ValveSolid[], c: Common, zi: number, sx: 1 | -1, ends: ValveEnds, name: string) {
-  const { D, tb, f } = c;
-  const hub = revolve([{ r: D / 2, z: 0 }, { r: D / 2 + tb, z: 0 }, { r: D / 2 + tb, z: zi - f.hubLen }, { r: D / 2 + 2 * tb, z: zi }, { r: D / 2, z: zi }], N);
+  const { D, tb, f } = c, line = [{ r: D / 2 + tb, z: 0 }, { r: D / 2 + tb, z: zi - f.hubLen }, { r: D / 2 + 2 * tb, z: zi }];
+  const hub = revolve([{ r: D / 2, z: 0 }, ...(ends === 'RF' ? clipToNutRoom(line, f, D, zi) : line), { r: D / 2, z: zi }], N);   // SW-VLV-1: clear of the end joint's nuts
   const toSide: Mat4 = multiply(rotateY((sx * Math.PI) / 2), translate(0, 0, 0));
   push(b, `${name} hub`, transformMesh(hub, toSide));
   if (ends === 'RF') { push(b, `${name} end flange`, transformMesh(flangeRing(f, zi, D), toSide)); push(b, `${name} raised face`, transformMesh(ringZ(f.rfOD / 2, D / 2, zi + f.tf, zi + f.tf + f.rfH), toSide)); }
@@ -910,8 +954,8 @@ const buildRotary: Build = (b, NPS, cls, dims, notes) => {
   for (const sz of [-1, 1]) {
     const z0 = sz * zT, z1 = sz * (zT + tr);
     push(b, 'square-to-round transition', loftShell(squareRing(Nn / 2 + tb, rcS, nR, z0), circleRing(c.D / 2 + tb, nR, z1), squareRing(Nn / 2, rcS, nR, z0), circleRing(c.D / 2, nR, z1)));
-    const hub = revolve([{ r: c.D / 2, z: 0 }, { r: c.D / 2 + tb, z: 0 }, { r: c.D / 2 + tb, z: c.hHub - f.hubLen }, { r: c.D / 2 + 2 * tb, z: c.hHub }, { r: c.D / 2, z: c.hHub }], N);
-    const hubM = sz > 0 ? hub : revolve([{ r: c.D / 2, z: 0 }, { r: c.D / 2, z: -c.hHub }, { r: c.D / 2 + 2 * tb, z: -c.hHub }, { r: c.D / 2 + tb, z: -(c.hHub - f.hubLen) }, { r: c.D / 2 + tb, z: 0 }], N);
+    const line = clipToNutRoom([{ r: c.D / 2 + tb, z: 0 }, { r: c.D / 2 + tb, z: c.hHub - f.hubLen }, { r: c.D / 2 + 2 * tb, z: c.hHub }], f, c.D, c.hHub);   // SW-VLV-1: clear of the end joint's nuts
+    const hubM = sz > 0 ? revolve([{ r: c.D / 2, z: 0 }, ...line, { r: c.D / 2, z: c.hHub }], N) : revolve([{ r: c.D / 2, z: 0 }, { r: c.D / 2, z: -c.hHub }, ...line.slice().reverse().map(p => ({ r: p.r, z: -p.z }))], N);
     push(b, 'hub', transformMesh(hubM, translate(0, 0, sz * (zT + tr))));
   }
   endFlanges(b, c, zFace);

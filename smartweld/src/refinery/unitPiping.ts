@@ -3,7 +3,7 @@
  * cell (its rack and bodies, §78) is given a nozzle schedule and a line list drawn from its flowsheet and sizes (§74,
  * §75); the generator itself is unchanged and routes, assembles, welds and supports the lines by its own rules.
  */
-import { pipeDims, designFlange, gateFaceToFace, makeValve, type PipeClass, type PartSpec } from '../catalogue';
+import { pipeDims, designFlange, gateFaceToFace, makeValve, teeC, elbowRadius, type PipeClass, type PartSpec } from '../catalogue';
 import { buildGeometry } from '../geometry/partGeometry';
 import type { PlantDef } from '../generator/plant';
 import { jointBySpec, flangeBySpec, lineGroup } from '../generator/plant';
@@ -598,6 +598,16 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     /** largest first, each on the first tier allowed it that it does not load beyond `room` at any section of its run (the top tier, for a line that is to go there first: beyond 85 % of its lanes) and that has a lane free for it; undefined if a line fits none */
     const share = (room: number): RackLane[] | undefined => {
       const load = RACK.tiers.map((_, t) => new Float64Array(nx).fill(t === top ? headers.reduce((a, h) => a + h.width + 3, 0) : 0)), taken = [...headerPlan];
+      // SW-RPI-8 (amended 2026-11-27, SW-RPI-22): a branch's root spool on its parent's tier, its connection taken off by a tee (an olet for a branch of half the run or less, SW-SWT-6;
+      // butt welded, SW-SPEC-1): the tee on the parent's run points across the rack at the spool, and the spool stands no nearer the parent's lane than the tee's lead point toward it
+      // and one grid step (the tee's centre-to-end of its outlet and the connection's elbow radius, out to the 6 in grid, and 6 in: 36 in for a 10 in connection). Whichever of the
+      // branch and its parent is planned second keeps that distance from the other's lane; the spool stands in the branch's lane, and the lines planned after take theirs around it
+      const apart = rootPlans.flatMap(r => {
+        const p = lines.find(l => l.def.no === r.parent)?.def, c = r.root.def, tap = [c.from, c.to].find((e): e is Extract<EndRef, { k: 'tap' }> => e.k === 'tap');
+        if (!p || !tap || p.NPS < 2 || (tap.via ?? (c.NPS <= p.NPS / 2 ? 'olet' : 'tee')) !== 'tee') return [];
+        return [{ pair: [r.main.def.no, r.parent], d: up(teeC(pipeDims(p.NPS, p.cls).OD) + elbowRadius(pipeDims(c.NPS, c.cls).OD)) + 6 }];
+      });
+      const keepsApart = (no: string, t: number, z: number) => apart.every(q => { const i = q.pair.indexOf(no), L = i < 0 ? undefined : taken.find(x => x.no === q.pair[1 - i]); return !L || L.t !== t || Math.abs(L.z - z) >= q.d; });
       for (const v of order) {
         const i0 = Math.max(0, Math.floor((Math.min(v.xa, v.xb) - 36) / CELL)), i1 = Math.min(nx - 1, Math.ceil((Math.max(v.xa, v.xb) + 36) / CELL)), w = v.OD + 3;
         const a0 = clampX(v.xa), b0 = clampX(v.xb), x0 = Math.min(a0, b0), x1 = Math.max(a0, b0), s0 = half(v.l.def);
@@ -607,7 +617,7 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
         const s = s0 || (sent && may[0] === 0 ? upper(d) : 0), zs = s ? [...cands.filter(c => c * s >= 0), ...cands.filter(c => c * s < 0)] : cands;
         const fits = (k: number) => { let m = 0; for (let i = i0; i <= i1; i++) m = Math.max(m, load[k][i]); return m + w <= (topFirst && k === top ? Math.max(room, most) : room); };
         let put: RackLane | undefined;
-        for (const t of tiersOf) { if (!fits(t)) continue; const z = zs.find(c => clearOf(t, c) && pastColumns(t, c, d.NPS, d.cls) && free(taken, t, c, v.OD, x0 - 36, x1 + 36) && (!rp || free(taken, t, c, wide, rp.x - 60, rp.x + 60))); if (z !== undefined) { put = { t, z, OD: v.OD, x0, x1, no: d.no }; break; } }
+        for (const t of tiersOf) { if (!fits(t)) continue; const z = zs.find(c => clearOf(t, c) && pastColumns(t, c, d.NPS, d.cls) && free(taken, t, c, v.OD, x0 - 36, x1 + 36) && (!rp || free(taken, t, c, wide, rp.x - 60, rp.x + 60)) && keepsApart(d.no, t, c)); if (z !== undefined) { put = { t, z, OD: v.OD, x0, x1, no: d.no }; break; } }
         if (!put) { stuck = `${d.no}, ${Math.round(x0)} to ${Math.round(x1)} along the rack, tiers ${tiersOf.map(k => k + 1).join(' or ')}: ${tiersOf.map(k => (fits(k) ? `no lane free on tier ${k + 1}` : `tier ${k + 1} full`)).join(', ')}`; return undefined; }
         for (let i = i0; i <= i1; i++) load[put.t][i] += w;
         taken.push(put); if (rp) taken.push({ t: put.t, z: put.z, OD: wide, x0: rp.x - 60, x1: rp.x + 60 });
