@@ -3,7 +3,7 @@
  "area": 27,
  "name": "Cooling water mains",
  "frame": "the main pipeway's (SW-PWY-1) moved 234 in north (SW-CWM-1): inches, x east from the rack's west end, y up from the bench, z south from the sleeper way's centre line",
- "seconds": 435,
+ "seconds": 473,
  "sleepers": 51,
  "way": {
   "x0": 240,
@@ -15,9 +15,9 @@
   "lines": 22,
   "routed": 18,
   "failed": 0,
-  "comps": 315,
-  "welds": 249,
-  "supports": 132,
+  "comps": 367,
+  "welds": 301,
+  "supports": 140,
   "penetrations": 0
  },
  "failures": [],
@@ -28,10 +28,8 @@
   "valves": [],
   "lineClearance": [],
   "staticClearance": [],
-  "supports": [
-   "8\"-P150-P-27108: unsupported span 264 in > 240 on run from 2850,438,663",
-   "6\"-P150-P-27114: unsupported span 312 in > 240 on run from 7032,426,641"
-  ]
+  "ownClearance": [],
+  "supports": []
  },
  "mains": [
   {
@@ -343,7 +341,7 @@
    "routed": true,
    "components": 15,
    "welds": 14,
-   "supports": 0,
+   "supports": 1,
    "lengthFt": 46
   },
   {
@@ -449,10 +447,10 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 11,
-   "welds": 10,
-   "supports": 3,
-   "lengthFt": 108
+   "components": 17,
+   "welds": 16,
+   "supports": 4,
+   "lengthFt": 100
   },
   {
    "no": "6\"-P150-P-27109",
@@ -467,8 +465,8 @@
    "designP": 140,
    "designT": 150,
    "routed": true,
-   "components": 9,
-   "welds": 8,
+   "components": 13,
+   "welds": 12,
    "supports": 4,
    "lengthFt": 90
   },
@@ -485,9 +483,9 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 7,
-   "welds": 6,
-   "supports": 4,
+   "components": 11,
+   "welds": 10,
+   "supports": 3,
    "lengthFt": 87
   },
   {
@@ -503,10 +501,10 @@
    "designP": 140,
    "designT": 150,
    "routed": true,
-   "components": 13,
-   "welds": 12,
-   "supports": 4,
-   "lengthFt": 90
+   "components": 19,
+   "welds": 18,
+   "supports": 3,
+   "lengthFt": 94
   },
   {
    "no": "6\"-P150-P-27112",
@@ -521,10 +519,10 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 7,
-   "welds": 6,
-   "supports": 4,
-   "lengthFt": 87
+   "components": 15,
+   "welds": 14,
+   "supports": 2,
+   "lengthFt": 93
   },
   {
    "no": "6\"-P150-P-27113",
@@ -539,10 +537,10 @@
    "designP": 140,
    "designT": 150,
    "routed": true,
-   "components": 9,
-   "welds": 8,
+   "components": 19,
+   "welds": 18,
    "supports": 4,
-   "lengthFt": 82
+   "lengthFt": 86
   },
   {
    "no": "6\"-P150-P-27114",
@@ -557,10 +555,10 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 11,
-   "welds": 10,
-   "supports": 3,
-   "lengthFt": 107
+   "components": 17,
+   "welds": 16,
+   "supports": 4,
+   "lengthFt": 98
   },
   {
    "no": "3\"-P150-P-27115",
@@ -575,8 +573,8 @@
    "designP": 140,
    "designT": 150,
    "routed": true,
-   "components": 9,
-   "welds": 8,
+   "components": 13,
+   "welds": 12,
    "supports": 4,
    "lengthFt": 83
   },
@@ -593,8 +591,8 @@
    "designP": 70,
    "designT": 155,
    "routed": true,
-   "components": 7,
-   "welds": 6,
+   "components": 11,
+   "welds": 10,
    "supports": 5,
    "lengthFt": 95
   },
@@ -674,26 +672,26 @@
  "counts": {
   "components": {
    "blind": 4,
-   "elbow": 67,
+   "elbow": 93,
    "flange": 20,
    "gasket": 28,
    "olet": 14,
-   "pipe": 148,
+   "pipe": 174,
    "tee": 2,
    "valve": 4
   },
   "welds": {
    "BW, field": 38,
-   "BW, shop": 197,
+   "BW, shop": 249,
    "FW, shop": 14
   },
   "supports": {
    "anchor": 2,
    "guide": 8,
-   "hanger": 28,
-   "shoe": 92,
-   "stanchion": 11,
-   "trunnion": 5
+   "hanger": 22,
+   "shoe": 89,
+   "stanchion": 16,
+   "trunnion": 8
   }
  },
  "notes": [
@@ -719,64 +717,17 @@
   "6\"-P150-P-27114: no valve at BL-1612-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)",
   "3\"-P150-P-27116: no valve at BL-1810-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-PWY-7)",
   "2 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)",
-  "14 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 2 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 4 pipe frames",
-  "21 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)"
+  "3 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6\"-P150-P-27111/S1 (hanger): its rod through solid/cladding/pipeway line; 6\"-P150-P-27114/S2 (hanger): its rod through solid/cladding/pipeway line; 3\"-P150-P-27115/S1 (hanger): its rod through solid/cladding/pipeway line",
+  "8 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 2 stanchions on steel below, 1 stanchions and 2 support posts from the floor, and 1 pipe frames",
+  "17 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)"
  ],
  "frames": [
   {
-   "line": "8\"-P150-P-27108",
-   "at": [
-    2850,
-    438,
-    495.00074824205683
-   ],
-   "u": [
-    1,
-    0,
-    0
-   ],
-   "d": [
-    120,
-    36
-   ],
-   "floors": [
-    0,
-    0
-   ],
-   "top": 430,
-   "post": "W10x49",
-   "rad": 4
-  },
-  {
-   "line": "8\"-P150-P-27108",
-   "at": [
-    2850,
-    438,
-    422.52434398242156
-   ],
-   "u": [
-    1,
-    0,
-    0
-   ],
-   "d": [
-    120,
-    60
-   ],
-   "floors": [
-    0,
-    0
-   ],
-   "top": 430,
-   "post": "W10x49",
-   "rad": 4
-  },
-  {
    "line": "6\"-P150-P-27114",
    "at": [
     7032,
-    426,
-    442.6672278482092
+    348,
+    682.953125
    ],
    "u": [
     1,
@@ -784,39 +735,15 @@
     0
    ],
    "d": [
-    66,
+    30,
     18
    ],
    "floors": [
     0,
     0
    ],
-   "top": 419,
-   "post": "W10x49",
-   "rad": 3
-  },
-  {
-   "line": "6\"-P150-P-27114",
-   "at": [
-    7032,
-    426,
-    358.4765913201495
-   ],
-   "u": [
-    1,
-    0,
-    0
-   ],
-   "d": [
-    0,
-    18
-   ],
-   "floors": [
-    0,
-    0
-   ],
-   "top": 419,
-   "post": "W10x49",
+   "top": 341,
+   "post": "W8x31",
    "rad": 3
   }
  ]

@@ -6,7 +6,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 
 | Lines | Routed | Components | Welds | Supports | Pipe, ft | Failures | Checks not at zero |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 18 | 18 | 287 | 249 | 146 | 3,396 | 0 | supports 2 |
+| 18 | 18 | 339 | 301 | 145 | 3,393 | 0 | none |
 
 ## Mains
 
@@ -48,28 +48,28 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | Component | Count |
 | --- | --- |
 | blind | 4 |
-| elbow | 67 |
+| elbow | 93 |
 | flange | 20 |
 | gasket | 28 |
 | olet | 14 |
-| pipe | 148 |
+| pipe | 174 |
 | tee | 2 |
 | valve | 4 |
 
 | Welds | Count |
 | --- | --- |
 | BW, field | 38 |
-| BW, shop | 197 |
+| BW, shop | 249 |
 | FW, shop | 14 |
 
 | Supports | Count |
 | --- | --- |
 | anchor | 2 |
 | guide | 8 |
-| hanger | 28 |
-| shoe | 92 |
-| stanchion | 11 |
-| trunnion | 5 |
+| hanger | 22 |
+| shoe | 89 |
+| stanchion | 16 |
+| trunnion | 8 |
 
 ## Checks
 
@@ -81,12 +81,8 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | valves | 0 |
 | lineClearance | 0 |
 | staticClearance | 0 |
-| supports | 2 |
-
-Not at zero, supports:
-
-- 8"-P150-P-27108: unsupported span 264 in > 240 on run from 2850,438,663
-- 6"-P150-P-27114: unsupported span 312 in > 240 on run from 7032,426,641
+| ownClearance | 0 |
+| supports | 0 |
 
 ## Notes
 
@@ -112,8 +108,9 @@ Not at zero, supports:
 - 6"-P150-P-27114: no valve at BL-1612-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)
 - 3"-P150-P-27116: no valve at BL-1810-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-PWY-7)
 - 2 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)
-- 14 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 2 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 4 pipe frames
-- 21 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
+- 3 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6"-P150-P-27111/S1 (hanger): its rod through solid/cladding/pipeway line; 6"-P150-P-27114/S2 (hanger): its rod through solid/cladding/pipeway line; 3"-P150-P-27115/S1 (hanger): its rod through solid/cladding/pipeway line
+- 8 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 2 stanchions on steel below, 1 stanchions and 2 support posts from the floor, and 1 pipe frames
+- 17 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
 
 Not in this stage (SW-CWM-8): the cooling tower plot's own piping; the mains end at its edge, each at a limit spool with its block valve and blind.
 
