@@ -5638,7 +5638,11 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   the tall member of every support set before it: where it overlaps any of them, the support
   is taken out. So is one whose base plate (a stanchion's or a trunnion's) lies more than
   0.05 in inside a solid of the plant rather than on it (amended the same day: stanchions
-  set at grade stood with their base plates up to 3.5 in inside an equipment pad). SW-RPI-17 then sets a support where the span that leaves is longer than the
+  set at grade stood with their base plates up to 3.5 in inside an equipment pad).
+  SW-RPI-17 sets no support this test would take out (amended the same day): a stanchion on
+  steel stands on the member's true top, from its own box, not on the generator's estimate
+  of it (the centre and seven tenths of the round it holds the member by, which for a 12 in
+  girder lies an inch inside it); and each support it would set is tested so first. SW-RPI-17 then sets a support where the span that leaves is longer than the
   line's span, clear by its own 1 in. Only supports move; no line or component does.
 - `SW-RPI-19` Valves that strike (added 2026-11-26). The generator turns a valve's stem to
   the first direction in which its box strikes nothing it has planned, and does not see the
