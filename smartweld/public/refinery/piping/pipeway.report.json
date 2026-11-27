@@ -20,14 +20,14 @@
   3
  ],
  "tierRoom": 96,
- "seconds": 2091,
+ "seconds": 1522,
  "stats": {
   "lines": 145,
   "routed": 119,
   "failed": 0,
-  "comps": 2720,
-  "welds": 2200,
-  "supports": 2304,
+  "comps": 2713,
+  "welds": 2193,
+  "supports": 2306,
   "penetrations": 0
  },
  "failures": [],
@@ -37,9 +37,7 @@
   "elbows": [],
   "valves": [],
   "lineClearance": [],
-  "staticClearance": [
-   "3\"-P150-P-10025 3\"-P150-P-10025/p25 (pipe) – rack-bent:120/beam/unit-19: -0.14 in"
-  ],
+  "staticClearance": [],
   "ownClearance": [],
   "supports": []
  },
@@ -4686,8 +4684,8 @@
    "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 18,
-   "welds": 17,
+   "components": 17,
+   "welds": 16,
    "supports": 2,
    "lengthFt": 73
   },
@@ -4761,7 +4759,7 @@
    "components": 18,
    "welds": 17,
    "supports": 3,
-   "lengthFt": 62
+   "lengthFt": 64
   },
   {
    "no": "4\"-P150-P-10608",
@@ -4812,8 +4810,8 @@
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 18,
-   "welds": 17,
+   "components": 14,
+   "welds": 13,
    "supports": 4,
    "lengthFt": 55
   },
@@ -5013,7 +5011,7 @@
    "components": 16,
    "welds": 15,
    "supports": 3,
-   "lengthFt": 65
+   "lengthFt": 63
   },
   {
    "no": "10\"-P150-P-10622",
@@ -5064,10 +5062,10 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 17,
-   "welds": 16,
-   "supports": 1,
-   "lengthFt": 61
+   "components": 19,
+   "welds": 18,
+   "supports": 2,
+   "lengthFt": 60
   },
   {
    "no": "8\"-P150-P-10625",
@@ -5154,10 +5152,10 @@
    "designP": 55,
    "designT": 280,
    "routed": true,
-   "components": 17,
-   "welds": 16,
+   "components": 13,
+   "welds": 12,
    "supports": 2,
-   "lengthFt": 51
+   "lengthFt": 48
   },
   {
    "no": "4\"-P300-P-10630",
@@ -5416,32 +5414,31 @@
   "components": {
    "blind": 26,
    "cap": 18,
-   "elbow": 505,
+   "elbow": 502,
    "flange": 155,
    "gasket": 207,
    "olet": 21,
-   "pipe": 1487,
+   "pipe": 1483,
    "reducer": 24,
    "tee": 44,
    "valve": 26
   },
   "welds": {
    "BW, field": 273,
-   "BW, shop": 1906,
+   "BW, shop": 1899,
    "FW, shop": 21
   },
   "supports": {
    "anchor": 54,
    "guide": 209,
-   "hanger": 219,
-   "shoe": 1945,
-   "stanchion": 1,
-   "trapeze": 1
+   "hanger": 223,
+   "shoe": 1944
   }
  },
  "notes": [
   "Carried on from the headers' caps with the pipeways of the areas beyond the bench, not from the main rack (SW-PWY-11): medium-pressure steam: the flare; low-pressure steam: the product tankage; condensate: the product tankage; fuel gas to users: the flare; service water: the flare.",
   "Not on the main pipeway, though their streams are: slop oil: the marine terminal; slop oil: the truck loading; slop oil: the wastewater treatment; slop oil: the flare. What an area beyond the bench sends to another such area, or takes from one, runs on those areas' own pipeways (SW-PWY-3).",
+  "3\"-P150-P-10025: routed again with rack-bent:120/beam/unit-19 held 3 in larger, having passed within 3 in of it (SW-RPI-29): 3\"-P150-P-10025 3\"-P150-P-10025/p25 (pipe) – rack-bent:120/beam/unit-19: -0.14 in",
   "3\"-P150-P-10043: the lane given it at z -108 on tier 2 was found shut by what an earlier run left; routed in the lane at z 138 (SW-RPI-7)",
   "3\"-P300-P-10027: the lane given it at z 108 on tier 2 was found shut by what an earlier run left; routed in the lane at z -114 (SW-RPI-7)",
   "3\"-P150-P-10001: no valve at BL-1103-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-RPI-14)",
@@ -5618,11 +5615,11 @@
   "8\"-P150-P-10405/p28 (40.2 ft, far end 12258,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "8\"-P150-P-10405/p31 (40.7 ft, far end 13668,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "4\"-P150-IA-10407/p32 (40.4 ft, far end 13219,402,42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "505 butt welds set square to their joints (SW-RPI-24)",
-  "3 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6\"-P150-P-10018/S39 (hanger): its rod through 6\"-P150-P-10006; 4\"-P150-P-10121/S1 (hanger): its rod through rack-bay:38/intermediate-beam; 4\"-P150-P-10629/S1 (trapeze): its part overlaps the support 8\"-P300-P-10603/S1",
-  "5 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 3 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 1 support posts from the floor, and 1 pipe frames",
-  "7 shoes and guides moved along their runs, off the welds of the steel they stand on and wholly onto one straight pipe of their line (SW-RPI-28): 3\"-P150-P-10111/S3 +1 in; 3\"-P150-P-10112/S3 +1 in; 10\"-P300-P-10013/S15 +4 in; 3\"-P150-P-10115/S4 -1 in; 3\"-P600-P-10610/S4 -1 in; 3\"-P1200-P-10614/S4 +1 in; 3\"-P300-P-10635/S3 +1 in",
-  "223 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "502 butt welds set square to their joints (SW-RPI-24)",
+  "2 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6\"-P150-P-10018/S39 (hanger): its rod through 6\"-P150-P-10006; 4\"-P150-P-10121/S1 (hanger): its rod through rack-bay:38/intermediate-beam",
+  "3 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 3 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 0 support posts from the floor, and 0 pipe frames",
+  "6 shoes and guides moved along their runs, off the welds of the steel they stand on and wholly onto one straight pipe of their line (SW-RPI-28): 3\"-P150-P-10111/S3 +1 in; 3\"-P150-P-10112/S3 +1 in; 10\"-P300-P-10013/S15 +4 in; 3\"-P150-P-10115/S4 -1 in; 3\"-P1200-P-10614/S4 +1 in; 3\"-P300-P-10635/S3 +1 in",
+  "225 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
   "118 shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).",
   "0 posts set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 5 hangers set where the generator's stepping along a run had stopped for want of that steel: 3\"-P150-P-10613 3 hangers; 3\"-P150-P-10615 2 hangers (SW-PWY-8).",
   "4\"-P150-P-10110/el7 (elbow) passes rack-bent:120/beam/unit-11 at 2.91 in from the round the check holds that member by and 6.40 in from its section (SW-RPI-13)",
@@ -5635,32 +5632,7 @@
   "6\"-P600-P-10034/p8 (pipe) passes rack-bent:120/beam/unit-16 at 2.38 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
   "6\"-P600-P-10034/p30 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
   "6\"-P150-P-10037/p8 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
-  "4\"-P150-P-10629/p13 (pipe) passes rack-bent:120/beam/unit-19 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)"
+  "4\"-P150-P-10629/p9 (pipe) passes rack-bent:120/beam/unit-19 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)"
  ],
- "frames": [
-  {
-   "line": "3\"-P150-P-10025",
-   "at": [
-    2310,
-    318,
-    -436.1966991411009
-   ],
-   "u": [
-    1,
-    0,
-    0
-   ],
-   "d": [
-    30,
-    42
-   ],
-   "floors": [
-    0,
-    0
-   ],
-   "top": 312.5,
-   "post": "W8x31",
-   "rad": 1.5
-  }
- ]
+ "frames": []
 }
