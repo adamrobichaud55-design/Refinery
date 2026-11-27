@@ -6351,6 +6351,12 @@ given; nothing was looked up (PROVENANCE P-94). The mains are piped by the gener
   frame is left out, and the next carries the span), its top 11 in above grade; one on each bent line of the main
   rack over the way's length (20 ft apart: the span of SW-PS-7 for a pipe of 3.5 in and
   more), from a bent line west of the west spools to 10 ft short of the tower's spools.
+  The way is the mains' own: the pipeway's supports (SW-RPI-17) stand clear of it, the strip
+  from the return's far side to the supply's, as wide as the sleepers and 6 in more each
+  side, from grade to 6 ft, being a solid while they are set (amended 2026-11-27: a pipe
+  frame the pipeway's correction set stood with a post 20 in from the supply's lane, and the
+  supply, routed after, was laid 6 in off its lane and came back at its west end in a loop
+  through itself, the loop the owner had called impossible).
   Between the corridor and the tower's plot, off the way, the mains cross the open ground
   at 11 ft on posts and come down onto the way where it ends: away from a rack the
   generator keeps every line 8 ft clear of the ground but within 4 ft of its own ends

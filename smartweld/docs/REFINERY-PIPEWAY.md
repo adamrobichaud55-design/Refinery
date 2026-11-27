@@ -6,7 +6,7 @@ The main pipeway joins the units (DESIGN_BASIS.md §80): a rack 1160 ft long and
 
 | Lines | Routed | Components | Welds | Supports | Pipe, ft | Failures | Checks not at zero |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 145 | 145 | 2,432 | 2,119 | 2,431 | 38,327 | 0 | none |
+| 145 | 145 | 2,442 | 2,129 | 2,430 | 38,333 | 0 | none |
 
 145 lines: 45 streams' lines; 22 branches to the further parties of streams that have more than two; 9 utility headers and the 43 branches from them to their parties (SW-PWY-11, SW-PWY-12); and 26 valves with their blinds beyond the limit spools (SW-PWY-4). The lines that run the rack are on 3 of its tiers (tier 1 25 lines, tier 2 19 lines, tier 3 10 lines), each in a lane given it beforehand, no tier loaded beyond 132 in of lanes at any section; the middle of the top tier is the utility headers'. The generator was run 46 times: once for each stream's line that runs the rack, with its branches, and once for the rest, the headers and their branches among it.
 
@@ -14,28 +14,29 @@ The main pipeway joins the units (DESIGN_BASIS.md §80): a rack 1160 ft long and
 | --- | --- |
 | blind | 26 |
 | cap | 18 |
-| elbow | 461 |
+| elbow | 464 |
 | flange | 155 |
 | gasket | 207 |
 | olet | 21 |
-| pipe | 1450 |
+| pipe | 1457 |
 | reducer | 24 |
 | tee | 44 |
 | valve | 26 |
 
 | Welds | Count |
 | --- | --- |
-| BW, field | 274 |
-| BW, shop | 1824 |
+| BW, field | 275 |
+| BW, shop | 1833 |
 | FW, shop | 21 |
 
 | Supports | Count |
 | --- | --- |
 | anchor | 54 |
 | guide | 209 |
-| hanger | 220 |
-| shoe | 1944 |
-| stanchion | 4 |
+| hanger | 218 |
+| shoe | 1942 |
+| stanchion | 5 |
+| trapeze | 2 |
 
 ## Checks
 
@@ -47,6 +48,7 @@ The main pipeway joins the units (DESIGN_BASIS.md §80): a rack 1160 ft long and
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | 0 |
 | spans within SW-PS-7, a support at every rack beam crossed | 0 |
 
 ## Streams
@@ -107,7 +109,7 @@ On the top tier, each from a cap just inside the west limit bay to one just insi
 
 | Header | Line | Design | Lane, z in | Unit 19's line, in | Largest stretch, lb/h (size for it) | Largest unit header, in | Made, lb/h | Used, lb/h | Parties |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| low-pressure steam | 14"-P150-P-10401 | 80 psi, 370 °F | 0 | 6 | 45,000 (12 in) | 14 | 110,710 | 103,321 | unit 19 sends, 6 in (10627); unit 19's header takes, 10 in (10621); unit 14's header sends, 10 in (10622); unit 11's header sends, 8 in (10625); unit 12's header takes, 4 in (10632); unit 18's header takes, 10 in (10623); unit 17's header sends, 14 in (10619) |
+| low-pressure steam | 14"-P150-P-10401 | 80 psi, 370 °F | 0 | 6 | 45,000 (12 in) | 14 | 110,710 | 103,321 | unit 19's header takes, 10 in (10621); unit 19 sends, 6 in (10627); unit 14's header sends, 10 in (10622); unit 11's header sends, 8 in (10625); unit 12's header takes, 4 in (10632); unit 18's header takes, 10 in (10623); unit 17's header sends, 14 in (10619) |
 | high-pressure steam | 10"-P1200-LS-10402 | 685 psi, 700 °F | -18 | 10 | 36,663 (8 in) | 8 | 68,136 | 114,459 | unit 13's header takes, 4 in (10606); unit 19 sends, 10 in (10620); unit 14's header takes, 8 in (10604); unit 18's header sends, 4 in (10609); unit 17's header takes, 8 in (10626) |
 | medium-pressure steam | 10"-P300-LS-10403 | 185 psi, 450 °F | 18 | 8 | 28,802 (8 in) | 10 | 72,331 | 86,877 | unit 13's header takes, 4 in (10628); unit 19 sends, 8 in (10603); unit 15's header takes, 3 in (10635); unit 16's header takes, 4 in (10631); unit 12's header sends, 6 in (10605); unit 17's header sends, 10 in (10601) |
 | boiler feed water | 8"-P1200-SC-10404 | 1035 psi, 300 °F | -30 | 8 | 161,177 (6 in) | 4 | 0 | 161,177 | unit 19 sends, 8 in (10624); unit 14's header takes, 3 in reduced to 2 in at its spool (10614); unit 11's header takes, 3 in reduced to 2 in at its spool (10638); unit 12's header takes, 3 in reduced to 2 in at its spool (10641); unit 18's header takes, 3 in reduced to 2 in at its spool (10616); unit 17's header takes, 4 in (10633) |
@@ -374,23 +376,26 @@ At each unit's limit: two posts in line with the columns of the unit's rack and 
 - 6"-P150-P-10029/p7 (41.0 ft, far end 13352,252,114): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
 - 3"-P150-P-10035/p27 (40.1 ft, far end 13843,246,-144): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
 - 6"-P150-P-10038/p25 (40.4 ft, far end 13844,252,-6): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 3"-P150-P-10043/p40 (40.9 ft, far end 13843,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 3"-P150-P-10043/p16 (40.1 ft, far end 3380,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 3"-P150-P-10043/p18 (40.1 ft, far end 4336,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 3"-P150-P-10043/p19 (40.1 ft, far end 4817,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 3"-P150-P-10043/p21 (40.1 ft, far end 5744,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 3"-P150-P-10043/p22 (40.1 ft, far end 6225,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 3"-P150-P-10043/p38 (40.7 ft, far end 13843,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
 - 10"-P1200-LS-10402/p33 (40.1 ft, far end 13217,408,-18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
 - 10"-P300-LS-10403/p34 (40.3 ft, far end 13668,408,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 8"-P1200-SC-10404/p26 (40.1 ft, far end 11297,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 8"-P1200-SC-10404/p27 (40.1 ft, far end 11778,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 8"-P1200-SC-10404/p28 (40.1 ft, far end 12260,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 8"-P1200-SC-10404/p31 (40.6 ft, far end 13668,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 8"-P150-P-10405/p27 (40.0 ft, far end 11776,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 8"-P150-P-10405/p28 (40.0 ft, far end 12257,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 8"-P150-P-10405/p29 (40.0 ft, far end 12737,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 8"-P150-P-10405/p31 (40.5 ft, far end 13668,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 8"-P1200-SC-10404/p31 (40.5 ft, far end 13668,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 8"-P150-P-10405/p25 (40.2 ft, far end 10818,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 8"-P150-P-10405/p27 (40.2 ft, far end 11776,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 8"-P150-P-10405/p28 (40.2 ft, far end 12258,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
+- 8"-P150-P-10405/p31 (40.7 ft, far end 13668,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
 - 4"-P150-IA-10407/p32 (40.4 ft, far end 13219,402,42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3"-P150-P-10104/S3 (hanger): its rod through 10"-P300-P-10013; 3"-P150-P-10105/S3 (hanger): its rod through 10"-P300-P-10013; 6"-P150-P-10018/S39 (hanger): its rod through 6"-P150-P-10006; 3"-P300-P-10039/S3 (hanger): its rod through 6"-P150-P-10017; 3"-P150-P-10611/S2 (trapeze): its post through 3"-P1200-P-10641; 3"-P150-P-10611/S3 (trapeze): its post through 3"-P1200-P-10641
-- 6 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 1 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 2 pipe frames
-- 160 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
+- 508 butt welds set square to their joints (SW-RPI-24)
+- 6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3"-P150-P-10104/S3 (hanger): its rod through 10"-P300-P-10013; 3"-P150-P-10105/S3 (hanger): its rod through 10"-P300-P-10013; 6"-P150-P-10018/S39 (hanger): its rod through 6"-P150-P-10006; 3"-P300-P-10039/S3 (hanger): its rod through 6"-P150-P-10017; 3"-P1200-P-10641/S1 (hanger): its part overlaps the support 3"-P150-P-10611/S2; 3"-P1200-P-10641/S2 (hanger): its part overlaps the support 3"-P150-P-10611/S3
+- 6 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 1 pipe frames
+- 223 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
 - 115 shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).
-- 1 post set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 8 hangers set where the generator's stepping along a run had stopped for want of that steel: 3"-P1200-P-10641 1 post; 3"-P150-P-10613 3 hangers; 3"-P150-P-10615 3 hangers; 3"-P150-P-10643 1 hanger; 3"-P150-P-10025 1 hanger (SW-PWY-8).
+- 2 posts set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 7 hangers set where the generator's stepping along a run had stopped for want of that steel: 3"-P1200-P-10641 1 post; 3"-P150-P-10613 3 hangers; 3"-P150-P-10615 3 hangers; 3"-P150-P-10643 1 hanger; 3"-P150-P-10025 1 post (SW-PWY-8).
 - 4"-P150-P-10110/p8 (pipe) passes rack-bent:120/beam/unit-11 at 0.30 in from the round the check holds that member by and 6.40 in from its section (SW-RPI-13)
 - 3"-P150-P-10111/p6 (pipe) passes rack-bent:120/beam/unit-15 at 1.87 in from the round the check holds that member by and 7.30 in from its section (SW-RPI-13)
 - 3"-P150-P-10115/p5 (pipe) passes rack-bent:120/beam/unit-17 at 0.80 in from the round the check holds that member by and 6.90 in from its section (SW-RPI-13)
@@ -400,7 +405,6 @@ At each unit's limit: two posts in line with the columns of the unit's rack and 
 - 6"-P600-P-10034/p8 (pipe) passes rack-bent:120/beam/unit-16 at 2.38 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)
 - 6"-P600-P-10034/p30 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)
 - 6"-P150-P-10037/p8 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)
-- 4"-P150-P-10629/p11 (pipe) passes rack-bent:120/beam/unit-19 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)
 
 ## Lines
 
@@ -462,7 +466,7 @@ At each unit's limit: two posts in line with the columns of the unit's rack and 
 | 3"-P600-P-10023 | main | reformer net gas | hydrogen-rich gas | BL-1303-P | BL-1502-P | 395 psi, 160 °F | 1 | 23 | 20 | 42 | 418 |
 | 3"-P600-P-10120 | branch | reformer net gas | hydrogen-rich gas | BL-1403-P | tap 3"-P600-P-10023 | 395 psi, 160 °F | — | 5 | 4 | 3 | 29 |
 | 3"-P600-P-10024 | main | hydrogen | hydrogen-rich gas | BL-1404-P | BL-1605-P | 545 psi, 160 °F | 2 | 29 | 26 | 40 | 438 |
-| 3"-P150-P-10025 | main | surplus hydrogen | hydrogen-rich gas | BL-1405-P | BL-1916-P | 85 psi, 160 °F | 1 | 22 | 19 | 11 | 138 |
+| 3"-P150-P-10025 | main | surplus hydrogen | hydrogen-rich gas | BL-1405-P | BL-1916-P | 85 psi, 160 °F | 1 | 22 | 19 | 11 | 142 |
 | 3"-P150-P-10026 | main | stabiliser gas | fuel gas | BL-1406-P | BL-1917-P | 95 psi, 160 °F | 2 | 18 | 15 | 10 | 130 |
 | 3"-P300-P-10027 | main | reformer liquefied gas | liquefied petroleum gas | BL-1407-P | BL-1714-P | 275 psi, 160 °F | 2 | 37 | 34 | 62 | 664 |
 | 4"-P150-P-10028 | main | reformate | reformate | BL-1408-P | PL-1013-P | 75 psi, 150 °F | 2 | 36 | 33 | 48 | 962 |
@@ -482,7 +486,7 @@ At each unit's limit: two posts in line with the columns of the unit's rack and 
 | 3"-P150-P-10817 | limit | slurry oil | slurry oil | PL-1017-U | blind | 85 psi, 250 °F | — | 4 | 0 | 0 | 1 |
 | 4"-P150-P-10036 | main | light cycle oil to fuel oil | diesel | BL-1705-P | PL-1018-P | 85 psi, 190 °F | 1 | 22 | 19 | 18 | 394 |
 | 3"-P150-P-10818 | limit | light cycle oil to fuel oil | diesel | PL-1018-U | blind | 85 psi, 190 °F | — | 4 | 0 | 0 | 1 |
-| 6"-P150-P-10037 | main | fuel gas | fuel gas | BL-1712-P | BL-1915-P | 95 psi, 165 °F | 1 | 28 | 25 | 33 | 656 |
+| 6"-P150-P-10037 | main | fuel gas | fuel gas | BL-1712-P | BL-1915-P | 95 psi, 165 °F | 1 | 28 | 25 | 33 | 655 |
 | 6"-P150-P-10038 | main | cracked gasoline | gasoline | BL-1713-P | PL-1019-P | 75 psi, 150 °F | 1 | 24 | 21 | 20 | 400 |
 | 6"-P150-P-10819 | limit | cracked gasoline | gasoline | PL-1019-U | blind | 75 psi, 150 °F | — | 4 | 0 | 0 | 1 |
 | 3"-P300-P-10039 | main | three-carbon liquefied gas | liquefied petroleum gas | BL-1715-P | PL-1020-P | 265 psi, 160 °F | 2 | 19 | 16 | 40 | 428 |
@@ -491,9 +495,9 @@ At each unit's limit: two posts in line with the columns of the unit's rack and 
 | 3"-P300-P-10821 | limit | four-carbon liquefied gas | liquefied petroleum gas | PL-1021-U | blind | 225 psi, 150 °F | — | 4 | 0 | 0 | 1 |
 | 3"-P150-P-10041 | main | stripped water to wastewater | oily water | BL-1806-P | PL-1022-P | 55 psi, 170 °F | 2 | 22 | 19 | 40 | 428 |
 | 3"-P150-P-10822 | limit | stripped water to wastewater | oily water | PL-1022-U | blind | 55 psi, 170 °F | — | 4 | 0 | 0 | 1 |
-| 6"-P300-P-10042 | main | fire water make-up | raw and service water | BL-1904-P | PL-1023-P | 160 psi, 150 °F | 1 | 17 | 14 | 12 | 235 |
+| 6"-P300-P-10042 | main | fire water make-up | raw and service water | BL-1904-P | PL-1023-P | 160 psi, 150 °F | 1 | 17 | 14 | 11 | 235 |
 | 6"-P300-P-10823 | limit | fire water make-up | raw and service water | PL-1023-U | blind | 160 psi, 150 °F | — | 4 | 0 | 0 | 1 |
-| 3"-P150-P-10043 | main | boiler blowdown | oily water | BL-1910-P | PL-1024-P | 55 psi, 265 °F | 2 | 39 | 36 | 97 | 1000 |
+| 3"-P150-P-10043 | main | boiler blowdown | oily water | BL-1910-P | PL-1024-P | 55 psi, 265 °F | 2 | 42 | 39 | 96 | 995 |
 | 3"-P150-P-10824 | limit | boiler blowdown | oily water | PL-1024-U | blind | 55 psi, 265 °F | — | 4 | 0 | 0 | 1 |
 | 8"-P150-P-10044 | main | raw water | raw and service water | PL-1025-P | BL-1901-P | 65 psi, 150 °F | 1 | 14 | 11 | 12 | 226 |
 | 8"-P150-P-10825 | limit | raw water | raw and service water | PL-1025-U | blind | 65 psi, 150 °F | — | 4 | 0 | 0 | 2 |
@@ -502,22 +506,22 @@ At each unit's limit: two posts in line with the columns of the unit's rack and 
 | 14"-P150-P-10401 | header | low-pressure steam | steam, 50 psi | cap | cap | 80 psi, 370 °F | 3 | 39 | 38 | 55 | 1118 |
 | 10"-P1200-LS-10402 | header | high-pressure steam | steam, 600 psi | cap | cap | 685 psi, 700 °F | 3 | 36 | 35 | 55 | 1118 |
 | 10"-P300-LS-10403 | header | medium-pressure steam | steam, 150 psi | cap | cap | 185 psi, 450 °F | 3 | 36 | 35 | 55 | 1118 |
-| 8"-P1200-SC-10404 | header | boiler feed water | boiler feed water | cap | cap | 1035 psi, 300 °F | 3 | 36 | 35 | 55 | 1118 |
+| 8"-P1200-SC-10404 | header | boiler feed water | boiler feed water | cap | cap | 1035 psi, 300 °F | 3 | 33 | 32 | 55 | 1118 |
 | 8"-P150-P-10405 | header | fuel gas to users | fuel gas | cap | cap | 85 psi, 150 °F | 3 | 36 | 35 | 55 | 1118 |
 | 4"-P150-SC-10406 | header | condensate | steam condensate | cap | cap | 55 psi, 280 °F | 3 | 38 | 37 | 55 | 1118 |
 | 4"-P150-IA-10407 | header | instrument air | instrument air | cap | cap | 130 psi, 150 °F | 3 | 35 | 34 | 55 | 1118 |
 | 4"-P300-W-10408 | header | service water | raw and service water | cap | cap | 160 psi, 150 °F | 3 | 33 | 32 | 55 | 1118 |
 | 3"-P600-P-10409 | header | caustic | caustic solution | cap | cap | 385 psi, 150 °F | 3 | 34 | 33 | 111 | 1118 |
 | 10"-P300-P-10601 | branch | medium-pressure steam | steam, 150 psi | BL-1723-P | tap 10"-P300-LS-10403 | 185 psi, 450 °F | — | 10 | 9 | 3 | 62 |
-| 8"-P150-P-10602 | branch | fuel gas to users | fuel gas | BL-1919-P | tap 8"-P150-P-10405 | 85 psi, 150 °F | — | 17 | 16 | 3 | 71 |
-| 8"-P300-P-10603 | branch | medium-pressure steam | steam, 150 psi | BL-1908-P | tap 10"-P300-LS-10403 | 185 psi, 450 °F | — | 17 | 16 | 2 | 72 |
+| 8"-P150-P-10602 | branch | fuel gas to users | fuel gas | BL-1919-P | tap 8"-P150-P-10405 | 85 psi, 150 °F | — | 13 | 12 | 3 | 66 |
+| 8"-P300-P-10603 | branch | medium-pressure steam | steam, 150 psi | BL-1908-P | tap 10"-P300-LS-10403 | 185 psi, 450 °F | — | 17 | 16 | 2 | 73 |
 | 8"-P1200-P-10604 | branch | high-pressure steam | steam, 600 psi | tap 10"-P1200-LS-10402 | BL-1409-P | 685 psi, 700 °F | — | 10 | 9 | 3 | 62 |
 | 6"-P300-P-10605 | branch | medium-pressure steam | steam, 150 psi | BL-1209-P | tap 10"-P300-LS-10403 | 185 psi, 450 °F | — | 10 | 9 | 3 | 63 |
 | 4"-P1200-P-10606 | branch | high-pressure steam | steam, 600 psi | tap 10"-P1200-LS-10402 | BL-1312-P | 685 psi, 700 °F | — | 11 | 10 | 3 | 56 |
-| 4"-P150-P-10607 | branch | instrument air | instrument air | BL-1912-P | tap 4"-P150-IA-10407 | 130 psi, 150 °F | — | 17 | 16 | 2 | 64 |
+| 4"-P150-P-10607 | branch | instrument air | instrument air | BL-1912-P | tap 4"-P150-IA-10407 | 130 psi, 150 °F | — | 18 | 17 | 3 | 62 |
 | 4"-P150-P-10608 | branch | fuel gas to users | fuel gas | tap 8"-P150-P-10405 | BL-1119-P | 85 psi, 150 °F | — | 11 | 10 | 3 | 55 |
 | 4"-P1200-P-10609 | branch | high-pressure steam | steam, 600 psi | BL-1812-P | tap 10"-P1200-LS-10402 | 685 psi, 700 °F | — | 11 | 10 | 3 | 56 |
-| 3"-P600-P-10610 | branch | caustic | caustic solution | BL-1914-P | tap 3"-P600-P-10409 | 385 psi, 150 °F | — | 17 | 16 | 3 | 59 |
+| 3"-P600-P-10610 | branch | caustic | caustic solution | BL-1914-P | tap 3"-P600-P-10409 | 385 psi, 150 °F | — | 18 | 17 | 4 | 55 |
 | 3"-P150-P-10611 | branch | fuel gas to users | fuel gas | tap 8"-P150-P-10405 | BL-1214-P | 85 psi, 150 °F | — | 17 | 16 | 4 | 57 |
 | 3"-P150-P-10612 | branch | condensate | steam condensate | BL-1808-P | tap 4"-P150-SC-10406 | 55 psi, 280 °F | — | 14 | 13 | 4 | 55 |
 | 3"-P150-P-10613 | branch | condensate | steam condensate | BL-1313-P | tap 4"-P150-SC-10406 | 55 psi, 280 °F | — | 11 | 10 | 4 | 60 |
@@ -527,17 +531,17 @@ At each unit's limit: two posts in line with the columns of the unit's rack and 
 | 3"-P150-P-10617 | branch | instrument air | instrument air | tap 4"-P150-IA-10407 | BL-1718-P | 130 psi, 150 °F | — | 11 | 10 | 4 | 59 |
 | 3"-P600-P-10618 | branch | caustic | caustic solution | tap 3"-P600-P-10409 | BL-1722-P | 385 psi, 150 °F | — | 17 | 16 | 3 | 61 |
 | 14"-P150-P-10619 | branch | low-pressure steam | steam, 50 psi | BL-1725-P | tap 14"-P150-P-10401 | 80 psi, 370 °F | — | 19 | 18 | 1 | 63 |
-| 10"-P1200-P-10620 | branch | high-pressure steam | steam, 600 psi | BL-1907-P | tap 10"-P1200-LS-10402 | 685 psi, 700 °F | — | 19 | 18 | 1 | 62 |
-| 10"-P150-P-10621 | branch | low-pressure steam | steam, 50 psi | tap 14"-P150-P-10401 | BL-1921-P | 80 psi, 370 °F | — | 16 | 15 | 3 | 63 |
+| 10"-P1200-P-10620 | branch | high-pressure steam | steam, 600 psi | BL-1907-P | tap 10"-P1200-LS-10402 | 685 psi, 700 °F | — | 19 | 18 | 2 | 62 |
+| 10"-P150-P-10621 | branch | low-pressure steam | steam, 50 psi | tap 14"-P150-P-10401 | BL-1921-P | 80 psi, 370 °F | — | 16 | 15 | 3 | 67 |
 | 10"-P150-P-10622 | branch | low-pressure steam | steam, 50 psi | BL-1410-P | tap 14"-P150-P-10401 | 80 psi, 370 °F | — | 9 | 8 | 3 | 46 |
 | 10"-P150-P-10623 | branch | low-pressure steam | steam, 50 psi | tap 14"-P150-P-10401 | BL-1807-P | 80 psi, 370 °F | — | 10 | 9 | 3 | 53 |
-| 8"-P1200-P-10624 | branch | boiler feed water | boiler feed water | BL-1906-P | tap 8"-P1200-SC-10404 | 1035 psi, 300 °F | — | 13 | 12 | 2 | 55 |
+| 8"-P1200-P-10624 | branch | boiler feed water | boiler feed water | BL-1906-P | tap 8"-P1200-SC-10404 | 1035 psi, 300 °F | — | 17 | 16 | 1 | 61 |
 | 8"-P150-P-10625 | branch | low-pressure steam | steam, 50 psi | BL-1118-P | tap 14"-P150-P-10401 | 80 psi, 370 °F | — | 19 | 18 | 3 | 58 |
 | 8"-P1200-P-10626 | branch | high-pressure steam | steam, 600 psi | tap 10"-P1200-LS-10402 | BL-1720-P | 685 psi, 700 °F | — | 9 | 8 | 3 | 44 |
-| 6"-P150-P-10627 | branch | low-pressure steam | steam, 50 psi | BL-1909-P | tap 14"-P150-P-10401 | 80 psi, 370 °F | — | 14 | 13 | 2 | 58 |
+| 6"-P150-P-10627 | branch | low-pressure steam | steam, 50 psi | BL-1909-P | tap 14"-P150-P-10401 | 80 psi, 370 °F | — | 20 | 19 | 2 | 66 |
 | 4"-P300-P-10628 | branch | medium-pressure steam | steam, 150 psi | tap 10"-P300-LS-10403 | BL-1314-P | 185 psi, 450 °F | — | 17 | 16 | 3 | 55 |
-| 4"-P150-P-10629 | branch | condensate | steam condensate | tap 4"-P150-SC-10406 | BL-1905-P | 55 psi, 280 °F | — | 17 | 16 | 2 | 51 |
-| 4"-P300-P-10630 | branch | service water | raw and service water | BL-1902-P | tap 4"-P300-W-10408 | 160 psi, 150 °F | — | 17 | 16 | 1 | 50 |
+| 4"-P150-P-10629 | branch | condensate | steam condensate | tap 4"-P150-SC-10406 | BL-1905-P | 55 psi, 280 °F | — | 19 | 18 | 0 | 51 |
+| 4"-P300-P-10630 | branch | service water | raw and service water | BL-1902-P | tap 4"-P300-W-10408 | 160 psi, 150 °F | — | 17 | 16 | 2 | 50 |
 | 4"-P300-P-10631 | branch | medium-pressure steam | steam, 150 psi | tap 10"-P300-LS-10403 | BL-1613-P | 185 psi, 450 °F | — | 19 | 18 | 2 | 55 |
 | 4"-P150-P-10632 | branch | low-pressure steam | steam, 50 psi | tap 14"-P150-P-10401 | BL-1213-P | 80 psi, 370 °F | — | 16 | 15 | 2 | 57 |
 | 4"-P1200-P-10633 | branch | boiler feed water | boiler feed water | tap 8"-P1200-SC-10404 | BL-1719-P | 1035 psi, 300 °F | — | 11 | 10 | 3 | 51 |

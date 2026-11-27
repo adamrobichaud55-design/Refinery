@@ -20,14 +20,14 @@
   3
  ],
  "tierRoom": 132,
- "seconds": 1372,
+ "seconds": 1434,
  "stats": {
   "lines": 145,
   "routed": 119,
   "failed": 0,
-  "comps": 2639,
-  "welds": 2119,
-  "supports": 2307,
+  "comps": 2649,
+  "welds": 2129,
+  "supports": 2306,
   "penetrations": 0
  },
  "failures": [],
@@ -38,6 +38,7 @@
   "valves": [],
   "lineClearance": [],
   "staticClearance": [],
+  "ownClearance": [],
   "supports": []
  },
  "limits": [
@@ -2027,15 +2028,6 @@
    "used": 103321.27472527474,
    "parties": [
     {
-     "party": "unit 19",
-     "unit": 19,
-     "sends": true,
-     "nozzle": "BL-1909-P",
-     "NPS": 6,
-     "spool": 6,
-     "branch": "6\"-P150-P-10627"
-    },
-    {
      "party": "unit 19's header",
      "unit": 19,
      "sends": false,
@@ -2043,6 +2035,15 @@
      "NPS": 10,
      "spool": 10,
      "branch": "10\"-P150-P-10621"
+    },
+    {
+     "party": "unit 19",
+     "unit": 19,
+     "sends": true,
+     "nozzle": "BL-1909-P",
+     "NPS": 6,
+     "spool": 6,
+     "branch": "6\"-P150-P-10627"
     },
     {
      "party": "unit 14's header",
@@ -3762,7 +3763,7 @@
    "components": 22,
    "welds": 19,
    "supports": 11,
-   "lengthFt": 138,
+   "lengthFt": 142,
    "tier": 1,
    "lane": -48
   },
@@ -4146,7 +4147,7 @@
    "components": 28,
    "welds": 25,
    "supports": 33,
-   "lengthFt": 656,
+   "lengthFt": 655,
    "tier": 1,
    "lane": -114
   },
@@ -4317,7 +4318,7 @@
    "routed": true,
    "components": 17,
    "welds": 14,
-   "supports": 12,
+   "supports": 11,
    "lengthFt": 235,
    "tier": 1,
    "lane": -30
@@ -4353,10 +4354,10 @@
    "designP": 55,
    "designT": 265,
    "routed": true,
-   "components": 39,
-   "welds": 36,
-   "supports": 97,
-   "lengthFt": 1000,
+   "components": 42,
+   "welds": 39,
+   "supports": 96,
+   "lengthFt": 995,
    "tier": 2,
    "lane": -48
   },
@@ -4527,8 +4528,8 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 36,
-   "welds": 35,
+   "components": 33,
+   "welds": 32,
    "supports": 55,
    "lengthFt": 1118,
    "tier": 3,
@@ -4665,10 +4666,10 @@
    "designP": 85,
    "designT": 150,
    "routed": true,
-   "components": 17,
-   "welds": 16,
+   "components": 13,
+   "welds": 12,
    "supports": 3,
-   "lengthFt": 71
+   "lengthFt": 66
   },
   {
    "no": "8\"-P300-P-10603",
@@ -4686,7 +4687,7 @@
    "components": 17,
    "welds": 16,
    "supports": 2,
-   "lengthFt": 72
+   "lengthFt": 73
   },
   {
    "no": "8\"-P1200-P-10604",
@@ -4755,10 +4756,10 @@
    "designP": 130,
    "designT": 150,
    "routed": true,
-   "components": 17,
-   "welds": 16,
-   "supports": 2,
-   "lengthFt": 64
+   "components": 18,
+   "welds": 17,
+   "supports": 3,
+   "lengthFt": 62
   },
   {
    "no": "4\"-P150-P-10608",
@@ -4809,10 +4810,10 @@
    "designP": 385,
    "designT": 150,
    "routed": true,
-   "components": 17,
-   "welds": 16,
-   "supports": 3,
-   "lengthFt": 59
+   "components": 18,
+   "welds": 17,
+   "supports": 4,
+   "lengthFt": 55
   },
   {
    "no": "3\"-P150-P-10611",
@@ -4991,7 +4992,7 @@
    "routed": true,
    "components": 19,
    "welds": 18,
-   "supports": 1,
+   "supports": 2,
    "lengthFt": 62
   },
   {
@@ -5010,7 +5011,7 @@
    "components": 16,
    "welds": 15,
    "supports": 3,
-   "lengthFt": 63
+   "lengthFt": 67
   },
   {
    "no": "10\"-P150-P-10622",
@@ -5061,10 +5062,10 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 13,
-   "welds": 12,
-   "supports": 2,
-   "lengthFt": 55
+   "components": 17,
+   "welds": 16,
+   "supports": 1,
+   "lengthFt": 61
   },
   {
    "no": "8\"-P150-P-10625",
@@ -5115,10 +5116,10 @@
    "designP": 80,
    "designT": 370,
    "routed": true,
-   "components": 14,
-   "welds": 13,
+   "components": 20,
+   "welds": 19,
    "supports": 2,
-   "lengthFt": 58
+   "lengthFt": 66
   },
   {
    "no": "4\"-P300-P-10628",
@@ -5151,9 +5152,9 @@
    "designP": 55,
    "designT": 280,
    "routed": true,
-   "components": 17,
-   "welds": 16,
-   "supports": 2,
+   "components": 19,
+   "welds": 18,
+   "supports": 0,
    "lengthFt": 51
   },
   {
@@ -5171,7 +5172,7 @@
    "routed": true,
    "components": 17,
    "welds": 16,
-   "supports": 1,
+   "supports": 2,
    "lengthFt": 50
   },
   {
@@ -5413,26 +5414,27 @@
   "components": {
    "blind": 26,
    "cap": 18,
-   "elbow": 461,
+   "elbow": 464,
    "flange": 155,
    "gasket": 207,
    "olet": 21,
-   "pipe": 1450,
+   "pipe": 1457,
    "reducer": 24,
    "tee": 44,
    "valve": 26
   },
   "welds": {
-   "BW, field": 274,
-   "BW, shop": 1824,
+   "BW, field": 275,
+   "BW, shop": 1833,
    "FW, shop": 21
   },
   "supports": {
    "anchor": 54,
    "guide": 209,
-   "hanger": 220,
-   "shoe": 1944,
-   "stanchion": 4
+   "hanger": 218,
+   "shoe": 1942,
+   "stanchion": 5,
+   "trapeze": 2
   }
  },
  "notes": [
@@ -5603,23 +5605,26 @@
   "6\"-P150-P-10029/p7 (41.0 ft, far end 13352,252,114): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "3\"-P150-P-10035/p27 (40.1 ft, far end 13843,246,-144): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "6\"-P150-P-10038/p25 (40.4 ft, far end 13844,252,-6): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "3\"-P150-P-10043/p40 (40.9 ft, far end 13843,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p16 (40.1 ft, far end 3380,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p18 (40.1 ft, far end 4336,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p19 (40.1 ft, far end 4817,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p21 (40.1 ft, far end 5744,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p22 (40.1 ft, far end 6225,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "3\"-P150-P-10043/p38 (40.7 ft, far end 13843,318,-48): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "10\"-P1200-LS-10402/p33 (40.1 ft, far end 13217,408,-18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "10\"-P300-LS-10403/p34 (40.3 ft, far end 13668,408,18): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "8\"-P1200-SC-10404/p26 (40.1 ft, far end 11297,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "8\"-P1200-SC-10404/p27 (40.1 ft, far end 11778,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "8\"-P1200-SC-10404/p28 (40.1 ft, far end 12260,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "8\"-P1200-SC-10404/p31 (40.6 ft, far end 13668,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "8\"-P150-P-10405/p27 (40.0 ft, far end 11776,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "8\"-P150-P-10405/p28 (40.0 ft, far end 12257,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "8\"-P150-P-10405/p29 (40.0 ft, far end 12737,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "8\"-P150-P-10405/p31 (40.5 ft, far end 13668,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "8\"-P1200-SC-10404/p31 (40.5 ft, far end 13668,408,-30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "8\"-P150-P-10405/p25 (40.2 ft, far end 10818,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "8\"-P150-P-10405/p27 (40.2 ft, far end 11776,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "8\"-P150-P-10405/p28 (40.2 ft, far end 12258,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
+  "8\"-P150-P-10405/p31 (40.7 ft, far end 13668,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "4\"-P150-IA-10407/p32 (40.4 ft, far end 13219,402,42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
-  "6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-10104/S3 (hanger): its rod through 10\"-P300-P-10013; 3\"-P150-P-10105/S3 (hanger): its rod through 10\"-P300-P-10013; 6\"-P150-P-10018/S39 (hanger): its rod through 6\"-P150-P-10006; 3\"-P300-P-10039/S3 (hanger): its rod through 6\"-P150-P-10017; 3\"-P150-P-10611/S2 (trapeze): its post through 3\"-P1200-P-10641; 3\"-P150-P-10611/S3 (trapeze): its post through 3\"-P1200-P-10641",
-  "6 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 1 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 2 pipe frames",
-  "160 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "508 butt welds set square to their joints (SW-RPI-24)",
+  "6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-10104/S3 (hanger): its rod through 10\"-P300-P-10013; 3\"-P150-P-10105/S3 (hanger): its rod through 10\"-P300-P-10013; 6\"-P150-P-10018/S39 (hanger): its rod through 6\"-P150-P-10006; 3\"-P300-P-10039/S3 (hanger): its rod through 6\"-P150-P-10017; 3\"-P1200-P-10641/S1 (hanger): its part overlaps the support 3\"-P150-P-10611/S2; 3\"-P1200-P-10641/S2 (hanger): its part overlaps the support 3\"-P150-P-10611/S3",
+  "6 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 1 pipe frames",
+  "223 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
   "115 shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).",
-  "1 post set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 8 hangers set where the generator's stepping along a run had stopped for want of that steel: 3\"-P1200-P-10641 1 post; 3\"-P150-P-10613 3 hangers; 3\"-P150-P-10615 3 hangers; 3\"-P150-P-10643 1 hanger; 3\"-P150-P-10025 1 hanger (SW-PWY-8).",
+  "2 posts set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 7 hangers set where the generator's stepping along a run had stopped for want of that steel: 3\"-P1200-P-10641 1 post; 3\"-P150-P-10613 3 hangers; 3\"-P150-P-10615 3 hangers; 3\"-P150-P-10643 1 hanger; 3\"-P150-P-10025 1 post (SW-PWY-8).",
   "4\"-P150-P-10110/p8 (pipe) passes rack-bent:120/beam/unit-11 at 0.30 in from the round the check holds that member by and 6.40 in from its section (SW-RPI-13)",
   "3\"-P150-P-10111/p6 (pipe) passes rack-bent:120/beam/unit-15 at 1.87 in from the round the check holds that member by and 7.30 in from its section (SW-RPI-13)",
   "3\"-P150-P-10115/p5 (pipe) passes rack-bent:120/beam/unit-17 at 0.80 in from the round the check holds that member by and 6.90 in from its section (SW-RPI-13)",
@@ -5628,16 +5633,15 @@
   "4\"-P150-P-10121/p8 (pipe) passes rack-bent:120/beam/unit-18 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)",
   "6\"-P600-P-10034/p8 (pipe) passes rack-bent:120/beam/unit-16 at 2.38 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
   "6\"-P600-P-10034/p30 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
-  "6\"-P150-P-10037/p8 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)",
-  "4\"-P150-P-10629/p11 (pipe) passes rack-bent:120/beam/unit-19 at 1.37 in from the round the check holds that member by and 6.80 in from its section (SW-RPI-13)"
+  "6\"-P150-P-10037/p8 (pipe) passes rack-bent:120/beam/unit-17 at 2.31 in from the round the check holds that member by and 3.00 in from its section (SW-RPI-13)"
  ],
  "frames": [
   {
-   "line": "3\"-P150-P-10611",
+   "line": "3\"-P1200-P-10641",
    "at": [
     7098,
-    342,
-    -142.33333333333334
+    366,
+    -214
    ],
    "u": [
     1,
@@ -5652,31 +5656,7 @@
     0,
     0
    ],
-   "top": 336.5,
-   "post": "W8x31",
-   "rad": 1.5
-  },
-  {
-   "line": "3\"-P150-P-10611",
-   "at": [
-    7098,
-    342,
-    -302.66666666666663
-   ],
-   "u": [
-    1,
-    0,
-    0
-   ],
-   "d": [
-    48,
-    18
-   ],
-   "floors": [
-    0,
-    0
-   ],
-   "top": 336.5,
+   "top": 360.5,
    "post": "W8x31",
    "rad": 1.5
   }

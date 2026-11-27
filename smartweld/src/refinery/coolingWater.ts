@@ -38,6 +38,13 @@ export const CWM = {
   /** room above the units' top tiers */ headRoom: 72, /** beyond a spool in a valve bay */ bayBeyond: 18,
 } as const;
 const LENGTH = PWY.bays * PWY.bent;
+/** SW-CWM-2 (amended): the mains' way in the pipeway's frame, the strip the pipeway's own supports stand clear of: from the return's far side to the supply's,
+ *  as wide as the sleepers and 6 in more each side, from grade to 6 ft */
+export function mainsWayStrip(): { z0: number; z1: number; top: number } {
+  const PH = plantHeaders(() => 0).filter(h => h.fluid === 'CWS' || h.fluid === 'CWR');
+  const OD = Math.max(...PH.map(h => pipeDims(h.NPS, h.cls).OD)), h0 = PH[0], pitch = up(Math.max(designFlange(h0.NPS, h0.cls).OD + 6, gateWidth(h0.NPS, h0.cls) + 3));
+  return { z0: CWM.way - pitch - OD / 2 - CWM.sleeperOver - 6, z1: CWM.way + OD / 2 + CWM.sleeperOver + 6, top: 72 };
+}
 /** the area's frame from the pipeway's: the way's centre line on z = 0 */
 const SHIFT: Mat4 = translate(0, 0, -CWM.way);
 const toArea = (p: V3): V3 => [p[0], p[1], Math.round((p[2] - CWM.way) * 1e6) / 1e6];
