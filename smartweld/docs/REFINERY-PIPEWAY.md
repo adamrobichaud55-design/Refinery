@@ -390,10 +390,11 @@ At each unit's limit: two posts in line with the columns of the unit's rack and 
 - 8"-P150-P-10405/p28 (40.2 ft, far end 12258,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
 - 8"-P150-P-10405/p31 (40.7 ft, far end 13668,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
 - 4"-P150-IA-10407/p32 (40.4 ft, far end 13219,402,42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
-- 508 butt welds set square to their joints (SW-RPI-24)
+- 464 butt welds set square to their joints (SW-RPI-24)
 - 6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3"-P150-P-10104/S3 (hanger): its rod through 10"-P300-P-10013; 3"-P150-P-10105/S3 (hanger): its rod through 10"-P300-P-10013; 6"-P150-P-10018/S39 (hanger): its rod through 6"-P150-P-10006; 3"-P300-P-10039/S3 (hanger): its rod through 6"-P150-P-10017; 3"-P1200-P-10641/S1 (hanger): its part overlaps the support 3"-P150-P-10611/S2; 3"-P1200-P-10641/S2 (hanger): its part overlaps the support 3"-P150-P-10611/S3
 - 6 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 1 pipe frames
-- 223 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
+- 0 shoes and guides moved along their runs off the welds of the steel they stand on (SW-RPI-28); 4 left: 3"-P300-P-10039/S5; 3"-P300-P-10039/S19; 3"-P300-P-10039/S23; 3"-P300-P-10039/S39
+- 225 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
 - 115 shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).
 - 2 posts set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 7 hangers set where the generator's stepping along a run had stopped for want of that steel: 3"-P1200-P-10641 1 post; 3"-P150-P-10613 3 hangers; 3"-P150-P-10615 3 hangers; 3"-P150-P-10643 1 hanger; 3"-P150-P-10025 1 post (SW-PWY-8).
 - 4"-P150-P-10110/p8 (pipe) passes rack-bent:120/beam/unit-11 at 0.30 in from the round the check holds that member by and 6.40 in from its section (SW-RPI-13)
