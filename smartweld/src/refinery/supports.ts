@@ -390,7 +390,7 @@ export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp)
     : { line: r.no, a: sh.a as V3, b: sh.b as V3, r: sh.r, box: [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r), [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r)] as Box, kind: c.kind, isBox: false })));
   const near = (p: (typeof pieces)[number], b: Box, g: number) => ov(p.box, b, g) && (p.isBox || K.segBox(p.a, p.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < p.r);
   const sBox = statics.map(o => ({ o, box: (o.kind === 'box' ? [o.mn, o.mx] : [[0, 1, 2].map(k => Math.min(o.a[k], o.b[k]) - o.r), [0, 1, 2].map(k => Math.max(o.a[k], o.b[k]) + o.r)]) as Box }));
-  const truth = trueSolids(plant), truePieces = piecesOf(m);
+  const truth = trueSolids(plant), truePieces = piecesOf(m), nozzleEquip = new Map((m.nozzles ?? []).map(n => [n.id, n.equip] as const));
   /** what one of a valve's solids, grown by g, overlaps: a solid of the plant or a pipe or fitting of another line (held by its axis and radius) */
   const hit = (no: string, b: Box, g: number) => sBox.find(q => ov(q.box, b, g) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < q.o.r))?.o.tag
     ?? pieces.find(q => q.line !== no && near(q, b, g - 0.02))?.line;
@@ -421,7 +421,9 @@ export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp)
     if (c.kind !== 'valve') continue;
     const own = ownOff(r, c);
     // SW-RPI-19 (amended 2026-11-27): whether it strikes, by the true shapes (SW-RPI-18's): the plant's true solids and the other lines' pieces as they are
-    const T = c.T as unknown as number[], first = solidsOf(c.key, T).map(b => truth.find(q => solidIn(q, b))?.tag ?? truePieces.find(q => q.line !== r.no && pieceIn(q, b))?.line ?? (ownHit(own, b, -0.02) ? `its own line ${r.no}` : undefined)).find(Boolean); if (!first) continue;
+    // the nozzles its line ends at, which its stack bolts to, are not another line's pieces (SW-RPI-19 amended)
+    const mates = new Set([r.from, r.to].map(e => nozzleEquip.get(String(e))).filter(Boolean).map(e => `nozzle ${e}`));
+    const T = c.T as unknown as number[], first = solidsOf(c.key, T).map(b => truth.find(q => solidIn(q, b))?.tag ?? truePieces.find(q => q.line !== r.no && !mates.has(q.line) && pieceIn(q, b))?.line ?? (ownHit(own, b, -0.02) ? `its own line ${r.no}` : undefined)).find(Boolean); if (!first) continue;
     const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), f: V3 = [(c.b[0] - c.a[0]) / L, (c.b[1] - c.a[1]) / L, (c.b[2] - c.a[2]) / L], stem: V3 = [T[4], T[5], T[6]], at: V3 = [T[12], T[13], T[14]];
     // up, then +x, -x, +z and -z; never stem down (SW-LL-5; SW-RPI-19 as amended again)
     const dirs = ([[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1]] as V3[]).filter(d => Math.abs(d[0] * f[0] + d[1] * f[1] + d[2] * f[2]) < 1e-6 && Math.hypot(d[0] - stem[0], d[1] - stem[1], d[2] - stem[2]) > 1e-6);

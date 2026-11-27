@@ -5921,7 +5921,10 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   shapes, the plant's true solids and the other lines' pieces as they are (a pipe a
   flat-ended cylinder, an elbow its arc's tube); held by the generator's rounds, four valves
   of the cracking unit seemed to strike pipes of other lines they stood clear of, and were
-  listed as having no clear direction. The test of a direction to turn to is as before.
+  listed as having no clear direction. The test of a direction to turn to is as before. The
+  nozzle a valve's line ends at, which its stack bolts to, is no other line's piece for this
+  test (amended the same day: held so, eight valves of the cracking unit bolted to their
+  nozzles were turned at every making, up and then aside and back).
 - `SW-RPI-20` A hanger's top at the steel it hangs from (added 2026-11-26). The generator
   takes the underside of the member a rod hangs from as the member's centre less seven tenths
   of the round it holds it by, which for a wide-flange beam lies inside the beam: its top
