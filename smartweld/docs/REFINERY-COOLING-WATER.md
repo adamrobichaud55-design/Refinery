@@ -6,7 +6,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 
 | Lines | Routed | Components | Welds | Supports | Pipe, ft | Failures | Checks not at zero |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 18 | 18 | 352 | 314 | 143 | 3,444 | 0 | ownClearance 3 |
+| 18 | 18 | 339 | 301 | 145 | 3,393 | 0 | none |
 
 ## Mains
 
@@ -48,18 +48,18 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | Component | Count |
 | --- | --- |
 | blind | 4 |
-| elbow | 100 |
+| elbow | 93 |
 | flange | 20 |
 | gasket | 28 |
 | olet | 14 |
-| pipe | 180 |
+| pipe | 174 |
 | tee | 2 |
 | valve | 4 |
 
 | Welds | Count |
 | --- | --- |
 | BW, field | 38 |
-| BW, shop | 262 |
+| BW, shop | 249 |
 | FW, shop | 14 |
 
 | Supports | Count |
@@ -67,8 +67,8 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | anchor | 2 |
 | guide | 8 |
 | hanger | 20 |
-| shoe | 88 |
-| stanchion | 16 |
+| shoe | 89 |
+| stanchion | 17 |
 | trunnion | 9 |
 
 ## Checks
@@ -81,14 +81,8 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | valves | 0 |
 | lineClearance | 0 |
 | staticClearance | 0 |
-| ownClearance | 3 |
+| ownClearance | 0 |
 | supports | 0 |
-
-Not at zero, ownClearance:
-
-- 30"-P150-P-27001 30"-P150-P-27001/p44 (pipe) – 30"-P150-P-27001/el55 (elbow): 22.46 in
-- 30"-P150-P-27001 30"-P150-P-27001/p44 (pipe) – 30"-P150-P-27001/p56 (pipe): 1.88 in
-- 30"-P150-P-27001 30"-P150-P-27001/el45 (elbow) – 30"-P150-P-27001/p56 (pipe): 22.57 in
 
 ## Notes
 
@@ -113,12 +107,11 @@ Not at zero, ownClearance:
 - 6"-P150-P-27112: no valve at BL-1509-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)
 - 6"-P150-P-27114: no valve at BL-1612-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)
 - 3"-P150-P-27116: no valve at BL-1810-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-PWY-7)
-- 1 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)
-- 102 butt welds set square to their joints (SW-RPI-24)
+- 2 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)
+- 95 butt welds set square to their joints (SW-RPI-24)
 - 2 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6"-P150-P-27111/S1 (hanger): its rod through solid/cladding/pipeway line; 3"-P150-P-27115/S1 (hanger): its rod through solid/cladding/pipeway line
-- 5 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 0 hangers from steel above, 0 stanchions on steel below, 1 stanchions and 3 support posts from the floor, and 1 pipe frames
+- 6 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 1 hangers from steel above, 0 stanchions on steel below, 1 stanchions and 3 support posts from the floor, and 1 pipe frames
 - 22 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
-- 30"-P150-P-27001: foreseen in the lane at z 0, laid at z -6 (SW-CWM-2)
 
 Not in this stage (SW-CWM-8): the cooling tower plot's own piping; the mains end at its edge, each at a limit spool with its block valve and blind.
 
