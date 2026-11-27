@@ -9,7 +9,7 @@ import * as K from '../generator/pipingCheck';
 import type { PlantDef } from '../generator/plant';
 import type { V3 } from '../generator/router';
 import { frameFromAxes } from '../geometry/transform';
-import { pipeDims, makeWideFlange, type PipeClass } from '../catalogue';
+import { pipeDims, makeWideFlange, designFlange, type PipeClass } from '../catalogue';
 import { interiorKit } from '../generator/interiorKit';
 import type { Placed } from '../generator/building';
 import { multiply, translate, standUp } from '../geometry/transform';
@@ -194,6 +194,8 @@ export function supportsThatStrike(m: PipingModel, plant: PlantDef, vb: (c: Comp
     if (t[1][1] - t[0][1] <= 6.5) return undefined;
     return [[t[0][0], t[0][1] + 3, t[0][2]], [t[1][0], t[1][1] - 3, t[1][2]]];
   };
+  /** the lowest of a part's solids in the world: a stanchion's or trunnion's base plate */
+  const lowestOf = (key: string, T: number[]): Box | undefined => { const bs = solidBoxes(partFromKey(key)); if (!bs.length) return undefined; const world = bs.map(q => { const cs: V3[] = []; for (const x of [q[0][0], q[1][0]]) for (const y of [q[0][1], q[1][1]]) for (const z of [q[0][2], q[1][2]]) cs.push(xfp(T, [x, y, z])); return [[0, 1, 2].map(k => Math.min(...cs.map(c => c[k]))), [0, 1, 2].map(k => Math.max(...cs.map(c => c[k])))] as Box; }); return world.reduce((lo, q) => (q[0][1] < lo[0][1] ? q : lo)); };
   const ov = (a: Box, b: Box) => [0, 1, 2].every(k => a[0][k] < b[1][k] && b[0][k] < a[1][k]);
   const pieces = m.lines.flatMap(r => r.comps.filter(c => c.kind !== 'studs').flatMap(c => K.compShapes(c, vb).map(sh => ({ line: r.no, sh, box: (sh.kind === 'box' ? [sh.mn, sh.mx] : [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r), [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r)]) as Box }))));
   const sBox = statics.map(o => ({ o, box: (o.kind === 'box' ? [o.mn, o.mx] : [[0, 1, 2].map(k => Math.min(o.a[k], o.b[k]) - o.r), [0, 1, 2].map(k => Math.max(o.a[k], o.b[k]) + o.r)]) as Box }));
@@ -205,6 +207,10 @@ export function supportsThatStrike(m: PipingModel, plant: PlantDef, vb: (c: Comp
       if (!b) { keep.push(sp); continue; }
       // a pipe or round piece overlaps the member where its axis comes nearer the member's box than its radius (the library's gap to a box is never below 0)
       const hits = (q: (typeof pieces)[number]) => (q.sh.kind === 'box' ? true : K.segBox(q.sh.a, q.sh.b, b[0], b[1]) < q.sh.r - 0.02);
+      // SW-RPI-18 (amended): its base plate (the lowest of its part's solids) on a solid, not inside one by more than 0.05 in
+      const base = sp.type === 'stanchion' || sp.type === 'trunnion' ? lowestOf(sp.key, sp.T as unknown as number[]) : undefined;
+      const sunk = base ? sBox.find(q => [0, 1, 2].every(k => Math.min(base[1][k], q.box[1][k]) - Math.max(base[0][k], q.box[0][k]) > 0.05) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, base[0], base[1]) < q.o.r - 0.05)) : undefined;
+      if (sunk) { out.push(`${sp.id} (${sp.type}): its base plate inside ${sunk.o.tag}`); continue; }
       const line = pieces.find(q => q.line !== r.no && ov(q.box, b) && hits(q));
       const solid = line ? undefined : sBox.find(q => ov(q.box, b) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, b[0], b[1]) < q.o.r));
       const other = line || solid ? undefined : kept.find(q => q.line !== r.no && ov(q.box, b));
@@ -236,15 +242,62 @@ export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp)
   /** what one of a valve's solids, grown by g, overlaps: a solid of the plant or a pipe or fitting of another line (held by its axis and radius) */
   const hit = (no: string, b: Box, g: number) => sBox.find(q => ov(q.box, b, g) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < q.o.r))?.o.tag
     ?? pieces.find(q => q.line !== no && near(q, b, g - 0.02))?.line;
+  /** SW-RPI-19 (amended): a valve's own line's pieces that are not of its own stack: off its run's axis, and not joined end to end with a piece on it */
+  const ownOff = (r: (typeof m.lines)[number], c: Comp) => {
+    const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]) || 1, w = [(c.b[0] - c.a[0]) / L, (c.b[1] - c.a[1]) / L, (c.b[2] - c.a[2]) / L];
+    const offAxis = (p: number[]) => { const d = [p[0] - c.a[0], p[1] - c.a[1], p[2] - c.a[2]], t = d[0] * w[0] + d[1] * w[1] + d[2] * w[2]; return Math.hypot(d[0] - w[0] * t, d[1] - w[1] * t, d[2] - w[2] * t) > 0.05; };
+    const on = r.comps.filter(q => q.kind !== 'studs' && !offAxis(q.a) && !offAxis(q.b)), ends = on.flatMap(q => [q.a, q.b]);
+    const joined = (q: Comp) => ends.some(e => [q.a, q.b].some(p => Math.hypot(p[0] - e[0], p[1] - e[1], p[2] - e[2]) < 0.05));
+    return r.comps.filter(q => q.kind !== 'studs' && !on.includes(q) && !joined(q)).flatMap(q => K.compShapes(q, vb ?? (() => [[0, 0, 0], [0, 0, 0]] as Box)).map(sh => sh.kind === 'box' ? { box: [sh.mn, sh.mx] as Box, a: [0, 0, 0] as V3, b: [0, 0, 0] as V3, r: 0, isBox: true } : { box: [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r), [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r)] as Box, a: sh.a as V3, b: sh.b as V3, r: sh.r, isBox: false }));
+  };
+  const ownHit = (own: ReturnType<typeof ownOff>, b: Box, g: number) => own.some(p => ov(p.box, b, g) && (p.isBox || K.segBox(p.a, p.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < p.r));
   for (const r of m.lines) for (const c of r.comps) {
     if (c.kind !== 'valve') continue;
-    const T = c.T as unknown as number[], first = solidsOf(c.key, T).map(b => hit(r.no, b, 0)).find(Boolean); if (!first) continue;
+    const own = ownOff(r, c);
+    const T = c.T as unknown as number[], first = solidsOf(c.key, T).map(b => hit(r.no, b, 0) ?? (ownHit(own, b, -0.02) ? `its own line ${r.no}` : undefined)).find(Boolean); if (!first) continue;
     const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), f: V3 = [(c.b[0] - c.a[0]) / L, (c.b[1] - c.a[1]) / L, (c.b[2] - c.a[2]) / L], stem: V3 = [T[4], T[5], T[6]], at: V3 = [T[12], T[13], T[14]];
     const dirs = ([[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1], [0, -1, 0]] as V3[]).filter(d => Math.abs(d[0] * f[0] + d[1] * f[1] + d[2] * f[2]) < 1e-6 && Math.hypot(d[0] - stem[0], d[1] - stem[1], d[2] - stem[2]) > 1e-6);
     // clear by 1 in of the plant's solids and by 3 in of every other line (SW-RT-3's clearance between lines, which the generator's own check holds a valve's box to)
-    const d = dirs.find(q => { const Tq = frameFromAxes(at, q, f) as unknown as number[], sol = solidsOf(c.key, Tq); const vbox = vb ? [vb({ ...c, T: Tq } as unknown as Comp)] : sol; return sol.every(b => !hit(r.no, b, 1)) && vbox.every(b => !pieces.some(p => p.line !== r.no && near(p, b, 3))); });
+    const d = dirs.find(q => { const Tq = frameFromAxes(at, q, f) as unknown as number[], sol = solidsOf(c.key, Tq); const vbox = vb ? [vb({ ...c, T: Tq } as unknown as Comp)] : sol; return sol.every(b => !hit(r.no, b, 1) && !ownHit(own, b, 1)) && vbox.every(b => !pieces.some(p => p.line !== r.no && near(p, b, 3))); });
     if (!d) { stuck.push(`${c.tag}: strikes ${first} and has no clear direction`); continue; }
     c.T = frameFromAxes(at, d, f) as never; turned.push(`${c.tag}: struck ${first}; stem turned to ${d.join(',')}`);
   }
   return { turned, stuck };
+}
+
+/**
+ * SW-RPI-20: a hanger's top at the steel it hangs from. Each hanger's rod is made as long as brings its top plate's upper face to the underside of the lowest
+ * horizontal member over it whose underside lies within 6 in of the plate. Returns the hangers changed.
+ */
+export function hangerTops(m: PipingModel, plant: PlantDef): string[] {
+  const out: string[] = [], PLATE = 0.375;
+  const members = plant.interior().instances.filter(pl => !pl.tags.some(t => /keep-out|equipment|pad|grating|ladder|guardrail|stair|bracing|column|post|pedestal|anchor|bolt|weld|clip|plate/.test(t)))
+    .map(pl => worldBox(pl.part, pl.transform)).filter((b): b is Box => !!b && b[1][1] - b[0][1] <= 36 && Math.max(b[1][0] - b[0][0], b[1][2] - b[0][2]) >= 24);
+  for (const r of m.lines) for (const sp of r.supports) {
+    if (sp.type !== 'hanger') continue;
+    const k = sp.key.split('|'), L = Number(k[3]), top = sp.at[1] + L + PLATE, x = sp.at[0], z = sp.at[2];
+    const over = members.filter(b => x >= b[0][0] - 0.01 && x <= b[1][0] + 0.01 && z >= b[0][2] - 0.01 && z <= b[1][2] + 0.01 && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]);
+    if (!over.length) continue;
+    const under = over[0][0][1], L2 = under - PLATE - sp.at[1]; if (Math.abs(L2 - L) < 0.01 || L2 < 8) continue;
+    sp.key = [k[0], k[1], k[2], L2.toFixed(2), ...k.slice(4)].join('|'); out.push(`${sp.id}: rod ${L.toFixed(2)} → ${L2.toFixed(2)} in`);
+  }
+  return out;
+}
+/** SW-RPI-21: the two stud sets of the joints either side of a wafer valve made one set through both flanges. Returns the valves corrected. */
+export function waferStuds(m: PipingModel): string[] {
+  const out: string[] = [], d3 = (p: V3, q: V3) => Math.hypot(p[0] - q[0], p[1] - q[1], p[2] - q[2]);
+  for (const r of m.lines) for (const v of r.comps.filter(c => c.kind === 'valve' && /^VLV\|BFLY\|/.test(c.key))) {
+    const L = d3(v.a as V3, v.b as V3); if (L < 1e-6) continue;
+    const w: V3 = [(v.b[0] - v.a[0]) / L, (v.b[1] - v.a[1]) / L, (v.b[2] - v.a[2]) / L], mid: V3 = [(v.a[0] + v.b[0]) / 2, (v.a[1] + v.b[1]) / 2, (v.a[2] + v.b[2]) / 2];
+    const along = (p: V3) => (p[0] - mid[0]) * w[0] + (p[1] - mid[1]) * w[1] + (p[2] - mid[2]) * w[2], off = (p: V3) => { const t = along(p); return d3(p, [mid[0] + w[0] * t, mid[1] + w[1] * t, mid[2] + w[2] * t]); };
+    const sets = r.comps.filter(c => c.kind === 'studs' && c.NPS === v.NPS && off(c.T.slice(12, 15) as unknown as V3) < 0.05 && Math.abs(along(c.T.slice(12, 15) as unknown as V3)) < L / 2 + 3);
+    if (sets.length !== 2) continue;
+    const ext = sets.flatMap(c => { const at = c.T.slice(12, 15) as unknown as V3, st = Number(c.key.split('|')[3]); return [along(at) - st / 2, along(at) + st / 2]; });
+    const lo = Math.min(...ext), hi = Math.max(...ext), stack = hi - lo, c0 = (lo + hi) / 2, at: V3 = [mid[0] + w[0] * c0, mid[1] + w[1] * c0, mid[2] + w[2] * c0];
+    const f = designFlange(v.NPS, v.cls as PipeClass), len = f.studLen + Math.max(0, stack - (2 * (f.tf + f.rfH) + f.gasketT));
+    const [keep, drop] = sets, T = keep.T.slice() as number[]; T[12] = at[0]; T[13] = at[1]; T[14] = at[2];
+    Object.assign(keep, { key: `STUDS|${v.NPS}|${v.cls}|${stack.toFixed(3)}`, T, a: [at[0] - w[0] * len / 2, at[1] - w[1] * len / 2, at[2] - w[2] * len / 2], b: [at[0] + w[0] * len / 2, at[1] + w[1] * len / 2, at[2] + w[2] * len / 2] });
+    r.comps = r.comps.filter(c => c !== drop); out.push(`${v.tag}: one stud set of ${stack.toFixed(3)} in through both flanges`);
+  }
+  return out;
 }

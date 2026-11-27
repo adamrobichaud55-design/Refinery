@@ -31,7 +31,10 @@
   "supports": [
    "3\"-P150-P-18711: no shoe at bent x=360",
    "3\"-P150-P-18059: unsupported span 280 in > 180 on run from 984,246,619",
-   "2\"-P1200-SC-18507: unsupported span 126 in > 120 on run from 2562,372,39"
+   "3\"-P150-CWS-18503: unsupported span 259 in > 180 on run from 678,102,215",
+   "2\"-P1200-SC-18507: unsupported span 126 in > 120 on run from 2562,372,39",
+   "2\"-P300-SC-18554: unsupported span 136 in > 120 on run from 894,96,111",
+   "2\"-P300-SC-18556: unsupported span 135 in > 120 on run from 1050,102,237"
   ]
  },
  "spools": [
@@ -597,7 +600,7 @@
    "routed": true,
    "components": 21,
    "welds": 12,
-   "supports": 2,
+   "supports": 1,
    "lengthFt": 62,
    "station": "CS-1801"
   },
@@ -2743,7 +2746,7 @@
    "routed": true,
    "components": 23,
    "welds": 14,
-   "supports": 3,
+   "supports": 4,
    "lengthFt": 48,
    "station": "CS-1826"
   },
@@ -2990,7 +2993,7 @@
    "routed": true,
    "components": 16,
    "welds": 9,
-   "supports": 3,
+   "supports": 2,
    "lengthFt": 40
   },
   {
@@ -3070,10 +3073,10 @@
    "anchor": 43,
    "guide": 115,
    "hanger": 75,
-   "shoe": 291,
-   "stanchion": 119,
+   "shoe": 292,
+   "stanchion": 118,
    "trapeze": 1,
-   "trunnion": 63
+   "trunnion": 62
   }
  },
  "notes": [
@@ -3089,7 +3092,11 @@
   "2\"-P150-P-18407/p2 (51.4 ft, far end 794,342,60): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)",
   "2 valves turned where their stem or handwheel struck (SW-RPI-19): 6\"-P150-P-18011/B4: struck E-1802/pad; stem turned to 1,0,0; 6\"-P150-P-18035/B4: struck E-1805/pad; stem turned to 1,0,0; 4 with no clear direction, left: 3\"-P150-P-18049/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18053/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18057/B2: strikes X-1801/equipment and has no clear direction; 4\"-P1200-LS-18508/A2: strikes H-1801/equipment and has no clear direction",
   "5 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 4\"-P150-P-18705/S1 (hanger): its rod through 4\"-P150-P-18042; 3\"-P150-P-18025/S1 (hanger): its rod through rack-bay:5/strut; 6\"-P150-P-18714/S1 (hanger): its rod through 6\"-P150-P-18032; 3\"-P150-P-18715/S2 (hanger): its rod through 3\"-P150-P-18043; 3\"-P150-LS-18518/S1 (hanger): its rod through 8\"-P150-P-18058",
-  "94 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 18 hangers from steel above, 4 stanchions on steel below, 19 stanchions and 32 support posts from the floor, and 21 pipe frames"
+  "0 valves turned where their stem or handwheel struck (SW-RPI-19); 4 with no clear direction, left: 3\"-P150-P-18049/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18053/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18057/B2: strikes X-1801/equipment and has no clear direction; 4\"-P1200-LS-18508/A2: strikes H-1801/equipment and has no clear direction",
+  "64 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "10 wafer valves bolted with one stud set through both flanges (SW-RPI-21)",
+  "11 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 4\"-P150-P-18701/S2 (trunnion): its base plate inside rack-bent:600/pedestal; 3\"-P150-P-18002/S30 (stanchion): its base plate inside rack-bay:2/strut; 6\"-P150-P-18005/S4 (stanchion): its base plate inside E-1801/pad; 3\"-P150-P-18025/S11 (stanchion): its base plate inside rack-stringer/beam; 3\"-P150-P-18025/S12 (stanchion): its base plate inside rack-bay:5/strut; 4\"-P300-P-18030/S7 (stanchion): its base plate inside E-1804/pad; 8\"-P150-P-18056/S8 (stanchion): its base plate inside D-1801/pad; 3\"-P150-CWS-18503/S1 (stanchion): its base plate inside E-1803/pad; 2\"-P300-SC-18554/S3 (stanchion): its base plate inside E-1806/pad; 2\"-P300-SC-18556/S5 (stanchion): its base plate inside E-1808/pad; 2\"-P150-P-18519/S2 (stanchion): its base plate inside rack-bent:4200/beam",
+  "104 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 18 hangers from steel above, 7 stanchions on steel below, 22 stanchions and 35 support posts from the floor, and 22 pipe frames"
  ],
  "frames": [
   {
@@ -3595,6 +3602,30 @@
    "top": 210.5,
    "post": "W8x31",
    "rad": 1.5
+  },
+  {
+   "line": "2\"-P300-SC-18556",
+   "at": [
+    1050,
+    102,
+    252
+   ],
+   "u": [
+    -1,
+    0,
+    0
+   ],
+   "d": [
+    72,
+    18
+   ],
+   "floors": [
+    0,
+    0
+   ],
+   "top": 97,
+   "post": "W8x31",
+   "rad": 1
   }
  ]
 }

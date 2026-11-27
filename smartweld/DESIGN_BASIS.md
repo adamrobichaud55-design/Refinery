@@ -5636,7 +5636,9 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   rod, a post or a leg), less 3 in at each of its ends where it bears or is clamped, against
   every piece of every other line, every solid of the steel, concrete and equipment, and
   the tall member of every support set before it: where it overlaps any of them, the support
-  is taken out. SW-RPI-17 then sets a support where the span that leaves is longer than the
+  is taken out. So is one whose base plate (a stanchion's or a trunnion's) lies more than
+  0.05 in inside a solid of the plant rather than on it (amended the same day: stanchions
+  set at grade stood with their base plates up to 3.5 in inside an equipment pad). SW-RPI-17 then sets a support where the span that leaves is longer than the
   line's span, clear by its own 1 in. Only supports move; no line or component does.
 - `SW-RPI-19` Valves that strike (added 2026-11-26). The generator turns a valve's stem to
   the first direction in which its box strikes nothing it has planned, and does not see the
@@ -5648,7 +5650,25 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   the run, up first, in which none of its solids comes within 1 in of a solid of the plant
   or within 3 in of another line (SW-RT-3; with 1 in, a valve turned in unit 19 came within
   the generator's 3 in of a line); the valve and its joints stay where they are. A valve with
-  no such direction stays, and is listed.
+  no such direction stays, and is listed. Amended the same day: the valve's own line counts
+  too, but for the pieces of its own stack (those on its run's axis, and those joined end to
+  end with them): the generator turns a valve's stem before its line is routed, and the line
+  may then turn its riser beside the stack, on the stem's side, through its own handwheel
+  (a design panel's survey found 17 lines so, in eight units).
+- `SW-RPI-20` A hanger's top at the steel it hangs from (added 2026-11-26). The generator
+  takes the underside of the member a rod hangs from as the member's centre less seven tenths
+  of the round it holds it by, which for a wide-flange beam lies inside the beam: its top
+  plate stood 1.5 to 2.3 in up in the beam (an independent clash check counted 864 such seats
+  in the plant). Plant 3's own correction, on the finished model: each hanger's rod is cut,
+  or lengthened, so that its top plate's upper face meets the underside of the horizontal
+  member it hangs from, found as the lowest member over the rod whose underside lies within
+  6 in of the plate; the clamp and the pipe stay. A hanger with no such member is left.
+- `SW-RPI-21` One stud set through a wafer valve (added 2026-11-26). A wafer body is clamped
+  between its two flanges by one set of studs through both, as its rule says (BF-1). The
+  generator builds the joint on each side of the body as a joint of its own, each with its
+  stud set, so that the two sets' nuts met inside the joint, in the same holes (116 found).
+  Plant 3's own correction: the two sets are made one, from the back of one flange to the
+  back of the other, its length by the catalogue's rule for a stack (SW-FLG-13).
 - `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),
   in inches: x east along the rack from its west end, z south across it from its centre line,
   y up from the bench. It is set on the site by a shift alone. Area number 10; its lines are

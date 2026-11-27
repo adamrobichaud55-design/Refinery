@@ -7,7 +7,7 @@ import { staticObstacles, partFromKey, worldBox, type PipingModel, type LineRun,
 import * as K from '../generator/pipingCheck';
 import type { V3 } from '../generator/router';
 import { generateUnit, unitChecks, valveBoxFn, spanNote, type UnitChecks, type RunCache } from './pipingReport';
-import { supportsThatStrike, supportsAlongSpans, valvesThatStrike, type FrameSpec } from './supports';
+import { supportsThatStrike, supportsAlongSpans, valvesThatStrike, hangerTops, waferStuds, type FrameSpec } from './supports';
 import type { UnitPiping } from './unitPiping';
 import { pipeway, PWY, type Pipeway, type LimitSpool, type Junction, type StreamPlan, type PipewayLine, type HeaderPlan, type TierLoad } from './pipeway';
 import { FLUIDS } from './fluids';
@@ -147,6 +147,7 @@ export function pipePipeway(log: (s: string) => void = () => {}, watch?: (plant:
   { const vt = valvesThatStrike(model, pw.plant, valveBoxFn()); if (vt.turned.length || vt.stuck.length) notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`); }
   { const vbx = valveBoxFn(), struck = supportsThatStrike(model, pw.plant, vbx); if (struck.length) { notes.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`); log(`unit ${PWY.area}: ${struck.length} supports that strike taken out (SW-RPI-18)`); }
     const sup = supportsAlongSpans(model, pw.plant, vbx), n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { notes.push(spanNote(sup)); log(`unit ${PWY.area}: ${spanNote(sup)}`); } frames.push(...sup.frames); }
+  { const ht = hangerTops(model, pw.plant), ws = waferStuds(model); if (ht.length) notes.push(`${ht.length} hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)`); if (ws.length) notes.push(`${ws.length} wafer valves bolted with one stud set through both flanges (SW-RPI-21)`); }
   if (set.shoes) notes.push(`${set.shoes} shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).`);
   if (set.posts || set.hangers) notes.push(`${set.posts} ${set.posts === 1 ? 'post' : 'posts'} set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and ${set.hangers} hangers set where the generator's stepping along a run had stopped for want of that steel: ${set.where.join('; ')} (SW-PWY-8).`);
   if (set.shoes || set.posts || set.hangers) log(`unit ${PWY.area}: ${set.shoes} shoes, ${set.posts} posts and ${set.hangers} hangers at and from the units' first bents (SW-PWY-8)`);

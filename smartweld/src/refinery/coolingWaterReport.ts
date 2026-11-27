@@ -7,7 +7,7 @@ import { coolingWater, CWM, type CwBranch, type CwMain, type CwSpool } from './c
 import { unitChecks, valveBoxFn, spanNote, removeValves, lengthenShortPieces, cutLongPipes, runSolids } from './pipingReport';
 import { generatePiping } from '../generator/piping';
 import type { Placed } from '../generator/building';
-import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, type FrameSpec } from './supports';
+import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, hangerTops, waferStuds, type FrameSpec } from './supports';
 import type { UnitPiping } from './unitPiping';
 
 export interface CwLineRec { no: string; origin: string; stream: string; fluid: string; fluidName: string; from: string; to: string; NPS: number; cls: string; designP: number; designT: number; routed: boolean; components: number; welds: number; supports: number; lengthFt: number }
@@ -43,6 +43,7 @@ export function pipeCoolingWater(log: (s: string) => void = () => {}): { model: 
   { const vt = valvesThatStrike(model, real, vb); if (vt.turned.length || vt.stuck.length) notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`); }
   const struck = supportsThatStrike(model, real, vb); if (struck.length) { notes.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`); log(`area ${CWM.area}: ${struck.length} supports that strike taken out (SW-RPI-18)`); }
   const sup = supportsAlongSpans(model, real, vb); { const n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { notes.push(spanNote(sup)); log(`area ${CWM.area}: ${spanNote(sup)}`); } }
+  { const ht = hangerTops(model, real), ws = waferStuds(model); if (ht.length) notes.push(`${ht.length} hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)`); if (ws.length) notes.push(`${ws.length} wafer valves bolted with one stud set through both flanges (SW-RPI-21)`); }
   const aside: string[] = [], checks = unitChecks(model, { cell: { interior: cw.interior, rack: cw.rack }, plant: real } as unknown as UnitPiping, aside);
   const count = (xs: string[]) => { const o: Record<string, number> = {}; for (const x of xs) o[x] = (o[x] ?? 0) + 1; return Object.fromEntries(Object.entries(o).sort()); };
   // the lanes the mains were given against those foreseen (SW-CWM-2)
