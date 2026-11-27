@@ -540,7 +540,7 @@ export function selfCorrections(m: PipingModel, up: Cx['up'], vb: Cx['vb']): str
   const only = new Set(found), notes = [...offsetOverTakeOff(m, up, vb, only), ...straightBetweenStacks(m, up, vb, only), ...bareTurnAsOffset(m, up, vb, only), ...takeOffMoved(m, up, vb, only)];
   for (const no of found) {
     const r = m.lines.find(q => q.no === no)!, f = ownClashes(r, nozzles);
-    if (f.length) notes.push(`${no}: still through itself (${f.map(x => `${x.a} – ${x.b}: ${x.depth.toFixed(2)} in`).join('; ')}); no correction of SW-RPI-23 serves, and it is left as routed and listed`);
+    if (f.length) notes.push(`${no}: still through itself (${f.map(x => `${x.a} – ${x.b}: ${x.depth.toFixed(2)} in`).join('; ')}); no correction of SW-RPI-23 serves, and it is left as routed (SW-RPI-22 lists it in the unit's checks while it stays so)`);
   }
   return notes;
 }

@@ -9,7 +9,7 @@ import {
   makePlatformedColumn, makeSwagedTower, makeCabinHeater, makeConeRoofTank, makeCatCracker, makeWetScrubber, makeFlueGasCooler, makeSulfurFurnace,
   makeSulfurCondenser, makeIncinerator, makeWaterTubeBoiler, makeTurbineCompressor, makeLoadingStation, makeCoolingTower, makeSilo, makeDeaerator, makeEjector, makeSulfurPit, makeSeparatorBasin,
   makeEjectorSet, ejectorSetLayout, makeShellTubeExchanger, makeGrating, makeRod, GRATING, type EjectorSetInput, type Cut,
-  MOTOR_SHAFT, designFlange, pipeDims, gateFaceToFace, globeFaceToFace, elbowRadius, makeWideFlange, type PartSpec, type PipeClass,
+  MOTOR_SHAFT, designFlange, pipeDims, gateFaceToFace, globeFaceToFace, elbowRadius, makeWideFlange, proportionW, type PartSpec, type PipeClass,
 } from '../catalogue';
 import { K } from '../core/constants';
 import { zReq } from '../scene/structures';
@@ -37,6 +37,9 @@ export const PAD = 6, PUMP_PAD = 9, Y_VESSEL = PAD + 1.5 + 0.75;
 /** SW-CELL-6: the underside of the yard's support beams */
 export const YARD = 366;
 export const DECK = RACK.tiers[RACK.tiers.length - 1] + 108, RACK_COL = Math.ceil(RACK.tiers[RACK.tiers.length - 1] / 24 / 2) * 2;
+/** SW-CELL-4 (amended 2026-11-27): an air cooler's columns, 2 ft less what the deck's girders (W12x40, centred 6 in under DECK by their nominal depth and drawn
+ *  at their own, SW-W-5) stand above DECK; the cooler's column bases are on the girders' tops and its plenum where 2 ft columns on DECK put it */
+export const COOLER_LEG = 24 - (proportionW(12, 40).d / 2 - 6);
 export type Lane = 'pump' | 'exchanger' | 'air' | 'vessel' | 'heater' | 'pit' | 'under' | 'behind';
 /** where a body stands in its unit, and the facts of its shape the nozzle schedule needs */
 export interface Spot {
@@ -73,6 +76,8 @@ function partBoxes(p: PartSpec): { name: string; mn: V3; mx: V3 }[] {
   for (const so of buildGeometry(p).solids) { const mn: V3 = [Infinity, Infinity, Infinity], mx: V3 = [-Infinity, -Infinity, -Infinity], P = so.mesh.positions; for (let i = 0; i < P.length; i += 3) for (let a = 0; a < 3; a++) { mn[a] = Math.min(mn[a], P[i + a]); mx[a] = Math.max(mx[a], P[i + a]); } if (Number.isFinite(mn[0])) r.push({ name: so.name ?? '', mn, mx }); }
   ownBoxes.set(p, r); return r;
 }
+/** the lowest point of a placed part's solids */
+function lowestY(pl: Placed): number { const T = pl.transform as number[]; let lo = Infinity; for (const so of buildGeometry(pl.part).solids) { const P = so.mesh.positions; for (let i = 0; i < P.length; i += 3) lo = Math.min(lo, T[1] * P[i] + T[5] * P[i + 1] + T[9] * P[i + 2] + T[13]); } return lo; }
 /** SW-CELL-4 (amended): how far from the vertical axis through (x, z) a part's solids reach between the heights y0 and y1, counting only what lies
  *  within `near` of it: the greatest distance in plan of the solids' corners there and of their edges where they cross y0 and y1 */
 function reachBetween(p: PartSpec, x: number, z: number, y0: number, y1: number, near: number): number {
@@ -250,7 +255,13 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
         k.guardrail([[xFl, el, zOut], [xEnd, el, zOut], [xEnd, el, topL ? zf : zIn], ...(topL ? [] : [[xFl, el, zIn] as V3])], cen, stairTag);
         if (topL) { k.guardrail([[xFl, el, zf], [xFl, el, laneZ(true) + far * 21]], cen, stairTag); }
         // the flight down from it: even ones climb toward the near end in the outer lane, odd ones toward the far end in the inner lane
-        k.stairFlight([near ? ux(36 + run) : ux(36), el - rise, laneZ(!near)], (near ? -sd : sd) as 1 | -1, risers, stairTag);
+        const from = c.out.length; k.stairFlight([near ? ux(36 + run) : ux(36), el - rise, laneZ(!near)], (near ? -sd : sd) as 1 | -1, risers, stairTag);
+        // SW-CELL-4 (amended): a stringer the kit cut as its fellow's mirror, its foot below the floor, cut again level at the floor and plumb at the landing
+        for (const pl of c.out.slice(from)) if (pl.tags.includes('stringer') && lowestY(pl) < el - rise - 0.01) {
+          const cuts = pl.part.extra?.endCuts as { start: { dx: number; dy: number }; end: { dx: number; dy: number } } | undefined; if (!cuts) continue;
+          const again: PartSpec = { ...pl.part, id: `${pl.part.id}:other-hand`, extra: { ...pl.part.extra, endCuts: { start: { dx: cuts.start.dx, dy: -cuts.start.dy }, end: { dx: cuts.end.dx, dy: -cuts.end.dy } } } };
+          if (lowestY({ ...pl, part: again }) >= el - rise - 0.01) pl.part = again;
+        }
       }
       // guardrail round the deck, open where the top landing meets it
       const [l0, l1] = span(0, 36), y = E, c1 = U(xA, y, zA), c2 = U(xB, y, zA), c3 = U(xB, y, zB), c4 = U(xA, y, zB), centre: [number, number] = [U(0, 0, (zA + zB) / 2)[0], U((xA + xB) / 2, 0, 0)[2]];
@@ -302,7 +313,8 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       return [{ ...boxy(e.tag, 'vessel', 240 + d.ID, d.ID + 96, d.ID + 150, (c, s) => { place(c, body, frameFromAxes([s.x + (east ? 120 : -120), PAD + d.ID / 2 + 36, s.z], [0, 1, 0], [east ? -1 : 1, 0, 0]), e.tag); }, east ? toRegen : ductRoom(nOut.NPS, nOut.cls), false, { solid: /^shell$/, axes: 'xyz', onLine: true }), ...(by > 0 ? { raise: { by, under: /^saddle base/ } } : {}) }];
     }
     // SW-CELL-4: over the rack, on a deck 9 ft above its top tier, the tubes across the rack; the catalogue cooler on 2 ft legs, its headers' tops 134 in above the deck
-    case 'aircooler': return tags(d.bays).map(tag => boxy(tag, 'air', 168 + 12, 384 + 24, DECK + 134, (c, s) => { place(c, bare(makeAirCooler({ tag, W: 168, L: 384, fans: 2, legH: 24 })), multiply(translate(s.x, DECK, s.z), multiply(rotateY(Math.PI / 2), standUp())), tag); Object.assign(s, { yt: DECK + 134 }); }, 0));
+    // (amended 2026-11-27: the legs COOLER_LEG long, standing on the girders' drawn tops, the plenum and headers where they were)
+    case 'aircooler': return tags(d.bays).map(tag => boxy(tag, 'air', 168 + 12, 384 + 24, DECK + 134, (c, s) => { place(c, bare(makeAirCooler({ tag, W: 168, L: 384, fans: 2, legH: COOLER_LEG })), multiply(translate(s.x, DECK + 24 - COOLER_LEG, s.z), multiply(rotateY(Math.PI / 2), standUp())), tag); Object.assign(s, { yt: DECK + 134 }); }, 0));
     case 'drum': {
       if (e.p.vertical) return [vertical(e.tag, d.D, d.t, d.L, 60, false)];
       return [horizontal(e.tag, d.D, d.t, d.L, drumUnder(sh, e, z), false, isHotwell(sh, e.tag))];

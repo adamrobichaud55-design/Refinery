@@ -2751,6 +2751,18 @@ Equipment items (each `make…` takes the stated dimensions; what is not stated 
   ring diameter 0.9 W/n, on four columns `W6` of stated height with an `L3x3x1/4` brace each side;
   fan motors by SW-EQC-8 of 12 in frame below the plenum. Reason: envelope of a forced-draught
   bank; the fan ring fills the bay it serves.
+  Amended 2026-11-27 (owner's decision, P-95): each brace runs on its work line from the base
+  of one column to the top of the other along the tubes, its heel on that line and its legs
+  below it as before, and its foot is cut level with the column bases, so that nothing of the
+  angle reaches below the plane the columns stand on. The brace's section, its work line and
+  its top end are unchanged. Reason: an angle whose legs hang below a work line that starts at
+  a column's base passes under that base until its 3 in leg has risen clear, and so into
+  whatever the cooler stands on; the cut is where its foot bears. On a bay 32 ft long on 2 ft
+  columns the brace falls 3 in below the bases at the column and the cut runs 45 in along it
+  (5.2 lb a brace); on the catalogue's 20 ft bay on 10 ft columns, 5.4 in (0.6 lb). An
+  independent clash check of plant 3 found both braces of every air cooler bay (33 bays) 3.16
+  in into the W12x40 girders of the deck the bays stand on (SW-CELL-4). Plants 1 and 2 have
+  no air cooler.
 - `SW-EQC-12` Centrifugal compressor package: a skid `PL1` of stated plan on a 12 in pad (SW-CIV-5
   with 12 in height); the casing a cylinder of stated diameter D and length 1.2 D along the
   shaft; a gearbox box 0.8 D cube; the motor by SW-EQC-8 of stated frame; a lube console box
@@ -4657,6 +4669,17 @@ their own geometry rules, which are unchanged.
     way to it. The 9 ft clears the take-offs that rise from the headers on the top tier and
     lets the fans draw air. Sizes by span / 20 for the beams' depth, as the rack's own steel
     (SW-RK-2). (SW-PRC-9's "over the rack" stands again.)
+    Amended 2026-11-27 (owner's decision, P-95): each cooler's columns stand on the girders'
+    tops as the girders are drawn. A girder is set by its nominal depth, its centre 6 in under
+    the deck's 9 ft, and drawn at its own depth (SW-W-5: 12.33 in for the `W12x40`), so its top
+    stands 0.165 in above the 9 ft; the cooler's columns are that much shorter than 2 ft
+    (23.835 in) and stand there, and the cooler's plenum, bundle, header boxes and every
+    connection stay where they were. Nothing of the deck moves. Reason: the cooler had been set
+    with its column bases at the 9 ft, inside the girders' top flanges; an independent clash
+    check of plant 3 found the four columns of every bay (33 bays) 0.165 in into the girders
+    (0.17 in to 0.34 in by the checkers' own measures). Shortening the columns, rather than
+    raising the cooler or lowering the deck, leaves every line to a cooler, and every support
+    hung from or resting on the deck, where it was.
   - Fired heaters: vertical cylinders (SW-EQC-15) with a stack 0.6 of the firebox height, and
     cabins (SW-EQC-53), at the sizes of SW-PRC-10.
   - Compressors and blowers (SW-EQC-12, -14): casing diameter 14 in × (gas horsepower / 100)^(1/3),
@@ -4733,7 +4756,11 @@ their own geometry rules, which are unchanged.
       first bend 0.4 in inside the grating, found by the plant's clash audit).
     - A stair of those flights stands along the deck's far side, a landing at each end of
       each flight on posts of its own, its top landing against the deck beside the
-      condensers, where the guardrail is open.
+      condensers, where the guardrail is open. Each stringer is cut level at the floor and
+      plumb at the landing, on both sides of a flight (amended 2026-11-27: the stair kit cuts
+      a flight's second stringer, which it turns to face the first, as that one's mirror, and
+      the bottom flight's second stringer stood 11.2 in below grade, found by the plant's
+      clash audit; plant 3 cuts it again, its own, and leaves the kit as plants 1 and 2 use it).
     Reason: the set must stand a tail pipe's height above its hotwell; a deck gives its
     condensers and ejectors a floor to be reached, lifted and cleaned from, and leaves the
     ground under it to the hotwell and the tail pipes.
@@ -5691,7 +5718,10 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   Where no place within a span has any of these, a pipe frame is set (added 2026-11-26, the
   owner's choice for the stretches left): a goalpost square to the run, two posts and a beam
   across under the pipe, the pipe on a shoe on the beam (SW-PS-1, 4 in high). The beam's top
-  is the shoe's height under the pipe; each post stands on the floor below its own place, a
+  is the shoe's height under the pipe, the beam set down from it by the depth the catalogue
+  draws its section at, and each post reaching the beam's underside so (amended 2026-11-27:
+  set by the section's name, 8 in for a W8x31 and 12 in for a W12x40, the beams stood 0.2 in
+  and 0.17 in into their shoes, 130 shoes in all, found by the plant's clash audit); each post stands on the floor below its own place, a
   concrete pedestal 20 in square and 6 in high on grade or the top of a pad, and is set out
   from the pipe on its own side, the nearest place, from the pipe's radius and 1 ft out to
   15 ft in 6 in steps, where the post and its pedestal are 1 in clear of every line and solid;
@@ -5759,7 +5789,15 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   trunnion's elbow had seemed to reach 5 in down into the leg, 88 trunnions falsely; and a
   frame's post stood through a nozzle's spool unseen). An oblique cylinder and an arc are
   held by the round swept along them short of their ends by their radius, which lies within
-  the piece; the piece joined to each end is tested as well.
+  the piece; the piece joined to each end is tested as well. A hanger's lug, rod and top
+  plate, and a trapeze's rods and top plates, are tested too against the true solids of the
+  steel, concrete and equipment (a member by its own drawn solids where it lies along an axis
+  of the plant, a round bar by its own radius), the rods to their tops, but the member the
+  support hangs from (the solid its top plate is in or bears against from below) (amended
+  the same day: the generator holds a member by a round about its axis that reaches past its
+  flanges, so the rods' top 3 in were left out; eight hangers' top plates stood 0.37 in into a
+  rack bay's bracing rods, and rods passed up to 0.3 in into the girder beside the beam they
+  hung from).
   SW-RPI-17 sets no support this test would take out (amended the same day): a stanchion on
   steel stands on the member's true top, from its own box, not on the generator's estimate
   of it (the centre and seven tenths of the round it holds the member by, which for a 12 in
@@ -5793,7 +5831,13 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   in the plant). Plant 3's own correction, on the finished model: each hanger's rod is cut,
   or lengthened, so that its top plate's upper face meets the underside of the horizontal
   member it hangs from, found as the lowest member over the rod whose underside lies within
-  6 in of the plate; the clamp and the pipe stay. A hanger with no such member is left.
+  6 in of the plate, or where none is over the rod, over its top plate (amended 2026-11-27:
+  the generator hangs a rod within six tenths of the round it holds a member by, which for a
+  wide-flange member reaches up to 1.2 in past the edge of its flange; 79 hangers so had their
+  plates up to 1.7 in inside the flange of the beam, strut or girder beside them, left by this
+  correction as it was first written); the clamp and the pipe stay. A hanger with no such
+  member is left. It is made before SW-RPI-18's test (amended the same day), which would
+  otherwise find the plates in the steel they hang from, and again after SW-RPI-17.
 - `SW-RPI-21` One stud set through a wafer valve (added 2026-11-26). A wafer body is clamped
   between its two flanges by one set of studs through both, as its rule says (BF-1). The
   generator builds the joint on each side of the body as a joint of its own, each with its

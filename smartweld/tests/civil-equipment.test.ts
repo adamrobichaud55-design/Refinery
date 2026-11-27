@@ -116,6 +116,19 @@ describe('equipment proportions (SW-EQC-*)', () => {
     const cy = makeCyclone({ tag: 'S', D: 48 }); expect(cy.dims.coneH.value).toBeCloseTo((24 - 6) * Math.tan(Math.PI / 3), 9);
     const si = makeSilo({ tag: 'R', D: 96, H: 240, outletNPS: 8, outletH: 72 }); expect(si.dims.skirtH.value).toBeCloseTo(72 + (48 - 4) * Math.tan(Math.PI / 3), 9);
   });
+  it('SW-EQC-11 (amended 2026-11-27): an air cooler\'s braces end at the column bases, their feet cut level with them, none of them below', () => {
+    for (const [W, L, legH] of [[96, 240, 120], [168, 384, 23.835]]) {
+      const braces = (makeAirCooler({ tag: 'E', W, L, fans: 2, legH }).extra!.solids as { name: string; mesh: { positions: number[] } }[]).filter(s => /^brace/.test(s.name));
+      expect(braces.length).toBe(2);
+      const sinA = legH / Math.hypot(L - 24, legH);
+      for (const s of braces) {
+        const P = s.mesh.positions, z = P.filter((_, i) => i % 3 === 2), foot = P.filter((_, i) => i % 3 === 0 && Math.abs(P[i + 2]) < 1e-9);
+        expect(Math.min(...z)).toBeGreaterThanOrEqual(-1e-9); expect(Math.max(...z)).toBeCloseTo(legH, 9);            // between the column bases and tops
+        expect(Math.min(...foot)).toBeCloseTo(-L / 2 + 12, 9);                                                            // the foot starts at the column's line
+        expect(Math.max(...foot)).toBeCloseTo(-L / 2 + 12 + 3 / sinA, 6);                                                 // and runs on the bases' plane until the 3 in leg has risen clear
+      }
+    }
+  });
   it('weights come from the drawn steel (SW-EQ-7)', () => {
     for (const p of equipment) { const geo = buildGeometry(p); expect(p.weight.value).toBeCloseTo(geo.volume * K.STEEL_DENSITY_LB_IN3, 3); }
   });

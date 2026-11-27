@@ -10,6 +10,7 @@ import { sizing } from '../src/refinery/sizing';
 import { bench, DIKES } from '../src/refinery/site';
 import { MODEL_IMAGES } from '../src/refinery/modelReport';
 import { makeHorizontalDrum } from '../src/catalogue';
+import { buildGeometry } from '../src/geometry/partGeometry';
 
 const M = processModel(), Z = sizing(), all = cells();
 const basisDoc = readFileSync(new URL('../DESIGN_BASIS.md', import.meta.url), 'utf8');
@@ -121,6 +122,25 @@ describe('plant 3: a unit in its own frame (SW-CELL-1 to SW-CELL-4)', () => {
       if (c.yard.neg !== undefined || c.yard.pos !== undefined) expect(tags('yard-support').length).toBeGreaterThan(4);
       expect(YARD).toBeGreaterThan(RACK.tiers[2]);
     }
+  });
+  it('an air cooler\'s columns stand on its deck\'s girders as drawn, its braces no lower, its headers where 2 ft legs on the deck put them (SW-CELL-4, SW-EQC-11, amended 2026-11-27)', () => {
+    let bays = 0;
+    for (const { cell: c } of all) {
+      const placed = (part: Parameters<typeof buildGeometry>[0], T: number[]) => buildGeometry(part).solids.map(s => { const P = s.mesh.positions, W: number[] = []; for (let i = 0; i < P.length; i += 3) W.push(T[0] * P[i] + T[4] * P[i + 1] + T[8] * P[i + 2] + T[12], T[1] * P[i] + T[5] * P[i + 1] + T[9] * P[i + 2] + T[13], T[2] * P[i] + T[6] * P[i + 1] + T[10] * P[i + 2] + T[14]); return { name: s.name ?? '', P: W }; });
+      const girders = c.interior.instances.filter(i => i.tags.includes('cooler-deck') && i.tags.includes('girder')).map(g => { const P = placed(g.part, g.transform as unknown as number[])[0].P, k = (a: number) => P.filter((_, i) => i % 3 === a); return { x0: Math.min(...k(0)), x1: Math.max(...k(0)), top: Math.max(...k(1)), z0: Math.min(...k(2)), z1: Math.max(...k(2)) }; });
+      for (const e of c.interior.instances.filter(i => i.part.kind === 'AIR_COOLER')) {
+        bays++;
+        const tag = e.tags[0], sol = placed(e.part, e.transform as unknown as number[]);
+        for (const s of sol.filter(q => /^column|^brace/.test(q.name))) {
+          const over = girders.map(g => ({ g, ys: s.P.filter((_, i) => i % 3 === 1 && s.P[i - 1] >= g.x0 && s.P[i - 1] <= g.x1 && s.P[i + 1] >= g.z0 && s.P[i + 1] <= g.z1) })).filter(q => q.ys.length);
+          expect(over.length, `${tag} ${s.name}`).toBe(s.name.startsWith('column') ? 1 : 2);   // a brace runs from over one girder to over the other
+          for (const { g, ys } of over) { const low = Math.min(...ys); expect(low, `${tag} ${s.name}`).toBeGreaterThanOrEqual(g.top - 1e-9); if (s.name.startsWith('column')) expect(low, `${tag}: a column's base on the girder's top`).toBeCloseTo(g.top, 9); }
+          if (s.name.startsWith('brace')) expect(Math.min(...over.map(q => Math.min(...q.ys) - q.g.top)), `${tag}: a brace's foot on the girder's top`).toBeCloseTo(0, 9);
+        }
+        for (const b of bodySolids(c, tag).filter(q => q.name === 'header box')) expect(b.mx[1], tag).toBe(DECK + 134);
+      }
+    }
+    expect(bays).toBe(33);
   });
   it('sizes are those the process gave: the crude column, a pump, a stacked exchanger', () => {
     const c11 = buildCell(11, plotLength(all[0].plot)), col = c11.spots.find(s => s.tag === 'C-1101')!, d = Z.get(11)!.equip.get('C-1101')!.d;

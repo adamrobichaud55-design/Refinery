@@ -27,8 +27,9 @@ const units = process.argv.slice(2).map(Number); for (const u of units.length ? 
   const had = r.notes.findIndex(n => n.includes('(SW-RPI-17)')), num = (re: RegExp) => (had >= 0 ? Number(re.exec(r.notes[had])?.[1] ?? 0) : 0);
   const vt = valvesThatStrike(m, up.plant, vb);   // SW-RPI-19: valves whose stem or handwheel strikes, turned
   if (vt.turned.length || vt.stuck.length) r.notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`);
+  const ht0 = hangerTops(m, up.plant);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets
   const struck = supportsThatStrike(m, up.plant, vb);   // SW-RPI-18 first: supports whose rod, post or leg strikes are taken out
-  const before = r.checks.supports.length, s = supportsAlongSpans(m, up.plant, vb), ht = hangerTops(m, up.plant), ws = waferStuds(m), aside: string[] = [], checks = unitChecks(m, up, aside);
+  const before = r.checks.supports.length, s = supportsAlongSpans(m, up.plant, vb), ht = [...ht0, ...hangerTops(m, up.plant)], ws = waferStuds(m), aside: string[] = [], checks = unitChecks(m, up, aside);
   if (struck.length) r.notes.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`);
   if (ht.length) r.notes.push(`${ht.length} hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)`); if (ws.length) r.notes.push(`${ws.length} wafer valves bolted with one stud set through both flanges (SW-RPI-21)`);
   if (had >= 0) { s.hangers += num(/(\d+) hangers/); s.onSteel += num(/(\d+) stanchions on steel/); s.stanchions += num(/, (\d+) stanchions and/); s.posts += num(/(\d+) support posts/); s.frames = [...r.frames, ...s.frames]; r.notes.splice(had, 1); }

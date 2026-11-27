@@ -291,8 +291,10 @@ export function makeAirCooler(inp: AirCoolerInput): PartSpec {
   }
   const w6 = proportionW(6, 15), prof = wProfile(w6);
   for (const [x, y] of [[-inp.L / 2 + 12, -inp.W / 2 + 6], [inp.L / 2 - 12, -inp.W / 2 + 6], [-inp.L / 2 + 12, inp.W / 2 - 6], [inp.L / 2 - 12, inp.W / 2 - 6]]) solids.push({ name: 'column W6x15', mesh: at(extrude({ outer: prof }, zP, 0), x, y, 0) });
-  const brace = lProfile(3, 3, 0.25), bl = Math.hypot(inp.L - 24, zP);
-  for (const y of [-inp.W / 2 + 6, inp.W / 2 - 6]) solids.push({ name: 'brace L3x3x1/4', mesh: transformMesh(extrude({ outer: brace }, bl, 0), multiply(translate(-inp.L / 2 + 12, y, 0), rotateY(Math.PI / 2 - Math.atan2(zP, inp.L - 24)))) });
+  // SW-EQC-11 (amended 2026-11-27): the brace on its work line from one column's base to the other's top, heel on the line and legs below it; its foot
+  // cut level with the column bases (the profile's x, which hangs below the line, cut back along the brace by x / tan of its slope), so none of it is below them
+  const brace = lProfile(3, 3, 0.25), bl = Math.hypot(inp.L - 24, zP), foot = { start: { dx: (inp.L - 24) / zP, dy: 0 } };
+  for (const y of [-inp.W / 2 + 6, inp.W / 2 - 6]) solids.push({ name: 'brace L3x3x1/4', mesh: transformMesh(extrude({ outer: brace }, bl, 0, foot), multiply(translate(-inp.L / 2 + 12, y, 0), rotateY(Math.PI / 2 - Math.atan2(zP, inp.L - 24)))) });
   return done(inp.tag, 'AIR_COOLER', `${inp.tag} air cooler ${inp.W}" × ${inp.L}", ${inp.fans} fans`, {
     W: drawing(inp.W, 'Bundle width'), L: drawing(inp.L, 'Tube length'), fans: drawing(inp.fans, 'Fans', 'count'), legH: drawing(inp.legH, 'Column height to the plenum'),
     depth: rule(depth, 'SW-EQC-11', 'Bundle depth'), plenum: rule(plenum, 'SW-EQC-11', 'Plenum depth (0.5 W)'), fanD: rule(fanD, 'SW-EQC-11', 'Fan ring diameter (0.9 W / n)'), header: rule(hdr, 'SW-EQC-11', 'Header box depth'),

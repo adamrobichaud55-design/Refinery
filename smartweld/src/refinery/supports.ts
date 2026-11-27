@@ -27,8 +27,10 @@ const POST_MAX = 600, HANG_MAX = 240, up6 = (v: number) => Math.ceil(v / 6 - 1e-
 /** SW-RPI-17: a pipe frame: two posts and a beam across under a pipe, the pipe on a shoe on the beam. `u` is square to the run in plan; post A stands at `at` − u·d[0], post B at `at` + u·d[1], each on its floor (grade, on a pedestal, or a pad's top); the beam's top is at `top` */
 export interface FrameSpec { line: string; at: V3; u: V3; /** 0 on a side with no post (a cantilever) */ d: [number, number]; floors: [number, number]; top: number; post: 'W8x31' | 'W10x49'; /** the pipe's radius: a cantilever's beam reaches 4 in past it */ rad?: number }
 export const FRAME_BEAM = { D: 8, w: 31 }, SHOE_H = 4, PEDESTAL = 20;
+/** SW-RPI-17 (amended): the depth the catalogue draws a frame's beam at, W8x31 or W12x40, by which the beam is set down from its top */
+const drawnDepth = (() => { const memo = new Map<number, number>(); return (D: 8 | 12) => { let v = memo.get(D); if (v === undefined) { const p = makeWideFlange(D === 8 ? 'W8x31' : 'W12x40', D, D === 8 ? 31 : 40, 12); v = p.dims.d?.value ?? D; memo.set(D, v); } return v; }; })();
 /** the depth of a frame's beam: `W8x31` to 20 ft long, `W12x40` longer */
-export const beamDepth = (f: FrameSpec) => (f.d[0] > 0 ? f.d[0] + 4 : (f.rad ?? 0) + 4) + (f.d[1] > 0 ? f.d[1] + 4 : (f.rad ?? 0) + 4) > 248 ? 12 : FRAME_BEAM.D;
+export const beamDepth = (f: FrameSpec) => drawnDepth((f.d[0] > 0 ? f.d[0] + 4 : (f.rad ?? 0) + 4) + (f.d[1] > 0 ? f.d[1] + 4 : (f.rad ?? 0) + 4) > 248 ? 12 : 8);
 /** the parts of a pipe frame, placed */
 export function framePlaced(f: FrameSpec): Placed[] {
   const out: Placed[] = [], kit = interiorKit({ pedestal: PAD, padHeight: PAD }, out, {}), [pD, pw] = f.post === 'W8x31' ? [8, 31] : [10, 49], tag = `pipe-frame:${f.line}`;
@@ -39,7 +41,7 @@ export function framePlaced(f: FrameSpec): Placed[] {
     out.push({ part: makeWideFlange(f.post, pD, pw, f.top - beamDepth(f) - base), transform: multiply(translate(px, base, pz), standUp()), tags: [tag, 'post'] });
   });
   const reach = (d: number) => (d > 0 ? d + 4 : (f.rad ?? 0) + 4), L = reach(f.d[0]) + reach(f.d[1]), a: V3 = [f.at[0] - f.u[0] * reach(f.d[0]), f.top - FRAME_BEAM.D / 2, f.at[2] - f.u[2] * reach(f.d[0])];
-  const [bD, bw] = L > 248 ? [12, 40] : [FRAME_BEAM.D, FRAME_BEAM.w]; a[1] = f.top - bD / 2;
+  const [bD, bw] = L > 248 ? [12, 40] : [FRAME_BEAM.D, FRAME_BEAM.w]; a[1] = f.top - drawnDepth(bD as 8 | 12) / 2;   // SW-RPI-17 (amended): by its drawn depth, its top at the shoe's underside
   out.push({ part: makeWideFlange(L > 248 ? 'W12x40' : 'W8x31', bD, bw, L), transform: frameFromAxes(a, [0, 1, 0], f.u), tags: [tag, 'beam'] });
   return out;
 }
@@ -122,9 +124,9 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
         const u: V3 = [-w[2], 0, w[0]], top = p[1] - rad - SHOE_H;
         const side = (s: 1 | -1): { d: number; floor: number; post: 'W8x31' | 'W10x49' } | undefined => {
           for (let d = up6(rad + 12); d <= 180; d += 6) {
-            const px = p[0] + u[0] * d * s, pz = p[2] + u[2] * d * s, fl = floorUnder([px, top, pz]), base = fl > 0 ? fl : PAD, h = top - FRAME_BEAM.D - base; if (h < 12 || h > POST_MAX) continue;
+            const px = p[0] + u[0] * d * s, pz = p[2] + u[2] * d * s, fl = floorUnder([px, top, pz]), base = fl > 0 ? fl : PAD, h = top - drawnDepth(8) - base; if (h < 12 || h > POST_MAX) continue;
             const post: 'W8x31' | 'W10x49' = h > 360 ? 'W10x49' : 'W8x31', half = post === 'W8x31' ? 4.25 : 5.25;
-            if (!clearBox(r.no, [[px - half, base, pz - half], [px + half, top - FRAME_BEAM.D, pz + half]], fl > 0 ? fl : undefined)) continue;
+            if (!clearBox(r.no, [[px - half, base, pz - half], [px + half, top - drawnDepth(8), pz + half]], fl > 0 ? fl : undefined)) continue;
             if (fl <= 0 && !clearBox(r.no, [[px - PEDESTAL / 2, 0, pz - PEDESTAL / 2], [px + PEDESTAL / 2, PAD, pz + PEDESTAL / 2]], 0)) continue;
             return { d, floor: fl, post };
           }
@@ -136,8 +138,8 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
         if (!A && !B) { why(r.no, `at ${p.map(Math.round)}: no frame (no place for a post on either side; last ${lastBlock})`); return false; }
         if (!A || !B) { const one = (A ?? B)!; if (one.d > 48) { why(r.no, `at ${p.map(Math.round)}: no frame (a post on one side only, ${one.d} in out; last ${lastBlock})`); return false; } }
         const NONE = { d: 0, floor: 0, post: 'W8x31' as const }; if (!A) A = NONE; if (!B) B = NONE;
-        const e = A.d > 0 ? A.d + 4 : rad + 4, f2 = B.d > 0 ? B.d + 4 : rad + 4, ends: V3[] = [[p[0] - u[0] * e, top - FRAME_BEAM.D, p[2] - u[2] * e], [p[0] + u[0] * f2, top, p[2] + u[2] * f2]];
-        const bd = e + f2 > 248 ? 12 : FRAME_BEAM.D, beam: Box = [[Math.min(ends[0][0], ends[1][0]) - (Math.abs(u[0]) < 0.5 ? 4.5 : 0), top - bd, Math.min(ends[0][2], ends[1][2]) - (Math.abs(u[2]) < 0.5 ? 4.5 : 0)], [Math.max(ends[0][0], ends[1][0]) + (Math.abs(u[0]) < 0.5 ? 4.5 : 0), top, Math.max(ends[0][2], ends[1][2]) + (Math.abs(u[2]) < 0.5 ? 4.5 : 0)]];
+        const e = A.d > 0 ? A.d + 4 : rad + 4, f2 = B.d > 0 ? B.d + 4 : rad + 4, ends: V3[] = [[p[0] - u[0] * e, top - drawnDepth(8), p[2] - u[2] * e], [p[0] + u[0] * f2, top, p[2] + u[2] * f2]];
+        const bd = drawnDepth(e + f2 > 248 ? 12 : 8), beam: Box = [[Math.min(ends[0][0], ends[1][0]) - (Math.abs(u[0]) < 0.5 ? 4.5 : 0), top - bd, Math.min(ends[0][2], ends[1][2]) - (Math.abs(u[2]) < 0.5 ? 4.5 : 0)], [Math.max(ends[0][0], ends[1][0]) + (Math.abs(u[0]) < 0.5 ? 4.5 : 0), top, Math.max(ends[0][2], ends[1][2]) + (Math.abs(u[2]) < 0.5 ? 4.5 : 0)]];
         if (!clearBox(r.no, beam)) { why(r.no, `at ${p.map(Math.round)}: no frame (beam blocked by ${lastBlock})`); return false; }
         const shoeKey = `SHOE|${r.NPS}|${r.cls}|shoe|${SHOE_H.toFixed(3)}`, shoeT = frameFromAxes([p[0], p[1] - rad, p[2]], [0, 1, 0], w) as number[];
         if (!freeOf(shoeKey, shoeT)) { why(r.no, `at ${p.map(Math.round)}: no frame (its shoe on ${lastBlock})`); return false; }
@@ -247,6 +249,28 @@ const shapeBox = (s: OwnShape): Box => {
   if (s.k === 'cyl') return [[0, 1, 2].map(i => Math.min(s.a[i], s.b[i]) - s.r) as V3, [0, 1, 2].map(i => Math.max(s.a[i], s.b[i]) + s.r) as V3];
   const ps = Array.from({ length: 19 }, (_, i) => arcAt(s, (i * Math.PI) / 36)); return [[0, 1, 2].map(i => Math.min(...ps.map(p => p[i])) - s.r) as V3, [0, 1, 2].map(i => Math.max(...ps.map(p => p[i])) + s.r) as V3];
 };
+/** SW-RPI-18 (amended): the true solids of the plant's steel, concrete and equipment: a member along an axis of the plant by its own drawn solids, a round bar
+ *  by its own radius about its axis; a member at a slope by the generator's round (larger than it, so a support beside one may be taken out where it need not) */
+type TrueSolid = { tag: string; /** the placed part it is a solid of */ id: number; box: Box; cap?: { a: V3; b: V3; r: number } };
+const MEMBER_KINDS = new Set(['W', 'C', 'L', 'HSS_RECT', 'HSS_ROUND', 'Z', 'CS', 'ROD', 'PIPE']);
+export function trueSolids(plant: PlantDef): TrueSolid[] {
+  const out: TrueSolid[] = [], square = (T: number[]) => [0, 4, 8].every(i => [0, 1, 2].filter(k => Math.abs(T[i + k]) > 0.9999).length === 1);
+  let id = 0;
+  for (const pl of [...plant.building().instances.filter(p => !p.tags.includes('cladding') && !p.tags.includes('trim')), ...plant.interior().instances]) {
+    id++; if (pl.tags.some(t => /keep-out|anchor-rod|slab/.test(t))) continue;
+    const T = pl.transform as number[], tag = pl.tags.join('/'), bs = solidBoxes(pl.part) as Box[]; if (!bs.length) continue;
+    if (pl.part.kind === 'ROD' || (MEMBER_KINDS.has(pl.part.kind) && !square(T))) {
+      const u: Box = [[0, 1, 2].map(k => Math.min(...bs.map(b => b[0][k]))) as V3, [0, 1, 2].map(k => Math.max(...bs.map(b => b[1][k]))) as V3];
+      const cx = (u[0][0] + u[1][0]) / 2, cy = (u[0][1] + u[1][1]) / 2, r = pl.part.kind === 'ROD' ? (u[1][0] - u[0][0]) / 2 : Math.hypot(u[1][0] - u[0][0], u[1][1] - u[0][1]) / 2;
+      const a = xfp(T, [cx, cy, u[0][2]]), b = xfp(T, [cx, cy, u[1][2]]);
+      out.push({ tag, id, box: [[0, 1, 2].map(k => Math.min(a[k], b[k]) - r) as V3, [0, 1, 2].map(k => Math.max(a[k], b[k]) + r) as V3], cap: { a, b, r } }); continue;
+    }
+    for (const b of bs) out.push({ tag, id, box: toWorld(T, b) });
+  }
+  return out;
+}
+const inBox = (p: V3, b: Box) => [0, 1, 2].every(k => p[k] >= b[0][k] - 1e-6 && p[k] <= b[1][k] + 1e-6);
+const solidIn = (q: TrueSolid, b: Box, e = 0.02) => ovBox(q.box, b) && (q.cap ? K.segBox(q.cap.a, q.cap.b, b[0], b[1]) < q.cap.r - e : deep(q.box, b, e));
 /** the pieces of the lines and of the nozzles' spools by their true shapes (SW-RPI-22's), each with its box */
 function piecesOf(m: PipingModel, _vb?: (c: Comp) => Box) {
   const of = (line: string, c: Comp) => shapesOf(c).map(s => ({ line, kind: c.kind, tag: c.tag, s, box: shapeBox(s) }));
@@ -277,6 +301,30 @@ export function strikeTest(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box
   const statics = staticObstacles(plant.building().instances, plant.interior().instances, true).obstacles.filter(o => !/keep-out/.test(o.tag));
   const pieces = piecesOf(m, vb);
   const sBox = statics.map(o => ({ o, box: (o.kind === 'box' ? [o.mn, o.mx] : [[0, 1, 2].map(k => Math.min(o.a[k], o.b[k]) - o.r), [0, 1, 2].map(k => Math.max(o.a[k], o.b[k]) + o.r)]) as Box }));
+  let truth: TrueSolid[] | undefined;
+  /** SW-RPI-18 (amended): a hanger's lug, rod and top plate, a trapeze's rods and top plates, against the true solids but the member it hangs from */
+  const hungStrikes = (sp: { type: string; key: string; T: unknown; at?: unknown }, T: number[], solids: Box[]): string | undefined => {
+    truth ??= trueSolids(plant);
+    // each top: its plate's box and the point just under its top face's middle
+    const tops: { plate: Box; rod: Box }[] = [];
+    if (sp.type === 'hanger') {
+      const plate = solids.reduce((a, b) => (b[1][1] > a[1][1] ? b : a)), rods = tallOf(sp.key, T, true); for (const rod of rods) tops.push({ plate, rod });
+      // the lug too, with the rod: everything but the clamp round the pipe (the lowest solid)
+      const lo = solids.reduce((a, b) => (b[0][1] < a[0][1] ? b : a)); for (const q of solids) if (q !== lo && q !== plate && !rods.includes(q)) tops.push({ plate, rod: q });
+    } else if (sp.type === 'trapeze') {
+      for (const rod of tallOf(sp.key, T, true)) { const cx = (rod[0][0] + rod[1][0]) / 2, cz = (rod[0][2] + rod[1][2]) / 2; tops.push({ plate: [[cx - 2, rod[1][1], cz - 2], [cx + 2, rod[1][1] + 0.375, cz + 2]], rod }); }
+    } else return undefined;
+    for (const { plate, rod } of tops) {
+      const pc: V3 = [(plate[0][0] + plate[1][0]) / 2, plate[1][1] - 0.01, (plate[0][2] + plate[1][2]) / 2];
+      // a rod is never the member it hangs from (SW-PS-9), nor a member at a slope
+      const hung = (q: TrueSolid) => (q.cap ? false : inBox(pc, q.box) || (Math.abs(q.box[0][1] - plate[1][1]) <= 0.05 && q.box[0][0] < plate[1][0] && plate[0][0] < q.box[1][0] && q.box[0][2] < plate[1][2] && plate[0][2] < q.box[1][2]));
+      const above = new Set(truth.filter(hung).map(q => q.id));
+      for (const [what, b] of [['top plate', plate], [sp.type === 'trapeze' ? 'rod' : rod === tops[0].rod ? 'rod' : 'lug', [rod[0], [rod[1][0], Math.min(rod[1][1], plate[0][1]), rod[1][2]]] as Box]] as const) {
+        const q = truth.find(x => !above.has(x.id) && solidIn(x, b)); if (q) return `its ${what} through ${q.tag}`;
+      }
+    }
+    return undefined;
+  };
   return (sp, no, kept = []) => {
     const T = sp.T as number[], me = keptOf(sp, no);
     // SW-RPI-18 (amended): no solid of it inside a solid of a support set before it, of its own line or another
@@ -295,6 +343,7 @@ export function strikeTest(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box
         const other = line || solid ? undefined : kept.find(q => q.line !== no && q.tall.some(t => ovBox(t, b)));
         if (line || solid || other) return `its ${sp.type === 'hanger' || sp.type === 'trapeze' ? 'rod' : sp.type === 'trunnion' ? 'leg' : 'post'} ${line ? `through ${line.line}${line.line === no ? ` (${line.tag}, ${line.kind})` : ''}` : solid ? `through ${solid.o.tag}` : `through the support of ${other!.line} in the same place`}`;
       }
+      const hs = hungStrikes(sp, T, me.solids); if (hs) return hs;
     }
     kept.push(me); return undefined;
   };
@@ -390,7 +439,9 @@ export function hangerTops(m: PipingModel, plant: PlantDef): string[] {
   for (const r of m.lines) for (const sp of r.supports) {
     if (sp.type !== 'hanger') continue;
     const k = sp.key.split('|'), L = Number(k[3]), top = sp.at[1] + L + PLATE, x = sp.at[0], z = sp.at[2];
-    const over = members.filter(b => x >= b[0][0] - 0.01 && x <= b[1][0] + 0.01 && z >= b[0][2] - 0.01 && z <= b[1][2] + 0.01 && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]);
+    let over = members.filter(b => x >= b[0][0] - 0.01 && x <= b[1][0] + 0.01 && z >= b[0][2] - 0.01 && z <= b[1][2] + 0.01 && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]);
+    // SW-RPI-20 (amended): where none is over the rod, the member over its top plate (the generator hangs a rod up to 1.2 in past a flange's edge)
+    if (!over.length) { const sol = supportSolids(sp.key, sp.T as unknown as number[]), pl = sol.reduce((a, b) => (b[1][1] > a[1][1] ? b : a)); over = members.filter(b => b[0][0] < pl[1][0] - 0.01 && pl[0][0] + 0.01 < b[1][0] && b[0][2] < pl[1][2] - 0.01 && pl[0][2] + 0.01 < b[1][2] && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]); }
     if (!over.length) continue;
     const under = over[0][0][1], L2 = under - PLATE - sp.at[1]; if (Math.abs(L2 - L) < 0.01 || L2 < 8) continue;
     sp.key = [k[0], k[1], k[2], L2.toFixed(2), ...k.slice(4)].join('|'); out.push(`${sp.id}: rod ${L.toFixed(2)} → ${L2.toFixed(2)} in`);
