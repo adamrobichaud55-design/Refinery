@@ -10,7 +10,7 @@ import type { PlantDef } from '../generator/plant';
 import type { V3 } from '../generator/router';
 import { frameFromAxes } from '../geometry/transform';
 import { pipeDims, makeWideFlange, designFlange, elbowRadius, type PipeClass } from '../catalogue';
-import { arcPoints, arcMeetsBox } from './ownLine';
+import { arcPoints, arcMeetsBox, shapesOf, type OwnShape } from './ownLine';
 import { interiorKit } from '../generator/interiorKit';
 import type { Placed } from '../generator/building';
 import { multiply, translate, standUp } from '../geometry/transform';
@@ -58,6 +58,8 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
   const items: { line: string; s: K.Shape; box: Box }[] = [];
   const addLine = (r: LineRun) => { for (const c of r.comps) if (c.kind !== 'studs') for (const s of K.compShapes(c, vb)) items.push({ line: r.no, s, box: boxOfShape(s) }); for (const sp of r.supports) { const b = vb({ key: sp.key, T: sp.T } as Comp); items.push({ line: r.no, s: { kind: 'box', mn: b[0], mx: b[1] }, box: b }); } };
   for (const r of m.lines) addLine(r);
+  // SW-RPI-18 (amended): no support set here overlaps a solid of any support already on the model, its own line's included
+  const keptAll: KeptSupport[] = m.lines.flatMap(r => r.supports.map(sp => keptOf(sp, r.no)));
   const solidBoxes: { s: K.Shape; box: Box }[] = statics.map(o => (o.kind === 'box' ? { s: { kind: 'box', mn: o.mn, mx: o.mx } as K.Shape, box: [o.mn, o.mx] as Box } : { s: { kind: 'cap', a: o.a, b: o.b, r: o.r } as K.Shape, box: boxOfShape({ kind: 'cap', a: o.a, b: o.b, r: o.r }) }));
   const near = (a: Box, b: Box, e: number) => a[0][0] < b[1][0] + e && a[1][0] > b[0][0] - e && a[0][1] < b[1][1] + e && a[1][1] > b[0][1] - e && a[0][2] < b[1][2] + e && a[1][2] > b[0][2] - e;
   /** a solid in the box b is 1 in clear of every other line and of every solid of the plant but the floor it stands on */
@@ -78,6 +80,7 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
     }
     return true;
   };
+  const freeOf = (key: string, T: number[]) => { const mine = supportSolids(key, T), q = keptAll.find(k => k.solids.some(a => mine.some(b => deep(a, b)))); if (q) lastBlock = `the support ${q.id}`; return !q; };
   const rodClear = (no: string, x: number, z: number, y0: number, y1: number) => y1 <= y0 || clearBox(no, [[x - 0.25, y0, z - 0.25], [x + 0.25, y1, z + 0.25]]);
   const steelOver = (p: V3, rad: number, no: string): number | undefined => {
     let best = Infinity;
@@ -136,28 +139,30 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
         const e = A.d > 0 ? A.d + 4 : rad + 4, f2 = B.d > 0 ? B.d + 4 : rad + 4, ends: V3[] = [[p[0] - u[0] * e, top - FRAME_BEAM.D, p[2] - u[2] * e], [p[0] + u[0] * f2, top, p[2] + u[2] * f2]];
         const bd = e + f2 > 248 ? 12 : FRAME_BEAM.D, beam: Box = [[Math.min(ends[0][0], ends[1][0]) - (Math.abs(u[0]) < 0.5 ? 4.5 : 0), top - bd, Math.min(ends[0][2], ends[1][2]) - (Math.abs(u[2]) < 0.5 ? 4.5 : 0)], [Math.max(ends[0][0], ends[1][0]) + (Math.abs(u[0]) < 0.5 ? 4.5 : 0), top, Math.max(ends[0][2], ends[1][2]) + (Math.abs(u[2]) < 0.5 ? 4.5 : 0)]];
         if (!clearBox(r.no, beam)) { why(r.no, `at ${p.map(Math.round)}: no frame (beam blocked by ${lastBlock})`); return false; }
+        const shoeKey = `SHOE|${r.NPS}|${r.cls}|shoe|${SHOE_H.toFixed(3)}`, shoeT = frameFromAxes([p[0], p[1] - rad, p[2]], [0, 1, 0], w) as number[];
+        if (!freeOf(shoeKey, shoeT)) { why(r.no, `at ${p.map(Math.round)}: no frame (its shoe on ${lastBlock})`); return false; }
         const spec: FrameSpec = { line: r.no, at: [p[0], p[1], p[2]], u, d: [A.d, B.d], floors: [A.floor, B.floor], top, post: A.post === 'W10x49' || B.post === 'W10x49' ? 'W10x49' : 'W8x31', rad };
         out.frames.push(spec); for (const q of framePlaced(spec)) { const b = worldBox(q.part, q.transform as never); if (b) items.push({ line: `frame:${r.no}`, s: { kind: 'box', mn: b[0], mx: b[1] }, box: b }); }
         push(`SHOE|${r.NPS}|${r.cls}|shoe|${SHOE_H.toFixed(3)}`, frameFromAxes([p[0], p[1] - rad, p[2]], [0, 1, 0], w) as number[], 'shoe', [p[0], top, p[2]]); return true;
       };
       const placeSupport = (p: V3): boolean => {
         const top = steelOver(p, rad, r.no);
-        if (top !== undefined) { const key = `HANG|${r.NPS}|${r.cls}|${(top - p[1]).toFixed(2)}`, T = frameFromAxes(p, [0, 1, 0], w); push(key, T, 'hanger', p); out.hangers++; return true; }
+        if (top !== undefined) { const key = `HANG|${r.NPS}|${r.cls}|${(top - p[1]).toFixed(2)}`, T = frameFromAxes(p, [0, 1, 0], w) as number[]; if (freeOf(key, T)) { push(key, T, 'hanger', p); out.hangers++; return true; } }
         // on steel directly below, at most 10 ft under the pipe: the highest member whose axis passes under it
         let sb = -Infinity, sm: Obstacle | undefined; for (const o of members) { const dx = o.b[0] - o.a[0], dz = o.b[2] - o.a[2], u = Math.max(0, Math.min(1, ((p[0] - o.a[0]) * dx + (p[2] - o.a[2]) * dz) / (dx * dx + dz * dz || 1))), q = [o.a[0] + dx * u, o.a[1] + (o.b[1] - o.a[1]) * u, o.a[2] + dz * u]; if (Math.hypot(q[0] - p[0], q[2] - p[2]) > o.r * 0.6) continue; const tp = q[1] + o.r * 0.7; if (tp < p[1] - rad - 6 && tp > sb) { sb = tp; sm = o; } }
         // the member's true top, from its own box, where one under p has its top within 3 in of the estimate (SW-RPI-18 as amended)
         if (isFinite(sb)) { const tb = memberTops.filter(q => p[0] >= q[0][0] - 0.01 && p[0] <= q[1][0] + 0.01 && p[2] >= q[0][2] - 0.01 && p[2] <= q[1][2] + 0.01 && Math.abs(q[1][1] - sb) <= 3).sort((x, y) => Math.abs(x[1][1] - sb) - Math.abs(y[1][1] - sb))[0]; if (tb) sb = tb[1][1]; }
         if (isFinite(sb) && p[1] - rad - sb <= 120) { const h2 = p[1] - rad - sb, key = `STAN|${r.NPS}|${r.cls}|${h2.toFixed(2)}`, T = frameFromAxes([p[0], sb, p[2]], [0, 1, 0], w), b = worldBox(partFromKey(key), T as never);
-          if (b && postClear(r.no, key, [p[0], sb + 0.5, p[2]], p[1] - rad - 0.5, undefined, sm) && !strikes({ id: '', type: 'stanchion', key, T }, r.no)) { push(key, T, 'stanchion', p); out.onSteel++; return true; } }
+          if (b && postClear(r.no, key, [p[0], sb + 0.5, p[2]], p[1] - rad - 0.5, undefined, sm) && !strikes({ id: '', type: 'stanchion', key, T }, r.no) && freeOf(key, T as number[])) { push(key, T, 'stanchion', p); out.onSteel++; return true; } }
         const f = floorUnder(p), h = p[1] - rad - f; if (h < 6 || h > POST_MAX) { why(r.no, `at ${p.map(Math.round)}: no steel above, ${isFinite(sb) ? `steel below at ${sb.toFixed(0)} (blocked by ${lastBlock})` : 'no steel below'}, floor ${f} out of reach`); return false; }
         const key = `STAN|${r.NPS}|${r.cls}|${h.toFixed(2)}`, T = frameFromAxes([p[0], f, p[2]], [0, 1, 0], w), b = worldBox(partFromKey(key), T as never);
-        if (!b || !postClear(r.no, key, [p[0], f, p[2]], p[1] - rad - 0.5, f) || strikes({ id: '', type: 'stanchion', key, T }, r.no)) { why(r.no, `at ${p.map(Math.round)}: no steel above, ${isFinite(sb) ? `steel below at ${sb.toFixed(0)}` : 'no steel below'}; a post from ${f} blocked by ${lastBlock}`); return false; }
+        if (!b || !postClear(r.no, key, [p[0], f, p[2]], p[1] - rad - 0.5, f) || strikes({ id: '', type: 'stanchion', key, T }, r.no) || !freeOf(key, T as number[])) { why(r.no, `at ${p.map(Math.round)}: no steel above, ${isFinite(sb) ? `steel below at ${sb.toFixed(0)}` : 'no steel below'}; a post from ${f} blocked by ${lastBlock}`); return false; }
         push(key, T, 'stanchion', p); if (h > 168) out.posts++; else out.stanchions++; return true;
       };
       const push = (key: string, T: number[], type: 'hanger' | 'stanchion' | 'shoe', p: V3) => {
         const ids = new Set(r.supports.map(sp => sp.id)); let k = r.supports.length + 1; while (ids.has(`${r.no}/S${k}`)) k++;
         const sp = { id: `${r.no}/S${k}`, line: r.no, type, at: p, key, T } as LineRun['supports'][number]; r.supports.push(sp); added++;
-        const b = vb({ key, T } as Comp); items.push({ line: r.no, s: { kind: 'box', mn: b[0], mx: b[1] }, box: b });
+        const b = vb({ key, T } as Comp); items.push({ line: r.no, s: { kind: 'box', mn: b[0], mx: b[1] }, box: b }); keptAll.push(keptOf(sp, r.no));
       };
       /** the generator's stepping along a stretch, in the direction given; false where a step finds nothing */
       const step = (lo: number, hi: number, dir: 1 | -1): boolean => {
@@ -184,13 +189,81 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
   }
 }
 
+/** a part's solid box from its own frame into the world, as the box round its eight corners */
+const xfp = (T: number[], p: V3): V3 => [T[0] * p[0] + T[4] * p[1] + T[8] * p[2] + T[12], T[1] * p[0] + T[5] * p[1] + T[9] * p[2] + T[13], T[2] * p[0] + T[6] * p[1] + T[10] * p[2] + T[14]];
+const toWorld = (T: number[], q: Box): Box => { const cs: V3[] = []; for (const x of [q[0][0], q[1][0]]) for (const y of [q[0][1], q[1][1]]) for (const z of [q[0][2], q[1][2]]) cs.push(xfp(T, [x, y, z])); return [[0, 1, 2].map(k => Math.min(...cs.map(c => c[k]))), [0, 1, 2].map(k => Math.max(...cs.map(c => c[k])))] as Box; };
+/** every solid of a support's part, in the world */
+export const supportSolids = (key: string, T: number[]): Box[] => solidBoxes(partFromKey(key)).map(q => toWorld(T, q as Box));
+/** SW-RPI-18 (amended): the tall members of a support's part in the world, each trimmed 3 in at each end along its height: every solid standing
+ *  more than 6.5 in and taller than it is wide (a hanger's rod, a stanchion's post, a trunnion's leg; not a hanger's clamp ring, as tall as it
+ *  is wide); a trapeze's two rods, which its part holds as one solid, one by one, each at its side of that solid, as wide as the solid is thick
+ *  and as long as its own rod (the key's two heights). `whole`: untrimmed */
+const tallOf = (key: string, T: number[], whole = false): Box[] => {
+  const out: Box[] = [], k = key.split('|'), e = whole ? 0 : 3;
+  for (const q of solidBoxes(partFromKey(key))) {
+    const h = q[1][1] - q[0][1], wx = q[1][0] - q[0][0], wz = q[1][2] - q[0][2];
+    if (h <= 6.5 || h <= Math.max(wx, wz)) continue;
+    const each: Box[] = k[0] === 'TRAP' && wx > 2 * wz ? [[[q[0][0], q[0][1], q[0][2]], [q[0][0] + wz, Number(k[3]), q[1][2]]], [[q[1][0] - wz, q[0][1], q[0][2]], [q[1][0], Number(k[4]), q[1][2]]]] : [q as Box];
+    for (const x of each) { const t = toWorld(T, x); if (t[1][1] - t[0][1] > 6.5) out.push([[t[0][0], t[0][1] + e, t[0][2]], [t[1][0], t[1][1] - e, t[1][2]]]); }
+  }
+  return out;
+};
+/** SW-RPI-18 (amended): the base of a part, every solid within 1 in of its lowest point and no more than 1 in high: its plate (not the anchor rods, which go into the member by design) */
+const baseOf = (key: string, T: number[]): Box[] => { const world = supportSolids(key, T); if (!world.length) return []; const lo = Math.min(...world.map(q => q[0][1])); return world.filter(q => q[0][1] <= lo + 1 && q[1][1] - q[0][1] <= 1); };
+/** two boxes overlap by more than e in every direction */
+const deep = (a: Box, b: Box, e = 0.02) => [0, 1, 2].every(k => Math.min(a[1][k], b[1][k]) - Math.max(a[0][k], b[0][k]) > e);
+const ovBox = (a: Box, b: Box) => [0, 1, 2].every(k => a[0][k] < b[1][k] && b[0][k] < a[1][k]);
+/** a support kept by SW-RPI-18: its line, its tall members and all its solids */
+export interface KeptSupport { line: string; id: string; tall: Box[]; solids: Box[] }
+export const keptOf = (sp: { id: string; key: string; T: unknown }, line: string): KeptSupport => ({ line, id: sp.id, tall: tallOf(sp.key, sp.T as number[]), solids: supportSolids(sp.key, sp.T as number[]) });
+/** a point's distance to a box */
+const boxDist = (p: V3, b: Box) => Math.hypot(Math.max(b[0][0] - p[0], 0, p[0] - b[1][0]), Math.max(b[0][1] - p[1], 0, p[1] - b[1][1]), Math.max(b[0][2] - p[2], 0, p[2] - b[1][2]));
+/** an arc's point at angle th */
+const arcAt = (s: Extract<OwnShape, { k: 'arc' }>, th: number): V3 => [0, 1, 2].map(i => s.O[i] + (s.u[i] * Math.cos(th) + s.v[i] * Math.sin(th)) * s.R) as V3;
+/** SW-RPI-18 (amended): whether a piece's true shape (SW-RPI-22's: a pipe a flat-ended cylinder, an elbow its arc's tube, a valve its part's solids) overlaps a box
+ *  by more than e. A cylinder along an axis exactly; an oblique one, and an arc, by the round swept along it short of its ends by its radius, which lies
+ *  within the piece (so near its ends a piece is held a little short of its true shape, where the piece joined to it is tested as well) */
+function shapeInBox(s: OwnShape, b: Box, e = 0.02): boolean {
+  if (s.k === 'box') return deep([s.mn, s.mx], b, e);
+  if (s.k === 'cyl') {
+    const d: V3 = [s.b[0] - s.a[0], s.b[1] - s.a[1], s.b[2] - s.a[2]], L = Math.hypot(d[0], d[1], d[2]); if (L < 1e-9) return false;
+    const k = [0, 1, 2].find(i => Math.abs(d[i]) / L > 0.9999);
+    if (k !== undefined) {
+      const lo = Math.min(s.a[k], s.b[k]), hi = Math.max(s.a[k], s.b[k]); if (Math.min(hi, b[1][k]) - Math.max(lo, b[0][k]) <= e) return false;
+      const [i, j] = [0, 1, 2].filter(q => q !== k); return Math.hypot(Math.max(b[0][i] - s.a[i], 0, s.a[i] - b[1][i]), Math.max(b[0][j] - s.a[j], 0, s.a[j] - b[1][j])) < s.r - e;
+    }
+    const rr = Math.min(s.r, L / 2), u: V3 = [d[0] / L, d[1] / L, d[2] / L], a: V3 = [s.a[0] + u[0] * rr, s.a[1] + u[1] * rr, s.a[2] + u[2] * rr], c: V3 = [s.b[0] - u[0] * rr, s.b[1] - u[1] * rr, s.b[2] - u[2] * rr];
+    return K.segBox(a, c, b[0], b[1]) < rr - e;
+  }
+  const d0 = Math.min(s.r / s.R, Math.PI / 4), span = Math.PI / 2 - 2 * d0, N = 45, f = (th: number) => boxDist(arcAt(s, th), b);
+  let bi = 0, bv = Infinity; for (let i = 0; i <= N; i++) { const v = f(d0 + (span * i) / N); if (v < bv) { bv = v; bi = i; } }
+  // refined about the nearest sample (the distance to a box along a short arc has one least value)
+  let lo = d0 + (span * Math.max(0, bi - 1)) / N, hi = d0 + (span * Math.min(N, bi + 1)) / N;
+  for (let it = 0; it < 40; it++) { const m1 = lo + (hi - lo) / 3, m2 = hi - (hi - lo) / 3; if (f(m1) < f(m2)) hi = m2; else lo = m1; }
+  return Math.min(bv, f((lo + hi) / 2)) < s.r - e;
+}
+const shapeBox = (s: OwnShape): Box => {
+  if (s.k === 'box') return [s.mn, s.mx];
+  if (s.k === 'cyl') return [[0, 1, 2].map(i => Math.min(s.a[i], s.b[i]) - s.r) as V3, [0, 1, 2].map(i => Math.max(s.a[i], s.b[i]) + s.r) as V3];
+  const ps = Array.from({ length: 19 }, (_, i) => arcAt(s, (i * Math.PI) / 36)); return [[0, 1, 2].map(i => Math.min(...ps.map(p => p[i])) - s.r) as V3, [0, 1, 2].map(i => Math.max(...ps.map(p => p[i])) + s.r) as V3];
+};
+/** the pieces of the lines and of the nozzles' spools by their true shapes (SW-RPI-22's), each with its box */
+function piecesOf(m: PipingModel, _vb?: (c: Comp) => Box) {
+  const of = (line: string, c: Comp) => shapesOf(c).map(s => ({ line, kind: c.kind, tag: c.tag, s, box: shapeBox(s) }));
+  return [...m.lines.flatMap(r => r.comps.filter(c => c.kind !== 'studs').flatMap(c => of(r.no, c))), ...(m.nozzles ?? []).flatMap(n => (n.comps ?? []).filter(c => c.kind !== 'studs').flatMap(c => of(`nozzle ${n.equip}`, c)))];
+}
+type Piece = ReturnType<typeof piecesOf>[number];
+/** a piece overlaps the box b by more than e */
+const pieceIn = (q: Piece, b: Box, e = 0.02) => ovBox(q.box, b) && shapeInBox(q.s, b, e);
 /**
- * SW-RPI-18: supports that strike. On a finished model, each hanger, stanchion, trunnion and trapeze is tested by the tall member of its part (a rod, a post or
- * a leg: the solid box of greatest height), less 3 in at each of its ends, against every piece of every other line, every solid of the plant's steel, concrete and
- * equipment, and the tall member of every support tested before it; one that overlaps any of them is taken out of its line. Returns what was taken out, and why.
+ * SW-RPI-18: supports that strike. On a finished model, each hanger, stanchion, trunnion and trapeze is tested by the tall members of its part (its rods,
+ * post or leg), less 3 in at each of their ends, against every piece of every line (its own but for a trunnion's own elbow), every solid of the plant's
+ * steel, concrete and equipment, and the tall members of every support of another line tested before it; its base plate against the plant's solids; and
+ * every support, of whatever kind, by all its solids against the solids of every support tested before it. One that strikes is taken out of its line.
+ * Returns what was taken out, and why.
  */
 export function supportsThatStrike(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box): string[] {
-  const out: string[] = [], test = strikeTest(m, plant, vb), kept: { line: string; box: Box }[] = [];
+  const out: string[] = [], test = strikeTest(m, plant, vb), kept: KeptSupport[] = [];
   for (const r of m.lines) {
     const keep: typeof r.supports = [];
     for (const sp of r.supports) { const why = test(sp, r.no, kept); if (why) { out.push(`${sp.id} (${sp.type}): ${why}`); continue; } keep.push(sp); }
@@ -198,61 +271,61 @@ export function supportsThatStrike(m: PipingModel, plant: PlantDef, vb: (c: Comp
   }
   return out;
 }
-/** SW-RPI-18's test of one support: why it strikes, or undefined. `kept`: the tall members of supports already kept, to which a clear one's is added */
-export function strikeTest(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box): (sp: { id: string; type: string; key: string; T: unknown }, line: string, kept?: { line: string; box: Box }[]) => string | undefined {
+/** SW-RPI-18's test of one support: why it strikes, or undefined. `kept`: the supports already kept, to which a clear one is added */
+export function strikeTest(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box): (sp: { id: string; type: string; key: string; T: unknown }, line: string, kept?: KeptSupport[]) => string | undefined {
   const TALL = new Set(['hanger', 'stanchion', 'trunnion', 'trapeze']);
   const statics = staticObstacles(plant.building().instances, plant.interior().instances, true).obstacles.filter(o => !/keep-out/.test(o.tag));
-  const xfp = (T: number[], p: V3): V3 => [T[0] * p[0] + T[4] * p[1] + T[8] * p[2] + T[12], T[1] * p[0] + T[5] * p[1] + T[9] * p[2] + T[13], T[2] * p[0] + T[6] * p[1] + T[10] * p[2] + T[14]];
-  const toWorld = (T: number[], q: Box): Box => { const cs: V3[] = []; for (const x of [q[0][0], q[1][0]]) for (const y of [q[0][1], q[1][1]]) for (const z of [q[0][2], q[1][2]]) cs.push(xfp(T, [x, y, z])); return [[0, 1, 2].map(k => Math.min(...cs.map(c => c[k]))), [0, 1, 2].map(k => Math.max(...cs.map(c => c[k])))] as Box; };
-  /** SW-RPI-18 (amended): the tall members of a support's part in the world, each trimmed 3 in at each end along its height: every solid standing
-   *  more than 6.5 in and taller than it is wide (a hanger's rod, a stanchion's post, a trunnion's leg; not a hanger's clamp ring, as tall as it
-   *  is wide); a trapeze's two rods, which its part holds as one solid, one by one, each at its side of that solid, as wide as the solid is thick
-   *  and as long as its own rod (the key's two heights) */
-  const tallOf = (key: string, T: number[]): Box[] => {
-    const out: Box[] = [], k = key.split('|');
-    for (const q of solidBoxes(partFromKey(key))) {
-      const h = q[1][1] - q[0][1], wx = q[1][0] - q[0][0], wz = q[1][2] - q[0][2];
-      if (h <= 6.5 || h <= Math.max(wx, wz)) continue;
-      const each: Box[] = k[0] === 'TRAP' && wx > 2 * wz ? [[[q[0][0], q[0][1], q[0][2]], [q[0][0] + wz, Number(k[3]), q[1][2]]], [[q[1][0] - wz, q[0][1], q[0][2]], [q[1][0], Number(k[4]), q[1][2]]]] : [q];
-      for (const e of each) { const t = toWorld(T, e); if (t[1][1] - t[0][1] > 6.5) out.push([[t[0][0], t[0][1] + 3, t[0][2]], [t[1][0], t[1][1] - 3, t[1][2]]]); }
-    }
-    return out;
-  };
-  /** the lowest of a part's solids in the world: a stanchion's or trunnion's base plate */
-  /** SW-RPI-18 (amended): the base of a part, every solid within 1 in of its lowest point and no more than 1 in high: its plate */
-  const baseOf = (key: string, T: number[]): Box[] => { const bs = solidBoxes(partFromKey(key)); if (!bs.length) return []; const world = bs.map(q => toWorld(T, q as Box)); const lo = Math.min(...world.map(q => q[0][1])); return world.filter(q => q[0][1] <= lo + 1 && q[1][1] - q[0][1] <= 1); };   // the plate, not the anchor rods (they go into the member by design)
-  const ov = (a: Box, b: Box) => [0, 1, 2].every(k => a[0][k] < b[1][k] && b[0][k] < a[1][k]);
-  const pieces = m.lines.flatMap(r => r.comps.filter(c => c.kind !== 'studs').flatMap(c => K.compShapes(c, vb).map(sh => ({ line: r.no, sh, box: (sh.kind === 'box' ? [sh.mn, sh.mx] : [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r), [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r)]) as Box }))));
+  const pieces = piecesOf(m, vb);
   const sBox = statics.map(o => ({ o, box: (o.kind === 'box' ? [o.mn, o.mx] : [[0, 1, 2].map(k => Math.min(o.a[k], o.b[k]) - o.r), [0, 1, 2].map(k => Math.max(o.a[k], o.b[k]) + o.r)]) as Box }));
   return (sp, no, kept = []) => {
-    {
-      const r = { no };
-      const talls = TALL.has(sp.type) ? tallOf(sp.key, sp.T as unknown as number[]) : [];
-      if (!talls.length) return undefined;
-      // SW-RPI-18 (amended): its base plate (the lowest of its part's solids) on a solid, not inside one by more than 0.05 in
-      const bases = sp.type === 'stanchion' || sp.type === 'trunnion' ? baseOf(sp.key, sp.T as unknown as number[]) : [];
-      const sunk = bases.map(base => sBox.find(q => [0, 1, 2].every(k => Math.min(base[1][k], q.box[1][k]) - Math.max(base[0][k], q.box[0][k]) > 0.05) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, base[0], base[1]) < q.o.r - 0.05))).find(Boolean);
+    const T = sp.T as number[], me = keptOf(sp, no);
+    // SW-RPI-18 (amended): no solid of it inside a solid of a support set before it, of its own line or another
+    for (const q of kept) if (q.id !== sp.id && q.solids.some(a => me.solids.some(b => deep(a, b)))) return `its part overlaps the support ${q.id}`;
+    if (TALL.has(sp.type)) {
+      // its base plate (a stanchion's or a trunnion's) on a solid, not inside one by more than 0.05 in
+      const bases = sp.type === 'stanchion' || sp.type === 'trunnion' ? baseOf(sp.key, T) : [];
+      const sunk = bases.map(base => sBox.find(q => deep(base, q.box, 0.05) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, base[0], base[1]) < q.o.r - 0.05))).find(Boolean);
       if (sunk) return `its base plate inside ${sunk.o.tag}`;
-      for (const b of talls) {
-        // a pipe or round piece overlaps the member where its axis comes nearer the member's box than its radius (the library's gap to a box is never below 0)
-        const hits = (q: (typeof pieces)[number]) => (q.sh.kind === 'box' ? true : K.segBox(q.sh.a, q.sh.b, b[0], b[1]) < q.sh.r - 0.02);
-        // other lines' pieces, and its own line's too but for a trunnion (its leg is welded into its own elbow); its trimmed ends hold the piece it carries (SW-RPI-18 amended)
-        const line = pieces.find(q => (q.line !== r.no || sp.type !== 'trunnion') && ov(q.box, b) && hits(q));
-        const solid = line ? undefined : sBox.find(q => ov(q.box, b) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, b[0], b[1]) < q.o.r));
-        const other = line || solid ? undefined : kept.find(q => q.line !== r.no && ov(q.box, b));
-        if (line || solid || other) return `its ${sp.type === 'hanger' || sp.type === 'trapeze' ? 'rod' : sp.type === 'trunnion' ? 'leg' : 'post'} ${line ? `through ${line.line}` : solid ? `through ${solid.o.tag}` : `through the support of ${other!.line} in the same place`}`;
+      // a trunnion's own elbow, which its leg is welded into: an elbow of its own line that the untrimmed leg reaches
+      const legs = sp.type === 'trunnion' ? tallOf(sp.key, T, true) : [], ownElbow = (q: Piece) => sp.type === 'trunnion' && q.line === no && q.kind === 'elbow' && legs.some(l => ovBox(q.box, l));
+      for (const b of me.tall) {
+        // every line's pieces, its own too (SW-RPI-18 amended); its trimmed ends hold the piece it carries
+        const line = pieces.find(q => !ownElbow(q) && pieceIn(q, b));
+        const solid = line ? undefined : sBox.find(q => ovBox(q.box, b) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, b[0], b[1]) < q.o.r));
+        const other = line || solid ? undefined : kept.find(q => q.line !== no && q.tall.some(t => ovBox(t, b)));
+        if (line || solid || other) return `its ${sp.type === 'hanger' || sp.type === 'trapeze' ? 'rod' : sp.type === 'trunnion' ? 'leg' : 'post'} ${line ? `through ${line.line}${line.line === no ? ` (${line.tag}, ${line.kind})` : ''}` : solid ? `through ${solid.o.tag}` : `through the support of ${other!.line} in the same place`}`;
       }
-      for (const b of talls) kept.push({ line: r.no, box: b });
-      return undefined;
     }
+    kept.push(me); return undefined;
   };
 }
-
 /**
- * SW-RPI-19: valves that strike. A valve whose part's solids overlap a solid of the steel, concrete or equipment or a piece of another line is turned about its
- * own run to the first other direction square to the run, up first and never down, in which its solids, grown by 1 in, overlap nothing; its place and joints stay. Returns what
- * was turned, and what could not be.
+ * SW-RPI-18 (amended): the pipe frames of SW-RPI-17, each tested as a support is: its pedestals, posts and beam against every piece of every line and of
+ * the nozzles' spools, every solid of the plant (not its frames: `plant` without them), every support but its own shoe, and the frames kept before it.
+ * A frame that overlaps any of them by more than 0.02 in is taken out with its shoe. Returns the frames kept and what was taken out.
  */
+export function framesThatStrike(m: PipingModel, plant: PlantDef, frames: FrameSpec[], vb: (c: Comp) => Box): { kept: FrameSpec[]; out: string[] } {
+  const statics = staticObstacles(plant.building().instances, plant.interior().instances, true).obstacles.filter(o => !/keep-out/.test(o.tag));
+  const sBox = statics.map(o => ({ o, box: (o.kind === 'box' ? [o.mn, o.mx] : [[0, 1, 2].map(k => Math.min(o.a[k], o.b[k]) - o.r), [0, 1, 2].map(k => Math.max(o.a[k], o.b[k]) + o.r)]) as Box }));
+  const pieces = piecesOf(m, vb), shoeOf = (f: FrameSpec) => (s: { type: string; at: V3 | number[] }) => s.type === 'shoe' && Math.abs(s.at[0] - f.at[0]) < 0.5 && Math.abs(s.at[2] - f.at[2]) < 0.5;
+  const sup = m.lines.flatMap(r => r.supports.map(sp => ({ line: r.no, sp, solids: supportSolids(sp.key, sp.T as unknown as number[]) })));
+  const kept: FrameSpec[] = [], keptBoxes: Box[] = [], out: string[] = [];
+  for (const f of frames) {
+    const parts = framePlaced(f).map(q => ({ what: q.tags[q.tags.length - 1], box: worldBox(q.part, q.transform) })).filter((q): q is { what: string; box: Box } => !!q.box);
+    const own = shoeOf(f);
+    let why: string | undefined;
+    for (const { what, box } of parts) {
+      const li = pieces.find(q => pieceIn(q, box)); if (li) { why = `its ${what} through ${li.line} (${li.tag})`; break; }
+      const so = sBox.find(q => deep(q.box, box) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, box[0], box[1]) < q.o.r - 0.02)); if (so) { why = `its ${what} inside ${so.o.tag}`; break; }
+      const su = sup.find(q => !(q.line === f.line && own(q.sp as never)) && q.solids.some(s => deep(s, box))); if (su) { why = `its ${what} through the support ${su.sp.id}`; break; }
+      if (keptBoxes.some(b => deep(b, box))) { why = `its ${what} inside another frame`; break; }
+    }
+    if (!why) { kept.push(f); keptBoxes.push(...parts.map(q => q.box)); continue; }
+    const r = m.lines.find(q => q.no === f.line); if (r) r.supports = r.supports.filter(s => !own(s as never));
+    out.push(`the pipe frame of ${f.line} at ${f.at.map(Math.round).join(', ')}: ${why}`);
+  }
+  return { kept, out };
+}
 export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp) => Box): { turned: string[]; stuck: string[] } {
   const turned: string[] = [], stuck: string[] = [];
   const statics = staticObstacles(plant.building().instances, plant.interior().instances, true).obstacles.filter(o => !/keep-out/.test(o.tag));

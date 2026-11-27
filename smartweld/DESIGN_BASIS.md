@@ -859,24 +859,36 @@ on the closure member and the effort a person can apply. Every internal is a rea
   `BALL`, `BFLY`. Bore D = the pipe bore of the class (full port). Ends: integral flanges with
   the SW-FLG pattern of the size and class (BFLY is a wafer body between pipe flanges).
   Amended 2026-11-27 (owner's decision, P-95): behind each end flange the valve leaves room
-  for the studs and nuts of its joint (SW-FLG-7). Over the nuts' reach behind the back of the
-  flange (half the stud length less half the joint, that is the two flanges, their raised
-  faces and the gasket: the nut and the end of the stud beyond it), the hub and the tube, neck
-  or flare that carries it stand no further from the axis than half the bolt circle less half
-  the nut's width across corners (SW-B-2, SW-B-3), and come back to their own size beyond that
-  reach on a 45° shoulder. The cut never leaves less wall over the bore than SW-VLV-2 gives
-  the bore itself (D_c = D). The end flange keeps its n holes of the stud diameter plus 1/8 in
-  on the bolt circle (SW-FLG-4), drilled as the pipe flange it bolts to; face-to-face, flange
-  diameter and thickness are unchanged. Reason: a nut seats on the back of the flange, so the
-  casting behind it must stop short of the nut; drawn whole, the hub (twice the body wall at
-  the flange) stood where the nuts on the valve's side sit, and an independent clash check of
+  for the studs and nuts of its joint (SW-FLG-7), with the clearance a bolt hole gives its
+  stud (1/16 in all round, the hole being d + 1/8 in, SW-FLG-4). The room runs from the back
+  of the flange over the nuts' reach (half the stud length less half the joint, that is the
+  two flanges, their raised faces and the gasket: the nut and the end of the stud beyond it)
+  and the clearance. Over it the hub, and the tube, neck or flare that carries it, stand no
+  further from the axis than half the bolt circle less half the nut's width across corners
+  (SW-B-2, SW-B-3) and the clearance, and keep their own size beyond it (a plain step); any
+  other part of the casting that stands where a nut or a stud's end would (the edge of a
+  cover flange) is cut back round each bolt hole to half the nut's width across corners and
+  the clearance. No cut leaves less wall over the bore than SW-VLV-2 gives the bore itself
+  (D_c = D); where that wall is reached first the clearance gives way (the 4 in valves of
+  classes 150 to 1200 keep 0.009 in to the nuts' corners). The end flange keeps its n holes
+  of d + 1/8 in on the bolt circle (SW-FLG-4), drilled as the pipe flange it bolts to;
+  face-to-face, flange diameter and thickness are unchanged. Reason: a nut seats on the back of the flange and must be turned there, so the
+  casting behind it stops short of the nut; drawn whole, the hub (twice the body wall at the
+  flange) stood where the nuts on the valve's side sit, and an independent clash check of
   plant 3 found the stud set inside the body of every flanged gate, globe, check and control
   valve from 2 in to 14 in (4,040 findings at 72 valve sizes, up to 0.6 in deep; at 12 in
-  class 1200 the control valve's hub stood beyond the bolt circle itself). The holes were
-  already drilled and the studs clear of them. In classes 2400 and 4800 (69 offered valves,
-  none in any plant) the wall comes first and the nuts still meet the hub, by up to 1/4 in:
-  there the bolt circle of SW-FLG-4 is too small for the hub, as it is for the pipe flanges'
-  own hubs, and is to be reviewed with the flange rules.
+  class 1200 the control valve's hub stood beyond the bolt circle itself); with the hubs cut,
+  the cover flange of the 3 in swing check still stood 0.03 in into two of its nuts. The
+  holes were already drilled and the studs clear of them. Not settled by this rule, and used
+  in no plant: in classes 2400 and 4800 the wall comes first and the nuts still meet the hub,
+  because the bolt circle of SW-FLG-4 is too small for the hub there, as it is for the pipe
+  flanges' own hubs (to be reviewed with the flange rules); bolts are not cut, so where the
+  bolts of a cover or bonnet stand in an end joint's room (the 36 in class 1200 swing check,
+  the 5 in and 8 in class 1200 safety valves, and larger or higher-class ones of these and of
+  the globes) the joint's arrangement is to be reviewed; and the Y-pattern globe's inclined
+  bonnet joint (F-4) is left as drawn (its hubs are cut), because its body and bonnet
+  flanges, gasket and bonnet bolts stand over the inlet joint's nuts at every size, which
+  only a longer neck (a taller valve) can clear, for the owner to decide.
 - `SW-VLV-2` Body wall: t_b = roundup( max( 1/4 in + D/50, P D_c / (2 S_c) + 1/8 in ), 1/16 in ) with
   S_c = F_y / 2.5 = 14,400 psi ("Grade 36 casting", drawing) and D_c the body cavity diameter.
   Reason: hoop stress with a larger factor for a casting (porosity, surface defects) plus a
@@ -4715,7 +4727,10 @@ their own geometry rules, which are unchanged.
       next the channel covers and of both end frames (no line hangs from a rod). Grating (SW-GR-1) cut round the
       saddles, the frames' posts and the set's own pipes (an inch clear), and under each
       boot for the sleeve of the tail pipe that falls from it (SW-PEN-1); guardrail on
-      every edge.
+      every edge. A pipe's hole is an inch clear of the pipe where it passes between the
+      grating's faces, its bend included where a bend begins below the floor (amended
+      2026-11-27: sized to the straight leg alone, the hole left the cooling water supply's
+      first bend 0.4 in inside the grating, found by the plant's clash audit).
     - A stair of those flights stands along the deck's far side, a landing at each end of
       each flight on posts of its own, its top landing against the deck beside the
       condensers, where the guardrail is open.
@@ -5714,9 +5729,37 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   SW-RPI-17, which stand in a unit's report and not among its cell's solids, are solids of
   the plant for this test and for SW-RPI-17 (supports set later stood up to 2.2 in inside
   a frame's pedestal). The tall member is tested against the pieces of its own line too
-  (amended the same day: 30 posts stood through a valve or flange of the line they carry);
-  its ends, left out, hold the piece it carries; a trunnion's leg, welded into its own elbow,
-  is tested against other lines only.
+  (amended the same day: on the models as they stood, five stanchions' posts rose from the
+  floor through a flange, gasket, valve or pipe of their own line's battery-limit spool, which
+  runs under the run they carry); its ends, left out, hold the piece it carries; a trunnion's
+  leg is tested against its own line but the elbow it is welded into (amended the same day:
+  first tested against other lines only, a leg stood through its own line's reducer and
+  flange below the elbow, by 1.3 in). A support whose solids, any of them, overlap a solid
+  of a support set before it, of its own line or another, by more than 0.02 in is taken out
+  too (amended the same day: two shoes of one line stood in one place, and two trunnions'
+  base plates overlapped by 0.5 in); and SW-RPI-17 tests each support it would set so, its
+  own line's supports included. A pipe frame of SW-RPI-17 is tested as a support is
+  (amended the same day: frames set for two lines side by side stood with their pedestals
+  up to 5.6 in inside each other's, and a post through a nozzle's spool): its pedestals,
+  posts and beam against every piece of every line but the run its shoe carries, every
+  solid of the plant, and the frames tested before it; a frame that overlaps any of them by
+  more than 0.02 in is taken out with its shoe, and SW-RPI-17 may then set another support
+  there. A part's tall members
+  are each of its solids that stands more than 6.5 in and is taller than it is wide, each
+  tested on its own (amended the same day: the tallest solid alone had been taken, and on a
+  line of 12 in or more that is a hanger's clamp ring, as tall as it is wide, so the test had
+  found the hanger's own pipe inside its "rod", 26 hangers falsely; and a trapeze's two rods,
+  which its part holds as one solid, had been taken as one box across the pipe between them,
+  11 trapezes falsely); a trapeze's rods are taken one by one, each at its side of that solid,
+  as wide as the solid is thick and as long as its own rod (the part's two rod lengths).
+  Each piece is tested by its true shape, SW-RPI-22's (a pipe or flange a flat-ended
+  cylinder, an elbow the tube about its arc, a valve its part's solids), and the nozzles'
+  spools are pieces too (amended the same day: held as the generator's checks hold them, a
+  pipe as a round about its axis that reaches its radius past each end, the riser above a
+  trunnion's elbow had seemed to reach 5 in down into the leg, 88 trunnions falsely; and a
+  frame's post stood through a nozzle's spool unseen). An oblique cylinder and an arc are
+  held by the round swept along them short of their ends by their radius, which lies within
+  the piece; the piece joined to each end is tested as well.
   SW-RPI-17 sets no support this test would take out (amended the same day): a stanchion on
   steel stands on the member's true top, from its own box, not on the generator's estimate
   of it (the centre and seven tenths of the round it holds the member by, which for a 12 in
@@ -6179,7 +6222,10 @@ given; nothing was looked up (PROVENANCE P-94). The mains are piped by the gener
   the rack, its stringers and junction frames, the units' steel in their valve bays, every
   piece and support of the pipeway's lines and of the units' lines in their valve bays (as
   the checks hold them, SW-RPI-7), but the pieces of each cooling water spool itself, which
-  the branch bolts to.
+  the branch bolts to; and the pipe frames SW-RPI-17 set for those lines (amended
+  2026-11-27: a frame stands in its model's report and not among its solids, and the clash
+  audit found two of the mains through the post of a frame the pipeway's correction had set,
+  by up to 4.5 in).
 - `SW-CWM-6` Two runs. The supply's main with its branches and the valves beyond its
   spools are routed first; the generator's valves that are not built are taken out of the
   result (SW-PWY-7); then that result stands as solids (SW-RPI-7) while the return's lines

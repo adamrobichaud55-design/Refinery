@@ -73,6 +73,20 @@ function partBoxes(p: PartSpec): { name: string; mn: V3; mx: V3 }[] {
   for (const so of buildGeometry(p).solids) { const mn: V3 = [Infinity, Infinity, Infinity], mx: V3 = [-Infinity, -Infinity, -Infinity], P = so.mesh.positions; for (let i = 0; i < P.length; i += 3) for (let a = 0; a < 3; a++) { mn[a] = Math.min(mn[a], P[i + a]); mx[a] = Math.max(mx[a], P[i + a]); } if (Number.isFinite(mn[0])) r.push({ name: so.name ?? '', mn, mx }); }
   ownBoxes.set(p, r); return r;
 }
+/** SW-CELL-4 (amended): how far from the vertical axis through (x, z) a part's solids reach between the heights y0 and y1, counting only what lies
+ *  within `near` of it: the greatest distance in plan of the solids' corners there and of their edges where they cross y0 and y1 */
+function reachBetween(p: PartSpec, x: number, z: number, y0: number, y1: number, near: number): number {
+  let r = 0;
+  for (const so of buildGeometry(p).solids) {
+    const P = so.mesh.positions, I = so.mesh.indices, d = (xx: number, zz: number) => Math.hypot(xx - x, zz - z), take = (v: number) => { if (v <= near && v > r) r = v; };
+    for (let i = 0; i < P.length; i += 3) if (P[i + 1] >= y0 && P[i + 1] <= y1) take(d(P[i], P[i + 2]));
+    for (let t = 0; t < I.length; t += 3) for (const [a, b] of [[I[t], I[t + 1]], [I[t + 1], I[t + 2]], [I[t + 2], I[t]]]) for (const y of [y0, y1]) {
+      const ya = P[3 * a + 1], yb = P[3 * b + 1]; if ((ya - y) * (yb - y) > 0 || ya === yb) continue;
+      const u = (y - ya) / (yb - ya); take(d(P[3 * a] + (P[3 * b] - P[3 * a]) * u, P[3 * a + 2] + (P[3 * b + 2] - P[3 * a + 2]) * u));
+    }
+  }
+  return r;
+}
 /** a box under a transform: the box of its eight corners (exact for the quarter turns bodies are placed by) */
 function boxAt(b: { mn: V3; mx: V3 }, T: Mat4): { mn: V3; mx: V3 } {
   const mn: V3 = [Infinity, Infinity, Infinity], mx: V3 = [-Infinity, -Infinity, -Infinity];
@@ -210,7 +224,8 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       const plan = (b: { mn: V3; mx: V3 }, m: number) => { const p = U(b.mn[0], 0, b.mn[2]), q = U(b.mx[0], 0, b.mx[2]); return { x0: Math.min(p[0], q[0]) - m, x1: Math.max(p[0], q[0]) + m, z0: Math.min(p[2], q[2]) - m, z1: Math.max(p[2], q[2]) + m }; };
       const rects = sb.filter(b => /saddle base|: posts /.test(b.name) && b.mn[1] < 1).map(b => plan(b, 1));
       // round holes: the set's own pipes, an inch clear; and under each boot the hole its tail pipe's sleeve needs (SW-PEN-1), since a tail pipe falls straight (SW-CELL-3)
-      const rounds = [...sb.filter(b => /leg$/.test(b.name)).map(b => { const p = U((b.mn[0] + b.mx[0]) / 2, 0, (b.mn[2] + b.mx[2]) / 2); return { x: p[0], z: p[2], r: (b.mx[0] - b.mn[0]) / 2 + 1 }; }),
+      // SW-CELL-4 (amended): each an inch clear of its pipe where the pipe passes between the grating's faces, its bend included
+      const rounds = [...sb.filter(b => /leg$/.test(b.name)).map(b => { const cx = (b.mn[0] + b.mx[0]) / 2, cz = (b.mn[2] + b.mx[2]) / 2, half = (b.mx[0] - b.mn[0]) / 2, p = U(cx, 0, cz); return { x: p[0], z: p[2], r: Math.max(half, reachBetween(set, cx, cz, 0, bar, half + 12)) + 1 }; }),
         ...inp.stages.map((q, i) => { const b = bx(new RegExp(`^condenser ${i + 1}: condensate boot$`)), p = U((b.mn[0] + b.mx[0]) / 2, 0, (b.mn[2] + b.mx[2]) / 2); return { x: p[0], z: p[2], r: (partFromKey(`FSLV|${q.drain}|P150`).extra!.cutD as number) / 2 }; })];
       const z0 = Math.min(U(xA, 0, 0)[2], U(xB, 0, 0)[2]), nP = Math.ceil(W / 36 - 1e-9);
       for (let i = 0; i + 1 < stations.length; i++) {

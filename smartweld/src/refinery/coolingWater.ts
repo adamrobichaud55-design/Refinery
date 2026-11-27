@@ -25,6 +25,7 @@ import { lineNumber } from './registry';
 import { plantHeaders } from './headers';
 import { pipeway, PWY, PIPED, MIN_BRANCH, unitToPipeway, type PipewayLine } from './pipeway';
 import { runSolids, valveBoxFn } from './pipingReport';
+import { framePlaced, type FrameSpec } from './supports';
 
 const up = (v: number, s = 6) => Math.ceil(v / s - 1e-9) * s, down = (v: number, s = 6) => Math.floor(v / s + 1e-9) * s;
 const xf = (m: Mat4, p: V3): V3 => [m[0] * p[0] + m[4] * p[1] + m[8] * p[2] + m[12], m[1] * p[0] + m[5] * p[1] + m[9] * p[2] + m[13], m[2] * p[0] + m[6] * p[1] + m[10] * p[2] + m[14]].map(v => Math.round(v * 1e6) / 1e6) as V3;
@@ -137,6 +138,9 @@ export function coolingWater(root = '.'): CoolingWater {
   for (const pl of pw.interior.instances) solids.push({ part: pl.part, transform: multiply(SHIFT, pl.transform), tags: [...pl.tags, ...(hiddenBeam(pl) ? ['first bent'] : [])] });
   const pm = JSON.parse(readFileSync(`${root}/public/refinery/piping/pipeway.json`, 'utf8')) as PipingModel;
   for (const b of runSolids(pm, vb)) solids.push({ ...b, transform: multiply(SHIFT, b.transform), tags: ['solid', 'cladding', 'pipeway line'] });   // real, not a routing aid: not 'keep-out' (SW-RPI-17 sees it), and nothing hangs from it
+  // SW-CWM-5 (amended): the pipe frames SW-RPI-17 set for those lines, which stand in the report and not among the solids
+  const framesOf = (file: string) => (JSON.parse(readFileSync(`${root}/public/refinery/piping/${file}`, 'utf8')) as { frames?: FrameSpec[] }).frames ?? [];
+  for (const f of framesOf('pipeway.report.json')) for (const q of framePlaced(f)) solids.push({ ...q, transform: multiply(SHIFT, q.transform), tags: [...q.tags, 'solid', 'cladding', 'pipeway line'] });
   for (const U of units) {
     const bay = bays.find(b => b.unit === U.unit); if (!bay) continue;
     const um = JSON.parse(readFileSync(`${root}/public/refinery/piping/unit-${U.unit}.json`, 'utf8')) as PipingModel;
@@ -145,6 +149,7 @@ export function coolingWater(root = '.'): CoolingWater {
     const near: PipingModel = { ...um, lines: [...um.lines.map(r => ({ ...r, comps: r.comps.filter(c => inBay(c.a) || inBay(c.b)), supports: r.supports.filter(s => inBay(s.at as V3)), side: (r.side ?? []).filter(c => inBay(c.a) || inBay(c.b)) })),
       { no: 'spools', comps: um.nozzles.filter(n => !cwTags.has(n.equip)).flatMap(n => n.comps ?? []).filter(c => inBay(c.a) || inBay(c.b)), supports: [], welds: [], path: [] } as unknown as PipingModel['lines'][number]] };
     for (const b of runSolids(near, vb)) solids.push({ ...b, transform: multiply(SHIFT, multiply(U.T, b.transform)), tags: ['solid', 'cladding', `unit-${U.unit} line`] });
+    for (const f of framesOf(`unit-${U.unit}.report.json`).filter(f => inBay(f.at))) for (const q of framePlaced(f)) solids.push({ ...q, transform: multiply(SHIFT, multiply(U.T, q.transform)), tags: [...q.tags, 'solid', 'cladding', `unit-${U.unit} line`] });
   }
   // sleepers, each where it stands 3 in clear of the steel (a junction frame's post)
   const sleepers: CoolingWater['sleepers'] = [], zs0 = Math.min(...lanes) - OD / 2 - CWM.sleeperOver, zs1 = Math.max(...lanes) + OD / 2 + CWM.sleeperOver;

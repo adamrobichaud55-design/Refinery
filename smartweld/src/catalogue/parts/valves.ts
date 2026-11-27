@@ -229,6 +229,9 @@ function endFlanges(b: ValveSolid[], c: Common, zFace = c.F2F / 2, f = c.f, D = 
   }
 }
 // ---- room for the end joints' nuts (SW-VLV-1, amended 2026-11-27) ------------------------------------------
+/** whether the valve being built has flanged ends (set by makeValve around its builder): forged socket-weld and threaded ends have no studs behind them */
+let FLANGED = true;
+const NO_ROOM: SDF = () => Infinity;
 /** the clearance kept round the nuts: the bolt hole's own clearance on its stud (SW-FLG-4, hole d + 1/8 in), 1/16 in */
 const nutGap = (f: FlangeDesign) => (f.holeD - f.d) / 2;
 /** the nuts' reach behind the back of an end flange: half the stud length less half the joint (two flanges, their raised faces and the gasket), i.e. the nut and the stud's end beyond it (SW-FLG-7), and the clearance */
@@ -240,6 +243,7 @@ const nutClearR = (f: FlangeDesign, D: number) => Math.max((f.BC - hexHardware(f
 /** the room for the nuts behind an end flange whose back stands at sb along the outward axis (`ax`, sign `sg`): the ring between the clear radius and
  *  half the bolt circle plus half the nut's across-corners and the clearance, from the nuts' reach behind the back through the flange's thickness */
 function nutRoom(f: FlangeDesign, D: number, ax: 'x' | 'y' | 'z', sg: 1 | -1, sb: number): SDF {
+  if (!FLANGED) return NO_ROOM;
   const rc = nutClearR(f, D), ro = (f.BC + hexHardware(f.d).C) / 2 + nutGap(f), R = nutReach(f);
   return (x, y, z) => {
     const s = sg * (ax === 'x' ? x : ax === 'y' ? y : z) - sb, r = ax === 'x' ? Math.hypot(y, z) : ax === 'y' ? Math.hypot(x, z) : Math.hypot(x, y);
@@ -250,6 +254,7 @@ function nutRoom(f: FlangeDesign, D: number, ax: 'x' | 'y' | 'z', sg: 1 | -1, sb
  *  (a body or cover flange) stands where a nut or stud end would is cut back round it. Holes as flangeRing draws them: at (i + 1/2) 360°/n from x in the
  *  x–y plane for an end along z, and from x toward −z for an end along y (flangeRing turned by toY); never nearer the axis than the bore's own wall */
 function nutPockets(f: FlangeDesign, D: number, ax: 'y' | 'z', sg: 1 | -1, sb: number): SDF {
+  if (!FLANGED) return NO_ROOM;
   const rp = hexHardware(f.d).C / 2 + nutGap(f), rf = D / 2 + boreWall(D, f.P), R = nutReach(f), step = (2 * Math.PI) / f.n;
   return (x, y, z) => {
     const s = sg * (ax === 'y' ? y : z) - sb, u = x, v = ax === 'y' ? -z : y, r = Math.hypot(u, v);
@@ -259,6 +264,7 @@ function nutPockets(f: FlangeDesign, D: number, ax: 'y' | 'z', sg: 1 | -1, sb: n
 }
 /** a revolved hub's outer line (r against rising z, ending at the flange back zb) held within the clear radius over the nuts' reach (SW-VLV-1, amended 2026-11-27) */
 function clipToNutRoom(outer: { r: number; z: number }[], f: FlangeDesign, D: number, zb: number): { r: number; z: number }[] {
+  if (!FLANGED) return outer;
   const rc = nutClearR(f, D), z0 = zb - nutReach(f);
   const line = (z: number) => { for (let i = 0; i + 1 < outer.length; i++) { const a = outer[i], q = outer[i + 1]; if (z <= q.z + 1e-12) return q.z - a.z < 1e-12 ? Math.max(a.r, q.r) : a.r + ((q.r - a.r) * (z - a.z)) / (q.z - a.z); } return outer[outer.length - 1].r; };
   const zs = [...new Set([...outer.map(p => p.z), z0])].filter(z => z >= outer[0].z && z <= outer[outer.length - 1].z).sort((a, b) => a - b), all = [...zs];
@@ -371,7 +377,7 @@ function globeBodySDF(c: Common, zi: number, tilt = 0): { body: SDF; info: Globe
     parts.length = 0; parts.push(plateT, S.roundBox(0, Rs / 2, -(0.6 * D + tb / 2), Rs, Rs / 2, tb / 2, 0), S.roundBox(0, -Rs / 2, 0.6 * D + tb / 2, Rs, Rs / 2, tb / 2, 0));
   }
   cavity = S.subtract(cavity, ...parts);
-  return { body: S.subtract(outer, cavity, ...runPockets(c, zi)), info: { Rs, Rn, fb, yB, yS: tb / 2 } };   // SW-VLV-1
+  return { body: S.subtract(outer, cavity, ...(tilt ? [] : runPockets(c, zi))), info: { Rs, Rn, fb, yB, yS: tb / 2 } };   // SW-VLV-1 (the Y-pattern's inclined bonnet joint is not cut: see the amendment)
 }
 
 // =====================================================================================================
@@ -744,7 +750,7 @@ const buildPlug: Build = (b, NPS, cls, dims, notes) => {
   const outer = S.union(S.blend(k, runSDF(c, zi), S.roundBox(0, ym, 0, a, hy, a, Math.min(0.3 * D, 0.45 * a))), S.rcylY(fb.OD / 2, yT - fb.tf, yT, edgeR(fb.tf)));
   const cav = S.union(boreSDF(c, zi), S.frustumY(rB + 0.02, yB, rT + 0.02, yT + 1));
   const x = Math.max(a, fb.OD / 2) + 0.5;
-  castPart(b, 'body', S.subtract(outer, cav), [-x, yB - tb - 0.5, -(zi + 0.1)], [x, yT + 0.1, zi + 0.1], tb);
+  castPart(b, 'body', S.subtract(outer, cav, ...runPockets(c, zi)), [-x, yB - tb - 0.5, -(zi + 0.1)], [x, yT + 0.1, zi + 0.1], tb);
   push(b, 'plug', revolveY([{ r: 0, z: yB }, { r: rB, z: yB }, { r: rT, z: yT }, { r: 0, z: yT }]), 'closure');                 // PL-1
   push(b, 'gland gasket', ringY((fb.gasketID + 2 * fb.wg) / 2, fb.gasketID / 2, yT, yT + fb.gasketT), 'polymer', 'compressed sheet');
   const head = 0.5 * D, y0 = yT + fb.gasketT, yHead = y0 + fb.tf;
@@ -772,7 +778,7 @@ const buildDiaph: Build = (b, NPS, cls, dims, notes) => {
     S.roundBox(0, yF - fb.tf / 2, 0, hs, fb.tf / 2, hs, 0.25));
   const weir = S.roundBox(0, -D / 2 + 0.3 * D - 0.5, 0, Ro + 1, 0.3 * D + 0.5, 0.12 * D, 0.08 * D);
   const cav = S.subtract(S.union(boreSDF(c, zi), S.superCylY(Ro, Ro, -0.1 * D, yF + 1, 4)), weir);
-  castPart(b, 'body', S.subtract(outer, cav), [-hs - 0.5, yLo - 0.5, -(zi + 0.1)], [hs + 0.5, yF + 0.1, zi + 0.1], tb);
+  castPart(b, 'body', S.subtract(outer, cav, ...runPockets(c, zi)), [-hs - 0.5, yLo - 0.5, -(zi + 0.1)], [hs + 0.5, yF + 0.1, zi + 0.1], tb);
   push(b, 'diaphragm', box(-hs + 0.1, yF, -hs + 0.1, hs - 0.1, yF + td, hs - 0.1), 'polymer', 'polymer');
   const F = P * (Math.PI / 4) * (1.6 * D) ** 2 * 0.5, st = risingStem(F, D), y0 = yF + td, yT = y0 + fb.tf;
   // F-8 bonnet: square at its flange, round above (square prism ∩ cone), up to a round spindle neck
@@ -811,7 +817,7 @@ const buildPSV: Build = (b, NPS, cls, dims, notes) => {
     S.rcylY(fbj.OD / 2, yBody - fbj.tf, yBody, edgeR(fbj.tf)));
   const cav = S.union(S.cylY(D / 2, yi - 1, 0.2 * D), S.ellipsoid(0, 0.1 * D, 0, Rbowl, Rbowl, Rbowl), S.cylZ(Do / 2, 0, zo + 1), S.cylY(Rh, 0.3 * D, yBody + 1));
   const x = Math.max(Rbowl + tb, fbj.OD / 2, Do / 2 + 2 * tb) + 0.5;
-  castPart(b, 'body', S.subtract(outer, cav), [-x, yi - 0.1, -x], [x, yBody + 0.1, zo + 0.1], tb);
+  castPart(b, 'body', S.subtract(outer, cav, nutPockets(f, D, 'y', -1, -yi), nutPockets(fo, Do, 'z', 1, zo)), [-x, yi - 0.1, -x], [x, yBody + 0.1, zo + 0.1], tb);
   push(b, 'nozzle', ringY(D / 2, dSeat / 2 - 0.05 * D, -Rbowl * 0.7, -0.2 * D), 'stem', BAR);
   push(b, 'disc', cylY(dSeat / 2 + 0.05 * D, -0.2 * D, -0.05 * D), 'closure', BAR);
   push(b, 'disc holder', revolveY([{ r: 0, z: -0.05 * D }, { r: dSeat / 2 + 0.05 * D, z: -0.05 * D }, { r: dSeat / 2 + 0.05 * D, z: 0.1 * D }, { r: dsp, z: 0.25 * D }, { r: 0, z: 0.25 * D }]), 'closure');
@@ -976,7 +982,9 @@ export function makeValve(id: string, type: ValveType, NPS: number, cls: PipeCla
   if (type === 'NEEDLE' && ends === 'SW') throw new Error('NEEDLE has threaded ports by NE-1; socket-weld ends are not made');
   const b0: ValveSolid[] = [], notes: string[] = [];
   const dims: Record<string, Dim> = { NPS: drawing(NPS, 'Nominal size'), P: drawing(CLASS_PRESSURE[cls], 'Class design pressure', 'psi') };
-  const { c, op, extra } = BUILDERS[type](b0, NPS, cls, dims, notes, ends);
+  FLANGED = ends === 'RF';                                                           // SW-VLV-1: room for end studs only behind flanged ends
+  let built: ReturnType<Build>; try { built = BUILDERS[type](b0, NPS, cls, dims, notes, ends); } finally { FLANGED = true; }
+  const { c, op, extra } = built;
   let b = b0;
   if (ends !== 'RF' && type !== 'NEEDLE') {   // NE-1: the needle valve's bar body already has threaded female ports
     // SW-SWT-10: the end flanges are replaced by forged ends continuing the hubs: a cylinder of OD + 2 t_f with the socket or thread
