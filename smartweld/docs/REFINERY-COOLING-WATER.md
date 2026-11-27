@@ -6,7 +6,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 
 | Lines | Routed | Components | Welds | Supports | Pipe, ft | Failures | Checks not at zero |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 18 | 18 | 339 | 301 | 145 | 3,395 | 0 | none |
+| 18 | 18 | 337 | 299 | 146 | 3,393 | 0 | none |
 
 ## Mains
 
@@ -48,28 +48,28 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | Component | Count |
 | --- | --- |
 | blind | 4 |
-| elbow | 93 |
+| elbow | 92 |
 | flange | 20 |
 | gasket | 28 |
 | olet | 14 |
-| pipe | 174 |
+| pipe | 173 |
 | tee | 2 |
 | valve | 4 |
 
 | Welds | Count |
 | --- | --- |
 | BW, field | 38 |
-| BW, shop | 249 |
+| BW, shop | 247 |
 | FW, shop | 14 |
 
 | Supports | Count |
 | --- | --- |
 | anchor | 2 |
 | guide | 8 |
-| hanger | 25 |
+| hanger | 24 |
 | shoe | 89 |
-| stanchion | 14 |
-| trunnion | 7 |
+| stanchion | 15 |
+| trunnion | 8 |
 
 ## Checks
 
@@ -86,7 +86,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 
 ## Notes
 
-- 59 solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).
+- 66 solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).
 - 30"-P150-P-27001: no valve at PL-2701-P; GATE 30 and what stood with it left out, 3 pieces, the pipe 43.0 in longer (SW-PWY-7)
 - 30"-P150-P-27001: no valve at PL-2702-P; GATE 30 and what stood with it left out, 3 pieces, the pipe 43.0 in longer (SW-PWY-7)
 - 20"-P150-P-27101: no valve at BL-1717-P; GATE 20 and what stood with it left out, 3 pieces, the pipe 30.6 in longer (SW-PWY-7)
@@ -108,10 +108,10 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 - 6"-P150-P-27114: no valve at BL-1612-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)
 - 3"-P150-P-27116: no valve at BL-1810-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-PWY-7)
 - 2 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)
-- 93 butt welds set square to their joints (SW-RPI-24)
-- 4 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6"-P150-P-27111/S1 (hanger): its rod through solid/cladding/pipeway line; 6"-P150-P-27112/S3 (hanger): its rod through solid/cladding/pipeway line; 6"-P150-P-27114/S3 (hanger): its rod through solid/cladding/pipeway line; 3"-P150-P-27115/S1 (hanger): its rod through solid/cladding/pipeway line
-- 9 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 0 stanchions on steel below, 2 stanchions and 4 support posts from the floor, and 1 pipe frames
-- 29 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
+- 92 butt welds set square to their joints (SW-RPI-24)
+- 3 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6"-P150-P-27111/S1 (hanger): its rod through solid/cladding/pipeway line; 6"-P150-P-27112/S3 (hanger): its rod through solid/cladding/pipeway line; 3"-P150-P-27115/S1 (hanger): its rod through solid/cladding/pipeway line
+- 8 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 0 stanchions on steel below, 1 stanchions and 4 support posts from the floor, and 1 pipe frames
+- 27 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
 
 Not in this stage (SW-CWM-8): the cooling tower plot's own piping; the mains end at its edge, each at a limit spool with its block valve and blind.
 
