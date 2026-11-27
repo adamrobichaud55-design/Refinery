@@ -288,6 +288,18 @@ function restAgain(up: UnitPiping, k: number, prior0: Placed[], m: PipingModel, 
   return { first, rest, why: [...turned, firstOf.length ? `${firstOf.join(', ')} with ${[...firstSet].filter(x => !firstOf.includes(x)).join(', ') || 'no parent'} routed first` : '',
     own.length ? `${own.map(o => `${o.line} through ${o.what.join(' and ')}`).join('; ')} (SW-RPI-22), held as ${held.length} solid${held.length === 1 ? '' : 's'} of ${[...new Set(held.map(h => h.tags[0]))].join(', ')} while the first were routed` : '', near.length ? `${strips.length} strip${strips.length > 1 ? 's' : ''} beside header${strips.length > 1 ? 's' : ''} where ${near.length} valve${near.length > 1 ? 's' : ''} came within 3 in` : ''].filter(Boolean).join('; '), after };
 }
+/** SW-RPI-29 (added 2026-11-27): a run whose lines pass within 3 in of a steel member, as the generator's check measured again by SW-RPI-13 finds it, routed again once with
+ *  each such member also held as a solid, its section's box widened by 3 in all round; kept where it has no more failures and fewer such findings */
+function clearAgain(up: UnitPiping, k: number, prior: Placed[], m: PipingModel): { m: PipingModel; note: string } | undefined {
+  const near = (q: PipingModel) => unitChecks(q, up).staticClearance, was = near(m); if (!was.length) return undefined;
+  const statics = staticObstacles([], up.cell.interior.instances, true).obstacles, section = sectionBoxFn(up.cell.interior.instances);
+  const tags = new Set(was.map(v => /^\S+ \S+ \(\w+\) – (.+): -?[\d.]+ in$/.exec(v)?.[1]).filter((t): t is string => !!t));
+  const held: Placed[] = statics.filter(o => tags.has(o.tag)).flatMap(o => { const b = section(o); return b ? [{ ...block([b[0][0] - 3, b[0][1] - 3, b[0][2] - 3], [b[1][0] + 3, b[1][1] + 3, b[1][2] + 3], 'member held 3 in larger'), tags: ['keep-out', 'cladding', 'member held 3 in larger'] }] : []; });
+  if (!held.length) return undefined;
+  const mine = new Set(up.runs[k].lines), again = generatePiping({ plant: up.runPlant(k, [...prior, ...held]), only: l => mine.has(l.no) }), now = near(again);
+  if (again.failures.length > m.failures.length || now.length >= was.length) return undefined;
+  return { m: again, note: `${up.runs[k].lines[0]}: routed again with ${[...tags].join(', ')} held 3 in larger, having passed within 3 in of ${tags.size > 1 ? 'them' : 'it'} (SW-RPI-29): ${was.join('; ')}` };
+}
 export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}, watch?: (plant: UnitPiping['plant']) => void, notes: string[] = [], cache?: RunCache): PipingModel {
   const vb = valveBoxFn(), models: PipingModel[] = [], prior: Placed[] = [], t00 = Date.now(); let routed = 0, failed = 0;
   for (const [k, run] of up.runs.entries()) {
@@ -303,6 +315,8 @@ export function generateUnit(up: UnitPiping, log: (s: string) => void = () => {}
     if (run.kind === 'rest') { const again = restAgain(up, k, prior, m, vb, models); if (again) { const was = findingsOf(up, again.first.lines.length ? m : m, vb); m = again.rest; models.push(again.first); notes.push(`the last run made again (SW-RPI-16): ${again.why}; ${was} findings before, ${again.after} after`); log(`unit ${up.unit}: the last run made again (SW-RPI-16): ${again.why}; findings ${was} → ${again.after}`); } }
     // SW-RPI-7: a line whose lane is shut at the outset, given the nearest other lane that is free and clear of what the earlier runs left
     if (m.failures.length && run.kind === 'rack' && run.lane && !kept) { const again = laneAgain(up, k, prior, m); if (again) { m = again.m; notes.push(again.note); log(`unit ${up.unit}: ${again.note}`); } }
+    // SW-RPI-29: a run whose lines pass within 3 in of a steel member, routed again once with that member held 3 in larger
+    if (!kept && run.kind !== 'rest') { const again = clearAgain(up, k, prior, m); if (again) { m = again.m; notes.push(again.note); log(`unit ${up.unit}: ${again.note}`); } }
     if (!kept && run.kind !== 'rest') cache?.put(k, run.lines, m);
     models.push(m); routed += m.stats.routed ?? 0; failed += m.failures.length;
     if (run.kind === 'rest') log(`unit ${up.unit}: the rest, ${m.stats.routed} of ${m.lines.filter(l => l.kind !== 'stub').length} lines routed, ${m.failures.length} failures, ${((Date.now() - t0) / 1000).toFixed(0)} s`);

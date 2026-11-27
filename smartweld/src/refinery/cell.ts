@@ -2,7 +2,8 @@
  * Plant 3: a unit built in its own frame (DESIGN_BASIS.md §78, SW-CELL-1..5). Each sized item of the process model
  * becomes a catalogue body at its size, standing in its row beside the unit's rack. Inches; x from the battery limit
  * along the rack, z across, y up. The steel of the rack and the pads are built by the interior kit of plants 1 and 2,
- * unchanged; nozzles are not part of a body (the piping stage adds them).
+ * unchanged, and three joints of the rack's steel are then made as plant 3's own rule says (SW-CELL-8, rackFraming.ts); nozzles are not part of a body
+ * (the piping stage adds them).
  */
 import {
   makeVerticalVessel, makeHorizontalVessel, makeExchanger, makePump, pumpShaftY, makeAirCooler, makeFiredHeater, makeCompressorPackage, makeBlower,
@@ -28,14 +29,18 @@ import type { Equip, UnitSheet, EqKind } from './flowsheet';
 import { cfs, FLUIDS } from './fluids';
 import { buildGeometry } from '../geometry/partGeometry';
 import { nozzleStandout } from '../generator/nozzles';
+import { rackJoints } from './rackFraming';
 
 const up = (v: number, s = 6) => Math.ceil(v / s - 1e-9) * s, down = (v: number, s = 6) => Math.floor(v / s + 1e-9) * s, near = (v: number, s = 6) => Math.round(v / s) * s;
 /** SW-CELL-2: the unit rack */
 export const RACK = { start: 360, bent: 240, half: 144, tiers: [192, 264, 336] as const, loadPsf: 40 };
 export const PAD = 6, PUMP_PAD = 9, Y_VESSEL = PAD + 1.5 + 0.75;
 /** SW-CELL-4: the air coolers' deck, top of steel, 9 ft above the rack's top tier; the rack's column depth (SW-RK-2: top tier / 24, to 2 in) */
-/** SW-CELL-6: the underside of the yard's support beams */
+/** SW-CELL-6: the underside of the yard's support beams by their nominal depth; drawn, YARD_UNDER */
 export const YARD = 366;
+/** SW-CELL-6 (amended 2026-11-27): a yard beam (W12x40) is centred 6 in above YARD by its nominal depth and drawn at its own (SW-W-5), so its drawn underside, on
+ *  which each yard post's cut end bears and from which the crossing lines' hangers hang, is YARD less half the difference (365.835 in). The way beams are the same section. */
+export const YARD_UNDER = YARD + 6 - proportionW(12, 40).d / 2;
 export const DECK = RACK.tiers[RACK.tiers.length - 1] + 108, RACK_COL = Math.ceil(RACK.tiers[RACK.tiers.length - 1] / 24 / 2) * 2;
 /** SW-CELL-4 (amended 2026-11-27): an air cooler's columns, 2 ft less what the deck's girders (W12x40, centred 6 in under DECK by their nominal depth and drawn
  *  at their own, SW-W-5) stand above DECK; the cooler's column bases are on the girders' tops and its plenum where 2 ft columns on DECK put it */
@@ -247,12 +252,14 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       place(c, set, frameFromAxes([0, steel, 0], [0, 1, 0], [sd, 0, 0]), tag);
       const w = (Dn: number, wt: number, a: V3, b: V3, ...more: string[]) => { k.wBeam(Dn, wt, a, b, deckTag); c.out[c.out.length - 1].tags.push('structure', ...more); };
       // beams across, girders along, columns under the girders
-      stations.forEach((st, i) => { const trib = ((stations[i + 1]?.z ?? st.z) - (stations[i - 1]?.z ?? st.z)) / 2, b = sizeW(D, zReq(DECK_PSF, trib, W) + zPoint(st.kip, W)); w(D, b.w, U(xA + girder.dims.tw / 2, steel - b.dims.d / 2, st.z), U(xB - girder.dims.tw / 2, steel - b.dims.d / 2, st.z), st.kip ? 'carrying-beam' : 'floor-beam'); });
+      stations.forEach((st, i) => { const trib = ((stations[i + 1]?.z ?? st.z) - (stations[i - 1]?.z ?? st.z)) / 2, b = sizeW(D, zReq(DECK_PSF, trib, W) + zPoint(st.kip, W)); w(D, b.w, U(xA + girder.dims.bf / 2, steel - b.dims.d / 2, st.z), U(xB - girder.dims.bf / 2, steel - b.dims.d / 2, st.z), st.kip ? 'carrying-beam' : 'floor-beam'); });   // (b): to the girders' flange tips
       const lines = [xA, xB], cols = Array.from({ length: nx + 1 }, (_, i) => zA + i * sx), colTop = steel - girder.dims.d;
-      for (const xl of lines) { for (let i = 0; i < nx; i++) w(D, girder.w, U(xl, steel - girder.dims.d / 2, cols[i]), U(xl, steel - girder.dims.d / 2, cols[i + 1]), 'girder'); for (const zl of cols) { const p = U(xl, 0, zl); k.postColumn(p[0], p[2], colTop, deckTag); } }
+      for (const xl of lines) { for (let i = 0; i < nx; i++) w(D, girder.w, U(xl, steel - girder.dims.d / 2, cols[i]), U(xl, steel - girder.dims.d / 2, cols[i + 1]), 'girder'); for (const zl of cols) { const p = U(xl, 0, zl); k.postColumn(p[0], p[2], colTop - PAD, deckTag); } }   // (a): the kit counts a column's top from its pad's top
+      const cdim = c.out.find(q => q.tags[0] === deckTag && q.tags.includes('column'))!.part.dims, ctw = cdim.tw.value, cdd = cdim.d.value;
       // struts at each landing's height, and crossed rods in the end bay of each line next the channel covers and in both end frames, storey by storey
       const levels = Array.from({ length: flights - 1 }, (_, j) => (j + 1) * rise), d8 = sizeW(8, 2), dX = sizeW(Dx, 2);
-      for (const y of levels) { for (const xl of lines) for (let i = 0; i < nx; i++) w(8, d8.w, U(xl, y - d8.dims.d / 2, cols[i]), U(xl, y - d8.dims.d / 2, cols[i + 1]), 'strut'); for (const zl of cols) w(Dx, dX.w, U(xA, y - dX.dims.d / 2, zl), U(xB, y - dX.dims.d / 2, zl), 'strut'); }
+      // (c): each strut ends at the face it is clipped to, the columns' web faces along a line and their flange faces across the deck
+      for (const y of levels) { for (const xl of lines) for (let i = 0; i < nx; i++) w(8, d8.w, U(xl, y - d8.dims.d / 2, cols[i] + ctw / 2), U(xl, y - d8.dims.d / 2, cols[i + 1] - ctw / 2), 'strut'); for (const zl of cols) w(Dx, dX.w, U(xA + cdd / 2, y - dX.dims.d / 2, zl), U(xB - cdd / 2, y - dX.dims.d / 2, zl), 'strut'); }
       const rod = (a: V3, b: V3, nrm: V3) => { const Lr = Math.hypot(b[0] - a[0], b[1] - a[1], b[2] - a[2]); k.add(k.part(`xrod:${Lr.toFixed(1)}`, () => makeRod('XR', 0.75, Lr)), frameFromAxes(a, nrm, [(b[0] - a[0]) / Lr, (b[1] - a[1]) / Lr, (b[2] - a[2]) / Lr]), deckTag, 'structure', 'bolted-rod'); };   // a rod is no steel to hang a line from: the generator hangs from nothing whose tag says bolt
       const storeys = [PAD + 12, ...levels, colTop].map((y, j, a) => (j + 1 < a.length ? [j ? y + 6 : y, a[j + 1] - 14] : null)).filter((v): v is number[] => !!v);
       for (const [y0, y1] of storeys) {
@@ -280,11 +287,20 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       const run = (risers - 1) * RUN, gap = 18, zf = U(xA, 0, 0)[2], zIn = zf + far * gap, zOut = zIn + far * 84, laneZ = (inner: boolean) => zIn + far * (inner ? 21 : 63), postTop = (el: number) => el - bar - k.platformBeam.dims.d;
       let zN = up(L.saddles[0] + 60, 6); const clearOf = (zz: number) => cols.every(cz => Math.abs(cz - zz) >= 30); while (![zN, zN + 36, zN + 36 + run, zN + 72 + run].every(clearOf)) zN += 6;
       const ux = (u: number) => sd * (zN + u), span = (u0: number, u1: number) => [Math.min(ux(u0), ux(u1)), Math.max(ux(u0), ux(u1))], zLo = Math.min(zIn, zOut), zHi = Math.max(zIn, zOut), stairTag = `${tag}-stair`;
+      // SW-CELL-4 (d), amended 2026-11-27: a landing's beams end at the posts that carry on up past it, its closing beams at the span beams' flange tips, and at the deck
+      // the girder is the top landing's edge; called before a landing's own posts are set, so that a post found at a corner is one that carries on up past it
+      const pb = k.platformBeam, posts = () => c.out.filter(q => q.tags[0] === stairTag && q.tags.includes('column')).map(q => ({ x: q.transform[12], z: q.transform[14], tw: q.part.dims.tw.value, d: q.part.dims.d.value }));
+      const recut = (pl: Placed, c0: number, c1: number) => { if (!c0 && !c1) return; const T = [...pl.transform], L = pl.part.length!.value - c0 - c1; for (let a = 0; a < 3; a++) T[12 + a] += T[8 + a] * c0; pl.part = k.part(`W${pb.D}x${pb.w}:${L.toFixed(2)}`, () => makeWideFlange(`W${pb.D}x${pb.w}`, pb.D, pb.w, L)); pl.transform = T as Mat4; };
+      const fitLanding = (beams: Placed[]) => { const on = posts(), at = (e: number[]) => on.find(p => Math.abs(p.x - e[0]) < 0.01 && Math.abs(p.z - e[2]) < 0.01);
+        for (const pl of beams) { if (pl.part.kind !== 'W') continue; const T = pl.transform, L = pl.part.length!.value, a = [T[12], T[13], T[14]], b = [a[0] + T[8] * L, a[1] + T[9] * L, a[2] + T[10] * L];
+          if (Math.abs(T[10]) > 0.99) { const cut = (e: number[]) => Math.abs(e[2] - zf) < 0.01 ? girder.dims.bf / 2 : (at(e)?.d ?? 0) / 2; recut(pl, cut(a), cut(b)); }
+          else if (Math.abs(a[2] - zf) < 0.01) c.out.splice(c.out.indexOf(pl), 1);
+          else { const cut = (e: number[]) => (at(e)?.tw ?? pb.dims.bf) / 2; recut(pl, cut(a), cut(b)); } } };
       for (let j = 0; j < flights; j++) {
         const el = E - j * rise, near = j % 2 === 0, [x0, x1] = near ? span(0, 36) : span(36 + run, 72 + run), topL = j === 0;
         // the landing: to the deck's edge at the top, where the guardrail is open; on four posts of its own
-        k.platform(x0, topL ? Math.min(zLo, zf) : zLo, x1, topL ? Math.max(zHi, zf) : zHi, el, { span: 'z', tag: stairTag });
-        for (const [px, pz] of [[x0, zLo], [x1, zLo], [x1, zHi], [x0, zHi]]) k.postColumn(px, pz, postTop(el), stairTag);
+        const f0 = c.out.length; k.platform(x0, topL ? Math.min(zLo, zf) : zLo, x1, topL ? Math.max(zHi, zf) : zHi, el, { span: 'z', tag: stairTag }); fitLanding(c.out.slice(f0));
+        for (const [px, pz] of [[x0, zLo], [x1, zLo], [x1, zHi], [x0, zHi]]) k.postColumn(px, pz, postTop(el) - PAD, stairTag);   // (a)
         const cen: [number, number] = [(x0 + x1) / 2, (zLo + zHi) / 2], xEnd = near ? ux(0) : ux(72 + run), xFl = near ? ux(36) : ux(36 + run);
         k.guardrail([[xFl, el, zOut], [xEnd, el, zOut], [xEnd, el, topL ? zf : zIn], ...(topL ? [] : [[xFl, el, zIn] as V3])], cen, stairTag);
         if (topL) { k.guardrail([[xFl, el, zf], [xFl, el, laneZ(true) + far * 21]], cen, stairTag); }
@@ -296,6 +312,10 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
           const again: PartSpec = { ...pl.part, id: `${pl.part.id}:other-hand`, extra: { ...pl.part.extra, endCuts: { start: { dx: cuts.start.dx, dy: -cuts.start.dy }, end: { dx: cuts.end.dx, dy: -cuts.end.dy } } } };
           if (lowestY({ ...pl, part: again }) >= el - rise - 0.01) pl.part = again;
         }
+        // SW-CELL-4 (e), amended 2026-11-27: a flight's top clip at a post's web stands on the stringer's side of it, a leg on the web and one on the stringer's web
+        { const lane = laneZ(!near), on = posts();
+          for (const pl of c.out.slice(from)) if (pl.tags.includes('clip')) { const T = pl.transform, o = [T[12], T[13], T[14]], dX = Math.sign(T[4]), p = on.find(q => Math.abs(q.x - o[0]) < 0.01 && Math.abs(o[2] - q.z) < q.d / 2); if (!p) continue;
+            const s = Math.sign(o[2] - lane), h = pl.part.length!.value, ey = -s * dX; pl.transform = frameFromAxes([p.x - dX * p.tw / 2, ey > 0 ? o[1] : o[1] + h, o[2] - s * 0.2], [-dX, 0, 0], [0, ey, 0]); } }
       }
       // guardrail round the deck, open where the top landing meets it
       const [l0, l1] = span(0, 36), y = E, c1 = U(xA, y, zA), c2 = U(xB, y, zA), c3 = U(xB, y, zB), c4 = U(xA, y, zB), centre: [number, number] = [U(0, 0, (zA + zB) / 2)[0], U((xA + xB) / 2, 0, 0)[2]];
@@ -595,10 +615,12 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
     for (const p of air) { const sp: Spot = { tag: p.tag, item: p.item, kind: p.kind, lane: p.lane, side: -1, x: up(xa + p.lx / 2), z: 0, lx: p.lx, lz: p.lz, h: p.h, shape: 'box' }; spots.push(sp); settle(p, sp); xa = sp.x + p.lx / 2; }
     far = Math.max(far, xa);
     const b0 = RACK.start + Math.floor((RACK.start + RACK.bent - RACK.start) / RACK.bent) * RACK.bent, b1 = RACK.start + Math.ceil((xa - RACK.start) / RACK.bent) * RACK.bent, zc = hw - RACK_COL / 2;
-    const post = makeWideFlange('W8x31', 8, 31, DECK - 12 - 14 - RACK.tiers[RACK.tiers.length - 1]), beam = makeWideFlange('W14x48', 14, 48, 384), girder = makeWideFlange('W12x40', 12, 40, b1 - b0);
+    // SW-CELL-4 (amended again 2026-11-27): stacked by the drawn depths (SW-W-5) from the girders' undersides down; the girders where they were
+    const top = RACK.tiers[RACK.tiers.length - 1], gUnder = DECK - 6 - proportionW(12, 40).d / 2, dB = proportionW(14, 48).d, yBeam = gUnder - dB / 2, postTop = gUnder - dB;
+    const post = makeWideFlange('W8x31', 8, 31, postTop - top), beam = makeWideFlange('W14x48', 14, 48, 384), girder = makeWideFlange('W12x40', 12, 40, b1 - b0);
     for (let x = b0; x <= b1 + 1e-6; x += RACK.bent) {
-      for (const sgn of [1, -1]) out.push({ part: post, transform: multiply(translate(x, RACK.tiers[RACK.tiers.length - 1], sgn * zc), standUp()), tags: ['cooler-deck', 'post'] });
-      out.push({ part: beam, transform: frameFromAxes([x, DECK - 12 - 7, -192], [0, 1, 0], [0, 0, 1]), tags: ['cooler-deck', 'beam'] });
+      for (const sgn of [1, -1]) out.push({ part: post, transform: multiply(translate(x, top, sgn * zc), standUp()), tags: ['cooler-deck', 'post'] });
+      out.push({ part: beam, transform: frameFromAxes([x, yBeam, -192], [0, 1, 0], [0, 0, 1]), tags: ['cooler-deck', 'beam'] });
     }
     for (const sgn of [1, -1]) out.push({ part: girder, transform: frameFromAxes([b0, DECK - 6, sgn * 180], [0, 1, 0], [1, 0, 0]), tags: ['cooler-deck', 'girder'] });
   }
@@ -651,7 +673,7 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
   const yard: { neg?: number; pos?: number } = {};
   for (const side of [1, -1] as const) {
     if (!spots.some(q => q.side === side && q.lane !== 'pump' && q.lane !== 'air' && q.lane !== 'heater')) continue;
-    const rowP = spots.filter(q => q.side === side && q.lane === 'pump'), zb = up(Math.max(hw + 78, ...rowP.map(q => Math.abs(q.z) + q.lz / 2 + 18))), post = makeWideFlange('W8x31', 8, 31, YARD - PAD), beam = makeWideFlange('W12x40', 12, 40, rackEnd - RACK.start);
+    const rowP = spots.filter(q => q.side === side && q.lane === 'pump'), zb = up(Math.max(hw + 78, ...rowP.map(q => Math.abs(q.z) + q.lz / 2 + 18))), post = makeWideFlange('W8x31', 8, 31, YARD_UNDER - PAD), beam = makeWideFlange('W12x40', 12, 40, rackEnd - RACK.start);
     for (let x = RACK.start; x <= rackEnd + 1e-6; x += RACK.bent) { out.push({ part: kit.concrete('pedestal', 20, PAD, 20), transform: frameFromAxes([x - 10, PAD / 2, side * zb], [0, 1, 0], [1, 0, 0]), tags: ['yard-support', 'pad'] }); out.push({ part: post, transform: multiply(translate(x, PAD, side * zb), standUp()), tags: ['yard-support', 'post'] }); }
     out.push({ part: beam, transform: frameFromAxes([RACK.start, YARD + 6, side * zb], [0, 1, 0], [1, 0, 0]), tags: ['yard-support', 'beam'] });
     if (side > 0) yard.pos = zb; else yard.neg = -zb;
@@ -674,6 +696,7 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
   kit.rack({ ...rack, x0: RACK.start - RACK.bent });                                                      // SW-CELL-2: one bay more toward the battery limit, the valve bay (SW-RPI-4)
   // SW-CELL-2: no ladder at the rack's battery-limit end, where the lines to the main pipeway pass out between its columns (§80); the ladder at its far end stays
   for (let i = out.length - 1; i >= 0; i--) if (out[i].tags.includes('rack-ladder') && out[i].transform[12] < RACK.start) out.splice(i, 1);
+  rackJoints(out);                                                                                         // SW-CELL-8: the stringers framed to the channels, the ladder's brackets and cage hoops to what they meet
   const notes = [`Unit ${unit}: ${spots.length} bodies of ${sh.equip.size} items; rack ${(rackEnd - RACK.start) / 12} ft long, ${(2 * hw) / 12} ft wide, tiers at ${RACK.tiers.map(t => t / 12).join(', ')} ft (SW-CELL-2, SW-CELL-3).`];
   const m: CellModel = { unit, name: sh.name, rack, spots, yard, interior: { instances: out, derived, notes, equipment }, x1: Math.max(rack.x1, xH) + 24, z0: Math.min(-hw, ...spots.map(s => s.z - s.lz / 2)) - 24, z1: Math.max(hw, ...spots.map(s => s.z + s.lz / 2)) + 24, y1: Math.max(...spots.map(s => s.h)) };
   cache.set(key, m); return m;

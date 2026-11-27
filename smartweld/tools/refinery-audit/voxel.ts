@@ -36,6 +36,7 @@
  * piece inside a mesh solid was not seen.
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
+import { rackJoints } from '../../src/refinery/rackFraming';
 import { createHash } from 'node:crypto';
 import { cells } from '../../src/refinery/assemble';
 import { unitToPipeway, PWY, stringersOf } from '../../src/refinery/pipeway';
@@ -411,6 +412,7 @@ const own: { part: PartSpec; transform: Mat4; tags: string[] }[] = [];
   kit.rack({ x0: 0, x1: LENGTH, bentSpacing: PWY.bent, halfWidth: PWY.half, tiers: PWY.tiers as unknown as number[], loadPsf: PWY.loadPsf });
   const st = makeWideFlange('W8x18', 8, 18, PWY.bent - 12);
   for (const [t, tier] of PWY.tiers.entries()) for (const z of stringersOf(t)) for (let x = 0; x < LENGTH - 1e-6; x += PWY.bent) own.push({ part: st, transform: frameFromAxes([x + 6, tier - 16, z], [0, 1, 0], [1, 0, 0]), tags: ['rack-stringer', 'beam'] });
+  rackJoints(own as never);   // SW-CELL-8, as pipeway.ts makes them
   const up = (v: number, s = 6) => Math.ceil(v / s - 1e-9) * s;
   for (const J of pwRep.junctions as { unit: number; x: number; z: number; half: number; tiers: number[]; beam: string; post: string }[]) {
     const tiers = J.tiers, span = 2 * J.half, D = up(span / 20, 2), w = up(2.75 * D, 5), Dp = Math.max(10, D - 2), wp = up(2.75 * Dp, 5), z = J.z;

@@ -4916,6 +4916,23 @@ their own geometry rules, which are unchanged.
     (0.17 in to 0.34 in by the checkers' own measures). Shortening the columns, rather than
     raising the cooler or lowering the deck, leaves every line to a cooler, and every support
     hung from or resting on the deck, where it was.
+    Amended again 2026-11-27 (P-95): the deck's beams and posts are stacked by their drawn
+    depths from the girders down. The girders stay where they are (their tops, where the
+    coolers' columns stand, and their undersides, where lines hang, do not move). Each beam is
+    set with its top flange on the girders' undersides: its centre is the girders' underside
+    less half its own drawn depth (SW-W-5: 14.31 in for the `W14x48`). Each post is cut to
+    stand from the rack's top tier to the beam's underside. With `W12x40` girders: girder
+    underside 431.835 in, beam centre 424.68 in (was 425), beam underside and post top
+    417.525 in, post 81.525 in (was 82). A line hung from a beam's underside follows it
+    (SW-RPI-20). This supersedes, for the beams and posts, the first amendment's "nothing of
+    the deck moves"; the girders, the coolers and every support under the girders stay where
+    they were. Reason: a rolled member is as deep as it is drawn, not as the number in its
+    name. Stacked by nominal depths, each beam stood 0.32 in into the girders and each post
+    0.155 in into its beam (74 and 74 in units 11 to 18, found within one structure by the
+    plant's clash audit). Members that bear flange on flange are whole sections, bolted
+    through and never cut into; the post is the piece cut to length to suit. Raising the
+    girders instead would leave short the 85 hangers that hang from their undersides; lowering
+    the beams moves one hanger's top, by 0.32 in.
   - Fired heaters: vertical cylinders (SW-EQC-15) with a stack 0.6 of the firebox height, and
     cabins (SW-EQC-53), at the sizes of SW-PRC-10.
     Amended 2026-11-27 (owner's decision, P-95): a cabin is given its coil outlet as a
@@ -5018,6 +5035,38 @@ their own geometry rules, which are unchanged.
     Reason: the set must stand a tail pipe's height above its hotwell; a deck gives its
     condensers and ejectors a floor to be reached, lifted and cleaned from, and leaves the
     ground under it to the hotwell and the tail pipes.
+    Amended 2026-11-27 (P-95): every member of the deck, and of its stair's frame, ends at the
+    face of the member it is joined to; no two are drawn through each other. The deck draws no
+    connection material (no coped stub, clip angle or cap plate), so each member is drawn to
+    where its full section ends.
+    - (a) The stair kit stands a column on its pad and counts the column's top from the pad's
+      top. Plant 3's elevations are from grade, so each column is given the elevation of the
+      underside of what it carries less the pad's 6 in: a deck column's top is its girder's
+      underside, a landing post's the underside of the beams of the highest landing it
+      carries. Passed as they were, every column ran 6 in up into the steel it carries.
+    - (b) A beam across the deck, of the girders' nominal depth and flush on top with them, is
+      drawn from the girders' flange tips to their flange tips; a deeper one (the `W18x95`
+      carrying beams) hangs 0.52 in below the girders' underside and ends at the same planes.
+      Two flanges at one level cannot pass each other: the real beam is coped clear of the
+      girder's flanges and clipped to its web.
+    - (c) A strut between the columns ends at the face it is clipped to: along a line of
+      columns, their web faces between their flanges; across the deck, their flange faces.
+      Drawn to the columns' centre lines, a strut ran through its column, and the two struts at
+      a column through each other.
+    - (d) A landing's frame. A beam ends at the face of a post that carries on up past the
+      landing: its flange face for a beam in the post's depth, its web face for a beam across
+      it. A closing beam between the span beams ends at their flange tips. Over a post whose
+      top carries the landing, the span beam runs on to the corner. Where the top landing meets
+      the deck, the deck's girder is its edge: the landing has no edge beam of its own there,
+      and its span beams end at the girder's flange tips. The kit draws a platform's beams to
+      its corner points, which is right only where all of them rest on caps.
+    - (e) Where a flight's top end comes to a post's web, the flight's top clip (SW-SR-5)
+      stands on the stringer's side of that web, one leg flat on the web and the other on the
+      stringer web's outer face. Where the kit sets it, on the landing's side, half its leg lay
+      inside the post's web and it touched none of the stringer.
+    Reason: two pieces of steel cannot occupy one place; the plant's clash audit, looking
+    within one structure, found 311 such overlaps in the deck and its stair's frame (to
+    0.585 in). The kit is left as plants 1 and 2 use it; plant 3 sets these ends itself.
   - A hotwell (SW-CELL-3) is a horizontal drum as any other, turned square to the rack.
   - Every body stands on an equipment pad 6 in high and 12 in larger all round, as in plants 1
     and 2 (SW-LAY-*). Nozzles are not part of a body: the piping stage adds each one from the
@@ -5044,6 +5093,18 @@ their own geometry rules, which are unchanged.
   over at either end, on posts at 20 ft at most. Reason: the set's water, steam and hotwell
   lines cross 45 ft of open ground between the yard's line and its deck, three times what a
   pipe of their size spans; 15 ft is what the smallest of them, 3 in, spans (SW-PS-7).
+  Amended 2026-11-27 (P-95): a yard post reaches the underside of the beam it carries as that
+  beam is drawn, not as its name would put it. The beam is set by its nominal depth, its centre
+  6 in above 30 ft 6 in, and drawn at its own depth (SW-W-5: 12.33 in for the `W12x40`), so its
+  drawn underside is 30 ft 5.835 in above grade. Each post, on its 6 in pedestal, is cut square
+  there (359.835 in long), and the beam's bottom flange bears on the post's cut end, the two
+  touching at that face only; so too the posts under the beams that lead to a body behind the
+  first row, which are of the same section at the same height. Reason: a column is cut to
+  length from the height of what it carries, measured on that member. Drawn 360 in long, every
+  post stood 0.165 in up into the beam's bottom flange (260 posts in the nine units and the
+  cooling tower's cell), which the plant's clash audit found within one structure. The beam
+  keeps its place: the lines that cross under it hang from its drawn underside, and raising it
+  would leave their rods short.
 - `SW-CELL-7` Footprints (added 2026-11-24). A body's footprint in its row is not a figure
   given beforehand but what its solids and pads cover: every body is built once at the origin
   and measured there, and its row keeps that width and depth about the body's datum (a
@@ -5064,6 +5125,46 @@ their own geometry rules, which are unchanged.
   to the next along the row, and with the scrubber centred by its extent, which its two
   pumps make lopsided, its axis stood 36 in to one side of the cooler's, a jog a 36 in duct
   has no room to make between them. Their footprints are measured about that axis.
+- `SW-CELL-8` Joints within a rack's steel (added 2026-11-27, P-95). The kit builds a unit's
+  rack (SW-RK-*, as plants 1 and 2 use it) and plant 3 adds the stringers of SW-CELL-6; the
+  main pipeway's rack is built the same way, with the stringers of SW-PWY-9. In plant 3's
+  racks three joints are made as below, after the kit has built the rack. The kit, and plants 1
+  and 2, are unchanged.
+  - A stringer and the bay's intermediate beam (SW-RK-6). Where a stringer meets the channel
+    at mid-bay within the channel's depth, the channel runs through whole and the stringer is
+    framed to it: each bay's stringer is drawn as two lengths, the first ending square against
+    the back of the channel's web, the second starting square at the plane of the toes of its
+    flanges, each touching the channel there and entering it nowhere. In a unit's rack the
+    stringer is set with its top at the tier (as drawn, 8.22 in deep, it stands 0.11 in above
+    the channel's top); in the main pipeway its top stands 2.11 in up into the 14 in channel.
+    Only the stringer's steel inside the channel's outline is taken out (3.02 in at a
+    `C12x20`, 3.51 in at a `C14x27`), and nothing moves. Reason: two pieces of steel cannot
+    occupy one place. The channel carries the tier's small lines across the whole rack and is
+    not cut; the stringer carries only lines hung from it at points, and is the member cut, as
+    a lighter member framing into a heavier one is. From the channel's open side the stringer
+    could reach the web only with its flange coped, which the model does not draw, so that
+    length stops at the toes. The connections (clips or an end plate through the web on the
+    back side, a plate across the toes on the open side) are not drawn, as no stringer
+    connection is. Drawn whole, every stringer ran through its bay's channel (406 in the main
+    pipeway, 121 in the units' racks).
+  - A rack-end ladder's bracket (SW-LD-2, SW-LAY-3). The kit starts each bracket at the plane
+    of the column's flange tips. Where a tier beam's flange, wider than the column's, stands
+    out beyond that plane at the bracket's height, the bracket is cut back at that end to the
+    plane of the beam's flange tip (0.295 in under a `W16x40`, 0.695 in under a `W18x50`, the
+    column a `W14x35`) and welded to it there. Reason: a bracket cannot pass into the flange
+    it bears against; cut to that steel, it keeps its place at the rail, and the rung line its
+    7 in standoff. One bracket of every unit's ladder stood in its tier beam's flange.
+  - A cage hoop (SW-LD-3). Each hoop ends, at each side, where its inner face meets the plane
+    of the outer face of the ladder's side rail, and is welded to that face; the rest is as the
+    kit draws it (a 30 in hoop centred 12 in in front of the rung line, at 4 ft, with its five
+    straps). The kit opens the hoop on the 18 in chord between the rails' inner faces, which
+    lays the last 2.4 deg of each end through the rail's 1/2 in thickness and 0.2 in behind it.
+    The hoop's drawing allows only a radial end, so its inner edge lies on the rail's face along
+    the bar's full 2 in and the wedge beside it (0.16 in at most) is the weld's place; no face of
+    the hoop bears flat on the rail, and nothing overlaps. Reason: the hoop is a bent flat bar
+    carried by the two rails. It reaches each from outside the ladder, so it stops against the
+    rail's outer face; a solid bar cannot pass into a solid rail, and the rail, which carries
+    the ladder, is never notched for it. Every hoop of plant 3 (76) stood 0.23 in in its rails.
 
 ## 79. Plant 3: piping of a unit (`SW-RPI-*`)
 
@@ -5512,7 +5613,7 @@ What this section adds is what that generator is given.
     from 12 ft all round any such body: the generator's search for a line is bounded, at 2.5
     million steps, and an open space 24 ft square the height of a column exhausted it before
     a way down past the column's other lines was found.)
-  - beyond the yard's support beams (SW-CELL-6), from 18 in above their underside up to that
+  - beyond the yard's support beams (SW-CELL-6), from 18 in above 30 ft 6 in up to that
     level, with the same exception: every line crossing between equipment and rack passes
     under a beam, from which it hangs.
   The blocks are not part of the model and are in no drawing, count or check; no hanger hangs
@@ -6347,6 +6448,16 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
     own first leg; none of (a) to (d) served.
   The corrections are plant 3's own (src/refinery/ownLine.ts), made in a unit's run and by
   tools/refinery-selfx.ts on the models on disk; the generator's code is not changed.
+- `SW-RPI-29` A line within 3 in of a member, routed again (added 2026-11-27, P-95). Where the
+  lines of one of the generator's runs (SW-RPI-7), as routed, pass nearer than 3 in to a steel
+  member (the generator's own check, §40, measured again by SW-RPI-13), the run is routed once
+  more with each such member also held as a solid: its section's box widened by 3 in all
+  round. The second routing is kept where it has no more failures and fewer such findings than
+  the first, and is said in the notes. Reason: the generator is not shown the tier beams of the
+  first bent of a unit's rack in the main pipeway (SW-PWY-8), and once the main rack's lanes
+  were kept clear of the bent beams' end welds (SW-PWY-5 as amended), a 3 in line crossing to
+  the utilities unit was routed 0.23 in under that unit's top tier beam. Held for that run only,
+  the member is avoided by its lines, and nothing else changes.
 - `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),
   in inches: x east along the rack from its west end, z south across it from its centre line,
   y up from the bench. It is set on the site by a shift alone. Area number 10; its lines are
@@ -6535,6 +6646,8 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   line from a spool then hangs at the junction frame (13 ft 6 in from its flange), at the
   rack's strut (13 ft 9 in on) and at each stringer it passes (10 ft at most): within the
   15 ft a 3 in line spans (SW-PS-7).
+  Each stringer is framed to its bay's intermediate channel, and each cage hoop of the rack's
+  end ladders ends at its rails, as in a unit's rack (SW-CELL-8, added 2026-11-27).
   A junction beam's depth is a twentieth of its span, to the next 2 in, and its weight
   2.75 lb/ft for each inch of depth, to the next 5 lb; a post is of the next depth below
   the beam's that is 10 in at least. These are SmartWeld's own proportions, from the same

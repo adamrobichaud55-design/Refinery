@@ -23,6 +23,7 @@ import { sizing, transferLine } from './sizing';
 import { cells, cellToSite } from './assemble';
 import { bench, PIPEWAY_Z, type Plot } from './site';
 import { RACK, type CellModel } from './cell';
+import { rackJoints } from './rackFraming';
 import { unitPiping, block, gateReach, gateWidth, laneSpacing, keptReach, STRINGER, type UnitRun, type RackLane, type V3 } from './unitPiping';
 import { lineNumber, serviceOf } from './registry';
 import { plantHeaders, unitHeaders, type PlantHeader } from './headers';
@@ -380,6 +381,7 @@ export function pipeway(): Pipeway {
   const junctions: Junction[] = [];
   { const st = makeWideFlange('W8x18', 8, 18, PWY.bent - 12);
     for (const [t, tier] of PWY.tiers.entries()) for (const z of stringersOf(t)) for (let x = 0; x < LENGTH - 1e-6; x += PWY.bent) own.push({ part: st, transform: frameFromAxes([x + 6, tier - 16, z], [0, 1, 0], [1, 0, 0]), tags: ['rack-stringer', 'beam'] }); }
+  rackJoints(own);                                                                                       // SW-CELL-8 (SW-PWY-9): the stringers framed to the channels, the end ladders' hoops to their rails
   for (const U of units) {
     const mine = conns.filter(c => c.unit === U.unit); if (!mine.length) continue;
     // a beam under every main tier: a line may cross to the rack at any of the three levels, whatever tier its spool stands on (it changes level in the unit's valve bay or in the strip)

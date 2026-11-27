@@ -15,6 +15,7 @@
  * polygon as the catalogue's pipe, the catalogue tee's outer blend); all other parts are exactly buildGeometry's solids.
  */
 import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 'node:fs';
+import { rackJoints } from '../../src/refinery/rackFraming';
 import { createHash } from 'node:crypto';
 import { cells } from '../../src/refinery/assemble';
 import { unitToPipeway, PWY, stringersOf } from '../../src/refinery/pipeway';
@@ -599,6 +600,7 @@ const pwOwn: { part: PartSpec; transform: M4; tags: string[] }[] = [];
   kit.rack({ ...rack, x0: 0, x1: LENGTH } as never);
   const st = makeWideFlange('W8x18', 8, 18, PWY.bent - 12);
   for (const [t, tier] of PWY.tiers.entries()) for (const z of stringersOf(t)) for (let x = 0; x < LENGTH - 1e-6; x += PWY.bent) pwOwn.push({ part: st, transform: frameFromAxes([x + 6, tier - 16, z], [0, 1, 0], [1, 0, 0]), tags: ['rack-stringer', 'beam'] });
+  rackJoints(pwOwn as never);   // SW-CELL-8, as pipeway.ts makes them
   for (const J of pwRep.junctions as { unit: number; x: number; z: number; half: number; tiers: number[] }[]) {
     const span = 2 * J.half, D = up(span / 20, 2), w = up(2.75 * D, 5), Dp = Math.max(10, D - 2), wp = up(2.75 * Dp, 5), z = J.z, tiers = J.tiers;
     const beam = makeWideFlange(`W${D}x${w}`, D, w, span - Dp), post = makeWideFlange(`W${Dp}x${wp}`, Dp, wp, PWY.tiers[tiers[tiers.length - 1]] - PWY.PAD), tag = `junction:U${J.unit}`;
