@@ -921,7 +921,7 @@
    "routed": true,
    "components": 18,
    "welds": 13,
-   "supports": 3,
+   "supports": 4,
    "lengthFt": 59
   },
   {
@@ -1483,9 +1483,9 @@
   "supports": {
    "anchor": 20,
    "guide": 47,
-   "hanger": 27,
-   "shoe": 44,
-   "stanchion": 36,
+   "hanger": 28,
+   "shoe": 47,
+   "stanchion": 33,
    "trunnion": 23
   }
  },
@@ -1513,7 +1513,9 @@
   "5 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-12009/S7 (stanchion): its base plate inside rack-bay:3/strut; 3\"-P600-P-12023/S3 (stanchion): its base plate inside E-1202/pad; 6\"-P300-LS-12501/S5 (stanchion): its base plate inside rack-bay:4/strut; 6\"-P300-LS-12505/S3 (stanchion): its base plate inside E-1201/pad; 3\"-P300-LS-12507/S1 (stanchion): its base plate inside rack-bay:1/strut",
   "1 valves turned where their stem or handwheel struck (SW-RPI-19): 3\"-P300-LS-12507/B3: struck its own line 3\"-P300-LS-12507; stem turned to 1,0,0",
   "5 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-12009/S7 (stanchion): its base plate inside rack-bay:3/strut; 3\"-P600-P-12023/S3 (stanchion): its base plate inside E-1202/pad; 6\"-P300-LS-12501/S5 (stanchion): its base plate inside rack-bay:4/strut; 6\"-P300-LS-12505/S3 (stanchion): its base plate inside E-1201/pad; 3\"-P300-LS-12507/S4 (stanchion): its base plate inside rack-bay:1/strut",
-  "22 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 2 hangers from steel above, 9 stanchions on steel below, 4 stanchions and 6 support posts from the floor, and 1 pipe frames"
+  "1 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "5 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-12009/S7 (stanchion): its base plate inside rack-bay:3/strut; 3\"-P600-P-12023/S3 (stanchion): its base plate inside E-1202/pad; 6\"-P300-LS-12501/S5 (stanchion): its base plate inside rack-bay:4/strut; 6\"-P300-LS-12505/S3 (stanchion): its base plate inside E-1201/pad; 3\"-P300-LS-12507/S4 (stanchion): its base plate inside rack-bay:1/strut",
+  "28 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 3 hangers from steel above, 9 stanchions on steel below, 5 stanchions and 7 support posts from the floor, and 4 pipe frames"
  ],
  "frames": [
   {
@@ -1534,6 +1536,78 @@
    ],
    "floors": [
     6,
+    0
+   ],
+   "top": 312.5,
+   "post": "W8x31",
+   "rad": 1.5
+  },
+  {
+   "line": "3\"-P600-P-12023",
+   "at": [
+    582,
+    114,
+    360.75
+   ],
+   "u": [
+    -1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    36
+   ],
+   "floors": [
+    0,
+    6
+   ],
+   "top": 108.5,
+   "post": "W8x31",
+   "rad": 1.5
+  },
+  {
+   "line": "6\"-P300-LS-12505",
+   "at": [
+    432,
+    324,
+    375
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    48
+   ],
+   "floors": [
+    0,
+    6
+   ],
+   "top": 317,
+   "post": "W8x31",
+   "rad": 3
+  },
+  {
+   "line": "3\"-P300-LS-12507",
+   "at": [
+    564,
+    318,
+    119.5
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    0
+   ],
+   "floors": [
+    0,
     0
    ],
    "top": 312.5,

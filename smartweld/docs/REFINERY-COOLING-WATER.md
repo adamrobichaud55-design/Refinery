@@ -6,7 +6,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 
 | Lines | Routed | Components | Welds | Supports | Pipe, ft | Failures | Checks not at zero |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| 18 | 18 | 287 | 249 | 146 | 3,396 | 0 | none |
+| 18 | 18 | 287 | 249 | 146 | 3,396 | 0 | supports 2 |
 
 ## Mains
 
@@ -67,8 +67,8 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | anchor | 2 |
 | guide | 8 |
 | hanger | 28 |
-| shoe | 88 |
-| stanchion | 15 |
+| shoe | 92 |
+| stanchion | 11 |
 | trunnion | 5 |
 
 ## Checks
@@ -81,7 +81,12 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 | valves | 0 |
 | lineClearance | 0 |
 | staticClearance | 0 |
-| supports | 0 |
+| supports | 2 |
+
+Not at zero, supports:
+
+- 8"-P150-P-27108: unsupported span 264 in > 240 on run from 2850,438,663
+- 6"-P150-P-27114: unsupported span 312 in > 240 on run from 7032,426,641
 
 ## Notes
 
@@ -107,7 +112,7 @@ The two cooling water mains (DESIGN_BASIS.md §81) lie on 51 concrete sleepers a
 - 6"-P150-P-27114: no valve at BL-1612-P; GATE 6 and what stood with it left out, 3 pieces, the pipe 14.2 in longer (SW-PWY-7)
 - 3"-P150-P-27116: no valve at BL-1810-P; GATE 3 and what stood with it left out, 3 pieces, the pipe 13.7 in longer (SW-PWY-7)
 - 2 pieces of pipe over 40 ft cut again with a shop weld (SW-RPI-10)
-- 14 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 9 stanchions on steel below, 0 stanchions and 0 support posts from the floor, and 0 pipe frames
+- 14 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 2 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 4 pipe frames
 - 21 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
 
 Not in this stage (SW-CWM-8): the cooling tower plot's own piping; the mains end at its edge, each at a limit spool with its block valve and blind.

@@ -211,7 +211,10 @@ export function coolingWater(root = '.'): CoolingWater {
   // the fence that holds the return in its lane: either side of the centre line, between the supply's pipe and the return's lane, along the way short of the tower's drops
   const r = OD / 2, fx1 = Math.min(...towerX) - CWM.approach;
   const fx0 = westX + CWM.westBeyond, fence = [block([fx0, y - r, -pitch + r + 12], [fx1, y + r, -r], 'lane fence'), block([fx0, y - r, r], [fx1, y + r, pitch - r - 12], 'lane fence')];
-  const runPlant = (k: number, prior: Placed[]): PlantDef => ({ ...plant, interior: () => ({ ...shown, instances: [...routed, ...(k > 0 ? fence : []), ...prior] }) });
+  // SW-CWM-5 (amended): the space over the main rack from 2 ft below its lowest tier upward, between its column lines, closed to the mains' lines: a branch to a south
+  // unit crosses under the rack (SW-CWM-4)
+  const overRack = block(toArea([0, PWY.tiers[0] - 24, -PWY.half - 6]), toArea([LENGTH, gridTop, PWY.half + 6]), 'over the main rack');
+  const runPlant = (k: number, prior: Placed[]): PlantDef => ({ ...plant, interior: () => ({ ...shown, instances: [...routed, overRack, ...(k > 0 ? fence : []), ...prior] }) });
   notes.push(`${hiddenCount} solids not shown to the generator while it routes: the sleepers, the first bents' tier beams of the units and the pieces of the pipeway's and units' lines where the generator's own valve at a unit's spool stands (SW-CWM-5).`);
   cache = { plant, lines, nozzles, runs, runOf, runPlant, foreseen: [], interior, mains, branches, spools, sleepers, notes, rack, toPipeway: translate(0, 0, CWM.way) };
   return cache;

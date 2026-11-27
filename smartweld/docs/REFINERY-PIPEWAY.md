@@ -34,8 +34,8 @@ The main pipeway joins the units (DESIGN_BASIS.md §80): a rack 1160 ft long and
 | anchor | 54 |
 | guide | 209 |
 | hanger | 220 |
-| shoe | 1942 |
-| stanchion | 6 |
+| shoe | 1944 |
+| stanchion | 4 |
 
 ## Checks
 
@@ -387,7 +387,7 @@ At each unit's limit: two posts in line with the columns of the unit's rack and 
 - 8"-P150-P-10405/p31 (40.5 ft, far end 13668,408,30): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
 - 4"-P150-IA-10407/p32 (40.4 ft, far end 13219,402,42): a piece of pipe over 40 ft, cut again with a shop weld (SW-RPI-10)
 - 6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3"-P150-P-10104/S3 (hanger): its rod through 10"-P300-P-10013; 3"-P150-P-10105/S3 (hanger): its rod through 10"-P300-P-10013; 6"-P150-P-10018/S39 (hanger): its rod through 6"-P150-P-10006; 3"-P300-P-10039/S3 (hanger): its rod through 6"-P150-P-10017; 3"-P150-P-10611/S2 (trapeze): its post through 3"-P1200-P-10641; 3"-P150-P-10611/S3 (trapeze): its post through 3"-P1200-P-10641
-- 6 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 1 hangers from steel above, 2 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 0 pipe frames
+- 6 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 1 hangers from steel above, 0 stanchions on steel below, 0 stanchions and 3 support posts from the floor, and 2 pipe frames
 - 160 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)
 - 115 shoes set on the tier beams of the units' first bents, where the pipeway's lines pass over them to their spools: those beams are not shown to the generator while it routes (SW-PWY-8).
 - 1 post set on the top-tier beams of first bents under lines that pass higher than a shoe stands, and 8 hangers set where the generator's stepping along a run had stopped for want of that steel: 3"-P1200-P-10641 1 post; 3"-P150-P-10613 3 hangers; 3"-P150-P-10615 3 hangers; 3"-P150-P-10643 1 hanger; 3"-P150-P-10025 1 hanger (SW-PWY-8).

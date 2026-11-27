@@ -6107,7 +6107,12 @@ given; nothing was looked up (PROVENANCE P-94). The mains are piped by the gener
   reaches and 6 in where that is higher (the pipeway's headers lie above, as solids), in the valve bays of the
   units that have cooling water spools as far as their spools and 18 in beyond, and over
   the open ground between the corridor and the tower's plot within 10 ft either side of
-  the two tower spools. Everything the pipeway and the units have built stands as a solid:
+  the two tower spools. Over the main rack, from 2 ft below its lowest tier upward, the space is closed to
+  the mains' lines while they are routed (added 2026-11-27), so that a branch to a south unit
+  crosses under the rack as SW-CWM-4 says: routed without that, two such branches crossed
+  over the pipeway's top tier, above its utility headers, where no support could stand
+  clear of them (a post on the tier's beams passed through the headers; nothing stands
+  above to hang from). Everything the pipeway and the units have built stands as a solid:
   the rack, its stringers and junction frames, the units' steel in their valve bays, every
   piece and support of the pipeway's lines and of the units' lines in their valve bays (as
   the checks hold them, SW-RPI-7), but the pieces of each cooling water spool itself, which
