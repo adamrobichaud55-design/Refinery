@@ -6158,8 +6158,9 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   it only where a triangle of that item's drawn solids meets the valve's box, or the box
   lies inside one of them. Reason: held by its box, a ring platform's kerb, a curved shell
   or a frame fills the space it encloses, and six valves standing in such space (in a
-  column's platform's open quarter, beside a heater and a sulfur unit's item) were listed
-  as striking items whose drawn triangles none of them comes near (measured, P-95). A valve
+  column's platform's open quarter, beside the sulfur pit and beside the sulfur unit's
+  reaction furnace) were listed as striking items whose drawn triangles none of them comes
+  near (measured, P-95). A valve
   so cleared is neither turned nor listed. The test of a direction to turn to is as before.
 - `SW-RPI-20` A hanger's top at the steel it hangs from (added 2026-11-26). The generator
   takes the underside of the member a rod hangs from as the member's centre less seven tenths
