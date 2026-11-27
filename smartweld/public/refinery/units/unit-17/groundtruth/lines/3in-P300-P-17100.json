@@ -146,7 +146,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 4386,
@@ -1552,7 +1552,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 2142,
@@ -2975,7 +2975,7 @@
    "spool": "loose",
    "at": {
     "E": 4386,
-    "N": -268.4154,
+    "N": -360,
     "EL": 1416
    },
    "rules": [
@@ -2984,26 +2984,6 @@
   },
   {
    "tag": "3\"-P300-P-17100/S23",
-   "line": "3\"-P300-P-17100",
-   "lineClass": "H300",
-   "type": "shoe",
-   "description": "SHOE FOR 3\" LINE (SHOE-3)",
-   "designation": "SHOE-3",
-   "key": "SHOE|3|P300|shoe|4.000",
-   "material": "Grade 36",
-   "weight": 9.9212,
-   "spool": "loose",
-   "at": {
-    "E": 2142,
-    "N": -515.4479,
-    "EL": 1434.5
-   },
-   "rules": [
-    "SW-PS-1"
-   ]
-  },
-  {
-   "tag": "3\"-P300-P-17100/S24",
    "line": "3\"-P300-P-17100",
    "lineClass": "H300",
    "type": "stanchion",
@@ -3015,11 +2995,31 @@
    "spool": "loose",
    "at": {
     "E": 4386,
-    "N": -360,
+    "N": -266.4675,
     "EL": 1416
    },
    "rules": [
     "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-17100/S24",
+   "line": "3\"-P300-P-17100",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 3\" LINE (SHOE-3)",
+   "designation": "SHOE-3",
+   "key": "SHOE|3|P300|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 2142,
+    "N": -519.5,
+    "EL": 1434.5
+   },
+   "rules": [
+    "SW-PS-1"
    ]
   }
  ],
@@ -3127,7 +3127,7 @@
    "itemNo": 3,
    "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
    "qty": 2,
-   "weight": 243.5125
+   "weight": 240.7427
   },
   {
    "itemNo": 4,
@@ -3589,6 +3589,6 @@
   "fieldWelds": 4,
   "supports": 23,
   "pipeLength": 3453.4375,
-  "weight": 1703.5873
+  "weight": 1700.8175
  }
 }

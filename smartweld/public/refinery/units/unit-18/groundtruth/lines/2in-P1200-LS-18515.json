@@ -156,7 +156,7 @@
    "cls": "P1200",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 67.7505,
+   "weight": 67.3425,
    "spool": "loose",
    "a": {
     "E": 1188,
@@ -964,7 +964,7 @@
    "cls": "P1200",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 67.7505,
+   "weight": 67.3425,
    "spool": "loose",
    "a": {
     "E": 1188,
@@ -1566,26 +1566,6 @@
  ],
  "supports": [
   {
-   "tag": "2\"-P1200-LS-18515/S1",
-   "line": "2\"-P1200-LS-18515",
-   "lineClass": "S1200",
-   "type": "hanger",
-   "description": "HANGER FOR 2\" LINE (HANGER-2x53.6)",
-   "designation": "HANGER-2x53.6",
-   "key": "HANG|2|P1200|53.58",
-   "material": "Grade 36",
-   "weight": 5.2522,
-   "spool": "loose",
-   "at": {
-    "E": 1188,
-    "N": -13.6935,
-    "EL": 1332
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
    "tag": "2\"-P1200-LS-18515/S2",
    "line": "2\"-P1200-LS-18515",
    "lineClass": "S1200",
@@ -1684,6 +1664,26 @@
    "rules": [
     "SW-PS-1"
    ]
+  },
+  {
+   "tag": "2\"-P1200-LS-18515/S7",
+   "line": "2\"-P1200-LS-18515",
+   "lineClass": "S1200",
+   "type": "stanchion",
+   "description": "STANCHION FOR 2\" LINE (STANCHION-2x131.0)",
+   "designation": "STANCHION-2x131.0",
+   "key": "STAN|2|P1200|131.00",
+   "material": "Grade 36",
+   "weight": 122.7004,
+   "spool": "loose",
+   "at": {
+    "E": 1188,
+    "N": 13.6935,
+    "EL": 1332
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
   }
  ],
  "spools": [
@@ -1765,7 +1765,7 @@
    "itemNo": 4,
    "description": "VALVE, GLOBE, T-PATTERN 2\" P1200",
    "qty": 2,
-   "weight": 135.501
+   "weight": 134.685
   },
   {
    "itemNo": 5,
@@ -2050,6 +2050,6 @@
   "fieldWelds": 2,
   "supports": 6,
   "pipeLength": 824.6773,
-  "weight": 393.2708
+  "weight": 392.4548
  }
 }

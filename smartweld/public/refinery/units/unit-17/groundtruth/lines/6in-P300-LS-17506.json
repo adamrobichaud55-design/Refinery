@@ -114,7 +114,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 258.8487,
+   "weight": 256.9267,
    "spool": "loose",
    "a": {
     "E": 2340,
@@ -964,7 +964,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 258.8487,
+   "weight": 256.9267,
    "spool": "loose",
    "a": {
     "E": 2340,
@@ -1487,7 +1487,28 @@
  ],
  "supports": [
   {
-   "tag": "6\"-P300-LS-17506/S1",
+   "tag": "6\"-P300-LS-17506/S2",
+   "line": "6\"-P300-LS-17506",
+   "lineClass": "S300",
+   "type": "trapeze",
+   "description": "TRAPEZE FOR 6\" LINE (TRAPEZE-6x223.0)",
+   "designation": "TRAPEZE-6x223.0",
+   "key": "TRAP|6|P300|223.02|223.02|9.00",
+   "material": "Grade 36",
+   "weight": 33.7118,
+   "spool": "loose",
+   "at": {
+    "E": 2340,
+    "N": 386.5,
+    "EL": 1344
+   },
+   "rules": [
+    "SW-PS-13",
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "6\"-P300-LS-17506/S3",
    "line": "6\"-P300-LS-17506",
    "lineClass": "S300",
    "type": "stanchion",
@@ -1500,26 +1521,6 @@
    "at": {
     "E": 2340,
     "N": 172.935,
-    "EL": 1344
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
-   "tag": "6\"-P300-LS-17506/S2",
-   "line": "6\"-P300-LS-17506",
-   "lineClass": "S300",
-   "type": "stanchion",
-   "description": "STANCHION FOR 6\" LINE (STANCHION-6x141.0)",
-   "designation": "STANCHION-6x141.0",
-   "key": "STAN|6|P300|141.00",
-   "material": "Grade 36",
-   "weight": 788.0835,
-   "spool": "loose",
-   "at": {
-    "E": 2340,
-    "N": 390,
     "EL": 1344
    },
    "rules": [
@@ -1599,7 +1600,7 @@
    "itemNo": 3,
    "description": "VALVE, GLOBE, T-PATTERN 6\" P300",
    "qty": 2,
-   "weight": 517.6974
+   "weight": 513.8533
   },
   {
    "itemNo": 4,
@@ -1863,6 +1864,6 @@
   "fieldWelds": 3,
   "supports": 2,
   "pipeLength": 621.8615,
-  "weight": 1377.3018
+  "weight": 1373.4577
  }
 }

@@ -325,11 +325,11 @@
   "areaName": "Vacuum distillation",
   "designation": "A-1201A air cooler 168\" × 384\", 2 fans",
   "material": "Grade 36",
-  "weight": 456065.6007,
+  "weight": 456054.4517,
   "origin": {
    "E": 690,
    "N": 0,
-   "EL": 1644
+   "EL": 1644.165
   },
   "axis": {
    "E": 0,
@@ -361,7 +361,7 @@
    {
     "name": "legH",
     "label": "Column height to the plenum",
-    "value": 24,
+    "value": 23.835,
     "unit": "in",
     "basis": "stated on drawing"
    },
@@ -441,11 +441,11 @@
   "areaName": "Vacuum distillation",
   "designation": "A-1201B air cooler 168\" × 384\", 2 fans",
   "material": "Grade 36",
-  "weight": 456065.6007,
+  "weight": 456054.4517,
   "origin": {
    "E": 870,
    "N": 0,
-   "EL": 1644
+   "EL": 1644.165
   },
   "axis": {
    "E": 0,
@@ -477,7 +477,7 @@
    {
     "name": "legH",
     "label": "Column height to the plenum",
-    "value": 24,
+    "value": 23.835,
     "unit": "in",
     "basis": "stated on drawing"
    },
@@ -1270,7 +1270,7 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1201A centrifugal pump",
   "material": "Grade 36",
-  "weight": 6192.2321,
+  "weight": 6131.7383,
   "origin": {
    "E": 540,
    "N": 285,
@@ -1379,7 +1379,7 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1201B centrifugal pump",
   "material": "Grade 36",
-  "weight": 6192.2321,
+  "weight": 6131.7383,
   "origin": {
    "E": 624,
    "N": 285,
@@ -1488,11 +1488,11 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1202A centrifugal pump",
   "material": "Grade 36",
-  "weight": 9963.2789,
+  "weight": 10074.2945,
   "origin": {
    "E": 714,
    "N": 291,
-   "EL": 1210
+   "EL": 1209.5
   },
   "axis": {
    "E": 0,
@@ -1545,7 +1545,7 @@
    {
     "name": "shaftY",
     "label": "Shaft centreline above the pad",
-    "value": 14,
+    "value": 14.5,
     "unit": "in",
     "basis": "proportioned by SmartWeld rule SW-EQ-4"
    }
@@ -1597,11 +1597,11 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1202B centrifugal pump",
   "material": "Grade 36",
-  "weight": 9963.2789,
+  "weight": 10074.2945,
   "origin": {
    "E": 804,
    "N": 291,
-   "EL": 1210
+   "EL": 1209.5
   },
   "axis": {
    "E": 0,
@@ -1654,7 +1654,7 @@
    {
     "name": "shaftY",
     "label": "Shaft centreline above the pad",
-    "value": 14,
+    "value": 14.5,
     "unit": "in",
     "basis": "proportioned by SmartWeld rule SW-EQ-4"
    }
@@ -1706,7 +1706,7 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1203A centrifugal pump",
   "material": "Grade 36",
-  "weight": 5359.474,
+  "weight": 5291.9855,
   "origin": {
    "E": 894,
    "N": 285,
@@ -1815,7 +1815,7 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1203B centrifugal pump",
   "material": "Grade 36",
-  "weight": 5359.474,
+  "weight": 5291.9855,
   "origin": {
    "E": 978,
    "N": 285,
@@ -1924,7 +1924,7 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1204A centrifugal pump",
   "material": "Grade 36",
-  "weight": 1168.1109,
+  "weight": 1131.8146,
   "origin": {
    "E": 1056,
    "N": 273,
@@ -2033,7 +2033,7 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1204B centrifugal pump",
   "material": "Grade 36",
-  "weight": 1168.1109,
+  "weight": 1131.8146,
   "origin": {
    "E": 1128,
    "N": 273,
@@ -2142,7 +2142,7 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1205A centrifugal pump",
   "material": "Grade 36",
-  "weight": 1168.1109,
+  "weight": 1131.8146,
   "origin": {
    "E": 1200,
    "N": 273,
@@ -2251,7 +2251,7 @@
   "areaName": "Vacuum distillation",
   "designation": "P-1205B centrifugal pump",
   "material": "Grade 36",
-  "weight": 1168.1109,
+  "weight": 1131.8146,
   "origin": {
    "E": 1272,
    "N": 273,
@@ -2360,7 +2360,7 @@
   "areaName": "Vacuum distillation",
   "designation": "H-1201 cabin heater, radiant box 26' × 16' × 32'",
   "material": "Grade 36",
-  "weight": 165440.7078,
+  "weight": 165401.4707,
   "origin": {
    "E": 2394,
    "N": -156,
@@ -2446,6 +2446,13 @@
     "name": "stackH",
     "label": "Stack height (1.5 H)",
     "value": 576,
+    "unit": "in",
+    "basis": "proportioned by SmartWeld rule SW-EQC-53"
+   },
+   {
+    "name": "throughClear",
+    "label": "Buckstays clear of the rim of a connection's flange through the wall",
+    "value": 1,
     "unit": "in",
     "basis": "proportioned by SmartWeld rule SW-EQC-53"
    }

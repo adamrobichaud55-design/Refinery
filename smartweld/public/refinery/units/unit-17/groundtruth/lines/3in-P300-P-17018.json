@@ -534,7 +534,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 1206,
@@ -999,7 +999,28 @@
    ]
   }
  ],
- "supports": [],
+ "supports": [
+  {
+   "tag": "3\"-P300-P-17018/S1",
+   "line": "3\"-P300-P-17018",
+   "lineClass": "H300",
+   "type": "stanchion",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x124.5)",
+   "designation": "STANCHION-3x124.5",
+   "key": "STAN|3|P300|124.50",
+   "material": "Grade 36",
+   "weight": 179.6688,
+   "spool": "loose",
+   "at": {
+    "E": 1056,
+    "N": -562,
+    "EL": 1332
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  }
+ ],
  "spools": [
   {
    "id": "3\"-P300-P-17018-SP01",
@@ -1087,7 +1108,7 @@
    "itemNo": 8,
    "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
    "qty": 1,
-   "weight": 121.7562
+   "weight": 120.3713
   },
   {
    "itemNo": 9,
@@ -1264,8 +1285,8 @@
   "items": 16,
   "welds": 9,
   "fieldWelds": 2,
-  "supports": 0,
+  "supports": 1,
   "pipeLength": 338.0937,
-  "weight": 299.7762
+  "weight": 298.3913
  }
 }

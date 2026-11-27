@@ -23,13 +23,13 @@
    "itemNo": 1,
    "description": "PIPE 3\" P600 BEVELLED ENDS",
    "designation": "PIPE3-P600",
-   "key": "PIPE|3|P600|9.667",
+   "key": "PIPE|3|P600|33.667",
    "NPS": 3,
    "cls": "P600",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 9.6667,
-   "weight": 3.8265,
+   "cutLength": 33.6667,
+   "weight": 13.3266,
    "spool": "3\"-P600-P-17601-SP01",
    "a": {
     "E": 726,
@@ -39,12 +39,12 @@
    "b": {
     "E": 726,
     "N": -30,
-    "EL": 1315
+    "EL": 1339
    },
    "centre": {
     "E": 726,
     "N": -30,
-    "EL": 1310.1667
+    "EL": 1322.1667
    },
    "axis": {
     "E": 0,
@@ -76,17 +76,17 @@
    "a": {
     "E": 726,
     "N": -30,
-    "EL": 1315
+    "EL": 1339
    },
    "b": {
     "E": 721,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "centre": {
     "E": 723.5,
     "N": -30,
-    "EL": 1317.5
+    "EL": 1341.5
    },
    "axis": {
     "E": -0.7071,
@@ -119,17 +119,17 @@
    "a": {
     "E": 721,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "b": {
     "E": 659,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "centre": {
     "E": 690,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "axis": {
     "E": -1,
@@ -161,17 +161,17 @@
    "a": {
     "E": 659,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "b": {
     "E": 654,
     "N": -30,
-    "EL": 1325
+    "EL": 1349
    },
    "centre": {
     "E": 656.5,
     "N": -30,
-    "EL": 1322.5
+    "EL": 1346.5
    },
    "axis": {
     "E": -0.7071,
@@ -193,18 +193,18 @@
    "itemNo": 1,
    "description": "PIPE 3\" P600 BEVELLED ENDS",
    "designation": "PIPE3-P600",
-   "key": "PIPE|3|P600|140.000",
+   "key": "PIPE|3|P600|116.000",
    "NPS": 3,
    "cls": "P600",
    "material": "Grade 35 pipe",
    "ends": "BW×BW",
-   "cutLength": 140,
-   "weight": 55.4168,
+   "cutLength": 116,
+   "weight": 45.9168,
    "spool": "3\"-P600-P-17601-SP01",
    "a": {
     "E": 654,
     "N": -30,
-    "EL": 1325
+    "EL": 1349
    },
    "b": {
     "E": 654,
@@ -214,7 +214,7 @@
    "centre": {
     "E": 654,
     "N": -30,
-    "EL": 1395
+    "EL": 1407
    },
    "axis": {
     "E": 0,
@@ -492,7 +492,7 @@
    "cls": "P600",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 707.875,
@@ -626,7 +626,7 @@
    "at": {
     "E": 726,
     "N": -30,
-    "EL": 1315
+    "EL": 1339
    },
    "key": "BW|3|P600",
    "weight": 0.0808,
@@ -660,7 +660,7 @@
    "at": {
     "E": 721,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "key": "BW|3|P600",
    "weight": 0.0808,
@@ -694,7 +694,7 @@
    "at": {
     "E": 659,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "key": "BW|3|P600",
    "weight": 0.0808,
@@ -728,7 +728,7 @@
    "at": {
     "E": 654,
     "N": -30,
-    "EL": 1325
+    "EL": 1349
    },
    "key": "BW|3|P600",
    "weight": 0.0808,
@@ -844,30 +844,7 @@
    ]
   }
  ],
- "supports": [
-  {
-   "tag": "3\"-P600-P-17601/S1",
-   "line": "3\"-P600-P-17601",
-   "lineClass": "H600",
-   "type": "trunnion",
-   "description": "TRUNNION FOR 3\" LINE (TRUNNION-3x118.5)",
-   "designation": "TRUNNION-3x118.5",
-   "key": "TRUN|3|P600|118.50",
-   "material": "Grade 36",
-   "weight": 113.4014,
-   "spool": "loose",
-   "at": {
-    "E": 654,
-    "N": -30,
-    "EL": 1318.5
-   },
-   "rules": [
-    "SW-FIT-1",
-    "SW-PS-10",
-    "SW-PS-4"
-   ]
-  }
- ],
+ "supports": [],
  "spools": [
   {
    "id": "3\"-P600-P-17601-SP01",
@@ -935,7 +912,7 @@
    "itemNo": 6,
    "description": "VALVE, GATE, WEDGE, OS&Y 3\" P600",
    "qty": 1,
-   "weight": 121.7562
+   "weight": 120.3713
   }
  ],
  "nodes": [
@@ -952,7 +929,7 @@
    "at": {
     "E": 726,
     "N": -30,
-    "EL": 1315
+    "EL": 1339
    },
    "kind": "pipe end",
    "ref": "3\"-P600-P-17601/p1"
@@ -961,7 +938,7 @@
    "at": {
     "E": 726,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "kind": "elbow work point",
    "ref": "3\"-P600-P-17601/el2"
@@ -970,7 +947,7 @@
    "at": {
     "E": 721,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "kind": "elbow end",
    "ref": "3\"-P600-P-17601/el2"
@@ -979,7 +956,7 @@
    "at": {
     "E": 659,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "kind": "pipe end",
    "ref": "3\"-P600-P-17601/p3"
@@ -988,7 +965,7 @@
    "at": {
     "E": 654,
     "N": -30,
-    "EL": 1320
+    "EL": 1344
    },
    "kind": "elbow work point",
    "ref": "3\"-P600-P-17601/el4"
@@ -997,7 +974,7 @@
    "at": {
     "E": 654,
     "N": -30,
-    "EL": 1325
+    "EL": 1349
    },
    "kind": "elbow end",
    "ref": "3\"-P600-P-17601/el4"
@@ -1079,8 +1056,8 @@
   "items": 13,
   "welds": 8,
   "fieldWelds": 2,
-  "supports": 1,
+  "supports": 0,
   "pipeLength": 241.7292,
-  "weight": 257.4109
+  "weight": 256.026
  }
 }

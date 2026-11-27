@@ -146,7 +146,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 129.1601,
+   "weight": 126.0958,
    "spool": "loose",
    "a": {
     "E": 756,
@@ -1551,7 +1551,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 129.1601,
+   "weight": 126.0958,
    "spool": "loose",
    "a": {
     "E": 1833.6391,
@@ -1895,7 +1895,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 211.8356,
+   "weight": 210.4397,
    "spool": "loose",
    "a": {
     "E": 1863.0852,
@@ -2238,7 +2238,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 129.1601,
+   "weight": 126.0958,
    "spool": "loose",
    "a": {
     "E": 1893.5,
@@ -2584,7 +2584,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 129.1601,
+   "weight": 126.0958,
    "spool": "loose",
    "a": {
     "E": 1937.875,
@@ -3820,28 +3820,6 @@
    ]
   },
   {
-   "tag": "4\"-P300-P-18030/S6",
-   "line": "4\"-P300-P-18030",
-   "lineClass": "H300",
-   "type": "trunnion",
-   "description": "TRUNNION FOR 4\" LINE (TRUNNION-4x52.0)",
-   "designation": "TRUNNION-4x52.0",
-   "key": "TRUN|4|P300|52.00",
-   "material": "Grade 36",
-   "weight": 77.3922,
-   "spool": "loose",
-   "at": {
-    "E": 1842,
-    "N": 108,
-    "EL": 1252
-   },
-   "rules": [
-    "SW-FIT-1",
-    "SW-PS-10",
-    "SW-PS-4"
-   ]
-  },
-  {
    "tag": "4\"-P300-P-18030/S8",
    "line": "4\"-P300-P-18030",
    "lineClass": "H300",
@@ -3899,6 +3877,26 @@
    },
    "rules": [
     "SW-PS-1"
+   ]
+  },
+  {
+   "tag": "4\"-P300-P-18030/S11",
+   "line": "4\"-P300-P-18030",
+   "lineClass": "H300",
+   "type": "stanchion",
+   "description": "STANCHION FOR 4\" LINE (STANCHION-4x238.0)",
+   "designation": "STANCHION-4x238.0",
+   "key": "STAN|4|P300|238.00",
+   "material": "Grade 36",
+   "weight": 1898.2015,
+   "spool": "loose",
+   "at": {
+    "E": 738,
+    "N": -379,
+    "EL": 1446
+   },
+   "rules": [
+    "SW-PS-9"
    ]
   }
  ],
@@ -4031,7 +4029,7 @@
    "itemNo": 3,
    "description": "VALVE, GATE, WEDGE, OS&Y 4\" P300",
    "qty": 4,
-   "weight": 516.6403
+   "weight": 504.383
   },
   {
    "itemNo": 4,
@@ -4092,7 +4090,7 @@
    "itemNo": 13,
    "description": "VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 3\" P300",
    "qty": 1,
-   "weight": 211.8356
+   "weight": 210.4397
   }
  ],
  "nodes": [
@@ -4670,6 +4668,6 @@
   "fieldWelds": 2,
   "supports": 9,
   "pipeLength": 2069.7426,
-  "weight": 2408.7403
+  "weight": 2395.0871
  }
 }

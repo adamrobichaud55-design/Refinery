@@ -450,7 +450,7 @@
    "cls": "P150",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 119.3555,
+   "weight": 117.9596,
    "spool": "loose",
    "a": {
     "E": 1308,
@@ -2146,6 +2146,26 @@
    ]
   },
   {
+   "tag": "3\"-P150-CWR-17514/S2",
+   "line": "3\"-P150-CWR-17514",
+   "lineClass": "W150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x226.5)",
+   "designation": "STANCHION-3x226.5",
+   "key": "STAN|3|P150|226.50",
+   "material": "Grade 36",
+   "weight": 1806.5382,
+   "spool": "loose",
+   "at": {
+    "E": 1290,
+    "N": -519,
+    "EL": 1434
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
    "tag": "3\"-P150-CWR-17514/S3",
    "line": "3\"-P150-CWR-17514",
    "lineClass": "W150",
@@ -2163,46 +2183,6 @@
    },
    "rules": [
     "SW-PS-9"
-   ]
-  },
-  {
-   "tag": "3\"-P150-CWR-17514/S4",
-   "line": "3\"-P150-CWR-17514",
-   "lineClass": "W150",
-   "type": "stanchion",
-   "description": "STANCHION FOR 3\" LINE (STANCHION-3x232.5)",
-   "designation": "STANCHION-3x232.5",
-   "key": "STAN|3|P150|232.50",
-   "material": "Grade 36",
-   "weight": 1854.0962,
-   "spool": "loose",
-   "at": {
-    "E": 1290,
-    "N": -429.5,
-    "EL": 1434
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
-   "tag": "3\"-P150-CWR-17514/S5",
-   "line": "3\"-P150-CWR-17514",
-   "lineClass": "W150",
-   "type": "shoe",
-   "description": "SHOE FOR 3\" LINE (SHOE-3)",
-   "designation": "SHOE-3",
-   "key": "SHOE|3|P150|shoe|4.000",
-   "material": "Grade 36",
-   "weight": 9.9212,
-   "spool": "loose",
-   "at": {
-    "E": 1290,
-    "N": -560.25,
-    "EL": 1428.5
-   },
-   "rules": [
-    "SW-PS-1"
    ]
   }
  ],
@@ -2323,7 +2303,7 @@
    "itemNo": 7,
    "description": "VALVE, GLOBE, T-PATTERN 3\" P150",
    "qty": 1,
-   "weight": 119.3555
+   "weight": 117.9596
   },
   {
    "itemNo": 8,
@@ -2698,8 +2678,8 @@
   "items": 35,
   "welds": 18,
   "fieldWelds": 2,
-  "supports": 4,
+  "supports": 3,
   "pipeLength": 835.5124,
-  "weight": 617.6414
+  "weight": 616.2455
  }
 }

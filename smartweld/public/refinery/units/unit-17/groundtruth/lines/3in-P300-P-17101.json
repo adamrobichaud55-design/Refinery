@@ -146,7 +146,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 2142,
@@ -1465,7 +1465,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 2470.5796,
@@ -1809,7 +1809,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 128.1661,
+   "weight": 127.7725,
    "spool": "loose",
    "a": {
     "E": 2445.6648,
@@ -2152,7 +2152,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 2418.1875,
@@ -2498,7 +2498,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 2376.125,
@@ -3566,6 +3566,27 @@
  ],
  "supports": [
   {
+   "tag": "3\"-P300-P-17101/S1",
+   "line": "3\"-P300-P-17101",
+   "lineClass": "H300",
+   "type": "trapeze",
+   "description": "TRAPEZE FOR 3\" LINE (TRAPEZE-3x145.0)",
+   "designation": "TRAPEZE-3x145.0",
+   "key": "TRAP|3|P300|145.02|145.02|7.50",
+   "material": "Grade 36",
+   "weight": 17.0572,
+   "spool": "loose",
+   "at": {
+    "E": 2142,
+    "N": -360,
+    "EL": 1422
+   },
+   "rules": [
+    "SW-PS-13",
+    "SW-PS-9"
+   ]
+  },
+  {
    "tag": "3\"-P300-P-17101/S2",
    "line": "3\"-P300-P-17101",
    "lineClass": "H300",
@@ -3693,16 +3714,16 @@
    "tag": "3\"-P300-P-17101/S8",
    "line": "3\"-P300-P-17101",
    "lineClass": "H300",
-   "type": "hanger",
-   "description": "HANGER FOR 3\" LINE (HANGER-3x34.6)",
-   "designation": "HANGER-3x34.6",
-   "key": "HANG|3|P300|34.56",
+   "type": "stanchion",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x220.5)",
+   "designation": "STANCHION-3x220.5",
+   "key": "STAN|3|P300|220.50",
    "material": "Grade 36",
-   "weight": 4.9532,
+   "weight": 1758.9802,
    "spool": "loose",
    "at": {
     "E": 2142,
-    "N": 25.9402,
+    "N": 45.5,
     "EL": 1422
    },
    "rules": [
@@ -3848,7 +3869,7 @@
    "itemNo": 3,
    "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
    "qty": 4,
-   "weight": 487.0249
+   "weight": 481.4853
   },
   {
    "itemNo": 4,
@@ -3909,7 +3930,7 @@
    "itemNo": 13,
    "description": "VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 2\" P300",
    "qty": 1,
-   "weight": 128.1661
+   "weight": 127.7725
   }
  ],
  "nodes": [
@@ -4467,8 +4488,8 @@
   "items": 60,
   "welds": 29,
   "fieldWelds": 4,
-  "supports": 7,
+  "supports": 8,
   "pipeLength": 1734.4517,
-  "weight": 1520.0062
+  "weight": 1514.073
  }
 }

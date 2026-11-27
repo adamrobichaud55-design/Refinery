@@ -146,7 +146,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 200.2803,
+   "weight": 198.3516,
    "spool": "loose",
    "a": {
     "E": 3246,
@@ -1424,7 +1424,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 200.2803,
+   "weight": 198.3516,
    "spool": "loose",
    "a": {
     "E": 1662,
@@ -2497,15 +2497,35 @@
    "line": "6\"-P300-P-17080",
    "lineClass": "H300",
    "type": "hanger",
-   "description": "HANGER FOR 6\" LINE (HANGER-6x23.6)",
-   "designation": "HANGER-6x23.6",
-   "key": "HANG|6|P300|23.59",
+   "description": "HANGER FOR 6\" LINE (HANGER-6x21.5)",
+   "designation": "HANGER-6x21.5",
+   "key": "HANG|6|P300|21.50",
    "material": "Grade 36",
-   "weight": 5.9429,
+   "weight": 5.8279,
    "spool": "loose",
    "at": {
     "E": 1662,
     "N": -177.3333,
+    "EL": 1356
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-17080/S10",
+   "line": "6\"-P300-P-17080",
+   "lineClass": "H300",
+   "type": "stanchion",
+   "description": "STANCHION FOR 6\" LINE (STANCHION-6x153.0)",
+   "designation": "STANCHION-6x153.0",
+   "key": "STAN|6|P300|153.00",
+   "material": "Grade 36",
+   "weight": 854.1362,
+   "spool": "loose",
+   "at": {
+    "E": 1662,
+    "N": -360,
     "EL": 1356
    },
    "rules": [
@@ -2526,26 +2546,6 @@
    "at": {
     "E": 1662,
     "N": -427,
-    "EL": 1356
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
-   "tag": "6\"-P300-P-17080/S12",
-   "line": "6\"-P300-P-17080",
-   "lineClass": "H300",
-   "type": "stanchion",
-   "description": "STANCHION FOR 6\" LINE (STANCHION-6x153.0)",
-   "designation": "STANCHION-6x153.0",
-   "key": "STAN|6|P300|153.00",
-   "material": "Grade 36",
-   "weight": 854.1362,
-   "spool": "loose",
-   "at": {
-    "E": 1662,
-    "N": -360,
     "EL": 1356
    },
    "rules": [
@@ -2637,7 +2637,7 @@
    "itemNo": 3,
    "description": "VALVE, GATE, WEDGE, OS&Y 6\" P300",
    "qty": 2,
-   "weight": 400.5606
+   "weight": 396.7032
   },
   {
    "itemNo": 4,
@@ -3069,6 +3069,6 @@
   "fieldWelds": 2,
   "supports": 11,
   "pipeLength": 2818.8102,
-  "weight": 3767.7477
+  "weight": 3763.8903
  }
 }

@@ -67,7 +67,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 4950,
@@ -1306,7 +1306,7 @@
    "cls": "P300",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 121.7562,
+   "weight": 120.3713,
    "spool": "loose",
    "a": {
     "E": 162.125,
@@ -2101,6 +2101,27 @@
   }
  ],
  "supports": [
+  {
+   "tag": "3\"-P300-P-19045/S1",
+   "line": "3\"-P300-P-19045",
+   "lineClass": "H300",
+   "type": "trapeze",
+   "description": "TRAPEZE FOR 3\" LINE (TRAPEZE-3x241.0)",
+   "designation": "TRAPEZE-3x241.0",
+   "key": "TRAP|3|P300|241.02|241.02|7.50",
+   "material": "Grade 36",
+   "weight": 23.0019,
+   "spool": "loose",
+   "at": {
+    "E": 4950,
+    "N": 352.286,
+    "EL": 1326
+   },
+   "rules": [
+    "SW-PS-13",
+    "SW-PS-9"
+   ]
+  },
   {
    "tag": "3\"-P300-P-19045/S2",
    "line": "3\"-P300-P-19045",
@@ -2920,26 +2941,6 @@
    "rules": [
     "SW-PS-9"
    ]
-  },
-  {
-   "tag": "3\"-P300-P-19045/S43",
-   "line": "3\"-P300-P-19045",
-   "lineClass": "H300",
-   "type": "stanchion",
-   "description": "STANCHION FOR 3\" LINE (STANCHION-3x124.5)",
-   "designation": "STANCHION-3x124.5",
-   "key": "STAN|3|P300|124.50",
-   "material": "Grade 36",
-   "weight": 179.6688,
-   "spool": "loose",
-   "at": {
-    "E": 4950,
-    "N": 354,
-    "EL": 1326
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
   }
  ],
  "spools": [
@@ -3025,7 +3026,7 @@
    "itemNo": 2,
    "description": "VALVE, GATE, WEDGE, OS&Y 3\" P300",
    "qty": 2,
-   "weight": 243.5125
+   "weight": 240.7427
   },
   {
    "itemNo": 3,
@@ -3364,6 +3365,6 @@
   "fieldWelds": 3,
   "supports": 42,
   "pipeLength": 5545.5335,
-  "weight": 2509.309
+  "weight": 2506.5392
  }
 }

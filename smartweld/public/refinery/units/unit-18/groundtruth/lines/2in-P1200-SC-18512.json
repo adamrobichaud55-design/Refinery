@@ -146,7 +146,7 @@
    "cls": "P1200",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 67.7505,
+   "weight": 67.3425,
    "spool": "loose",
    "a": {
     "E": 972,
@@ -1081,7 +1081,7 @@
    "cls": "P1200",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 63.5754,
+   "weight": 63.1684,
    "spool": "loose",
    "a": {
     "E": 1377.75,
@@ -1427,7 +1427,7 @@
    "cls": "P1200",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 150.6939,
+   "weight": 150.2859,
    "spool": "loose",
    "a": {
     "E": 1404.5313,
@@ -1772,7 +1772,7 @@
    "cls": "P1200",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 63.5754,
+   "weight": 63.1684,
    "spool": "loose",
    "a": {
     "E": 1431.0938,
@@ -2118,7 +2118,7 @@
    "cls": "P1200",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 67.7505,
+   "weight": 67.3425,
    "spool": "loose",
    "a": {
     "E": 1469.875,
@@ -2879,26 +2879,6 @@
  ],
  "supports": [
   {
-   "tag": "2\"-P1200-SC-18512/S1",
-   "line": "2\"-P1200-SC-18512",
-   "lineClass": "C1200",
-   "type": "stanchion",
-   "description": "STANCHION FOR 2\" LINE (STANCHION-2x95.0)",
-   "designation": "STANCHION-2x95.0",
-   "key": "STAN|2|P1200|95.00",
-   "material": "Grade 36",
-   "weight": 90.9951,
-   "spool": "loose",
-   "at": {
-    "E": 1069.6667,
-    "N": -210,
-    "EL": 1296
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
    "tag": "2\"-P1200-SC-18512/S2",
    "line": "2\"-P1200-SC-18512",
    "lineClass": "C1200",
@@ -2931,6 +2911,26 @@
    "spool": "loose",
    "at": {
     "E": 1258.3333,
+    "N": -210,
+    "EL": 1296
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "2\"-P1200-SC-18512/S4",
+   "line": "2\"-P1200-SC-18512",
+   "lineClass": "C1200",
+   "type": "stanchion",
+   "description": "STANCHION FOR 2\" LINE (STANCHION-2x95.0)",
+   "designation": "STANCHION-2x95.0",
+   "key": "STAN|2|P1200|95.00",
+   "material": "Grade 36",
+   "weight": 90.9951,
+   "spool": "loose",
+   "at": {
+    "E": 1063.6667,
     "N": -210,
     "EL": 1296
    },
@@ -3046,7 +3046,7 @@
    "itemNo": 3,
    "description": "VALVE, GLOBE, T-PATTERN 2\" P1200",
    "qty": 2,
-   "weight": 135.501
+   "weight": 134.685
   },
   {
    "itemNo": 4,
@@ -3083,13 +3083,13 @@
    "itemNo": 9,
    "description": "VALVE, GATE, WEDGE, OS&Y 2\" P1200",
    "qty": 2,
-   "weight": 127.1509
+   "weight": 126.3367
   },
   {
    "itemNo": 10,
    "description": "VALVE, CONTROL, GLOBE WITH DIAPHRAGM ACTUATOR 2\" P1200",
    "qty": 1,
-   "weight": 150.6939
+   "weight": 150.2859
   }
  ],
  "nodes": [
@@ -3532,6 +3532,6 @@
   "fieldWelds": 2,
   "supports": 3,
   "pipeLength": 663.1879,
-  "weight": 691.5305
+  "weight": 689.4924
  }
 }
