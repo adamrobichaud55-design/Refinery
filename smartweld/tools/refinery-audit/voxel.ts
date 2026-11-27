@@ -222,7 +222,8 @@ let CACHE_DIR = '';
 function cacheDir(): string {
   if (CACHE_DIR) return CACHE_DIR;
   const h = createHash('sha1'), walk = (d: string): string[] => readdirSync(d, { withFileTypes: true }).flatMap(e => (e.isDirectory() ? walk(`${d}/${e.name}`) : /\.ts$/.test(e.name) ? [`${d}/${e.name}`] : [])).sort();
-  for (const f of [...walk('../../src/catalogue'), ...walk('../../src/geometry'), '../../src/generator/piping.ts']) h.update(f).update(readFileSync(f));
+  const root = new URL('../../src/', import.meta.url).pathname.replace(/\/$/, '');   // from this file, wherever it is run from
+  for (const f of [...walk(`${root}/catalogue`), ...walk(`${root}/geometry`), `${root}/generator/piping.ts`]) h.update(f).update(readFileSync(f));
   h.update(String(CAST_CELLS)).update(components.toString()).update(classify.toString()).update('shapes of a part: buildGeometry solids, split into components, each classified; v2');
   CACHE_DIR = `${HERE}/shape-cache/${h.digest('hex').slice(0, 16)}`; return CACHE_DIR;
 }

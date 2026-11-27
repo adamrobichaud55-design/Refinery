@@ -456,7 +456,8 @@ function valveMeshBuild(key: string, cells: number) {
 const CACHE_DIR = (() => {
   if (ENV.NOCACHE === '1') return undefined;
   const files: string[] = []; const walk = (d: string) => { for (const f of readdirSync(d, { withFileTypes: true })) { const q = `${d}/${f.name}`; if (f.isDirectory()) walk(q); else if (/\.ts$/.test(f.name)) files.push(q); } };
-  for (const d of ['../../src/catalogue', '../../src/geometry']) walk(d);
+  const root = new URL('../../src/', import.meta.url).pathname;   // from this file, wherever it is run from
+  for (const d of [`${root}catalogue`, `${root}geometry`]) walk(d.replace(/\/$/, ''));
   const h = createHash('sha1'); for (const f of files.sort()) { h.update(f); h.update(readFileSync(f)); }
   const dir = `${OUT_DIR}/valve-cache/${h.digest('hex').slice(0, 16)}`; mkdirSync(dir, { recursive: true }); return dir;
 })();
