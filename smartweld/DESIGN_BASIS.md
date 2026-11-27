@@ -5864,10 +5864,14 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   up to 5.6 in inside each other's, and a post through a nozzle's spool): its pedestals,
   posts and beam against every piece of every line but the run its shoe carries, every
   solid of the plant, and the frames tested before it; a frame that overlaps any of them by
-  more than 0.02 in is taken out with its shoe, and SW-RPI-17 may then set another support
-  there; SW-RPI-17 sets no frame whose parts would be taken out so (amended the same day:
+  more than 0.02 in is taken out with its shoe, and with any support that bears on it or
+  hangs from it (amended the same day: a hanger left hanging from a frame taken out hung from
+  nothing), and SW-RPI-17 may then set another support there; SW-RPI-17 sets no frame whose parts would be taken out so (amended the same day:
   frames it set stood with a post through a support of another line, and were taken out
-  only at the next making). A part's tall members
+  only at the next making), nor one whose parts meet a piece of any line or of a nozzle's
+  spool by its true shape (amended the same day: tested by the generator's rounds, which
+  miss an elbow's inside and hold no spool, two frames set had posts 0.2 and 0.5 in into an
+  elbow and a spool). A part's tall members
   are each of its solids that stands more than 6.5 in and is taller than it is wide, each
   tested on its own (amended the same day: the tallest solid alone had been taken, and on a
   line of 12 in or more that is a hanger's clamp ring, as tall as it is wide, so the test had
@@ -5938,7 +5942,10 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   plates up to 1.7 in inside the flange of the beam, strut or girder beside them, left by this
   correction as it was first written); the clamp and the pipe stay. A hanger with no such
   member is left. It is made before SW-RPI-18's test (amended the same day), which would
-  otherwise find the plates in the steel they hang from, and again after SW-RPI-17.
+  otherwise find the plates in the steel they hang from, and again after SW-RPI-17. A
+  trapeze's two rods are each made so, to the member over that rod or its plate (amended the
+  same day: left at the generator's estimate, 13 trapezes' rods and plates stood up to 2 in
+  inside the beams they hang from).
 - `SW-RPI-21` One stud set through a wafer valve (added 2026-11-26). A wafer body is clamped
   between its two flanges by one set of studs through both, as its rule says (BF-1). The
   generator builds the joint on each side of the body as a joint of its own, each with its
@@ -5951,8 +5958,10 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   drawn as a ring square to that, stood tilted through the elbow and the piece beside it (an
   independent clash check found 123 such beads at elbows, to 2 in). Plant 3's own
   correction, on the finished model: each weld is set square to the axis of the joint it
-  closes, the direction of the straight piece it joins (a pipe, flange, reducer or tee run),
-  or, between two elbows, the elbows' common tangent there; its place stays.
+  closes, the direction of the straight piece it joins (a pipe first; else a flange, reducer
+  or tee run, and at a tee's outlet the outlet's axis), or, between two elbows, the elbows'
+  common tangent there; its place stays (amended the same day: taken first from a tee it
+  joined at its outlet, a weld was set square to the tee's run, across its own branch).
 - `SW-RPI-25` A slip-on flange's inside weld at the pipe's end (added 2026-11-27). SW-FLG-10
   stops the pipe t_pipe + 1/8 in short of a slip-on flange's face and lays the inside fillet
   there, so that the weld cannot foul the gasket; the generator records that weld at the
@@ -5978,6 +5987,20 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   routed again alone, the twelve lines at those pumps came out worse (a suction looping round
   its own valve's stem and shutting its spare's way). Carried up, they keep the routes that
   held every check, and only the lengths next to the pumps change.
+- `SW-RPI-27` A spade's handle opposite the stem of the valve beside it (added 2026-11-27). The
+  generator turns a spade's handle and the stem of the valve on the other side of the gasket
+  the same way; at the units' cooling water spools, where the valve is a wafer and its neck
+  stands out from its faces, the handle met the neck (an independent clash check found 15,
+  0.07 to 0.25 in). Plant 3's own correction, on the finished model: a spade whose handle
+  points as the stem of a valve next to it in its stack (no more than a gasket between) is
+  turned half round its run, its handle the other way; its place stays.
+- `SW-RPI-28` A shoe or guide off the welds of the steel it stands on (added 2026-11-27). The
+  generator sets a shoe or guide on a beam where its run crosses it, which may be where the
+  beam is welded to its column; there the guide's angle stood 0.2 in in the bent's fillet
+  welds at four places on the pipeway. Plant 3's own correction, on the finished model: a
+  shoe, guide or anchor any of whose solids meets a weld of the steel by more than 0.02 in is
+  moved along its run, an inch at a time up to 6 in either way, to the nearest place where
+  none does and it stands on the same member; one with no such place is left and listed.
 - `SW-RPI-22` Pieces of one line clear of each other (added 2026-11-27). The generator keeps
   a line 3 in from every other line but never measures a line against itself: its search
   passes every cell held under the line's own number (its end stacks, their valves' boxes

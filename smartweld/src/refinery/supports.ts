@@ -61,7 +61,7 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
   const addLine = (r: LineRun) => { for (const c of r.comps) if (c.kind !== 'studs') for (const s of K.compShapes(c, vb)) items.push({ line: r.no, s, box: boxOfShape(s) }); for (const sp of r.supports) { const b = vb({ key: sp.key, T: sp.T } as Comp); items.push({ line: r.no, s: { kind: 'box', mn: b[0], mx: b[1] }, box: b }); } };
   for (const r of m.lines) addLine(r);
   // SW-RPI-18 (amended): no support set here overlaps a solid of any support already on the model, its own line's included
-  const keptAll: KeptSupport[] = m.lines.flatMap(r => r.supports.map(sp => keptOf(sp, r.no)));
+  const keptAll: KeptSupport[] = m.lines.flatMap(r => r.supports.map(sp => keptOf(sp, r.no))), truePieces = piecesOf(m);
   const solidBoxes: { s: K.Shape; box: Box }[] = statics.map(o => (o.kind === 'box' ? { s: { kind: 'box', mn: o.mn, mx: o.mx } as K.Shape, box: [o.mn, o.mx] as Box } : { s: { kind: 'cap', a: o.a, b: o.b, r: o.r } as K.Shape, box: boxOfShape({ kind: 'cap', a: o.a, b: o.b, r: o.r }) }));
   const near = (a: Box, b: Box, e: number) => a[0][0] < b[1][0] + e && a[1][0] > b[0][0] - e && a[0][1] < b[1][1] + e && a[1][1] > b[0][1] - e && a[0][2] < b[1][2] + e && a[1][2] > b[0][2] - e;
   /** a solid in the box b is 1 in clear of every other line and of every solid of the plant but the floor it stands on */
@@ -145,8 +145,12 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
         if (!freeOf(shoeKey, shoeT)) { why(r.no, `at ${p.map(Math.round)}: no frame (its shoe on ${lastBlock})`); return false; }
         const spec: FrameSpec = { line: r.no, at: [p[0], p[1], p[2]], u, d: [A.d, B.d], floors: [A.floor, B.floor], top, post: A.post === 'W10x49' || B.post === 'W10x49' ? 'W10x49' : 'W8x31', rad };
         // SW-RPI-18 (amended): its posts, pedestals and beam clear of every support already set, as the frames test holds them
-        const hit = framePlaced(spec).map(q => worldBox(q.part, q.transform)).find(b => b && keptAll.some(k => k.solids.some(x => deep(x, b))));
+        const boxes = framePlaced(spec).map(q => worldBox(q.part, q.transform)).filter((b): b is Box => !!b);
+        const hit = boxes.find(b => keptAll.some(k => k.solids.some(x => deep(x, b))));
         if (hit) { why(r.no, `at ${p.map(Math.round)}: no frame (a part of it through a support)`); return false; }
+        // and clear of every line's pieces and the nozzles' spools by their true shapes (the generator's rounds miss an elbow's inside, and hold no spool)
+        const through = boxes.map(b => truePieces.find(q => pieceIn(q, b))).find(Boolean);
+        if (through) { why(r.no, `at ${p.map(Math.round)}: no frame (a part of it through ${through.line})`); return false; }
         out.frames.push(spec); for (const q of framePlaced(spec)) { const b = worldBox(q.part, q.transform as never); if (b) items.push({ line: `frame:${r.no}`, s: { kind: 'box', mn: b[0], mx: b[1] }, box: b }); }
         push(`SHOE|${r.NPS}|${r.cls}|shoe|${SHOE_H.toFixed(3)}`, frameFromAxes([p[0], p[1] - rad, p[2]], [0, 1, 0], w) as number[], 'shoe', [p[0], top, p[2]]); return true;
       };
@@ -374,7 +378,10 @@ export function framesThatStrike(m: PipingModel, plant: PlantDef, frames: FrameS
     }
     if (!why) { kept.push(f); keptBoxes.push(...parts.map(q => q.box)); continue; }
     const r = m.lines.find(q => q.no === f.line); if (r) r.supports = r.supports.filter(s => !own(s as never));
-    out.push(`the pipe frame of ${f.line} at ${f.at.map(Math.round).join(', ')}: ${why}`);
+    // and every support that bears on it or hangs from it: one whose solids come within 0.05 in of its parts (SW-RPI-18 amended)
+    const near = (a: Box, b: Box) => [0, 1, 2].every(k => a[0][k] < b[1][k] + 0.05 && b[0][k] < a[1][k] + 0.05), gone: string[] = [];
+    for (const q of m.lines) q.supports = q.supports.filter(sp => { const hit = supportSolids(sp.key, sp.T as unknown as number[]).some(x => parts.some(pp => near(x, pp.box))); if (hit) gone.push(sp.id); return !hit; });
+    out.push(`the pipe frame of ${f.line} at ${f.at.map(Math.round).join(', ')}: ${why}${gone.length ? `; with it ${gone.join(', ')}, which bore on it` : ''}`);
   }
   return { kept, out };
 }
@@ -444,6 +451,17 @@ export function hangerTops(m: PipingModel, plant: PlantDef): string[] {
   const members = plant.interior().instances.filter(pl => !pl.tags.some(t => /keep-out|equipment|pad|grating|ladder|guardrail|stair|bracing|column|post|pedestal|anchor|bolt|weld|clip|plate/.test(t)))
     .map(pl => worldBox(pl.part, pl.transform)).filter((b): b is Box => !!b && b[1][1] - b[0][1] <= 36 && Math.max(b[1][0] - b[0][0], b[1][2] - b[0][2]) >= 24);
   for (const r of m.lines) for (const sp of r.supports) {
+    if (sp.type === 'trapeze') {   // SW-RPI-20 (amended): each of a trapeze's rods to the member over it or its plate
+      const k = sp.key.split('|'), T = sp.T as unknown as number[], X: V3 = [T[0], T[1], T[2]], OD = pipeDims(Number(k[1]), k[2] as PipeClass).OD, a = k[5] !== undefined ? Number(k[5]) : OD / 2 + 6;
+      const hs = [Number(k[3]), Number(k[4])], nh = hs.map((h, i) => {
+        const s0 = i ? 1 : -1, x = sp.at[0] + X[0] * a * s0, z = sp.at[2] + X[2] * a * s0, top = sp.at[1] + h + PLATE;
+        let over = members.filter(b => x >= b[0][0] - 0.01 && x <= b[1][0] + 0.01 && z >= b[0][2] - 0.01 && z <= b[1][2] + 0.01 && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]);
+        if (!over.length) over = members.filter(b => b[0][0] < x + 2 - 0.01 && x - 2 + 0.01 < b[1][0] && b[0][2] < z + 2 - 0.01 && z - 2 + 0.01 < b[1][2] && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]);
+        if (!over.length) return h; const h2 = over[0][0][1] - PLATE - sp.at[1]; return h2 < 8 ? h : h2;
+      });
+      if (nh.some((h, i) => Math.abs(h - hs[i]) >= 0.01)) { sp.key = [k[0], k[1], k[2], nh[0].toFixed(2), nh[1].toFixed(2), ...k.slice(5)].join('|'); out.push(`${sp.id}: rods ${hs.map(h => h.toFixed(2)).join(', ')} → ${nh.map(h => h.toFixed(2)).join(', ')} in`); }
+      continue;
+    }
     if (sp.type !== 'hanger') continue;
     const k = sp.key.split('|'), L = Number(k[3]), top = sp.at[1] + L + PLATE, x = sp.at[0], z = sp.at[2];
     let over = members.filter(b => x >= b[0][0] - 0.01 && x <= b[1][0] + 0.01 && z >= b[0][2] - 0.01 && z <= b[1][2] + 0.01 && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]);
@@ -479,4 +497,34 @@ export function withFrames(plant: PlantDef, frames: FrameSpec[]): PlantDef {
   if (!frames.length) return plant;
   const placed = frames.flatMap(f => framePlaced(f));
   return { ...plant, interior: () => { const i = plant.interior(); return { ...i, instances: [...i.instances, ...placed] }; } };
+}
+
+/**
+ * SW-RPI-28: a shoe, guide or anchor off the welds of the steel it stands on. One any of whose solids meets a weld of the steel (a true solid tagged as a
+ * weld) by more than 0.02 in is moved along its run an inch at a time, up to 6 in either way, to the nearest place where none does, it stands on the same
+ * member, and it stays on one pipe of its line 1 in from the pipe's ends. Returns the supports moved, and those left.
+ */
+export function shoesOffWelds(m: PipingModel, plant: PlantDef): { moved: string[]; left: string[] } {
+  const truth = trueSolids(plant), welds = truth.filter(q => /weld/.test(q.tag)), moved: string[] = [], left: string[] = [];
+  const onWeld = (key: string, T: number[]) => supportSolids(key, T).some(b => welds.some(q => solidIn(q, b)));
+  for (const r of m.lines) for (const sp of r.supports) {
+    if (!/^(shoe|guide|anchor)$/.test(sp.type)) continue;
+    const T0 = sp.T as unknown as number[]; if (!onWeld(sp.key, T0)) continue;
+    const w: V3 = [T0[8], T0[9], T0[10]], sol = supportSolids(sp.key, T0), base = sol.reduce((a, b) => (b[0][1] < a[0][1] ? b : a));
+    // the member it stands on: a true solid, not a weld, whose top meets its base
+    const under = truth.find(q => !/weld/.test(q.tag) && !q.cap && Math.abs(q.box[1][1] - base[0][1]) <= 0.05 && q.box[0][0] < base[1][0] && base[0][0] < q.box[1][0] && q.box[0][2] < base[1][2] && base[0][2] < q.box[1][2]);
+    const half = Math.max(...sol.map(b => Math.abs((b[1][0] - b[0][0]) * w[0]) + Math.abs((b[1][2] - b[0][2]) * w[2]))) / 2;
+    let done = false;
+    for (let d = 1; d <= 6 && !done; d++) for (const s0 of [1, -1]) {
+      const o = d * s0, at: V3 = [sp.at[0] + w[0] * o, sp.at[1] + w[1] * o, sp.at[2] + w[2] * o], T = [...T0.slice(0, 12), T0[12] + w[0] * o, T0[13] + w[1] * o, T0[14] + w[2] * o, 1];
+      if (onWeld(sp.key, T)) continue;
+      const nb = supportSolids(sp.key, T).reduce((a, b) => (b[0][1] < a[0][1] ? b : a));
+      if (under && !(under.box[0][0] < nb[1][0] && nb[0][0] < under.box[1][0] && under.box[0][2] < nb[1][2] && nb[0][2] < under.box[1][2])) continue;
+      const onPipe = r.comps.some(c => { if (c.kind !== 'pipe') return false; const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), t = ((at[0] - c.a[0]) * (c.b[0] - c.a[0]) + (at[2] - c.a[2]) * (c.b[2] - c.a[2])) / (L || 1); return Math.abs((c.b[1] - c.a[1])) < 1e-6 && t > half + 1 && t < L - half - 1 && Math.hypot(...[0, 2].map(k => c.a[k] + (c.b[k] - c.a[k]) * t / L - at[k])) < 0.5; });
+      if (!onPipe) continue;
+      sp.at = at as never; sp.T = T as never; moved.push(`${sp.id} ${o > 0 ? '+' : ''}${o} in`); done = true; break;
+    }
+    if (!done) left.push(sp.id);
+  }
+  return { moved, left };
 }

@@ -31,7 +31,10 @@ export function squareWelds(m: PipingModel): string[] {
     if (w.type !== 'BW') continue;
     const at = w.at as V3, pieces = w.joins.map(t => byTag.get(t)).filter((c): c is Comp => !!c && c.kind !== 'studs');
     if (!pieces.length) continue;
-    const straight = pieces.find(c => c.kind !== 'elbow'), axis = straight ? axisAt(straight, at) : axisAt(pieces[0], at);
+    // a pipe it joins first (a tee joins a branch at its outlet, square to its run); a tee at its outlet by the outlet's axis; else the straight piece's, or an elbow's tangent
+    const pipe = pieces.find(c => c.kind === 'pipe'), tee = pieces.find(c => c.kind === 'tee'), atOutlet = !!tee && len(sub(at, tee.a as V3)) > 0.05 && len(sub(at, tee.b as V3)) > 0.05;
+    const straight = pipe ?? (tee && !atOutlet ? tee : pieces.find(c => c.kind !== 'elbow' && c.kind !== 'tee'));
+    const axis = straight ? axisAt(straight, at) : tee && atOutlet ? unit([tee.T[4], tee.T[5], tee.T[6]] as V3) : axisAt(pieces[0], at);
     if (!axis) continue;
     const old = unit(w.dir as V3), d = dot(old, axis) < 0 ? ([-axis[0], -axis[1], -axis[2]] as V3) : axis;
     if (Math.abs(dot(old, d)) > 1 - 1e-6) continue;
@@ -59,6 +62,26 @@ export function insideFillets(m: PipingModel): string[] {
     if (!near(at, face)) continue;   // the hub's weld, or one already at the pipe's end
     const n = unit(sub(back, face)), t = pipeDims(pipe.NPS, pipe.cls as PipeClass).t, set = t + 0.125, p: V3 = [face[0] + n[0] * set, face[1] + n[1] * set, face[2] + n[2] * set], d: V3 = [-n[0], -n[1], -n[2]];
     w.at = p; w.dir = d; w.T = frameFromAxes(p, perp(d), d) as never; out.push(w.id);
+  }
+  return out;
+}
+
+/**
+ * Plant 3, SW-RPI-27: a spade's handle opposite the stem of the valve beside it. A spade whose handle (its frame's second axis) points as the stem of a
+ * valve next to it in its stack, no more than a gasket between, is turned half round its run. Returns the spades turned.
+ */
+export function spadeHandles(m: PipingModel): string[] {
+  const out: string[] = [];
+  for (const r of m.lines) {
+    const cs = r.comps.filter(c => c.kind !== 'studs');
+    cs.forEach((c, i) => {
+      if (c.kind !== 'spade') return;
+      const near = [cs[i - 1], cs[i - 2], cs[i + 1], cs[i + 2]].filter((q): q is Comp => !!q);
+      const beside = near.filter(q => q.kind === 'valve' && (Math.abs(cs.indexOf(q) - i) === 1 || cs[(cs.indexOf(q) + i) / 2]?.kind === 'gasket'));
+      const h: V3 = [c.T[4], c.T[5], c.T[6]];
+      if (!beside.some(v => dot(h, [v.T[4], v.T[5], v.T[6]] as V3) > 0.99)) return;
+      c.T = [-c.T[0], -c.T[1], -c.T[2], c.T[3], -c.T[4], -c.T[5], -c.T[6], c.T[7], ...c.T.slice(8)] as never; out.push(c.tag);
+    });
   }
   return out;
 }

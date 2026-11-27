@@ -10,7 +10,7 @@ import { unitPiping } from '../src/refinery/unitPiping';
 import { unitChecks, valveBoxFn, spanNote, cutLongPipes, type PipedUnit } from '../src/refinery/pipingReport';
 import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, hangerTops, waferStuds, withFrames } from '../src/refinery/supports';
 import { selfCorrections, ownClearance } from '../src/refinery/ownLine';
-import { squareWelds, insideFillets } from '../src/refinery/welds';
+import { squareWelds, insideFillets, spadeHandles } from '../src/refinery/welds';
 // PIPING_DIR: another folder of unit models to correct in place of the repository's (a copy, to try the corrections on)
 const dir = process.env.PIPING_DIR ?? 'public/refinery/piping', vb = valveBoxFn();
 const pathLen = (r: LineRun) => r.path.reduce((s, p, i) => (i ? s + Math.hypot(p[0] - r.path[i - 1][0], p[1] - r.path[i - 1][1], p[2] - r.path[i - 1][2]) : 0), 0);
@@ -35,6 +35,7 @@ const units = process.argv.slice(2).map(Number); for (const u of units.length ? 
   // flange's inside weld at the pipe's end, like every other
   const sw = squareWelds(m); if (sw.length) r.notes.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`);
   const fi = insideFillets(m); if (fi.length) r.notes.push(`${fi.length} slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)`);
+  const sh = spadeHandles(m); if (sh.length) r.notes.push(`${sh.length} spades turned, their handles opposite the stems of the valves beside them (SW-RPI-27)`);
   const ht0 = hangerTops(m, pf);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets
   const struck = supportsThatStrike(m, pf, vb);   // SW-RPI-18 first: supports whose rod, post or leg strikes are taken out
   const before = r.checks.supports.length, s = supportsAlongSpans(m, pf, vb), ht = [...ht0, ...hangerTops(m, pf)], ws = waferStuds(m), aside: string[] = [], checks = unitChecks(m, up, aside);

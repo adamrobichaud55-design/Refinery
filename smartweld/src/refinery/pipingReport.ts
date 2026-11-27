@@ -4,13 +4,13 @@
  * nothing is hidden, and a check that does not come to zero is listed.
  */
 import { generatePiping, partFromKey, staticObstacles, worldBox, type PipingModel, type Comp, type LineRun, type Obstacle } from '../generator/piping';
-import { squareWelds, insideFillets } from './welds';
+import { squareWelds, insideFillets, spadeHandles } from './welds';
 import * as K from '../generator/pipingCheck';
 import { buildGeometry } from '../geometry/partGeometry';
 import { pipeDims, elbowRadius, designFlange } from '../catalogue';
 import type { V3 } from '../generator/router';
 import { frameFromAxes } from '../geometry/transform';
-import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, hangerTops, waferStuds, type SpanSupports, type FrameSpec } from './supports';
+import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, hangerTops, waferStuds, shoesOffWelds, type SpanSupports, type FrameSpec } from './supports';
 import { ownClearance, ownClashes, shapesOf, arcMeetsBox, selfCorrections } from './ownLine';
 import { unitPiping, block, laneSpacing, type UnitPiping, type UnitLine, type BlSpool, type RootSpool, type StationSpool } from './unitPiping';
 import type { Placed } from '../generator/building';
@@ -443,10 +443,11 @@ export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watc
   const t0 = Date.now(), recut: string[] = [], up = unitPiping(unit), model = generateUnit(up, log, watch, recut, cache);
   // SW-RPI-17: supports where the generator's stepping stopped
   { const vt = valvesThatStrike(model, up.plant, valveBoxFn()); if (vt.turned.length || vt.stuck.length) recut.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`); }
-  { const sw = squareWelds(model); if (sw.length) recut.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`); const fi = insideFillets(model); if (fi.length) recut.push(`${fi.length} slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)`); }
+  { const sw = squareWelds(model); if (sw.length) recut.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`); const fi = insideFillets(model); if (fi.length) recut.push(`${fi.length} slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)`); const sh = spadeHandles(model); if (sh.length) recut.push(`${sh.length} spades turned, their handles opposite the stems of the valves beside them (SW-RPI-27)`); }
   const ht0 = hangerTops(model, up.plant);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets
   const struck = supportsThatStrike(model, up.plant, valveBoxFn()); if (struck.length) { recut.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`); log(`unit ${unit}: ${struck.length} supports that strike taken out (SW-RPI-18)`); }
   const sup = supportsAlongSpans(model, up.plant, valveBoxFn()); { const n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { recut.push(spanNote(sup)); log(`unit ${unit}: ${spanNote(sup)}`); } }
+  { const so = shoesOffWelds(model, up.plant); if (so.moved.length || so.left.length) recut.push(`${so.moved.length} shoes and guides moved along their runs off the welds of the steel they stand on (SW-RPI-28)${so.moved.length ? `: ${so.moved.join('; ')}` : ''}${so.left.length ? `; ${so.left.length} left: ${so.left.join('; ')}` : ''}`); }
   { const ht = [...ht0, ...hangerTops(model, up.plant)], ws = waferStuds(model); if (ht.length) recut.push(`${ht.length} hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)`); if (ws.length) recut.push(`${ws.length} wafer valves bolted with one stud set through both flanges (SW-RPI-21)`); }
   // SW-RPI-7: each line that runs the rack lies in the lane it was given; one found in another is said, and so is a header (their lanes are held where they were foreseen)
   const astray = up.foreseen.flatMap(L => { const r = L.no === undefined ? undefined : model.lines.find(l => l.no === L.no), z = r && r.ok ? laneOf(r, L.t) : undefined; return z !== undefined && Math.abs(z - L.z) > 1e-6 ? [`${L.no}: given the lane at z ${L.z} on tier ${L.t + 1}, routed at z ${z}`] : []; });
