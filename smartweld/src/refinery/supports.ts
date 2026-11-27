@@ -14,6 +14,7 @@ import { arcPoints, arcMeetsBox, shapesOf, type OwnShape } from './ownLine';
 import { interiorKit } from '../generator/interiorKit';
 import type { Placed } from '../generator/building';
 import { multiply, translate, standUp } from '../geometry/transform';
+import { buildGeometry } from '../geometry/partGeometry';
 import { PAD } from './cell';
 
 type Member = Extract<Obstacle, { kind: 'cap' }>;
@@ -260,10 +261,12 @@ export const shapeBox = (s: OwnShape): Box => {
  *  by its own radius about its axis; a member at a slope by the generator's round (larger than it, so a support beside one may be taken out where it need not) */
 type TrueSolid = { tag: string; /** the placed part it is a solid of */ id: number; box: Box; cap?: { a: V3; b: V3; r: number } };
 const MEMBER_KINDS = new Set(['W', 'C', 'L', 'HSS_RECT', 'HSS_ROUND', 'Z', 'CS', 'ROD', 'PIPE']);
-export function trueSolids(plant: PlantDef): TrueSolid[] {
+/** the placed parts `trueSolids` walks, in its order: a true solid's `id` is its part's place in this list, from 1 */
+export const trueInstances = (plant: PlantDef): Placed[] => [...plant.building().instances.filter(p => !p.tags.includes('cladding') && !p.tags.includes('trim')), ...plant.interior().instances];
+export function trueSolids(plant: PlantDef, placed: Placed[] = trueInstances(plant)): TrueSolid[] {
   const out: TrueSolid[] = [], square = (T: number[]) => [0, 4, 8].every(i => [0, 1, 2].filter(k => Math.abs(T[i + k]) > 0.9999).length === 1);
   let id = 0;
-  for (const pl of [...plant.building().instances.filter(p => !p.tags.includes('cladding') && !p.tags.includes('trim')), ...plant.interior().instances]) {
+  for (const pl of placed) {
     id++; if (pl.tags.some(t => /keep-out|anchor-rod|slab/.test(t))) continue;
     const T = pl.transform as number[], tag = pl.tags.join('/'), bs = solidBoxes(pl.part) as Box[]; if (!bs.length) continue;
     if (pl.part.kind === 'ROD' || (MEMBER_KINDS.has(pl.part.kind) && !square(T))) {
@@ -275,6 +278,37 @@ export function trueSolids(plant: PlantDef): TrueSolid[] {
     for (const b of bs) out.push({ tag, id, box: toWorld(T, b) });
   }
   return out;
+}
+/** SW-RPI-19 (amended again 2026-11-27): whether a box meets the drawn surface of a placed part (a triangle of its solids overlaps the box), or lies inside one of its
+ *  solids (a ray from the box's centre crosses that solid's surface an odd number of times) */
+export function drawnMeetsBox(pl: Placed, b: Box, cache = new Map<Placed, { name: string; t: number[] }[]>()): boolean {
+  let tris = cache.get(pl);
+  if (!tris) { tris = []; const T = pl.transform as number[];
+    for (const s of buildGeometry(pl.part).solids) { const P = (s.mesh as { positions: ArrayLike<number> }).positions, I = (s.mesh as { indices: ArrayLike<number> }).indices;
+      const w = (i: number) => [T[0] * P[3 * i] + T[4] * P[3 * i + 1] + T[8] * P[3 * i + 2] + T[12], T[1] * P[3 * i] + T[5] * P[3 * i + 1] + T[9] * P[3 * i + 2] + T[13], T[2] * P[3 * i] + T[6] * P[3 * i + 1] + T[10] * P[3 * i + 2] + T[14]];
+      for (let k = 0; k < I.length; k += 3) tris.push({ name: s.name, t: [...w(I[k]), ...w(I[k + 1]), ...w(I[k + 2])] }); }
+    cache.set(pl, tris); }
+  const c = [0, 1, 2].map(k => (b[0][k] + b[1][k]) / 2), h = [0, 1, 2].map(k => (b[1][k] - b[0][k]) / 2);
+  // a triangle against the box by separating axes: the box's three, the triangle's normal, and the nine edge cross products
+  const meets = (q: number[]) => {
+    const v = [0, 1, 2].map(i => [q[3 * i] - c[0], q[3 * i + 1] - c[1], q[3 * i + 2] - c[2]]), e = [0, 1, 2].map(i => [0, 1, 2].map(k => v[(i + 1) % 3][k] - v[i][k]));
+    for (let k = 0; k < 3; k++) if (Math.min(v[0][k], v[1][k], v[2][k]) > h[k] || Math.max(v[0][k], v[1][k], v[2][k]) < -h[k]) return false;
+    const cr = (a: number[], d: number[]) => [a[1] * d[2] - a[2] * d[1], a[2] * d[0] - a[0] * d[2], a[0] * d[1] - a[1] * d[0]], dot = (a: number[], d: number[]) => a[0] * d[0] + a[1] * d[1] + a[2] * d[2];
+    const axes = [cr(e[0], e[1]), ...e.flatMap(ed => [[1, 0, 0], [0, 1, 0], [0, 0, 1]].map(u => cr(u, ed)))];
+    for (const a of axes) { if (Math.hypot(a[0], a[1], a[2]) < 1e-12) continue; const p = v.map(x => dot(x, a)), r = h[0] * Math.abs(a[0]) + h[1] * Math.abs(a[1]) + h[2] * Math.abs(a[2]); if (Math.min(...p) > r || Math.max(...p) < -r) return false; }
+    return true;
+  };
+  const near = (q: number[]) => [0, 1, 2].every(k => Math.min(q[k], q[3 + k], q[6 + k]) <= b[1][k] && Math.max(q[k], q[3 + k], q[6 + k]) >= b[0][k]);
+  if (tris.some(x => near(x.t) && meets(x.t))) return true;
+  // inside a solid: crossings of a ray from the centre along a slightly skewed direction, solid by solid
+  const d = [1, 0.000123, 0.000457], odd = new Map<string, number>();
+  for (const { name, t: q } of tris) {
+    const e1 = [q[3] - q[0], q[4] - q[1], q[5] - q[2]], e2 = [q[6] - q[0], q[7] - q[1], q[8] - q[2]], p = [d[1] * e2[2] - d[2] * e2[1], d[2] * e2[0] - d[0] * e2[2], d[0] * e2[1] - d[1] * e2[0]], det = e1[0] * p[0] + e1[1] * p[1] + e1[2] * p[2];
+    if (Math.abs(det) < 1e-12) continue; const w = [c[0] - q[0], c[1] - q[1], c[2] - q[2]], u = (w[0] * p[0] + w[1] * p[1] + w[2] * p[2]) / det; if (u < 0 || u > 1) continue;
+    const qq = [w[1] * e1[2] - w[2] * e1[1], w[2] * e1[0] - w[0] * e1[2], w[0] * e1[1] - w[1] * e1[0]], vv = (d[0] * qq[0] + d[1] * qq[1] + d[2] * qq[2]) / det; if (vv < 0 || u + vv > 1) continue;
+    if ((e2[0] * qq[0] + e2[1] * qq[1] + e2[2] * qq[2]) / det > 0) odd.set(name, (odd.get(name) ?? 0) + 1);
+  }
+  return [...odd.values()].some(n => n % 2 === 1);
 }
 const inBox = (p: V3, b: Box) => [0, 1, 2].every(k => p[k] >= b[0][k] - 1e-6 && p[k] <= b[1][k] + 1e-6);
 const solidIn = (q: TrueSolid, b: Box, e = 0.02) => ovBox(q.box, b) && (q.cap ? K.segBox(q.cap.a, q.cap.b, b[0], b[1]) < q.cap.r - e : deep(q.box, b, e));
@@ -397,7 +431,9 @@ export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp)
     : { line: r.no, a: sh.a as V3, b: sh.b as V3, r: sh.r, box: [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r), [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r)] as Box, kind: c.kind, isBox: false })));
   const near = (p: (typeof pieces)[number], b: Box, g: number) => ov(p.box, b, g) && (p.isBox || K.segBox(p.a, p.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < p.r);
   const sBox = statics.map(o => ({ o, box: (o.kind === 'box' ? [o.mn, o.mx] : [[0, 1, 2].map(k => Math.min(o.a[k], o.b[k]) - o.r), [0, 1, 2].map(k => Math.max(o.a[k], o.b[k]) + o.r)]) as Box }));
-  const truth = trueSolids(plant), truePieces = piecesOf(m), nozzleEquip = new Map((m.nozzles ?? []).map(n => [n.id, n.equip] as const));
+  const placed = trueInstances(plant), truth = trueSolids(plant, placed), truePieces = piecesOf(m), nozzleEquip = new Map((m.nozzles ?? []).map(n => [n.id, n.equip] as const));
+  // SW-RPI-19 (amended again 2026-11-27): an item's solid strikes a valve's only where its drawn surface meets the valve's solid (held by its box), not its box alone
+  const drawn = new Map<Placed, { name: string; t: number[] }[]>(), struck = (q: TrueSolid, b: Box) => solidIn(q, b) && (q.cap !== undefined || drawnMeetsBox(placed[q.id - 1], b, drawn));
   /** what one of a valve's solids, grown by g, overlaps: a solid of the plant or a pipe or fitting of another line (held by its axis and radius) */
   const hit = (no: string, b: Box, g: number) => sBox.find(q => ov(q.box, b, g) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < q.o.r))?.o.tag
     ?? pieces.find(q => q.line !== no && near(q, b, g - 0.02))?.line;
@@ -430,7 +466,7 @@ export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp)
     // SW-RPI-19 (amended 2026-11-27): whether it strikes, by the true shapes (SW-RPI-18's): the plant's true solids and the other lines' pieces as they are
     // the nozzles its line ends at, which its stack bolts to, are not another line's pieces (SW-RPI-19 amended)
     const mates = new Set([r.from, r.to].map(e => nozzleEquip.get(String(e))).filter(Boolean).map(e => `nozzle ${e}`));
-    const T = c.T as unknown as number[], first = solidsOf(c.key, T).map(b => truth.find(q => solidIn(q, b))?.tag ?? truePieces.find(q => q.line !== r.no && !mates.has(q.line) && pieceIn(q, b))?.line ?? (ownHit(own, b, -0.02) ? `its own line ${r.no}` : undefined)).find(Boolean); if (!first) continue;
+    const T = c.T as unknown as number[], first = solidsOf(c.key, T).map(b => truth.find(q => struck(q, b))?.tag ?? truePieces.find(q => q.line !== r.no && !mates.has(q.line) && pieceIn(q, b))?.line ?? (ownHit(own, b, -0.02) ? `its own line ${r.no}` : undefined)).find(Boolean); if (!first) continue;
     const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), f: V3 = [(c.b[0] - c.a[0]) / L, (c.b[1] - c.a[1]) / L, (c.b[2] - c.a[2]) / L], stem: V3 = [T[4], T[5], T[6]], at: V3 = [T[12], T[13], T[14]];
     // up, then +x, -x, +z and -z; never stem down (SW-LL-5; SW-RPI-19 as amended again)
     const dirs = ([[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1]] as V3[]).filter(d => Math.abs(d[0] * f[0] + d[1] * f[1] + d[2] * f[2]) < 1e-6 && Math.hypot(d[0] - stem[0], d[1] - stem[1], d[2] - stem[2]) > 1e-6);

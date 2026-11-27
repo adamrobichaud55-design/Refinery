@@ -54,6 +54,8 @@ export interface UnitPiping {
   runs: UnitRun[]; runOf: Map<string, number>; runPlant: (run: number, prior: Placed[], whole?: boolean | 'close') => PlantDef;
   /** the lanes on each tier: the headers', each rack line's, each root spool's */
   foreseen: RackLane[];
+  /** SW-PWY-5 (amended 2026-11-27): the farthest a lane's centre may lie from the rack's centre line where that is nearer than the rack's own lanes reach (the pipeway's: a guide clear of the beam's end weld) */
+  laneMost?: number;
 }
 /** the width of lanes a tier is loaded to at least; and at most, as a share of the tier's lanes (SW-RPI-7) */
 export const TIER_ROOM = 72, TIER_SHARE = 0.85;

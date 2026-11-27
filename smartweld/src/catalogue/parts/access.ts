@@ -74,10 +74,11 @@ export function makeGrating(id: string, w: number, h: number, cuts: Cut[] = [], 
 
 /** Grating stair tread (SW-GR-3): bearing bars span the width (local x), 10 in deep (local y), nosing bar along the front (y = 0). */
 export function makeTread(id: string, width: number, material: Material = DEFAULT_MATERIAL): PartSpec {
-  const g = GRATING, depth = 10;
-  const bars: BarSeg[] = []; for (let y = 1.25 + g.barPitch / 2; y < depth; y += g.barPitch) bars.push({ x0: 0, y0: y, x1: width, y1: y });
+  const g = GRATING, depth = 10, tc = 3 / 16;
+  // SW-GR-3 (amended 2026-11-27): the bearing bars between the carrier plates, from one's inner face to the other's
+  const bars: BarSeg[] = []; for (let y = 1.25 + g.barPitch / 2; y < depth; y += g.barPitch) bars.push({ x0: tc, y0: y, x1: width - tc, y1: y });
   const crosses: BarSeg[] = []; for (let x = g.crossPitch / 2; x < width; x += g.crossPitch) crosses.push({ x0: x, y0: 1.25, x1: x, y1: depth });
-  const vol = bars.length * width * g.barDepth * g.barT + crosses.length * (depth - 1.25) * g.crossSize ** 2 + width * 1.25 * g.barT * 2 /* nosing angle */ + 2 * 2 * depth * (3 / 16) /* carriers */;
+  const vol = bars.length * (width - 2 * tc) * g.barDepth * g.barT + crosses.length * (depth - 1.25) * g.crossSize ** 2 + (width - 2 * tc) * (2 * 1.25 * g.barT - g.barT ** 2) /* nosing angle, between the carriers */ + 2 * 2 * depth * tc /* carriers */;
   return {
     id, kind: 'GRATING_TREAD', category: 'plate', designation: `TREAD ${width}x${depth} grating`,
     dims: { width: drawing(width, 'Tread width'), depth: rule(depth, 'SW-GR-3', 'Tread depth'), nosing: rule(1.25, 'SW-GR-3', 'Nosing angle leg'), carrierT: rule(3 / 16, 'SW-GR-3', 'Carrier plate thickness'), rho: rhoDim() },

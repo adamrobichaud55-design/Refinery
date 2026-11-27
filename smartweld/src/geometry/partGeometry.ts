@@ -100,7 +100,9 @@ export function buildGeometry(part: PartSpec): PartGeometry {
       if (crossMeshes.length) solids.push({ name: 'cross bars', role: 'steel', mesh: mergeMeshes(crossMeshes) });
       if (part.kind === 'GRATING_TREAD') {
         const w = v(d, 'width');
-        solids.push({ name: 'nosing', role: 'steel', mesh: transformMesh(extrude({ outer: [{ x: 0, y: 0 }, { x: 1.25, y: 0 }, { x: 1.25, y: g.barT }, { x: g.barT, y: g.barT }, { x: g.barT, y: 1.25 }, { x: 0, y: 1.25 }] }, w), multiply4(translation(0, 0, 0), [0, 0, 1, 0, 0, 1, 0, 0, -1, 0, 0, 0, 0, -1.25, 0, 1])) });
+        // SW-GR-3 (amended 2026-11-27): the angle along the front edge (y 0 to 1-1/4), its top leg flush with the bars' top (z 0) and its front leg down the front, between the carrier plates:
+        // the profile's x goes down (−z), its y back (+y), its extrusion along the width (+x), from one carrier's inner face to the other's
+        solids.push({ name: 'nosing', role: 'steel', mesh: transformMesh(extrude({ outer: [{ x: 0, y: 0 }, { x: 1.25, y: 0 }, { x: 1.25, y: g.barT }, { x: g.barT, y: g.barT }, { x: g.barT, y: 1.25 }, { x: 0, y: 1.25 }] }, w - 2 * g.barT), [0, 0, -1, 0, 0, 1, 0, 0, 1, 0, 0, 0, g.barT, 0, 0, 1]) });
         for (const x of [0, w - g.barT]) solids.push({ name: 'carrier plate', role: 'steel', mesh: transformMesh(extrude({ outer: rect(x, 0, x + g.barT, 10) }, 2), translation(0, 0, -2)) });
       }
       break;

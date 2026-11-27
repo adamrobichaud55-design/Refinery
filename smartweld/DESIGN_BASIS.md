@@ -547,7 +547,16 @@ Where such a value may coincide with a published regulation it was not taken fro
   1-1/4 in × 3/16 in checker-plate nosing angle along the front edge, carrier plates
   3/16 × 2 in at each end bolted to the stringer with two 3/8 in bolts (SW-B-*). Reason:
   a visible, abrasive nosing marks the tread edge; the carrier plate gives a flat bolting
-  face.
+  face. Amended 2026-11-27 (the owner's decision, for every plant): the nosing angle lies
+  along the tread's front edge, its top leg flush with the top of the bars and its front leg
+  down the front, between the two carrier plates, against their inner faces. Reason: as
+  drawn, the angle was turned the wrong way about the tread: it lay beside the tread, a whole
+  tread's width off to one side, in front of the nosing line and standing above the walking
+  surface, so on plant 3's ejector deck stair each nosing passed through a stringer and into
+  the next flight (an in-structure check, P-95). Between the carriers, not across them,
+  because the carrier is a plate welded to the angle's end, not a plate the angle runs
+  through. So too the bearing bars: each runs from one carrier's inner face to the other's
+  (drawn, they ran the tread's full width, through both carriers by their thickness).
 - `SW-GR-4` Grating weight is computed from the drawn bars (K-1).
 
 ## 20. Guardrail (`SW-HR-*`)
@@ -6144,6 +6153,14 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   nozzle a valve's line ends at, which its stack bolts to, is no other line's piece for this
   test (amended the same day: held so, eight valves of the cracking unit bolted to their
   nozzles were turned at every making, up and then aside and back).
+  Amended again 2026-11-27: an item's solid is judged by its drawn surface, not by its box.
+  A valve whose solid (held by its box) overlaps the box of one of an item's solids strikes
+  it only where a triangle of that item's drawn solids meets the valve's box, or the box
+  lies inside one of them. Reason: held by its box, a ring platform's kerb, a curved shell
+  or a frame fills the space it encloses, and six valves standing in such space (in a
+  column's platform's open quarter, beside a heater and a sulfur unit's item) were listed
+  as striking items whose drawn triangles none of them comes near (measured, P-95). A valve
+  so cleared is neither turned nor listed. The test of a direction to turn to is as before.
 - `SW-RPI-20` A hanger's top at the steel it hangs from (added 2026-11-26). The generator
   takes the underside of the member a rod hangs from as the member's centre less seven tenths
   of the round it holds it by, which for a wide-flange beam lies inside the beam: its top
@@ -6240,6 +6257,11 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   web stood up to 0.27 in in the elbow, 0.15 in in the reducer and 0.19 in in the bead (an
   independent clash check, 25 shoes). A shoe is welded to straight pipe, and never across a
   girth weld, which must stay open to inspection.
+  Amended again 2026-11-27: the generator's own check of a shoe at every bent that a run on
+  the rack passes looks for one on the bent's centre line exactly; a shoe, guide or anchor
+  this correction moved stands on the same beam, within 6 in of that line, and the bent
+  counts as shod by it. Reason: two guides so moved, by 1 and 3 in, were listed by that check
+  as missing from their bents.
 - `SW-RPI-22` Pieces of one line clear of each other (added 2026-11-27). The generator keeps
   a line 3 in from every other line but never measures a line against itself: its search
   passes every cell held under the line's own number (its end stacks, their valves' boxes

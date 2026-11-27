@@ -69,7 +69,7 @@ export interface TierLoad { tier: number; lines: number; most: number; bay: numb
 export interface Pipeway {
   rack: RackLayout; /** the pipeway's own steel, and the steel of each unit that stands in its valve bay */ interior: InteriorModel; own: Placed[]; plant: PlantDef; lines: PipewayLine[]; nozzles: Map<string, Nozzle>;
   conns: Conn[]; limits: LimitSpool[]; junctions: Junction[]; streams: StreamPlan[]; /** streams and lines not on the main pipeway, and why */ skipped: { stream: string; why: string }[];
-  runs: UnitRun[]; runOf: Map<string, number>; runPlant: (run: number, prior: Placed[], whole?: boolean) => PlantDef; foreseen: RackLane[]; tierRoom: number; tiers: number[]; notes: string[];
+  runs: UnitRun[]; runOf: Map<string, number>; runPlant: (run: number, prior: Placed[], whole?: boolean) => PlantDef; foreseen: RackLane[]; /** SW-PWY-5 (amended 2026-11-27) */ laneMost: number; tierRoom: number; tiers: number[]; notes: string[];
   /** SW-PWY-11: the utility headers; SW-PWY-13: the tiers' loads */ headers: HeaderPlan[]; loads: TierLoad[];
   /** what stands in the pipeway's frame of each unit: its rack's centre along the pipeway, its side, its rack's half-width */ units: { unit: number; x: number; side: -1 | 1; half: number; piped: boolean }[];
 }
@@ -507,6 +507,6 @@ export function pipeway(): Pipeway {
     return { tier: t + 1, lines: mine.length, most: Math.round(most), bay, limit: Math.round(PWY.loadPsf * (2 * HW) / 12) };
   });
   for (const q of loads) if (q.most > q.limit) notes.push(`Tier ${q.tier} carries ${q.most} lb a foot in bay ${q.bay}, more than the ${q.limit} lb a foot it is built for (SW-PWY-13).`);
-  cache = { rack, interior, own, plant, lines, nozzles, conns, limits, junctions, streams, skipped, runs, runOf, runPlant, foreseen, tierRoom, tiers, notes, headers: headerPlans, loads, units: units.map(u => ({ unit: u.unit, x: u.x, side: u.side, half: u.half, piped: u.piped })) };
+  cache = { rack, interior, own, plant, lines, nozzles, conns, limits, junctions, streams, skipped, runs, runOf, runPlant, foreseen, laneMost: guideRoom, tierRoom, tiers, notes, headers: headerPlans, loads, units: units.map(u => ({ unit: u.unit, x: u.x, side: u.side, half: u.half, piped: u.piped })) };
   return cache;
 }

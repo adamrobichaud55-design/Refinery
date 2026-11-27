@@ -32,7 +32,7 @@ export function mainLaneOf(r: LineRun, tier: number): number | undefined {
   return z;
 }
 /** the pipeway as the generator's runner and checks take a unit (SW-PWY-6): its runs, its lines, its steel as it stands */
-export const asUnit = (pw: Pipeway): UnitPiping => ({ unit: PWY.area, runs: pw.runs, runPlant: pw.runPlant, lines: pw.lines, cell: { interior: pw.interior }, plant: pw.plant, foreseen: pw.foreseen } as unknown as UnitPiping);
+export const asUnit = (pw: Pipeway): UnitPiping => ({ unit: PWY.area, runs: pw.runs, runPlant: pw.runPlant, lines: pw.lines, cell: { interior: pw.interior }, plant: pw.plant, foreseen: pw.foreseen, laneMost: pw.laneMost } as unknown as UnitPiping);
 
 /**
  * SW-PWY-8: the tier beams of each unit's first bent are not shown to the generator while it routes, so it sets no support on them. They are steel all the same: where a

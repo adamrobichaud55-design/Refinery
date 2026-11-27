@@ -25,6 +25,10 @@ const units = process.argv.slice(2).map(Number); for (const u of units.length ? 
   const fi = insideFillets(m); if (fi.length) r.notes.push(`${fi.length} slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)`);
   const sh = spadeHandles(m); if (sh.length) r.notes.push(`${sh.length} spades turned, their handles opposite the stems of the valves beside them (SW-RPI-27)`);
   const vt = valvesThatStrike(m, pf, vb);   // SW-RPI-19: valves whose stem or handwheel strikes, turned
+  // SW-RPI-19 (amended again 2026-11-27): a valve an earlier pass listed as left with no clear direction, which by the items' drawn surfaces strikes nothing, is said so
+  { const before = new Set(r.notes.flatMap(n => { const k = n.indexOf('with no clear direction, left: '); return k < 0 || !n.includes('(SW-RPI-19)') ? [] : n.slice(k + 31).split('; ').map(q => q.slice(0, q.indexOf(': strikes'))).filter(Boolean); }));
+    const still = new Set(vt.stuck.map(q => q.slice(0, q.indexOf(': strikes')))), cleared = [...before].filter(t => !still.has(t));
+    if (cleared.length) r.notes.push(`${cleared.length} valves listed by an earlier pass as left with no clear direction, judged again by the drawn surfaces of the items (SW-RPI-19 as amended again): none strikes anything, none turned: ${cleared.join('; ')}`); }
   if (vt.turned.length || vt.stuck.length) r.notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`);
   const ht0 = hangerTops(m, pf);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets
   const struck = supportsThatStrike(m, pf, vb);   // SW-RPI-18 first: supports whose rod, post or leg strikes are taken out

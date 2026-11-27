@@ -86,6 +86,13 @@ export function sectionBoxFn(instances: Placed[]): (o: Obstacle) => [V3, V3] | u
   };
 }
 /** the generator's checks (§40) on a unit's piping, against the unit's real steel and equipment; `notes` takes what SW-RPI-13 set aside, with both distances */
+/** SW-RPI-28 (amended again 2026-11-27): the generator's check looks for a shoe on a bent's centre line exactly; a shoe, guide or anchor SW-RPI-28 moved stands on the
+ *  same beam within 6 in of it, and that bent is shod */
+export const shodBents = (m: PipingModel, listed: string[]): string[] => listed.filter(v => {
+  const q = /^(.*): no shoe at bent x=(-?[\d.]+)$/.exec(v); if (!q) return true;
+  const x = Number(q[2]), r = m.lines.find(l => l.no === q[1]);
+  return !r?.supports.some(sp => ['shoe', 'guide', 'anchor'].includes(sp.type) && Math.abs(sp.at[0] - x) <= 6 + 1e-6);
+});
 export function unitChecks(m: PipingModel, up: Pick<UnitPiping, 'cell' | 'plant'>, notes: string[] = []): UnitChecks {
   const vb = valveBoxFn(), byTag = new Map<string, Comp>(); for (const r of m.lines) for (const c of r.comps) byTag.set(c.tag, c);
   // SW-RPI-13: a pair the clearance check reports for the way it holds a piece at 45° is measured again, and stays reported if it is nearer than 3 in
@@ -117,7 +124,7 @@ export function unitChecks(m: PipingModel, up: Pick<UnitPiping, 'cell' | 'plant'
     lineClearance: [...new Set(K.checkLineClearance(m, vb).violations)].filter(real),
     staticClearance: K.checkStaticClearance(m, statics, vb).filter(stays),
     ownClearance: ownClearance(m),                                                                          // SW-RPI-22: each line against itself
-    supports: K.checkSupports(m, up.plant.rack),
+    supports: shodBents(m, K.checkSupports(m, up.plant.rack)),
   };
 }
 /** the lane a line runs in on a tier of the rack: where its longest stretch along the rack at that tier's elevation lies, if that is 8 ft or more */
@@ -156,7 +163,8 @@ function laneAgain(up: UnitPiping, k: number, prior: Placed[], m: PipingModel): 
   const others = foreseen.filter(q => q !== L && q.t === L.t && !(q.x1 < L.x0 - 24 || q.x0 > L.x1 + 24));
   const boxes = prior.flatMap(p => { const b = worldBox(p.part, p.transform); return b && b[1][0] > x0 && b[0][0] < x1 && b[1][1] > y - r - 9 && b[0][1] < y + r + 9 ? [b] : []; });
   const clear = (z: number) => boxes.every(b => b[1][2] < z - r - 9 || b[0][2] > z + r + 9);
-  const cands: number[] = []; for (let z = -(HW - 24); z <= HW - 24; z += 6) if (Math.abs(z - was) > 1e-6) cands.push(z); cands.sort((p, q) => Math.abs(p - was) - Math.abs(q - was) || p - q);
+  // (SW-PWY-5 as amended 2026-11-27: no nearer the rack's edge than `laneMost`, where the plan gives one)
+  const most = Math.min(HW - 24, up.laneMost ?? Infinity), cands: number[] = []; for (let z = -(HW - 24); z <= HW - 24; z += 6) if (Math.abs(z - was) > 1e-6 && Math.abs(z) <= most + 1e-6) cands.push(z); cands.sort((p, q) => Math.abs(p - was) - Math.abs(q - was) || p - q);
   let tries = 0;
   for (const z of cands) {
     if (!others.every(q => Math.abs(q.z - z) >= laneSpacing(q.OD, L.OD)) || !clear(z)) continue;

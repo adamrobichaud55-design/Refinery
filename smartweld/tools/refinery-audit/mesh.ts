@@ -52,6 +52,11 @@ const NOISE = 0.02, FACE = 0.05, PORT_TOL = 0.05, EPS_PLANE = 1e-3;
 const CLEAR = Number(ENV.CLEAR ?? 2);   // near-miss listing (not findings): unrelated piping of different models closer than this
 const PLANT = ENV.PLANT === '1';
 const ONLY = ENV.ONLY ? new RegExp(ENV.ONLY) : undefined;   // development: test only pairs with a side in a model matching this
+// STRUCT=1 (added 2026-11-27): only the pairs within one structure, which every other mode excuses as 'one structure': each structure's own pieces against each
+// other, bolts, anchor rods and bars through steel (their holes are not drawn, as for every bolt of the plant) and welds against the steel they join excused, a shared
+// face to FACE allowed, and nothing else (not 'one standing on the other': a plate set half into the floor it stands on is a finding)
+const STRUCT = ENV.STRUCT === '1';
+const THROUGH_KIND = new Set(['BOLT', 'ANCHOR_ROD', 'ROD', 'FILLET_WELD', 'FILLET_WELD_AROUND', 'GROUT']);
 const T0 = Date.now();
 const secs = () => ((Date.now() - T0) / 1000).toFixed(1);
 let peakRss = 0; const rss = () => { const r = process.memoryUsage().rss; if (r > peakRss) peakRss = r; return r; };
@@ -682,7 +687,7 @@ if (PLANT) {
 const tagObj = new Map<string, Obj>(); for (const o of objs) if (o.tagKey && !tagObj.has(o.tagKey)) tagObj.set(o.tagKey, o);
 const lineObjs = new Map<string, Obj[]>(); for (const o of objs) if (o.lineKey) { const l = lineObjs.get(o.lineKey); if (l) l.push(o); else lineObjs.set(o.lineKey, [o]); }
 // ---- relations (the contact policy) ----------------------------------------------------------------------------------
-const MODE = { SKIP: 0, TEST: 1, FACE: 2, BEARING: 3, STUDS: 4 } as const;
+const MODE = { SKIP: 0, TEST: 1, FACE: 2, BEARING: 3, STUDS: 4, INSIDE: 5 } as const;
 const STACK = new Set(['flange', 'blind', 'gasket', 'valve', 'spade', 'spectacle']);
 const isPiping = (o: Obj) => o.cat <= CAT.support;
 function portsMeet(a: Obj, b: Obj): boolean {
@@ -726,6 +731,11 @@ function carries(S: Obj, P: Obj): boolean {
 }
 function relate(A: Obj, B: Obj): { mode: number; why: string } {
   if (A.planted || B.planted) return { mode: MODE.TEST, why: 'planted' };
+  if (STRUCT) {
+    if (isPiping(A) || isPiping(B) || A.struct !== B.struct) return { mode: MODE.SKIP, why: 'not within one structure (STRUCT)' };
+    if (THROUGH_KIND.has(A.kind) || THROUGH_KIND.has(B.kind) || [A, B].some(o => o.tag.split('/').some(t => /^(bolt|anchor-rod|weld|bolted-rod)$/.test(t)))) return { mode: MODE.SKIP, why: 'bolt, rod or weld within its structure' };
+    return { mode: MODE.INSIDE, why: 'within one structure' };
+  }
   const pa = isPiping(A), pb = isPiping(B);
   if (pa && pb) {
     let why = '';
@@ -846,6 +856,10 @@ function judge(A: Obj, B: Obj, mode: number, why: string): Finding | null {
   if (r.depth < NOISE) { stats.noise++; drop(A, B, r, `${why}: shallower than ${NOISE} in`); return null; }
   const fine = [A, B].filter(o => o.tpl.sdf).map(o => `${o.tag} valve mesh at ${o.tpl.sdf!.level} cells`).join(', ');
   let note = `${why}: ${r.hits ? `${r.hits >= HIT_CAP ? '>=' : ''}${r.hits} triangle crossings` : 'one solid inside the other'}`;
+  if (mode === MODE.INSIDE) {
+    if (r.depth <= FACE) { stats.faceOk++; drop(A, B, r, `${why}: a shared face (${FACE} in)`); return null; }
+    note += `; deeper than a shared face (${FACE} in), within one structure`;
+  }
   if (mode === MODE.FACE) {
     if (r.depth <= FACE) { stats.faceOk++; drop(A, B, r, `${why}: a shared face (${FACE} in)`); return null; }
     // founded on: one stands on the other, the overlap at the upper one's underside and the lower one's top
