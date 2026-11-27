@@ -3093,7 +3093,10 @@ Items:
   pontoon roof (an annular pontoon 0.1 D wide and 24 in deep round a single deck) floating at
   0.8 of the height, a rim seal, a rolling ladder from the gauger's platform to the roof, roof
   drain and legs, and the spiral stair. Reason: a fixed roof keeps rain out of a low-vapour
-  stock; a floating roof rides on the liquid so no vapour space forms.
+  stock; a floating roof rides on the liquid so no vapour space forms. The spiral stair's
+  stringers are cut level at the floor it starts from (amended 2026-11-27: each stringer
+  plate was drawn whole at its slope, and the first ones reached 3 in below the tank's
+  bottom into its pad, found at five tanks by the plant's clash audit).
 
 ## 70. Piping specials (`SW-PSP-*`) — catalogue items only
 
@@ -5927,6 +5930,15 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   correction, on the finished model: each weld is set square to the axis of the joint it
   closes, the direction of the straight piece it joins (a pipe, flange, reducer or tee run),
   or, between two elbows, the elbows' common tangent there; its place stays.
+- `SW-RPI-25` A slip-on flange's inside weld at the pipe's end (added 2026-11-27). SW-FLG-10
+  stops the pipe t_pipe + 1/8 in short of a slip-on flange's face and lays the inside fillet
+  there, so that the weld cannot foul the gasket; the generator records that weld at the
+  face itself, its bead standing t_pipe out of the flange through the gasket and into what
+  the flange bolts to (an independent clash check found 46 such welds in 47 contacts, 0.125 in into gaskets and up to
+  0.2 in into wafer valves' bodies, at the units' cooling water spools). Plant 3's own
+  correction, on the finished model, made with SW-RPI-24: each slip-on flange's inside weld
+  is moved from the face into the flange by t_pipe + 1/8 in, to the pipe's end, its bead
+  toward the face, ending 1/8 in short of it; the weld at the hub's back stays.
 - `SW-RPI-22` Pieces of one line clear of each other (added 2026-11-27). The generator keeps
   a line 3 in from every other line but never measures a line against itself: its search
   passes every cell held under the line's own number (its end stacks, their valves' boxes

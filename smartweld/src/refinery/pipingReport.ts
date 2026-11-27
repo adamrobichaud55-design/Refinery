@@ -4,7 +4,7 @@
  * nothing is hidden, and a check that does not come to zero is listed.
  */
 import { generatePiping, partFromKey, staticObstacles, worldBox, type PipingModel, type Comp, type LineRun, type Obstacle } from '../generator/piping';
-import { squareWelds } from './welds';
+import { squareWelds, insideFillets } from './welds';
 import * as K from '../generator/pipingCheck';
 import { buildGeometry } from '../geometry/partGeometry';
 import { pipeDims, elbowRadius, designFlange } from '../catalogue';
@@ -443,7 +443,7 @@ export function pipeUnit(unit: number, log: (s: string) => void = () => {}, watc
   const t0 = Date.now(), recut: string[] = [], up = unitPiping(unit), model = generateUnit(up, log, watch, recut, cache);
   // SW-RPI-17: supports where the generator's stepping stopped
   { const vt = valvesThatStrike(model, up.plant, valveBoxFn()); if (vt.turned.length || vt.stuck.length) recut.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`); }
-  { const sw = squareWelds(model); if (sw.length) recut.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`); }
+  { const sw = squareWelds(model); if (sw.length) recut.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`); const fi = insideFillets(model); if (fi.length) recut.push(`${fi.length} slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)`); }
   const ht0 = hangerTops(model, up.plant);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets
   const struck = supportsThatStrike(model, up.plant, valveBoxFn()); if (struck.length) { recut.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`); log(`unit ${unit}: ${struck.length} supports that strike taken out (SW-RPI-18)`); }
   const sup = supportsAlongSpans(model, up.plant, valveBoxFn()); { const n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { recut.push(spanNote(sup)); log(`unit ${unit}: ${spanNote(sup)}`); } }

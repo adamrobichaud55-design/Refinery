@@ -7,7 +7,7 @@ import { serializePiping, type PipingModel } from '../src/generator/piping';
 import { unitPiping } from '../src/refinery/unitPiping';
 import { unitChecks, valveBoxFn, spanNote, type PipedUnit } from '../src/refinery/pipingReport';
 import { supportsAlongSpans, supportsThatStrike, framesThatStrike, valvesThatStrike, hangerTops, waferStuds, withFrames } from '../src/refinery/supports';
-import { squareWelds } from '../src/refinery/welds';
+import { squareWelds, insideFillets } from '../src/refinery/welds';
 // PIPING_DIR: another folder of unit models to correct in place of the repository's (a copy, to try the correction on)
 const dir = process.env.PIPING_DIR ?? 'public/refinery/piping', vb = valveBoxFn();
 const units = process.argv.slice(2).map(Number); for (const u of units.length ? units : [11, 12, 13, 14, 15, 16, 17, 18, 19]) {
@@ -19,6 +19,7 @@ const units = process.argv.slice(2).map(Number); for (const u of units.length ? 
   if (fr.out.length) r.notes.push(`${fr.out.length} pipe frames taken out with their shoes where they struck (SW-RPI-18): ${fr.out.join('; ')}`);
   const pf = withFrames(up.plant, r.frames);
   const sw = squareWelds(m); if (sw.length) r.notes.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`);
+  const fi = insideFillets(m); if (fi.length) r.notes.push(`${fi.length} slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)`);
   const vt = valvesThatStrike(m, pf, vb);   // SW-RPI-19: valves whose stem or handwheel strikes, turned
   if (vt.turned.length || vt.stuck.length) r.notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`);
   const ht0 = hangerTops(m, pf);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets

@@ -527,7 +527,13 @@ export function spiralStair(R: number, z0: number, z1: number, a0: number): { so
   for (let k = 0; k < n; k++) {
     const a = a0 + (k + 0.5) * dth, z = z0 + (k + 1) * rise;
     treads.push(transformMesh(boxMesh(rIn, -5, z - 1.25, rOut, 5, z), rotateZ(a)));
-    for (const r of [rIn, rOut]) { const seg = Math.hypot(r * dth, rise) * 1.03, phi = Math.atan2(rise, r * dth); str.push(transformMesh(boxMesh(-0.1875, -seg / 2, -4.5, 0.1875, seg / 2, 4.5), multiply(rotateZ(a), multiply(translate(r, 0, z - rise / 2 - 1.5), rotateX(phi))))); }
+    for (const r of [rIn, rOut]) {
+      const seg = Math.hypot(r * dth, rise) * 1.03, phi = Math.atan2(rise, r * dth), zc = z - rise / 2 - 1.5, c = Math.cos(phi), sn = Math.sin(phi);
+      // SW-EQC-44 (amended 2026-11-27): the plate in its own plane (along the going, up), cut level at the floor z0; a plate wholly above it as before
+      const corners = [[-seg / 2, -4.5], [seg / 2, -4.5], [seg / 2, 4.5], [-seg / 2, 4.5]].map(([y, w]) => ({ x: y * c - w * sn, y: zc + y * sn + w * c }));
+      const cut: { x: number; y: number }[] = []; for (let i = 0; i < 4; i++) { const p = corners[i], q = corners[(i + 1) % 4], pin = p.y >= z0, qin = q.y >= z0; if (pin) cut.push(p); if (pin !== qin) { const t = (z0 - p.y) / (q.y - p.y); cut.push({ x: p.x + (q.x - p.x) * t, y: z0 }); } }
+      str.push(transformMesh(extrude({ outer: cut }, 0.375), multiply(rotateZ(a), multiply(translate(r, 0, 0), frameFromAxes([-0.1875, 0, 0], [0, 0, 1], [1, 0, 0])))));
+    }
     if (k % 3 === 0) rail.push(transformMesh(cylZ(rOut - 1, 0, 0.95, z, z + 42, 8), rotateZ(a)));
     if (k % 4 === 0) brk.push(transformMesh(boxMesh(R - 0.1, -0.25, z - 7, rIn, 0.25, z - 1.25), rotateZ(a)));
     top.push([(rOut - 1) * Math.cos(a), (rOut - 1) * Math.sin(a), z + 42]);

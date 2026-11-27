@@ -2,7 +2,7 @@
  * Plant 3: the cooling water mains piped by the generator of plants 1 and 2, checked, and written up (DESIGN_BASIS.md §81, SW-CWM-*).
  */
 import type { PipingModel, LineRun } from '../generator/piping';
-import { squareWelds } from './welds';
+import { squareWelds, insideFillets } from './welds';
 import { FLUIDS } from './fluids';
 import { coolingWater, CWM, type CwBranch, type CwMain, type CwSpool } from './coolingWater';
 import { unitChecks, valveBoxFn, spanNote, removeValves, lengthenShortPieces, cutLongPipes, runSolids } from './pipingReport';
@@ -42,7 +42,7 @@ export function pipeCoolingWater(log: (s: string) => void = () => {}): { model: 
   // SW-CWM-7: SW-RPI-17's correction, against the real steel and solids (no keep-outs)
   const real = { ...cw.plant, interior: () => cw.interior };
   { const vt = valvesThatStrike(model, real, vb); if (vt.turned.length || vt.stuck.length) notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`); }
-  { const sw = squareWelds(model); if (sw.length) notes.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`); }
+  { const sw = squareWelds(model); if (sw.length) notes.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`); const fi = insideFillets(model); if (fi.length) notes.push(`${fi.length} slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)`); }
   const ht0 = hangerTops(model, real);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets
   const struck = supportsThatStrike(model, real, vb); if (struck.length) { notes.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`); log(`area ${CWM.area}: ${struck.length} supports that strike taken out (SW-RPI-18)`); }
   const sup = supportsAlongSpans(model, real, vb); { const n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { notes.push(spanNote(sup)); log(`area ${CWM.area}: ${spanNote(sup)}`); } }

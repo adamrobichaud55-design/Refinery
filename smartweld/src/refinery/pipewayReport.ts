@@ -4,7 +4,7 @@
  * (§40) on the result against the steel as it stands, and writes what is found: nothing is hidden.
  */
 import { staticObstacles, partFromKey, worldBox, type PipingModel, type LineRun, type Obstacle } from '../generator/piping';
-import { squareWelds } from './welds';
+import { squareWelds, insideFillets } from './welds';
 import * as K from '../generator/pipingCheck';
 import type { V3 } from '../generator/router';
 import { generateUnit, unitChecks, valveBoxFn, spanNote, type UnitChecks, type RunCache } from './pipingReport';
@@ -146,7 +146,7 @@ export function pipePipeway(log: (s: string) => void = () => {}, watch?: (plant:
   const set = supportsAtFirstBents(model, pw), frames: FrameSpec[] = [];
   // SW-RPI-18 and SW-RPI-17, as for a unit: supports whose rod, post or leg strikes are taken out, and supports set where a span is then too long
   { const vt = valvesThatStrike(model, pw.plant, valveBoxFn()); if (vt.turned.length || vt.stuck.length) notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`); }
-  { const sw = squareWelds(model); if (sw.length) notes.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`); }
+  { const sw = squareWelds(model); if (sw.length) notes.push(`${sw.length} butt welds set square to their joints (SW-RPI-24)`); const fi = insideFillets(model); if (fi.length) notes.push(`${fi.length} slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)`); }
   const ht0 = hangerTops(model, pw.plant);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets
   { const vbx = valveBoxFn(), struck = supportsThatStrike(model, pw.plant, vbx); if (struck.length) { notes.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`); log(`unit ${PWY.area}: ${struck.length} supports that strike taken out (SW-RPI-18)`); }
     const sup = supportsAlongSpans(model, pw.plant, vbx), n = sup.hangers + sup.stanchions + sup.posts + sup.onSteel + sup.frames.length; if (n) { notes.push(spanNote(sup)); log(`unit ${PWY.area}: ${spanNote(sup)}`); } frames.push(...sup.frames); }
