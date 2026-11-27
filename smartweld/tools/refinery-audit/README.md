@@ -15,6 +15,11 @@ only pieces of two different lines of one model.
 | `routes.ts` | per line: continuity, self-crossing, U-turns, needless hops, supports' seats, plus pairwise overlaps |
 | `interfaces.ts` | where two models meet (battery-limit spools, the pipeway's and the mains' limit spools), then the corridor between the units |
 
+The analytic detector holds a non-convex component (a curved rail, a lattice, an I-section) by
+its convex hull, which fills its hollows; a finding of that detector alone is measured again
+exactly, by the mesh or voxel detector or on the parts' own meshes, before anything is done
+about it (23 of its first findings, at handrails and a lattice, were hulls and nothing more).
+
 Contacts that are meant to touch (pieces joined end to end, a stud set through its flanges, a
 branch's fitting on its run, a support on its line and on the member it bears on, a nozzle on
 its own equipment) are excused only by a named relationship, never by a depth threshold;

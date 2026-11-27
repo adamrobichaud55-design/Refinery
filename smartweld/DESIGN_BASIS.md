@@ -5957,6 +5957,22 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   correction, on the finished model, made with SW-RPI-24: each slip-on flange's inside weld
   is moved from the face into the flange by t_pipe + 1/8 in, to the pipe's end, its bead
   toward the face, ending 1/8 in short of it; the weld at the hub's back stays.
+- `SW-RPI-26` Lines at connections that rose, carried up with them (added 2026-11-27). Where a
+  correction of an item's drawing raises some of its connections by a height Δ and moves
+  nothing else in a unit, the lines at those connections are not routed again. Walking from
+  the connection along each such line, its pieces rise by Δ with it up to the first vertical
+  pipe that can take the change (one going up that stays 2 in long or more once cut shorter
+  by Δ, or one coming down, made longer by Δ), and that pipe is cut so; a take-off on a piece
+  that rose rises with it, and its branch walks from it the same way; a support on a piece
+  that rose is taken off, and SW-RPI-17 sets the line's supports again. The welds at the
+  joints that rose rise with them. Each line so changed must hold every check of §40 and
+  SW-RPI-22, or the unit is routed again. Reason: routed afresh after its six charge and
+  product pumps rose 6 and 12 in (SW-EQ-4 as amended), the crude unit left two lines
+  unrouted that had been routed before (a spare's take-off set over its parent's own valve,
+  a side draw whose search ran out), every route depending on every one before it; and
+  routed again alone, the twelve lines at those pumps came out worse (a suction looping round
+  its own valve's stem and shutting its spare's way). Carried up, they keep the routes that
+  held every check, and only the lengths next to the pumps change.
 - `SW-RPI-22` Pieces of one line clear of each other (added 2026-11-27). The generator keeps
   a line 3 in from every other line but never measures a line against itself: its search
   passes every cell held under the line's own number (its end stacks, their valves' boxes

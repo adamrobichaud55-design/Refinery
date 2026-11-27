@@ -6,14 +6,14 @@ Each unit is piped in its own frame by the generator of plants 1 and 2, unchange
 
 | Unit | Name | Lines | Routed | Components | Welds | Supports | Pipe, ft | Failures | Checks not at zero |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 11 | Crude distillation | 135 | 135 | 3,768 | 2,426 | 551 | 14,251 | 0 | supports 9 |
-| 12 | Vacuum distillation | 62 | 62 | 1,468 | 912 | 198 | 5,027 | 0 | supports 1 |
-| 13 | Naphtha hydrotreater and splitter | 86 | 86 | 2,134 | 1,310 | 331 | 7,360 | 0 | supports 3 |
+| 11 | Crude distillation | 135 | 133 | 3,679 | 2,363 | 545 | 14,036 | 2 | joints 1, ownClearance 3, supports 5 |
+| 12 | Vacuum distillation | 62 | 62 | 1,452 | 896 | 198 | 4,966 | 0 | supports 1 |
+| 13 | Naphtha hydrotreater and splitter | 86 | 86 | 2,126 | 1,302 | 333 | 7,342 | 0 | supports 2 |
 | 14 | Catalytic reformer and hydrogen purification | 99 | 99 | 2,395 | 1,507 | 468 | 9,517 | 0 | supports 7 |
-| 15 | Kerosene hydrotreater | 65 | 65 | 1,572 | 963 | 217 | 4,689 | 0 | none |
-| 16 | Diesel hydrotreater | 85 | 85 | 2,133 | 1,348 | 395 | 8,285 | 0 | supports 2 |
-| 17 | Fluid catalytic cracker and gas concentration | 222 | 222 | 6,022 | 3,804 | 1,203 | 25,404 | 0 | supports 9 |
-| 18 | Sulfur block | 139 | 139 | 3,739 | 2,221 | 709 | 12,908 | 0 | supports 7 |
+| 15 | Kerosene hydrotreater | 65 | 65 | 1,568 | 959 | 217 | 4,682 | 0 | none |
+| 16 | Diesel hydrotreater | 85 | 85 | 2,129 | 1,344 | 395 | 8,275 | 0 | supports 1 |
+| 17 | Fluid catalytic cracker and gas concentration | 222 | 222 | 6,018 | 3,800 | 1,195 | 25,391 | 0 | supports 7 |
+| 18 | Sulfur block | 139 | 139 | 3,735 | 2,217 | 710 | 12,901 | 0 | supports 6 |
 | 19 | Utilities | 104 | 104 | 2,485 | 1,548 | 511 | 10,222 | 0 | ownClearance 1, supports 1 |
 
 ## Unit 11: Crude distillation
@@ -23,29 +23,29 @@ Each unit is piped in its own frame by the generator of plants 1 and 2, unchange
 | Component | Count |
 | --- | --- |
 | cap | 5 |
-| elbow | 817 |
-| flange | 469 |
-| gasket | 740 |
+| elbow | 793 |
+| flange | 458 |
+| gasket | 726 |
 | olet | 6 |
-| pipe | 1212 |
-| reducer | 80 |
-| spade | 80 |
+| pipe | 1182 |
+| reducer | 77 |
+| spade | 79 |
 | spectacle | 6 |
 | tee | 42 |
-| valve | 311 |
+| valve | 305 |
 
 | Welds | Count |
 | --- | --- |
-| BW, field | 340 |
-| BW, shop | 2064 |
+| BW, field | 331 |
+| BW, shop | 2010 |
 | FW, shop | 22 |
 
 | Supports | Count |
 | --- | --- |
 | anchor | 58 |
 | guide | 127 |
-| hanger | 101 |
-| shoe | 136 |
+| hanger | 100 |
+| shoe | 131 |
 | stanchion | 72 |
 | trunnion | 57 |
 
@@ -54,25 +54,36 @@ Each unit is piped in its own frame by the generator of plants 1 and 2, unchange
 | Check (the generator's own, §40) | Found |
 | --- | --- |
 | every line continuous from end to end | 0 |
-| every joint a joint of its class | 0 |
+| every joint a joint of its class | 1 |
 | elbows and the straights between them | 0 |
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
-| pieces of one line clear of each other (SW-RPI-22) | not measured |
-| spans within SW-PS-7, a support at every rack beam crossed | 9 |
+| pieces of one line clear of each other (SW-RPI-22) | 3 |
+| spans within SW-PS-7, a support at every rack beam crossed | 5 |
+
+Reported by the generator:
+
+- 14"-P150-P-11323: route failed: start clearance to 1 at 660,84,-252 at P1=660,96,-252 goal=762,24,-210
+- 6"-P150-P-11043: route failed: exhausted 2500000 at P1=558,1146,-528 goal=798,36,-144
+
+Not at zero, joints:
+
+- 14"-P150-P-11037: tee 14"-P150-P-11037/T:14"-P150-P-11323 outlet has 0 weld records
+
+Not at zero, ownClearance:
+
+- 10"-P300-P-11324 10"-P300-P-11324/el17 (elbow) – 10"-P300-P-11324/el25 (elbow): 1.05 in
+- 10"-P300-P-11324 10"-P300-P-11324/el17 (elbow) – 10"-P300-P-11324/p26 (pipe): 7.03 in
+- 10"-P300-P-11324 10"-P300-P-11324/el17 (elbow) – 10"-P300-P-11324/el27 (elbow): 3.35 in
 
 Not at zero, supports:
 
 - 12"-P600-P-11019: unsupported span 260 in > 240 on run from 1350,108,-16
-- 24"-P300-P-11022: unsupported span 426 in > 240 on run from 558,486,32
 - 8"-P300-P-11036: unsupported span 269 in > 240 on run from 1446,414,245
-- 8"-P150-P-11712: unsupported span 255 in > 240 on run from 888,234,95
-- 4"-P150-P-11056: unsupported span 245 in > 240 on run from 558,654,89
 - 24"-P150-P-11310: unsupported span 280 in > 240 on run from 694,774,-198
 - 24"-P150-P-11311: unsupported span 544 in > 240 on run from 610,684,-114
-- 6"-P150-LS-11509: unsupported span 454 in > 240 on run from 558,444,-58
-- 3"-P150-LS-11511: unsupported span 188 in > 180 on run from 858,348,-377
+- 6"-P150-LS-11509: unsupported span 383 in > 240 on run from 558,426,-58
 
 These runs are longer than a pipe of their size spans and no steel stands where a support would go: lines that cross the yard or run beside the rack away from the support beams. They are listed, not hidden, and want pipe supports of their own.
 
@@ -141,8 +152,8 @@ At these ends the valve the generator stands at every equipment connection is no
 
 | Line | Kind | Fluid | From | To | Design | Rack tier | Components | Welds | Supports | Length, ft |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 16"-P150-P-11001 | process | crude oil | BL-1101-U | P-1101A-S | 120 psi, 150 °F | — | 27 | 16 | 1 | 51 |
-| 12"-P600-P-11002 | process | crude oil | P-1101A-D | E-1101-N1 | 390 psi, 150 °F | — | 30 | 17 | 2 | 54 |
+| 16"-P150-P-11001 | process | crude oil | BL-1101-U | P-1101A-S | 120 psi, 150 °F | — | 27 | 16 | 1 | 50 |
+| 12"-P600-P-11002 | process | crude oil | P-1101A-D | E-1101-N1 | 390 psi, 150 °F | — | 30 | 17 | 3 | 54 |
 | 12"-P600-P-11003 | process | crude oil | E-1101-N2 | E-1102-N1 | 390 psi, 155 °F | — | 21 | 10 | 1 | 24 |
 | 12"-P600-P-11004 | process | crude oil | E-1102-N2 | E-1103-N1 | 390 psi, 175 °F | — | 21 | 10 | 1 | 24 |
 | 12"-P600-P-11005 | process | crude oil | E-1103-N2 | E-1104-N1 | 390 psi, 235 °F | — | 21 | 10 | 1 | 24 |
@@ -150,18 +161,18 @@ At these ends the valve the generator stands at every equipment connection is no
 | 4"-P150-P-11007 | process | process and wash water | BL-1102-U | P-1102A-S | 125 psi, 170 °F | 1 | 33 | 22 | 2 | 77 |
 | 3"-P300-P-11008 | process | process and wash water | P-1102A-D | E-1105-N1 | 285 psi, 160 °F | 2 | 37 | 24 | 8 | 127 |
 | 3"-P300-P-11009 | process | process and wash water | E-1105-N2 | tap 12"-P600-P-11006 | 285 psi, 270 °F | — | 14 | 9 | 0 | 19 |
-| 3"-P300-P-11010 | process | oily water | D-1101-N2 | E-1105-N3 | 175 psi, 320 °F | 2 | 32 | 23 | 19 | 222 |
+| 3"-P300-P-11010 | process | oily water | D-1101-N2 | E-1105-N3 | 175 psi, 320 °F | 2 | 30 | 21 | 18 | 222 |
 | 3"-P300-P-11011 | process | oily water | E-1105-N4 | E-1112-N1 | 165 psi, 210 °F | — | 23 | 12 | 2 | 36 |
-| 3"-P300-P-11012 | process | oily water | E-1112-N2 | CS-1101-A | 155 psi, 160 °F | 2 | 52 | 31 | 7 | 118 |
+| 3"-P300-P-11012 | process | oily water | E-1112-N2 | CS-1101-A | 155 psi, 160 °F | 2 | 52 | 31 | 7 | 115 |
 | 3"-P150-P-11701 | control | oily water | CS-1101-B | BL-1103-U | 110 psi, 160 °F | — | 19 | 12 | 1 | 34 |
-| 16"-P300-P-11013 | process | crude oil | D-1101-N3 | P-1103A-S | 175 psi, 320 °F | — | 27 | 16 | 2 | 72 |
+| 16"-P300-P-11013 | process | crude oil | D-1101-N3 | P-1103A-S | 175 psi, 320 °F | — | 27 | 16 | 2 | 71 |
 | 12"-P600-P-11014 | process | crude oil | P-1103A-D | E-1106-N1 | 400 psi, 320 °F | 1 | 40 | 27 | 5 | 162 |
 | 12"-P600-P-11015 | process | crude oil | E-1106-N2 | E-1107-N1 | 400 psi, 335 °F | — | 21 | 10 | 1 | 25 |
 | 12"-P600-P-11016 | process | crude oil | E-1107-N2 | CS-1102-A | 400 psi, 450 °F | 1 | 48 | 27 | 5 | 140 |
 | 12"-P150-P-11702 | control | crude oil | CS-1102-B | D-1102-N1 | 70 psi, 450 °F | — | 22 | 13 | 3 | 74 |
-| 8"-P150-P-11017 | process | naphtha | D-1102-N2 | C-1101-N1 | 70 psi, 450 °F | 1 | 35 | 28 | 10 | 314 |
-| 16"-P150-P-11018 | process | crude oil | D-1102-N3 | P-1104A-S | 70 psi, 450 °F | — | 33 | 22 | 0 | 58 |
-| 12"-P600-P-11019 | process | crude oil | P-1104A-D | E-1108-N1 | 455 psi, 450 °F | 1 | 38 | 25 | 6 | 164 |
+| 8"-P150-P-11017 | process | naphtha | D-1102-N2 | C-1101-N1 | 70 psi, 450 °F | 1 | 33 | 26 | 10 | 309 |
+| 16"-P150-P-11018 | process | crude oil | D-1102-N3 | P-1104A-S | 70 psi, 450 °F | — | 33 | 22 | 0 | 57 |
+| 12"-P600-P-11019 | process | crude oil | P-1104A-D | E-1108-N1 | 455 psi, 450 °F | 1 | 38 | 25 | 6 | 163 |
 | 12"-P600-P-11020 | process | crude oil | E-1108-N2 | E-1109-N1 | 455 psi, 505 °F | — | 23 | 12 | 1 | 37 |
 | 12"-P600-P-11021 | process | crude oil | E-1109-N2 | CS-1103-A | 455 psi, 555 °F | 1 | 48 | 27 | 9 | 191 |
 | 12"-P600-P-11703 | control | crude oil | CS-1103-B | H-1101-N1 | 455 psi, 555 °F | 1 | 23 | 16 | 4 | 135 |
@@ -172,46 +183,46 @@ At these ends the valve the generator stands at every equipment connection is no
 | 3"-P150-P-11026 | process | hydrocarbon gas | D-1103-N2 | BL-1104-U | 50 psi, 150 °F | 2 | 28 | 21 | 23 | 271 |
 | 8"-P150-P-11027 | process | naphtha | D-1103-N3 | P-1112A-S | 50 psi, 150 °F | — | 31 | 18 | 1 | 49 |
 | 6"-P150-P-11028 | process | naphtha | P-1112A-D | CS-1104-A | 125 psi, 150 °F | 1 | 55 | 32 | 11 | 229 |
-| 6"-P150-P-11704 | control | naphtha | CS-1104-B | C-1101-N4 | 125 psi, 150 °F | — | 25 | 16 | 2 | 155 |
+| 6"-P150-P-11704 | control | naphtha | CS-1104-B | C-1101-N4 | 125 psi, 150 °F | — | 23 | 14 | 2 | 162 |
 | 8"-P150-P-11029 | process | naphtha | D-1103-N4 | P-1113A-S | 50 psi, 150 °F | — | 29 | 18 | 1 | 50 |
-| 6"-P300-P-11030 | process | naphtha | P-1113A-D | CS-1105-A | 200 psi, 150 °F | 1 | 56 | 33 | 10 | 212 |
+| 6"-P300-P-11030 | process | naphtha | P-1113A-D | CS-1105-A | 200 psi, 150 °F | 1 | 56 | 33 | 9 | 212 |
 | 6"-P150-P-11705 | control | naphtha | CS-1105-B | BL-1105-U | 135 psi, 150 °F | — | 19 | 12 | 1 | 38 |
 | 3"-P150-P-11031 | process | sour water | D-1103-N5 | P-1114A-S | 50 psi, 150 °F | — | 29 | 18 | 3 | 59 |
-| 3"-P150-P-11032 | process | sour water | P-1114A-D | CS-1106-A | 150 psi, 150 °F | 2 | 62 | 39 | 22 | 262 |
+| 3"-P150-P-11032 | process | sour water | P-1114A-D | CS-1106-A | 150 psi, 150 °F | 2 | 60 | 37 | 22 | 263 |
 | 3"-P150-P-11706 | control | sour water | CS-1106-B | BL-1106-U | 85 psi, 190 °F | — | 19 | 12 | 1 | 44 |
-| 12"-P150-P-11033 | process | naphtha | C-1101-N5 | P-1105A-S | 50 psi, 380 °F | — | 31 | 20 | 1 | 133 |
+| 12"-P150-P-11033 | process | naphtha | C-1101-N5 | P-1105A-S | 50 psi, 380 °F | — | 28 | 17 | 1 | 133 |
 | 10"-P300-P-11034 | process | naphtha | P-1105A-D | E-1101-N3 | 165 psi, 380 °F | — | 32 | 19 | 5 | 97 |
 | 10"-P300-P-11035 | process | naphtha | E-1101-N4 | A-1102-N1 | 165 psi, 295 °F | 3 | 32 | 23 | 7 | 173 |
 | 8"-P300-P-11036 | process | naphtha | A-1102-N2 | CS-1107-A | 165 psi, 240 °F | 3 | 50 | 31 | 4 | 136 |
-| 8"-P150-P-11707 | control | naphtha | CS-1107-B | C-1101-N6 | 50 psi, 240 °F | — | 22 | 15 | 3 | 160 |
-| 14"-P150-P-11037 | process | diesel | C-1101-N7 | P-1106A-S | 50 psi, 550 °F | — | 28 | 17 | 1 | 111 |
+| 8"-P150-P-11707 | control | naphtha | CS-1107-B | C-1101-N6 | 50 psi, 240 °F | — | 21 | 14 | 3 | 160 |
+| 14"-P150-P-11037 | process | diesel | C-1101-N7 | P-1106A-S | 50 psi, 550 °F | — | 30 | 19 | 1 | 111 |
 | 10"-P300-P-11038 | process | diesel | P-1106A-D | E-1104-N3 | 165 psi, 550 °F | — | 32 | 19 | 5 | 99 |
 | 10"-P300-P-11039 | process | diesel | E-1104-N4 | CS-1108-A | 165 psi, 420 °F | 1 | 39 | 18 | 1 | 54 |
 | 10"-P150-P-11708 | control | diesel | CS-1108-B | C-1101-N8 | 50 psi, 420 °F | — | 21 | 14 | 4 | 139 |
-| 14"-P150-P-11040 | process | gas oil | C-1101-N9 | P-1107A-S | 50 psi, 660 °F | 3 | 41 | 30 | 3 | 154 |
-| 10"-P300-P-11041 | process | gas oil | P-1107A-D | E-1107-N3 | 165 psi, 660 °F | 1 | 38 | 25 | 4 | 139 |
+| 14"-P150-P-11040 | process | gas oil | C-1101-N9 | P-1107A-S | 50 psi, 660 °F | 3 | 41 | 30 | 2 | 154 |
+| 10"-P300-P-11041 | process | gas oil | P-1107A-D | E-1107-N3 | 165 psi, 660 °F | 1 | 38 | 25 | 5 | 139 |
 | 10"-P300-P-11042 | process | gas oil | E-1107-N4 | CS-1109-A | 165 psi, 490 °F | — | 52 | 31 | 5 | 147 |
-| 10"-P150-P-11709 | control | gas oil | CS-1109-B | C-1101-N10 | 50 psi, 490 °F | 1 | 31 | 24 | 7 | 178 |
-| 6"-P150-P-11043 | process | kerosene | C-1101-N11 | CS-1110-A | 50 psi, 450 °F | 2 | 40 | 21 | 2 | 145 |
+| 10"-P150-P-11709 | control | gas oil | CS-1109-B | C-1101-N10 | 50 psi, 490 °F | 1 | 27 | 20 | 7 | 178 |
+| 6"-P150-P-11043 | process | kerosene | C-1101-N11 | CS-1110-A | 50 psi, 450 °F | 2 | 0 | 0 | 0 | 0 |
 | 6"-P150-P-11710 | control | kerosene | CS-1110-B | C-1102-N1 | 50 psi, 450 °F | — | 22 | 15 | 3 | 114 |
-| 6"-P150-P-11044 | process | kerosene | C-1102-N2 | C-1101-N12 | 50 psi, 445 °F | 2 | 35 | 28 | 4 | 241 |
+| 6"-P150-P-11044 | process | kerosene | C-1102-N2 | C-1101-N12 | 50 psi, 445 °F | 2 | 33 | 26 | 4 | 240 |
 | 6"-P150-P-11045 | process | kerosene | C-1102-N3 | P-1108A-S | 50 psi, 440 °F | 2 | 37 | 26 | 4 | 143 |
 | 4"-P300-P-11046 | process | kerosene | P-1108A-D | E-1102-N3 | 215 psi, 440 °F | 2 | 36 | 23 | 7 | 161 |
-| 4"-P300-P-11047 | process | kerosene | E-1102-N4 | E-1111-N1 | 215 psi, 250 °F | 2 | 32 | 21 | 10 | 222 |
+| 4"-P300-P-11047 | process | kerosene | E-1102-N4 | E-1111-N1 | 215 psi, 250 °F | 2 | 32 | 21 | 8 | 222 |
 | 4"-P300-P-11048 | process | kerosene | E-1111-N2 | CS-1111-A | 215 psi, 150 °F | 2 | 53 | 32 | 6 | 153 |
 | 4"-P150-P-11711 | control | kerosene | CS-1111-B | BL-1107-U | 105 psi, 150 °F | 1 | 24 | 17 | 4 | 95 |
-| 8"-P150-P-11049 | process | diesel | C-1101-N13 | CS-1112-A | 50 psi, 590 °F | 1 | 51 | 32 | 7 | 204 |
-| 8"-P150-P-11712 | control | diesel | CS-1112-B | C-1102-N4 | 50 psi, 590 °F | 1 | 23 | 16 | 7 | 167 |
-| 6"-P150-P-11050 | process | diesel | C-1102-N5 | C-1101-N14 | 50 psi, 585 °F | 2 | 31 | 24 | 4 | 200 |
+| 8"-P150-P-11049 | process | diesel | C-1101-N13 | CS-1112-A | 50 psi, 590 °F | 1 | 51 | 32 | 7 | 207 |
+| 8"-P150-P-11712 | control | diesel | CS-1112-B | C-1102-N4 | 50 psi, 590 °F | 1 | 23 | 16 | 8 | 167 |
+| 6"-P150-P-11050 | process | diesel | C-1102-N5 | C-1101-N14 | 50 psi, 585 °F | 2 | 32 | 25 | 4 | 197 |
 | 8"-P150-P-11051 | process | diesel | C-1102-N6 | P-1109A-S | 50 psi, 580 °F | 1 | 34 | 23 | 5 | 139 |
 | 6"-P300-P-11052 | process | diesel | P-1109A-D | E-1103-N3 | 215 psi, 580 °F | 2 | 34 | 21 | 7 | 162 |
 | 6"-P300-P-11053 | process | diesel | E-1103-N4 | A-1103-N1 | 215 psi, 285 °F | 3 | 38 | 29 | 5 | 169 |
 | 6"-P300-P-11054 | process | diesel | A-1103-N2 | CS-1113-A | 215 psi, 190 °F | 3 | 43 | 24 | 4 | 109 |
 | 6"-P150-P-11713 | control | diesel | CS-1113-B | BL-1108-U | 105 psi, 190 °F | 1 | 24 | 17 | 3 | 78 |
-| 6"-P150-P-11055 | process | gas oil | C-1101-N15 | CS-1114-A | 50 psi, 670 °F | 2 | 49 | 30 | 5 | 184 |
-| 6"-P150-P-11714 | control | gas oil | CS-1114-B | C-1102-N7 | 50 psi, 670 °F | 2 | 32 | 25 | 5 | 159 |
-| 4"-P150-P-11056 | process | gas oil | C-1102-N8 | C-1101-N16 | 50 psi, 665 °F | 2 | 31 | 24 | 5 | 189 |
-| 6"-P150-P-11057 | process | gas oil | C-1102-N9 | P-1110A-S | 50 psi, 660 °F | 2 | 41 | 30 | 4 | 147 |
+| 6"-P150-P-11055 | process | gas oil | C-1101-N15 | CS-1114-A | 50 psi, 670 °F | 2 | 51 | 32 | 6 | 176 |
+| 6"-P150-P-11714 | control | gas oil | CS-1114-B | C-1102-N7 | 50 psi, 670 °F | 2 | 32 | 25 | 5 | 155 |
+| 4"-P150-P-11056 | process | gas oil | C-1102-N8 | C-1101-N16 | 50 psi, 665 °F | 2 | 29 | 22 | 5 | 194 |
+| 6"-P150-P-11057 | process | gas oil | C-1102-N9 | P-1110A-S | 50 psi, 660 °F | 2 | 38 | 27 | 5 | 150 |
 | 4"-P300-P-11058 | process | gas oil | P-1110A-D | E-1106-N3 | 215 psi, 660 °F | 2 | 33 | 20 | 5 | 143 |
 | 3"-P300-P-11059 | process | gas oil | E-1106-N4 | CS-1115-A | 215 psi, 430 °F | 2 | 47 | 26 | 9 | 137 |
 | 3"-P150-P-11715 | control | gas oil | CS-1115-B | BL-1109-U | 125 psi, 430 °F | 2 | 31 | 24 | 9 | 145 |
@@ -227,27 +238,27 @@ At these ends the valve the generator stands at every equipment connection is no
 | 12"-P600-P-11302 | spare | crude oil | P-1101B-D | tap 12"-P600-P-11002 | 390 psi, 150 °F | — | 21 | 14 | 0 | 27 |
 | 4"-P150-P-11303 | spare | process and wash water | tap 4"-P150-P-11007 | P-1102B-S | 125 psi, 170 °F | — | 13 | 6 | 0 | 5 |
 | 3"-P300-P-11304 | spare | process and wash water | P-1102B-D | tap 3"-P300-P-11008 | 285 psi, 160 °F | — | 14 | 7 | 0 | 6 |
-| 16"-P300-P-11305 | spare | crude oil | tap 16"-P300-P-11013 | P-1103B-S | 175 psi, 320 °F | — | 21 | 14 | 0 | 37 |
-| 12"-P600-P-11306 | spare | crude oil | P-1103B-D | tap 12"-P600-P-11014 | 400 psi, 320 °F | — | 19 | 12 | 0 | 16 |
-| 16"-P150-P-11307 | spare | crude oil | tap 16"-P150-P-11018 | P-1104B-S | 70 psi, 450 °F | — | 25 | 18 | 0 | 45 |
+| 16"-P300-P-11305 | spare | crude oil | tap 16"-P300-P-11013 | P-1103B-S | 175 psi, 320 °F | — | 19 | 12 | 0 | 25 |
+| 12"-P600-P-11306 | spare | crude oil | P-1103B-D | tap 12"-P600-P-11014 | 400 psi, 320 °F | — | 19 | 12 | 0 | 18 |
+| 16"-P150-P-11307 | spare | crude oil | tap 16"-P150-P-11018 | P-1104B-S | 70 psi, 450 °F | — | 23 | 16 | 0 | 42 |
 | 12"-P600-P-11308 | spare | crude oil | P-1104B-D | tap 12"-P600-P-11019 | 455 psi, 450 °F | — | 19 | 12 | 0 | 17 |
 | 24"-P150-P-11309 | spare | naphtha | tap 24"-P150-P-11023 | A-1101B-N1 | 50 psi, 300 °F | — | 12 | 9 | 0 | 40 |
 | 24"-P150-P-11310 | spare | naphtha | tap 24"-P150-P-11023 | A-1101C-N1 | 50 psi, 300 °F | — | 11 | 8 | 0 | 49 |
 | 24"-P150-P-11311 | spare | naphtha | tap 24"-P150-P-11023 | A-1101D-N1 | 50 psi, 300 °F | — | 18 | 15 | 0 | 95 |
 | 10"-P150-P-11312 | spare | naphtha | A-1101B-N2 | tap 10"-P150-P-11024 | 50 psi, 190 °F | — | 13 | 10 | 0 | 21 |
-| 10"-P150-P-11313 | spare | naphtha | A-1101C-N2 | tap 10"-P150-P-11024 | 50 psi, 190 °F | — | 9 | 6 | 2 | 32 |
+| 10"-P150-P-11313 | spare | naphtha | A-1101C-N2 | tap 10"-P150-P-11024 | 50 psi, 190 °F | — | 9 | 6 | 1 | 32 |
 | 10"-P150-P-11314 | spare | naphtha | A-1101D-N2 | tap 10"-P150-P-11024 | 50 psi, 190 °F | — | 11 | 8 | 2 | 45 |
 | 8"-P150-P-11315 | spare | naphtha | tap 8"-P150-P-11027 | P-1112B-S | 50 psi, 150 °F | — | 19 | 12 | 0 | 12 |
 | 6"-P150-P-11316 | spare | naphtha | P-1112B-D | tap 6"-P150-P-11028 | 125 psi, 150 °F | — | 14 | 7 | 0 | 5 |
-| 8"-P150-P-11317 | spare | naphtha | tap 8"-P150-P-11029 | P-1113B-S | 50 psi, 150 °F | — | 19 | 12 | 0 | 12 |
+| 8"-P150-P-11317 | spare | naphtha | tap 8"-P150-P-11029 | P-1113B-S | 50 psi, 150 °F | — | 15 | 8 | 0 | 3 |
 | 6"-P300-P-11318 | spare | naphtha | P-1113B-D | tap 6"-P300-P-11030 | 200 psi, 150 °F | — | 14 | 7 | 0 | 5 |
 | 3"-P150-P-11319 | spare | sour water | tap 3"-P150-P-11031 | P-1114B-S | 50 psi, 150 °F | — | 15 | 8 | 0 | 6 |
 | 3"-P150-P-11320 | spare | sour water | P-1114B-D | tap 3"-P150-P-11032 | 150 psi, 150 °F | — | 14 | 7 | 0 | 6 |
 | 12"-P150-P-11321 | spare | naphtha | tap 12"-P150-P-11033 | P-1105B-S | 50 psi, 380 °F | — | 19 | 12 | 0 | 15 |
-| 10"-P300-P-11322 | spare | naphtha | P-1105B-D | tap 10"-P300-P-11034 | 165 psi, 380 °F | — | 20 | 13 | 0 | 17 |
-| 14"-P150-P-11323 | spare | diesel | tap 14"-P150-P-11037 | P-1106B-S | 50 psi, 550 °F | — | 19 | 12 | 0 | 26 |
-| 10"-P300-P-11324 | spare | diesel | P-1106B-D | tap 10"-P300-P-11038 | 165 psi, 550 °F | — | 24 | 17 | 0 | 21 |
-| 14"-P150-P-11325 | spare | gas oil | tap 14"-P150-P-11040 | P-1107B-S | 50 psi, 660 °F | — | 21 | 14 | 0 | 27 |
+| 10"-P300-P-11322 | spare | naphtha | P-1105B-D | tap 10"-P300-P-11034 | 165 psi, 380 °F | — | 20 | 13 | 0 | 18 |
+| 14"-P150-P-11323 | spare | diesel | tap 14"-P150-P-11037 | P-1106B-S | 50 psi, 550 °F | — | 0 | 0 | 0 | 0 |
+| 10"-P300-P-11324 | spare | diesel | P-1106B-D | tap 10"-P300-P-11038 | 165 psi, 550 °F | — | 24 | 17 | 0 | 19 |
+| 14"-P150-P-11325 | spare | gas oil | tap 14"-P150-P-11040 | P-1107B-S | 50 psi, 660 °F | — | 15 | 8 | 0 | 10 |
 | 10"-P300-P-11326 | spare | gas oil | P-1107B-D | tap 10"-P300-P-11041 | 165 psi, 660 °F | — | 20 | 13 | 0 | 18 |
 | 6"-P150-P-11327 | spare | kerosene | tap 6"-P150-P-11045 | P-1108B-S | 50 psi, 440 °F | — | 13 | 6 | 0 | 5 |
 | 4"-P300-P-11328 | spare | kerosene | P-1108B-D | tap 4"-P300-P-11046 | 215 psi, 440 °F | — | 14 | 7 | 0 | 6 |
@@ -265,16 +276,16 @@ At these ends the valve the generator stands at every equipment connection is no
 | 4"-P150-CWS-11501 | utility | cooling water supply | tap 10"-P150-CWS-11401 | E-1112-N3 | 140 psi, 150 °F | — | 31 | 18 | 3 | 95 |
 | 4"-P150-CWR-11502 | utility | cooling water return | E-1112-N4 | tap 10"-P150-CWR-11402 | 70 psi, 155 °F | — | 32 | 19 | 3 | 84 |
 | 8"-P150-CWS-11503 | utility | cooling water supply | tap 10"-P150-CWS-11401 | E-1110-N3 | 140 psi, 150 °F | — | 33 | 22 | 4 | 97 |
-| 8"-P150-CWR-11504 | utility | cooling water return | E-1110-N4 | tap 10"-P150-CWR-11402 | 70 psi, 155 °F | — | 32 | 21 | 3 | 83 |
-| 6"-P150-CWS-11505 | utility | cooling water supply | tap 10"-P150-CWS-11401 | E-1111-N3 | 140 psi, 150 °F | — | 33 | 22 | 5 | 95 |
+| 8"-P150-CWR-11504 | utility | cooling water return | E-1110-N4 | tap 10"-P150-CWR-11402 | 70 psi, 155 °F | — | 32 | 21 | 2 | 85 |
+| 6"-P150-CWS-11505 | utility | cooling water supply | tap 10"-P150-CWS-11401 | E-1111-N3 | 140 psi, 150 °F | — | 33 | 22 | 4 | 95 |
 | 6"-P150-CWR-11506 | utility | cooling water return | E-1111-N4 | tap 10"-P150-CWR-11402 | 70 psi, 155 °F | — | 32 | 21 | 3 | 87 |
 | 2"-P1200-SC-11507 | utility | boiler feed water | tap 2"-P1200-SC-11403 | CS-1117-A | 1035 psi, 300 °F | — | 40 | 21 | 1 | 31 |
 | 2"-P300-SC-11551 | control | boiler feed water | CS-1117-B | E-1113-N3 | 175 psi, 300 °F | — | 22 | 13 | 5 | 74 |
-| 8"-P150-LS-11508 | utility | steam, 50 psi | E-1113-N4 | tap 8"-P150-LS-11404 | 80 psi, 370 °F | — | 25 | 16 | 3 | 91 |
-| 6"-P150-LS-11509 | utility | steam, 50 psi | tap 8"-P150-LS-11404 | C-1101-N18 | 80 psi, 370 °F | — | 17 | 10 | 0 | 53 |
-| 3"-P150-LS-11510 | utility | steam, 50 psi | tap 8"-P150-LS-11404 | C-1102-N10 | 80 psi, 370 °F | — | 26 | 19 | 3 | 90 |
+| 8"-P150-LS-11508 | utility | steam, 50 psi | E-1113-N4 | tap 8"-P150-LS-11404 | 80 psi, 370 °F | — | 25 | 16 | 2 | 91 |
+| 6"-P150-LS-11509 | utility | steam, 50 psi | tap 8"-P150-LS-11404 | C-1101-N18 | 80 psi, 370 °F | — | 17 | 10 | 1 | 50 |
+| 3"-P150-LS-11510 | utility | steam, 50 psi | tap 8"-P150-LS-11404 | C-1102-N10 | 80 psi, 370 °F | — | 28 | 21 | 2 | 91 |
 | 3"-P150-LS-11511 | utility | steam, 50 psi | tap 8"-P150-LS-11404 | C-1102-N11 | 80 psi, 370 °F | — | 27 | 20 | 2 | 75 |
-| 3"-P150-LS-11512 | utility | steam, 50 psi | tap 8"-P150-LS-11404 | C-1102-N12 | 80 psi, 370 °F | — | 25 | 18 | 3 | 55 |
+| 3"-P150-LS-11512 | utility | steam, 50 psi | tap 8"-P150-LS-11404 | C-1102-N12 | 80 psi, 370 °F | — | 25 | 18 | 3 | 60 |
 | 4"-P150-P-11513 | utility | fuel gas | tap 4"-P150-P-11405 | H-1101-N3 | 85 psi, 150 °F | — | 18 | 11 | 1 | 42 |
 
 ## Unit 12: Vacuum distillation
@@ -284,11 +295,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | Component | Count |
 | --- | --- |
 | cap | 6 |
-| elbow | 279 |
+| elbow | 271 |
 | flange | 218 |
 | gasket | 308 |
 | olet | 3 |
-| pipe | 443 |
+| pipe | 435 |
 | reducer | 38 |
 | spade | 18 |
 | spectacle | 1 |
@@ -298,16 +309,16 @@ At these ends the valve the generator stands at every equipment connection is no
 | Welds | Count |
 | --- | --- |
 | BW, field | 132 |
-| BW, shop | 769 |
+| BW, shop | 753 |
 | FW, shop | 11 |
 
 | Supports | Count |
 | --- | --- |
 | anchor | 20 |
 | guide | 47 |
-| hanger | 28 |
+| hanger | 29 |
 | shoe | 47 |
-| stanchion | 33 |
+| stanchion | 32 |
 | trunnion | 23 |
 
 ### Checks
@@ -320,7 +331,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
-| pieces of one line clear of each other (SW-RPI-22) | not measured |
+| pieces of one line clear of each other (SW-RPI-22) | 0 |
 | spans within SW-PS-7, a support at every rack beam crossed | 1 |
 
 Not at zero, supports:
@@ -396,7 +407,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | 8"-P300-P-12001 | process | residue | BL-1201-U | CS-1201-A | 175 psi, 700 °F | 1 | 45 | 26 | 6 | 154 |
 | 8"-P300-P-12701 | control | residue | CS-1201-B | H-1201-N1 | 175 psi, 700 °F | 1 | 21 | 14 | 2 | 88 |
-| 36"-P300-P-12002 | process | residue | H-1201-N2 | C-1201-N1 | 50 psi, 800 °F | 3 | 37 | 34 | 6 | 322 |
+| 36"-P300-P-12002 | process | residue | H-1201-N2 | C-1201-N1 | 50 psi, 800 °F | 3 | 33 | 30 | 6 | 285 |
 | 48"-P150-P-12003 | process | hydrocarbon gas | C-1201-N2 | J-1201-N1 | 50 psi, 200 °F | — | 10 | 7 | 0 | 101 |
 | 3"-P150-P-12004 | process | hydrocarbon gas | J-1201-N2 | D-1201-N1 | 50 psi, 275 °F | — | 6 | 3 | 0 | 37 |
 | 3"-P150-P-12005 | process | oily water | J-1201-N3 | D-1201-N2 | 50 psi, 170 °F | — | 6 | 3 | 0 | 37 |
@@ -433,9 +444,9 @@ At these ends the valve the generator stands at every equipment connection is no
 | 3"-P300-P-12304 | spare | sour water | P-1205B-D | tap 3"-P300-P-12011 | 160 psi, 180 °F | — | 14 | 7 | 0 | 6 |
 | 10"-P150-P-12305 | spare | gas oil | tap 10"-P150-P-12012 | P-1201B-S | 50 psi, 350 °F | — | 19 | 12 | 0 | 13 |
 | 8"-P300-P-12306 | spare | gas oil | tap 8"-P300-P-12013 | A-1201B-N1 | 220 psi, 350 °F | — | 13 | 10 | 0 | 20 |
-| 8"-P300-P-12307 | spare | gas oil | P-1201B-D | tap 8"-P300-P-12013 | 220 psi, 350 °F | — | 20 | 13 | 0 | 9 |
+| 8"-P300-P-12307 | spare | gas oil | P-1201B-D | tap 8"-P300-P-12013 | 220 psi, 350 °F | — | 12 | 5 | 0 | 2 |
 | 8"-P300-P-12308 | spare | gas oil | A-1201B-N2 | tap 8"-P300-P-12014 | 220 psi, 200 °F | — | 13 | 10 | 0 | 17 |
-| 14"-P150-P-12309 | spare | gas oil | tap 14"-P150-P-12016 | P-1202B-S | 50 psi, 600 °F | — | 19 | 12 | 0 | 26 |
+| 14"-P150-P-12309 | spare | gas oil | tap 14"-P150-P-12016 | P-1202B-S | 50 psi, 600 °F | — | 15 | 8 | 0 | 9 |
 | 10"-P300-P-12310 | spare | gas oil | P-1202B-D | tap 10"-P300-P-12017 | 260 psi, 600 °F | — | 20 | 13 | 0 | 14 |
 | 8"-P300-P-12311 | spare | residue | tap 8"-P300-P-12021 | P-1203B-S | 50 psi, 740 °F | — | 13 | 6 | 0 | 5 |
 | 6"-P600-P-12312 | spare | residue | P-1203B-D | tap 6"-P600-P-12022 | 260 psi, 740 °F | — | 14 | 7 | 0 | 6 |
@@ -464,11 +475,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | Component | Count |
 | --- | --- |
 | cap | 6 |
-| elbow | 426 |
+| elbow | 422 |
 | flange | 286 |
 | gasket | 454 |
 | olet | 6 |
-| pipe | 647 |
+| pipe | 643 |
 | reducer | 42 |
 | spade | 34 |
 | spectacle | 14 |
@@ -478,16 +489,16 @@ At these ends the valve the generator stands at every equipment connection is no
 | Welds | Count |
 | --- | --- |
 | BW, field | 196 |
-| BW, shop | 1100 |
+| BW, shop | 1092 |
 | FW, shop | 14 |
 
 | Supports | Count |
 | --- | --- |
 | anchor | 33 |
 | guide | 63 |
-| hanger | 52 |
+| hanger | 53 |
 | shoe | 103 |
-| stanchion | 43 |
+| stanchion | 44 |
 | trapeze | 2 |
 | trunnion | 35 |
 
@@ -501,13 +512,12 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
-| pieces of one line clear of each other (SW-RPI-22) | not measured |
-| spans within SW-PS-7, a support at every rack beam crossed | 3 |
+| pieces of one line clear of each other (SW-RPI-22) | 0 |
+| spans within SW-PS-7, a support at every rack beam crossed | 2 |
 
 Not at zero, supports:
 
 - 3"-P150-P-13704: no shoe at bent x=360
-- 6"-P150-CWS-13501: unsupported span 256 in > 240 on run from 942,108,256
 - 2"-P150-CWS-13505: unsupported span 148 in > 120 on run from 1134,372,3
 
 These runs are longer than a pipe of their size spans and no steel stands where a support would go: lines that cross the yard or run beside the rack away from the support beams. They are listed, not hidden, and want pipe supports of their own.
@@ -634,7 +644,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 6"-P150-P-13712 | control | naphtha | CS-1312-B | BL-1309-U | 75 psi, 190 °F | 1 | 27 | 20 | 2 | 64 |
 | 3"-P600-P-13601 | root | hydrogen-rich gas | RS-1301-A | tap 3"-P600-P-13005 | 395 psi, 160 °F | — | 11 | 8 | 0 | 13 |
 | 3"-P150-P-13602 | root | naphtha | tap 4"-P150-P-13031 | RS-1302-A | 145 psi, 180 °F | — | 11 | 8 | 1 | 19 |
-| 8"-P150-P-13301 | spare | naphtha | tap 8"-P150-P-13003 | P-1301B-S | 55 psi, 150 °F | — | 19 | 12 | 0 | 13 |
+| 8"-P150-P-13301 | spare | naphtha | tap 8"-P150-P-13003 | P-1301B-S | 55 psi, 150 °F | — | 15 | 8 | 0 | 4 |
 | 6"-P600-P-13302 | spare | naphtha | P-1301B-D | tap 6"-P600-P-13004 | 595 psi, 150 °F | — | 16 | 9 | 0 | 11 |
 | 3"-P600-P-13303 | spare | hydrogen-rich gas | tap 3"-P600-P-13005 | K-1301B-N1 | 385 psi, 150 °F | — | 13 | 10 | 0 | 25 |
 | 3"-P600-P-13304 | spare | hydrogen-rich gas | K-1301B-N2 | tap 6"-P600-P-13004 | 515 psi, 215 °F | — | 10 | 7 | 1 | 26 |
@@ -648,7 +658,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 4"-P150-P-13312 | spare | naphtha | A-1303B-N2 | tap 4"-P150-P-13029 | 50 psi, 180 °F | — | 11 | 8 | 0 | 16 |
 | 6"-P150-P-13313 | spare | naphtha | tap 6"-P150-P-13030 | P-1303B-S | 50 psi, 180 °F | — | 19 | 12 | 0 | 8 |
 | 4"-P150-P-13314 | spare | naphtha | P-1303B-D | tap 4"-P150-P-13031 | 145 psi, 180 °F | — | 14 | 7 | 0 | 5 |
-| 8"-P150-P-13315 | spare | naphtha | tap 8"-P150-P-13036 | P-1304B-S | 50 psi, 360 °F | — | 19 | 12 | 0 | 12 |
+| 8"-P150-P-13315 | spare | naphtha | tap 8"-P150-P-13036 | P-1304B-S | 50 psi, 360 °F | — | 15 | 8 | 0 | 3 |
 | 6"-P300-P-13316 | spare | naphtha | P-1304B-D | tap 6"-P300-P-13037 | 160 psi, 360 °F | — | 14 | 7 | 0 | 5 |
 | 6"-P150-CWS-13401 | header | cooling water supply | BL-1310-U | cap | 140 psi, 150 °F | — | 13 | 9 | 12 | 248 |
 | 6"-P150-CWR-13402 | header | cooling water return | BL-1311-U | cap | 70 psi, 155 °F | — | 13 | 9 | 12 | 256 |
@@ -656,13 +666,13 @@ At these ends the valve the generator stands at every equipment connection is no
 | 2"-P150-SC-13404 | header | steam condensate | BL-1313-U | cap | 55 psi, 280 °F | — | 15 | 11 | 24 | 248 |
 | 4"-P300-LS-13405 | header | steam, 150 psi | BL-1314-U | cap | 185 psi, 450 °F | — | 14 | 10 | 12 | 248 |
 | 2"-P150-P-13406 | header | fuel gas | BL-1315-U | cap | 85 psi, 150 °F | — | 15 | 11 | 25 | 256 |
-| 6"-P150-CWS-13501 | utility | cooling water supply | tap 6"-P150-CWS-13401 | E-1302-N3 | 140 psi, 150 °F | — | 33 | 22 | 3 | 86 |
+| 6"-P150-CWS-13501 | utility | cooling water supply | tap 6"-P150-CWS-13401 | E-1302-N3 | 140 psi, 150 °F | — | 33 | 22 | 4 | 86 |
 | 6"-P150-CWR-13502 | utility | cooling water return | E-1302-N4 | tap 6"-P150-CWR-13402 | 70 psi, 155 °F | — | 32 | 21 | 4 | 75 |
 | 4"-P1200-LS-13503 | utility | steam, 600 psi | tap 4"-P1200-LS-13403 | E-1304-N3 | 685 psi, 700 °F | — | 20 | 11 | 3 | 77 |
 | 2"-P1200-SC-13504 | utility | steam condensate | E-1304-N4 | CS-1313-A | 650 psi, 660 °F | — | 42 | 21 | 5 | 78 |
 | 2"-P150-SC-13551 | control | steam condensate | CS-1313-B | tap 2"-P150-SC-13404 | 55 psi, 280 °F | — | 18 | 11 | 1 | 38 |
 | 2"-P150-CWS-13505 | utility | cooling water supply | tap 6"-P150-CWS-13401 | E-1305-N3 | 140 psi, 150 °F | — | 33 | 20 | 6 | 84 |
-| 2"-P150-CWR-13506 | utility | cooling water return | E-1305-N4 | tap 6"-P150-CWR-13402 | 70 psi, 155 °F | — | 32 | 19 | 6 | 75 |
+| 2"-P150-CWR-13506 | utility | cooling water return | E-1305-N4 | tap 6"-P150-CWR-13402 | 70 psi, 155 °F | — | 32 | 19 | 7 | 75 |
 | 4"-P300-LS-13507 | utility | steam, 150 psi | tap 4"-P300-LS-13405 | E-1306-N3 | 185 psi, 450 °F | — | 25 | 16 | 3 | 83 |
 | 2"-P300-SC-13508 | utility | steam condensate | E-1306-N4 | CS-1314-A | 165 psi, 410 °F | — | 42 | 21 | 5 | 77 |
 | 2"-P150-SC-13552 | control | steam condensate | CS-1314-B | tap 2"-P150-SC-13404 | 55 psi, 280 °F | — | 16 | 9 | 1 | 35 |
@@ -906,11 +916,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | Component | Count |
 | --- | --- |
 | cap | 4 |
-| elbow | 311 |
+| elbow | 309 |
 | flange | 211 |
 | gasket | 338 |
 | olet | 3 |
-| pipe | 468 |
+| pipe | 466 |
 | reducer | 36 |
 | spade | 30 |
 | spectacle | 8 |
@@ -920,7 +930,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | Welds | Count |
 | --- | --- |
 | BW, field | 144 |
-| BW, shop | 804 |
+| BW, shop | 800 |
 | FW, shop | 15 |
 
 | Supports | Count |
@@ -943,7 +953,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
-| pieces of one line clear of each other (SW-RPI-22) | not measured |
+| pieces of one line clear of each other (SW-RPI-22) | 0 |
 | spans within SW-PS-7, a support at every rack beam crossed | 0 |
 
 ### Battery limit
@@ -1057,7 +1067,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 3"-P300-P-15308 | spare | naphtha | P-1502B-D | tap 3"-P300-P-15024 | 155 psi, 170 °F | — | 16 | 9 | 0 | 7 |
 | 3"-P150-P-15309 | spare | sour water | tap 3"-P150-P-15026 | P-1504B-S | 55 psi, 170 °F | — | 14 | 7 | 0 | 7 |
 | 3"-P600-P-15310 | spare | sour water | P-1504B-D | tap 3"-P600-P-15027 | 470 psi, 170 °F | — | 14 | 7 | 0 | 7 |
-| 6"-P150-P-15311 | spare | kerosene | tap 6"-P150-P-15028 | P-1503B-S | 70 psi, 420 °F | — | 19 | 12 | 0 | 10 |
+| 6"-P150-P-15311 | spare | kerosene | tap 6"-P150-P-15028 | P-1503B-S | 70 psi, 420 °F | — | 15 | 8 | 0 | 3 |
 | 4"-P300-P-15312 | spare | kerosene | P-1503B-D | tap 4"-P300-P-15029 | 180 psi, 420 °F | — | 14 | 7 | 0 | 6 |
 | 6"-P150-CWS-15401 | header | cooling water supply | BL-1508-U | cap | 140 psi, 150 °F | — | 12 | 8 | 9 | 188 |
 | 6"-P150-CWR-15402 | header | cooling water return | BL-1509-U | cap | 70 psi, 155 °F | — | 14 | 10 | 9 | 196 |
@@ -1077,11 +1087,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | Component | Count |
 | --- | --- |
 | cap | 4 |
-| elbow | 440 |
+| elbow | 438 |
 | flange | 277 |
 | gasket | 435 |
 | olet | 4 |
-| pipe | 673 |
+| pipe | 671 |
 | reducer | 50 |
 | spade | 28 |
 | spectacle | 9 |
@@ -1091,7 +1101,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | Welds | Count |
 | --- | --- |
 | BW, field | 197 |
-| BW, shop | 1139 |
+| BW, shop | 1135 |
 | FW, shop | 12 |
 
 | Supports | Count |
@@ -1100,9 +1110,9 @@ At these ends the valve the generator stands at every equipment connection is no
 | guide | 92 |
 | hanger | 60 |
 | shoe | 130 |
-| stanchion | 33 |
+| stanchion | 34 |
 | trapeze | 1 |
-| trunnion | 40 |
+| trunnion | 39 |
 
 ### Checks
 
@@ -1114,12 +1124,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
-| pieces of one line clear of each other (SW-RPI-22) | not measured |
-| spans within SW-PS-7, a support at every rack beam crossed | 2 |
+| pieces of one line clear of each other (SW-RPI-22) | 0 |
+| spans within SW-PS-7, a support at every rack beam crossed | 1 |
 
 Not at zero, supports:
 
-- 6"-P1200-P-16005: unsupported span 299 in > 240 on run from 426,138,-26
 - 3"-P150-P-16704: no shoe at bent x=360
 
 These runs are longer than a pipe of their size spans and no steel stands where a support would go: lines that cross the yard or run beside the rack away from the support beams. They are listed, not hidden, and want pipe supports of their own.
@@ -1200,7 +1209,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 3"-P150-P-16702 | control | diesel | CS-1602-B | D-1601-N2 | 105 psi, 190 °F | — | 21 | 14 | 4 | 64 |
 | 6"-P150-P-16003 | process | diesel | D-1601-N3 | F-1601-N1 | 55 psi, 190 °F | 1 | 33 | 24 | 13 | 276 |
 | 8"-P150-P-16004 | process | diesel | F-1601-N2 | P-1601A-S | 50 psi, 190 °F | — | 23 | 12 | 1 | 39 |
-| 6"-P1200-P-16005 | process | diesel | P-1601A-D | E-1601-N1 | 1145 psi, 190 °F | 1 | 45 | 32 | 13 | 296 |
+| 6"-P1200-P-16005 | process | diesel | P-1601A-D | E-1601-N1 | 1145 psi, 190 °F | 1 | 45 | 32 | 14 | 296 |
 | 6"-P1200-P-16006 | process | hydrogen-rich gas | D-1602-N1 | C-1601-N1 | 850 psi, 180 °F | — | 15 | 8 | 0 | 22 |
 | 4"-P600-P-16007 | process | amine solution | BL-1603-U | P-1602A-S | 330 psi, 170 °F | — | 33 | 22 | 2 | 80 |
 | 3"-P1200-P-16008 | process | amine solution | P-1602A-D | CS-1603-A | 995 psi, 170 °F | 2 | 55 | 32 | 10 | 138 |
@@ -1224,7 +1233,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 3"-P1200-P-16022 | process | process and wash water | P-1605A-D | tap 8"-P1200-P-16020 | 1015 psi, 160 °F | — | 19 | 12 | 0 | 21 |
 | 8"-P1200-P-16023 | process | reactor effluent (oil and hydrogen) | A-1601-N2 | D-1602-N2 | 1015 psi, 190 °F | — | 20 | 11 | 5 | 115 |
 | 3"-P1200-P-16024 | process | sour water | D-1602-N3 | CS-1607-A | 990 psi, 190 °F | 2 | 48 | 29 | 9 | 133 |
-| 3"-P150-P-16707 | control | sour water | CS-1607-B | BL-1607-U | 85 psi, 190 °F | — | 17 | 10 | 1 | 32 |
+| 3"-P150-P-16707 | control | sour water | CS-1607-B | BL-1607-U | 85 psi, 190 °F | — | 17 | 10 | 0 | 32 |
 | 6"-P300-P-16025 | process | diesel | D-1602-N4 | CS-1608-A | 175 psi, 190 °F | 2 | 46 | 27 | 6 | 131 |
 | 6"-P300-P-16708 | control | diesel | CS-1608-B | D-1604-N1 | 175 psi, 190 °F | — | 22 | 13 | 3 | 60 |
 | 3"-P300-P-16026 | process | hydrocarbon gas | D-1604-N2 | CS-1609-A | 165 psi, 190 °F | 2 | 44 | 25 | 13 | 159 |
@@ -1255,7 +1264,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 3"-P150-P-16603 | root | hydrocarbon gas | RS-1603-A | tap 3"-P300-P-16026 | 105 psi, 170 °F | — | 13 | 10 | 0 | 9 |
 | 3"-P300-P-16604 | root | naphtha | tap 3"-P300-P-16034 | RS-1604-A | 205 psi, 170 °F | — | 9 | 6 | 0 | 10 |
 | 3"-P1200-P-16605 | root | sour water | RS-1605-A | tap 3"-P1200-P-16024 | 990 psi, 170 °F | — | 11 | 8 | 0 | 10 |
-| 8"-P150-P-16301 | spare | diesel | tap 8"-P150-P-16004 | P-1601B-S | 50 psi, 190 °F | — | 19 | 12 | 0 | 13 |
+| 8"-P150-P-16301 | spare | diesel | tap 8"-P150-P-16004 | P-1601B-S | 50 psi, 190 °F | — | 15 | 8 | 0 | 3 |
 | 6"-P1200-P-16302 | spare | diesel | P-1601B-D | tap 6"-P1200-P-16005 | 1145 psi, 190 °F | — | 13 | 6 | 0 | 7 |
 | 4"-P600-P-16303 | spare | amine solution | tap 4"-P600-P-16007 | P-1602B-S | 330 psi, 170 °F | — | 15 | 8 | 0 | 6 |
 | 3"-P1200-P-16304 | spare | amine solution | P-1602B-D | tap 3"-P1200-P-16008 | 995 psi, 170 °F | — | 14 | 7 | 0 | 7 |
@@ -1287,11 +1296,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | Component | Count |
 | --- | --- |
 | cap | 10 |
-| elbow | 1222 |
+| elbow | 1220 |
 | flange | 797 |
 | gasket | 1219 |
 | olet | 20 |
-| pipe | 1933 |
+| pipe | 1931 |
 | reducer | 122 |
 | spade | 88 |
 | spectacle | 27 |
@@ -1301,7 +1310,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | Welds | Count |
 | --- | --- |
 | BW, field | 518 |
-| BW, shop | 3250 |
+| BW, shop | 3246 |
 | FW, shop | 36 |
 
 | Supports | Count |
@@ -1309,10 +1318,10 @@ At these ends the valve the generator stands at every equipment connection is no
 | anchor | 78 |
 | guide | 201 |
 | hanger | 163 |
-| shoe | 520 |
-| stanchion | 144 |
-| trapeze | 1 |
-| trunnion | 96 |
+| shoe | 516 |
+| stanchion | 140 |
+| trapeze | 3 |
+| trunnion | 94 |
 
 ### Checks
 
@@ -1324,16 +1333,14 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
-| pieces of one line clear of each other (SW-RPI-22) | not measured |
-| spans within SW-PS-7, a support at every rack beam crossed | 9 |
+| pieces of one line clear of each other (SW-RPI-22) | 0 |
+| spans within SW-PS-7, a support at every rack beam crossed | 7 |
 
 Not at zero, supports:
 
-- 3"-P300-P-17018: unsupported span 186 in > 180 on run from 1056,132,469
 - 16"-P150-P-17038: unsupported span 301 in > 240 on run from 1362,300,-255
-- 4"-P300-P-17064: unsupported span 282 in > 240 on run from 1500,294,-893
-- 6"-P300-P-17081: unsupported span 241 in > 240 on run from 1686,294,452
-- 6"-P300-P-17081: unsupported span 241 in > 240 on run from 1194,618,-206
+- 3"-P300-P-17056: unsupported span 223 in > 180 on run from 1038,294,-289
+- 4"-P300-P-17064: unsupported span 275 in > 240 on run from 1500,294,-893
 - 24"-P150-V-17312: unsupported span 376 in > 240 on run from 1790,744,-198
 - 3"-P150-CWS-17513: unsupported span 279 in > 180 on run from 1308,246,317
 - 8"-P150-CWS-17515: unsupported span 331 in > 240 on run from 1422,318,381
@@ -1480,8 +1487,8 @@ At these ends the valve the generator stands at every equipment connection is no
 | 8"-P600-P-17007 | process | gas oil | E-1702-N2 | CS-1704-A | 330 psi, 500 °F | 1 | 44 | 23 | 11 | 208 |
 | 8"-P150-P-17704 | control | gas oil | CS-1704-B | R-1701-N1 | 55 psi, 500 °F | — | 21 | 12 | 2 | 61 |
 | 20"-P150-V-17008 | process | process air | K-1701-N1 | R-1701-N2 | 65 psi, 430 °F | — | 20 | 11 | 6 | 105 |
-| 3"-P150-P-17009 | process | process air | V-1701-N1 | R-1701-N3 | 70 psi, 150 °F | 1 | 33 | 26 | 21 | 276 |
-| 3"-P150-P-17010 | process | process air | R-1701-N4 | V-1702-N1 | 55 psi, 650 °F | 1 | 35 | 28 | 20 | 301 |
+| 3"-P150-P-17009 | process | process air | V-1701-N1 | R-1701-N3 | 70 psi, 150 °F | 1 | 33 | 26 | 21 | 275 |
+| 3"-P150-P-17010 | process | process air | R-1701-N4 | V-1702-N1 | 55 psi, 650 °F | 1 | 35 | 28 | 19 | 299 |
 | 42"-P150-V-17011 | process | flue gas | R-1701-N5 | E-1703-N1 | 50 psi, 650 °F | — | 12 | 9 | 0 | 79 |
 | 36"-P150-V-17012 | process | flue gas | E-1703-N2 | C-1705-N1 | 50 psi, 600 °F | — | 5 | 2 | 1 | 4 |
 | 24"-P300-V-17013 | process | hydrocarbon gas | R-1701-N6 | C-1701-N1 | 55 psi, 1030 °F | — | 15 | 12 | 1 | 139 |
@@ -1490,9 +1497,9 @@ At these ends the valve the generator stands at every equipment connection is no
 | 10"-P600-P-17016 | process | slurry oil | E-1702-N4 | E-1704-N1 | 210 psi, 710 °F | — | 23 | 12 | 1 | 38 |
 | 10"-P300-P-17017 | process | slurry oil | E-1704-N2 | CS-1705-A | 210 psi, 530 °F | 1 | 47 | 26 | 6 | 139 |
 | 10"-P150-P-17705 | control | slurry oil | CS-1705-B | C-1701-N3 | 55 psi, 530 °F | — | 20 | 13 | 3 | 97 |
-| 3"-P300-P-17018 | process | slurry oil | tap 10"-P300-P-17017 | E-1705-N1 | 210 psi, 530 °F | — | 14 | 9 | 0 | 30 |
-| 3"-P300-P-17019 | process | slurry oil | E-1705-N2 | F-1701-N1 | 210 psi, 250 °F | 2 | 33 | 24 | 36 | 417 |
-| 3"-P300-P-17020 | process | slurry oil | F-1701-N2 | CS-1706-A | 210 psi, 250 °F | 2 | 58 | 39 | 41 | 445 |
+| 3"-P300-P-17018 | process | slurry oil | tap 10"-P300-P-17017 | E-1705-N1 | 210 psi, 530 °F | — | 14 | 9 | 1 | 30 |
+| 3"-P300-P-17019 | process | slurry oil | E-1705-N2 | F-1701-N1 | 210 psi, 250 °F | 2 | 33 | 24 | 36 | 415 |
+| 3"-P300-P-17020 | process | slurry oil | F-1701-N2 | CS-1706-A | 210 psi, 250 °F | 2 | 58 | 39 | 40 | 443 |
 | 3"-P150-P-17706 | control | slurry oil | CS-1706-B | BL-1704-U | 85 psi, 250 °F | — | 19 | 12 | 1 | 35 |
 | 10"-P150-P-17021 | process | gas oil | C-1701-N4 | P-1703A-S | 55 psi, 650 °F | — | 27 | 16 | 1 | 84 |
 | 8"-P300-P-17022 | process | gas oil | P-1703A-D | E-1715-N1 | 210 psi, 650 °F | 1 | 39 | 26 | 8 | 208 |
@@ -1510,11 +1517,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | 4"-P600-P-17031 | process | diesel | P-1705A-D | A-1702-N1 | 345 psi, 485 °F | 2 | 36 | 25 | 4 | 166 |
 | 4"-P600-P-17032 | process | diesel | A-1702-N2 | CS-1710-A | 345 psi, 190 °F | 3 | 44 | 25 | 2 | 88 |
 | 4"-P150-P-17710 | control | diesel | CS-1710-B | BL-1705-U | 85 psi, 190 °F | — | 21 | 14 | 0 | 35 |
-| 3"-P600-P-17033 | process | diesel | tap 4"-P600-P-17032 | CS-1711-A | 345 psi, 190 °F | — | 29 | 14 | 0 | 3 |
+| 3"-P600-P-17033 | process | diesel | tap 4"-P600-P-17032 | CS-1711-A | 345 psi, 190 °F | — | 29 | 14 | 0 | 6 |
 | 3"-P150-P-17711 | control | diesel | CS-1711-B | BL-1706-U | 105 psi, 190 °F | 1 | 27 | 20 | 4 | 71 |
 | 3"-P600-P-17034 | process | diesel | RS-1701-B | E-1708-N1 | 345 psi, 190 °F | 2 | 21 | 12 | 8 | 114 |
 | 3"-P600-P-17035 | process | diesel | E-1708-N2 | CS-1712-A | 345 psi, 150 °F | — | 42 | 21 | 3 | 76 |
-| 3"-P300-P-17712 | control | diesel | CS-1712-B | C-1704-N1 | 215 psi, 150 °F | — | 23 | 16 | 6 | 154 |
+| 3"-P300-P-17712 | control | diesel | CS-1712-B | C-1704-N1 | 215 psi, 150 °F | — | 23 | 16 | 5 | 154 |
 | 3"-P150-P-17036 | process | diesel | C-1704-N2 | CS-1713-A | 65 psi, 165 °F | 2 | 50 | 31 | 8 | 141 |
 | 3"-P150-P-17713 | control | diesel | CS-1713-B | C-1701-N10 | 65 psi, 165 °F | 2 | 34 | 27 | 7 | 173 |
 | 24"-P150-V-17037 | process | hydrocarbon gas | C-1701-N11 | A-1701C-N1 | 50 psi, 320 °F | — | 22 | 19 | 0 | 115 |
@@ -1535,12 +1542,12 @@ At these ends the valve the generator stands at every equipment connection is no
 | 14"-P150-P-17048 | process | hydrocarbon gas | D-1702-N7 | K-1702-N1 | 50 psi, 150 °F | 3 | 28 | 21 | 8 | 200 |
 | 12"-P150-P-17049 | process | hydrocarbon gas | K-1702-N2 | A-1703-N1 | 85 psi, 250 °F | 3 | 29 | 22 | 2 | 119 |
 | 10"-P150-P-17050 | process | hydrocarbon gas | A-1703-N2 | D-1703-N1 | 80 psi, 170 °F | — | 20 | 11 | 4 | 108 |
-| 10"-P150-P-17051 | process | hydrocarbon gas | D-1703-N2 | K-1703-N1 | 80 psi, 170 °F | 1 | 30 | 23 | 6 | 152 |
-| 8"-P300-P-17052 | process | hydrocarbon gas | K-1703-N2 | A-1704-N1 | 300 psi, 280 °F | 3 | 33 | 26 | 2 | 113 |
+| 10"-P150-P-17051 | process | hydrocarbon gas | D-1703-N2 | K-1703-N1 | 80 psi, 170 °F | 1 | 30 | 23 | 6 | 151 |
+| 8"-P300-P-17052 | process | hydrocarbon gas | K-1703-N2 | A-1704-N1 | 300 psi, 280 °F | 3 | 33 | 26 | 2 | 112 |
 | 10"-P300-P-17053 | process | hydrocarbon gas | A-1704-N2 | E-1710-N1 | 300 psi, 180 °F | 3 | 33 | 24 | 4 | 139 |
 | 10"-P300-P-17054 | process | hydrocarbon gas | E-1710-N2 | D-1704-N1 | 300 psi, 150 °F | 1 | 36 | 25 | 11 | 246 |
 | 3"-P150-P-17055 | process | gasoline | D-1703-N3 | P-1709A-S | 80 psi, 170 °F | — | 29 | 18 | 1 | 41 |
-| 3"-P300-P-17056 | process | gasoline | P-1709A-D | tap 8"-P300-P-17052 | 300 psi, 170 °F | — | 19 | 12 | 5 | 60 |
+| 3"-P300-P-17056 | process | gasoline | P-1709A-D | tap 8"-P300-P-17052 | 300 psi, 170 °F | — | 19 | 12 | 4 | 60 |
 | 6"-P300-P-17057 | process | hydrocarbon gas | D-1704-N2 | C-1703-N2 | 225 psi, 150 °F | — | 17 | 10 | 0 | 26 |
 | 8"-P300-P-17058 | process | gasoline | C-1703-N3 | P-1710A-S | 225 psi, 165 °F | — | 28 | 17 | 2 | 72 |
 | 6"-P300-P-17059 | process | gasoline | P-1710A-D | tap 8"-P300-P-17052 | 275 psi, 165 °F | — | 16 | 9 | 3 | 54 |
@@ -1550,11 +1557,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | 4"-P300-P-17718 | control | amine solution | CS-1718-B | C-1706-N2 | 210 psi, 170 °F | 2 | 33 | 26 | 6 | 188 |
 | 4"-P150-P-17063 | process | amine solution | C-1706-N3 | CS-1719-A | 105 psi, 185 °F | 2 | 55 | 36 | 6 | 183 |
 | 4"-P150-P-17719 | control | amine solution | CS-1719-B | BL-1711-U | 95 psi, 190 °F | 1 | 25 | 18 | 3 | 62 |
-| 4"-P300-P-17064 | process | fuel gas | C-1706-N4 | D-1706-N1 | 205 psi, 165 °F | 2 | 33 | 30 | 11 | 300 |
+| 4"-P300-P-17064 | process | fuel gas | C-1706-N4 | D-1706-N1 | 205 psi, 165 °F | 2 | 33 | 30 | 12 | 300 |
 | 4"-P300-P-17065 | process | fuel gas | D-1706-N2 | CS-1720-A | 205 psi, 165 °F | 2 | 51 | 32 | 10 | 240 |
 | 4"-P150-P-17720 | control | fuel gas | CS-1720-B | BL-1712-U | 95 psi, 165 °F | 1 | 27 | 20 | 2 | 64 |
-| 3"-P150-P-17066 | process | sour water | D-1704-N3 | tap 3"-P300-P-17047 | 120 psi, 150 °F | — | 18 | 15 | 6 | 93 |
-| 10"-P300-P-17067 | process | gasoline | D-1704-N4 | P-1711A-S | 225 psi, 150 °F | — | 32 | 21 | 3 | 82 |
+| 3"-P150-P-17066 | process | sour water | D-1704-N3 | tap 3"-P300-P-17047 | 120 psi, 150 °F | — | 18 | 15 | 5 | 93 |
+| 10"-P300-P-17067 | process | gasoline | D-1704-N4 | P-1711A-S | 225 psi, 150 °F | — | 32 | 21 | 2 | 82 |
 | 8"-P600-P-17068 | process | gasoline | P-1711A-D | E-1711-N1 | 315 psi, 150 °F | 1 | 39 | 26 | 10 | 209 |
 | 8"-P600-P-17069 | process | gasoline | E-1711-N2 | CS-1721-A | 315 psi, 230 °F | 1 | 46 | 25 | 9 | 171 |
 | 8"-P300-P-17721 | control | gasoline | CS-1721-B | C-1707-N1 | 240 psi, 230 °F | — | 22 | 13 | 2 | 88 |
@@ -1583,7 +1590,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 4"-P300-P-17726 | control | liquefied petroleum gas | CS-1726-B | C-1709-N1 | 300 psi, 160 °F | — | 19 | 12 | 2 | 49 |
 | 3"-P300-P-17088 | process | liquefied petroleum gas | BL-1714-U | RS-1705-B | 275 psi, 160 °F | 2 | 16 | 9 | 27 | 281 |
 | 3"-P600-P-17089 | process | amine solution | RS-1706-B | CS-1727-A | 330 psi, 170 °F | 2 | 40 | 21 | 24 | 253 |
-| 3"-P300-P-17727 | control | amine solution | CS-1727-B | C-1709-N2 | 265 psi, 170 °F | — | 20 | 13 | 4 | 87 |
+| 3"-P300-P-17727 | control | amine solution | CS-1727-B | C-1709-N2 | 265 psi, 170 °F | — | 20 | 13 | 3 | 87 |
 | 3"-P300-P-17090 | process | amine solution | C-1709-N3 | RS-1707-B | 215 psi, 165 °F | 2 | 26 | 19 | 21 | 252 |
 | 4"-P300-P-17091 | process | liquefied petroleum gas | C-1709-N4 | V-1703-N1 | 260 psi, 160 °F | — | 17 | 8 | 0 | 25 |
 | 4"-P300-P-17092 | process | liquefied petroleum gas | V-1703-N2 | CS-1728-A | 255 psi, 160 °F | — | 37 | 16 | 1 | 40 |
@@ -1598,9 +1605,9 @@ At these ends the valve the generator stands at every equipment connection is no
 | 6"-P300-P-17098 | process | liquefied petroleum gas | C-1710-N4 | E-1714-N1 | 250 psi, 275 °F | — | 21 | 12 | 0 | 33 |
 | 8"-P300-P-17099 | process | liquefied petroleum gas | E-1714-N2 | C-1710-N5 | 245 psi, 285 °F | — | 17 | 8 | 0 | 40 |
 | 3"-P300-P-17100 | process | liquefied petroleum gas | C-1710-N6 | E-1716-N1 | 250 psi, 285 °F | 2 | 36 | 25 | 23 | 294 |
-| 3"-P300-P-17101 | process | liquefied petroleum gas | E-1716-N2 | CS-1731-A | 240 psi, 150 °F | — | 50 | 29 | 7 | 150 |
+| 3"-P300-P-17101 | process | liquefied petroleum gas | E-1716-N2 | CS-1731-A | 240 psi, 150 °F | — | 50 | 29 | 8 | 150 |
 | 3"-P300-P-17731 | control | liquefied petroleum gas | CS-1731-B | BL-1716-U | 225 psi, 150 °F | 2 | 21 | 14 | 18 | 212 |
-| 3"-P600-P-17601 | root | diesel | tap 4"-P600-P-17032 | RS-1701-A | 345 psi, 190 °F | — | 11 | 8 | 1 | 21 |
+| 3"-P600-P-17601 | root | diesel | tap 4"-P600-P-17032 | RS-1701-A | 345 psi, 190 °F | — | 11 | 8 | 0 | 21 |
 | 6"-P300-P-17602 | root | hydrocarbon gas | RS-1702-A | tap 8"-P300-P-17052 | 235 psi, 200 °F | — | 11 | 8 | 0 | 16 |
 | 4"-P300-P-17603 | root | gasoline | tap 6"-P300-P-17083 | RS-1703-A | 160 psi, 150 °F | — | 11 | 8 | 0 | 10 |
 | 4"-P300-P-17604 | root | liquefied petroleum gas | tap 6"-P300-P-17077 | RS-1704-A | 300 psi, 160 °F | — | 13 | 10 | 0 | 9 |
@@ -1609,7 +1616,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 3"-P300-P-17607 | root | amine solution | RS-1707-A | tap 4"-P150-P-17063 | 215 psi, 165 °F | — | 11 | 8 | 0 | 17 |
 | 3"-P600-P-17608 | root | liquefied petroleum gas | tap 6"-P600-P-17096 | RS-1708-A | 305 psi, 160 °F | — | 18 | 15 | 1 | 42 |
 | 10"-P150-P-17301 | spare | gas oil | tap 10"-P150-P-17004 | P-1701B-S | 55 psi, 390 °F | — | 18 | 11 | 0 | 17 |
-| 6"-P600-P-17302 | spare | gas oil | P-1701B-D | tap 6"-P600-P-17005 | 330 psi, 390 °F | — | 20 | 13 | 0 | 11 |
+| 6"-P600-P-17302 | spare | gas oil | P-1701B-D | tap 6"-P600-P-17005 | 330 psi, 390 °F | — | 16 | 9 | 0 | 4 |
 | 14"-P300-P-17303 | spare | slurry oil | tap 14"-P300-P-17014 | P-1702B-S | 55 psi, 730 °F | — | 23 | 16 | 0 | 31 |
 | 10"-P600-P-17304 | spare | slurry oil | P-1702B-D | tap 10"-P600-P-17015 | 210 psi, 730 °F | — | 20 | 13 | 0 | 16 |
 | 10"-P150-P-17305 | spare | gas oil | tap 10"-P150-P-17021 | P-1703B-S | 55 psi, 650 °F | — | 19 | 12 | 0 | 13 |
@@ -1631,7 +1638,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 3"-P150-P-17321 | spare | gasoline | tap 3"-P150-P-17055 | P-1709B-S | 80 psi, 170 °F | — | 15 | 8 | 0 | 9 |
 | 3"-P300-P-17322 | spare | gasoline | P-1709B-D | tap 8"-P300-P-17052 | 300 psi, 170 °F | — | 21 | 14 | 2 | 68 |
 | 8"-P300-P-17323 | spare | gasoline | tap 8"-P300-P-17058 | P-1710B-S | 225 psi, 165 °F | — | 19 | 12 | 0 | 12 |
-| 6"-P300-P-17324 | spare | gasoline | P-1710B-D | tap 8"-P300-P-17052 | 275 psi, 165 °F | — | 20 | 13 | 2 | 62 |
+| 6"-P300-P-17324 | spare | gasoline | P-1710B-D | tap 8"-P300-P-17052 | 275 psi, 165 °F | — | 20 | 13 | 3 | 62 |
 | 10"-P300-P-17325 | spare | gasoline | tap 10"-P300-P-17067 | P-1711B-S | 225 psi, 150 °F | — | 19 | 12 | 0 | 13 |
 | 8"-P600-P-17326 | spare | gasoline | P-1711B-D | tap 8"-P600-P-17068 | 315 psi, 150 °F | — | 14 | 7 | 0 | 5 |
 | 10"-P300-P-17327 | spare | liquefied petroleum gas | tap 10"-P300-P-17076 | P-1712B-S | 165 psi, 160 °F | — | 19 | 12 | 0 | 15 |
@@ -1653,7 +1660,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 2"-P150-IA-17501 | utility | instrument air | tap 2"-P150-IA-17402 | CS-1732-A | 130 psi, 150 °F | — | 37 | 26 | 1 | 42 |
 | 2"-P150-IA-17551 | control | instrument air | CS-1732-B | V-1701-N2 | 115 psi, 150 °F | — | 18 | 11 | 4 | 53 |
 | 3"-P1200-SC-17502 | utility | boiler feed water | tap 4"-P1200-SC-17403 | CS-1733-A | 1035 psi, 300 °F | — | 34 | 15 | 1 | 43 |
-| 3"-P1200-SC-17552 | control | boiler feed water | CS-1733-B | E-1703-N3 | 770 psi, 300 °F | — | 23 | 14 | 3 | 89 |
+| 3"-P1200-SC-17552 | control | boiler feed water | CS-1733-B | E-1703-N3 | 770 psi, 300 °F | — | 23 | 14 | 4 | 89 |
 | 8"-P1200-LS-17503 | utility | steam, 600 psi | E-1703-N4 | tap 8"-P1200-LS-17404 | 685 psi, 700 °F | — | 24 | 15 | 1 | 64 |
 | 3"-P300-W-17504 | utility | raw and service water | tap 3"-P300-W-17405 | CS-1734-A | 160 psi, 150 °F | — | 42 | 19 | 1 | 49 |
 | 3"-P150-W-17553 | control | raw and service water | CS-1734-B | C-1705-N2 | 105 psi, 150 °F | — | 27 | 16 | 1 | 53 |
@@ -1668,12 +1675,12 @@ At these ends the valve the generator stands at every equipment connection is no
 | 2"-P300-LS-17511 | utility | steam, 150 psi | tap 10"-P300-LS-17407 | C-1702-N4 | 185 psi, 450 °F | — | 23 | 16 | 3 | 50 |
 | 6"-P300-LS-17512 | utility | steam, 150 psi | tap 10"-P300-LS-17407 | C-1701-N13 | 185 psi, 450 °F | — | 20 | 13 | 2 | 46 |
 | 3"-P150-CWS-17513 | utility | cooling water supply | tap 20"-P150-CWS-17401 | E-1708-N3 | 140 psi, 150 °F | — | 31 | 18 | 5 | 93 |
-| 3"-P150-CWR-17514 | utility | cooling water return | E-1708-N4 | tap 20"-P150-CWR-17408 | 70 psi, 155 °F | — | 31 | 18 | 4 | 73 |
+| 3"-P150-CWR-17514 | utility | cooling water return | E-1708-N4 | tap 20"-P150-CWR-17408 | 70 psi, 155 °F | — | 31 | 18 | 3 | 73 |
 | 8"-P150-CWS-17515 | utility | cooling water supply | tap 20"-P150-CWS-17401 | E-1709-N3 | 140 psi, 150 °F | — | 31 | 18 | 3 | 95 |
-| 8"-P150-CWR-17516 | utility | cooling water return | E-1709-N4 | tap 20"-P150-CWR-17408 | 70 psi, 155 °F | — | 31 | 18 | 3 | 71 |
+| 8"-P150-CWR-17516 | utility | cooling water return | E-1709-N4 | tap 20"-P150-CWR-17408 | 70 psi, 155 °F | — | 31 | 18 | 1 | 71 |
 | 8"-P1200-LS-17517 | utility | steam, 600 psi | tap 8"-P1200-LS-17404 | K-1702-N3 | 685 psi, 700 °F | — | 22 | 15 | 1 | 78 |
 | 14"-P150-P-17518 | utility | steam, 50 psi | K-1702-N4 | tap 14"-P150-P-17409 | 80 psi, 370 °F | — | 19 | 12 | 2 | 89 |
-| 6"-P150-CWS-17519 | utility | cooling water supply | tap 20"-P150-CWS-17401 | E-1710-N3 | 140 psi, 150 °F | — | 33 | 20 | 5 | 93 |
+| 6"-P150-CWS-17519 | utility | cooling water supply | tap 20"-P150-CWS-17401 | E-1710-N3 | 140 psi, 150 °F | — | 33 | 20 | 4 | 93 |
 | 6"-P150-CWR-17520 | utility | cooling water return | E-1710-N4 | tap 20"-P150-CWR-17408 | 70 psi, 155 °F | — | 31 | 18 | 1 | 74 |
 | 14"-P150-P-17521 | utility | cooling water supply | tap 20"-P150-CWS-17401 | E-1712-N3 | 140 psi, 150 °F | — | 21 | 16 | 3 | 96 |
 | 14"-P150-P-17522 | utility | cooling water return | E-1712-N4 | tap 20"-P150-CWR-17408 | 70 psi, 155 °F | — | 20 | 15 | 1 | 73 |
@@ -1685,7 +1692,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 2"-P300-P-17557 | control | caustic solution | CS-1738-B | V-1703-N3 | 275 psi, 150 °F | — | 20 | 13 | 7 | 72 |
 | 10"-P150-CWS-17527 | utility | cooling water supply | tap 20"-P150-CWS-17401 | E-1713-N3 | 140 psi, 150 °F | — | 33 | 20 | 3 | 95 |
 | 10"-P150-CWR-17528 | utility | cooling water return | E-1713-N4 | tap 20"-P150-CWR-17408 | 70 psi, 155 °F | — | 32 | 19 | 2 | 75 |
-| 4"-P300-LS-17529 | utility | steam, 150 psi | tap 10"-P300-LS-17407 | E-1714-N3 | 185 psi, 450 °F | — | 25 | 16 | 4 | 89 |
+| 4"-P300-LS-17529 | utility | steam, 150 psi | tap 10"-P300-LS-17407 | E-1714-N3 | 185 psi, 450 °F | — | 25 | 16 | 3 | 89 |
 | 2"-P300-SC-17530 | utility | steam condensate | E-1714-N4 | CS-1739-A | 165 psi, 410 °F | — | 42 | 21 | 5 | 75 |
 | 2"-P150-SC-17558 | control | steam condensate | CS-1739-B | tap 2"-P150-SC-17410 | 55 psi, 280 °F | — | 18 | 11 | 1 | 37 |
 | 6"-P150-CWS-17531 | utility | cooling water supply | tap 20"-P150-CWS-17401 | E-1716-N3 | 140 psi, 150 °F | — | 31 | 18 | 4 | 93 |
@@ -1698,11 +1705,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | Component | Count |
 | --- | --- |
 | cap | 7 |
-| elbow | 692 |
+| elbow | 690 |
 | flange | 542 |
 | gasket | 827 |
 | olet | 7 |
-| pipe | 1102 |
+| pipe | 1100 |
 | reducer | 84 |
 | spade | 63 |
 | spectacle | 18 |
@@ -1712,7 +1719,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | Welds | Count |
 | --- | --- |
 | BW, field | 325 |
-| BW, shop | 1881 |
+| BW, shop | 1877 |
 | FW, shop | 15 |
 
 | Supports | Count |
@@ -1721,9 +1728,9 @@ At these ends the valve the generator stands at every equipment connection is no
 | guide | 115 |
 | hanger | 78 |
 | shoe | 294 |
-| stanchion | 116 |
+| stanchion | 118 |
 | trapeze | 1 |
-| trunnion | 62 |
+| trunnion | 61 |
 
 ### Checks
 
@@ -1735,13 +1742,12 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
-| pieces of one line clear of each other (SW-RPI-22) | not measured |
-| spans within SW-PS-7, a support at every rack beam crossed | 7 |
+| pieces of one line clear of each other (SW-RPI-22) | 0 |
+| spans within SW-PS-7, a support at every rack beam crossed | 6 |
 
 Not at zero, supports:
 
 - 3"-P150-P-18711: no shoe at bent x=360
-- 4"-P300-P-18030: unsupported span 249 in > 240 on run from 738,246,503
 - 3"-P150-P-18059: unsupported span 280 in > 180 on run from 984,246,619
 - 3"-P150-CWS-18503: unsupported span 259 in > 180 on run from 678,102,215
 - 2"-P1200-SC-18507: unsupported span 126 in > 120 on run from 2562,372,39
@@ -1913,7 +1919,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 3"-P150-P-18059 | process | liquid sulfur | X-1801-N4 | CS-1822-A | 85 psi, 335 °F | 2 | 49 | 30 | 21 | 255 |
 | 3"-P150-P-18722 | control | liquid sulfur | CS-1822-B | X-1802-N1 | 85 psi, 335 °F | — | 19 | 12 | 2 | 46 |
 | 3"-P600-P-18601 | root | amine solution | tap 6"-P600-P-18017 | RS-1801-A | 445 psi, 170 °F | — | 16 | 13 | 1 | 34 |
-| 6"-P150-P-18301 | spare | amine solution | tap 6"-P150-P-18003 | P-1801B-S | 50 psi, 185 °F | — | 19 | 12 | 0 | 11 |
+| 6"-P150-P-18301 | spare | amine solution | tap 6"-P150-P-18003 | P-1801B-S | 50 psi, 185 °F | — | 15 | 8 | 0 | 4 |
 | 6"-P150-P-18302 | spare | amine solution | P-1801B-D | tap 6"-P150-P-18004 | 150 psi, 185 °F | — | 20 | 13 | 0 | 13 |
 | 3"-P150-P-18303 | spare | sour water | tap 3"-P150-P-18008 | P-1802B-S | 50 psi, 170 °F | — | 15 | 8 | 0 | 6 |
 | 3"-P150-P-18304 | spare | sour water | P-1802B-D | tap 3"-P150-P-18009 | 115 psi, 170 °F | — | 18 | 11 | 0 | 3 |
@@ -1961,7 +1967,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | 2"-P300-SC-18556 | control | boiler feed water | CS-1828-B | E-1808-N4 | 175 psi, 300 °F | — | 25 | 16 | 5 | 76 |
 | 3"-P150-LS-18514 | utility | steam, 50 psi | E-1808-N5 | tap 10"-P150-LS-18401 | 80 psi, 370 °F | — | 23 | 14 | 1 | 54 |
 | 2"-P1200-LS-18515 | utility | steam, 600 psi | tap 4"-P1200-LS-18406 | E-1809-N3 | 685 psi, 700 °F | — | 22 | 13 | 6 | 70 |
-| 2"-P1200-SC-18516 | utility | steam condensate | E-1809-N4 | CS-1829-A | 650 psi, 660 °F | — | 41 | 20 | 2 | 52 |
+| 2"-P1200-SC-18516 | utility | steam condensate | E-1809-N4 | CS-1829-A | 650 psi, 660 °F | — | 41 | 20 | 3 | 52 |
 | 2"-P150-SC-18557 | control | steam condensate | CS-1829-B | tap 3"-P150-SC-18402 | 55 psi, 280 °F | — | 22 | 15 | 1 | 43 |
 | 2"-P1200-SC-18517 | utility | boiler feed water | tap 2"-P1200-SC-18405 | CS-1830-A | 1035 psi, 300 °F | — | 36 | 17 | 1 | 37 |
 | 2"-P300-SC-18558 | control | boiler feed water | CS-1830-B | E-1810-N4 | 175 psi, 300 °F | — | 23 | 14 | 4 | 68 |

@@ -28,14 +28,12 @@
   "valves": [],
   "lineClearance": [],
   "staticClearance": [],
+  "ownClearance": [],
   "supports": [
-   "4\"-P300-P-14026: unsupported span 260 in > 240 on run from 1410,174,-29",
    "6\"-P300-P-14027: unsupported span 253 in > 240 on run from 1386,162,500",
-   "3\"-P150-CWS-14505: unsupported span 256 in > 180 on run from 1266,96,179",
    "3\"-P150-CWR-14506: unsupported span 193 in > 180 on run from 1272,378,163",
    "6\"-P150-CWR-14508: unsupported span 282 in > 240 on run from 1470,336,500",
-   "2\"-P1200-SC-14510: unsupported span 262 in > 120 on run from 2340,96,-657",
-   "4\"-P150-CWS-14511: unsupported span 260 in > 240 on run from 1578,108,211"
+   "2\"-P1200-SC-14510: unsupported span 262 in > 120 on run from 2340,96,-657"
   ]
  },
  "spools": [
@@ -1067,7 +1065,7 @@
    "routed": true,
    "components": 32,
    "welds": 23,
-   "supports": 8,
+   "supports": 9,
    "lengthFt": 152,
    "tier": 1
   },
@@ -1964,7 +1962,7 @@
    "routed": true,
    "components": 33,
    "welds": 20,
-   "supports": 3,
+   "supports": 4,
    "lengthFt": 72
   },
   {
@@ -2085,7 +2083,7 @@
    "routed": true,
    "components": 33,
    "welds": 20,
-   "supports": 2,
+   "supports": 3,
    "lengthFt": 73
   },
   {
@@ -2232,9 +2230,9 @@
   "supports": {
    "anchor": 36,
    "guide": 84,
-   "hanger": 60,
-   "shoe": 179,
-   "stanchion": 65,
+   "hanger": 62,
+   "shoe": 178,
+   "stanchion": 67,
    "trapeze": 1,
    "trunnion": 43
   }
@@ -2263,10 +2261,13 @@
   "18 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 14\"-P1200-P-14013/S4 (stanchion): its base plate inside rack-stringer/beam; 3\"-P600-P-14018/S8 (stanchion): its base plate inside E-1403/pad; 4\"-P300-P-14026/S8 (stanchion): its base plate inside E-1404/pad; 3\"-P300-P-14029/S14 (stanchion): its base plate inside rack-bay:5/strut; 3\"-P300-P-14030/S21 (stanchion): its base plate inside rack-stringer/beam; 3\"-P300-P-14711/S2 (stanchion): its base plate inside rack-bay:9/strut; 3\"-P600-P-14311/S1 (stanchion): its base plate inside X-1401B/pad; 3\"-P600-P-14312/S4 (stanchion): its base plate inside X-1401B/pad; 6\"-P150-CWR-14504/S1 (stanchion): its base plate inside E-1402/pad; 3\"-P150-CWS-14505/S4 (stanchion): its base plate inside E-1403/pad; 3\"-P150-CWR-14506/S2 (stanchion): its base plate inside rack-bay:4/strut; 6\"-P150-CWS-14507/S2 (stanchion): its base plate inside E-1405/pad; 4\"-P1200-LS-14509/S1 (stanchion): its base plate inside rack-bay:9/strut; 2\"-P1200-SC-14510/S1 (stanchion): its base plate inside E-1406/pad; 2\"-P1200-SC-14510/S2 (stanchion): its base plate inside E-1406/pad; 4\"-P150-CWS-14511/S3 (stanchion): its base plate inside E-1407/pad; 4\"-P150-CWR-14512/S4 (stanchion): its base plate inside E-1407/pad; 2\"-P150-P-14517/S3 (stanchion): its base plate inside rack-bay:14/strut",
   "1 valves turned where their stem or handwheel struck (SW-RPI-19): 4\"-P300-P-14037/B2: struck its own line 4\"-P300-P-14037; stem turned to 1,0,0; 1 with no clear direction, left: 10\"-P150-LS-14502/B3: strikes 10\"-P150-LS-14402 and has no clear direction",
   "14 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 14\"-P1200-P-14013/S6 (stanchion): its base plate inside rack-stringer/beam; 4\"-P300-P-14026/S8 (stanchion): its base plate inside E-1404/pad; 3\"-P300-P-14029/S14 (stanchion): its base plate inside rack-bay:5/strut; 3\"-P300-P-14030/S21 (stanchion): its base plate inside rack-stringer/beam; 3\"-P600-P-14311/S3 (stanchion): its base plate inside X-1401B/pad; 3\"-P600-P-14311/S4 (stanchion): its base plate inside X-1401B/pad; 6\"-P150-CWR-14504/S3 (stanchion): its base plate inside E-1402/pad; 3\"-P150-CWS-14505/S4 (stanchion): its base plate inside E-1403/pad; 3\"-P150-CWR-14506/S4 (stanchion): its base plate inside rack-bay:4/strut; 6\"-P150-CWS-14507/S1 (stanchion): its base plate inside E-1405/pad; 4\"-P1200-LS-14509/S4 (stanchion): its base plate inside rack-bay:9/strut; 4\"-P150-CWS-14511/S3 (stanchion): its base plate inside E-1407/pad; 4\"-P150-CWR-14512/S4 (stanchion): its base plate inside E-1407/pad; 2\"-P150-P-14517/S7 (stanchion): its base plate inside rack-bay:14/strut",
-  "0 valves turned where their stem or handwheel struck (SW-RPI-19); 1 with no clear direction, left: 10\"-P150-LS-14502/B3: strikes 10\"-P150-LS-14402 and has no clear direction",
   "1 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
-  "14 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 14\"-P1200-P-14013/S6 (stanchion): its base plate inside rack-stringer/beam; 4\"-P300-P-14026/S8 (stanchion): its base plate inside E-1404/pad; 3\"-P300-P-14029/S14 (stanchion): its base plate inside rack-bay:5/strut; 3\"-P300-P-14030/S21 (stanchion): its base plate inside rack-stringer/beam; 3\"-P600-P-14311/S3 (stanchion): its base plate inside X-1401B/pad; 3\"-P600-P-14311/S4 (stanchion): its base plate inside X-1401B/pad; 6\"-P150-CWR-14504/S3 (stanchion): its base plate inside E-1402/pad; 3\"-P150-CWS-14505/S4 (stanchion): its base plate inside E-1403/pad; 3\"-P150-CWR-14506/S4 (stanchion): its base plate inside rack-bay:4/strut; 6\"-P150-CWS-14507/S1 (stanchion): its base plate inside E-1405/pad; 4\"-P1200-LS-14509/S4 (stanchion): its base plate inside rack-bay:9/strut; 4\"-P150-CWS-14511/S3 (stanchion): its base plate inside E-1407/pad; 4\"-P150-CWR-14512/S4 (stanchion): its base plate inside E-1407/pad; 2\"-P150-P-14517/S7 (stanchion): its base plate inside rack-bay:14/strut",
-  "126 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 18 hangers from steel above, 20 stanchions on steel below, 21 stanchions and 53 support posts from the floor, and 14 pipe frames"
+  "1 pipe frames taken out with their shoes where they struck (SW-RPI-18): the pipe frame of 6\"-P150-CWR-14504 at 756, 300, 375: its pad inside another frame",
+  "518 butt welds set square to their joints (SW-RPI-24)",
+  "8 slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)",
+  "8 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "2 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 14\"-P1200-P-14010/S5 (stanchion): its base plate inside rack-bay:14/intermediate-beam; 3\"-P600-P-14019/S2 (hanger): its top plate through rack-bay:4/bracing",
+  "131 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 21 hangers from steel above, 20 stanchions on steel below, 22 stanchions and 55 support posts from the floor, and 13 pipe frames"
  ],
  "frames": [
   {
@@ -2532,30 +2533,6 @@
    "top": 366.5,
    "post": "W8x31",
    "rad": 1.5
-  },
-  {
-   "line": "6\"-P150-CWR-14504",
-   "at": [
-    756,
-    300,
-    375
-   ],
-   "u": [
-    1,
-    0,
-    0
-   ],
-   "d": [
-    18,
-    66
-   ],
-   "floors": [
-    0,
-    0
-   ],
-   "top": 293,
-   "post": "W8x31",
-   "rad": 3
   },
   {
    "line": "6\"-P150-CWS-14507",

@@ -15,8 +15,8 @@
   "lines": 146,
   "routed": 139,
   "failed": 0,
-  "comps": 4485,
-  "welds": 2221,
+  "comps": 4481,
+  "welds": 2217,
   "supports": 608,
   "penetrations": 0
  },
@@ -28,9 +28,9 @@
   "valves": [],
   "lineClearance": [],
   "staticClearance": [],
+  "ownClearance": [],
   "supports": [
    "3\"-P150-P-18711: no shoe at bent x=360",
-   "4\"-P300-P-18030: unsupported span 249 in > 240 on run from 738,246,503",
    "3\"-P150-P-18059: unsupported span 280 in > 180 on run from 984,246,619",
    "3\"-P150-CWS-18503: unsupported span 259 in > 180 on run from 678,102,215",
    "2\"-P1200-SC-18507: unsupported span 126 in > 120 on run from 2562,372,39",
@@ -2075,10 +2075,10 @@
    "designP": 50,
    "designT": 185,
    "routed": true,
-   "components": 19,
-   "welds": 12,
+   "components": 15,
+   "welds": 8,
    "supports": 0,
-   "lengthFt": 11
+   "lengthFt": 4
   },
   {
    "no": "6\"-P150-P-18302",
@@ -2905,7 +2905,7 @@
    "routed": true,
    "components": 41,
    "welds": 20,
-   "supports": 2,
+   "supports": 3,
    "lengthFt": 52,
    "station": "CS-1829"
   },
@@ -3054,11 +3054,11 @@
  "counts": {
   "components": {
    "cap": 7,
-   "elbow": 692,
+   "elbow": 690,
    "flange": 542,
    "gasket": 827,
    "olet": 7,
-   "pipe": 1102,
+   "pipe": 1100,
    "reducer": 84,
    "spade": 63,
    "spectacle": 18,
@@ -3067,7 +3067,7 @@
   },
   "welds": {
    "BW, field": 325,
-   "BW, shop": 1881,
+   "BW, shop": 1877,
    "FW, shop": 15
   },
   "supports": {
@@ -3075,9 +3075,9 @@
    "guide": 115,
    "hanger": 78,
    "shoe": 294,
-   "stanchion": 116,
+   "stanchion": 118,
    "trapeze": 1,
-   "trunnion": 62
+   "trunnion": 61
   }
  },
  "notes": [
@@ -3099,10 +3099,15 @@
   "11 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 4\"-P150-P-18701/S2 (trunnion): its base plate inside rack-bent:600/pedestal; 3\"-P150-P-18002/S30 (stanchion): its base plate inside rack-bay:2/strut; 6\"-P150-P-18005/S4 (stanchion): its base plate inside E-1801/pad; 3\"-P150-P-18025/S11 (stanchion): its base plate inside rack-stringer/beam; 3\"-P150-P-18025/S12 (stanchion): its base plate inside rack-bay:5/strut; 4\"-P300-P-18030/S7 (stanchion): its base plate inside E-1804/pad; 8\"-P150-P-18056/S8 (stanchion): its base plate inside D-1801/pad; 3\"-P150-CWS-18503/S1 (stanchion): its base plate inside E-1803/pad; 2\"-P300-SC-18554/S3 (stanchion): its base plate inside E-1806/pad; 2\"-P300-SC-18556/S5 (stanchion): its base plate inside E-1808/pad; 2\"-P150-P-18519/S2 (stanchion): its base plate inside rack-bent:4200/beam",
   "4 valves turned where their stem or handwheel struck (SW-RPI-19): 4\"-P300-P-18030/B26: struck its own line 4\"-P300-P-18030; stem turned to 0,0,1; 8\"-P150-P-18050/A4: struck its own line 8\"-P150-P-18050; stem turned to 1,0,0; 8\"-P150-P-18054/A4: struck its own line 8\"-P150-P-18054; stem turned to 1,0,0; 3\"-P150-LS-18510/B3: struck its own line 3\"-P150-LS-18510; stem turned to 1,0,0; 4 with no clear direction, left: 3\"-P150-P-18049/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18053/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18057/B2: strikes X-1801/equipment and has no clear direction; 4\"-P1200-LS-18508/A2: strikes H-1801/equipment and has no clear direction",
   "6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-18002/S30 (stanchion): its base plate inside rack-bay:2/strut; 6\"-P150-P-18005/S6 (stanchion): its base plate inside E-1801/pad; 3\"-P150-P-18025/S11 (stanchion): its base plate inside rack-bay:5/strut; 3\"-P150-P-18025/S12 (stanchion): its base plate inside rack-stringer/beam; 4\"-P300-P-18030/S9 (stanchion): its base plate inside E-1804/pad; 8\"-P150-P-18056/S11 (stanchion): its base plate inside D-1801/pad",
-  "0 valves turned where their stem or handwheel struck (SW-RPI-19); 4 with no clear direction, left: 3\"-P150-P-18049/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18053/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18057/B2: strikes X-1801/equipment and has no clear direction; 4\"-P1200-LS-18508/A2: strikes H-1801/equipment and has no clear direction",
   "3 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
-  "6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-18002/S30 (stanchion): its base plate inside rack-bay:2/strut; 6\"-P150-P-18005/S6 (stanchion): its base plate inside E-1801/pad; 3\"-P150-P-18025/S11 (stanchion): its base plate inside rack-bay:5/strut; 3\"-P150-P-18025/S12 (stanchion): its base plate inside rack-stringer/beam; 4\"-P300-P-18030/S9 (stanchion): its base plate inside E-1804/pad; 8\"-P150-P-18056/S11 (stanchion): its base plate inside D-1801/pad",
-  "119 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 21 hangers from steel above, 10 stanchions on steel below, 22 stanchions and 42 support posts from the floor, and 24 pipe frames"
+  "6\"-P150-P-18301: its take-off's first point stood 18 in from its far end's first point, nearer than the 24 in its search needs before a turn; the take-off 6\"-P150-P-18003/T:6\"-P150-P-18301 moved 6 in along 6\"-P150-P-18003 (y 42.0 to 48.0), the branch laid again out along the outlet with 2 elbows (path (588,48,-168) (606,48,-168) (606,24,-168)), straights 21.0, 4.0, 4.7 in, and the parent's two pipes beside the fitting cut again (SW-RPI-23 (a))",
+  "2 valves turned where their stem or handwheel struck (SW-RPI-19): 3\"-P150-CWS-18403/L2: struck nozzle BL-1809; stem turned to 0,0,1; 3\"-P150-CWR-18404/L2: struck nozzle BL-1810; stem turned to 0,0,1; 3 with no clear direction, left: 3\"-P150-P-18049/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18053/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18057/B2: strikes X-1801/equipment and has no clear direction",
+  "726 butt welds set square to their joints (SW-RPI-24)",
+  "4 slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)",
+  "9 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 3\"-P150-P-18711/S1 (hanger): its top plate through rack-bay:0/bracing; 4\"-P300-P-18030/S6 (trunnion): its leg through 4\"-P300-P-18030 (4\"-P300-P-18030/B23, reducer); 4\"-P300-P-18038/S1 (hanger): its top plate through rack-bay:8/bracing; 8\"-P150-P-18056/S4 (hanger): its top plate through rack-bay:4/bracing; 2\"-P150-SC-18502/S7 (stanchion): its post through 2\"-P150-SC-18502 (2\"-P150-SC-18502/B5, flange); 2\"-P150-SC-18506/S9 (stanchion): its post through 2\"-P150-SC-18506 (2\"-P150-SC-18506/B7, pipe); 2\"-P1200-SC-18512/S1 (stanchion): its base plate inside yard-support/pad; 2\"-P1200-LS-18515/S1 (hanger): its top plate through rack-bay:4/bracing; 2\"-P1200-SC-18516/S2 (stanchion): its post through 2\"-P1200-SC-18516 (2\"-P1200-SC-18516/B5, flange)",
+  "11 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "2 valves turned where their stem or handwheel struck (SW-RPI-19): 3\"-P150-CWS-18403/L2: struck nozzle BL-1809; stem turned to 0,1,0; 3\"-P150-CWR-18404/L2: struck nozzle BL-1810; stem turned to 0,1,0; 3 with no clear direction, left: 3\"-P150-P-18049/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18053/B2: strikes X-1801/equipment and has no clear direction; 3\"-P150-P-18057/B2: strikes X-1801/equipment and has no clear direction",
+  "129 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 25 hangers from steel above, 10 stanchions on steel below, 26 stanchions and 44 support posts from the floor, and 24 pipe frames"
  ],
  "frames": [
   {

@@ -14,8 +14,8 @@
   "lines": 69,
   "routed": 65,
   "failed": 0,
-  "comps": 1872,
-  "welds": 963,
+  "comps": 1868,
+  "welds": 959,
   "supports": 193,
   "penetrations": 0
  },
@@ -27,6 +27,7 @@
   "valves": [],
   "lineClearance": [],
   "staticClearance": [],
+  "ownClearance": [],
   "supports": []
  },
  "spools": [
@@ -1274,10 +1275,10 @@
    "designP": 70,
    "designT": 420,
    "routed": true,
-   "components": 19,
-   "welds": 12,
+   "components": 15,
+   "welds": 8,
    "supports": 0,
-   "lengthFt": 10
+   "lengthFt": 3
   },
   {
    "no": "4\"-P300-P-15312",
@@ -1470,11 +1471,11 @@
  "counts": {
   "components": {
    "cap": 4,
-   "elbow": 311,
+   "elbow": 309,
    "flange": 211,
    "gasket": 338,
    "olet": 3,
-   "pipe": 468,
+   "pipe": 466,
    "reducer": 36,
    "spade": 30,
    "spectacle": 8,
@@ -1483,14 +1484,14 @@
   },
   "welds": {
    "BW, field": 144,
-   "BW, shop": 804,
+   "BW, shop": 800,
    "FW, shop": 15
   },
   "supports": {
    "anchor": 23,
    "guide": 47,
-   "hanger": 35,
-   "shoe": 59,
+   "hanger": 36,
+   "shoe": 58,
    "stanchion": 26,
    "trapeze": 1,
    "trunnion": 26
@@ -1512,8 +1513,13 @@
   "10 wafer valves bolted with one stud set through both flanges (SW-RPI-21)",
   "6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6\"-P600-P-15007/S10 (stanchion): its base plate inside E-1501/pad; 8\"-P600-P-15010/S5 (trunnion): its base plate inside E-1505/pad; 3\"-P150-P-15706/S2 (stanchion): its base plate inside rack-bay:5/strut; 4\"-P300-P-15029/S4 (stanchion): its base plate inside E-1503/pad; 4\"-P150-CWR-15504/S3 (stanchion): its base plate inside E-1504/pad; 2\"-P150-P-15506/S2 (stanchion): its base plate inside rack-bent:2520/beam",
   "4 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6\"-P600-P-15007/S10 (stanchion): its base plate inside E-1501/pad; 3\"-P150-P-15706/S4 (stanchion): its base plate inside rack-bay:5/strut; 4\"-P300-P-15029/S4 (stanchion): its base plate inside E-1503/pad; 4\"-P150-CWR-15504/S3 (stanchion): its base plate inside E-1504/pad",
-  "4 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6\"-P600-P-15007/S10 (stanchion): its base plate inside E-1501/pad; 3\"-P150-P-15706/S4 (stanchion): its base plate inside rack-bay:5/strut; 4\"-P300-P-15029/S4 (stanchion): its base plate inside E-1503/pad; 4\"-P150-CWR-15504/S3 (stanchion): its base plate inside E-1504/pad",
-  "37 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 5 hangers from steel above, 4 stanchions on steel below, 12 stanchions and 10 support posts from the floor, and 6 pipe frames"
+  "6\"-P150-P-15311: its take-off's first point stood 18 in from its far end's first point, nearer than the 24 in its search needs before a turn; the take-off 6\"-P150-P-15028/T:6\"-P150-P-15311 moved 6 in along 6\"-P150-P-15028 (y 42.0 to 48.0), the branch laid again out along the outlet with 2 elbows (path (1188,48,-162) (1194,48,-162) (1194,24,-162)), straights 9.0, 4.0, 4.7 in, and the parent's two pipes beside the fitting cut again (SW-RPI-23 (a))",
+  "329 butt welds set square to their joints (SW-RPI-24)",
+  "6 slip-on flanges' inside welds moved to the pipe's end (SW-RPI-25)",
+  "6 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "1 pipe frames taken out with their shoes where they struck (SW-RPI-18): the pipe frame of 4\"-P150-CWR-15504 at 1218, 222, 481: its pad inside another frame",
+  "1 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "37 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 6 hangers from steel above, 4 stanchions on steel below, 12 stanchions and 10 support posts from the floor, and 5 pipe frames"
  ],
  "frames": [
   {
@@ -1635,30 +1641,6 @@
    "top": 155,
    "post": "W8x31",
    "rad": 3
-  },
-  {
-   "line": "4\"-P150-CWR-15504",
-   "at": [
-    1218,
-    222,
-    481
-   ],
-   "u": [
-    1,
-    0,
-    0
-   ],
-   "d": [
-    36,
-    36
-   ],
-   "floors": [
-    0,
-    6
-   ],
-   "top": 216,
-   "post": "W8x31",
-   "rad": 2
   }
  ]
 }
