@@ -5352,6 +5352,17 @@ What this section adds is what that generator is given.
   practice in any case. The parent's run is taken as the stretch of rack between its
   nozzles, or, where it ends at a tee itself, from its nozzle to the nearest point of the
   line it taps.
+  Amended 2026-11-27 (SW-RPI-22): where a root spool stands on its parent's tier and the
+  connection's tee on the parent points across the rack at it, the spool stands no nearer
+  the parent's lane than that tee's lead point toward it and one grid step (the tee's
+  centre-to-end of its outlet and the connection's elbow radius, rounded out to the 6 in
+  grid, and 6 in: 36 in for a 10 in connection), its branch in the nearest lane free at that
+  distance, and the lines planned after it around it. Reason: the hydrotreater's 10 in
+  connection had its spool 24 in from its parent's lane, where the tee's lead point stands
+  30 in out; the two lead elbows lay on each other, so every way the generator could give
+  passed through the line itself, and its loop of six elbows came back up 6 in beside its
+  first drop. Of the units' 25 root connections that tee into a parent, five stand on the
+  parent's tier, and only that one's tee points across at its spool.
 - `SW-RPI-9` Control stations (added 2026-11-24). The generator stands a control valve station
   at a line's destination nozzle, along that nozzle's axis. Given an item's own nozzle, that
   put stations upright on top of drums and exchangers and straight out from columns 50 ft
@@ -5587,6 +5598,18 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   routed by themselves it stood clear: the discharge valve, routed in an earlier run, had
   its stem toward the suction and over it; and two 8 in steam take-off valves turned their
   stems toward a 20 in water header and stood 2.7 in from it.
+  Amended 2026-11-27 (SW-RPI-22): the last run is also made again, once, where a line of it
+  passes through the body of a valve of its own end stack, or through its own nozzle's
+  flange or neck, which no turn of a stem clears. That line, the line it taps and that
+  line's other branches are routed first, in a run of their own, with the box the
+  generator holds the valve by and the nozzle's flange and neck held as solids, tagged as
+  part of the equipment the stack is bolted to (the generator's test of that stack's own
+  valves passes its equipment's solids, so they keep their stems), stopping the pipe's
+  radius and 6 in short of the stack's lead point, and no part of the model. The second
+  result is kept where it has fewer findings, SW-RPI-22's counted. Reason: in the
+  hydrotreater the spare's 12 in suction branch took off with its first point inside its
+  own pump's suction gate and passed through the gate's body by 9.3 in; with the gate held
+  it came round clear (a probe of 2026-11-27).
 - `SW-RPI-17` Supports where the generator's stepping stopped (added 2026-11-25). The generator
   sets the supports of a run by stepping along it from its start (SW-PS-9) and stops at the
   first stretch where it finds no steel above and no floor within reach; what lies beyond is
@@ -5659,6 +5682,12 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   end with them): the generator turns a valve's stem before its line is routed, and the line
   may then turn its riser beside the stack, on the stem's side, through its own handwheel
   (a design panel's survey found 17 lines so, in eight units).
+  Amended again 2026-11-27 (SW-RPI-22): an elbow is never part of the valve's own stack,
+  even joined end to end with a piece on its axis, and the own line's elbows are measured by
+  their arcs (three cooling water take-offs turned their first elbow, at the take-off's
+  lead, into their own butterfly valve's lever, on the inside of the bend); and no
+  direction is stem down (SW-LL-5): the turn takes the first of up, +x, -x, +z and -z square
+  to the valve's run, as SW-RPI-16's turn of an earlier run's valve does.
 - `SW-RPI-20` A hanger's top at the steel it hangs from (added 2026-11-26). The generator
   takes the underside of the member a rod hangs from as the member's centre less seven tenths
   of the round it holds it by, which for a wide-flange beam lies inside the beam: its top
@@ -5673,6 +5702,81 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   stud set, so that the two sets' nuts met inside the joint, in the same holes (116 found).
   Plant 3's own correction: the two sets are made one, from the back of one flange to the
   back of the other, its length by the catalogue's rule for a stack (SW-FLG-13).
+- `SW-RPI-22` Pieces of one line clear of each other (added 2026-11-27). The generator keeps
+  a line 3 in from every other line but never measures a line against itself: its search
+  passes every cell held under the line's own number (its end stacks, their valves' boxes
+  and its leads), the cells it is laying join the grid only when it returns, so a loop it is
+  driven into may come back through its own first leg, and its clearance check (§40)
+  compares only pieces of two different lines. An independent clash check of the nine units
+  found 32 lines whose pieces passed through pieces of the same line, to 18.4 in, none of
+  them reported: branches to installed spares looping back through their own first leg,
+  risers through their own valve's handwheel, lead elbows into their own butterfly valve's
+  lever, two lines whose lead points passed each other, a 45° offset laid over its own tee,
+  and the vacuum unit's 36 in transfer line turning about over its own end and down through
+  its own flange. Each unit's checks (and the pipeway's and the mains') therefore measure
+  each line against itself, the flange and neck of each nozzle it ends at with it: a pipe,
+  reducer or tee's run by its cylinder, a tee's outlet by its stub, a 90° elbow by its arc,
+  a 45° elbow by its two legs (SW-RPI-13), a flange, gasket, blind or spade by the flange's
+  diameter, a valve by its part's solids; studs are not measured. Not compared: two pieces
+  joined to each other; two with nothing between them but gaskets, a joint's blind and
+  studs; two on one axis whose lengths overlap by no more than 0.05 in (the valves of a
+  stack or station stand so by their own rules, SW-LL-3, SW-LL-7). A pair that shares more
+  than 0.05 in is a finding, "pieces of one line clear of each other", and a unit is clean
+  only where these come to zero. Reason: two pieces of steel cannot stand in one place.
+- `SW-RPI-23` A line through itself, corrected on the result (added 2026-11-27). Each
+  correction acts only on a line SW-RPI-22 reports, on the merged model after SW-RPI-14 and
+  before SW-RPI-11 and SW-RPI-10, is named in the unit's notes, and moves nothing but that
+  line (and for (a) the parent's fitting and the two pipes beside it). Every new piece is at
+  true scale, every straight at least 2 in (SW-RT-4), 3 in from every other line, steel and
+  equipment (SW-RT-3) and clear of its own line (SW-RPI-22); welds follow from the pieces as
+  the generator derives them; a support on a piece taken out goes with it, and SW-RPI-18
+  and SW-RPI-17 set the line's supports again; head room is kept (a new piece lower than
+  8 ft above the floor, or 7 ft above a platform, lies within 4 ft in plan of the line's own
+  end points, SW-RT-3; none enters the 2 ft over a rack tier, SW-RT-7). Where none serves,
+  the line is left and listed.
+  - (a) A take-off nearer its far end than one elbow spacing. The generator sets a branch's
+    take-off at the place on its parent nearest the branch's far end, and its search needs
+    one elbow spacing of straight before every turn but the first (SW-RT-4: two elbow radii
+    and 2 in on the 6 in grid; 24 in at 6 in, 30 at 8, 36 at 10, 42 at 12, 54 at 14). Where
+    the take-off's first point and the far end's first point stand nearer than that on every
+    axis, the branch has no way of fewer than four elbows, and the cheapest the search finds
+    may come back through its own first leg. Where a branch passes through itself so, its
+    fitting, with what stands on its outlet, is moved along the same straight piece of its
+    parent 6 in at a time away from the far end's first point, to the first place from which
+    the branch runs out along the outlet and into its far end's stack with at most two
+    elbows, keeping the generator's margins for a take-off (the fitting's half-length, the
+    parent's elbow radius and 3 in from a corner; two fittings' half-lengths and 2 in apart;
+    a branch flange 3 in from another). The parent's two pipes beside it are cut again.
+    Reason: an installed spare's suction tee stood 18 to 42 in above the spare's suction axis
+    on the first pump's drop, a little less than the branch's elbow spacing (in unit 11's
+    14 in branch 42 in where 54 were needed); the branch ran past the spare, rose, came back
+    and dropped through its own first leg by 13.6 in. With the tee 12 in higher it goes out
+    55.0 in and down 7.3 in into the stack; given a solid at the old place, the generator
+    itself took exactly that way. Nine suction and two discharge spares were so.
+  - (b) Two ends on one axis. Where a line's two end stacks, or an end stack and a
+    take-off's outlet, stand on one axis facing each other with 2 in or more between them,
+    the pieces between become one straight pipe. Reason: the generator joins two lead
+    points, each an elbow radius beyond its stack; where they pass each other it loops back
+    through its own stack (a spare's discharge under the tee on the first pump's discharge,
+    whose straight is 24.5 in).
+  - (c) A turn-about at a bare end. Where a line passes through itself, or its own nozzle's
+    flange or neck, at a connection left without its valve (SW-RPI-14), and the run before
+    the turn-about lies parallel to the connection's axis, offset in one plane by 8 ft or
+    less, the pieces from that run's last elbow to the flange are laid as a 45° offset as
+    SW-RT-8 lays one (two 45° elbows on a diagonal centred between them on the 6 in grid, not
+    within 6 in of a grating, every new piece within the plan area and no lower than the
+    pieces it replaces). Reason: the vacuum column's 36 in feed arrives 8 ft below its
+    nozzle, and two 90° elbows of that size need 10.5 ft between them; the generator rose
+    18.5 ft, came back over its own end and dropped through its own flange.
+  - (d) A 45° offset over a take-off. SW-RT-8 lays no offset where a branch sits on the
+    length it replaces, but the generator tests only the take-off's centre against the
+    offset's two corners. Where an offset it laid leaves less than 2 in of pipe between one
+    of its elbows and a take-off's fitting on the same run, or runs past it, the corner is
+    laid as the generator routed it, two 90° elbows at the path's corners. Reason: in the
+    hydrotreater's 12 in suction the second 45° elbow ended 6.3 in past the start of the
+    spare's tee, and the pipe between them was laid backward through both.
+  The corrections are plant 3's own (src/refinery/ownLine.ts), made in a unit's run and by
+  tools/refinery-selfx.ts on the models on disk; the generator's code is not changed.
 - `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),
   in inches: x east along the rack from its west end, z south across it from its centre line,
   y up from the bench. It is set on the site by a shift alone. Area number 10; its lines are
