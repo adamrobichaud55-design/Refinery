@@ -1642,11 +1642,11 @@
    "line": "2\"-P300-SC-18554",
    "lineClass": "C300",
    "type": "hanger",
-   "description": "HANGER FOR 2\" LINE (HANGER-2x85.7)",
-   "designation": "HANGER-2x85.7",
-   "key": "HANG|2|P300|85.67",
+   "description": "HANGER FOR 2\" LINE (HANGER-2x83.6)",
+   "designation": "HANGER-2x83.6",
+   "key": "HANG|2|P300|83.63",
    "material": "Grade 36",
-   "weight": 6.2458,
+   "weight": 6.1826,
    "spool": "loose",
    "at": {
     "E": 960,
@@ -1690,7 +1690,27 @@
    "spool": "loose",
    "at": {
     "E": 894,
-    "N": -294.8889,
+    "N": -222,
+    "EL": 1296
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "2\"-P300-SC-18554/S4",
+   "line": "2\"-P300-SC-18554",
+   "lineClass": "C300",
+   "type": "stanchion",
+   "description": "STANCHION FOR 2\" LINE (STANCHION-2x95.0)",
+   "designation": "STANCHION-2x95.0",
+   "key": "STAN|2|P300|95.00",
+   "material": "Grade 36",
+   "weight": 90.9951,
+   "spool": "loose",
+   "at": {
+    "E": 894,
+    "N": -250.3334,
     "EL": 1296
    },
    "rules": [
@@ -2076,7 +2096,7 @@
   "items": 27,
   "welds": 14,
   "fieldWelds": 2,
-  "supports": 3,
+  "supports": 4,
   "pipeLength": 546.8754,
   "weight": 270.9377
  }
