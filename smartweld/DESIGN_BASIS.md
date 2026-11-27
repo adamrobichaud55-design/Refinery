@@ -6457,9 +6457,12 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   tools/refinery-selfx.ts on the models on disk; the generator's code is not changed.
 - `SW-RPI-29` A line within 3 in of a member, routed again (added 2026-11-27, P-95). Where the
   lines of one of the generator's runs (SW-RPI-7), as routed, pass nearer than 3 in to a steel
-  member (the generator's own check, §40, measured again by SW-RPI-13), the run is routed once
-  more with each such member also held as a solid: its section's box widened by 3 in all
-  round. The second routing is kept where it has no more failures and fewer such findings than
+  member with their pipes or fittings (the generator's own check, §40, measured again by
+  SW-RPI-13), the run is routed once more with each such member also held as a solid: its
+  section's box widened by 3 in all round. A connection's flange, gasket and valve are not
+  counted: they stand where the connection is, whatever way the line takes (the valve the
+  generator stands at a spool over a unit's first bent, SW-PWY-8, is one, and holding that
+  beam left the line no way out of its spool). The second routing is kept where it has no more failures and fewer such findings than
   the first, and is said in the notes. Reason: the generator is not shown the tier beams of the
   first bent of a unit's rack in the main pipeway (SW-PWY-8), and once the main rack's lanes
   were kept clear of the bent beams' end welds (SW-PWY-5 as amended), a 3 in line crossing to

@@ -291,7 +291,9 @@ function restAgain(up: UnitPiping, k: number, prior0: Placed[], m: PipingModel, 
 /** SW-RPI-29 (added 2026-11-27): a run whose lines pass within 3 in of a steel member, as the generator's check measured again by SW-RPI-13 finds it, routed again once with
  *  each such member also held as a solid, its section's box widened by 3 in all round; kept where it has no more failures and fewer such findings */
 function clearAgain(up: UnitPiping, k: number, prior: Placed[], m: PipingModel): { m: PipingModel; note: string } | undefined {
-  const near = (q: PipingModel) => unitChecks(q, up).staticClearance, was = near(m); if (!was.length) return undefined;
+  // the pieces whose way the generator chose: a connection's flange, gasket, studs and valve stand where the connection is (SW-PWY-8's spool valve over a first bent among them)
+  const STAND = new Set(['valve', 'gasket', 'flange', 'studs', 'blind', 'spade', 'spacer']);
+  const near = (q: PipingModel) => unitChecks(q, up).staticClearance.filter(v => !STAND.has(/^\S+ \S+ \((\w+)\) – /.exec(v)?.[1] ?? '')), was = near(m); if (!was.length) return undefined;
   const statics = staticObstacles([], up.cell.interior.instances, true).obstacles, section = sectionBoxFn(up.cell.interior.instances);
   const tags = new Set(was.map(v => /^\S+ \S+ \(\w+\) – (.+): -?[\d.]+ in$/.exec(v)?.[1]).filter((t): t is string => !!t));
   const held: Placed[] = statics.filter(o => tags.has(o.tag)).flatMap(o => { const b = section(o); return b ? [{ ...block([b[0][0] - 3, b[0][1] - 3, b[0][2] - 3], [b[1][0] + 3, b[1][1] + 3, b[1][2] + 3], 'member held 3 in larger'), tags: ['keep-out', 'cladding', 'member held 3 in larger'] }] : []; });
