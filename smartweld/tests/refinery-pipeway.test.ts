@@ -199,7 +199,13 @@ describe('plant 3: what the generator is given for the main pipeway (SW-PWY-1 to
       for (const c of mine) { expect(Math.abs(c.z)).toBeGreaterThan(zb); expect(Math.abs(c.z) - zb).toBeLessThanOrEqual(180); expect(c.y + pipeDims(c.NPS, c.cls).OD / 2 + 3).toBeLessThan(PWY.tiers[c.unitTier!] - Number(/^W(\d+)x/.exec(j!.beam)![1])); }
       expect(zb - PWY.junction).toBeLessThanOrEqual(180); expect(PWY.junction - PWY.half).toBeLessThanOrEqual(180);
     }
-    expect(pw.own.filter(q => q.tags.includes('rack-stringer')).length).toBe(PWY.tiers.reduce((a, _t, t) => a + stringersOf(t).length, 0) * PWY.bays); expect(stringersOf(0)).toEqual([-60, 60]); expect(stringersOf(PWY.tiers.length - 1)).toEqual([-96, 0, 96]); expect(stringersBy(0)).toEqual([-60, 60]); expect(stringersBy(1).sort((a, b) => a - b)).toEqual([-96, -60, 0, 60, 96]);
+    // SW-CELL-8: each bay's stringer framed to its bay's intermediate channel, in two lengths that each end on the channel and enter it nowhere
+    { const strs = pw.own.filter(q => q.tags.includes('rack-stringer')), chans = pw.own.filter(q => q.tags.includes('intermediate-beam')).map(q => worldBox(q.part, q.transform)!);
+      expect(strs.length).toBe(2 * PWY.tiers.reduce((a, _t, t) => a + stringersOf(t).length, 0) * PWY.bays);
+      for (const st of strs) { const b = worldBox(st.part, st.transform)!;
+        expect(chans.some(c => Math.abs(c[0][0] - b[1][0]) < 1e-6 || Math.abs(c[1][0] - b[0][0]) < 1e-6), 'a stringer length ends on a channel').toBe(true);
+        expect(chans.some(c => [0, 1, 2].every(k => b[0][k] < c[1][k] - 1e-6 && b[1][k] > c[0][k] + 1e-6)), 'a stringer length inside a channel').toBe(false); } }
+    expect(stringersOf(0)).toEqual([-60, 60]); expect(stringersOf(PWY.tiers.length - 1)).toEqual([-96, 0, 96]); expect(stringersBy(0)).toEqual([-60, 60]); expect(stringersBy(1).sort((a, b) => a - b)).toEqual([-96, -60, 0, 60, 96]);
   });
   it('the generator sees the corridor and the units\' valve bays and no more; the tier beams of each unit\'s first bent only in the checks (SW-PWY-8)', () => {
     const shown = pw.plant.interior().instances, real = pw.interior.instances, firstBent = `rack-bent:${RACK.start - RACK.bent}`;
