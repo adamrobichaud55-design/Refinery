@@ -94,8 +94,10 @@ rule written first:
   drawn, the boilers' feed water on the economizer header's axis and their steam on an outlet
   header a size above the line, a fuel gas drum's gas outlet on top and the drum made long
   enough for it, the scrubber's duct of the line's own pipe, the hopper's outlet drawn inside
-  its skirt, the seams laid clear of the connections, large tanks drawn round enough. Units
-  12, 14 and 19 routed again; the other units' necks cut again on disk (`necksToPlan`).
+  its skirt, the seams laid clear of the connections, large tanks drawn round enough; and no
+  pipeway lane so near a bent's end that a guide's angle stands on the beam's end weld
+  (SW-PWY-5). Units 12, 14 and 19 routed again; the other units' necks cut again on disk
+  (`necksToPlan`); the pipeway and the mains routed again.
 
 What was learned in that round: an exclusion by relationship hides what lies inside the
 relationship. The detectors excuse a nozzle on its own item and a stud set in its own
