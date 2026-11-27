@@ -9,7 +9,8 @@ import * as K from '../generator/pipingCheck';
 import type { PlantDef } from '../generator/plant';
 import type { V3 } from '../generator/router';
 import { frameFromAxes } from '../geometry/transform';
-import { pipeDims, makeWideFlange, designFlange, type PipeClass } from '../catalogue';
+import { pipeDims, makeWideFlange, designFlange, elbowRadius, type PipeClass } from '../catalogue';
+import { arcPoints, arcMeetsBox } from './ownLine';
 import { interiorKit } from '../generator/interiorKit';
 import type { Placed } from '../generator/building';
 import { multiply, translate, standUp } from '../geometry/transform';
@@ -237,7 +238,7 @@ export function strikeTest(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box
 
 /**
  * SW-RPI-19: valves that strike. A valve whose part's solids overlap a solid of the steel, concrete or equipment or a piece of another line is turned about its
- * own run to the first other direction square to the run, up first, in which its solids, grown by 1 in, overlap nothing; its place and joints stay. Returns what
+ * own run to the first other direction square to the run, up first and never down, in which its solids, grown by 1 in, overlap nothing; its place and joints stay. Returns what
  * was turned, and what could not be.
  */
 export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp) => Box): { turned: string[]; stuck: string[] } {
@@ -255,21 +256,36 @@ export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp)
   /** what one of a valve's solids, grown by g, overlaps: a solid of the plant or a pipe or fitting of another line (held by its axis and radius) */
   const hit = (no: string, b: Box, g: number) => sBox.find(q => ov(q.box, b, g) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < q.o.r))?.o.tag
     ?? pieces.find(q => q.line !== no && near(q, b, g - 0.02))?.line;
-  /** SW-RPI-19 (amended): a valve's own line's pieces that are not of its own stack: off its run's axis, and not joined end to end with a piece on it */
+  /** SW-RPI-19 (amended): a valve's own line's pieces that are not of its own stack: off its run's axis, and not joined end to end with a piece on it.
+   *  Amended again (SW-RPI-22): an elbow is never of the stack, even joined end to end with a piece on its axis; and an elbow is held by its arc (SW-RPI-13),
+   *  a 90° elbow by the tube about its arc, flat at its ends (within the box of points every 5° along its centre line), a 45° elbow by its own two legs, R tan 22.5° each */
   const ownOff = (r: (typeof m.lines)[number], c: Comp) => {
     const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]) || 1, w = [(c.b[0] - c.a[0]) / L, (c.b[1] - c.a[1]) / L, (c.b[2] - c.a[2]) / L];
     const offAxis = (p: number[]) => { const d = [p[0] - c.a[0], p[1] - c.a[1], p[2] - c.a[2]], t = d[0] * w[0] + d[1] * w[1] + d[2] * w[2]; return Math.hypot(d[0] - w[0] * t, d[1] - w[1] * t, d[2] - w[2] * t) > 0.05; };
-    const on = r.comps.filter(q => q.kind !== 'studs' && !offAxis(q.a) && !offAxis(q.b)), ends = on.flatMap(q => [q.a, q.b]);
-    const joined = (q: Comp) => ends.some(e => [q.a, q.b].some(p => Math.hypot(p[0] - e[0], p[1] - e[1], p[2] - e[2]) < 0.05));
-    return r.comps.filter(q => q.kind !== 'studs' && !on.includes(q) && !joined(q)).flatMap(q => K.compShapes(q, vb ?? (() => [[0, 0, 0], [0, 0, 0]] as Box)).map(sh => sh.kind === 'box' ? { box: [sh.mn, sh.mx] as Box, a: [0, 0, 0] as V3, b: [0, 0, 0] as V3, r: 0, isBox: true } : { box: [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r), [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r)] as Box, a: sh.a as V3, b: sh.b as V3, r: sh.r, isBox: false }));
+    const on = r.comps.filter(q => q.kind !== 'studs' && q.kind !== 'elbow' && !offAxis(q.a) && !offAxis(q.b)), ends = on.flatMap(q => [q.a, q.b]);
+    const joined = (q: Comp) => q.kind !== 'elbow' && ends.some(e => [q.a, q.b].some(p => Math.hypot(p[0] - e[0], p[1] - e[1], p[2] - e[2]) < 0.05));
+    const shapesOf = (q: Comp): K.Shape[] => {
+      if (q.kind !== 'elbow' || !/\|45(\||$)/.test(q.key)) return K.compShapes(q, vb ?? (() => [[0, 0, 0], [0, 0, 0]] as Box));
+      const OD = pipeDims(q.NPS, q.cls).OD, leg = elbowRadius(OD) * Math.tan(Math.PI / 8), corner: V3 = [q.a[0] + q.T[8] * leg, q.a[1] + q.T[9] * leg, q.a[2] + q.T[10] * leg];
+      return [{ kind: 'cap', a: q.a, b: corner, r: OD / 2 }, { kind: 'cap', a: corner, b: q.b, r: OD / 2 }];
+    };
+    return r.comps.filter(q => q.kind !== 'studs' && !on.includes(q) && !joined(q)).flatMap((q): { box: Box; a: V3; b: V3; r: number; isBox: boolean; meets?: (mn: V3, mx: V3) => boolean }[] => {
+      if (q.kind === 'elbow' && q.key.startsWith('EL|') && !/\|45(\||$)/.test(q.key)) {
+        const arc = arcPoints(q), rad = pipeDims(q.NPS, q.cls).OD / 2;
+        return [{ box: [[0, 1, 2].map(k => Math.min(...arc.map(p => p[k])) - rad), [0, 1, 2].map(k => Math.max(...arc.map(p => p[k])) + rad)] as Box, a: [0, 0, 0] as V3, b: [0, 0, 0] as V3, r: rad, isBox: false, meets: arcMeetsBox(q) }];
+      }
+      return shapesOf(q).map(sh => sh.kind === 'box' ? { box: [sh.mn, sh.mx] as Box, a: [0, 0, 0] as V3, b: [0, 0, 0] as V3, r: 0, isBox: true } : { box: [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r), [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r)] as Box, a: sh.a as V3, b: sh.b as V3, r: sh.r, isBox: false });
+    });
   };
-  const ownHit = (own: ReturnType<typeof ownOff>, b: Box, g: number) => own.some(p => ov(p.box, b, g) && (p.isBox || K.segBox(p.a, p.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < p.r));
+  // a 90° elbow's tube about its arc against the solid grown by g, flat at the elbow's ends (SW-RPI-22's shape); any other piece by its axis and radius
+  const ownHit = (own: ReturnType<typeof ownOff>, b: Box, g: number) => own.some(p => ov(p.box, b, g) && (p.isBox || (p.meets ? p.meets([b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) : K.segBox(p.a, p.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < p.r)));
   for (const r of m.lines) for (const c of r.comps) {
     if (c.kind !== 'valve') continue;
     const own = ownOff(r, c);
     const T = c.T as unknown as number[], first = solidsOf(c.key, T).map(b => hit(r.no, b, 0) ?? (ownHit(own, b, -0.02) ? `its own line ${r.no}` : undefined)).find(Boolean); if (!first) continue;
     const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), f: V3 = [(c.b[0] - c.a[0]) / L, (c.b[1] - c.a[1]) / L, (c.b[2] - c.a[2]) / L], stem: V3 = [T[4], T[5], T[6]], at: V3 = [T[12], T[13], T[14]];
-    const dirs = ([[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1], [0, -1, 0]] as V3[]).filter(d => Math.abs(d[0] * f[0] + d[1] * f[1] + d[2] * f[2]) < 1e-6 && Math.hypot(d[0] - stem[0], d[1] - stem[1], d[2] - stem[2]) > 1e-6);
+    // up, then +x, -x, +z and -z; never stem down (SW-LL-5; SW-RPI-19 as amended again)
+    const dirs = ([[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1]] as V3[]).filter(d => Math.abs(d[0] * f[0] + d[1] * f[1] + d[2] * f[2]) < 1e-6 && Math.hypot(d[0] - stem[0], d[1] - stem[1], d[2] - stem[2]) > 1e-6);
     // clear by 1 in of the plant's solids and by 3 in of every other line (SW-RT-3's clearance between lines, which the generator's own check holds a valve's box to)
     const d = dirs.find(q => { const Tq = frameFromAxes(at, q, f) as unknown as number[], sol = solidsOf(c.key, Tq); const vbox = vb ? [vb({ ...c, T: Tq } as unknown as Comp)] : sol; return sol.every(b => !hit(r.no, b, 1) && !ownHit(own, b, 1)) && vbox.every(b => !pieces.some(p => p.line !== r.no && near(p, b, 3))); });
     if (!d) { stuck.push(`${c.tag}: strikes ${first} and has no clear direction`); continue; }

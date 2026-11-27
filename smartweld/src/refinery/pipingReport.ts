@@ -10,13 +10,14 @@ import { pipeDims, elbowRadius, designFlange } from '../catalogue';
 import type { V3 } from '../generator/router';
 import { frameFromAxes } from '../geometry/transform';
 import { supportsAlongSpans, supportsThatStrike, valvesThatStrike, hangerTops, waferStuds, type SpanSupports, type FrameSpec } from './supports';
+import { ownClearance } from './ownLine';
 import { unitPiping, block, laneSpacing, type UnitPiping, type UnitLine, type BlSpool, type RootSpool, type StationSpool } from './unitPiping';
 import type { Placed } from '../generator/building';
 import { processModel } from './process';
 import { FLUIDS } from './fluids';
 import { RACK } from './cell';
 
-export interface UnitChecks { continuity: string[]; joints: string[]; elbows: string[]; valves: string[]; lineClearance: string[]; staticClearance: string[]; supports: string[] }
+export interface UnitChecks { continuity: string[]; joints: string[]; elbows: string[]; valves: string[]; lineClearance: string[]; staticClearance: string[]; /** SW-RPI-22: pieces of one line that share more than 0.05 in */ ownClearance: string[]; supports: string[] }
 export interface PipedLine { no: string; origin: UnitLine['origin']; fluid: string; fluidName: string; from: string; to: string; NPS: number; cls: string; designP: number; designT: number; routed: boolean; components: number; welds: number; supports: number; lengthFt: number; /** the rack tier it runs on, 1 the lowest (SW-RPI-7) */ tier?: number; /** the control station it is divided at (SW-RPI-9) */ station?: string; controlValve?: 'piped' | 'omitted' }
 export interface PipedUnit {
   /** SW-RPI-17: plant 3's own pipe frames, which the generator's model has no place for */
@@ -114,6 +115,7 @@ export function unitChecks(m: PipingModel, up: Pick<UnitPiping, 'cell' | 'plant'
     valves: K.checkNumberingAndValves(m).filter(v => !v.startsWith('bad line number')),                    // plant 3's numbers carry a five-digit sequence (SW-REF-3)
     lineClearance: [...new Set(K.checkLineClearance(m, vb).violations)].filter(real),
     staticClearance: K.checkStaticClearance(m, statics, vb).filter(stays),
+    ownClearance: ownClearance(m),                                                                          // SW-RPI-22: each line against itself
     supports: K.checkSupports(m, up.plant.rack),
   };
 }
@@ -185,7 +187,8 @@ function restAgain(up: UnitPiping, k: number, prior0: Placed[], m: PipingModel, 
       for (const o of others) {
         if (o.c.kind !== 'valve' || !o.s.some(s => vs.some(w => K.gap(s, w) < 1))) continue;
         const c = o.c, L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), f: V3 = [(c.b[0] - c.a[0]) / L, (c.b[1] - c.a[1]) / L, (c.b[2] - c.a[2]) / L], stem: V3 = [c.T[4], c.T[5], c.T[6]], at: V3 = [c.T[12], c.T[13], c.T[14]];
-        const dirs: V3[] = ([[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1], [0, -1, 0]] as V3[]).filter(d => Math.abs(d[0] * f[0] + d[1] * f[1] + d[2] * f[2]) < 1e-6 && Math.hypot(d[0] - stem[0], d[1] - stem[1], d[2] - stem[2]) > 1e-6);
+        // never stem down (SW-LL-5; SW-RPI-19 as amended again)
+        const dirs: V3[] = ([[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1]] as V3[]).filter(d => Math.abs(d[0] * f[0] + d[1] * f[1] + d[2] * f[2]) < 1e-6 && Math.hypot(d[0] - stem[0], d[1] - stem[1], d[2] - stem[2]) > 1e-6);
         for (const d of dirs) {
           const T = frameFromAxes(at, d, f) as number[], tried = { ...c, T } as Comp, ts = K.compShapes(tried, vb), [mn, mx] = vb(tried);
           const clear = [...others, ...here].every(q => q.line === o.line || q.s.every(s => ts.every(w => K.gap(s, w) >= 3))) && vs.every(w => ts.every(s => K.gap(s, w) >= 3)) && statics.every(b => b[1][0] < mn[0] || b[0][0] > mx[0] || b[1][1] < mn[1] || b[0][1] > mx[1] || b[1][2] < mn[2] || b[0][2] > mx[2]);
@@ -416,7 +419,7 @@ export function pipingDocument(all: PipedUnit[]): string {
     out.push(table(['Component', 'Count'], Object.entries(u.counts.components)), '');
     out.push(table(['Welds', 'Count'], Object.entries(u.counts.welds)), '', table(['Supports', 'Count'], Object.entries(u.counts.supports)), '');
     out.push('### Checks', '');
-    out.push(table(['Check (the generator\'s own, §40)', 'Found'], [['every line continuous from end to end', u.checks.continuity.length], ['every joint a joint of its class', u.checks.joints.length], ['elbows and the straights between them', u.checks.elbows.length], ['valves by class and size', u.checks.valves.length], ['3 in between lines', u.checks.lineClearance.length], ['3 in from steel and equipment', u.checks.staticClearance.length], ['spans within SW-PS-7, a support at every rack beam crossed', u.checks.supports.length]]), '');
+    out.push(table(['Check (the generator\'s own, §40)', 'Found'], [['every line continuous from end to end', u.checks.continuity.length], ['every joint a joint of its class', u.checks.joints.length], ['elbows and the straights between them', u.checks.elbows.length], ['valves by class and size', u.checks.valves.length], ['3 in between lines', u.checks.lineClearance.length], ['3 in from steel and equipment', u.checks.staticClearance.length], ['pieces of one line clear of each other (SW-RPI-22)', u.checks.ownClearance?.length ?? 'not measured'], ['spans within SW-PS-7, a support at every rack beam crossed', u.checks.supports.length]]), '');
     if (u.failures.length) out.push('Reported by the generator:', '', ...u.failures.map(f => `- ${f}`), '');
     for (const [k, v] of Object.entries(u.checks) as [string, string[]][]) if (v.length) out.push(`Not at zero, ${k}:`, '', ...v.map(s => `- ${s}`), '');
     if (u.checks.supports.length) out.push('These runs are longer than a pipe of their size spans and no steel stands where a support would go: lines that cross the yard or run beside the rack away from the support beams. They are listed, not hidden, and want pipe supports of their own.', '');
