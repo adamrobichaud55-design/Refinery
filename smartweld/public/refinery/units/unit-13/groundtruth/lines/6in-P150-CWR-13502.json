@@ -2293,20 +2293,60 @@
    "tag": "6\"-P150-CWR-13502/S3",
    "line": "6\"-P150-CWR-13502",
    "lineClass": "W150",
-   "type": "stanchion",
-   "description": "STANCHION FOR 6\" LINE (STANCHION-6x291.0)",
-   "designation": "STANCHION-6x291.0",
-   "key": "STAN|6|P150|291.00",
+   "type": "hanger",
+   "description": "HANGER FOR 6\" LINE (HANGER-6x65.5)",
+   "designation": "HANGER-6x65.5",
+   "key": "HANG|6|P150|65.46",
    "material": "Grade 36",
-   "weight": 4114.2172,
+   "weight": 8.2476,
    "spool": "loose",
    "at": {
     "E": 888,
-    "N": -397,
+    "N": -282,
     "EL": 1500
    },
    "rules": [
     "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "6\"-P150-CWR-13502/S4",
+   "line": "6\"-P150-CWR-13502",
+   "lineClass": "W150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 6\" LINE (STANCHION-6x297.0)",
+   "designation": "STANCHION-6x297.0",
+   "key": "STAN|6|P150|297.00",
+   "material": "Grade 36",
+   "weight": 4198.7648,
+   "spool": "loose",
+   "at": {
+    "E": 888,
+    "N": -352,
+    "EL": 1500
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "6\"-P150-CWR-13502/S5",
+   "line": "6\"-P150-CWR-13502",
+   "lineClass": "W150",
+   "type": "shoe",
+   "description": "SHOE FOR 6\" LINE (SHOE-6)",
+   "designation": "SHOE-6",
+   "key": "SHOE|6|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 888,
+    "N": -483,
+    "EL": 1493
+   },
+   "rules": [
+    "SW-PS-1"
    ]
   }
  ],
@@ -2809,7 +2849,7 @@
   "items": 36,
   "welds": 21,
   "fieldWelds": 2,
-  "supports": 2,
+  "supports": 4,
   "pipeLength": 817.3499,
   "weight": 1399.7964
  }

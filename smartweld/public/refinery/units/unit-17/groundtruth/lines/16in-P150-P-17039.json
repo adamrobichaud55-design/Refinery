@@ -2132,15 +2132,35 @@
    "line": "16\"-P150-P-17039",
    "lineClass": "H150",
    "type": "stanchion",
-   "description": "STANCHION FOR 16\" LINE (STANCHION-16x28.7)",
-   "designation": "STANCHION-16x28.7",
-   "key": "STAN|16|P150|28.67",
+   "description": "STANCHION FOR 16\" LINE (STANCHION-16x220.0)",
+   "designation": "STANCHION-16x220.0",
+   "key": "STAN|16|P150|220.00",
    "material": "Grade 36",
-   "weight": 1255.7369,
+   "weight": 9512.6461,
    "spool": "loose",
    "at": {
     "E": 1356,
-    "N": 0,
+    "N": -86.3334,
+    "EL": 1428
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "16\"-P150-P-17039/S9",
+   "line": "16\"-P150-P-17039",
+   "lineClass": "H150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 16\" LINE (STANCHION-16x220.0)",
+   "designation": "STANCHION-16x220.0",
+   "key": "STAN|16|P150|220.00",
+   "material": "Grade 36",
+   "weight": 9512.6461,
+   "spool": "loose",
+   "at": {
+    "E": 1356,
+    "N": 123.5833,
     "EL": 1428
    },
    "rules": [
@@ -2603,7 +2623,7 @@
   "items": 33,
   "welds": 18,
   "fieldWelds": 2,
-  "supports": 6,
+  "supports": 7,
   "pipeLength": 1226.8537,
   "weight": 13482.6518
  }

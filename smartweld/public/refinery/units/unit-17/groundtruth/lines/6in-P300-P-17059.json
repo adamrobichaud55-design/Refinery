@@ -1202,19 +1202,39 @@
    "line": "6\"-P300-P-17059",
    "lineClass": "H300",
    "type": "stanchion",
-   "description": "STANCHION FOR 6\" LINE (STANCHION-6x105.7)",
-   "designation": "STANCHION-6x105.7",
-   "key": "STAN|6|P300|105.67",
+   "description": "STANCHION FOR 6\" LINE (STANCHION-6x297.0)",
+   "designation": "STANCHION-6x297.0",
+   "key": "STAN|6|P300|297.00",
    "material": "Grade 36",
-   "weight": 593.6131,
+   "weight": 4198.7648,
    "spool": "loose",
    "at": {
     "E": 876,
-    "N": 0,
+    "N": 126.5,
     "EL": 1500
    },
    "rules": [
     "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "6\"-P300-P-17059/S3",
+   "line": "6\"-P300-P-17059",
+   "lineClass": "H300",
+   "type": "shoe",
+   "description": "SHOE FOR 6\" LINE (SHOE-6)",
+   "designation": "SHOE-6",
+   "key": "SHOE|6|P300|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 876,
+    "N": -15.75,
+    "EL": 1493
+   },
+   "rules": [
+    "SW-PS-1"
    ]
   }
  ],
@@ -1496,7 +1516,7 @@
   "items": 20,
   "welds": 9,
   "fieldWelds": 2,
-  "supports": 2,
+  "supports": 3,
   "pipeLength": 647.6912,
   "weight": 1131.3268
  }

@@ -2412,19 +2412,39 @@
    "line": "6\"-P150-CWS-11505",
    "lineClass": "W150",
    "type": "stanchion",
-   "description": "STANCHION FOR 6\" LINE (STANCHION-6x93.0)",
-   "designation": "STANCHION-6x93.0",
-   "key": "STAN|6|P150|93.00",
+   "description": "STANCHION FOR 6\" LINE (STANCHION-6x99.0)",
+   "designation": "STANCHION-6x99.0",
+   "key": "STAN|6|P150|99.00",
    "material": "Grade 36",
-   "weight": 523.8724,
+   "weight": 556.8987,
    "spool": "loose",
    "at": {
     "E": 1782,
-    "N": -571,
+    "N": -475,
     "EL": 1302
    },
    "rules": [
     "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "6\"-P150-CWS-11505/S6",
+   "line": "6\"-P150-CWS-11505",
+   "lineClass": "W150",
+   "type": "shoe",
+   "description": "SHOE FOR 6\" LINE (SHOE-6)",
+   "designation": "SHOE-6",
+   "key": "SHOE|6|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 1782,
+    "N": -604.5,
+    "EL": 1295
+   },
+   "rules": [
+    "SW-PS-1"
    ]
   }
  ],
@@ -2947,7 +2967,7 @@
   "items": 37,
   "welds": 22,
   "fieldWelds": 2,
-  "supports": 4,
+  "supports": 5,
   "pipeLength": 1044.5167,
   "weight": 1673.2967
  }

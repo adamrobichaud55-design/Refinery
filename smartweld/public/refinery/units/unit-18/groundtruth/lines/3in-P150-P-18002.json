@@ -3922,16 +3922,36 @@
    "tag": "3\"-P150-P-18002/S30",
    "line": "3\"-P150-P-18002",
    "lineClass": "H150",
-   "type": "stanchion",
-   "description": "STANCHION FOR 3\" LINE (STANCHION-3x54.0)",
-   "designation": "STANCHION-3x54.0",
-   "key": "STAN|3|P150|53.98",
+   "type": "hanger",
+   "description": "HANGER FOR 3\" LINE (HANGER-3x185.5)",
+   "designation": "HANGER-3x185.5",
+   "key": "HANG|3|P150|185.46",
    "material": "Grade 36",
-   "weight": 82.6262,
+   "weight": 9.6254,
    "spool": "loose",
    "at": {
     "E": 690,
-    "N": 136.935,
+    "N": 180,
+    "EL": 1446
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "3\"-P150-P-18002/S31",
+   "line": "3\"-P150-P-18002",
+   "lineClass": "H150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x244.5)",
+   "designation": "STANCHION-3x244.5",
+   "key": "STAN|3|P150|244.50",
+   "material": "Grade 36",
+   "weight": 3457.4424,
+   "spool": "loose",
+   "at": {
+    "E": 690,
+    "N": 83.5,
     "EL": 1446
    },
    "rules": [
@@ -4609,7 +4629,7 @@
   "items": 56,
   "welds": 27,
   "fieldWelds": 4,
-  "supports": 30,
+  "supports": 31,
   "pipeLength": 3934.0766,
   "weight": 2369.5528
  }

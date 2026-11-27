@@ -2428,15 +2428,35 @@
    "line": "8\"-P150-P-19001",
    "lineClass": "H150",
    "type": "stanchion",
-   "description": "STANCHION FOR 8\" LINE (STANCHION-8x104.0)",
-   "designation": "STANCHION-8x104.0",
-   "key": "STAN|8|P150|104.00",
+   "description": "STANCHION FOR 8\" LINE (STANCHION-8x110.0)",
+   "designation": "STANCHION-8x110.0",
+   "key": "STAN|8|P150|110.00",
    "material": "Grade 36",
-   "weight": 837.9521,
+   "weight": 885.5101,
    "spool": "loose",
    "at": {
     "E": 942,
-    "N": 594,
+    "N": 552,
+    "EL": 1314
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "8\"-P150-P-19001/S5",
+   "line": "8\"-P150-P-19001",
+   "lineClass": "H150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 8\" LINE (STANCHION-8x110.0)",
+   "designation": "STANCHION-8x110.0",
+   "key": "STAN|8|P150|110.00",
+   "material": "Grade 36",
+   "weight": 885.5101,
+   "spool": "loose",
+   "at": {
+    "E": 942,
+    "N": 687.2386,
     "EL": 1314
    },
    "rules": [
@@ -2987,7 +3007,7 @@
   "items": 36,
   "welds": 24,
   "fieldWelds": 3,
-  "supports": 4,
+  "supports": 5,
   "pipeLength": 1666.2231,
   "weight": 4056.011
  }

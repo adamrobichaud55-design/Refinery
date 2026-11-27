@@ -2294,19 +2294,39 @@
    "line": "8\"-P150-CWR-11504",
    "lineClass": "W150",
    "type": "stanchion",
-   "description": "STANCHION FOR 8\" LINE (STANCHION-8x308.0)",
-   "designation": "STANCHION-8x308.0",
-   "key": "STAN|8|P150|308.00",
+   "description": "STANCHION FOR 8\" LINE (STANCHION-8x314.0)",
+   "designation": "STANCHION-8x314.0",
+   "key": "STAN|8|P150|314.00",
    "material": "Grade 36",
-   "weight": 4354.7895,
+   "weight": 4439.337,
    "spool": "loose",
    "at": {
     "E": 1674,
-    "N": -572.3334,
+    "N": -476.3334,
     "EL": 1518
    },
    "rules": [
     "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "8\"-P150-CWR-11504/S4",
+   "line": "8\"-P150-CWR-11504",
+   "lineClass": "W150",
+   "type": "shoe",
+   "description": "SHOE FOR 8\" LINE (SHOE-8)",
+   "designation": "SHOE-8",
+   "key": "SHOE|8|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 1674,
+    "N": -606.5,
+    "EL": 1510
+   },
+   "rules": [
+    "SW-PS-1"
    ]
   }
  ],
@@ -2815,7 +2835,7 @@
   "items": 36,
   "welds": 21,
   "fieldWelds": 2,
-  "supports": 2,
+  "supports": 3,
   "pipeLength": 869.8324,
   "weight": 2663.953
  }

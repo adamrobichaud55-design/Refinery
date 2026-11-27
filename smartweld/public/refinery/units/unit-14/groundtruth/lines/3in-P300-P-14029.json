@@ -2500,15 +2500,35 @@
    "line": "3\"-P300-P-14029",
    "lineClass": "H300",
    "type": "stanchion",
-   "description": "STANCHION FOR 3\" LINE (STANCHION-3x54.0)",
-   "designation": "STANCHION-3x54.0",
-   "key": "STAN|3|P300|53.98",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x244.5)",
+   "designation": "STANCHION-3x244.5",
+   "key": "STAN|3|P300|244.50",
    "material": "Grade 36",
-   "weight": 82.6262,
+   "weight": 3457.4424,
    "spool": "loose",
    "at": {
     "E": 1470,
-    "N": -136.935,
+    "N": -222,
+    "EL": 1446
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "3\"-P300-P-14029/S15",
+   "line": "3\"-P300-P-14029",
+   "lineClass": "H300",
+   "type": "stanchion",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x244.5)",
+   "designation": "STANCHION-3x244.5",
+   "key": "STAN|3|P300|244.50",
+   "material": "Grade 36",
+   "weight": 3457.4424,
+   "spool": "loose",
+   "at": {
+    "E": 1470,
+    "N": -119.5,
     "EL": 1446
    },
    "rules": [
@@ -3020,7 +3040,7 @@
   "items": 36,
   "welds": 21,
   "fieldWelds": 3,
-  "supports": 13,
+  "supports": 14,
   "pipeLength": 2014.6875,
   "weight": 1130.9935
  }
