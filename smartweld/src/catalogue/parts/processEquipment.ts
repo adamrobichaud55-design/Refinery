@@ -417,7 +417,15 @@ export function makeCoolingTower(inp: { tag: string; cells: number; cellL: numbe
 const hipShell = (y0: number, y1: number, z0: number, ya: number, yb: number, z1: number, x0: number, x1: number, t: number): MeshData => transformMesh(extrude({ outer: [{ x: y0, y: z0 }, { x: y1, y: z0 }, { x: yb, y: z1 }, { x: ya, y: z1 }], inner: [{ x: y0 + 2 * t, y: z0 + t }, { x: y1 - 2 * t, y: z0 + t }, { x: yb - 2 * t, y: z1 - t }, { x: ya + 2 * t, y: z1 - t }] }, x1 - x0, x0), SHAFT_X_UP_Z);
 /** SW-EQC-53 (amended 2026-11-27): a connection a plant passes out through a long wall of the radiant box: where its axis meets the wall (x along the box, z above the base), the wall (1: the one at y = W, −1: at y = 0) and its flange's outside diameter */
 export interface CabinThrough { x: number; z: number; wall: 1 | -1; OD: number }
-export function makeCabinHeater(inp: { tag: string; L: number; W: number; H: number; through?: CabinThrough[] }): PartSpec {
+/** a gas a plant brings to a cabin heater's burners (SW-EQC-53 as amended 2026-11-27): its connection's place along the box (x) and height above the base (z), and its pipe's OD */
+export interface CabinGas { x: number; z: number; OD: number }
+/** SW-EQC-53 (amended 2026-11-27): a gas header's axis across the box (y), inside the columns of the wall at y = W by 1 in from their flange edges */
+export const cabinGasHeaderY = (W: number, OD: number) => W - (4 + proportionW(8, 24).d / 2 + 1) - OD / 2;
+/** SW-EQC-53 (amended 2026-11-27): the height (z above the base) of a cabin's burners' gas inlet flanges, and the least height above them a header of outside
+ *  diameter OD may stand at for a 2 in branch to rise into it with a bend of 1.5 OD radius */
+export const cabinGasInlet = (W: number) => { const db = 0.12 * W; return 84 - 0.25 - (db + 4); };
+export const cabinHeaderRise = (OD: number) => 1.5 * pipeDims(2, 'P150').OD + OD / 2;
+export function makeCabinHeater(inp: { tag: string; L: number; W: number; H: number; through?: CabinThrough[]; gases?: CabinGas[] }): PartSpec {
   const { L, W: Wd, H, tag } = inp, zf = 84, zr = zf + H, zh = zr + 0.25 * Wd, zc = zh + 0.5 * H, t = 0.25, nb = Math.max(1, Math.round(L / (0.5 * Wd))), db = 0.12 * Wd, rs = 0.125 * Wd, Hs = 1.5 * H, nc = Math.ceil(L / 240), nk = Math.ceil(L / 96), s: Solid[] = [];
   const cols: MeshData[] = [], bases: MeshData[] = [], stays: MeshData[] = [], doors: MeshData[] = [];
   for (let i = 0; i <= nc; i++) for (const y of [4, Wd - 4]) { const x = Math.min(L - 4, Math.max(4, (L * i) / nc)); cols.push(member([x, y, 0.75], [x, y, zf - 8], P_W8, [0, 1, 0])); bases.push(boxMesh(x - 7, y - 7, 0, x + 7, y + 7, 0.75)); }
@@ -443,6 +451,26 @@ export function makeCabinHeater(inp: { tag: string; L: number; W: number; H: num
     { name: 'header boxes', role: 'steel', mesh: mergeMeshes([boxMesh(-12, 0.3 * Wd + 2, zh + 6, 0, 0.7 * Wd - 2, zc - 6), boxMesh(L, 0.3 * Wd + 2, zh + 6, L + 12, 0.7 * Wd - 2, zc - 6)]) });
   s.push({ name: 'breeching cone', mesh: at(frustum(0.19 * Wd, rs, 0, 0.3 * Wd, t), L / 2, Wd / 2, zc + t) }, { name: 'stack', mesh: at(mergeMeshes([tube(rs, t, Hs, 0), ...[0.33, 0.66, 1].map(f => at(extrude({ outer: circle(0, 0, rs + 3, 48), inner: circle(0, 0, rs, 48) }, 0.25, 0), 0, 0, f * Hs - 0.25))]), L / 2, Wd / 2, zc + t + 0.3 * Wd) });
   for (let i = 0; i < nb; i++) s.push(...burnerSolids(db).map(q => ({ ...q, name: `floor burner: ${q.name}`, mesh: transformMesh(q.mesh, multiply(translate((L * (i + 0.5)) / nb, Wd / 2, zf - t), rotateX(Math.PI))) })));
+  // SW-EQC-53 (amended 2026-11-27): a header for each gas a plant brings, along the row inside the wall's columns at its connection's height; a 2 in branch from it to
+  // the gas inlet flange of each burner nearer its connection than another's, ending in a flange bolted to the burner's with a 1/8 in gasket between
+  if (inp.gases?.length) {
+    const xb = Array.from({ length: nb }, (_, i) => (L * (i + 0.5)) / nb), yF = Wd / 2 + 1.6 * db + 0.75, zF = cabinGasInlet(Wd), br = pipeDims(2, 'P150').OD / 2, Rb = 1.5 * 2 * br;
+    const own = xb.map(x => inp.gases!.reduce((k, g, j) => (Math.abs(g.x - x) < Math.abs(inp.gases![k].x - x) - 1e-9 ? j : k), 0)), spans: [number, number][] = [];
+    inp.gases.forEach((g, j) => {
+      const mine = xb.filter((_, i) => own[i] === j), yh = cabinGasHeaderY(Wd, g.OD), xs = [g.x, ...mine], x0 = Math.min(...xs) - br - 3, x1 = Math.max(...xs) + br + 3;
+      if (g.z - zF < cabinHeaderRise(g.OD) - 1e-9 || yh - Rb < yF + 0.875) throw new Error(`${tag}: no room for the branches under the floor to a gas header at ${g.z} in (SW-EQC-53)`);
+      for (const [a, b] of spans) if (x0 < b + 3 && a < x1 + 3) throw new Error(`${tag}: two gas headers end to end stand less than 3 in apart (SW-EQC-53)`);
+      spans.push([x0, x1]);
+      const parts: MeshData[] = [sweep([[x0, yh, g.z], [x1, yh, g.z]], g.OD / 2, 24)];
+      for (const x of mine) {
+        const arc = Array.from({ length: 9 }, (_, k): V3 => { const a = (Math.PI / 2) * (k / 8); return [x, yh - Rb + Rb * Math.sin(a), zF + Rb - Rb * Math.cos(a)]; });
+        parts.push(sweep([[x, yF + 0.875, zF], ...arc, [x, yh, g.z]], br, 16));
+        parts.push(transformMesh(extrude({ outer: circle(0, 0, 3.19, 48), inner: circle(0, 0, 0.69, 48) }, 0.75, 0), multiply(translate(x, yF + 0.125, zF), rotateX(-Math.PI / 2))));   // the mating flange
+      }
+      s.push({ name: `${j ? 'waste' : 'fuel'} gas header and burner branches`, role: 'safety', mesh: mergeMeshes(parts) },
+        { name: `${j ? 'waste' : 'fuel'} gas branch gaskets`, role: 'closure', mesh: mergeMeshes(mine.map(x => transformMesh(extrude({ outer: circle(0, 0, 2.6, 48), inner: circle(0, 0, 1.19, 48) }, 0.125, 0), multiply(translate(x, yF, zF), rotateX(-Math.PI / 2))))) });
+    });
+  }
   // platform along the −y wall at the hip, with its ladder
   const bars: MeshData[] = [], br: MeshData[] = [];
   for (let y = -39.25; y < -3.5; y += 1.5) bars.push(boxMesh(0, y - 3 / 32, zr - 1.5, L, y + 3 / 32, zr));
@@ -568,9 +596,11 @@ export function makeSwagedTower(inp: { tag: string; sections: [number, number][]
   const targets = zone.flatMap(q => (q.b - q.a > 60 ? [q.a + 24, q.b - 12] : [q.a + 24])), floors = floorsThrough(targets, 0).map(f => { const c = cone.find(q => f > q.a - 1 && f < q.b + 1); return c ? c.b + 12 : f; });
   s.push(...accessAt(Rz, floors));
   floors.forEach((f, k) => { const R = Rz(f); if (zone.some(q => f + 36 > q.a + 20 && f + 36 < q.b - 20)) s.push(...onShell(makeManway(`${tag}-M${k + 1}`, { D: 24, cls: 'P150', shellT: t, shellR: R }), R, 0, f + 36, `manway ${k + 1}`)); });
-  return equip(tag, 'COLUMN', `${tag} swaged tower ${sec.map(q => `${q[0]}"`).join(' / ')} ID, ${((zTop - zTL) / 12).toFixed(0)}' T/T with ${floors.length} platforms`, {
+  const part = equip(tag, 'COLUMN', `${tag} swaged tower ${sec.map(q => `${q[0]}"`).join(' / ')} ID, ${((zTop - zTL) / 12).toFixed(0)}' T/T with ${floors.length} platforms`, {
     D1: drawing(sec[0][0], 'Bottom shell inside diameter'), L1: drawing(sec[0][1], 'Bottom shell length'), D2: drawing(sec[1][0], 'Middle shell inside diameter'), L2: drawing(sec[1][1], 'Middle shell length'), D3: drawing(sec[2][0], 'Top shell inside diameter'), L3: drawing(sec[2][1], 'Top shell length'), skirtH: drawing(skirtH, 'Skirt height'),
     t: inp.t !== undefined ? drawing(t, 'Shell thickness') : rule(t, 'SW-EQC-65', 'Shell thickness'), cone1: rule(cone[0].b - cone[0].a, 'SW-EQC-65', 'Lower cone length (30° to the axis)'), cone2: rule(cone[1].b - cone[1].a, 'SW-EQC-65', 'Upper cone length (30° to the axis)'), overhead: rule(nO, 'SW-EQC-65', 'Overhead nozzle (D3 / 3, 24 in at most)'), feed: rule(nF, 'SW-EQC-65', 'Feed nozzle (D2 / 4)'), bottoms: rule(nB, 'SW-EQC-65', 'Bottoms nozzle (D1 / 8)'),
     platforms: rule(floors.length, 'SW-EQC-32', 'Platforms', 'count'), spacing: rule(180, 'SW-EQC-28', 'Platform spacing at most'),
   }, zTop + Rk[2] / 2 + 42, s, ['Trays and packing are not drawn.'], );
+  // the drawn body, for the plant to stand its connections on (SW-RPI-2 as amended 2026-11-27): shells and cones in the part's own z, and the heads' crowns
+  return { ...part, extra: { ...part.extra, profile: { zTL, zTop, Rbot: Rk[0], Rtop: Rk[2], zones: zone.map(q => ({ ...q })), cones: cone.map(c => ({ ...c })) } } };
 }

@@ -11,12 +11,12 @@ import { translate, multiply, rotateX, rotateY, rotateZ, frameFromAxes } from '.
 import { wProfile, lProfile, hssRoundProfile, cProfile } from '../../geometry/profiles';
 import { proportionW } from './wideFlange';
 import { proportionC } from './channel';
-import { pipeDims, designFlange, type PipeClass } from './pipe';
+import { pipeDims, designFlange, SIZE_SERIES, type PipeClass } from './pipe';
 import { vesselSolids, shellRing, headLoop, makeVerticalVessel, N_REV, type VesselVInput } from './equipment';
 import { sweep, boxMesh, orient, hexNut, boltingOf, arcPts, type V3 } from './detailKit';
 import {
   done, cylZ, cylX, cylY, tube, at, flangeSolids, flangeLen, seriesUp, makeNozzle, makeManway, makeDavit, makeColumn, dressVessel, seamSolids, makeShellTubeExchanger, makeProcessPump, motorSolids,
-  RADIAL, NOZZLE_UP, baseBolt, type Solid, type ColumnInput, type ShellTubeInput,
+  RADIAL, NOZZLE_UP, baseBolt, type Solid, type ColumnInput, type ShellTubeInput, type SeamClear, type SeamLayout,
 } from './equipmentKit';
 
 const sub = (a: V3, b: V3): V3 => [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
@@ -331,7 +331,7 @@ export function makeFlareStack(inp: FlareInput): PartSpec {
 }
 
 // ---- SW-EQC-36: wet scrubber tower ----------------------------------------------------------------------------------
-export interface ScrubberInput { tag: string; D: number; H: number; /** SW-EQC-36: a stated outside diameter for the gas inlet duct, which is then drawn level and without its flange, for a plant's own nozzle on its end */ inlet?: { OD: number }; /** SW-EQC-36: the angle about the tower at which the pumps, their riser and the spray nozzles stand, in place of 90° */ pumpsAt?: number }
+export interface ScrubberInput { tag: string; D: number; H: number; /** SW-EQC-36: a stated outside diameter for the gas inlet duct, which is then drawn level and without its flange, for a plant's own nozzle on its end */ inlet?: { OD: number; /** the line's pipe wall (as amended 2026-11-27); 1/4 in where not stated */ t?: number }; /** SW-EQC-36: the angle about the tower at which the pumps, their riser and the spray nozzles stand, in place of 90° */ pumpsAt?: number }
 export function makeWetScrubber(inp: ScrubberInput): PartSpec {
   const D = inp.D, H = inp.H, t = 0.375, R = D / 2 + t, zIn = 0.2 * H + 0.3 * D, rs = 0.25 * D + t, zc = H + (R - rs), thR = inp.pumpsAt ?? Math.PI / 2, rr = R + 16, s: Solid[] = [];
   s.push({ name: 'base plate', mesh: cylZ(0, 0, R + 5, 0, 0.75, 64) }, { name: 'shell', mesh: tube(R, t, H - 0.75, 0.75) }, { name: 'weld seams', mesh: seamSolids(R, t, 0.75, H - 0.75) },
@@ -339,7 +339,7 @@ export function makeWetScrubber(inp: ScrubberInput): PartSpec {
     { name: 'anchor bolts', role: 'hardware', mesh: mergeMeshes(Array.from({ length: 8 }, (_, i) => transformMesh(mergeMeshes([cylZ(R + 3, 0, 0.375, -1, 3, 10), at(hexNut(0.75), R + 3, 0, 0.75)]), rotateZ((i + 0.5) * (Math.PI / 4))))) },
     { name: 'top cone', mesh: frustum(R, rs, H, zc, t) }, { name: 'outlet stack', mesh: tube(rs, t, D, zc) }, { name: 'outlet flange', mesh: ringFlange(rs, zc + D) });
   const o: V3 = [R + 0.8 * D, 0, zIn + 0.14 * D], i0: V3 = [R - 3, 0, inp.inlet ? o[2] : zIn], u: V3 = [(i0[0] - o[0]), 0, (i0[2] - o[2])], ul = Math.hypot(u[0], u[2]);
-  if (inp.inlet) s.push({ name: 'gas inlet duct', mesh: member(o, i0, { outer: circle(0, 0, inp.inlet.OD / 2, 48), inner: circle(0, 0, inp.inlet.OD / 2 - 0.25, 48) }) });
+  if (inp.inlet) s.push({ name: 'gas inlet duct', mesh: member(o, i0, { outer: circle(0, 0, inp.inlet.OD / 2, 48), inner: circle(0, 0, inp.inlet.OD / 2 - (inp.inlet.t ?? 0.25), 48) }) });
   else s.push({ name: 'gas inlet duct', mesh: member(o, i0, { outer: circle(0, 0, 0.25 * D + 0.25, 48), inner: circle(0, 0, 0.25 * D, 48) }) }, { name: 'gas inlet flange', mesh: member(o, [o[0] + (u[0] / ul) * 1.5, 0, o[2] + (u[2] / ul) * 1.5], { outer: circle(0, 0, 0.25 * D + 4, 48), inner: circle(0, 0, 0.25 * D, 48) }) });
   const zs = [0, 1, 2].map(k => zIn + 0.4 * D + k * 0.12 * H), zWash = 0.8 * H - 14;
   s.push({ name: 'mist eliminator support rings', mesh: mergeMeshes([0.8 * H, 0.8 * H + 24].map(z => at(extrude({ outer: circle(0, 0, R + 3, 64), inner: circle(0, 0, R, 64) }, 0.5, 0), 0, 0, z))) });
@@ -466,7 +466,7 @@ export function makeBurner(id: string, d: number): PartSpec {
   return done(id, 'BURNER', `Burner, ${d}" throat`, { d: drawing(d, 'Throat diameter'), windbox: rule(2 * d, 'SW-EQC-42', 'Windbox square (2 d)'), depth: rule(d, 'SW-EQC-42', 'Windbox depth (d)'), gasRing: rule(2, 'SW-EQC-42', 'Gas ring pipe size') }, 1.5 * d + 18, burnerSolids(d));
 }
 /** SW-EQC-41: an economizer; z up from its gas inlet flange, tubes along x */
-export function economizerSolids(a: number, b: number, h: number): { solids: Solid[]; tubes: number } {
+export function economizerSolids(a: number, b: number, h: number, inletFlange = true): { solids: Solid[]; tubes: number } {
   const tubes: MeshData[] = [];
   for (let y = -b / 2 + 4; y <= b / 2 - 4; y += 4) for (let z = 6; z <= h - 6; z += 4) tubes.push(hollowSweep([[-a / 2 - 3, y, z], [a / 2 + 3, y, z]], 1, 0.22, 6));
   const solids: Solid[] = [{ name: 'casing PL3/16', cut: true, mesh: extrude({ outer: rect(-a / 2, -b / 2, a / 2, b / 2), inner: rect(-a / 2 + 0.1875, -b / 2 + 0.1875, a / 2 - 0.1875, b / 2 - 0.1875) }, h, 0) },
@@ -474,7 +474,8 @@ export function economizerSolids(a: number, b: number, h: number): { solids: Sol
     { name: 'return bend boxes', cut: true, mesh: mergeMeshes([extrude({ outer: rect(a / 2, -b / 2, a / 2 + 8, b / 2), inner: rect(a / 2 + 0.1875, -b / 2 + 0.1875, a / 2 + 7.8125, b / 2 - 0.1875) }, h, 0), extrude({ outer: rect(-a / 2 - 8, -b / 2, -a / 2, b / 2), inner: rect(-a / 2 - 7.8125, -b / 2 + 0.1875, -a / 2 - 0.1875, b / 2 - 0.1875) }, h, 0)]) },
     { name: 'gas flanges L3x3', mesh: mergeMeshes([0, h - 0.25].map(z => extrude({ outer: rect(-a / 2 - 3, -b / 2 - 3, a / 2 + 3, b / 2 + 3), inner: rect(-a / 2, -b / 2, a / 2, b / 2) }, 0.25, z))) },
     { name: 'water headers 6 in', mesh: mergeMeshes([8, h - 8].map(z => pipeRun([[a / 2 + 12, -b / 2 - 4, z], [a / 2 + 12, b / 2 + 10, z]], 6.625, 14))) },
-    { name: 'header flanges', mesh: mergeMeshes([8, h - 8].map(z => transformMesh(ringFlange(3.3125, 0, 2.5, 1), multiply(translate(a / 2 + 12, b / 2 + 10, z), rotateX(-Math.PI / 2))))) }];
+    { name: 'header flanges', mesh: mergeMeshes((inletFlange ? [8, h - 8] : [h - 8]).map(z => transformMesh(ringFlange(3.3125, 0, 2.5, 1), multiply(translate(a / 2 + 12, b / 2 + 10, z), rotateX(-Math.PI / 2))))) },   // SW-EQC-40 (amended 2026-11-27): the inlet's flange left to a plant's own connection
+    ...(inletFlange ? [] : [{ name: 'header end plate', mesh: (() => { const OD = 6.625, tp = Math.min(OD / 4, Math.max(0.2, OD / 14)), rb = OD / 2 - tp; return transformMesh(extrude({ outer: circle(0, 0, rb, 48) }, tp, 0), multiply(translate(a / 2 + 12, b / 2 + 10 - tp, 8), rotateX(-Math.PI / 2))); })() }])];   // the inlet end closed in its bore, flush with the pipe's end
   return { solids, tubes: tubes.length };
 }
 export function makeEconomizer(id: string, a: number, b: number, h: number): PartSpec {
@@ -482,7 +483,10 @@ export function makeEconomizer(id: string, a: number, b: number, h: number): Par
   return done(id, 'ECONOMIZER', `Economizer ${a}" × ${b}" × ${h}"`, { a: drawing(a, 'Casing width (tube length)'), b: drawing(b, 'Casing depth'), h: drawing(h, 'Casing height'), tubes: rule(e.tubes, 'SW-EQC-41', 'Coil tubes 2 in at 4 in pitch', 'count'), headers: rule(6, 'SW-EQC-41', 'Header size') }, h, e.solids, ['Return bends are inside the end boxes and not drawn.']);
 }
 
-export interface BoilerInput { tag: string; steamID: number; L: number; centres: number; stackD?: number; stackH?: number; /** a stated wall for the steam drum in place of the proportion (§72) */ drumT?: number }
+export interface BoilerInput { tag: string; steamID: number; L: number; centres: number; stackD?: number; stackH?: number; /** a stated wall for the steam drum in place of the proportion (§72) */ drumT?: number;
+  /** SW-EQC-40 (amended 2026-11-27): the plant's steam line size, for the outlet header; and whether the plant brings the feed water to the economizer's inlet */ steamNPS?: number; feedWater?: boolean }
+/** SW-EQC-40 (amended 2026-11-27): the superheater outlet header's size: the next above the steam line, and 8 in at least */
+export const boilerOutletHeader = (steamNPS?: number) => { const NPS = steamNPS === undefined ? 8 : Math.max(8, SIZE_SERIES.find(v => v > steamNPS + 1e-9) ?? steamNPS); return { NPS, OD: pipeDims(NPS, 'P150').OD }; };
 /** SW-EQC-40: a two-drum water-tube boiler; drums along y, z up from grade, the furnace on +x */
 export function makeWaterTubeBoiler(inp: BoilerInput): PartSpec {
   const L = inp.L, C = inp.centres, sd = steamDrumSolids({ tag: `${inp.tag}-SD`, ID: inp.steamID, L, saddles: false, t: inp.drumT }), md = mudDrumSolids({ tag: `${inp.tag}-MD`, ID: 0.65 * inp.steamID, L, saddles: false });
@@ -504,10 +508,12 @@ export function makeWaterTubeBoiler(inp: BoilerInput): PartSpec {
   s.push({ name: 'buckstays C6', role: 'steel', cut: true, mesh: mergeMeshes(stays) });
   const bd = Math.min(30, 0.2 * C);
   for (const [k, f] of [0.3, 0.7].entries()) s.push(...burnerSolids(bd).map(q => ({ ...q, cut: true, name: `burner ${k + 1}: ${q.name}`, mesh: transformMesh(q.mesh, [1, 0, 0, 0, 0, 0, 1, 0, 0, -1, 0, 0, 0.55 * Wf, 12 - pl, zm + f * C, 1]) })));
-  s.push({ name: 'superheater headers 8 in', mesh: mergeMeshes([0.35, 0.6].map(f => pipeRun([[f * Wf, 20, zr + 16], [f * Wf, L - 20, zr + 16]], 8.625, 14))) }, { name: 'superheater header supports', role: 'steel', mesh: mergeMeshes([0.35, 0.6].flatMap(f => [0.25 * L, 0.75 * L].map(y => boxMesh(f * Wf - 3, y - 1, zr + 4, f * Wf + 3, y + 1, zr + 12)))) });
+  // SW-EQC-40 (amended 2026-11-27): the outlet header (at 0.6 of the furnace's width) of the steam line's size or above when a plant gives it, drawn with 48 sides; each support up to its header's underside
+  const oh = boilerOutletHeader(inp.steamNPS), hdr = [{ f: 0.35, OD: 8.625, n: 14 }, { f: 0.6, OD: inp.steamNPS === undefined ? 8.625 : oh.OD, n: inp.steamNPS === undefined ? 14 : 48 }];
+  s.push({ name: `superheater headers 8 in${inp.steamNPS === undefined ? '' : ` and ${oh.NPS} in`}`, mesh: mergeMeshes(hdr.map(h => pipeRun([[h.f * Wf, 20, zr + 16], [h.f * Wf, L - 20, zr + 16]], h.OD, h.n))) }, { name: 'superheater header supports', role: 'steel', mesh: mergeMeshes(hdr.flatMap(h => [0.25 * L, 0.75 * L].map(y => boxMesh(h.f * Wf - 3, y - 1, zr + 4, h.f * Wf + 3, y + 1, zr + 16 - (h.OD / 2) * (h.n === 14 ? Math.cos(Math.PI / 14) : Math.cos(Math.PI / 48)))))) });
   s.push(...pointUp(makeNozzle(`${inp.tag}-SH`, { NPS: 8, cls: 'P600', shellT: 0.5 }), 0.6 * Wf, L / 2, zr + 20, 'superheated steam outlet'));
   // gas outlet duct, economizer and stack on the bank side at the far end
-  const ea = 60, eb = 72, eh = 96, ex = xb - 36 - ea / 2, ey = L - 12 - eb / 2, ez = zm, eco = economizerSolids(ea, eb, eh), sD = inp.stackD ?? 36, sH = inp.stackH ?? 600;
+  const ea = 60, eb = 72, eh = 96, ex = xb - 36 - ea / 2, ey = L - 12 - eb / 2, ez = zm, eco = economizerSolids(ea, eb, eh, !inp.feedWater), sD = inp.stackD ?? 36, sH = inp.stackH ?? 600;
   s.push({ name: 'gas outlet duct', cut: true, mesh: mergeMeshes([boxMesh(xb - 36, L - 12 - eb, zf, xb, L - 12, zf + pl), boxMesh(xb - 36, L - 12 - eb, ez - 8, xb, L - 12, ez - 8 + pl), boxMesh(xb - 36, L - 12 - eb, zf, xb, L - 12 - eb + pl, ez - 8), boxMesh(xb - 36, L - 12 - pl, zf, xb, L - 12, ez - 8), boxMesh(xb - 36 - ea, L - 12 - eb, zf, xb - 36, L - 12, zf + pl), boxMesh(xb - 36 - ea - pl, L - 12 - eb, zf, xb - 36 - ea, L - 12, ez), boxMesh(xb - 36 - ea, L - 12 - eb, zf, xb - 36, L - 12 - eb + pl, ez), boxMesh(xb - 36 - ea, L - 12 - pl, zf, xb - 36, L - 12, ez)]) });
   s.push(...lift(eco.solids, ex, ey, ez).map(q => ({ ...q, name: `economizer ${q.name}` })), { name: 'stack transition', cut: true, mesh: at(frustum(Math.min(ea, eb) / 2, sD / 2, 0, 30, pl), ex, ey, ez + eh) }, ...lift(stackSolids(sD, sH, { flare: false, z0: 0, platformAt: 0.8 * sH }).filter(q => !/ladder 1:|platform 1:/.test(q.name) || true), ex, ey, ez + eh + 30).map(q => ({ ...q, name: `stack ${q.name.replace(/^stack /, '')}` })));
   // access to the steam drum: a walkway on the bank roof with a handrail, ladders with landings from grade
@@ -517,7 +523,7 @@ export function makeWaterTubeBoiler(inp: BoilerInput): PartSpec {
     steamID: drawing(inp.steamID, 'Steam drum inside diameter'), L: drawing(L, 'Drum length'), centres: drawing(C, 'Drum centres'), mudID: rule(0.65 * inp.steamID, 'SW-EQC-39', 'Mud drum diameter (0.65 of the steam drum)'),
     bank: rule(bank.length, 'SW-EQC-40', 'Generating tubes 2 in, 8 rows at 4 in', 'count'), walls: rule(walls.length, 'SW-EQC-40', 'Water-wall tubes 3 in at 4 in', 'count'), furnaceW: rule(Wf, 'SW-EQC-40', 'Furnace width (0.9 of the centres)'),
     burners: rule(2, 'SW-EQC-40', 'Burners', 'count'), burnerD: rule(bd, 'SW-EQC-42', 'Burner throat'), stackD: inp.stackD !== undefined ? drawing(sD, 'Stack diameter') : rule(sD, 'SW-EQC-40', 'Stack diameter'), stackH: inp.stackH !== undefined ? drawing(sH, 'Stack height') : rule(sH, 'SW-EQC-40', 'Stack height'),
-  }, ez + eh + 30 + sH, s, ['Refractory, insulation, superheater coils and sootblowers are not drawn; catalogue images cut the casing (SW-EQC-40).'], { zs, zm });
+  }, ez + eh + 30 + sH, s, ['Refractory, insulation, superheater coils and sootblowers are not drawn; catalogue images cut the casing (SW-EQC-40).'], { zs, zm, /** the economizer's lower header: a point on its axis at the end of its pipe, the axis outward, its OD (SW-RPI-2 as amended 2026-11-27) */ feedHeader: { at: [ex + ea / 2 + 12, ey + eb / 2 + 10, ez + 8], u: [0, 1, 0], OD: 6.625 } });
 }
 
 // ---- SW-EQC-44: above-ground storage tanks -----------------------------------------------------------------------------
@@ -542,17 +548,24 @@ export function spiralStair(R: number, z0: number, z1: number, a0: number): { so
   return { aEnd: a0 + n * dth, solids: [{ name: `stair treads (${n}, rise ${rise.toFixed(2)} in)`, role: 'galv', mesh: mergeMeshes(treads) }, { name: 'stair stringers PL3/8', role: 'steel', mesh: mergeMeshes(str) }, { name: 'stair brackets', role: 'steel', mesh: mergeMeshes(brk) }, { name: 'stair handrail', role: 'safety', mesh: mergeMeshes(rail) }] };
 }
 /** a tank shell's seams: a ring at every course joint (96 in courses) and vertical seams about 30 ft apart, staggered course to course */
-function tankSeams(R: number, t: number, z0: number, H: number): MeshData {
+export function tankSeams(R: number, t: number, z0: number, H: number, clear: SeamClear = []): MeshData & { seams: SeamLayout } {
   const wc = 2 * t + 0.25, parts: MeshData[] = [], nv = Math.max(3, Math.ceil((2 * Math.PI * R) / 360)), courses = Math.ceil(H / 96);
+  // SW-DET-6 (amended 2026-11-27): each course's vertical seams turned together, by the least quarter degree, clear of the connections on that course
+  const turn = (k: number) => { const on = clear.filter(c => c.a !== undefined && c.z >= 96 * k - c.h && c.z <= 96 * (k + 1) + c.h); if (!on.length) return 0;
+    const gap = (x: number) => { const d = Math.abs(((x % (2 * Math.PI)) + 3 * Math.PI) % (2 * Math.PI) - Math.PI); return d; };
+    for (let q = 0; q < 1440; q++) { const dl = (q * Math.PI) / 720, ok = Array.from({ length: nv }, (_, i) => (2 * Math.PI * (i + (k % 3) / 3)) / nv + dl).every(a => on.every(c => gap(a - c.a!) * R >= c.h + wc / 2)); if (ok) return dl; }
+    return 0; };
   for (let k = 1; k < courses; k++) parts.push(orient(revolve([{ r: R - 0.02, z: z0 + 96 * k - wc / 2 }, { r: R, z: z0 + 96 * k - wc / 2 }, { r: R + 0.125, z: z0 + 96 * k - wc / 4 }, { r: R + 0.125, z: z0 + 96 * k + wc / 4 }, { r: R, z: z0 + 96 * k + wc / 2 }, { r: R - 0.02, z: z0 + 96 * k + wc / 2 }], 96)));
-  for (let k = 0; k < courses; k++) for (let i = 0; i < nv; i++) parts.push(transformMesh(boxMesh(R - 0.02, -wc / 2, z0 + 96 * k + (k ? wc / 2 : 0), R + 0.125, wc / 2, Math.min(z0 + H, z0 + 96 * (k + 1)) - wc / 2), rotateZ((2 * Math.PI * (i + (k % 3) / 3)) / nv)));
-  return mergeMeshes(parts);
+  for (let k = 0; k < courses; k++) for (let i = 0; i < nv; i++) parts.push(transformMesh(boxMesh(R - 0.02, -wc / 2, z0 + 96 * k + (k ? wc / 2 : 0), R + 0.125, wc / 2, Math.min(z0 + H, z0 + 96 * (k + 1)) - wc / 2), rotateZ((2 * Math.PI * (i + (k % 3) / 3)) / nv + turn(k))));
+  return Object.assign(mergeMeshes(parts), { seams: { R, t, z0, TT: H, tank: true } });
 }
 export const ringRail = (r: number, z: number): MeshData => { const np = Math.max(8, Math.ceil((2 * Math.PI * r) / 72)), parts: MeshData[] = []; for (let i = 0; i < np; i++) { const a = (2 * Math.PI * (i + 0.5)) / np; parts.push(cylZ(r * Math.cos(a), r * Math.sin(a), 0.95, z, z + 42, 8)); } const ring = (h: number, rad: number) => sweep(Array.from({ length: 96 }, (_, i) => [r * Math.cos((2 * Math.PI * i) / 96), r * Math.sin((2 * Math.PI * i) / 96), z + h] as V3), rad, 8, true); parts.push(ring(42, 0.95), ring(21, 0.66)); return mergeMeshes(parts); };
 export interface StorageTankInput { tag: string; D: number; H: number; t?: number }
+/** SW-EQC-44 (amended 2026-11-27): the sides a tank's round parts are drawn with: none longer than 8 in, 96 at least */
+const tankSides = (R: number) => Math.max(96, Math.ceil((2 * Math.PI * R) / 8));
 function tankCommon(inp: StorageTankInput): { s: Solid[]; R: number; t: number; aEnd: number } {
   const R = inp.D / 2, t = inp.t ?? 0.3125, H = inp.H, s: Solid[] = [];
-  s.push({ name: 'bottom plate', mesh: cylZ(0, 0, R + 2, 0, 0.25, 96) }, { name: 'shell', mesh: at(extrude({ outer: circle(0, 0, R, 96), inner: circle(0, 0, R - t, 96) }, H, 0), 0, 0, 0.25) }, { name: 'shell seams', mesh: tankSeams(R, t, 0.25, H) });
+  s.push({ name: 'bottom plate', mesh: cylZ(0, 0, R + 2, 0, 0.25, tankSides(R)) }, { name: 'shell', mesh: at(extrude({ outer: circle(0, 0, R, tankSides(R)), inner: circle(0, 0, R - t, tankSides(R)) }, H, 0), 0, 0, 0.25) }, { name: 'shell seams', mesh: tankSeams(R, t, 0.25, H) });
   for (const [k, th] of [0.9, 0.9 + Math.PI].entries()) s.push(...onShell(makeManway(`${inp.tag}-M${k + 1}`, { D: 24, cls: 'P150', shellT: t, shellR: R }), R, th, 36, `shell manway ${k + 1}`));
   s.push(...onShell(makeNozzle(`${inp.tag}-N1`, { NPS: 6, cls: 'P150', shellT: t, shellR: R }), R, 2.5, 30, 'inlet nozzle'), ...onShell(makeNozzle(`${inp.tag}-N2`, { NPS: 8, cls: 'P150', shellT: t, shellR: R }), R, 2.2, 24, 'outlet nozzle'), ...onShell(makeNozzle(`${inp.tag}-N3`, { NPS: 3, cls: 'P150', shellT: t, shellR: R, blind: true }), R, 2.8, 10, 'drain nozzle'));
   const st = spiralStair(R, 0, H + 0.25, -0.5);
@@ -561,8 +574,8 @@ function tankCommon(inp: StorageTankInput): { s: Solid[]; R: number; t: number; 
 }
 export function makeConeRoofTank(inp: StorageTankInput): PartSpec {
   const { s, R, t, aEnd } = tankCommon(inp), H = inp.H, rise = (R * 0.75) / 12, zt = H + 0.25, zAt = (r: number) => zt + rise * (1 - r / R);
-  s.push({ name: 'curb angle L2x2x1/4', mesh: mergeMeshes([at(extrude({ outer: circle(0, 0, R + 0.25, 96), inner: circle(0, 0, R, 96) }, 2, 0), 0, 0, zt - 2), at(extrude({ outer: circle(0, 0, R + 2, 96), inner: circle(0, 0, R + 0.25, 96) }, 0.25, 0), 0, 0, zt - 0.25)]) },
-    { name: 'cone roof PL3/16', mesh: at(orient(revolve([{ r: R, z: 0 }, { r: 0, z: rise }, { r: 0, z: rise + 0.1875 }, { r: R, z: 0.1875 }], 96)), 0, 0, zt) });
+  s.push({ name: 'curb angle L2x2x1/4', mesh: mergeMeshes([at(extrude({ outer: circle(0, 0, R + 0.25, tankSides(R)), inner: circle(0, 0, R, tankSides(R)) }, 2, 0), 0, 0, zt - 2), at(extrude({ outer: circle(0, 0, R + 2, tankSides(R)), inner: circle(0, 0, R + 0.25, tankSides(R)) }, 0.25, 0), 0, 0, zt - 0.25)]) },
+    { name: 'cone roof PL3/16', mesh: at(orient(revolve([{ r: R, z: 0 }, { r: 0, z: rise }, { r: 0, z: rise + 0.1875 }, { r: R, z: 0.1875 }], tankSides(R))), 0, 0, zt) });
   s.push({ name: 'gooseneck vent 6 in', mesh: pipeRun([[0, 0, zAt(0) - 1], [0, 0, zAt(0) + 14], ...arcPts([7, 0, zAt(0) + 14], [-1, 0, 0], [0, 0, 1], 7, 0, Math.PI, 8), [14, 0, zAt(0) + 8]], 6.625, 16) },
     ...pointUp(makeNozzle(`${inp.tag}-RM`, { NPS: 24, cls: 'P150', shellT: 0.1875, blind: true }), 0.5 * R * Math.cos(aEnd + 0.4), 0.5 * R * Math.sin(aEnd + 0.4), zAt(0.5 * R) - 1, 'roof manway'),
     ...pointUp(makeNozzle(`${inp.tag}-GH`, { NPS: 8, cls: 'P150', shellT: 0.1875, blind: true }), (R - 30) * Math.cos(aEnd + 0.15), (R - 30) * Math.sin(aEnd + 0.15), zAt(R - 30) - 1, 'gauge hatch'));
@@ -574,10 +587,10 @@ export function makeConeRoofTank(inp: StorageTankInput): PartSpec {
 }
 export function makeFloatingRoofTank(inp: StorageTankInput): PartSpec {
   const { s, R, t, aEnd } = tankCommon(inp), H = inp.H, zt = H + 0.25, zg = zt - 42, zr = 0.8 * H, Rp = R - t - 8, wp = 0.1 * inp.D;
-  s.push({ name: 'wind girder walkway PL1/4', role: 'galv', mesh: at(extrude({ outer: circle(0, 0, R + 30, 96), inner: circle(0, 0, R, 96) }, 0.25, 0), 0, 0, zg) }, { name: 'wind girder kerb and braces', role: 'steel', mesh: mergeMeshes([at(extrude({ outer: circle(0, 0, R + 30.25, 96), inner: circle(0, 0, R + 30, 96) }, 6, 0), 0, 0, zg - 6), ...Array.from({ length: 24 }, (_, i) => { const a = (2 * Math.PI * i) / 24, c = Math.cos(a), sn = Math.sin(a); return member([(R + 28) * c, (R + 28) * sn, zg - 0.3], [(R - 0.1) * c, (R - 0.1) * sn, zg - 30], P_L3); })]) },
+  s.push({ name: 'wind girder walkway PL1/4', role: 'galv', mesh: at(extrude({ outer: circle(0, 0, R + 30, tankSides(R)), inner: circle(0, 0, R, tankSides(R)) }, 0.25, 0), 0, 0, zg) }, { name: 'wind girder kerb and braces', role: 'steel', mesh: mergeMeshes([at(extrude({ outer: circle(0, 0, R + 30.25, tankSides(R)), inner: circle(0, 0, R + 30, tankSides(R)) }, 6, 0), 0, 0, zg - 6), ...Array.from({ length: 24 }, (_, i) => { const a = (2 * Math.PI * i) / 24, c = Math.cos(a), sn = Math.sin(a); return member([(R + 28) * c, (R + 28) * sn, zg - 0.3], [(R - 0.1) * c, (R - 0.1) * sn, zg - 30], P_L3); })]) },
     { name: 'wind girder handrail', role: 'safety', mesh: ringRail(R + 28.5, zg + 0.25) });
-  s.push({ name: 'floating roof pontoon PL3/16', mesh: mergeMeshes([at(extrude({ outer: circle(0, 0, Rp, 96), inner: circle(0, 0, Rp - 0.1875, 96) }, 24, 0), 0, 0, zr - 24), at(extrude({ outer: circle(0, 0, Rp - wp + 0.1875, 96), inner: circle(0, 0, Rp - wp, 96) }, 24, 0), 0, 0, zr - 24), at(extrude({ outer: circle(0, 0, Rp - 0.1875, 96), inner: circle(0, 0, Rp - wp + 0.1875, 96) }, 0.1875, 0), 0, 0, zr - 0.1875), at(extrude({ outer: circle(0, 0, Rp - 0.1875, 96), inner: circle(0, 0, Rp - wp + 0.1875, 96) }, 0.1875, 0), 0, 0, zr - 24)]) }, { name: 'floating roof deck PL3/16', mesh: cylZ(0, 0, Rp - wp + 1, zr - 18, zr - 17.8125, 96) },
-    { name: 'rim seal', role: 'polymer', mesh: frustum(Rp + 0.2, R - t - 0.2, zr, zr + 10, 0.125, 96) }, { name: 'roof drain sump', mesh: boxMesh(-12, -12, zr - 30, 12, 12, zr - 18) });
+  s.push({ name: 'floating roof pontoon PL3/16', mesh: mergeMeshes([at(extrude({ outer: circle(0, 0, Rp, tankSides(R)), inner: circle(0, 0, Rp - 0.1875, tankSides(R)) }, 24, 0), 0, 0, zr - 24), at(extrude({ outer: circle(0, 0, Rp - wp + 0.1875, tankSides(R)), inner: circle(0, 0, Rp - wp, tankSides(R)) }, 24, 0), 0, 0, zr - 24), at(extrude({ outer: circle(0, 0, Rp - 0.1875, tankSides(R)), inner: circle(0, 0, Rp - wp + 0.1875, tankSides(R)) }, 0.1875, 0), 0, 0, zr - 0.1875), at(extrude({ outer: circle(0, 0, Rp - 0.1875, tankSides(R)), inner: circle(0, 0, Rp - wp + 0.1875, tankSides(R)) }, 0.1875, 0), 0, 0, zr - 24)]) }, { name: 'floating roof deck PL3/16', mesh: cylZ(0, 0, Rp - wp + 1, zr - 18, zr - 17.8125, tankSides(R)) },
+    { name: 'rim seal', role: 'polymer', mesh: frustum(Rp + 0.2, R - t - 0.2, zr, zr + 10, 0.125, tankSides(R)) }, { name: 'roof drain sump', mesh: boxMesh(-12, -12, zr - 30, 12, 12, zr - 18) });
   const legs: MeshData[] = []; for (let i = 0; i < 12; i++) { const a = (2 * Math.PI * i) / 12; legs.push(cylZ(0.72 * R * Math.cos(a), 0.72 * R * Math.sin(a), 1.75, zr - 84, zr - 10, 10)); } for (let i = 0; i < 6; i++) { const a = (2 * Math.PI * (i + 0.5)) / 6; legs.push(cylZ(0.35 * R * Math.cos(a), 0.35 * R * Math.sin(a), 1.75, zr - 84, zr - 10, 10)); }
   s.push({ name: 'roof legs (18 × 3 in pipe)', mesh: mergeMeshes(legs) }, ...pointUp(makeNozzle(`${inp.tag}-RV`, { NPS: 8, cls: 'P150', shellT: 0.1875, projection: 12 }), 0.3 * R, 0, zr - 18, 'roof vent'), ...pointUp(makeNozzle(`${inp.tag}-RM`, { NPS: 24, cls: 'P150', shellT: 0.1875, blind: true }), -0.3 * R, 0, zr - 18, 'deck manway'));
   // rolling ladder from the gauger's platform to the roof at 40°

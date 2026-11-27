@@ -447,18 +447,31 @@ export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp)
  * horizontal member over it whose underside lies within 6 in of the plate. Returns the hangers changed.
  */
 export function hangerTops(m: PipingModel, plant: PlantDef): string[] {
-  const out: string[] = [], PLATE = 0.375;
+  // SW-RPI-20 (amended 2026-11-27): at least ROD_CLEAR of rod between its lower attachment and its plate, or the support is taken out (SW-RPI-18);
+  // a note of one taken out begins 'taken out'
+  const out: string[] = [], PLATE = 0.375, ROD_CLEAR = 3, gone = new Set<object>();
+  // SW-RPI-20 (amended 2026-11-27): where no member is found, does any drawn solid stand over the plate, its underside within 1/2 in above it (or the plate in it)?
+  let truth: TrueSolid[] | undefined;
+  const underSomething = (pl: Box) => (truth ??= trueSolids(plant)).some(q => q.box[0][0] < pl[1][0] - 0.01 && pl[0][0] + 0.01 < q.box[1][0] && q.box[0][2] < pl[1][2] - 0.01 && pl[0][2] + 0.01 < q.box[1][2] && q.box[1][1] > pl[1][1] + 0.05 && q.box[0][1] <= pl[1][1] + 0.5);   // over the plate, or the plate in it
+  const platesOf = (sp: { key: string; T: unknown }) => { const sol = supportSolids(sp.key, sp.T as number[]), top = Math.max(...sol.map(b => b[1][1])); return sol.filter(b => b[1][1] > top - 1e-6); };   // a hanger's top plate
   const members = plant.interior().instances.filter(pl => !pl.tags.some(t => /keep-out|equipment|pad|grating|ladder|guardrail|stair|bracing|column|post|pedestal|anchor|bolt|weld|clip|plate/.test(t)))
     .map(pl => worldBox(pl.part, pl.transform)).filter((b): b is Box => !!b && b[1][1] - b[0][1] <= 36 && Math.max(b[1][0] - b[0][0], b[1][2] - b[0][2]) >= 24);
   for (const r of m.lines) for (const sp of r.supports) {
     if (sp.type === 'trapeze') {   // SW-RPI-20 (amended): each of a trapeze's rods to the member over it or its plate
       const k = sp.key.split('|'), T = sp.T as unknown as number[], X: V3 = [T[0], T[1], T[2]], OD = pipeDims(Number(k[1]), k[2] as PipeClass).OD, a = k[5] !== undefined ? Number(k[5]) : OD / 2 + 6;
-      const hs = [Number(k[3]), Number(k[4])], nh = hs.map((h, i) => {
+      const hs = [Number(k[3]), Number(k[4])], least = ROD_CLEAR - OD / 2, found = [false, false], nh = hs.map((h, i) => {   // a trapeze's rod clear from the top of its crossbar, at the pipe's bottom
         const s0 = i ? 1 : -1, x = sp.at[0] + X[0] * a * s0, z = sp.at[2] + X[2] * a * s0, top = sp.at[1] + h + PLATE;
         let over = members.filter(b => x >= b[0][0] - 0.01 && x <= b[1][0] + 0.01 && z >= b[0][2] - 0.01 && z <= b[1][2] + 0.01 && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]);
         if (!over.length) over = members.filter(b => b[0][0] < x + 2 - 0.01 && x - 2 + 0.01 < b[1][0] && b[0][2] < z + 2 - 0.01 && z - 2 + 0.01 < b[1][2] && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]);
-        if (!over.length) return h; const h2 = over[0][0][1] - PLATE - sp.at[1]; return h2 < 8 ? h : h2;
+        if (!over.length) return h; found[i] = true; return over[0][0][1] - PLATE - sp.at[1];
       });
+      // a rod over which no member stands, and whose plate meets no drawn solid's underside, hangs from nothing
+      // each rod's plate, 4 in square, from the key (the catalogue draws the two plates as one solid): along X and along the pipe (T's third axis)
+      const W: V3 = [T[8], T[9], T[10]], plate = (i: number): Box => { const s0 = i ? 1 : -1, c = [sp.at[0] + X[0] * a * s0, sp.at[2] + X[2] * a * s0], ex = Math.abs(X[0]) * 2 + Math.abs(W[0]) * 2, ez = Math.abs(X[2]) * 2 + Math.abs(W[2]) * 2;
+        return [[c[0] - ex, sp.at[1] + hs[i], c[1] - ez], [c[0] + ex, sp.at[1] + hs[i] + PLATE, c[1] + ez]]; };
+      const unhung = [0, 1].filter(i => !found[i] && !underSomething(plate(i)));
+      if (unhung.length) { gone.add(sp); out.push(`taken out: ${sp.id}, a trapeze whose rod${unhung.length > 1 ? 's hang' : ' hangs'} from nothing (SW-RPI-20, SW-RPI-18)`); continue; }
+      if (nh.some(h => h < least)) { gone.add(sp); out.push(`taken out: ${sp.id}, a trapeze whose rods would be ${nh.map(h => h.toFixed(2)).join(', ')} in, under ${least.toFixed(2)} in (SW-RPI-20, SW-RPI-18)`); continue; }
       if (nh.some((h, i) => Math.abs(h - hs[i]) >= 0.01)) { sp.key = [k[0], k[1], k[2], nh[0].toFixed(2), nh[1].toFixed(2), ...k.slice(5)].join('|'); out.push(`${sp.id}: rods ${hs.map(h => h.toFixed(2)).join(', ')} → ${nh.map(h => h.toFixed(2)).join(', ')} in`); }
       continue;
     }
@@ -467,10 +480,13 @@ export function hangerTops(m: PipingModel, plant: PlantDef): string[] {
     let over = members.filter(b => x >= b[0][0] - 0.01 && x <= b[1][0] + 0.01 && z >= b[0][2] - 0.01 && z <= b[1][2] + 0.01 && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]);
     // SW-RPI-20 (amended): where none is over the rod, the member over its top plate (the generator hangs a rod up to 1.2 in past a flange's edge)
     if (!over.length) { const sol = supportSolids(sp.key, sp.T as unknown as number[]), pl = sol.reduce((a, b) => (b[1][1] > a[1][1] ? b : a)); over = members.filter(b => b[0][0] < pl[1][0] - 0.01 && pl[0][0] + 0.01 < b[1][0] && b[0][2] < pl[1][2] - 0.01 && pl[0][2] + 0.01 < b[1][2] && Math.abs(b[0][1] - top) <= 6).sort((p, q) => p[0][1] - q[0][1]); }
-    if (!over.length) continue;
-    const under = over[0][0][1], L2 = under - PLATE - sp.at[1]; if (Math.abs(L2 - L) < 0.01 || L2 < 8) continue;
+    if (!over.length) { if (!platesOf(sp).some(underSomething)) { gone.add(sp); out.push(`taken out: ${sp.id}, a hanger whose rod hangs from nothing (SW-RPI-20, SW-RPI-18)`); } continue; }
+    const under = over[0][0][1], L2 = under - PLATE - sp.at[1], least = pipeDims(Number(k[1]), k[2] as PipeClass).OD / 2 + 1.5 + ROD_CLEAR;   // clear from the clamp ears' top
+    if (L2 < least) { gone.add(sp); out.push(`taken out: ${sp.id}, a hanger whose rod would be ${L2.toFixed(2)} in, under ${least.toFixed(2)} in (SW-RPI-20, SW-RPI-18)`); continue; }
+    if (Math.abs(L2 - L) < 0.01) continue;
     sp.key = [k[0], k[1], k[2], L2.toFixed(2), ...k.slice(4)].join('|'); out.push(`${sp.id}: rod ${L.toFixed(2)} → ${L2.toFixed(2)} in`);
   }
+  if (gone.size) for (const r of m.lines) r.supports = r.supports.filter(sp => !gone.has(sp));
   return out;
 }
 /** SW-RPI-21: the two stud sets of the joints either side of a wafer valve made one set through both flanges. Returns the valves corrected. */
@@ -509,19 +525,20 @@ export function shoesOffWelds(m: PipingModel, plant: PlantDef): { moved: string[
   const onWeld = (key: string, T: number[]) => supportSolids(key, T).some(b => welds.some(q => solidIn(q, b)));
   for (const r of m.lines) for (const sp of r.supports) {
     if (!/^(shoe|guide|anchor)$/.test(sp.type)) continue;
-    const T0 = sp.T as unknown as number[]; if (!onWeld(sp.key, T0)) continue;
-    const w: V3 = [T0[8], T0[9], T0[10]], sol = supportSolids(sp.key, T0), base = sol.reduce((a, b) => (b[0][1] < a[0][1] ? b : a));
+    const T0 = sp.T as unknown as number[], w: V3 = [T0[8], T0[9], T0[10]], sol = supportSolids(sp.key, T0), base = sol.reduce((a, b) => (b[0][1] < a[0][1] ? b : a));
+    const half = Math.max(...sol.map(b => Math.abs((b[1][0] - b[0][0]) * w[0]) + Math.abs((b[1][2] - b[0][2]) * w[2]))) / 2;
+    // SW-RPI-28 (amended): wholly on one straight, level pipe of its own line, 1 in clear of the pipe's ends (its butt welds, a reducer, an elbow's bend)
+    const onPipe = (at: V3) => r.comps.some(c => { if (c.kind !== 'pipe') return false; const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), t = ((at[0] - c.a[0]) * (c.b[0] - c.a[0]) + (at[2] - c.a[2]) * (c.b[2] - c.a[2])) / (L || 1); return Math.abs((c.b[1] - c.a[1])) < 1e-6 && t > half + 1 && t < L - half - 1 && Math.hypot(c.a[0] + (c.b[0] - c.a[0]) * t / L - at[0], c.a[2] + (c.b[2] - c.a[2]) * t / L - at[2]) < 0.5; });
+    if (!onWeld(sp.key, T0) && onPipe(sp.at as V3)) continue;
     // the member it stands on: a true solid, not a weld, whose top meets its base
     const under = truth.find(q => !/weld/.test(q.tag) && !q.cap && Math.abs(q.box[1][1] - base[0][1]) <= 0.05 && q.box[0][0] < base[1][0] && base[0][0] < q.box[1][0] && q.box[0][2] < base[1][2] && base[0][2] < q.box[1][2]);
-    const half = Math.max(...sol.map(b => Math.abs((b[1][0] - b[0][0]) * w[0]) + Math.abs((b[1][2] - b[0][2]) * w[2]))) / 2;
     let done = false;
     for (let d = 1; d <= 6 && !done; d++) for (const s0 of [1, -1]) {
       const o = d * s0, at: V3 = [sp.at[0] + w[0] * o, sp.at[1] + w[1] * o, sp.at[2] + w[2] * o], T = [...T0.slice(0, 12), T0[12] + w[0] * o, T0[13] + w[1] * o, T0[14] + w[2] * o, 1];
       if (onWeld(sp.key, T)) continue;
       const nb = supportSolids(sp.key, T).reduce((a, b) => (b[0][1] < a[0][1] ? b : a));
       if (under && !(under.box[0][0] < nb[1][0] && nb[0][0] < under.box[1][0] && under.box[0][2] < nb[1][2] && nb[0][2] < under.box[1][2])) continue;
-      const onPipe = r.comps.some(c => { if (c.kind !== 'pipe') return false; const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), t = ((at[0] - c.a[0]) * (c.b[0] - c.a[0]) + (at[2] - c.a[2]) * (c.b[2] - c.a[2])) / (L || 1); return Math.abs((c.b[1] - c.a[1])) < 1e-6 && t > half + 1 && t < L - half - 1 && Math.hypot(...[0, 2].map(k => c.a[k] + (c.b[k] - c.a[k]) * t / L - at[k])) < 0.5; });
-      if (!onPipe) continue;
+      if (!onPipe(at)) continue;
       sp.at = at as never; sp.T = T as never; moved.push(`${sp.id} ${o > 0 ? '+' : ''}${o} in`); done = true; break;
     }
     if (!done) left.push(sp.id);

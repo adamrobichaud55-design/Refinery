@@ -8,12 +8,15 @@ import { unitPiping } from '../src/refinery/unitPiping';
 import { unitChecks, valveBoxFn, spanNote, type PipedUnit } from '../src/refinery/pipingReport';
 import { supportsAlongSpans, supportsThatStrike, framesThatStrike, valvesThatStrike, hangerTops, waferStuds, withFrames, shoesOffWelds } from '../src/refinery/supports';
 import { squareWelds, insideFillets, spadeHandles } from '../src/refinery/welds';
+import { necksToPlan } from '../src/refinery/necks';
 // PIPING_DIR: another folder of unit models to correct in place of the repository's (a copy, to try the correction on)
 const dir = process.env.PIPING_DIR ?? 'public/refinery/piping', vb = valveBoxFn();
 const units = process.argv.slice(2).map(Number); for (const u of units.length ? units : [11, 12, 13, 14, 15, 16, 17, 18, 19]) {
   const m = JSON.parse(readFileSync(`${dir}/unit-${u}.json`, 'utf8')) as PipingModel, r = JSON.parse(readFileSync(`${dir}/unit-${u}.report.json`, 'utf8')) as PipedUnit, up = unitPiping(u);
   // made again on a model that has had it, the counts are added to the note already there
   const was = r.notes.findIndex(n => n.includes('(SW-RPI-17)')), num = (re: RegExp) => (was >= 0 ? Number(re.exec(r.notes[was])?.[1] ?? 0) : 0);
+  // SW-NOZ-1 (amended 2026-11-27): necks to the item's drawn body, as the plan now gives them, before anything is tested against them
+  const nk = necksToPlan(m, up.nozzles); if (nk.length) r.notes.push(`${nk.length} nozzle necks cut again to the item's drawn body, their faces kept (SW-NOZ-1): ${nk.join('; ')}`);
   // SW-RPI-18 (amended): a frame already set that strikes is taken out with its shoe; those kept are solids for the tests and for SW-RPI-17
   const fr = framesThatStrike(m, up.plant, r.frames ?? [], vb); r.frames = fr.kept;
   if (fr.out.length) r.notes.push(`${fr.out.length} pipe frames taken out with their shoes where they struck (SW-RPI-18): ${fr.out.join('; ')}`);
@@ -26,8 +29,8 @@ const units = process.argv.slice(2).map(Number); for (const u of units.length ? 
   const ht0 = hangerTops(m, pf);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets
   const struck = supportsThatStrike(m, pf, vb);   // SW-RPI-18 first: supports whose rod, post or leg strikes are taken out
   const before = r.checks.supports.length, s = supportsAlongSpans(m, pf, vb), ht = [...ht0, ...hangerTops(m, pf)], ws = waferStuds(m), aside: string[] = [], checks = unitChecks(m, up, aside);
-  const so = shoesOffWelds(m, pf); if (so.moved.length || so.left.length) r.notes.push(`${so.moved.length} shoes and guides moved along their runs off the welds of the steel they stand on (SW-RPI-28)${so.moved.length ? `: ${so.moved.join('; ')}` : ''}${so.left.length ? `; ${so.left.length} with no clear place, left: ${so.left.join('; ')}` : ''}`);
-  if (ht.length) r.notes.push(`${ht.length} hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)`); if (ws.length) r.notes.push(`${ws.length} wafer valves bolted with one stud set through both flanges (SW-RPI-21)`);
+  const so = shoesOffWelds(m, pf); if (so.moved.length || so.left.length) r.notes.push(`${so.moved.length} shoes and guides moved along their runs, off the welds of the steel they stand on and wholly onto one straight pipe of their line (SW-RPI-28)${so.moved.length ? `: ${so.moved.join('; ')}` : ''}${so.left.length ? `; ${so.left.length} with no clear place, left: ${so.left.join('; ')}` : ''}`);
+  { const htOut = ht.filter(x => x.startsWith('taken out')), htCut = ht.length - htOut.length; if (htCut) r.notes.push(`${htCut} hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)`); if (htOut.length) r.notes.push(`${htOut.length} hangers or trapezes taken out where their rods could not be cut to the steel's underside with 3 in of rod clear (SW-RPI-20, SW-RPI-18): ${htOut.map(x => x.slice(11)).join('; ')}`); } if (ws.length) r.notes.push(`${ws.length} wafer valves bolted with one stud set through both flanges (SW-RPI-21)`);
   if (struck.length) r.notes.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`);
   if (was >= 0) { s.hangers += num(/(\d+) hangers/); s.onSteel += num(/(\d+) stanchions on steel/); s.stanchions += num(/, (\d+) stanchions and/); s.posts += num(/(\d+) support posts/); s.frames = [...(r.frames ?? []), ...s.frames]; r.notes.splice(was, 1); }
   // SW-RPI-22's check too, where the report has it: no correction here may put a line through itself

@@ -1,8 +1,8 @@
 # Plant 3, the coastal refinery: where the work stands and how to carry it on
 
-Written 2026-11-25, brought up to date 2026-11-26, for whoever takes this up next, person or assistant. It says what is done,
+Written 2026-11-25, brought up to date 2026-11-27, for whoever takes this up next, person or assistant. It says what is done,
 what is open, what has been tried, and how to work on it. The rules of the work are in
-`DESIGN_BASIS.md` (§75 to §81 for plant 3) and the audit log is `PROVENANCE.md` (P-79 to P-94).
+`DESIGN_BASIS.md` (§75 to §81 for plant 3) and the audit log is `PROVENANCE.md` (P-79 to P-95).
 Read the standing rules below before changing anything.
 
 ## Standing rules (the owner's, unchanged)
@@ -37,7 +37,7 @@ Read the standing rules below before changing anything.
   2026-11-26 with the units' cooling water spools in view (SW-PWY-8 amended): 145 of 145,
   every check at zero.
 - Supports where the generator's stepping stopped (SW-RPI-17): hangers, posts and pipe
-  frames; 26 spans still listed.
+  frames; 26 spans and four bents without a shoe still listed.
 - The cooling water mains (§81, P-94): two 30 in mains on sleepers in the corridor's north
   strip from the cooling tower plot's edge, a branch to every unit's cooling water header
   spool; 22 of 22 lines routed, every check at zero against everything built.
@@ -84,6 +84,24 @@ rule written first:
   deck's stairs;
 - units 17 and 19 routed again; unit 11 kept, the lines at its six raised pumps carried up
   with them (SW-RPI-26); the pipeway and the mains routed again against them all.
+- the last round, from the final count's single-detector findings and a sixth check
+  (`tools/refinery-audit/necks.ts`, each nozzle through its neck's wall against its own item,
+  the contact the five detectors excuse): rods cut to the steel's underside or the support
+  taken out, and a rod over nothing taken out (SW-RPI-20); the shoe's web stopped at its pipe
+  and every shoe wholly on one straight pipe (SW-PS-1, SW-RPI-28); the nuts given room on the
+  weld-neck hub's root (SW-FLG-6); and every neck run to its item's drawn body (SW-NOZ-1):
+  the vacuum column's connections stood on its drawn shells, the heaters' burner manifolds
+  drawn, the boilers' feed water on the economizer header's axis and their steam on an outlet
+  header a size above the line, a fuel gas drum's gas outlet on top and the drum made long
+  enough for it, the scrubber's duct of the line's own pipe, the hopper's outlet drawn inside
+  its skirt, the seams laid clear of the connections, large tanks drawn round enough. Units
+  12, 14 and 19 routed again; the other units' necks cut again on disk (`necksToPlan`).
+
+What was learned in that round: an exclusion by relationship hides what lies inside the
+relationship. The detectors excuse a nozzle on its own item and a stud set in its own
+flanges, so a neck in the air and a nut in its hub were invisible to all five until each
+was measured for itself. And a probe cast along a nozzle's axis is the wrong probe for a
+neck that continues an opening (a cone's open end, a duct): cast through the neck's wall.
 
 What was learned: the generator holds a member as a round about its axis, larger than the
 member, and a pipe as a round that reaches its radius past each end; a test written on
@@ -100,10 +118,21 @@ that need them, the headers to the flare knock-out drum and the flare, area 25 a
 of the main rack, SW-PWY-4). Then, not started: the cooling tower plot's own piping (basin
 outlet, the four circulating pumps, side-stream filter, blowdown, make-up; the mains wait at
 its edge behind block valves and blinds, SW-CWM-8); registers and exports for the cooling
-water mains; supports for the 26 spans still listed after SW-RPI-17 (each has another line
-or equipment directly below and no steel above); tank farm and jetty piping (they stand
-unpiped, the owner's choice); offsite pipeways; expansion loops on the hot headers; a viewer
-entry for the pipeway.
+water mains; supports for the 26 spans and four bents without a shoe still listed after
+SW-RPI-17 (each span has another line or equipment directly below and no steel above); tank
+farm and jetty piping (they stand unpiped, the owner's choice); offsite pipeways; expansion
+loops on the hot headers; a viewer entry for the pipeway.
+
+Left by the clash work, each listed with its reason in PROVENANCE P-95: four pipeway guides
+whose angles stand 0.1 in in the fillet welds of the bents they guide on (no place along the
+run keeps them on the beam and off the weld); a stair's base plates centred on grade by the
+generator's own kit; a 14 in class 1200 gate valve whose cast body, drawn by polygonising its
+exact shape, stands 0.06 in into one nut's space at the pocket's step (the exact shape is
+clear by 1/16 in); straight-cut necks on curved bodies, whose rims stand off the body at their
+sides by up to their own radius (a branch's end is coped in the shop; the model's neck is a
+cut pipe); and plants 1 and 2's stored files, not made again, whose component weights the
+corrected catalogue now gives slightly differently (butterfly valves, pumps, 4 in flanges'
+hubs, shoes).
 
 ## How to work on it
 

@@ -141,7 +141,7 @@ const cylYM = (r: number, y0: number, y1: number, x = 0, z = 0) => transformMesh
 export function makeShoe(id: string, NPS: number, cls: PipeClass, kind: 'shoe' | 'guide' | 'anchor', h = 4): PartSpec {
   const p = pipeDims(NPS, cls), Ls = p.OD <= 8 ? 12 : 18, t = 0.375;
   const solids: FitSolid[] = [
-    { name: 'shoe web', mesh: boxM(-t / 2, -h + t, -Ls / 2, t / 2, 0.15, Ls / 2), role: 'steel' },
+    { name: 'shoe web', mesh: boxM(-t / 2, -h + t, -Ls / 2, t / 2, 0, Ls / 2), role: 'steel' },   // SW-PS-1 (amended 2026-11-27): its top edge at the pipe's underside
     { name: 'shoe base', mesh: boxM(-2, -h, -Ls / 2, 2, -h + t, Ls / 2), role: 'steel' },
   ];
   if (kind === 'guide') for (const s of [-1, 1]) solids.push({ name: 'guide angle L3x3x1/4', mesh: mergeMeshes([boxM(s > 0 ? 2.125 : -2.375, -h, -3, s > 0 ? 2.375 : -2.125, -h + 3, 3), boxM(s > 0 ? 2.125 : -5.125, -h, -3, s > 0 ? 5.125 : -2.125, -h + 0.25, 3)]), role: 'steel' });

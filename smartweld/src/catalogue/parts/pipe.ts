@@ -72,11 +72,16 @@ export function designFlange(NPS: number, cls: PipeClass, boreOverride?: number,
   }
   if (!chosen) chosen = compact;
   if (!chosen) throw new Error('SW-FLG-4: no stud size fits');
-  const { d, n, BC, OD: flOD } = chosen;
+  const { d, n } = chosen;
+  // SW-FLG-6 (amended 2026-11-27): the hub's root no thicker than leaves the nuts room on the back face (half a nut's width across corners and the bolt
+  // hole's clearance inside half the bolt circle), never less than t_pipe; where even t_pipe would not, the bolt circle is widened to give the room
+  const nutC = hexHardware(d).C, gap = 1 / 16, room = (bc: number) => bc / 2 - nutC / 2 - gap - bore / 2;
+  const pipeFlange = boreOverride === undefined && pipeTOverride === undefined && ODoverride === undefined;   // a valve's body and bonnet joints keep their own rule (SW-VLV-1)
+  const BC = !pipeFlange || room(chosen.BC) >= pipeT ? chosen.BC : bore + 2 * pipeT + nutC + 2 * gap, flOD = BC === chosen.BC ? chosen.OD : BC + 3 * d;
   const Wb = 1.5 * n * (Math.PI / 4) * d * d * (STUD_FU * 1000 / 3);                                        // SW-FLG-5: preload capacity
   const a = (BC - G) / 2, mb = (Wb * a) / (Math.PI * G);
   const tf = roundUpTo(Math.max(Math.sqrt((6 * mb) / (0.6 * FORGING_GRADE.Fy.value * 1000)), d + 0.25), 1 / 8);
-  const hubLen = 1.5 * tf, neckLen = 1, hubT = 2 * pipeT;                                                     // SW-FLG-6
+  const hubLen = 1.5 * tf, neckLen = 1, hubT = pipeFlange ? Math.min(2 * pipeT, Math.max(pipeT, room(BC))) : 2 * pipeT;               // SW-FLG-6
   const nut = hexHardware(d).nutH;
   const studLen = roundUpTo(2 * tf + gasketT + 2 * nut + 2 * (d / 4), 0.25);                                 // SW-FLG-7
   return { NPS, cls, P, bore, pipeT, gasketID, wg, G, gasketT, rfOD, rfH, d, n, BC, OD: flOD, tf, hubLen, neckLen, hubT, W, Wseat, Wop, studLen, holeD: d + 1 / 8 };

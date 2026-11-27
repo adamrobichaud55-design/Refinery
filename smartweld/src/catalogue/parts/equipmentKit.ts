@@ -10,12 +10,13 @@ import { roundUpTo } from '../../core/units';
 import { DEFAULT_MATERIAL, type PartSpec, type Material } from '../part';
 import { extrude, revolve, transformMesh, helixTube, mergeMeshes, signedVolume, type MeshData } from '../../geometry/mesh';
 import { circle, rect, annularSector, type Polygon } from '../../geometry/polygon';
-import { translate, multiply, rotateX, rotateY, rotateZ } from '../../geometry/transform';
+import { translate, multiply, rotateX, rotateY, rotateZ, frameFromAxes, type Vec3 } from '../../geometry/transform';
 import { ringAroundHole } from '../../geometry/profiles';
 import { wProfile, lProfile, hssRoundProfile, cProfile } from '../../geometry/profiles';
 import { proportionW } from './wideFlange';
 import { proportionC } from './channel';
-import { pipeDims, designFlange, type PipeClass, type FlangeDesign } from './pipe';
+import { pipeDims, designFlange, type PipeClass, type FlangeDesign, type PipeDims } from './pipe';
+import { makeTee, makeReducer, makeElbow, teeC, reducerLength, elbowRadius } from './fittings';
 import { finish, vesselSolids, shellRing, headLoop, makeVerticalVessel, N_REV, type VesselVInput } from './equipment';
 import { sweep, torus, hexNut, boltingOf, curvedPad, boxMesh, orient, ringPath, type DRole } from './detailKit';
 import { SIZE_SERIES } from './pipe';
@@ -31,7 +32,11 @@ export const cylX = (y: number, z: number, r: number, x0: number, x1: number, n 
 /** a cylinder along y from y0 to y1 at (x, z) */
 export const cylY = (x: number, z: number, r: number, y0: number, y1: number, n = N): MeshData => transformMesh(extrude({ outer: circle(0, 0, r, n) }, y1 - y0, 0), multiply(translate(x, y0, z), rotateX(-Math.PI / 2)));
 export const tube = (r: number, t: number, L: number, z0 = 0): MeshData => extrude({ outer: circle(0, 0, r, N), inner: circle(0, 0, r - t, N) }, L, z0);
-export const at = (m: MeshData, x: number, y: number, z: number): MeshData => transformMesh(m, translate(x, y, z));
+/** a mesh moved by (x, y, z); a seam layout it carries is carried on with the move (SW-DET-6 as amended 2026-11-27) */
+export const at = (m: MeshData, x: number, y: number, z: number): MeshData => {
+  const r = transformMesh(m, translate(x, y, z)), lay = (m as { seams?: SeamLayout }).seams;
+  return lay ? Object.assign(r, { seams: { ...lay, off: [(lay.off?.[0] ?? 0) + x, (lay.off?.[1] ?? 0) + y, (lay.off?.[2] ?? 0) + z] as [number, number, number] } }) : r;
+};
 
 /** a weld-neck flange's solids along +z from its face at z = 0 (ring with bolt holes, raised face below the face, hub and neck above) */
 export function flangeSolids(f: FlangeDesign, name = 'flange'): Solid[] {
@@ -161,12 +166,24 @@ export const seriesUp = (x: number) => SIZE_SERIES.find(v => v >= x - 1e-9) ?? S
 /** frames (column-major: images of local x, y, z): a part whose z is its axis mounted radially on a z-axis shell at angle 0 (local y round the shell);
  *  a lifting lug's plate turned so its weld edge runs up the shell */
 export const RADIAL = rotateY(Math.PI / 2), LUG_ON_SHELL = [0, 0, 1, 0, 0, -1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1];
-/** SW-DET-6: weld seams of a shell of outer radius R, thickness t, from z0 over length TT (z-axis shell): one mesh */
-export function seamSolids(R: number, t: number, z0: number, TT: number): MeshData {
-  const wc = 2 * t + 0.25, parts: MeshData[] = [], zs: number[] = []; for (let z = 0; z < TT - 1; z += 96) zs.push(z); zs.push(TT);
+/** where a shell's seams were laid from, kept with the mesh so that a plant can lay them again clear of its connections (SW-DET-6 as amended 2026-11-27) */
+export interface SeamLayout { R: number; t: number; z0: number; TT: number; /** a storage tank's courses (fixed from its bottom; their vertical seams turned clear) */ tank?: boolean; /** where the layout's frame stands in the part's */ off?: [number, number, number] }
+/** the axial bands (centre z from the shell's start, half-width h) no course joint may stand in */
+export type SeamClear = { z: number; h: number; /** the connection's angle about the axis, for a tank's vertical seams */ a?: number }[];
+/** SW-DET-6: weld seams of a shell of outer radius R, thickness t, from z0 over length TT (z-axis shell): one mesh. With `clear`, the joints between the end
+ *  seams are each at the farthest place within 96 in of the one before that lies in no band, and 12 in from it at least (as amended 2026-11-27). */
+export function seamSolids(R: number, t: number, z0: number, TT: number, clear: SeamClear = []): MeshData & { seams: SeamLayout } {
+  const wc = 2 * t + 0.25, parts: MeshData[] = [], zs: number[] = [0], inBand = (z: number) => clear.find(b => Math.abs(z - b.z) < b.h);
+  for (let prev = 0; prev + 96 < TT - 1;) {
+    let z = prev + 96;
+    for (let n = 0; n < 8; n++) { const b = inBand(z); if (!b) break; z = b.z - b.h; }   // down to the band's edge, as often as bands overlap
+    if (inBand(z) || z < prev + 12) z = prev + 96;   // no clear place: as before (the check through the necks will show it)
+    zs.push(z); prev = z;
+  }
+  zs.push(TT);
   for (const z of zs) parts.push(orient(revolve([{ r: R - 0.02, z: z0 + z - wc / 2 }, { r: R, z: z0 + z - wc / 2 }, { r: R + 0.125, z: z0 + z - wc / 4 }, { r: R + 0.125, z: z0 + z + wc / 4 }, { r: R, z: z0 + z + wc / 2 }, { r: R - 0.02, z: z0 + z + wc / 2 }], 64)));
   for (let j = 0; j + 1 < zs.length; j++) parts.push(transformMesh(boxMesh(R - 0.02, -wc / 2, z0 + zs[j] + wc / 2, R + 0.125, wc / 2, z0 + zs[j + 1] - wc / 2), rotateZ(Math.PI / 4 + (j * Math.PI) / 2)));
-  return mergeMeshes(parts);
+  return Object.assign(mergeMeshes(parts), { seams: { R, t, z0, TT } });
 }
 export interface DressInput { ID: number; t: number; TT: number; skirtH: number; emptyKips: number; rods?: number; cls?: PipeClass; top?: boolean; manway?: boolean }
 /** SW-DET-6..8: the standard connections, seams, lugs, nameplate, skirt frame, vents and anchor chairs of a skirt-supported vertical vessel (z up from the base ring's top) */
@@ -369,7 +386,18 @@ export function makeBlower(inp: BlowerInput): PartSpec {
   }, baseL, solids);
 }
 
-export interface HeaterInput { tag: string; D: number; H: number; stackH: number }
+/** a gas a plant brings to a vertical heater's burners (SW-EQC-15 as amended 2026-11-27): its pipe's outside diameter and its connection's height, z up from the leg bases */
+export interface HeaterGas { OD: number; z: number }
+export interface HeaterInput { tag: string; D: number; H: number; stackH: number; /** the fuel gas first, then a waste gas burned with it; none: the catalogue's own drawing */ gases?: HeaterGas[] }
+/** SW-EQC-15 (amended 2026-11-27): each gas ring's radius about a heater of diameter D: the fuel gas alone on the burners' circle (0.3 D); with a waste gas, the
+ *  fuel gas's ring outward and the waste gas's inward, each riser within the 8 in burner's bore 1/8 in from its wall, the two 1/4 in apart at least */
+export function heaterGasRings(D: number, ods: number[]): number[] {
+  const rb = 0.3 * D; if (ods.length <= 1) return ods.map(() => rb);
+  if (ods.length > 2) throw new Error('SW-EQC-15: a heater takes the fuel gas and one waste gas');
+  const ri = pipeDims(8, 'P150').D / 2, [rf, rw] = [ods[0] / 2, ods[1] / 2], of = ri - 0.125 - rf, ow = ri - 0.125 - rw;
+  if (of - rf - (rw - ow) < 0.25 - 1e-9) throw new Error(`SW-EQC-15: a ${ods[0]} in and a ${ods[1]} in riser do not both fit in an 8 in burner`);
+  return [rb + of, rb - ow];
+}
 /** SW-EQC-15: vertical cylindrical fired heater; z up from the leg bases */
 export function makeFiredHeater(inp: HeaterInput): PartSpec {
   const legH = 96, D = inp.D, R = D / 2, t = 0.25, solids: Solid[] = [], w8 = proportionW(8, 24), prof = wProfile(w8);
@@ -382,10 +410,21 @@ export function makeFiredHeater(inp: HeaterInput): PartSpec {
   solids.push({ name: 'burners (4 × 8 in)', role: 'closure', mesh: mergeMeshes([0, 1, 2, 3].map(k => at(tube(bp.OD / 2, bp.t, 14, legH - 13.5), 0.3 * D * Math.cos(Math.PI / 4 + (k * Math.PI) / 2), 0.3 * D * Math.sin(Math.PI / 4 + (k * Math.PI) / 2), 0))) },
     { name: 'peep doors', role: 'casting', mesh: mergeMeshes([0.4, 2.2].map(a => transformMesh(boxMesh(R - 0.5, -4, legH + 30, R + 2, 4, legH + 38), rotateZ(a)))) },
     { name: 'shell stiffening rings L3x3x1/4', mesh: mergeMeshes(Array.from({ length: Math.max(1, Math.floor(inp.H / 96)) }, (_, k) => at(extrude({ outer: circle(0, 0, R + 3, 64), inner: circle(0, 0, R, 64) }, 0.25, 0), 0, 0, legH + 0.5 + 96 * (k + 1) - 12))) });
+  // SW-EQC-15 (amended 2026-11-27): the burners' gas piping a plant's connections feed: each gas a ring at its connection's height, risers up into the burners' closed bottoms
+  const gasRings = inp.gases?.length ? heaterGasRings(D, inp.gases.map(g => g.OD)).map((r, i) => ({ r, z: inp.gases![i].z, OD: inp.gases![i].OD })) : [];
+  if (gasRings.length) {
+    const zb = legH - 13.5, tp = 0.375, at4 = [0, 1, 2, 3].map(k => Math.PI / 4 + (k * Math.PI) / 2);
+    solids.push({ name: 'burner bottom plates PL3/8', role: 'closure', mesh: mergeMeshes(at4.map(a => cylZ(0.3 * D * Math.cos(a), 0.3 * D * Math.sin(a), bp.OD / 2, zb - tp, zb))) });
+    gasRings.forEach((g, i) => {
+      const ring = sweep(Array.from({ length: 96 }, (_, k): [number, number, number] => [g.r * Math.cos((2 * Math.PI * k) / 96), g.r * Math.sin((2 * Math.PI * k) / 96), g.z]), g.OD / 2, 16, true);
+      if (g.z + g.OD / 2 >= zb - tp - 1) throw new Error(`${inp.tag}: a gas ring at ${g.z} in leaves its risers no length under the burners (SW-EQC-15)`);
+      solids.push({ name: `${i ? 'waste' : 'fuel'} gas ring and risers`, role: 'safety', mesh: mergeMeshes([ring, ...at4.map(a => cylZ(g.r * Math.cos(a), g.r * Math.sin(a), g.OD / 2, g.z, zb - tp))]) });
+    });
+  }
   return done(inp.tag, 'HEATER', `${inp.tag} fired heater ${D}" dia × ${inp.H}" radiant, stack ${inp.stackH}"`, {
     D: drawing(D, 'Radiant shell diameter'), H: drawing(inp.H, 'Radiant height'), stackH: drawing(inp.stackH, 'Stack height above the convection box'),
     legH: rule(legH, 'SW-EQC-15', 'Legs W8, 8 ft'), convection: rule(cs, 'SW-EQC-15', 'Convection box side (0.6 D)'), stackD: rule(0.3 * D, 'SW-EQC-15', 'Stack diameter (0.3 D)'),
-  }, legH + inp.H + ch + inp.stackH, solids, ['Burners are data.'], { top: zc + ch + t + inp.stackH });
+  }, legH + inp.H + ch + inp.stackH, solids, ['Burners are data.'], { top: zc + ch + t + inp.stackH, ...(gasRings.length ? { gasRings } : {}) });
 }
 
 export interface AgitatedInput extends VesselVInput { motorD: number }
@@ -494,13 +533,66 @@ export function makeBucketElevator(inp: ElevatorInput): PartSpec {
   }, H + t, solids, ['Belt and buckets not modeled (SW-EQC-21).']);
 }
 
-export interface SiloInput { tag: string; D: number; H: number; outletNPS: number; outletH: number; t?: number }
+/** a connection a plant takes through a silo's skirt opening (SW-EQC-22 as amended 2026-11-27): its pipe, and `y` its axis's distance from the opening's centre line along the silo's local y */
+export interface SiloLeg { NPS: number; cls: PipeClass; y: number }
+export interface SiloInput {
+  tag: string; D: number; H: number; outletNPS: number; outletH: number; t?: number;
+  /** SW-EQC-22 (amended 2026-11-27): the plant's connections through the skirt's opening (the first the one the outlet is reduced to), their axes at `z` above the base;
+   *  the opening is then cut as wide as they need and framed with bars, and the silo's own outlet is drawn out to them. None: the catalogue's own drawing */
+  discharge?: { z: number; legs: SiloLeg[] };
+}
+/** SW-EQC-22 (amended 2026-11-27): the skirt (outer radius R, up to the cone's rim at zb) cut at its opening, which faces local +x; the opening's frame of PL3/8 bars;
+ *  and the silo's own outlet from the foot of its cone (zc) out through the opening to 1 in outside the skirt, where each connection the plant gives it begins */
+function siloDischarge(tag: string, R: number, zc: number, zb: number, outletNPS: number, dis: { z: number; legs: SiloLeg[] }): { skirt: Solid[]; rest: Solid[]; dims: Record<string, Dim> } {
+  const T = 0.375, bar = 0.375, sill = 24, head = sill + 36, zp = dis.z, legs = dis.legs, pd = legs.map(l => pipeDims(l.NPS, l.cls)), err = (m: string) => new Error(`${tag}: ${m} (SW-EQC-22)`);
+  if (legs.length > 2) throw err(`its outlet is drawn to two connections through the skirt's opening at most, and it is given ${legs.length}`);
+  if (legs.length === 2 ? Math.sign(legs[0].y) * Math.sign(legs[1].y) >= 0 : Math.abs(legs[0].y) > 1e-9) throw err(legs.length === 2 ? 'its two connections through the skirt\'s opening are not one either side of its centre line' : 'its one connection through the skirt\'s opening is not on its centre line');
+  // the opening: 36 in high from 24 in above the base, as wide as its connections need 3 in clear of each, to the 6 in module (24 in at least, the width drawn without them)
+  const w = roundUpTo(2 * Math.max(12, ...legs.map((l, k) => Math.abs(l.y) + pd[k].OD / 2 + 3)), 6) / 2;
+  if (w > 0.9 * R || head + bar >= zb) throw err(`a ${2 * w} in × 36 in opening does not fit its skirt`);
+  legs.forEach((l, k) => { if (zp - pd[k].OD / 2 - 3 < sill - 1e-9 || zp + pd[k].OD / 2 + 3 > head + 1e-9) throw err(`its ${l.NPS} in connection at ${zp} in passes the opening's sill or head less than 3 in clear`); });
+  // the plate cut 3/8 in larger all round, at the sides on lines through the axis: a1 where a jamb bar's inner face (3/8 in inside the cut) meets the skirt's outer face w from the centre line
+  const a1 = Math.asin(w / R) + Math.asin(bar / R), ring = (z0: number, z1: number) => extrude({ outer: circle(0, 0, R, N_REV), inner: circle(0, 0, R - T, N_REV) }, z1 - z0, z0);
+  const skirt: Solid[] = [{ name: 'skirt (below opening)', mesh: ring(0, sill - bar) }, { name: 'skirt (at opening)', mesh: extrude({ outer: annularSector(R - T, R, a1, 2 * Math.PI - a1, N_REV) }, head - sill + 2 * bar, sill - bar) }, { name: 'skirt (above opening)', mesh: ring(head + bar, zb - T * Math.tan(Math.PI / 3)) }];   // its top where its inside face meets the cone's outside (SW-EQC-22 as amended)
+  // the frame: bars 3 in deep, 2 in inside the skirt's outer face to 1 in outside it; the sill and the head across the whole cut, a straight jamb between them each side on the cut edge
+  const across = (z0: number) => extrude({ outer: annularSector(R - 2, R + 1, -a1, a1, 8) }, bar, z0), jamb = (s: 1 | -1) => transformMesh(box(R - 2, s > 0 ? -bar : 0, sill, R + 1, s > 0 ? 0 : bar, head), rotateZ(s * a1));
+  const rest: Solid[] = [{ name: 'skirt opening frame', mesh: mergeMeshes([across(sill - bar), across(head), jamb(1), jamb(-1)]) }];
+  // the outlet, of the catalogue's own pipe and fittings (SW-PIPE-2..4, SW-FIT-1..3): a spout of the outlet's size down the axis from the cone's foot, a concentric reducer
+  // to the first connection's size, and under it a pick-up tee on the axis at the connections' height (with one connection, that connection's elbow); each branch out to its connection
+  const up: Vec3 = [0, 0, 1], down: Vec3 = [0, 0, -1], Y: Vec3 = [0, 1, 0], c0 = legs[0], p0 = pd[0], two = legs.length === 2;
+  const solid = (p: PartSpec) => (p.extra!.solids as Solid[])[0].mesh, put = (m: MeshData, o: Vec3, y: Vec3, z: Vec3) => transformMesh(m, frameFromAxes(o, y, z));
+  /** a straight pipe from a to b, its local y along `y` (square to the run) */
+  const pipe = (p: PipeDims, a: Vec3, b: Vec3, y: Vec3): MeshData[] => { const v = [b[0] - a[0], b[1] - a[1], b[2] - a[2]], L = Math.hypot(v[0], v[1], v[2]); return L < 1e-9 ? [] : [put(tube(p.OD / 2, p.t, L, 0), a, y, [v[0] / L, v[1] / L, v[2] / L])]; };
+  /** a concentric reducer from size n1 to size n2 (none where they are equal): its length, and its solid placed from a along d */
+  const reducer = (n1: number, n2: number, cls: PipeClass) => {
+    const r = n1 === n2 ? undefined : makeReducer(`${tag}-outlet-reducer`, Math.max(n1, n2), Math.min(n1, n2), cls), H = r ? (r.extra!.H as number) : 0;
+    return { H, at: (a: Vec3, d: Vec3, y: Vec3): MeshData[] => (!r ? [] : n1 > n2 ? [put(solid(r), a, y, d)] : [put(solid(r), [a[0] + d[0] * H, a[1] + d[1] * H, a[2] + d[2] * H], y, [-d[0], -d[1], -d[2]])]) };
+  };
+  const C = two ? teeC(p0.OD) : 0, first = reducer(outletNPS, c0.NPS, c0.cls), po = pipeDims(outletNPS, c0.cls), zr = zp + (two ? C : elbowRadius(p0.OD)), zs = zr + first.H;   // the reducer's small end on the tee's outlet (or the elbow), its large end the spout's foot
+  if (zc - zs < 1e-9) throw err(`its outlet's reducer and ${two ? 'tee' : 'elbow'} for connections at ${zp} in do not fit under the cone's foot at ${zc} in`);
+  rest.push({ name: 'outlet spout and pick-up', role: 'pipe', mesh: mergeMeshes([tube(po.OD / 2, po.t, zc - zs, zs), ...first.at([0, 0, zs], down, Y), ...(two ? [put(solid(makeTee(`${tag}-outlet-tee`, c0.NPS, c0.cls)), [0, 0, zp], up, Y)] : [])]) });
+  legs.forEach((l, k) => {
+    const p = pd[k], Rk = elbowRadius(p.OD), el = solid(makeElbow(`${tag}-outlet-elbow`, l.NPS, l.cls, 90)), leg = pipe(p, [Rk, l.y, zp], [R + 1, l.y, zp], up);   // the leg parallel to the opening's centre line, out to 1 in outside the skirt
+    if (!two) { rest.push({ name: `outlet branch 1 (${l.NPS} in)`, role: 'pipe', mesh: mergeMeshes([put(el, [0, 0, zr], [0, -1, 0], down), ...leg]) }); return; }   // turned out under the reducer, the elbow's corner on the axis
+    // from the tee's end: a reducer where the connection's size is not the tee's, a pipe, and a 90° elbow whose corner lies on the connection's axis in the silo's centre plane (x = 0)
+    const s = Math.sign(l.y), d: Vec3 = [0, s, 0], yE: Vec3 = [0, 0, -s], red = reducer(c0.NPS, l.NPS, l.cls), y1 = C + red.H, y2 = Math.abs(l.y) - Rk;
+    if (y2 - y1 < -1e-9) throw err(`its ${l.NPS} in connection ${Math.abs(l.y)} in from the centre line leaves its branch's pipe no length after the tee`);
+    rest.push({ name: `outlet branch ${k + 1} (${l.NPS} in)`, role: 'pipe', mesh: mergeMeshes([...red.at([0, s * C, zp], d, yE), ...pipe(p, [0, s * y1, zp], [0, s * y2, zp], yE), put(el, [0, s * y2, zp], yE, d), ...leg]) });
+  });
+  return { skirt, rest, dims: { opening: rule(2 * w, 'SW-EQC-22', 'Skirt opening width (its connections 3 in clear, to 6 in)'), dischargeZ: drawing(zp, 'Outlet connections\' axis height above the base') } };
+}
 /** SW-EQC-22: cone-bottom silo on a skirt; z up from the base ring */
 export function makeSilo(inp: SiloInput): PartSpec {
   const R = inp.D / 2, t = inp.t ?? 0.25, ro = inp.outletNPS / 2, hc = (R - ro) * Math.tan(Math.PI / 3), zc = inp.outletH, zb = zc + hc, zt = zb + inp.H, solids: Solid[] = [];
   solids.push({ name: 'cone', mesh: revolve([{ r: ro, z: zc }, { r: R, z: zb }, { r: R - t, z: zb }, { r: ro - Math.min(t, ro / 2), z: zc }], N_REV) }, { name: 'shell', mesh: at(shellRing(R, t, inp.H), 0, 0, zb) }, { name: 'top plate', mesh: at(extrude({ outer: circle(0, 0, R, N_REV) }, t, 0), 0, 0, zt) });
-  solids.push({ name: 'skirt', mesh: tube(R, 0.375, zb, 0) }, { name: 'base ring PL3/4', mesh: at(extrude({ outer: circle(0, 0, R + 6, N_REV), inner: circle(0, 0, R - 0.375, N_REV) }, 0.75, 0), 0, 0, -0.75) });
-  const openHalf = Math.asin(Math.min(0.9, 12 / R)); solids.push({ name: 'skirt opening frame', mesh: at(extrude({ outer: annularSector(R - 0.375, R + 1, -openHalf, openHalf, 8), inner: annularSector(R - 0.375 + 0.01, R + 0.99, -openHalf, openHalf, 8) }, 36, 24), 0, 0, 0) });
+  const baseRing: Solid = { name: 'base ring PL3/4', mesh: at(extrude({ outer: circle(0, 0, R + 6, N_REV), inner: circle(0, 0, R - 0.375, N_REV) }, 0.75, 0), 0, 0, -0.75) };
+  // SW-EQC-22 (amended 2026-11-27): where the plant takes connections out through the skirt's opening, the skirt is cut there, the opening framed, and the outlet drawn to them
+  const dis = inp.discharge?.legs.length ? siloDischarge(inp.tag, R, zc, zb, inp.outletNPS, inp.discharge) : undefined;
+  if (dis) solids.push(...dis.skirt, baseRing, ...dis.rest);
+  else {
+    solids.push({ name: 'skirt', mesh: tube(R, 0.375, zb - 0.375 * Math.tan(Math.PI / 3), 0) }, baseRing);   // SW-EQC-22 (amended 2026-11-27): its top where its inside face meets the cone's outside
+    const openHalf = Math.asin(Math.min(0.9, 12 / R)); solids.push({ name: 'skirt opening frame', mesh: at(extrude({ outer: annularSector(R - 0.375, R + 1, -openHalf, openHalf, 8), inner: annularSector(R - 0.375 + 0.01, R + 0.99, -openHalf, openHalf, 8) }, 36, 24), 0, 0, 0) });
+  }
   for (const s of makeManway(`${inp.tag}-mw`, { D: 20, cls: 'P150', shellT: t }).extra!.solids as Solid[]) solids.push({ ...s, mesh: at(s.mesh, R * 0.45, 0, zt + t) });
   for (const s of makeNozzle(`${inp.tag}-vent`, { NPS: 4, cls: 'P150', shellT: t }).extra!.solids as Solid[]) solids.push({ ...s, mesh: at(s.mesh, -R * 0.45, 0, zt + t) });
   if (zt > 180) {
@@ -518,7 +610,7 @@ export function makeSilo(inp: SiloInput): PartSpec {
   }
   return done(inp.tag, 'SILO', `${inp.tag} silo ${inp.D}" dia × ${inp.H}", cone bottom`, {
     D: drawing(inp.D, 'Shell diameter'), H: drawing(inp.H, 'Shell height'), outlet: drawing(inp.outletNPS, 'Outlet size'), outletH: drawing(inp.outletH, 'Outlet height above the base'), t: inp.t !== undefined ? drawing(t, 'Plate thickness') : rule(t, 'SW-EQC-22', 'Plate thickness'),
-    coneH: rule(hc, 'SW-EQC-22', 'Cone height (60°)'), skirtH: rule(zb, 'SW-EQC-22', 'Skirt height (to the cone\'s rim)'), skirtT: rule(0.375, 'SW-EQ-1', 'Skirt thickness'),
+    coneH: rule(hc, 'SW-EQC-22', 'Cone height (60°)'), skirtH: rule(zb - 0.375 * Math.tan(Math.PI / 3), 'SW-EQC-22', 'Skirt height (to where its inside meets the cone)'), skirtT: rule(0.375, 'SW-EQ-1', 'Skirt thickness'), ...(dis ? dis.dims : {}),
   }, zt + t + 10 + 12, solids, ['Skirt and base ring as SW-EQ-1 (anchor rods SW-AR-*).'], { zc, zb, zt, R });
 }
 

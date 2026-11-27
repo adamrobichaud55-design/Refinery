@@ -6,11 +6,13 @@
 import { makeConeRoofTank, makeFloatingRoofTank, makeDike, makeSphere, makeHorizontalVessel, makeFlareStack, type PartSpec } from '../catalogue';
 import { multiply, translate, standUp, rotateY, frameFromAxes } from '../geometry/transform';
 import type { Mat4 } from '../geometry/mesh';
-import { buildCell, bare, type CellModel } from './cell';
+import { readFileSync, existsSync } from 'node:fs';
+import { buildCell, bare, relaySeams, type CellModel, type SeamOpening } from './cell';
 import { PLOTS, DIKES, spheres, bench, plot, FLARE, type Plot } from './site';
 import { processModel } from './process';
 import { sizing } from './sizing';
 
+type V3 = [number, number, number];
 export interface SitePart { part: PartSpec; transform: Mat4; tags: string[]; unit: number }
 /** SW-CELL-1: the transform that sets a unit's frame on its plot: its battery limit on the plot's pipeway edge, its width centred to the nearest 6 in (the main pipeway's grid, §80) */
 export function cellToSite(p: Plot, c: CellModel): Mat4 {
@@ -21,9 +23,23 @@ export function cellToSite(p: Plot, c: CellModel): Mat4 {
 export const plotLength = (p: Plot) => (p.z1 - p.z0) * 12;
 /** the cells of the process bench: the nine process units, and the cooling tower's group on its own plot */
 export function cells(): { plot: Plot; cell: CellModel }[] {
-  const out = [11, 12, 13, 14, 15, 16, 17, 18, 19].map(u => { const p = PLOTS.find(q => q.unit === u && q.kind === 'unit')!; return { plot: p, cell: buildCell(u, plotLength(p), u === 19 ? 'rest' : 'all') }; });
+  const out = [11, 12, 13, 14, 15, 16, 17, 18, 19].map(u => { const p = PLOTS.find(q => q.unit === u && q.kind === 'unit')!, cell = buildCell(u, plotLength(p), u === 19 ? 'rest' : 'all');
+    // SW-DET-6 (amended 2026-11-27): the shells' seams laid clear of the connections the unit's stored piping has on them
+    const op = storedOpenings(u); if (op.length) cell.interior = { ...cell.interior, instances: relaySeams(cell.interior.instances, op) };
+    return { plot: p, cell }; });
   const ct = plot('CT'); out.push({ plot: { ...ct, faces: 'S' }, cell: buildCell(19, plotLength(ct), 'tower') });
   return out;
+}
+
+/** the connections of a unit's stored piping model, as its shells' seams need them (each neck's end, axis and size); none where no model is stored */
+function storedOpenings(u: number): SeamOpening[] {
+  try {
+    const dir = (process.env.MODELS ?? process.env.PIPING_DIR ?? new URL('../../public/refinery/piping/', import.meta.url).pathname).replace(/\/$/, ''), f = `${dir}/unit-${u}.json`;
+    if (!existsSync(f)) return [];
+    const m = JSON.parse(readFileSync(f, 'utf8')) as { nozzles?: { equip: string; face: V3; u: V3; NPS: number; cls: string; comps?: { a: V3; b: V3 }[] }[] };
+    return (m.nozzles ?? []).map(n => { const d = (p: V3) => -((p[0] - n.face[0]) * n.u[0] + (p[1] - n.face[1]) * n.u[1] + (p[2] - n.face[2]) * n.u[2]), ends = (n.comps ?? []).flatMap(c => [c.a, c.b]);
+      const far = ends.reduce((a, e) => (d(e) > d(a) ? e : a), n.face); return { equip: n.equip, A: far, u: n.u, NPS: n.NPS, cls: n.cls as SeamOpening['cls'] }; });
+  } catch { return []; }   // no file system (a browser): the seams as drawn
 }
 
 let cache: SitePart[] | undefined;

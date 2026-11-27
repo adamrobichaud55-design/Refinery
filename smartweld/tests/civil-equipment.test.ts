@@ -111,10 +111,10 @@ describe('equipment proportions (SW-EQC-*)', () => {
     expect(trays.length).toBe(20); expect(trays[0] - bottomTL).toBeCloseTo(topTL - trays[19], 6); expect(trays[1] - trays[0]).toBe(24);
     expect(makeReactor({ tag: 'R', ID: 96, t: 0.5, TT: 216, skirtH: 48 }).dims.t.value).toBe(2);
   });
-  it('air cooler fan ring 0.9 W/n; cyclone cone at 60°; silo skirt reaches the cone rim', () => {
+  it('air cooler fan ring 0.9 W/n; cyclone cone at 60°; silo skirt ends where its inside face meets the cone (SW-EQC-22 as amended 2026-11-27)', () => {
     expect(makeAirCooler({ tag: 'E', W: 96, L: 240, fans: 2, legH: 120 }).dims.fanD.value).toBeCloseTo(43.2, 9);
     const cy = makeCyclone({ tag: 'S', D: 48 }); expect(cy.dims.coneH.value).toBeCloseTo((24 - 6) * Math.tan(Math.PI / 3), 9);
-    const si = makeSilo({ tag: 'R', D: 96, H: 240, outletNPS: 8, outletH: 72 }); expect(si.dims.skirtH.value).toBeCloseTo(72 + (48 - 4) * Math.tan(Math.PI / 3), 9);
+    const si = makeSilo({ tag: 'R', D: 96, H: 240, outletNPS: 8, outletH: 72 }); expect(si.dims.skirtH.value).toBeCloseTo(72 + (48 - 4) * Math.tan(Math.PI / 3) - 0.375 * Math.tan(Math.PI / 3), 9);   // the cone's rim less the skirt's thickness up the 60° cone
   });
   it('SW-EQC-11 (amended 2026-11-27): an air cooler\'s braces end at the column bases, their feet cut level with them, none of them below', () => {
     for (const [W, L, legH] of [[96, 240, 120], [168, 384, 23.835]]) {

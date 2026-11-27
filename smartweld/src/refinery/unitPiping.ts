@@ -3,7 +3,7 @@
  * cell (its rack and bodies, §78) is given a nozzle schedule and a line list drawn from its flowsheet and sizes (§74,
  * §75); the generator itself is unchanged and routes, assembles, welds and supports the lines by its own rules.
  */
-import { pipeDims, designFlange, gateFaceToFace, makeValve, teeC, elbowRadius, type PipeClass, type PartSpec } from '../catalogue';
+import { pipeDims, designFlange, gateFaceToFace, makeValve, teeC, elbowRadius, heaterGasRings, cabinGasHeaderY, boilerOutletHeader, type PipeClass, type PartSpec } from '../catalogue';
 import { buildGeometry } from '../geometry/partGeometry';
 import type { PlantDef } from '../generator/plant';
 import { jointBySpec, flangeBySpec, lineGroup } from '../generator/plant';
@@ -20,7 +20,7 @@ import { unitHeaders, connection } from './headers';
 import { stationed } from './sizing';
 import { FLUIDS } from './fluids';
 import type { Equip, End, UnitSheet } from './flowsheet';
-import { buildCell, valveDrop, bodySolids, RACK, RACK_COL, YARD, type CellModel, type Spot, type SolidBox } from './cell';
+import { buildCell, valveDrop, bodySolids, relaySeams, cabinGasY, RACK, RACK_COL, YARD, type CellModel, type Spot, type SolidBox } from './cell';
 import { lineNumber, serviceOf, routedFree } from './registry';
 import { PLOTS } from './site';
 import { plotLength, cellToSite } from './assemble';
@@ -46,7 +46,7 @@ export interface HeaderLane { line: string; z?: number }
 /** a branch's root spool on the rack (SW-RPI-8) */
 export interface RootSpool { tag: string; line: string; connection: string; parent: string; at: V3; tier: number }
 export interface UnitPiping {
-  unit: number; cell: CellModel; plant: PlantDef; lines: UnitLine[]; nozzles: Map<string, Nozzle>; spools: BlSpool[]; roots: RootSpool[]; stations: StationSpool[]; headers: HeaderLane[]; /** SW-RPI-15: the block valves of the headers at the limit */ feeds: HeaderFeed[]; notes: string[];
+  unit: number; cell: CellModel; plant: PlantDef; lines: UnitLine[]; nozzles: Map<string, PlantNozzle>; spools: BlSpool[]; roots: RootSpool[]; stations: StationSpool[]; headers: HeaderLane[]; /** SW-RPI-15: the block valves of the headers at the limit */ feeds: HeaderFeed[]; notes: string[];
   /** the width of lanes each tier is loaded to in this unit, in */ tierRoom: number;
   /** SW-RPI-7: the rack tiers in use, lowest first (indices into the rack's tiers) */
   tiers: number[];
@@ -98,7 +98,9 @@ function segDist(a: V3, b: V3, c: V3, d: V3): number {
   for (let i = 0; i <= 12; i++) for (let j = 0; j <= 12; j++) { const s = i / 12, t = j / 12, v = Math.hypot(a[0] + (b[0] - a[0]) * s - c[0] - (d[0] - c[0]) * t, a[1] + (b[1] - a[1]) * s - c[1] - (d[1] - c[1]) * t, a[2] + (b[2] - a[2]) * s - c[2] - (d[2] - c[2]) * t); if (v < best) best = v; }
   return best;
 }
-interface Anchor { A: V3; u: V3; /** a standout other than SW-NOZ-1's */ S?: number }
+interface Anchor { A: V3; u: V3; /** a standout other than SW-NOZ-1's */ S?: number; /** SW-NOZ-1 (amended 2026-11-27): how far behind A, along −u, the item's drawn body lies where the neck meets it (the neck runs on to it; the face stays) */ back?: number }
+/** a plant 3 nozzle: its neck's end and length to the drawn body, and the base and standout its face was set by, which its runs are planned from */
+export type PlantNozzle = Nozzle & { plan?: { A: V3; S: number } };
 
 /** SW-RPI-2: where each connection of an item stands on one of its bodies */
 function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spot | undefined, temps: (port: string) => number | undefined, solids: () => SolidBox[], mate: (port: string) => Anchor | undefined = () => undefined, own: () => { part: PartSpec; transform: Mat4 } | undefined = () => undefined): Map<string, Anchor> {
@@ -166,13 +168,16 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
         if (water.length > 2 || steam.length > 2) throw new Error(`${e.tag}: its dome has a place for two water and two steam connections, and it has ${water.length} and ${steam.length}`);
       }
       // a desalter is fed from underneath, through its distributor, and its oil leaves on top; its brine leaves underneath at the far end
-      const des = e.kind === 'desalter', x0 = s.x - s.len! / 2, topP = des ? ports.filter(q => q.port === 'oil') : ports.filter(q => !onDome.has(q.port) && (q.dir === 'in' || /gas|vapour|vent|steam out/.test(q.port))), botP = ports.filter(q => !topP.includes(q) && !onDome.has(q.port));
+      const des = e.kind === 'desalter', x0 = s.x - s.len! / 2, topP = des ? ports.filter(q => q.port === 'oil') : ports.filter(q => !onDome.has(q.port) && (q.dir === 'in' || /gas|vapour|vent|steam out/.test(q.port) || (e.kind === 'drum' && q.dir === 'out' && e.ports.find(x => x.name === q.port)?.s.vf === 1))),   // SW-RPI-2 (amended 2026-11-27): a drum's outlet all vapour is gas, on top
+        botP = ports.filter(q => !topP.includes(q) && !onDome.has(q.port));
       for (const [p, a] of onDome) out.set(p, a);
       // under the shell, no connection stands over a saddle and its pier (SW-CELL-4: at 0.2 and 0.8 of the length)
       const pier = (Math.max(6, (2 * R) / 3) + 12) / 2, overPier = (x: number, w: number) => [0.2, 0.8].some(f => Math.abs(x - (x0 + f * s.len!)) < pier + w / 2 + 9);
       const along = (list: typeof ports, y: number, u: V3, fromEnd: boolean) => {
         let x = fromEnd ? down(x0 + s.len! - 18) : up(x0 + 18), prev = 0; const step = fromEnd ? -1 : 1;
-        for (const q of fromEnd ? [...list].reverse() : list) { const w = designFlange(q.NPS, q.cls).OD; if (prev) x += step * up((prev + w) / 2 + 12); while (u[1] < 0 && overPier(x, w)) x += step * 6; out.set(q.port, { A: [x, y, s.z], u }); prev = w; }
+        for (const q of fromEnd ? [...list].reverse() : list) { const w = designFlange(q.NPS, q.cls).OD; if (prev) x += step * up((prev + w) / 2 + 12); while (u[1] < 0 && overPier(x, w)) x += step * 6;
+          if (x < x0 + 18 - 1e-6 || x > x0 + s.len! - 18 + 1e-6) throw new Error(`${e.tag}: its connection "${q.port}" would stand at ${x}, beyond 18 in inside a tangent line (${x0 + 18} to ${x0 + s.len! - 18}); the drum is too short for its connections (SW-RPI-2)`);
+          out.set(q.port, { A: [x, y, s.z], u }); prev = w; }
       };
       const ins = topP.filter(q => q.dir === 'in'), gas = topP.filter(q => q.dir === 'out'), toPump = botP.filter(q => pumpX(q.port) !== undefined);
       along(ins, s.yc! + R, [0, 1, 0], false); along(gas, s.yc! + R, [0, 1, 0], true);
@@ -193,14 +198,27 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
     }
     case 'vv': {
       if (e.kind === 'heater') {   // a vertical cylindrical heater beyond the rack's end: the coil enters the convection box and leaves the radiant shell near its floor, both toward the rack; fuel gas under the floor
-        out.set('inlet', { A: [s.x - 0.3 * 2 * R, up(s.yt! + 0.2 * 2 * R), s.z], u: [-1, 0, 0] }); out.set('outlet', { A: [s.x, up(s.yb! + 24), s.z - R], u: [0, 0, -1] }); out.set('fuel gas', { A: [s.x, down(s.yb! - 18), s.z + R], u: [0, 0, 1] });
+        // SW-EQC-15 (amended 2026-11-27): the gas rings under the floor that the heater draws for its gas connections, and each gas's pipe
+        const fuel = ports.filter(q => q.port === 'fuel gas'), waste = ports.filter(q => /gas$/.test(q.port) && q.port !== 'fuel gas'), gasOD = [...fuel, ...waste].map(q => pipeDims(q.NPS, q.cls).OD), rings = fuel.length ? heaterGasRings(2 * R, gasOD) : [];
+        if (waste.length && !fuel.length) throw new Error(`${e.tag}: a waste gas and no fuel gas (SW-EQC-15)`);
+        out.set('inlet', { A: [s.x - 0.3 * 2 * R, up(s.yt! + 0.2 * 2 * R), s.z], u: [-1, 0, 0] }); out.set('outlet', { A: [s.x, up(s.yb! + 24), s.z - R], u: [0, 0, -1] }); out.set('fuel gas', { A: [s.x, down(s.yb! - 18), s.z + R], u: [0, 0, 1], back: R - (rings[0] + gasOD[0] / 2) });
         // a waste gas it burns enters beside the fuel gas, 3 ft along; a steam coil's two ends stand in the convection box's two side faces
-        ports.filter(q => /gas$/.test(q.port) && q.port !== 'fuel gas').forEach((q, k) => out.set(q.port, { A: [s.x + 36 * (k + 1), down(s.yb! - 18), s.z + R], u: [0, 0, 1] }));
+        // SW-RPI-2 (amended 2026-11-27): the waste gas 1 ft along and 1 ft below the fuel gas, its neck in to its own ring inside the fuel gas's (SW-EQC-15)
+        waste.forEach((q, k) => out.set(q.port, { A: [s.x + 12, down(s.yb! - 30), s.z + R], u: [0, 0, 1], back: R - Math.sqrt((rings[k + 1] + gasOD[k + 1] / 2) ** 2 - 144) }));
         if (ports.some(q => q.port === 'steam coil in')) { out.set('steam coil in', { A: [s.x, up(s.yt! + 0.2 * 2 * R), s.z - 0.3 * 2 * R], u: [0, 0, -1] }); out.set('steam coil out', { A: [s.x, up(s.yt! + 0.2 * 2 * R), s.z + 0.3 * 2 * R], u: [0, 0, 1] }); }
         return out;
       }
       // every shell connection on the centre line of the half that faces the rack (the platforms and ladders stand on the other half)
       const lo = up(s.yb! + 12), hi = down(s.yt! - 12), tOf = (p: string) => e.ports.find(q => q.name === p)?.s.T ?? temps(p) ?? 0;
+      // SW-RPI-2 (amended 2026-11-27): a column of shells of different diameters stands each connection on the shell at its own height, the top one on its crown
+      const body = s.body, crown = s.yt! + (body?.Rtop ?? R) / 2;
+      const Rat = (yy: number): number => {
+        if (!body) return R;
+        for (const q of body.zones) if (yy >= q.a - 1e-6 && yy <= q.b + 1e-6) return q.R;
+        for (const c of body.cones) if (yy > c.a && yy < c.b) return c.R0 + ((c.R1 - c.R0) * (yy - c.a)) / (c.b - c.a);
+        const [Rh, d] = yy < body.zones[0].a ? [body.Rbot, body.zones[0].a - yy] : [body.Rtop, yy - body.zones[body.zones.length - 1].b];
+        return Rh * Math.sqrt(Math.max(0, 1 - (d / (Rh / 2)) ** 2));   // on a 2:1 head
+      };
       let topUsed = false; const want: { p: string; y: number }[] = [], middle: string[] = [];
       // a vessel named in sections (a stacked side stripper): equal sections, the hottest lowest
       const secOf = (p: string) => /^(.+) (in|vapour|out|stripping steam)$/.exec(p), names = [...new Set(ports.map(q => secOf(q.port)?.[1]).filter((n): n is string => !!n && ports.some(q => q.port === `${n} in`) && ports.some(q => q.port === `${n} out`)))];
@@ -208,7 +226,7 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
       for (const q of ports) {
         const p = q.port, sec = secOf(p);
         // the one connection on top: a reactor's inlet; what leaves as vapour by its name; a drum's outlet that is all vapour (a knock-out or surge drum's gas)
-        if (!topUsed && ((e.kind === 'reactor' && p === 'inlet') || (q.dir === 'out' && /^(overhead|vapour|gas|gas out|treated gas|net gas|recycle gas|acid gas|vent|hydrogen)$/.test(p)) || (e.kind === 'drum' && q.dir === 'out' && e.ports.find(x => x.name === p)?.s.vf === 1))) { out.set(p, { A: [s.x, s.yt! + R / 2, s.z], u: [0, 1, 0], ...(s.floors ? { S: Math.max(nozzleStandout(q.NPS, q.cls), s.floors[s.floors.length - 1] + 54 - (s.yt! + R / 2)) } : {}) }); topUsed = true; continue; }
+        if (!topUsed && ((e.kind === 'reactor' && p === 'inlet') || (q.dir === 'out' && /^(overhead|vapour|gas|gas out|treated gas|net gas|recycle gas|acid gas|vent|hydrogen)$/.test(p)) || (e.kind === 'drum' && q.dir === 'out' && e.ports.find(x => x.name === p)?.s.vf === 1))) { out.set(p, { A: [s.x, crown, s.z], u: [0, 1, 0], ...(s.floors ? { S: Math.max(nozzleStandout(q.NPS, q.cls), s.floors[s.floors.length - 1] + 54 - crown) } : {}) }); topUsed = true; continue; }
         if (sec && sections.includes(sec[1])) { want.push({ p, y: lo + (sections.indexOf(sec[1]) + { out: 0.08, 'stripping steam': 0.2, in: 0.8, vapour: 0.92 }[sec[2] as 'in']) * hs }); continue; }
         const f = (/bottoms|rich amine|rich oil|^liquid$|^outlet$| out$|^water$|^oil$/.test(p) && q.dir === 'out') || (e.kind === 'psa' && /^(feed|tail gas)$/.test(p)) ? 0 : /reboiler draw/.test(p) ? 0.03 : /stripping steam|gas in/.test(p) ? 0.07 : /reboiler return/.test(p) ? 0.12 : /reflux|lean amine|lean oil|quench return|^inlet$/.test(p) ? 1 : -1;
         if (f < 0) middle.push(p); else want.push({ p, y: lo + f * (hi - lo) });
@@ -231,9 +249,17 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
         return !y.length || y[0] >= y0;
       };
       // a vessel without platforms too short for its shell connections: the uppermost on the top head instead, where that is free
-      if (!pack() && !topUsed && !s.floors && want.length > 1) { const w = want.pop()!; out.set(w.p, { A: [s.x, s.yt! + R / 2, s.z], u: [0, 1, 0] }); topUsed = true; nz = want.map(q => ports.find(x => x.port === q.p)!); fl = nz.map(q => designFlange(q.NPS, q.cls).OD); pack(); }
+      if (!pack() && !topUsed && !s.floors && want.length > 1) { const w = want.pop()!; out.set(w.p, { A: [s.x, crown, s.z], u: [0, 1, 0] }); topUsed = true; nz = want.map(q => ports.find(x => x.port === q.p)!); fl = nz.map(q => designFlange(q.NPS, q.cls).OD); pack(); }
       if (y.length && y[0] < y0) throw new Error(`${e.tag}: its ${y.length} shell connections need ${Math.round(gap.reduce((a, b) => a + b, 0))} in of shell and it has ${y1 - y0}`);
-      want.forEach((w, k) => out.set(w.p, { A: [s.x + toRack[0] * R, y[k], s.z + toRack[2] * R], u: toRack }));
+      if (body) {   // SW-RPI-2 (amended 2026-11-27): the feed 36 in above the lower cone on the middle shell; none with its pipe within 6 in of a cone; spaced again upward
+        const odOf = (p: string) => { const q = ports.find(x => x.port === p)!; return pipeDims(q.NPS, q.cls).OD; };
+        const clear = (p: string, yy: number) => { for (const c of body.cones) { const m = odOf(p) / 2 + 6; if (yy + m > c.a && yy - m < c.b) return up(c.b + m); } return yy; };
+        const at = want.map((w, k) => ({ w, y: w.p === 'feed' ? up(body.cones[0].b + 36) : y[k] })).sort((a, b) => a.y - b.y);
+        want.splice(0, want.length, ...at.map(q => q.w)); nz = want.map(w => ports.find(q => q.port === w.p)!); fl = nz.map(q => designFlange(q.NPS, q.cls).OD);
+        y = []; at.forEach((q, k) => { let yy = up(Math.max(q.y, k ? y[k - 1] + Math.max(36, gateReach(nz[k - 1].NPS) + fl[k] / 2 + 6) : y0)); for (let n = 0; n < 4; n++) { const c = clear(q.w.p, yy); if (c === yy) break; yy = c; } y.push(yy); });
+        if (y.length && y[y.length - 1] > y1) throw new Error(`${e.tag}: its shell connections, kept off its cones, reach ${y[y.length - 1]} past ${y1} (SW-RPI-2)`);
+      }
+      want.forEach((w, k) => { const r = Rat(y[k]); out.set(w.p, { A: [s.x + toRack[0] * r, y[k], s.z + toRack[2] * r], u: toRack }); });
       return out;
     }
     case 'tank': {
@@ -247,7 +273,9 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
       // (0.4 of the box's width, above the hip) and leaves the radiant box 2 ft above its floor; fuel and waste gases to the burners under the floor
       const W = Number(z.d.W), L = Number(z.d.L), H = s.yt! - s.yb!, yConv = near(s.yt! + 60 + H / 4), gases = ports.filter(q => /gas$/.test(q.port)), coils = ports.filter(q => /^steam coil/.test(q.port));
       out.set('inlet', { A: [s.x - 0.2 * W, yConv, s.z - up(L / 4)], u: [-1, 0, 0] }); out.set('outlet', { A: [s.x - W / 2, up(s.yb! + 24), s.z + up(L / 4)], u: [-1, 0, 0] });
-      gases.forEach((q, k) => out.set(q.port, { A: [s.x - W / 2, down(s.yb! - 24), s.z + (k - (gases.length - 1) / 2) * 48], u: [-1, 0, 0] }));
+      // SW-RPI-2 (amended 2026-11-27): each gas's neck in to its header inside the wall's columns (SW-EQC-53)
+      const yGas = gases.length ? cabinGasY(W, s.yb!, gases.map(q => pipeDims(q.NPS, q.cls).OD)) : 0;
+      gases.forEach((q, k) => { const od = pipeDims(q.NPS, q.cls).OD; out.set(q.port, { A: [s.x - W / 2, yGas, s.z + (k - (gases.length - 1) / 2) * 48], u: [-1, 0, 0], back: W - (cabinGasHeaderY(W, od) + od / 2) }); });
       coils.forEach((q, k) => out.set(q.port, { A: [s.x - 0.2 * W, yConv, s.z + up(L / 4) + (k ? 60 : 0)], u: [-1, 0, 0] }));
       return out;
     }
@@ -271,9 +299,15 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
       if (e.kind === 'boiler') {
         const sh2 = boxOf(/^superheater headers/), eh = boxOf(/^economizer water headers/), ef = boxOf(/^economizer header flanges/), mud = boxOf(/^mud drum head$/), md = boxOf(/^mud drum shell$/), wb = boxOf(/^burner 1: windbox/), drum = boxOf(/^steam drum shell$/);
         // the outlet header is the one of the two further from the steam drum; the connection at its mid-length
-        need('steam', { A: [near(mid(sh2, 0) > mid(drum, 0) ? sh2.mx[0] - 4.3125 : sh2.mn[0] + 4.3125), sh2.mx[1], mid(sh2, 2)], u: [0, 1, 0] });
-        const away = Math.abs(ef.mn[2] - s.z) > Math.abs(ef.mx[2] - s.z) ? ef.mn[2] : ef.mx[2], dirZ = away < mid(eh, 2) ? -1 : 1;   // the flanges' face, at the header's end
-        need('feed water', { A: [mid(eh, 0), up(eh.mn[1] + 12), away], u: [0, 0, dirZ] });
+        // SW-RPI-2 (amended 2026-11-27): the steam on the outlet header's drawn surface at the grid line nearest its axis
+        const nS = ports.find(q => q.port === 'steam'), Rh = boilerOutletHeader(nS?.NPS).OD / 2, outer = mid(sh2, 0) > mid(drum, 0), xc = outer ? sh2.mx[0] - Rh : sh2.mn[0] + Rh, yc = sh2.mx[1] - Rh, xs = near(xc);
+        if (Math.abs(xs - xc) > Rh - (nS ? pipeDims(nS.NPS, nS.cls).OD / 2 : 0)) throw new Error(`${e.tag}: the steam's grid line stands off its outlet header (SW-RPI-2)`);
+        need('steam', { A: [xs, yc + Math.sqrt(Rh * Rh - (xs - xc) ** 2), mid(sh2, 2)], u: [0, 1, 0] });
+        // the feed water on the economizer's lower header's axis at the end of its pipe (the boiler is set so that axis is on the grid), its neck continuing the header
+        const dirZ = Math.abs(ef.mn[2] - s.z) > Math.abs(ef.mx[2] - s.z) ? (ef.mn[2] < mid(eh, 2) ? -1 : 1) : (ef.mx[2] < mid(eh, 2) ? -1 : 1), endZ = dirZ < 0 ? eh.mn[2] : eh.mx[2];
+        const xa = (eh.mn[0] + eh.mx[0]) / 2, ya = eh.mn[1] + 6.625 / 2;
+        if (Math.abs(xa - near(xa)) > 0.01 || Math.abs(ya - near(ya)) > 0.01) throw new Error(`${e.tag}: the economizer's lower header's axis (${xa.toFixed(2)}, ${ya.toFixed(2)}) is off the grid (SW-CELL-7)`);
+        need('feed water', { A: [near(xa), near(ya), endZ], u: [0, 0, dirZ] });
         need('blowdown', { A: [mid(md, 0), mid(md, 1), toRack[2] > 0 ? mud.mx[2] : mud.mn[2]], u: toRack });
         const sx = mid(wb, 0) > mid(drum, 0) ? 1 : -1; need('fuel gas', { A: [sx > 0 ? wb.mx[0] : wb.mn[0], mid(wb, 1), mid(wb, 2)], u: [sx, 0, 0] });
         return out;
@@ -376,10 +410,11 @@ function anchorsOf(s: Spot, e: Equip, z: EquipSize, other: (port: string) => Spo
 export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.unit === unit && q.kind === 'unit')!)): UnitPiping {
   // the cell the site stands on its plot (SW-SITE-7): the same room along the rack, and unit 19 without its cooling tower's group, which has a plot of its own
   const M = processModel(), sh: UnitSheet = M.sheet(unit), Z = sizing().get(unit)!, cell = buildCell(unit, longest, unit === 19 ? 'rest' : 'all'), notes: string[] = [];
-  const HW = cell.rack.halfWidth, bodies = (tag: string) => cell.spots.filter(s => s.item === tag), defs: NozzleDef[] = [], nozzles = new Map<string, Nozzle>(), lines: UnitLine[] = [], spools: BlSpool[] = [], roots: RootSpool[] = [], stations: StationSpool[] = [];
+  const HW = cell.rack.halfWidth, bodies = (tag: string) => cell.spots.filter(s => s.item === tag), defs: NozzleDef[] = [], nozzles = new Map<string, PlantNozzle>(), lines: UnitLine[] = [], spools: BlSpool[] = [], roots: RootSpool[] = [], stations: StationSpool[] = [];
   const addNozzle = (id: string, equip: string, service: string, NPS: number, cls: PipeClass, a: Anchor, z0: number, S = nozzleStandout(NPS, cls)) => {
-    const face: V3 = [a.A[0] + a.u[0] * S, a.A[1] + a.u[1] * S, a.A[2] + a.u[2] * S];
-    nozzles.set(id, { id, equip, service, NPS, cls, A: a.A, u: a.u, face, S, z0 }); defs.push({ equip, id, service, NPS, cls, at: { on: 'top', dx: 0, dz: 0 } });
+    const face: V3 = [a.A[0] + a.u[0] * S, a.A[1] + a.u[1] * S, a.A[2] + a.u[2] * S], b = a.back ?? 0;
+    // SW-NOZ-1 (amended 2026-11-27): the neck runs back to the drawn body, `back` beyond A; the runs are planned from A and S as the face was set
+    nozzles.set(id, { id, equip, service, NPS, cls, A: b ? [a.A[0] - a.u[0] * b, a.A[1] - a.u[1] * b, a.A[2] - a.u[2] * b] : a.A, u: a.u, face, S: S + b, z0, ...(b ? { plan: { A: a.A, S } } : {}) }); defs.push({ equip, id, service, NPS, cls, at: { on: 'top', dx: 0, dz: 0 } });
   };
   const offered = (NPS: number, cls: PipeClass) => NPS <= 12 && NPS * NPS * Number(cls.slice(1)) <= 1_800_000;
   // SW-RPI-9: a control station is the line's specification break: the part after it, and the destination's nozzle, take the destination's class where it is lower
@@ -755,7 +790,7 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
       if (fe.kind === 'cracker' && ['flue gas', 'reactor vapour'].includes(l.from.port)) bareFlow.add(i);                                                                         // the regenerator's flue gas to its cooler; the reactor's vapour to its fractionator
       if (fe.kind === 'fluegascooler' && l.from.port === 'outlet' && l.to.k === 'eq' && sh.equip.get(l.to.tag)!.kind === 'scrubber') bareFlow.add(i);                              // the cooled flue gas to the scrubber
       if (fe.kind === 'ejector') bareFlow.add(i);                                                                                                                              // a tail pipe, or the last condenser's outlet
-      if (fe.kind === 'column') { const q = nozzles.get(nozzleId(l.from.tag, l.from.port)), sp = bodies(l.from.tag)[0]; if (q && sp.shape === 'vv' && q.u[1] > 0 && q.A[1] >= sp.yt! - 1e-6) bareFlow.add(i); }   // from a column's top
+      if (fe.kind === 'column') { const q = nozzles.get(nozzleId(l.from.tag, l.from.port)), sp = bodies(l.from.tag)[0]; if (q && sp.shape === 'vv' && q.u[1] > 0 && (q.plan?.A ?? q.A)[1] >= sp.yt! - 1e-6) bareFlow.add(i); }   // from a column's top
     });
     for (const l of lines) {
       const ends = (['from', 'to'] as const).filter(side => { const en = l.def[side]; if (en.k !== 'nozzle') return false; const it = itemOf(en.id); return !!it && (it.e.kind === 'ejector' || (it.e.kind === 'cracker' && it.q.service === 'regenerator air') || (l.flow !== undefined && bareFlow.has(l.flow) && (l.origin === 'process' || l.origin === 'control'))); });
@@ -825,7 +860,9 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
   // beyond the yard's support beams nothing travels above them: every line crossing between equipment and rack passes under a beam, and hangs from it (SW-CELL-6)
   if (cell.yard.neg !== undefined) fill({ ...G, z1: cell.yard.neg + 12 }, YARD + 18, limit, tallHoles);
   if (cell.yard.pos !== undefined) fill({ ...G, z0: cell.yard.pos - 12 }, YARD + 18, limit, tallHoles);
-  const shown = { ...cell.interior, instances: [...cell.interior.instances, ...keepOut] };
+  // SW-DET-6 (amended 2026-11-27): each shell's course joints laid again clear of the plant's own radial connections on it; a seam solid's extent is unchanged
+  const seamed = relaySeams(cell.interior.instances, [...nozzles.values()]);
+  const shown = { ...cell.interior, instances: [...seamed, ...keepOut] };
   const plant: PlantDef = {
     id: `R${unit}`, name: `SmartWeld coastal refinery (plant 3), unit ${unit}: ${sh.name}`,
     building: () => building, interior: () => shown, nozzles: () => nozzles, nozzleDefs: () => defs, lines: () => list, rack: cell.rack,
@@ -855,7 +892,8 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
   }
   /** the room a later run's line will need for the first valves at one of its nozzles */
   const reserve = (l: UnitLine, id: string, dest: boolean): Placed[] => {
-    const q = nozzles.get(id)!, f = designFlange(q.NPS, q.cls).OD / 2, base = gateFaceToFace(q.NPS, q.cls) + 2 * q.NPS + 24, L = q.S + (l.def.cv && dest ? Math.max(base, 12 * q.NPS + 96) : q.service === 'discharge' ? 2 * base : base);
+    // the room kept for its valves is measured from the base and standout the face was set by (SW-NOZ-1 as amended 2026-11-27)
+    const q0 = nozzles.get(id)!, q = { ...q0, ...(q0.plan ?? {}) }, f = designFlange(q.NPS, q.cls).OD / 2, base = gateFaceToFace(q.NPS, q.cls) + 2 * q.NPS + 24, L = q.S + (l.def.cv && dest ? Math.max(base, 12 * q.NPS + 96) : q.service === 'discharge' ? 2 * base : base);
     const box = (len: number, half: number, top: number) => { const a = q.A, b: V3 = [a[0] + q.u[0] * len, a[1] + q.u[1] * len, a[2] + q.u[2] * len], w = (k: number) => (q.u[k] ? 0 : k === 1 ? f : half);
       return block([Math.min(a[0], b[0]) - w(0), Math.min(a[1], b[1]) - w(1), Math.min(a[2], b[2]) - w(2)], [Math.max(a[0], b[0]) + w(0), Math.max(a[1], b[1]) + (q.u[1] ? 0 : top), Math.max(a[2], b[2]) + w(2)], 'room for valves'); };
     // at a spool (on the rack, or a control station's under it) a valve can only stand stem up, its neighbours on either hand: where the valve itself stands, the room is as high as its stem and
@@ -922,7 +960,7 @@ export function unitPiping(unit: number, longest = plotLength(PLOTS.find(q => q.
     const inst = [...shown.instances, ...held, ...ways, ...drops, ...lanesHeld, ...pieces, ...lanesKept, ...gates, ...caps, ...prior];
     // the grid cut to the run: 30 ft beyond its connections along and across the rack, its lane included, and 20 ft above the highest of them or of the rack's top tier
     const ends = lines.filter(l => mine.has(l.def.no)).flatMap(l => [l.def.from, l.def.to]).filter((e): e is Extract<EndRef, { k: 'nozzle' }> => e.k === 'nozzle').map(e => nozzles.get(e.id)!);
-    const xs = ends.flatMap(q => [q.A[0], q.face[0]]), ys = ends.flatMap(q => [q.A[1], q.face[1]]), zs = [...ends.flatMap(q => [q.A[2], q.face[2]]), ...(run.lane ? [run.lane.z] : [])];
+    const pA = (q: PlantNozzle) => q.plan?.A ?? q.A, xs = ends.flatMap(q => [pA(q)[0], q.face[0]]), ys = ends.flatMap(q => [pA(q)[1], q.face[1]]), zs = [...ends.flatMap(q => [pA(q)[2], q.face[2]]), ...(run.lane ? [run.lane.z] : [])];
     const full = { x0: G.x0, x1: G.x1, y1: gridTop, z0: G.z0, z1: G.z1 }, y1 = Math.min(gridTop, up(Math.max(RACK.tiers[top] + 24, ...ys) + 240));
     const far = whole === 'close' ? 120 : 360;   // 'close': the third attempt, 10 ft beyond the connections in place of 30
     const grid = whole === true || !ends.length ? full : rest ? { ...full, y1 } : { x0: Math.max(G.x0, down(Math.min(...xs) - far)), x1: Math.min(G.x1, up(Math.max(...xs) + far)), y1: whole === 'close' ? Math.min(gridTop, up(Math.max(RACK.tiers[top] + 24, ...ys) + far)) : y1, z0: Math.max(G.z0, down(Math.min(...zs) - far)), z1: Math.min(G.z1, up(Math.max(...zs) + far)) };

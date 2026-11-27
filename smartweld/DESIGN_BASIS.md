@@ -714,6 +714,14 @@ Geometry built in stage 5 once `OD` is known; rules fixed here.
 - `SW-PS-1` Pipe shoe: a T 4 in high of `PL3/8` web and `PL3/8` base 4 in wide, length 12 in for OD ≤ 8 in and 18 in above, welded to the pipe
   with intermittent fillets. Reason: 4 in lifts the pipe over the beam flange with room for
   insulation; a shoe long enough to stay on the beam through thermal travel.
+  Amended 2026-11-27 (P-95, for every plant, the owner's decision on the catalogue's own
+  drawings): the web's top edge stops at the pipe's underside, the line the shoe is welded
+  along. Reason: the web was drawn 0.15 in up into the pipe so that the two would read as
+  joined; a web is welded along its edge to the pipe's surface, not set into the pipe wall,
+  and the drawing must not put the shoe's steel inside the pipe (an independent clash check
+  found it so at every shoe). The pipe's curve across the web's 3/8 in thickness leaves the
+  web's two edges clear of the pipe by at most 0.015 in (at 2 in, the smallest line on a
+  shoe; less on larger lines), a gap the weld fills.
 - `SW-PS-2` Guide: two `L3x3x1/4` × 6 in each side of the shoe with 1/8 in clearance,
   welded to the beam. Reason: lets the line slide axially and stops it moving sideways.
 - `SW-PS-3` Anchor: the shoe base welded to the beam all around (SW-WD-1).
@@ -845,6 +853,24 @@ temperature; stresses are in psi unless stated.
 - `SW-FLG-6` Hub: wall 2 t_pipe at the back of the flange tapering to t_pipe over a length
   1.5 t_f; a straight neck of 1 in to the weld bevel; weld-end bevel per SW-WD-4. Reason: the
   taper spreads the flange moment into the pipe.
+  Amended 2026-11-27 (P-95, for every plant, the owner's decision on the catalogue's own
+  drawings): the hub's wall at the back of the flange is no thicker than leaves the nuts room
+  on the back face: its outside radius there at most half the bolt circle, less half a nut's
+  width across its corners (SW-B-2) and the bolt hole's own clearance on its stud (1/16 in, as
+  the valves keep, SW-VLV-1), and never less than t_pipe; the taper runs from there to t_pipe
+  as before. Where even t_pipe would not leave that room, the bolt circle is widened to give
+  it (and t_f follows from the wider circle by SW-FLG-5). Reason: SW-FLG-4 sets the bolt circle
+  from the gasket and the studs' spacing only, never from the hub behind the flange, and the
+  drawn nuts stood up to 0.12 in inside the hub's root at the class 1200 flanges of 4 to 12 in
+  (no clash check could see it: each excuses a stud set where it passes through its own
+  joint's flanges). A thinner root keeps the bolt circle, the flange's thickness and its
+  length, so no joint, line or route moves; the hub keeps at least the pipe's wall and still
+  tapers into it. The root is so thinned at 3 to 16 in in class 1200 (to between 1.47 and 1.96
+  t_pipe) and at 4 in in classes 150, 300 and 600 (to 1.71 t_pipe, where the nuts had 0.009 in);
+  no bolt circle, thickness or length changes in any class a plant uses (150 to 1200). Only in
+  classes 2400 and 4800, which no plant uses, is the bolt circle widened, at five sizes. The
+  rule is for pipe flanges (weld-neck flanges and nozzles); a valve's own body and bonnet
+  joints, designed with the body's bore and wall, keep SW-VLV-1's room for their nuts.
 - `SW-FLG-7` Studs: length = 2 t_f + gasket + 2 nut heights (SW-B-3) + 2 × d/4 stick-out,
   rounded up to 1/4 in; heavy hex nuts both ends; no washers. Reason: studs can be fitted
   from either side and replaced in place.
@@ -1338,7 +1364,24 @@ bore is continuous and every end is a butt-weld bevel.
 - `SW-NOZ-1` A nozzle is a pipe of the line's size and class welded into the shell and ending in a
   weld-neck flange (SW-FLG). The flange face stands S = flange OD / 2 + 3 in from the shell surface.
   Reason: the nuts behind the flange must clear the shell and 3 in of insulation.
-- `SW-NOZ-2` Nozzle positions and services are the plant's drawing (`DEMO_NOZZLES`, basis
+  Amended 2026-11-27 (plant 3, P-95): the neck runs from the back of the flange to the item's
+  body as drawn, its end where its axis meets the drawn body's outer surface: never stopping
+  short, so that it does not end in the air, and never running past it, into a head or a
+  shell. Where a plant's rule sets a connection's face on a plane the item's body does not
+  reach (a fired heater's gas connections, under its floor, where the body the gas enters is
+  the burners' manifold, SW-EQC-15 and SW-EQC-53 as amended), the face stays where the rule
+  sets it and the neck runs on, behind the base the face was set from, to that body. The room
+  kept for the connection's valves and the extent of a run's grid are measured from the base
+  and standout the face was set by, so a longer neck moves no route. A unit kept as routed
+  before has its stored necks cut again to the same length, the flange and face left where
+  they are (`necksToPlan`). A neck that continues an opening the item draws for it (an open
+  cone's small end, a gas duct of the line's outside diameter) ends in the plane of the
+  opening; whether a neck meets its body is checked through its wall at several points round
+  it, not on its axis, along which such an opening shows only the item's inside. Reason: a
+  nozzle is welded to the body it serves; a flange held up by nothing, or a neck standing into
+  a vessel's head, cannot be built. An independent check of every nozzle of the nine units
+  found necks 15 to 66 in off a column's narrower shells, one 12 in into its top head, and the
+  heaters' gas connections ending in the air under their floors. Nozzle positions and services are the plant's drawing (`DEMO_NOZZLES`, basis
   `drawing`). Pump suction nozzles are axial at the casing end; pump discharge nozzles are on top of
   the casing.
 - `SW-NOZ-3` Relief valves stand upright on top nozzles and need their own height plus 12 in below
@@ -2801,6 +2844,21 @@ Equipment items (each `make…` takes the stated dimensions; what is not stated 
   H on four `W8` legs 8 ft high with a floor plate; a convection box 0.6 D square and 0.4 D high
   on top; a stack of 0.3 D diameter and stated height above the convection box. Burners are data.
   Reason: envelope only.
+  Amended 2026-11-27 (P-95; drawn only where a plant gives the heater its gas connections, the
+  catalogue's own drawing otherwise unchanged): under the floor, the burners' gas piping. Each
+  gas a plant brings in has a ring of its connection's own pipe, level, about the heater's
+  axis at the height of its connection, and from the ring a riser of the same pipe straight up
+  into each of the four burners, whose bottom is closed by a 3/8 in plate the risers end on.
+  The fuel gas ring is on the burners' circle (0.3 D). Where a waste gas is burned as well, its
+  ring is 12 in below the fuel gas ring, and the two rings stand off the burners' circle, the
+  fuel gas's outward and the waste gas's inward, each riser wholly within the burner's bore
+  1/8 in from its wall (the two risers then at least 1/4 in apart, or the heater cannot take
+  both gases and stops the unit with an error). Reason: a heater's gas connection is the inlet
+  of the manifold that feeds its burners; drawn without it, the plant's connection flanges
+  stood under the floor with nothing behind them (an independent check of every nozzle found
+  all the heaters' gas connections so). A ring on the burners' circle lets each riser go
+  straight up; a second ring lower, inside the first, keeps each gas's neck and risers clear
+  of the other gas's ring.
 - `SW-EQC-16` Agitated tank: a vertical vessel (SW-EQ-1, or flat-bottomed as SW-EQ-5 when stated
   on legs by SW-EQC-4) with a top-mounted agitator: a motor (SW-EQC-8) on a gearbox box 0.8 D
   cube over a 6 in nozzle at the centre, a shaft of 0.08 ID diameter down to 0.3 ID above the
@@ -2835,6 +2893,50 @@ Equipment items (each `make…` takes the stated dimensions; what is not stated 
   connection made through the opening and the valve bolted to it, by 0.03 in, at both
   catalyst hoppers of the cracking unit, found by the plant's clash audit). Reason: the
   opening is where the outlet's piping leaves the skirt; the ladder is climbed from the side.
+  Amended 2026-11-27 (P-95; drawn only where a plant gives the silo the connections that leave
+  through the skirt's opening, the catalogue's own drawing otherwise unchanged): the skirt is
+  cut at its opening as SW-EQ-1's skirt is, in three pieces (below, at and above the opening),
+  its cut edges at the sides on lines through the axis. The opening faces the silo's local +x;
+  it is 36 in high with its sill 24 in above the base, and its width (across its centre line,
+  at the skirt's outer face) is twice the larger of 12 in and, for each connection through it,
+  the distance of its axis from the centre line plus half its pipe's outside diameter plus
+  3 in, taken up to the 6 in module: 36 in for the cracking unit's catalyst hopper (a 3 in and
+  a 2 in connection 12 in either side of the centre line), 24 in with no connections, the
+  width drawn before. The plate is cut 3/8 in larger all round, and a frame of `PL3/8` bars
+  3 in deep, from 2 in inside the skirt's outer face to 1 in outside it, fills that margin: a
+  sill and a head bar curved to the skirt, each reaching across the whole cut, and a straight
+  jamb bar at each side between them, its outer face on the plate's cut edge; bar and plate
+  edge to edge, and bar to bar. Each connection's pipe passes the frame 3 in clear at least,
+  or the silo cannot take it and stops the unit with an error. Where connections leave
+  through the opening, the silo's own outlet is drawn inside the skirt, from the silo's sizes
+  and the connections' sizes and places, which the plant gives it (each connection's size and
+  class, its axis's height above the base and its distance from the opening's centre line):
+  a spout of the outlet's size down the axis from the foot of the cone; a concentric reducer
+  to the first connection's size; a pick-up tee of that size on the axis at the connections'
+  height, its outlet up into the reducer and its run square to the opening's centre line;
+  from each end of the run a pipe of its connection's size (a concentric reducer first where
+  that connection's size differs from the tee's) to a 90° elbow whose corner lies on its
+  connection's axis in the silo's centre plane (the plane through the axis square to the
+  opening's centre line); and from each elbow a straight leg out through the opening,
+  parallel to its centre line, ending 1 in outside the skirt (the frame's outer face, R + 1
+  from the axis), where the plant's nozzle begins. A single connection, on the centre line,
+  is turned out under the reducer by its elbow alone, the elbow's corner on the axis. The
+  spout, the first reducer and the tee are of the first connection's class, each branch of
+  its own; every piece is the catalogue's own pipe and fittings at their own sizes
+  (SW-PIPE-2..4, SW-FIT-1..3), and where they do not fit between the cone and the
+  connections (two connections on one side of the centre line, more than two, or a branch
+  too short for its fittings) the unit stops with an error. Reason: a silo on a skirt empties down its axis;
+  a connection ended on the skirt would put the catalyst line against plate with no way
+  through. The frame drawn before was a closed skin over an uncut skirt, and the plant's
+  two necks at the cracking unit's catalyst hopper ended short of it (0.99 in on their axes;
+  0.8 to 1 in across their walls, and 2.2 to 2.4 in where a wall passed the frame's edge to
+  the skirt), with nothing behind them that was the silo's outlet; the outlet belongs to the
+  silo and must be drawn, or the connection stands in the air. The frame's outer face and its middle stay where they
+  were, so the connections' faces and the routes laid to them do not move.
+  Amended the same day (for every silo, the owner's decision on the catalogue's own drawings):
+  the skirt's top is cut level where its inside face meets the cone's outside, 0.375 tan 60° =
+  0.65 in below the cone's rim, leaving the groove for its weld at its outer edge. Reason: run
+  up to the rim, the skirt plate stood 0.19 in up inside the cone's wall all round.
 - `SW-EQC-23` Vertical sump pump: a motor (SW-EQC-8) on a mounting plate `PL1` of stated plan at
   grade, a column pipe of stated size and length down into the sump, a bowl cylinder of 2 × the
   column's diameter and 1.5 × its diameter long at the bottom, a discharge pipe elbowing up beside
@@ -2930,6 +3032,20 @@ here; nothing is decorative. Weights include the drawn detail (SW-EQ-7, SW-CIV-1
   course has one longitudinal seam, turned 90° from the next course's. A seam is a weld cap
   1/8 in proud and 2 t + 1/4 in wide. Reason: plate comes 8 ft wide; staggering the long seams
   keeps them from lining up.
+  Amended 2026-11-27 (plant 3, P-95; with no connections given, the layout is as before): where
+  a plant sets its own connections on a shell, the course joints between its two end seams are
+  laid clear of them. No circumferential seam's centre stands nearer a radial connection's
+  axis, along the shell, than the neck's outside radius, the shell's thickness (the nozzle's
+  own weld), half the seam's width and 1 in. The joints are taken from the first end on, each
+  at the farthest place within 96 in of the one before that is so clear, and at least 12 in
+  from it; the longitudinal seams are laid course by course as before. On a storage tank,
+  whose courses are fixed from its bottom, each course's vertical seams are turned about the
+  axis together by the least angle (in quarter degrees) that keeps each clear of the
+  connections on that course by the same margin, measured round the shell. Reason: the courses
+  were laid every 96 in from the tangent line before any connection was placed, so a seam's
+  raised cap stood under a nozzle's neck at several places (an independent check through
+  every neck's wall found them; the clash checks excuse a nozzle against its own item). A
+  nozzle is not set on a seam: the seam is ground and examined where nothing covers it.
 - `SW-DET-7` Vessel dressing (a catalogue vessel's standard connections, where a plant does not
   give its own nozzle schedule): top head centre nozzle of ID/8 rounded up to the size series
   (minimum 2 in); a side inlet of the same size at 0.75 TT; a 24 in manway at 30 in above the
@@ -3070,6 +3186,12 @@ Items:
   level, at the height its upper end would have had, and without its flange, for a plant's
   own nozzle to stand on its end; and the pumps, their riser and the spray nozzles may be
   given a stated angle about the tower in place of 90° (added 2026-11-25, for plant 3).
+  Amended 2026-11-27 (P-95): a duct of stated outside diameter is drawn of the line's own
+  pipe, with that pipe's wall, not of 1/4 in plate. Reason: the plant's nozzle on its end is a
+  piece of that pipe (SW-NOZ-1); against the thin duct the neck's 0.97 in wall (36 in, class
+  150) overhung the duct's bore, so that part of the neck's end met nothing, a ledge inside
+  the bore of a joint that could not be welded. The duct's outside and its end are unchanged,
+  so the nozzle's face and the line stay where they are.
 - `SW-EQC-37` Flue gas cooler (a horizontal fire-tube waste heat exchanger with its steam drum):
   a shell of stated diameter and length with tubesheets and tubes of 2 in on a 1.25 pitch; inlet
   and outlet channels as cones at 30° from the duct diameter of 0.5 D; a steam drum of 0.6 D
@@ -3094,6 +3216,15 @@ Items:
   stack (SW-EQC-43); a superheater header pair of 8 in pipe with its outlet nozzle; platform and
   ladder at the steam drum. Catalogue images cut the casing. Reason: water circulates down the
   cold downcomers and up the heated tubes by density alone.
+  Amended 2026-11-27 (P-95): where a plant gives the boiler's steam line, the outlet header is
+  of the next pipe size above that line, and 8 in at least, drawn round enough (48 sides) that
+  a neck on it meets its true surface; its supports reach to its underside. Where the plant
+  brings the feed water to the economizer's inlet, that inlet's flange is not drawn (the
+  plant's own connection stands there) and the header's end there is closed by a plate in its
+  bore, flush with the pipe's end and as thick as the header's drawn wall, on which the
+  connection's neck stands. Reason: a 10 in steam line's neck stood on the 8 in header, wider than the pipe it
+  was welded to; and the 4 in feed water neck on the 6 in header's open end would have stood
+  inside its bore, touching no metal.
 - `SW-EQC-41` Economizer: a casing box of stated plan and height with a serpentine coil of 2 in
   tubes at 4 in pitch (return bends outside the casing in header boxes), inlet and outlet headers
   of 6 in pipe. `SW-EQC-42` Burner: a register throat of stated diameter d in a windbox 2 d
@@ -3124,6 +3255,11 @@ out of scope (they belong to the P&ID). In-line items lie along z from one end f
 flanges, pipe and bolting by SW-PIPE-*, SW-FLG-*. Proportions are SmartWeld's own, from the
 reasoning given, for the owner to tune (PROVENANCE P-75).
 
+  Amended 2026-11-27 (P-95): a tank's round shell, bottom, curb, roof, girder and pontoon are
+  drawn with sides no longer than 8 in (96 sides at least), so that the drawn shell lies within
+  0.02 in of its true circle whatever the tank's size. Reason: an 80 ft tank drawn with 96
+  sides stood up to 0.26 in inside its circle between corners, and a connection's neck, set on
+  the true circle, stopped that short of the shell drawn.
 - `SW-PSP-1` Y strainer (flanged): face to face 2 flange lengths + 2.5 OD; a cast body of 1.5 OD
   diameter; a screen pocket of the pipe's bore at 45° below the run toward the outlet, 1.6 OD
   long, closed by a bolted cover with a drain plug. Reason: the pocket holds a screen as long as
@@ -3388,6 +3524,18 @@ catalogue's own entries are unchanged. Plant 3 states the wall of SW-PRC-14.
   at most; a platform 36 in wide along one long wall at the hip with a ladder. Tubes and
   refractory are not drawn. Reason: burners fire up between tube walls; the gas turns into
   the convection section above, where the remaining heat is taken, and leaves by the stack.
+  Amended 2026-11-27 (P-95; drawn only where a plant gives the heater its gas connections):
+  under the floor, a header for each gas along the burner row, of its connection's own pipe,
+  level at its connection's height, inside the columns of the wall the connections pass
+  through by 1 in from the columns' flange edges. The burners are shared between the gases by
+  which connection each is nearer along the row; each header runs from 3 in short of its
+  nearer end burner's branch, or of its own connection, to 3 in past the other, and is capped;
+  two headers end to end stand at least 3 in apart. From a header a 2 in branch runs to each of
+  its burners' gas inlet flanges (SW-EQC-42), across under the floor at the flange's height
+  and up into the header, its bend of 1.5 OD radius, ending in a 2 in flange bolted to the
+  burner's, a 1/8 in gasket between. Reason: as for SW-EQC-15 as amended: the connections
+  stood under the floor with nothing behind them; each burner fires the gas of the header it
+  is on (a cabin with two gases burns the waste gas in the burners nearer its connection).
   Amended 2026-11-27 (owner's decision, P-95): where a plant states a connection that passes
   out through a long wall of the radiant box (the point where its axis meets the wall, and its
   flange's outside diameter), no buckstay comes within 1 in of the flange's rim, seen along
@@ -4017,6 +4165,12 @@ the catalogue's own geometry rules (§25, §29–34, §66, §69, §72), which ar
   liquid they catch. Drums that hold a stated time (slop and drain drums, 30 minutes) use it.
   Reason: hold-up gives the operator time; the velocity is the settling speed of a 0.2 mm drop
   in turbulent drag (drag coefficient 0.44) taken at 70 %.
+  Amended 2026-11-27 (P-95): a horizontal drum is at least as long as the connections on its
+  top need: 18 in inside each tangent line and, between neighbours, half the sum of their
+  flanges and 12 in, to the 6 in (SW-RPI-2). The fuel gas mixing drum of the utilities unit,
+  whose four gases enter on its top and whose mixed gas leaves there too, is so stated 132 in
+  between tangents (3 D would give 108). Reason: on 108 in its gas outlet, once it stood on
+  top as a gas outlet does, came on the same spot as the fourth inlet.
 - `SW-PRC-7` Columns. Diameter from the largest vapour load in each section at
   u = 0.25 √((ρ_L − ρ_V) / ρ_V) ft/s over 85 % of the cross-section (the rest is downcomers), in
   6 in steps. Height: the stated number of trays at 24 in, plus 12 ft for the sump and feed
@@ -4943,6 +5097,14 @@ What this section adds is what that generator is given.
     top at the far end, and the brine leaves underneath at the far end. Reason: the water
     settles downward through the oil rising to the outlet; an inlet on top would drop the
     emulsion through the settled oil.
+    Amended 2026-11-27 (P-95): on a drum, an outlet whose stream is all vapour is gas, on top,
+    whatever it is called (as a vertical drum's is; a horizontal converter's gas leaves below
+    its bed, as before); and every connection stands between 18 in inside
+    each tangent line, a drum too short for its connections stopping the unit with an error.
+    Reason: a fuel gas drum's gas outlet, named only "outlet", was laid underneath with the
+    liquids, and stepped along past the saddle's pier it came 6 in beyond the tangent line,
+    under the head, where its neck met the head 4.5 in short of its end on one side and could
+    not meet it at all on the other.
   - Vertical vessel or column: every shell connection faces the rack, on the shell's centre
     line; a column's platforms and ladders are on the other half (SW-CELL-4). The one vapour
     outlet (a reactor's inlet; and a drum's outlet where what leaves it is all vapour, as a
@@ -4979,6 +5141,26 @@ What this section adds is what that generator is given.
     connections did not fit between the bands and four were set below the shell, one below
     grade; nothing checked for it. A test now holds every shell connection between its
     vessel's tangent lines.)
+    Amended 2026-11-27 (P-95): on a column whose shells are of different diameters (the
+    swaged tower of SW-EQC-65) the tangent lines are the drawn ones: the bottom one the bottom
+    head's depth (half the bottom shell's outside radius) above the skirt, the top one above
+    it by the shells' stated lengths and the two cones at 30° to the axis, each |ΔR| / tan 30°
+    long, not rounded. Each connection stands out from the shell at its own height, its base
+    on the outside of the shell it stands on, and the top connection's on the crown of the
+    top head (the top tangent line and half the top shell's outside radius). The feed stands
+    where the catalogue draws its own, 36 in above the lower cone on the middle shell, where
+    it flashes; any other connection whose pipe would come within 6 in of a cone (its axis
+    nearer a cone's end than half its outside diameter and 6 in) moves along its shell to the
+    nearer elevation clear of the cone, on the grid, the spacing above then kept again; and
+    the item's own drawn connections give way to the plant's, its side draws too (SW-CELL-4).
+    Reason: the connections stood as on a column of the middle shell's diameter and of the
+    sizing's tangent-to-tangent height, whose cones are rounded up to 6 in. The necks on the
+    two narrower shells stood 15 to 66 in off them in the air, the feed came on the bottom
+    shell 12 in under the lower cone, the bottoms outlet on the bottom head, and the
+    overhead's neck ran 12 in down into the top head; three of the catalogue's own 6 in side
+    draws stood open on the rack side, not taken out with its other nozzles (an independent
+    check of every nozzle against its item's drawn body found them, which the clash checks
+    excuse as a nozzle on its own item).
   - Adsorber (one of the four of the hydrogen purification unit): as a vertical vessel, the
     feed and the tail gas low on the shell and the hydrogen from the top head. The first
     vessel takes the unit's three lines and the others join them with tees, as parallel
@@ -5034,6 +5216,15 @@ What this section adds is what that generator is given.
     not drawn). Reason: each stands where the stream enters or leaves the boiler as the
     catalogue draws it: water through the economizer to the drum, steam from the
     superheater, the sludge from the lowest drum.
+    Amended 2026-11-27 (P-95): the feed water's connection stands on the lower header's own
+    axis at the end of its pipe, its neck continuing the header, and the economizer is drawn
+    without its inlet flange there; the boiler is set by SW-CELL-7 so that this axis lies on
+    the 6 in grid, moved along the rack and lifted on a thicker pad as that needs. The steam
+    leaves the top of the outlet header at the grid line nearest its axis, its neck's end on the
+    header's drawn surface there. Reason: as first coded, the feed water stood 9.45 in above
+    the lower header's axis (taken from the box of both headers) and 1.75 in beside it, so
+    that its neck met nothing at all; and the steam's neck ended at the height of the header's
+    crown, 1.2 in off the crown, where the header's surface lies lower.
   - Deaerator (SW-EQC-50; added 2026-11-24): on its dome, the water it deaerates and the
     steam that does it. The largest water connection enters the dome's top; the heating
     steam enters the dome's side toward the battery limit and a second steam the opposite
@@ -5049,12 +5240,23 @@ What this section adds is what that generator is given.
   - Vertical cylindrical heater: the coil enters the convection box and leaves the radiant
     shell 2 ft above its floor, the fuel gas enters under the floor; a waste gas it burns
     enters beside the fuel gas, 3 ft along; a steam coil's two ends stand in the convection
-    box's two side faces.
+    box's two side faces. Amended 2026-11-27 (P-95): the waste gas enters 1 ft along from the
+    fuel gas and 1 ft below it, at its own ring (SW-EQC-15 as amended); each gas's neck runs
+    in to its ring (SW-NOZ-1 as amended), the faces of the fuel gas where they were. Reason:
+    3 ft along, the waste gas's axis ran through a leg (on a 114 in heater the legs stand 36.06
+    in either side of the centre), so no neck could reach a manifold inside them.
   - Cabin heater: every connection on the wall that faces the rack: the coil enters the
     convection section at mid-height, a quarter of the heater's length to one side of its
     centre, and leaves the radiant box 2 ft above its floor a quarter to the other side; fuel
     gas and the waste gases it burns enter 2 ft below the floor, 4 ft apart about the centre; a
-    steam coil's two ends stand in the convection section beside the outlet's side.
+    steam coil's two ends stand in the convection section beside the outlet's side. Amended
+    2026-11-27 (P-95): each gas's neck runs in to its header inside the wall's columns
+    (SW-EQC-53, SW-NOZ-1 as amended); the gases enter 18 in below the floor instead where, at
+    2 ft, a branch from the burners' gas inlet flanges could not rise into its header with its
+    bend (the header's axis less than the bend's radius and the header's radius above the
+    flanges'). Reason: on a narrow cabin the burners are smaller and their inlet flanges stand
+    higher; on the 180 in cabin of unit 12 they stood 1.85 in under a header 2 ft below the
+    floor, too near for a bend and too far for a branch to run straight into it.
   - Air cooler bay: two passes side by side in one header, the header on the side of the
     rack its inlet line comes from. The inlet stands on top of the header, 3 ft to one side
     of the bay's centre, over one pass; the outlet stands in the header's outer face at
@@ -5087,10 +5289,23 @@ What this section adds is what that generator is given.
     that carries it enters, through the skirt's opening: two connections on the skirt's
     face at the opening's mid-height (to the grid), 24 in apart about its centre line (12 in at first: the catalyst line once laid, the generator held the air connection's first point too near it), the
     catalyst's the one toward the rack. The hopper's own outlet from the foot of the cone to
-    the opening is inside the skirt and is not drawn. Catalyst arriving enters through the
+    the opening is inside the skirt (at first not drawn; drawn as amended below). Catalyst arriving enters through the
     roof at its centre, its flange 54 in above the roof, over the handrail. Reason: a hopper
     on a skirt is emptied through the skirt's opening, where the carrying air picks the
     catalyst up; it is filled from the top.
+    Amended 2026-11-27 (P-95): the hopper's own outlet is drawn by SW-EQC-22 as amended, the
+    plant giving the silo the connections that leave through the opening, in the order their
+    places are set here (the outlets first, then the inlet of the carrying air): each one's
+    size and class, its axis's height in the silo's frame (the opening's middle brought to
+    the grid as the connections stand, less the height of the silo's base once it stands on
+    its pad) and its distance from the opening's centre line, 12 in to the side its
+    connection stands. Each of the outlet's legs ends 1 in outside the skirt, at the frame's
+    outer face, where its connection's neck begins, and the frame's outer face and middle are
+    where they were, so the connections' faces, their standouts and the routes laid to them
+    do not move. Reason: with the outlet not drawn, both necks ended short of a closed frame
+    drawn over an uncut skirt (0.99 in on their axes, more where their walls passed the
+    frame's edge to the skirt), with nothing behind them that was the hopper's outlet:
+    the catalyst line ran against plate with no way through, and the air line led nowhere.
   - Wet scrubber (SW-EQC-36; added 2026-11-25): the flue gas enters the end of the gas
     inlet duct, on its axis; make-up water and caustic enter the sump, on the shell's centre
     line where it faces the rack, under its lowest platform: the water 2 ft above the base,
@@ -5945,7 +6160,24 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   otherwise find the plates in the steel they hang from, and again after SW-RPI-17. A
   trapeze's two rods are each made so, to the member over that rod or its plate (amended the
   same day: left at the generator's estimate, 13 trapezes' rods and plates stood up to 2 in
-  inside the beams they hang from).
+  inside the beams they hang from). Amended again 2026-11-27: the rod is cut to the underside
+  however short it comes out, provided at least 3 in of rod stands clear between its lower
+  attachment (a hanger's clamp ears, a trapeze's crossbar under the pipe) and its top plate.
+  Reason: a rod carries a nut at each end, each about as tall as the rod is thick, with thread
+  showing past it, and needs room between them to turn one; 3 in is our own least for the
+  sizes used here (3/8 to 3/4 in). Where the member's underside leaves less than that, the
+  support cannot hang there and is taken out (SW-RPI-18), its span then counted by the
+  supports check. As first written the correction kept the generator's estimate wherever the
+  rod would have come out under 8 in, a limit that was in the code and not here: so one
+  trapeze's rods (3 in line, unit 19) stood 0.69 in up inside the rack strut it hangs from.
+  Amended the same day: a hanger, or a trapeze rod, with no such member over its rod or its
+  plate, and no drawn solid of any kind standing over its plate with its underside at most
+  1/2 in above it (or with the plate in it), is taken out (SW-RPI-18), no longer left as it
+  was: a rod that hangs from nothing cannot carry anything. Two were so: a hanger in unit 11 left under the place of
+  a pipe frame that was set again elsewhere when the lines at the raised pumps were carried up
+  (SW-RPI-26), its plate 38 ft up under nothing; and a hanger in the main pipeway whose rod the
+  generator hung 5.7 in off the axis of a junction frame's beam, its plate 0.11 in clear of
+  the beam's flange edge in plan.
 - `SW-RPI-21` One stud set through a wafer valve (added 2026-11-26). A wafer body is clamped
   between its two flanges by one set of studs through both, as its rule says (BF-1). The
   generator builds the joint on each side of the body as a joint of its own, each with its
@@ -6001,6 +6233,13 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   shoe, guide or anchor any of whose solids meets a weld of the steel by more than 0.02 in is
   moved along its run, an inch at a time up to 6 in either way, to the nearest place where
   none does and it stands on the same member; one with no such place is left and listed.
+  Amended the same day: so too a shoe, guide or anchor not wholly on one straight pipe of its
+  own line, its length within the pipe and 1 in clear of each of the pipe's ends. Reason:
+  the generator steps a shoe to where its run crosses a beam, which may be under a butt weld
+  (whose bead stands proud of the pipe), a reducer or the start of an elbow's bend; there the
+  web stood up to 0.27 in in the elbow, 0.15 in in the reducer and 0.19 in in the bead (an
+  independent clash check, 25 shoes). A shoe is welded to straight pipe, and never across a
+  girth weld, which must stay open to inspection.
 - `SW-RPI-22` Pieces of one line clear of each other (added 2026-11-27). The generator keeps
   a line 3 in from every other line but never measures a line against itself: its search
   passes every cell held under the line's own number (its end stacks, their valves' boxes

@@ -27,7 +27,7 @@ export function unit19(B: Balance): UnitSheet {
   u.item('K-1901', 'blower', 'Forced draught fan, boiler 1'); u.item('K-1902', 'blower', 'Forced draught fan, boiler 2');
   u.item('X-1903', 'coolingtower', 'Cooling tower, four cells', { cells: 4 });
   u.item('K-1903', 'compressor', 'Air compressor package', { count: 3 }); u.item('D-1903', 'drum', 'Wet air receiver', { vertical: 1, receiver: 1 }); u.item('D-1904', 'drum', 'Instrument air receiver', { vertical: 1, receiver: 1 });
-  u.item('T-1903', 'tank', 'Liquid nitrogen tank', { vertical: 1, bbl: 400, fluid: 'NI' }); u.item('D-1905', 'drum', 'Fuel gas mixing drum');   // horizontal: four gases enter along its top
+  u.item('T-1903', 'tank', 'Liquid nitrogen tank', { vertical: 1, bbl: 400, fluid: 'NI' }); u.item('D-1905', 'drum', 'Fuel gas mixing drum', { minL: 132 });   // SW-PRC-6 (amended 2026-11-27): four inlets and the gas outlet on top, 2 ft apart and 18 in inside each tangent line   // horizontal: four gases enter along its top
   u.item('T-1904', 'tank', 'Caustic tank', { bbl: 1500, roof: 'cone', fluid: 'CA' });
 
   // raw water: demineralised for boiler feed; service water; cooling tower and fire water tank make-up

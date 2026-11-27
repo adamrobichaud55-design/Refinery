@@ -8,8 +8,8 @@ import {
   makeVerticalVessel, makeHorizontalVessel, makeExchanger, makePump, pumpShaftY, makeAirCooler, makeFiredHeater, makeCompressorPackage, makeBlower,
   compressorShaftY, makePlatformedColumn, makeSwagedTower, makeCabinHeater, makeConeRoofTank, makeCatCracker, makeWetScrubber, makeFlueGasCooler, makeSulfurFurnace,
   makeSulfurCondenser, makeIncinerator, makeWaterTubeBoiler, makeTurbineCompressor, makeLoadingStation, makeCoolingTower, makeSilo, makeDeaerator, makeEjector, makeSulfurPit, makeSeparatorBasin,
-  makeEjectorSet, ejectorSetLayout, makeShellTubeExchanger, makeGrating, makeRod, GRATING, type EjectorSetInput, type Cut,
-  MOTOR_SHAFT, designFlange, pipeDims, gateFaceToFace, globeFaceToFace, elbowRadius, makeWideFlange, proportionW, type PartSpec, type PipeClass,
+  makeEjectorSet, ejectorSetLayout, makeShellTubeExchanger, makeGrating, makeRod, GRATING, cabinGasInlet, cabinHeaderRise, type EjectorSetInput, type Cut,
+  MOTOR_SHAFT, designFlange, pipeDims, gateFaceToFace, globeFaceToFace, elbowRadius, makeWideFlange, proportionW, seamSolids, tankSeams, at, type PartSpec, type PipeClass, type SeamLayout, type SeamClear,
 } from '../catalogue';
 import { K } from '../core/constants';
 import { zReq } from '../scene/structures';
@@ -18,7 +18,7 @@ import { partFromKey } from '../generator/piping';
 import type { Dim } from '../core/basis';
 import { frameFromAxes, multiply, translate, standUp, rotateY } from '../geometry/transform';
 import { unitHeaders, connection } from './headers';
-import type { Mat4 } from '../geometry/mesh';
+import type { Mat4, MeshData } from '../geometry/mesh';
 import type { Placed } from '../generator/building';
 import type { InteriorModel } from '../generator/interior';
 import { interiorKit, type RackLayout } from '../generator/interiorKit';
@@ -42,11 +42,14 @@ export const DECK = RACK.tiers[RACK.tiers.length - 1] + 108, RACK_COL = Math.cei
 export const COOLER_LEG = 24 - (proportionW(12, 40).d / 2 - 6);
 export type Lane = 'pump' | 'exchanger' | 'air' | 'vessel' | 'heater' | 'pit' | 'under' | 'behind';
 /** where a body stands in its unit, and the facts of its shape the nozzle schedule needs */
+/** a swaged column's drawn body: its shells' and cones' extents (a..b) and outside radii, and its bottom and top heads' outside radii */
+export interface SwagedProfile { zTL?: number; zTop?: number; Rbot: number; Rtop: number; zones: { a: number; b: number; R: number }[]; cones: { a: number; b: number; R0: number; R1: number }[] }
 export interface Spot {
   tag: string; item: string; kind: EqKind; lane: Lane; side: 1 | -1; x: number; z: number; /** footprint along and across the rack, and height */ lx: number; lz: number; h: number;
   shape: 'vv' | 'hv' | 'hx' | 'pump' | 'machine' | 'tank' | 'cabin' | 'box'; /** the origin of the body's own frame */ o?: [number, number, number]; /** outside radius; bottom and top tangent, or centre line; axis direction of a horizontal body */ R?: number; yb?: number; yt?: number; yc?: number; axis?: 'x' | 'z'; len?: number;
   /** a plane on the grid square to the axis: a pump's or compressor's casing centre, an exchanger's channel centre; and a pump's suction end */ zc?: number; zs?: number;
   /** the platform floors of a column, elevations */ floors?: number[];
+  /** a column of shells of different diameters (SW-EQC-65): its drawn shells and cones, elevations, and its heads' outside radii (SW-RPI-2 as amended 2026-11-27) */ body?: SwagedProfile;
   /** the tags of the parts that make up the body */ parts?: string[];
   /** round holes in the body's own floor where pipes pass, in plan (SW-CELL-4) */ holes?: { x: number; z: number; r: number }[];
 }
@@ -113,11 +116,42 @@ export function bodySolids(cell: CellModel, tag: string): SolidBox[] {
 /** the boxes of the cell's own works that carry every tag given: a body's pad, the piers it stands on (SW-CELL-4) */
 export function worksBoxes(cell: CellModel, ...tags: string[]): SolidBox[] { return placedBoxes(cell.interior.instances.filter(i => tags.every(t => i.tags.includes(t)))); }
 const SUFFIX = 'ABCDEFGH';
+/** SW-RPI-2 (amended 2026-11-27): the elevation a cabin heater's gases enter at, all at one: 2 ft below its floor (yb), or 18 in where at 2 ft the branches from
+ *  its burners could not rise into their headers with their bends (SW-EQC-53) */
+export function cabinGasY(W: number, yb: number, ods: number[]): number {
+  const rise = Math.max(...ods.map(cabinHeaderRise));
+  for (const drop of [24, 18]) { const y = down(yb - drop); if (y - PAD - cabinGasInlet(W) >= rise - 1e-9) return y; }
+  throw new Error(`a ${W} in cabin heater's gas headers find no elevation under its floor clear of their branches' bends (SW-RPI-2)`);
+}
+/** a connection on an item's shell, as far as its seams need it: the item, where its neck meets the body, its axis outward, and its size */
+export interface SeamOpening { equip: string; A: V3; u: V3; NPS: number; cls: PipeClass }
+/** SW-DET-6 (amended 2026-11-27): each placed shell's course joints laid again clear of the radial connections on it; a seam solid's extent is unchanged */
+export function relaySeams(instances: Placed[], openings: SeamOpening[]): Placed[] {
+  return instances.map(pl => {
+    const mine = openings.filter(q => q.equip === pl.tags[0]), sol = pl.part.extra?.solids as { name: string; mesh: MeshData & { seams?: SeamLayout } }[] | undefined;
+    if (!mine.length || !pl.tags.includes('equipment') || !sol?.some(q => q.mesh.seams)) return pl;
+    const T = pl.transform as number[], c = (k: number): V3 => [T[4 * k], T[4 * k + 1], T[4 * k + 2]], dot = (a: V3, b: V3) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    const local = (p: V3): V3 => { const d: V3 = [p[0] - T[12], p[1] - T[13], p[2] - T[14]]; return [dot(c(0), d), dot(c(1), d), dot(c(2), d)]; }, dir = (u: V3): V3 => [dot(c(0), u), dot(c(1), u), dot(c(2), u)];
+    let changed = false;
+    const solids = sol.map(q => {
+      const lay = q.mesh.seams; if (!lay) return q;
+      const o = lay.off ?? [0, 0, 0];   // where the layout's own frame stands in the part's
+      const bands: SeamClear = mine.flatMap(n => { const p = local(n.A), a: V3 = [p[0] - o[0], p[1] - o[1], p[2] - o[2]], w = dir(n.u), z = a[2] - lay.z0;
+        return Math.abs(w[2]) < 0.2 && Math.abs(Math.hypot(a[0], a[1]) - lay.R) < 1.5 && z > -12 && z < lay.TT + 12 ? [{ z, h: pipeDims(n.NPS, n.cls).OD / 2 + lay.t + (2 * lay.t + 0.25) / 2 + 1, a: Math.atan2(a[1], a[0]) }] : []; });
+      if (!bands.length) return q;
+      const made = lay.tank ? tankSeams(lay.R, lay.t, lay.z0, lay.TT, bands) : seamSolids(lay.R, lay.t, lay.z0, lay.TT, bands), mesh = lay.off ? at(made, o[0], o[1], o[2]) : made;
+      if (mesh.positions.length === q.mesh.positions.length && mesh.positions.every((v, i) => Math.abs(v - q.mesh.positions[i]) < 1e-9)) return q;
+      changed = true; return { ...q, mesh };
+    });
+    return changed ? { ...pl, part: { ...pl.part, extra: { ...pl.part.extra, solids } } } : pl;
+  });
+}
 /** a catalogue item without the nozzles it draws for the catalogue: the piping stage adds the plant's own (SW-CELL-4) */
 export function bare(p: PartSpec): PartSpec {
   // a compressor's lube oil piping is left out with the nozzles: the generator would hold its bounding box, which spans the casing, as solid;
   // a vessel's level connections are instrument connections, outside this model's scope
-  const solids = (p.extra?.solids as { name: string }[] | undefined)?.filter(s => !/nozzle|blind flange|flange face|stub|lube oil piping|level connection|^superheated steam outlet: /i.test(s.name) || /manway/i.test(s.name));   // a boiler's drawn steam outlet gives way to the plant's own connection
+  // a swaged column's own side draws too (SW-RPI-2 as amended 2026-11-27): the plant's draws are its own connections
+  const solids = (p.extra?.solids as { name: string }[] | undefined)?.filter(s => !/nozzle|blind flange|flange face|stub|lube oil piping|level connection|^superheated steam outlet: |^side draw \d/i.test(s.name) || /manway/i.test(s.name));   // a boiler's drawn steam outlet gives way to the plant's own connection
   return solids ? { ...p, extra: { ...p.extra, solids } } : p;
 }
 
@@ -146,7 +180,7 @@ const stackLength = (NPS: number, cls: PipeClass) => gateFaceToFace(NPS, cls) + 
 function scrubberBody(sh: UnitSheet, e: Equip, z: EquipSize): { body: PartSpec; D: number; turned: boolean; duct?: { NPS: number; cls: PipeClass } } {
   const gas = e.ports.find(p => p.name.startsWith('stack'))!.s, D = up(Math.sqrt((4 * cfs(gas)) / (Math.PI * 10)) * 12, 6), nG = z.nozzles.find(q => q.port === 'flue gas in'), order = [...sh.equip.keys()];
   const from = sh.lines.find(l => l.to.k === 'eq' && l.to.tag === e.tag && l.to.port === 'flue gas in')?.from, turned = !!from && from.k === 'eq' && order.indexOf(from.tag) < order.indexOf(e.tag);
-  return { body: bare(makeWetScrubber({ tag: e.tag, D, H: 8 * D, ...(nG ? { inlet: { OD: pipeDims(nG.NPS, nG.cls).OD } } : {}), ...(turned ? { pumpsAt: -Math.PI / 2 } : {}) })), D, turned, ...(nG ? { duct: { NPS: nG.NPS, cls: nG.cls } } : {}) };
+  return { body: bare(makeWetScrubber({ tag: e.tag, D, H: 8 * D, ...(nG ? { inlet: { OD: pipeDims(nG.NPS, nG.cls).OD, t: pipeDims(nG.NPS, nG.cls).t } } : {}), ...(turned ? { pumpsAt: -Math.PI / 2 } : {}) })), D, turned, ...(nG ? { duct: { NPS: nG.NPS, cls: nG.cls } } : {}) };
 }
 function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
   const d = z.d, tags = (n: number) => Array.from({ length: n }, (_, i) => (n > 1 ? `${e.tag}${SUFFIX[i]}` : e.tag));
@@ -323,18 +357,26 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
     case 'deaerator': return [boxy(e.tag, 'vessel', d.L + d.D, d.D + 24, 180 + 2 * d.D, (c, s) => { pad(c, s.x, s.z, d.L + 24, d.D + 24, e.tag); for (const f of [0.2, 0.8]) pad(c, s.x - d.L / 2 + f * d.L, s.z, 48, d.D, e.tag, 162, 'pier'), c.out[c.out.length - 1].transform = frameFromAxes([s.x - d.L / 2 + f * d.L - 24, PAD + 81, s.z], [0, 1, 0], [1, 0, 0]);
       place(c, bare(makeDeaerator({ tag: e.tag, ID: d.D, L: d.L, centreline: d.D / 2 + 18, t: d.t })), frameFromAxes([s.x - d.L / 2, PAD + 162 + 18 + d.D / 2, s.z], [0, 1, 0], [1, 0, 0]), e.tag); Object.assign(s, { shape: 'hv', R: d.D / 2 + 0.5, yc: PAD + 180 + d.D / 2, axis: 'x', len: d.L }); })];
     case 'column': {
-      if (d.Dtop) return [boxy(e.tag, 'vessel', d.D + 132, d.D + 132, Y_VESSEL + d.skirt + d.TT + d.D / 2, (c, s) => { pad(c, s.x, s.z, d.D + 48, d.D + 48, e.tag); place(c, bare(makeSwagedTower({ tag: e.tag, sections: [[d.Dbot, d.hBot], [d.D, d.hMid], [d.Dtop, d.hTop]], t: d.t, skirtH: d.skirt })), upright(s.x, Y_VESSEL, s.z, s.side > 0 ? -Math.PI / 2 : Math.PI / 2), e.tag); Object.assign(s, { shape: 'vv', R: d.D / 2 + d.t, yb: Y_VESSEL + d.skirt, yt: Y_VESSEL + d.skirt + d.TT }); }, 96)];
+      if (d.Dtop) return [boxy(e.tag, 'vessel', d.D + 132, d.D + 132, Y_VESSEL + d.skirt + d.TT + d.D / 2, (c, s) => { pad(c, s.x, s.z, d.D + 48, d.D + 48, e.tag); const part = bare(makeSwagedTower({ tag: e.tag, sections: [[d.Dbot, d.hBot], [d.D, d.hMid], [d.Dtop, d.hTop]], t: d.t, skirtH: d.skirt })), pr = part.extra!.profile as SwagedProfile; place(c, part, upright(s.x, Y_VESSEL, s.z, s.side > 0 ? -Math.PI / 2 : Math.PI / 2), e.tag); // SW-RPI-2 (amended 2026-11-27): the drawn tangent lines, and the drawn body for the connections to stand on
+        Object.assign(s, { shape: 'vv', R: d.D / 2 + d.t, yb: Y_VESSEL + pr.zTL!, yt: Y_VESSEL + pr.zTop!, body: { Rbot: pr.Rbot, Rtop: pr.Rtop, zones: pr.zones.map(q => ({ a: Y_VESSEL + q.a, b: Y_VESSEL + q.b, R: q.R })), cones: pr.cones.map(q => ({ a: Y_VESSEL + q.a, b: Y_VESSEL + q.b, R0: q.R0, R1: q.R1 })) } }); }, 96)];
       return [vertical(e.tag, d.D, d.t, d.TT, d.skirt, d.skirt + d.TT > 360, d.trays)];
     }
     case 'reactor': return d.TT ? [vertical(e.tag, d.D, d.t, d.TT, 96, d.TT + 96 > 360)] : [horizontal(e.tag, d.D, d.t, d.L, up(Math.max(48, ...z.nozzles.filter(q => q.dir === 'out' && !/gas out|vapour|vent|steam out/.test(q.port)).map(q => valveDrop(q.NPS, q.cls)))))];   // a horizontal converter: its outlet leaves underneath through its valve
     case 'vessel': case 'filter': return tags(z.count).map(tag => vertical(tag, d.D, d.t, d.L, 60, false));
-    case 'heater': return d.D
-      ? [boxy(e.tag, 'heater', d.D + 48, d.D + 48, 96 + d.H * 1.9, (c, s) => { pad(c, s.x, s.z, d.D + 36, d.D + 36, e.tag); place(c, makeFiredHeater({ tag: e.tag, D: d.D, H: d.H, stackH: up(0.6 * d.H, 12) }), upright(s.x, PAD, s.z), e.tag); Object.assign(s, { shape: 'vv', R: d.D / 2, yb: PAD + 96, yt: PAD + 96 + d.H }); }, 240)]
+    case 'heater': {
+      // SW-EQC-15, SW-EQC-53 (amended 2026-11-27): the gases the plant brings to the burners, at the heights SW-RPI-2 sets their connections (2 ft / 18 in below the floor,
+      // a vertical heater's waste gas 1 ft lower), so that the heater draws the manifold its connections feed
+      const gasPorts = [...z.nozzles.filter(q => q.port === 'fuel gas'), ...z.nozzles.filter(q => /gas$/.test(q.port) && q.port !== 'fuel gas')], od = (q: { NPS: number; cls: PipeClass }) => pipeDims(q.NPS, q.cls).OD;
+      const heaterGases = () => (gasPorts.length && gasPorts[0].port === 'fuel gas' ? { gases: gasPorts.map((q, k) => ({ OD: od(q), z: down(PAD + 96 - (k ? 30 : 18)) - PAD })) } : {});
+      const cabinGases = (L: number, W: number) => { const g = z.nozzles.filter(q => /gas$/.test(q.port)), y = g.length ? cabinGasY(W, PAD + 84, g.map(od)) : 0; return g.length ? { gases: g.map((q, k) => ({ x: L / 2 - (k - (g.length - 1) / 2) * 48, z: y - PAD, OD: od(q) })) } : {}; };
+      return d.D
+      ? [boxy(e.tag, 'heater', d.D + 48, d.D + 48, 96 + d.H * 1.9, (c, s) => { pad(c, s.x, s.z, d.D + 36, d.D + 36, e.tag); place(c, makeFiredHeater({ tag: e.tag, D: d.D, H: d.H, stackH: up(0.6 * d.H, 12), ...heaterGases() }), upright(s.x, PAD, s.z), e.tag); Object.assign(s, { shape: 'vv', R: d.D / 2, yb: PAD + 96, yt: PAD + 96 + d.H }); }, 240)]
       : [boxy(e.tag, 'heater', d.W + 48, d.L + 48, 84 + 2.5 * d.H, (c, s) => {
         // SW-CELL-4 (amended 2026-11-27): the coil outlet through the wall that faces the rack, where SW-RPI-2 sets it (2 ft above the floor to the grid, a quarter of the
         // box's length to 6 in from its middle), given to the item with its flange's diameter so that its buckstays stand clear of it (SW-EQC-53)
         const nO = z.nozzles.find(q => q.port === 'outlet'), through = nO ? [{ x: d.L / 2 - up(d.L / 4), z: up(PAD + 84 + 24) - PAD, wall: 1 as const, OD: designFlange(nO.NPS, nO.cls).OD }] : [];
-        pad(c, s.x, s.z, d.W + 36, d.L + 36, e.tag); place(c, makeCabinHeater({ tag: e.tag, L: d.L, W: d.W, H: d.H, ...(through.length ? { through } : {}) }), multiply(translate(s.x + d.W / 2, PAD, s.z + d.L / 2), multiply(rotateY(Math.PI / 2), standUp())), e.tag); Object.assign(s, { shape: 'cabin', yb: PAD + 84, yt: PAD + 84 + d.H }); }, 240)];
+        pad(c, s.x, s.z, d.W + 36, d.L + 36, e.tag); place(c, makeCabinHeater({ tag: e.tag, L: d.L, W: d.W, H: d.H, ...(through.length ? { through } : {}), ...cabinGases(d.L, d.W) }), multiply(translate(s.x + d.W / 2, PAD, s.z + d.L / 2), multiply(rotateY(Math.PI / 2), standUp())), e.tag); Object.assign(s, { shape: 'cabin', yb: PAD + 84, yt: PAD + 84 + d.H }); }, 240)];
+    }
     case 'compressor': case 'blower': return tags(z.count).map(tag => {
       const casingD = Math.max(10, up(14 * Math.cbrt(d.gasHp / 100), 1)), motorD = Math.max(10, Math.round(d.motorFrame ?? d.wheel ?? 0.8 * casingD));
       if (e.kind === 'blower') { const wheelD = Math.max(12, up(casingD, 1)), baseL = 0.5 * wheelD + 24 + 2 * motorD; return boxy(tag, 'exchanger', 1.4 * wheelD + 24, baseL + 12, 1.6 * wheelD + 12, (c, s) => { place(c, bare(makeBlower({ tag, wheelD, motorD })), frameFromAxes([s.x, PUMP_PAD, s.z - s.side * (baseL / 2 - 6)], [0, 1, 0], [0, 0, s.side]), tag); }, 48, false, { solid: /^outlet flange$/, axes: 'xz' }); }
@@ -382,9 +424,28 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       place(c, body, frameFromAxes([s.x - 190, PAD + 66, s.z], [0, 1, 0], [1, 0, 0]), e.tag); }, 48, false, { solid: /^furnace chamber$/, axes: 'y' })];
     case 'incinerator': return [boxy(e.tag, 'heater', 420, 144, 1300, (c, s) => { place(c, bare(makeIncinerator({ tag: e.tag, D: 72, L: 240, stackH: 1200 })), upright(s.x - 190, PAD, s.z), e.tag); }, 240, false, { solid: /^chamber shell$/, axes: 'y' })];
     case 'psa': return tags(z.count).map(tag => vertical(tag, d.D, d.t, d.TT, 60, false));   // SW-CELL-4: each adsorber a vessel of its own, piped to the others by the generator
-    case 'boiler': return [boxy(e.tag, 'vessel', 420, 420, 1200, (c, s) => { place(c, bare(makeWaterTubeBoiler({ tag: e.tag, steamID: d.steamID, L: d.L, centres: d.centres, stackD: 72, stackH: 1200, drumT: d.drumT })), upright(s.x - 60, PAD, s.z + 150), e.tag); }, 180)];
+    case 'boiler': {
+      // SW-RPI-2, SW-EQC-40 (amended 2026-11-27): the outlet header of the plant's steam line's size or above, the economizer's inlet left to the feed water's
+      // connection, and the boiler set (SW-CELL-7) so that the lower header's axis, where the feed water enters on it, lies on the grid along the rack and in height
+      const nS = z.nozzles.find(q => q.port === 'steam'), feed = z.nozzles.some(q => q.port === 'feed water');
+      const body = bare(makeWaterTubeBoiler({ tag: e.tag, steamID: d.steamID, L: d.L, centres: d.centres, stackD: 72, stackH: 1200, drumT: d.drumT, ...(nS ? { steamNPS: nS.NPS } : {}), feedWater: feed }));
+      const fh = body.extra!.feedHeader as { at: [number, number, number] };
+      return [boxy(e.tag, 'vessel', 420, 420, 1200, (c, s) => { place(c, body, upright(s.x - 60, PAD, s.z + 150), e.tag); }, 180, false, feed ? { point: fh.at, axes: 'xy' } : undefined)];
+    }
     case 'coolingtower': return [boxy(e.tag, 'vessel', d.cells * d.cellFt * 12 + 48, d.cellFt * 12 + 96, 560, (c, s) => place(c, bare(makeCoolingTower({ tag: e.tag, cells: d.cells, cellL: d.cellFt * 12, cellW: d.cellFt * 12, H: 480, riserNPS: 24 })), upright(s.x - (d.cells * d.cellFt * 12) / 2, 0, s.z + d.cellFt * 6), e.tag), 240, true)];
-    case 'hopper': return [boxy(e.tag, 'vessel', 192, 192, 480, (c, s) => { place(c, bare(makeSilo({ tag: e.tag, D: 144, H: 300, outletNPS: 8, outletH: 96 })), upright(s.x, Y_VESSEL, s.z), e.tag); })];
+    case 'hopper': return [boxy(e.tag, 'vessel', 192, 192, 480, (c, s) => {
+      // SW-RPI-2, SW-EQC-22 (amended 2026-11-27): the connections that leave through the skirt's opening, in the order SW-RPI-2 sets their places (the outlets, then the
+      // carrying air's inlet), given to the silo so that its own outlet is drawn out to them: their axes at the opening's middle brought to the grid once the silo stands on
+      // its pad (SW-CELL-7: its lowest solid on the pad's top), less that base's height; each 12 in to its connection's side, the first toward the rack (local y is −z here)
+      const inp = { tag: e.tag, D: 144, H: 300, outletNPS: 8, outletH: 96 }, row = [...z.nozzles.filter(q => q.dir === 'out'), ...z.nozzles.filter(q => q.dir === 'in' && /air/.test(q.port))];
+      let part = bare(makeSilo(inp));
+      if (row.length) {
+        const bs = partBoxes(part), fr = bs.find(q => q.name === 'skirt opening frame'); if (!fr) throw new Error(`${e.tag}: the silo has no skirt opening to leave through`);
+        const base = PAD - Math.min(...bs.filter(b => !HELD.test(b.name)).map(b => b.mn[2])), zm = (fr.mn[2] + fr.mx[2]) / 2;
+        part = bare(makeSilo({ ...inp, discharge: { z: near(base + zm) - base, legs: row.map((q, k) => ({ NPS: q.NPS, cls: q.cls, y: row.length > 1 ? (k ? -1 : 1) * s.side * 12 : 0 })) } }));
+      }
+      place(c, part, upright(s.x, Y_VESSEL, s.z), e.tag);
+    })];
     case 'ejector': {   // SW-CELL-4: the set of SW-EQC-68 at its sizes, on a deck of its own a tail pipe's height above its hotwell
       const nz = (port: string) => z.nozzles.find(q => q.port === port)!, n = d.stages, first = sh.lines.find(l => l.from.k === 'eq' && l.from.tag === e.tag && l.from.port === 'condensate 1')?.to;
       if (!first || first.k !== 'eq') throw new Error(`${e.tag}: an ejector set whose first tail pipe runs to no hotwell`);
@@ -490,7 +551,7 @@ export function buildCell(unit: number, longest = 4200, part: 'all' | 'tower' | 
     for (const q of b.out) out.push({ ...q, transform: multiply(T, q.transform) });
     for (const q of b.equipment) equipment.push({ ...q, transform: multiply(T, q.transform) });
     Object.assign(s, { shape: f.shape, parts: b.equipment.map(q => q.tag), ...(f.holes ? { holes: f.holes.map(hh => ({ x: hh.x + s.x, z: hh.z + s.z, r: hh.r })) } : {}), ...(f.R !== undefined ? { R: f.R } : {}), ...(f.yb !== undefined ? { yb: f.yb } : {}), ...(f.yt !== undefined ? { yt: f.yt } : {}), ...(f.yc !== undefined ? { yc: f.yc } : {}), ...(f.axis ? { axis: f.axis } : {}), ...(f.len !== undefined ? { len: f.len } : {}), ...(f.floors ? { floors: f.floors } : {}),
-      ...(f.o ? { o: [f.o[0] + s.x, f.o[1], f.o[2] + s.z] } : {}), ...(f.zc !== undefined ? { zc: f.zc + s.z } : {}), ...(f.zs !== undefined ? { zs: f.zs + s.z } : {}) });
+      ...(f.o ? { o: [f.o[0] + s.x, f.o[1], f.o[2] + s.z] } : {}), ...(f.zc !== undefined ? { zc: f.zc + s.z } : {}), ...(f.zs !== undefined ? { zs: f.zs + s.z } : {}), ...(f.body ? { body: f.body } : {}) });   // a swaged column's drawn body: elevations, no plan offset
   };
   const hw = half, spots: Spot[] = [], x0 = RACK.start + 60, heat = plans.filter(p => p.lane === 'heater');
   const room = longest - (heat.length ? 600 + Math.max(...heat.map(p => p.lx)) + 48 : 48) - 264;          // the heaters' ground at the outer end, and the rack's last bay
