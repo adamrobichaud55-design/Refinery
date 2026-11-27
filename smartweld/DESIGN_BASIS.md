@@ -681,12 +681,15 @@ once the pipe interface decision is made; each item carries its nozzle schedule 
   Amended 2026-11-27 (owner's decision, P-95): the pedestal (two thirds of the casing's
   diameter wide, from the baseplate to 2 in below the shaft) starts at the casing's suction
   face and ends 2 in behind the casing as before; it no longer starts 2 in ahead of the face.
-  And the shaft stands high enough for the motor as well as for the casing: 4 in above the
-  casing's underside, or, where the motor is the larger, half the motor's diameter above the
-  baseplate, so that the motor's round rests on the baseplate with its foot under it, and the
-  pump is lifted on a taller pedestal to meet the motor; no higher than that. Reason: the
-  suction nozzle's neck leaves the casing's face on the shaft's line, and the pedestal standing
-  2 in ahead of the face stood under the first 2 in of every neck larger than 4 in; and with
+  And the shaft stands high enough for the motor as well as for the casing: at the higher of
+  two heights above the baseplate's top, half the casing's diameter and 4 in (the casing's
+  underside 4 in above the baseplate, as before) and half the motor's diameter (the motor's
+  underside on the baseplate). So where the motor is more than 8 in larger than its casing,
+  the motor's round rests on the baseplate with its foot, 1 in high, on the baseplate under
+  it, and the pump is lifted on a taller pedestal to meet the motor; no higher than that.
+  Reason: the suction nozzle's neck leaves the casing's face on the shaft's line, and the
+  pedestal standing 2 in ahead of the face stood under the first 2 in of every neck larger
+  than 4 in across; and with
   the shaft set by the casing alone, a motor more than 8 in larger than its casing was drawn
   into its baseplate, and more than 10 in larger through it into the pad, its foot drawn
   downward from the baseplate's top into the pad (up to 6 in) and weighed as steel. An
@@ -860,8 +863,9 @@ on the closure member and the effort a person can apply. Every internal is a rea
   the SW-FLG pattern of the size and class (BFLY is a wafer body between pipe flanges).
   Amended 2026-11-27 (owner's decision, P-95): behind each end flange the valve leaves room
   for the studs and nuts of its joint (SW-FLG-7), with the clearance a bolt hole gives its
-  stud (1/16 in all round, the hole being d + 1/8 in, SW-FLG-4). The room runs from the back
-  of the flange over the nuts' reach (half the stud length less half the joint, that is the
+  stud (1/16 in all round: the catalogue drills every flange's stud holes d + 1/8 in on the
+  bolt circle of SW-FLG-4, a hole size SW-FLG-4's text does not itself state). The room runs
+  from the back of the flange over the nuts' reach (half the stud length less half the joint, that is the
   two flanges, their raised faces and the gasket: the nut and the end of the stud beyond it)
   and the clearance. Over it the hub, and the tube, neck or flare that carries it, stand no
   further from the axis than half the bolt circle less half the nut's width across corners
@@ -875,8 +879,8 @@ on the closure member and the effort a person can apply. Every internal is a rea
   face-to-face, flange diameter and thickness are unchanged. Reason: a nut seats on the back of the flange and must be turned there, so the
   casting behind it stops short of the nut; drawn whole, the hub (twice the body wall at the
   flange) stood where the nuts on the valve's side sit, and an independent clash check of
-  plant 3 found the stud set inside the body of every flanged gate, globe, check and control
-  valve from 2 in to 14 in (4,040 findings at 72 valve sizes, up to 0.6 in deep; at 12 in
+  plant 3 found the stud set inside the body of flanged gate, globe, check and control
+  valves from 2 in to 14 in (4,040 findings at 72 valve sizes, up to 0.6 in deep; at 12 in
   class 1200 the control valve's hub stood beyond the bolt circle itself); with the hubs cut,
   the cover flange of the 3 in swing check still stood 0.03 in into two of its nuts. The
   holes were already drilled and the studs clear of them. Not settled by this rule, and used
@@ -1252,6 +1256,19 @@ rules of sections 29–32.
   whole, the neck (at least 1 in in radius) and the boss stood out of a 2 in to 6 in body by
   up to 1/2 in each side and into the flanges it is clamped between; an independent clash
   check of plant 3 found it at every such valve (the disc, inside the bore, is not affected).
+  Amended 2026-11-27 (owner's decision, P-95): the line studs that clamp a wafer body run
+  through its width on the bolt circle, so the wafer body is drilled at every line stud, not
+  only at its four ears, with the hole a flange gives its stud (d + 1/8 in, 1/16 in all
+  round, as SW-VLV-1 takes it); the ring stands inside the studs (BF-1), so this cuts only
+  the neck and the bottom boss where they reach the bolt circle, and the fillets that join
+  them to the ring. Reason: the neck and the boss are centred on the shaft, between the two
+  studs that stand half a pitch either side of the top and the bottom of the bolt circle, and
+  from 10 in up the neck (0.1 D + 0.6 in in radius there) is wider than the gap between those
+  studs; a part-level check of plant 3's wafer valves against the one stud set through each
+  (SW-RPI-21), made while the end-flange rooms of SW-VLV-1 were reviewed, found the neck of
+  the 10, 12 and 20 in valves 0.31, 0.27 and 0.70 in into those studs, which the clash
+  checks had not tested (they take a stud set through a butterfly as the bolting of its
+  joint). The lugged body is drilled at every stud already.
 - `F-8` Plug: a cast body that is a rounded square prism (superellipse exponent 4) around the
   taper, blended into the run tubes, closed by a round gland cover; square wrench head and a
   wrench lever. Diaphragm: run tubes into a rounded square body with a low weir across the
@@ -4687,7 +4704,8 @@ their own geometry rules, which are unchanged.
     here, and the pad, 9 in at least, is still raised until the shaft is on the 6 in grid
     (SW-RPI-2). Reason: the cell had set the shaft by the casing alone, as the catalogue did,
     and so stood 16 pumps' motors in their own pads (P-1104A/B by 7 in). A pump whose motor is
-    the larger now stands higher on its pedestal: of the 18 such pumps, 12 keep their shaft
+    more than 8 in larger than its casing now stands higher on its pedestal (18 pumps; the
+    other 46 whose motor is the larger stand as they did): 12 of the 18 keep their shaft
     where it was on a pad made up less (9 1/2 in to 10 1/2 in high), and in unit 11 the shafts
     of P-1101A/B and P-1103A/B rise 6 in and those of P-1104A/B 12 in, their suction and
     discharge nozzles with them, so the lines to those six are routed again.
@@ -6012,6 +6030,12 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
     laid as the generator routed it, two 90° elbows at the path's corners. Reason: in the
     hydrotreater's 12 in suction the second 45° elbow ended 6.3 in past the start of the
     spare's tee, and the pipe between them was laid backward through both.
+  - (e) A loop through its own leg (added the same day). Where two straight legs of a line's
+    route cross, the loop between them is taken out and the line turns at the crossing,
+    from the first leg onto the second, its pieces laid as the generator lays them and taken
+    only where every test above holds. Reason: routed again with its lanes moved, the
+    utilities unit's 4 in feed ran 18 in past a corner, rose, came back and fell through its
+    own first leg; none of (a) to (d) served.
   The corrections are plant 3's own (src/refinery/ownLine.ts), made in a unit's run and by
   tools/refinery-selfx.ts on the models on disk; the generator's code is not changed.
 - `SW-PWY-1` Frame. The main pipeway is built level in its own frame, as a unit is (SW-CELL-1),

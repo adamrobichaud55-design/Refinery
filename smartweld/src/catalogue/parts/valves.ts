@@ -687,7 +687,8 @@ function butterflyCast(b: ValveSolid[], c: Common, Ro: number, zLo: number, zHi:
   if (mode === 'flanged') parts[0] = S.subtract(parts[0], nutRoom(f, D, 'z', 1, zHi), nutRoom(f, D, 'z', -1, -zLo));   // SW-VLV-1: the ring between two end flanges clear of their nuts
   const pts = circlePts(f.BC / 2, f.n);
   if (lugs) for (const [x, y] of pts) { parts.push(S.rcylZ(f.d, zLo, zHi, 0.2, x, y)); holes.push(S.cylZ(f.holeD / 2, zLo - 1, zHi + 1, x, y)); }
-  if (mode === 'wafer') for (const i of [0, 1, 2, 3].map(q => Math.floor((q * f.n) / 4))) { const [x, y] = pts[i], m = (zHi - zLo) * 0.15; parts.push(S.rcylZ(f.d * 0.9 + 0.15, zLo + m, zHi - m, 0.15, x, y)); holes.push(S.cylZ(f.holeD / 2, zLo - 1, zHi + 1, x, y)); }   // F-7 locating ears
+  if (mode === 'wafer') for (const i of [0, 1, 2, 3].map(q => Math.floor((q * f.n) / 4))) { const [x, y] = pts[i], m = (zHi - zLo) * 0.15; parts.push(S.rcylZ(f.d * 0.9 + 0.15, zLo + m, zHi - m, 0.15, x, y)); }   // F-7 locating ears
+  if (mode === 'wafer') for (const [x, y] of pts) holes.push(S.cylZ(f.holeD / 2, zLo - 1, zHi + 1, x, y));   // F-7 (amended 2026-11-27): drilled at every line stud, the ears and wherever the neck or boss reaches the bolt circle
   const whole = S.union(S.blend(Math.max(0.4, 0.04 * D), ...parts), S.roundBox(xOff, Ro + hn + tp / 2, 0, sp / 2, tp / 2, sp / 2, 0.12));
   // F-7 (amended): a body clamped between pipe flanges stands no wider than its faces within their reach; the neck and boss keep their round beyond it
   const yF = f.OD / 2 + 0.125, BIG = 1000;

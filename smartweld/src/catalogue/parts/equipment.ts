@@ -98,8 +98,9 @@ export function makeHorizontalVessel(inp: VesselHInput, material: Material = DEF
 export const makeExchanger = (inp: VesselHInput, material?: Material) => makeHorizontalVessel(inp, material, inp.ID / 2, Math.max(1, inp.ID / 12));
 
 export interface PumpInput { tag: string; baseW: number; baseL: number; casingD: number; casingW: number; motorD: number; motorL: number; nozzles?: NozzleSpec[] }
-/** SW-EQ-4 (amended 2026-11-27): the shaft centreline above the baseplate's underside: 4 in over the casing's underside, or half the
- *  motor's diameter over the baseplate's top where the motor is the larger, so that the motor rests on the baseplate, not through it */
+/** SW-EQ-4 (amended 2026-11-27): the shaft centreline above the baseplate's underside (1 in below its top): the higher of half the casing's
+ *  diameter + 4 in over the baseplate's top (the casing's underside 4 in above it) and half the motor's diameter over it (the motor's
+ *  underside on it, which governs where the motor is more than 8 in larger than its casing), so that the motor rests on the baseplate, not through it */
 export const pumpShaftY = (casingD: number, motorD: number) => 1 + Math.max(casingD / 2 + 4, motorD / 2);
 /** Centrifugal pump (SW-EQ-4). Local z along the shaft (motor at +z), x across, y up from the baseplate underside. */
 export function makePump(inp: PumpInput, material: Material = DEFAULT_MATERIAL): PartSpec {

@@ -14,7 +14,7 @@ Each unit is piped in its own frame by the generator of plants 1 and 2, unchange
 | 16 | Diesel hydrotreater | 85 | 85 | 2,133 | 1,348 | 395 | 8,285 | 0 | supports 2 |
 | 17 | Fluid catalytic cracker and gas concentration | 222 | 222 | 6,022 | 3,804 | 1,203 | 25,404 | 0 | supports 9 |
 | 18 | Sulfur block | 139 | 139 | 3,739 | 2,221 | 709 | 12,908 | 0 | supports 7 |
-| 19 | Utilities | 104 | 104 | 2,500 | 1,563 | 514 | 10,219 | 0 | supports 1 |
+| 19 | Utilities | 104 | 104 | 2,485 | 1,548 | 511 | 10,222 | 0 | ownClearance 1, supports 1 |
 
 ## Unit 11: Crude distillation
 
@@ -59,6 +59,7 @@ Each unit is piped in its own frame by the generator of plants 1 and 2, unchange
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | not measured |
 | spans within SW-PS-7, a support at every rack beam crossed | 9 |
 
 Not at zero, supports:
@@ -319,6 +320,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | not measured |
 | spans within SW-PS-7, a support at every rack beam crossed | 1 |
 
 Not at zero, supports:
@@ -499,6 +501,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | not measured |
 | spans within SW-PS-7, a support at every rack beam crossed | 3 |
 
 Not at zero, supports:
@@ -709,6 +712,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | not measured |
 | spans within SW-PS-7, a support at every rack beam crossed | 7 |
 
 Not at zero, supports:
@@ -939,6 +943,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | not measured |
 | spans within SW-PS-7, a support at every rack beam crossed | 0 |
 
 ### Battery limit
@@ -1109,6 +1114,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | not measured |
 | spans within SW-PS-7, a support at every rack beam crossed | 2 |
 
 Not at zero, supports:
@@ -1318,6 +1324,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | not measured |
 | spans within SW-PS-7, a support at every rack beam crossed | 9 |
 
 Not at zero, supports:
@@ -1728,6 +1735,7 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | not measured |
 | spans within SW-PS-7, a support at every rack beam crossed | 7 |
 
 Not at zero, supports:
@@ -1970,11 +1978,11 @@ At these ends the valve the generator stands at every equipment connection is no
 | Component | Count |
 | --- | --- |
 | cap | 1 |
-| elbow | 475 |
+| elbow | 467 |
 | flange | 326 |
 | gasket | 520 |
 | olet | 4 |
-| pipe | 803 |
+| pipe | 796 |
 | reducer | 60 |
 | spade | 14 |
 | spectacle | 28 |
@@ -1983,19 +1991,19 @@ At these ends the valve the generator stands at every equipment connection is no
 
 | Welds | Count |
 | --- | --- |
-| BW, field | 257 |
-| BW, shop | 1302 |
+| BW, field | 253 |
+| BW, shop | 1291 |
 | FW, shop | 4 |
 
 | Supports | Count |
 | --- | --- |
 | anchor | 42 |
 | guide | 109 |
-| hanger | 42 |
+| hanger | 38 |
 | shoe | 215 |
 | stanchion | 64 |
 | trapeze | 4 |
-| trunnion | 38 |
+| trunnion | 39 |
 
 ### Checks
 
@@ -2007,7 +2015,12 @@ At these ends the valve the generator stands at every equipment connection is no
 | valves by class and size | 0 |
 | 3 in between lines | 0 |
 | 3 in from steel and equipment | 0 |
+| pieces of one line clear of each other (SW-RPI-22) | 1 |
 | spans within SW-PS-7, a support at every rack beam crossed | 1 |
+
+Not at zero, ownClearance:
+
+- 4"-P1200-P-19020 4"-P1200-P-19020/p7 (pipe) – 4"-P1200-P-19020/p13 (pipe): 4.00 in
 
 Not at zero, supports:
 
@@ -2019,15 +2032,15 @@ These runs are longer than a pipe of their size spans and no steel stands where 
 
 | Spool | Stream | Direction | Line | Stands at (x, y, z), in | Tier | Lane |
 | --- | --- | --- | --- | --- | --- | --- |
-| BL-1909 | low-pressure steam | out | 6"-P150-P-19026 | 150, 204, -120 | 1 | -120 |
-| BL-1906 | boiler feed water | out | 8"-P1200-P-19018 | 150, 204, -96 | 1 | -102 |
-| BL-1919 | fuel gas to users | out | 8"-P150-P-19052 | 150, 204, -72 | 1 | -84 |
-| BL-1908 | medium-pressure steam | out | 8"-P300-P-19024 | 150, 204, -48 | 1 | -66 |
-| BL-1901 | raw water | in | 8"-P150-P-19001 | 150, 204, -24 | 1 | -36 |
-| BL-1907 | high-pressure steam | out | 10"-P1200-P-19021 | 150, 204, 0 | 1 | -18 |
-| BL-1915 | fuel gas | in | 6"-P150-P-19048 | 150, 204, 24 | 1 | 12 |
-| BL-1904 | fire water make-up | out | 6"-P300-P-19010 | 150, 204, 42 | 1 | 36 |
-| BL-1910 | boiler blowdown | out | 3"-P150-P-19709 | 150, 198, 60 | 1 | — |
+| BL-1919 | fuel gas to users | out | 8"-P150-P-19052 | 150, 204, -108 | 1 | -96 |
+| BL-1908 | medium-pressure steam | out | 8"-P300-P-19024 | 150, 204, -84 | 1 | -78 |
+| BL-1906 | boiler feed water | out | 8"-P1200-P-19018 | 150, 204, -54 | 1 | -54 |
+| BL-1901 | raw water | in | 8"-P150-P-19001 | 150, 204, -30 | 1 | -36 |
+| BL-1907 | high-pressure steam | out | 10"-P1200-P-19021 | 150, 204, -6 | 1 | -18 |
+| BL-1909 | low-pressure steam | out | 6"-P150-P-19026 | 150, 204, 18 | 1 | 12 |
+| BL-1915 | fuel gas | in | 6"-P150-P-19048 | 150, 204, 36 | 1 | 30 |
+| BL-1904 | fire water make-up | out | 6"-P300-P-19010 | 150, 204, 54 | 1 | 54 |
+| BL-1910 | boiler blowdown | out | 3"-P150-P-19709 | 150, 198, 72 | 1 | — |
 | BL-1905 | condensate | in | 4"-P150-P-19013 | 150, 270, -90 | 2 | -90 |
 | BL-1911 | plant air | out | 4"-P150-P-19039 | 150, 270, -72 | 2 | -78 |
 | BL-1912 | instrument air | out | 4"-P150-P-19043 | 150, 270, -54 | 2 | -66 |
@@ -2049,14 +2062,14 @@ Branches that travel the rack start at a spool on it, a block valve on each face
 | --- | --- | --- | --- | --- | --- |
 | RS-1901 | 4"-P300-P-19008 | 4"-P300-P-19601 | 8"-P300-P-19003 | 960, 270, 60 | 2 |
 | RS-1902 | 6"-P300-P-19009 | 6"-P300-P-19602 | 8"-P300-P-19003 | 960, 276, 24 | 2 |
-| RS-1903 | 6"-P300-P-19010 | 6"-P300-P-19603 | 8"-P300-P-19003 | 960, 204, 36 | 1 |
+| RS-1903 | 6"-P300-P-19010 | 6"-P300-P-19603 | 8"-P300-P-19003 | 960, 204, 54 | 1 |
 | RS-1904 | 4"-P1200-P-19019 | 4"-P1200-P-19604 | 8"-P1200-P-19018 | 480, 270, -30 | 2 |
 | RS-1905 | 4"-P1200-P-19020 | 4"-P1200-P-19605 | 4"-P1200-P-19019 | 1440, 270, -102 | 2 |
-| RS-1906 | 10"-P1200-P-19022 | 10"-P1200-P-19606 | 10"-P1200-P-19021 | 1680, 204, -42 | 1 |
+| RS-1906 | 10"-P1200-P-19022 | 10"-P1200-P-19606 | 10"-P1200-P-19021 | 1680, 204, -54 | 1 |
 | RS-1907 | 6"-P1200-P-19023 | 6"-P1200-P-19607 | 10"-P1200-P-19021 | 1680, 276, -24 | 2 |
 | RS-1908 | 3"-P1200-P-19028 | 3"-P1200-P-19608 | 3"-P1200-P-19027 | 1680, 270, -120 | 2 |
-| RS-1909 | 3"-P150-P-19040 | 3"-P150-P-19609 | 4"-P150-P-19039 | 2400, 198, 54 | 1 |
-| RS-1910 | 4"-P150-P-19054 | 4"-P150-P-19610 | 4"-P150-P-19053 | 1680, 198, 36 | 1 |
+| RS-1909 | 3"-P150-P-19040 | 3"-P150-P-19609 | 4"-P150-P-19039 | 2400, 198, 72 | 1 |
+| RS-1910 | 4"-P150-P-19054 | 4"-P150-P-19610 | 4"-P150-P-19053 | 1680, 198, 54 | 1 |
 
 ### Control valve stations
 
@@ -2089,9 +2102,9 @@ Each utility header ends at the limit in a block valve and a spool on the top ti
 
 | Line | Kind | Fluid | From | To | Design | Rack tier | Components | Welds | Supports | Length, ft |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 8"-P150-P-19001 | process | raw and service water | BL-1901-U | T-1901-N1 | 65 psi, 150 °F | 1 | 33 | 24 | 5 | 159 |
+| 8"-P150-P-19001 | process | raw and service water | BL-1901-U | T-1901-N1 | 65 psi, 150 °F | 1 | 33 | 24 | 5 | 157 |
 | 12"-P150-P-19002 | process | raw and service water | T-1901-N2 | P-1901A-S | 50 psi, 150 °F | — | 36 | 23 | 2 | 85 |
-| 8"-P300-P-19003 | process | raw and service water | P-1901A-D | F-1901A-N1 | 160 psi, 150 °F | 1 | 45 | 34 | 12 | 269 |
+| 8"-P300-P-19003 | process | raw and service water | P-1901A-D | F-1901A-N1 | 160 psi, 150 °F | 1 | 45 | 34 | 11 | 267 |
 | 6"-P300-P-19004 | process | demineralised water | F-1901A-N2 | V-1901A-N1 | 160 psi, 150 °F | 1 | 34 | 25 | 4 | 131 |
 | 6"-P150-P-19005 | process | demineralised water | V-1901A-N2 | V-1902A-N1 | 105 psi, 150 °F | 1 | 30 | 19 | 5 | 121 |
 | 6"-P150-P-19006 | process | demineralised water | V-1902A-N2 | V-1903-N1 | 100 psi, 150 °F | 1 | 30 | 19 | 5 | 129 |
@@ -2100,71 +2113,71 @@ Each utility header ends at the limit in a block valve and a spool on the top ti
 | 4"-P300-P-19008 | process | raw and service water | RS-1901-B | BL-1902-U | 160 psi, 150 °F | 2 | 10 | 3 | 3 | 61 |
 | 6"-P300-P-19009 | process | raw and service water | RS-1902-B | CS-1902-A | 160 psi, 150 °F | 2 | 36 | 17 | 3 | 69 |
 | 6"-P150-P-19702 | control | raw and service water | CS-1902-B | BL-1903-U | 0 psi, 150 °F | 2 | 17 | 10 | 3 | 61 |
-| 6"-P300-P-19010 | process | raw and service water | RS-1903-B | BL-1904-U | 160 psi, 150 °F | 1 | 18 | 11 | 3 | 64 |
+| 6"-P300-P-19010 | process | raw and service water | RS-1903-B | BL-1904-U | 160 psi, 150 °F | 1 | 10 | 3 | 3 | 60 |
 | 6"-P150-P-19011 | process | demineralised water | T-1902-N2 | P-1902A-S | 50 psi, 150 °F | — | 32 | 19 | 3 | 100 |
 | 6"-P150-P-19012 | process | demineralised water | P-1902A-D | CS-1903-A | 135 psi, 150 °F | 2 | 54 | 31 | 6 | 160 |
 | 6"-P150-P-19703 | control | demineralised water | CS-1903-B | V-1904-N1 | 135 psi, 150 °F | — | 21 | 14 | 2 | 81 |
-| 4"-P150-P-19013 | process | steam condensate | BL-1905-U | CS-1904-A | 55 psi, 280 °F | 2 | 38 | 19 | 3 | 85 |
+| 4"-P150-P-19013 | process | steam condensate | BL-1905-U | CS-1904-A | 55 psi, 280 °F | 2 | 38 | 19 | 3 | 75 |
 | 4"-P150-P-19704 | control | steam condensate | CS-1904-B | D-1901-N1 | 55 psi, 280 °F | — | 22 | 13 | 5 | 69 |
 | 3"-P150-P-19014 | process | steam, 50 psi | D-1901-N2 | V-1904-N2 | 50 psi, 310 °F | 3 | 28 | 21 | 8 | 145 |
 | 6"-P150-P-19015 | process | steam condensate | D-1901-N3 | P-1903A-S | 50 psi, 280 °F | — | 29 | 18 | 1 | 48 |
-| 4"-P150-P-19016 | process | steam condensate | P-1903A-D | CS-1905-A | 115 psi, 280 °F | 3 | 54 | 31 | 3 | 105 |
+| 4"-P150-P-19016 | process | steam condensate | P-1903A-D | CS-1905-A | 115 psi, 280 °F | 3 | 52 | 29 | 3 | 97 |
 | 4"-P150-P-19705 | control | steam condensate | CS-1905-B | V-1904-N3 | 115 psi, 280 °F | — | 20 | 13 | 3 | 76 |
 | 10"-P150-P-19017 | process | boiler feed water | V-1904-N4 | P-1904A-S | 50 psi, 300 °F | — | 31 | 18 | 1 | 54 |
-| 8"-P1200-P-19018 | process | boiler feed water | P-1904A-D | BL-1906-U | 1035 psi, 300 °F | 1 | 34 | 23 | 0 | 52 |
-| 4"-P1200-P-19019 | process | boiler feed water | RS-1904-B | CS-1906-A | 1035 psi, 300 °F | 2 | 42 | 23 | 5 | 96 |
+| 8"-P1200-P-19018 | process | boiler feed water | P-1904A-D | BL-1906-U | 1035 psi, 300 °F | 1 | 34 | 23 | 0 | 55 |
+| 4"-P1200-P-19019 | process | boiler feed water | RS-1904-B | CS-1906-A | 1035 psi, 300 °F | 2 | 40 | 21 | 5 | 96 |
 | 4"-P1200-P-19706 | control | boiler feed water | CS-1906-B | B-1901-N1 | 1035 psi, 300 °F | — | 22 | 15 | 2 | 86 |
-| 4"-P1200-P-19020 | process | boiler feed water | RS-1905-B | CS-1907-A | 1035 psi, 300 °F | 2 | 39 | 20 | 3 | 58 |
+| 4"-P1200-P-19020 | process | boiler feed water | RS-1905-B | CS-1907-A | 1035 psi, 300 °F | 2 | 39 | 20 | 2 | 58 |
 | 4"-P1200-P-19707 | control | boiler feed water | CS-1907-B | B-1902-N1 | 1035 psi, 300 °F | — | 22 | 15 | 2 | 87 |
-| 10"-P1200-P-19021 | process | steam, 600 psi | B-1901-N2 | BL-1907-U | 685 psi, 700 °F | 1 | 33 | 26 | 7 | 195 |
-| 10"-P1200-P-19022 | process | steam, 600 psi | B-1902-N2 | RS-1906-B | 685 psi, 700 °F | 1 | 20 | 13 | 3 | 96 |
-| 6"-P1200-P-19023 | process | steam, 600 psi | RS-1907-B | X-1901-N1 | 685 psi, 700 °F | 2 | 22 | 15 | 12 | 264 |
-| 8"-P300-P-19024 | process | steam, 150 psi | X-1901-N2 | BL-1908-U | 185 psi, 450 °F | 1 | 34 | 27 | 19 | 401 |
+| 10"-P1200-P-19021 | process | steam, 600 psi | B-1901-N2 | BL-1907-U | 685 psi, 700 °F | 1 | 33 | 26 | 7 | 194 |
+| 10"-P1200-P-19022 | process | steam, 600 psi | B-1902-N2 | RS-1906-B | 685 psi, 700 °F | 1 | 20 | 13 | 3 | 95 |
+| 6"-P1200-P-19023 | process | steam, 600 psi | RS-1907-B | X-1901-N1 | 685 psi, 700 °F | 2 | 23 | 16 | 12 | 264 |
+| 8"-P300-P-19024 | process | steam, 150 psi | X-1901-N2 | BL-1908-U | 185 psi, 450 °F | 1 | 30 | 23 | 18 | 394 |
 | 4"-P300-P-19025 | process | steam, 150 psi | tap 8"-P300-P-19024 | X-1902-N1 | 185 psi, 450 °F | — | 12 | 9 | 1 | 21 |
-| 6"-P150-P-19026 | process | steam, 50 psi | X-1902-N2 | BL-1909-U | 80 psi, 370 °F | 1 | 33 | 26 | 18 | 407 |
-| 3"-P1200-P-19027 | process | boiler feed water | B-1901-N3 | CS-1908-A | 685 psi, 540 °F | — | 41 | 22 | 1 | 45 |
+| 6"-P150-P-19026 | process | steam, 50 psi | X-1902-N2 | BL-1909-U | 80 psi, 370 °F | 1 | 37 | 30 | 19 | 422 |
+| 3"-P1200-P-19027 | process | boiler feed water | B-1901-N3 | CS-1908-A | 685 psi, 540 °F | — | 39 | 20 | 1 | 45 |
 | 3"-P150-P-19708 | control | boiler feed water | CS-1908-B | D-1902-N1 | 50 psi, 540 °F | — | 20 | 11 | 5 | 61 |
 | 3"-P1200-P-19028 | process | boiler feed water | B-1902-N3 | RS-1908-B | 685 psi, 540 °F | 2 | 17 | 10 | 5 | 74 |
 | 3"-P150-P-19029 | process | oily water | D-1902-N2 | P-1908A-S | 50 psi, 265 °F | — | 27 | 16 | 2 | 43 |
 | 3"-P150-P-19030 | process | oily water | P-1908A-D | CS-1909-A | 110 psi, 265 °F | 3 | 53 | 30 | 8 | 135 |
-| 3"-P150-P-19709 | control | oily water | CS-1909-B | BL-1910-U | 55 psi, 265 °F | — | 19 | 12 | 0 | 33 |
+| 3"-P150-P-19709 | control | oily water | CS-1909-B | BL-1910-U | 55 psi, 265 °F | — | 15 | 8 | 1 | 34 |
 | 4"-P150-P-19038 | process | plant air | K-1903A-N1 | D-1903-N1 | 150 psi, 160 °F | 2 | 38 | 25 | 8 | 238 |
 | 4"-P150-P-19039 | process | plant air | D-1903-N2 | BL-1911-U | 145 psi, 160 °F | 2 | 36 | 27 | 12 | 245 |
-| 3"-P150-P-19040 | process | plant air | RS-1909-B | V-1905A-N1 | 145 psi, 160 °F | 1 | 22 | 13 | 23 | 234 |
-| 3"-P150-P-19041 | process | instrument air | V-1905A-N2 | F-1903-N1 | 140 psi, 160 °F | 1 | 37 | 28 | 6 | 132 |
-| 4"-P150-P-19042 | process | instrument air | F-1903-N2 | D-1904-N1 | 135 psi, 160 °F | 1 | 32 | 23 | 12 | 294 |
-| 4"-P150-P-19043 | process | instrument air | D-1904-N2 | BL-1912-U | 130 psi, 150 °F | 2 | 34 | 25 | 13 | 261 |
-| 3"-P300-P-19044 | process | nitrogen | T-1903-N1 | X-1904-N1 | 175 psi, 150 °F | 1 | 27 | 20 | 23 | 290 |
+| 3"-P150-P-19040 | process | plant air | RS-1909-B | V-1905A-N1 | 145 psi, 160 °F | 1 | 22 | 13 | 23 | 235 |
+| 3"-P150-P-19041 | process | instrument air | V-1905A-N2 | F-1903-N1 | 140 psi, 160 °F | 1 | 33 | 24 | 5 | 132 |
+| 4"-P150-P-19042 | process | instrument air | F-1903-N2 | D-1904-N1 | 135 psi, 160 °F | 1 | 32 | 23 | 12 | 297 |
+| 4"-P150-P-19043 | process | instrument air | D-1904-N2 | BL-1912-U | 130 psi, 150 °F | 2 | 38 | 29 | 12 | 264 |
+| 3"-P300-P-19044 | process | nitrogen | T-1903-N1 | X-1904-N1 | 175 psi, 150 °F | 1 | 27 | 20 | 23 | 293 |
 | 3"-P300-P-19045 | process | nitrogen | X-1904-N2 | BL-1913-U | 170 psi, 150 °F | 2 | 28 | 21 | 42 | 465 |
 | 3"-P150-P-19046 | process | caustic solution | T-1904-N1 | P-1907A-S | 50 psi, 150 °F | — | 33 | 20 | 5 | 107 |
 | 3"-P600-P-19047 | process | caustic solution | P-1907A-D | BL-1914-U | 385 psi, 150 °F | 3 | 36 | 25 | 20 | 251 |
-| 6"-P150-P-19048 | process | fuel gas | BL-1915-U | CS-1910-A | 95 psi, 165 °F | 1 | 52 | 33 | 11 | 251 |
+| 6"-P150-P-19048 | process | fuel gas | BL-1915-U | CS-1910-A | 95 psi, 165 °F | 1 | 54 | 35 | 12 | 254 |
 | 6"-P150-P-19710 | control | fuel gas | CS-1910-B | D-1905-N1 | 95 psi, 165 °F | — | 18 | 9 | 3 | 53 |
 | 3"-P150-P-19049 | process | hydrogen-rich gas | BL-1916-U | CS-1911-A | 85 psi, 160 °F | 3 | 44 | 25 | 22 | 237 |
 | 3"-P150-P-19711 | control | hydrogen-rich gas | CS-1911-B | D-1905-N2 | 85 psi, 160 °F | — | 18 | 11 | 5 | 64 |
-| 3"-P150-P-19050 | process | fuel gas | BL-1917-U | CS-1912-A | 95 psi, 160 °F | 3 | 44 | 25 | 22 | 241 |
+| 3"-P150-P-19050 | process | fuel gas | BL-1917-U | CS-1912-A | 95 psi, 160 °F | 3 | 44 | 25 | 22 | 240 |
 | 3"-P150-P-19712 | control | fuel gas | CS-1912-B | D-1905-N3 | 95 psi, 160 °F | — | 20 | 13 | 5 | 72 |
 | 6"-P150-P-19051 | process | fuel gas | BL-1918-U | CS-1913-A | 95 psi, 150 °F | 2 | 42 | 23 | 12 | 248 |
 | 6"-P150-P-19713 | control | fuel gas | CS-1913-B | D-1905-N4 | 95 psi, 150 °F | — | 18 | 11 | 4 | 79 |
-| 8"-P150-P-19052 | process | fuel gas | D-1905-N5 | BL-1919-U | 85 psi, 150 °F | 1 | 38 | 29 | 13 | 301 |
-| 4"-P150-P-19053 | process | fuel gas | tap 8"-P150-P-19052 | CS-1914-A | 85 psi, 150 °F | — | 32 | 17 | 1 | 23 |
+| 8"-P150-P-19052 | process | fuel gas | D-1905-N5 | BL-1919-U | 85 psi, 150 °F | 1 | 38 | 29 | 13 | 298 |
+| 4"-P150-P-19053 | process | fuel gas | tap 8"-P150-P-19052 | CS-1914-A | 85 psi, 150 °F | — | 32 | 17 | 0 | 24 |
 | 4"-P150-P-19714 | control | fuel gas | CS-1914-B | B-1901-N4 | 85 psi, 150 °F | — | 16 | 9 | 2 | 49 |
-| 4"-P150-P-19054 | process | fuel gas | RS-1910-B | CS-1915-A | 85 psi, 150 °F | 1 | 34 | 15 | 4 | 75 |
+| 4"-P150-P-19054 | process | fuel gas | RS-1910-B | CS-1915-A | 85 psi, 150 °F | 1 | 36 | 17 | 4 | 76 |
 | 4"-P150-P-19715 | control | fuel gas | CS-1915-B | B-1902-N4 | 85 psi, 150 °F | 2 | 21 | 14 | 4 | 94 |
-| 3"-P150-P-19055 | process | oily water | D-1905-N6 | CS-1916-A | 85 psi, 150 °F | 2 | 48 | 29 | 26 | 285 |
-| 3"-P150-P-19716 | control | oily water | CS-1916-B | BL-1920-U | 65 psi, 200 °F | 3 | 20 | 13 | 4 | 66 |
-| 4"-P300-P-19601 | root | raw and service water | tap 8"-P300-P-19003 | RS-1901-A | 160 psi, 150 °F | — | 12 | 9 | 0 | 20 |
-| 6"-P300-P-19602 | root | raw and service water | tap 8"-P300-P-19003 | RS-1902-A | 160 psi, 150 °F | — | 11 | 8 | 0 | 15 |
-| 6"-P300-P-19603 | root | raw and service water | tap 8"-P300-P-19003 | RS-1903-A | 160 psi, 150 °F | — | 13 | 10 | 0 | 16 |
-| 4"-P1200-P-19604 | root | boiler feed water | tap 8"-P1200-P-19018 | RS-1904-A | 1035 psi, 300 °F | — | 12 | 9 | 0 | 10 |
-| 4"-P1200-P-19605 | root | boiler feed water | tap 4"-P1200-P-19019 | RS-1905-A | 1035 psi, 300 °F | — | 11 | 8 | 0 | 10 |
-| 10"-P1200-P-19606 | root | steam, 600 psi | RS-1906-A | tap 10"-P1200-P-19021 | 685 psi, 700 °F | — | 17 | 14 | 0 | 19 |
+| 3"-P150-P-19055 | process | oily water | D-1905-N6 | CS-1916-A | 85 psi, 150 °F | 2 | 48 | 29 | 25 | 285 |
+| 3"-P150-P-19716 | control | oily water | CS-1916-B | BL-1920-U | 65 psi, 200 °F | 3 | 20 | 13 | 4 | 68 |
+| 4"-P300-P-19601 | root | raw and service water | tap 8"-P300-P-19003 | RS-1901-A | 160 psi, 150 °F | — | 14 | 11 | 0 | 21 |
+| 6"-P300-P-19602 | root | raw and service water | tap 8"-P300-P-19003 | RS-1902-A | 160 psi, 150 °F | — | 11 | 8 | 0 | 16 |
+| 6"-P300-P-19603 | root | raw and service water | tap 8"-P300-P-19003 | RS-1903-A | 160 psi, 150 °F | — | 13 | 10 | 0 | 19 |
+| 4"-P1200-P-19604 | root | boiler feed water | tap 8"-P1200-P-19018 | RS-1904-A | 1035 psi, 300 °F | — | 12 | 9 | 0 | 6 |
+| 4"-P1200-P-19605 | root | boiler feed water | tap 4"-P1200-P-19019 | RS-1905-A | 1035 psi, 300 °F | — | 9 | 6 | 0 | 9 |
+| 10"-P1200-P-19606 | root | steam, 600 psi | RS-1906-A | tap 10"-P1200-P-19021 | 685 psi, 700 °F | — | 11 | 8 | 0 | 7 |
 | 6"-P1200-P-19607 | root | steam, 600 psi | tap 10"-P1200-P-19021 | RS-1907-A | 685 psi, 700 °F | — | 15 | 12 | 0 | 12 |
 | 3"-P1200-P-19608 | root | boiler feed water | RS-1908-A | tap 3"-P1200-P-19027 | 685 psi, 540 °F | — | 13 | 10 | 0 | 24 |
-| 3"-P150-P-19609 | root | plant air | tap 4"-P150-P-19039 | RS-1909-A | 145 psi, 160 °F | — | 11 | 8 | 0 | 16 |
-| 4"-P150-P-19610 | root | fuel gas | tap 4"-P150-P-19053 | RS-1910-A | 85 psi, 150 °F | — | 15 | 12 | 0 | 22 |
-| 12"-P150-P-19301 | spare | raw and service water | tap 12"-P150-P-19002 | P-1901B-S | 50 psi, 150 °F | — | 17 | 10 | 0 | 12 |
-| 12"-P150-P-19302 | spare | raw and service water | tap 12"-P150-P-19002 | P-1901C-S | 50 psi, 150 °F | — | 19 | 12 | 0 | 19 |
+| 3"-P150-P-19609 | root | plant air | tap 4"-P150-P-19039 | RS-1909-A | 145 psi, 160 °F | — | 11 | 8 | 0 | 18 |
+| 4"-P150-P-19610 | root | fuel gas | tap 4"-P150-P-19053 | RS-1910-A | 85 psi, 150 °F | — | 11 | 8 | 1 | 19 |
+| 12"-P150-P-19301 | spare | raw and service water | tap 12"-P150-P-19002 | P-1901B-S | 50 psi, 150 °F | — | 21 | 14 | 0 | 18 |
+| 12"-P150-P-19302 | spare | raw and service water | tap 12"-P150-P-19002 | P-1901C-S | 50 psi, 150 °F | — | 19 | 12 | 0 | 22 |
 | 8"-P300-P-19303 | spare | raw and service water | tap 8"-P300-P-19003 | F-1901B-N1 | 160 psi, 150 °F | — | 7 | 4 | 0 | 8 |
 | 8"-P300-P-19304 | spare | raw and service water | tap 8"-P300-P-19003 | F-1901C-N1 | 160 psi, 150 °F | — | 7 | 4 | 0 | 19 |
 | 8"-P300-P-19305 | spare | raw and service water | P-1901B-D | tap 8"-P300-P-19003 | 160 psi, 150 °F | — | 14 | 7 | 0 | 5 |
@@ -2180,7 +2193,7 @@ Each utility header ends at the limit in a block valve and a spool on the top ti
 | 6"-P150-P-19315 | spare | steam condensate | tap 6"-P150-P-19015 | P-1903B-S | 50 psi, 280 °F | — | 19 | 12 | 0 | 10 |
 | 4"-P150-P-19316 | spare | steam condensate | P-1903B-D | tap 4"-P150-P-19016 | 115 psi, 280 °F | — | 14 | 7 | 0 | 5 |
 | 10"-P150-P-19317 | spare | boiler feed water | tap 10"-P150-P-19017 | P-1904B-S | 50 psi, 300 °F | — | 19 | 12 | 0 | 14 |
-| 10"-P150-P-19318 | spare | boiler feed water | tap 10"-P150-P-19017 | P-1904C-S | 50 psi, 300 °F | — | 19 | 12 | 0 | 24 |
+| 10"-P150-P-19318 | spare | boiler feed water | tap 10"-P150-P-19017 | P-1904C-S | 50 psi, 300 °F | — | 23 | 16 | 0 | 34 |
 | 8"-P1200-P-19319 | spare | boiler feed water | P-1904B-D | tap 8"-P1200-P-19018 | 1035 psi, 300 °F | — | 14 | 7 | 0 | 6 |
 | 8"-P1200-P-19320 | spare | boiler feed water | P-1904C-D | tap 8"-P1200-P-19018 | 1035 psi, 300 °F | — | 14 | 7 | 0 | 16 |
 | 3"-P150-P-19321 | spare | oily water | tap 3"-P150-P-19029 | P-1908B-S | 50 psi, 265 °F | — | 15 | 8 | 0 | 3 |

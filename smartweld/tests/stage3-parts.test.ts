@@ -50,11 +50,13 @@ describe('revolve and equipment envelopes (SW-EQ-*)', () => {
       expect(p.weight.value).toBeGreaterThan(100);
     }
   });
-  it('SW-EQ-4 (amended 2026-11-27): nothing of a pump stands ahead of its casing\'s suction face; its motor rests on the baseplate, never through it', () => {
+  it('SW-EQ-4 (amended 2026-11-27): a pump\'s pedestal stands nowhere ahead of its casing\'s suction face; its motor rests on the baseplate, never through it', () => {
     const ext = (p: ReturnType<typeof makePump>, name: string) => { const P = buildGeometry(p).solids.find(s => s.name === name)!.mesh.positions, lo = [Infinity, Infinity, Infinity], hi = [-Infinity, -Infinity, -Infinity]; for (let i = 0; i < P.length; i++) { lo[i % 3] = Math.min(lo[i % 3], P[i]); hi[i % 3] = Math.max(hi[i % 3], P[i]); } return { lo, hi }; };
-    for (const [casingD, motorD] of [[20, 18], [18, 42], [14, 25], [14, 22]]) {
+    for (const [casingD, motorD] of [[20, 18], [18, 42], [14, 25], [14, 22], [20, 24]]) {   // the last: a motor larger than its casing, by less than 8 in, keeps the casing's shaft
       const p = makePump({ tag: 'P-1', baseW: 54, baseL: 108, casingD, casingW: 12, motorD, motorL: 1.8 * motorD }), shaftY = p.dims.shaftY.value;
       expect(ext(p, 'pump pedestal').lo[2], `${casingD}/${motorD}`).toBeCloseTo(ext(p, 'casing').lo[2], 9);      // the suction neck leaves the casing's face on the shaft line
+      expect(ext(p, 'pump pedestal').hi[2]).toBeCloseTo(ext(p, 'casing').hi[2] + 2, 9);                          // and ends 2 in behind the casing, as before
+      expect(ext(p, 'casing').lo[1]).toBeGreaterThanOrEqual(5 - 1e-9);                                            // the casing's underside 4 in above the baseplate's top, at least
       expect(ext(p, 'motor').lo[1], `${casingD}/${motorD}`).toBeGreaterThanOrEqual(1 - 1e-9);                     // the baseplate's top
       expect(ext(p, 'motor foot').lo[1]).toBeCloseTo(1, 9); expect(ext(p, 'motor foot').hi[1]).toBeGreaterThan(1);
       expect(shaftY).toBe(Math.max(1 + casingD / 2 + 4, 1 + motorD / 2));                                          // no higher than the larger needs

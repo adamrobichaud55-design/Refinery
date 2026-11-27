@@ -395,6 +395,37 @@ export function offsetOverTakeOff(m: PipingModel, up: Cx['up'], vb: Cx['vb'], on
 }
 
 /**
+ * SW-RPI-23 (e): a loop through its own leg. Where two straight legs of a line's routed span cross at a point inside both, the corners between them are
+ * taken out and the line turns there, from the first leg onto the second; the span is laid again through the corners left.
+ */
+export function loopThroughLeg(m: PipingModel, up: Cx['up'], vb: Cx['vb'], only?: Set<string>): string[] {
+  const cx = context(m, up, vb), notes: string[] = [];
+  for (const r of lines1(cx, only)) {
+    const sp = routedSpan(r); if (!sp) continue;
+    const [i0, i1] = sp, mid = r.comps.slice(i0, i1 + 1); if (mid.some(c => !['pipe', 'elbow', 'coupling'].includes(c.kind)) || mid.some(c => c.kind === 'elbow' && is45(c))) continue;
+    const S = r.comps[i0].a, E = r.comps[i1].b, Q: V3[] = [S, ...r.path.slice(1, -1), E];
+    // the first crossing of two legs that are not neighbours: segment i and segment j > i + 1, meeting at a point inside both
+    let cut: { i: number; j: number; P: V3 } | undefined;
+    for (let i = 0; i + 1 < Q.length && !cut; i++) for (let j = i + 2; j + 1 < Q.length && !cut; j++) {
+      const a = Q[i], b = Q[i + 1], c = Q[j], d = Q[j + 1], u = sub(b, a), v = sub(d, c), n = cross(u, v); if (len(n) < 1e-9) continue;
+      const w = sub(c, a); if (Math.abs(dot(w, n)) / len(n) > 0.01) continue;   // not in one plane: they pass
+      const t = dot(cross(w, v), n) / dot(n, n), q = dot(cross(w, u), n) / dot(n, n);
+      if (t > 1e-6 && t < 1 - 1e-6 && q > 1e-6 && q < 1 - 1e-6) cut = { i, j, P: [a[0] + u[0] * t, a[1] + u[1] * t, a[2] + u[2] * t] };
+    }
+    if (!cut) continue;
+    const pts = [...Q.slice(0, cut.i + 1), cut.P, ...Q.slice(cut.j + 1)];
+    const laid = layPieces(r.NPS, r.cls, pts, [], endsOf(r.comps, i0, i1)); if (!laid) { notes.push(`${r.no}: its route crosses its own leg, but the line cannot be laid turning at the crossing (SW-RPI-23 (e))`); continue; }
+    const s = spliced(r, r.comps, i0, i1, laid.comps), nr = { ...r, comps: s.comps };
+    if (sleeveGone(r, s.gone)) continue;
+    const why = refusal(cx, [nr], s.fresh, endZones(cx, r), s.fresh, r.path);
+    if (why) { notes.push(`${r.no}: its route crosses its own leg at ${cut.P.map(Math.round).join(', ')}, but turning there is ${why} (SW-RPI-23 (e))`); continue; }
+    commit(cx, r, s.comps, s.gone, [r.path[0], ...pts.slice(1, -1), r.path[r.path.length - 1]]);
+    notes.push(`${r.no}: its route crossed its own leg; the ${cut.j - cut.i - 1} corners of the loop taken out, the line turning at ${cut.P.map(Math.round).join(', ')} (SW-RPI-23 (e))`);
+  }
+  return notes;
+}
+
+/**
  * SW-RPI-23 (b): two ends on one axis. Where a line's two end stacks, or an end stack and a take-off's outlet, stand on one axis facing each
  * other with 2 in or more between them, the pieces between become one straight pipe, welded where the first and last were.
  */
@@ -558,6 +589,7 @@ export function selfCorrections(m: PipingModel, up: Cx['up'], vb: Cx['vb']): str
   const nozzles = new Map(m.nozzles.map(n => [n.id, n] as const)), found = m.lines.filter(r => r.ok && ownClashes(r, nozzles).length).map(r => r.no);
   if (!found.length) return [];
   const only = new Set(found), notes = [...offsetOverTakeOff(m, up, vb, only), ...straightBetweenStacks(m, up, vb, only), ...bareTurnAsOffset(m, up, vb, only), ...takeOffMoved(m, up, vb, only)];
+  { const still = new Set(found.filter(no => ownClashes(m.lines.find(q => q.no === no)!, nozzles).length)); if (still.size) notes.push(...loopThroughLeg(m, up, vb, still)); }   // (e), on the lines (a) to (d) left
   for (const no of found) {
     const r = m.lines.find(q => q.no === no)!, f = ownClashes(r, nozzles);
     if (f.length) notes.push(`${no}: still through itself (${f.map(x => `${x.a} – ${x.b}: ${x.depth.toFixed(2)} in`).join('; ')}); no correction of SW-RPI-23 serves, and it is left as routed (SW-RPI-22 lists it in the unit's checks while it stays so)`);

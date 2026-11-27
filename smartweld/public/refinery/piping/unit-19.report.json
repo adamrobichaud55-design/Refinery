@@ -10,14 +10,14 @@
   3
  ],
  "tierRoom": 84,
- "seconds": 693,
+ "seconds": 572,
  "stats": {
   "lines": 105,
   "routed": 104,
   "failed": 0,
-  "comps": 2978,
-  "welds": 1563,
-  "supports": 470,
+  "comps": 2963,
+  "welds": 1548,
+  "supports": 471,
   "penetrations": 0
  },
  "failures": [],
@@ -28,41 +28,14 @@
   "valves": [],
   "lineClearance": [],
   "staticClearance": [],
+  "ownClearance": [
+   "4\"-P1200-P-19020 4\"-P1200-P-19020/p7 (pipe) – 4\"-P1200-P-19020/p13 (pipe): 4.00 in"
+  ],
   "supports": [
    "4\"-P1200-P-19707: unsupported span 446 in > 240 on run from 1920,108,-43"
   ]
  },
  "spools": [
-  {
-   "tag": "BL-1909",
-   "stream": "low-pressure steam",
-   "dir": "out",
-   "line": "6\"-P150-P-19026",
-   "NPS": 6,
-   "cls": "P150",
-   "at": [
-    150,
-    204,
-    -120
-   ],
-   "tier": 0,
-   "lane": -120
-  },
-  {
-   "tag": "BL-1906",
-   "stream": "boiler feed water",
-   "dir": "out",
-   "line": "8\"-P1200-P-19018",
-   "NPS": 8,
-   "cls": "P1200",
-   "at": [
-    150,
-    204,
-    -96
-   ],
-   "tier": 0,
-   "lane": -102
-  },
   {
    "tag": "BL-1919",
    "stream": "fuel gas to users",
@@ -73,10 +46,10 @@
    "at": [
     150,
     204,
-    -72
+    -108
    ],
    "tier": 0,
-   "lane": -84
+   "lane": -96
   },
   {
    "tag": "BL-1908",
@@ -88,10 +61,25 @@
    "at": [
     150,
     204,
-    -48
+    -84
    ],
    "tier": 0,
-   "lane": -66
+   "lane": -78
+  },
+  {
+   "tag": "BL-1906",
+   "stream": "boiler feed water",
+   "dir": "out",
+   "line": "8\"-P1200-P-19018",
+   "NPS": 8,
+   "cls": "P1200",
+   "at": [
+    150,
+    204,
+    -54
+   ],
+   "tier": 0,
+   "lane": -54
   },
   {
    "tag": "BL-1901",
@@ -103,7 +91,7 @@
    "at": [
     150,
     204,
-    -24
+    -30
    ],
    "tier": 0,
    "lane": -36
@@ -118,10 +106,25 @@
    "at": [
     150,
     204,
-    0
+    -6
    ],
    "tier": 0,
    "lane": -18
+  },
+  {
+   "tag": "BL-1909",
+   "stream": "low-pressure steam",
+   "dir": "out",
+   "line": "6\"-P150-P-19026",
+   "NPS": 6,
+   "cls": "P150",
+   "at": [
+    150,
+    204,
+    18
+   ],
+   "tier": 0,
+   "lane": 12
   },
   {
    "tag": "BL-1915",
@@ -133,10 +136,10 @@
    "at": [
     150,
     204,
-    24
+    36
    ],
    "tier": 0,
-   "lane": 12
+   "lane": 30
   },
   {
    "tag": "BL-1904",
@@ -148,10 +151,10 @@
    "at": [
     150,
     204,
-    42
+    54
    ],
    "tier": 0,
-   "lane": 36
+   "lane": 54
   },
   {
    "tag": "BL-1910",
@@ -163,7 +166,7 @@
    "at": [
     150,
     198,
-    60
+    72
    ],
    "tier": 0
   },
@@ -382,7 +385,7 @@
    "at": [
     960,
     204,
-    36
+    54
    ],
    "tier": 0
   },
@@ -418,7 +421,7 @@
    "at": [
     1680,
     204,
-    -42
+    -54
    ],
    "tier": 0
   },
@@ -454,7 +457,7 @@
    "at": [
     2400,
     198,
-    54
+    72
    ],
    "tier": 0
   },
@@ -466,7 +469,7 @@
    "at": [
     1680,
     198,
-    36
+    54
    ],
    "tier": 0
   }
@@ -649,7 +652,7 @@
    "components": 33,
    "welds": 24,
    "supports": 5,
-   "lengthFt": 159,
+   "lengthFt": 157,
    "tier": 1
   },
   {
@@ -683,8 +686,8 @@
    "routed": true,
    "components": 45,
    "welds": 34,
-   "supports": 12,
-   "lengthFt": 269,
+   "supports": 11,
+   "lengthFt": 267,
    "tier": 1
   },
   {
@@ -848,10 +851,10 @@
    "designP": 160,
    "designT": 150,
    "routed": true,
-   "components": 18,
-   "welds": 11,
+   "components": 10,
+   "welds": 3,
    "supports": 3,
-   "lengthFt": 64,
+   "lengthFt": 60,
    "tier": 1
   },
   {
@@ -924,7 +927,7 @@
    "components": 38,
    "welds": 19,
    "supports": 3,
-   "lengthFt": 85,
+   "lengthFt": 75,
    "tier": 2,
    "station": "CS-1904",
    "controlValve": "piped"
@@ -994,10 +997,10 @@
    "designP": 115,
    "designT": 280,
    "routed": true,
-   "components": 54,
-   "welds": 31,
+   "components": 52,
+   "welds": 29,
    "supports": 3,
-   "lengthFt": 105,
+   "lengthFt": 97,
    "tier": 3,
    "station": "CS-1905",
    "controlValve": "piped"
@@ -1052,7 +1055,7 @@
    "components": 34,
    "welds": 23,
    "supports": 0,
-   "lengthFt": 52,
+   "lengthFt": 55,
    "tier": 1
   },
   {
@@ -1067,8 +1070,8 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 42,
-   "welds": 23,
+   "components": 40,
+   "welds": 21,
    "supports": 5,
    "lengthFt": 96,
    "tier": 2,
@@ -1107,7 +1110,7 @@
    "routed": true,
    "components": 39,
    "welds": 20,
-   "supports": 3,
+   "supports": 2,
    "lengthFt": 58,
    "tier": 2,
    "station": "CS-1907",
@@ -1146,7 +1149,7 @@
    "components": 33,
    "welds": 26,
    "supports": 7,
-   "lengthFt": 195,
+   "lengthFt": 194,
    "tier": 1
   },
   {
@@ -1164,7 +1167,7 @@
    "components": 20,
    "welds": 13,
    "supports": 3,
-   "lengthFt": 96,
+   "lengthFt": 95,
    "tier": 1
   },
   {
@@ -1179,8 +1182,8 @@
    "designP": 685,
    "designT": 700,
    "routed": true,
-   "components": 22,
-   "welds": 15,
+   "components": 23,
+   "welds": 16,
    "supports": 12,
    "lengthFt": 264,
    "tier": 2
@@ -1197,10 +1200,10 @@
    "designP": 185,
    "designT": 450,
    "routed": true,
-   "components": 34,
-   "welds": 27,
-   "supports": 19,
-   "lengthFt": 401,
+   "components": 30,
+   "welds": 23,
+   "supports": 18,
+   "lengthFt": 394,
    "tier": 1
   },
   {
@@ -1232,10 +1235,10 @@
    "designP": 80,
    "designT": 370,
    "routed": true,
-   "components": 33,
-   "welds": 26,
-   "supports": 18,
-   "lengthFt": 407,
+   "components": 37,
+   "welds": 30,
+   "supports": 19,
+   "lengthFt": 422,
    "tier": 1
   },
   {
@@ -1250,8 +1253,8 @@
    "designP": 685,
    "designT": 540,
    "routed": true,
-   "components": 41,
-   "welds": 22,
+   "components": 39,
+   "welds": 20,
    "supports": 1,
    "lengthFt": 45,
    "station": "CS-1908",
@@ -1342,10 +1345,10 @@
    "designP": 55,
    "designT": 265,
    "routed": true,
-   "components": 19,
-   "welds": 12,
-   "supports": 0,
-   "lengthFt": 33,
+   "components": 15,
+   "welds": 8,
+   "supports": 1,
+   "lengthFt": 34,
    "station": "CS-1909"
   },
   {
@@ -1399,7 +1402,7 @@
    "components": 22,
    "welds": 13,
    "supports": 23,
-   "lengthFt": 234,
+   "lengthFt": 235,
    "tier": 1
   },
   {
@@ -1414,9 +1417,9 @@
    "designP": 140,
    "designT": 160,
    "routed": true,
-   "components": 37,
-   "welds": 28,
-   "supports": 6,
+   "components": 33,
+   "welds": 24,
+   "supports": 5,
    "lengthFt": 132,
    "tier": 1
   },
@@ -1435,7 +1438,7 @@
    "components": 32,
    "welds": 23,
    "supports": 12,
-   "lengthFt": 294,
+   "lengthFt": 297,
    "tier": 1
   },
   {
@@ -1450,10 +1453,10 @@
    "designP": 130,
    "designT": 150,
    "routed": true,
-   "components": 34,
-   "welds": 25,
-   "supports": 13,
-   "lengthFt": 261,
+   "components": 38,
+   "welds": 29,
+   "supports": 12,
+   "lengthFt": 264,
    "tier": 2
   },
   {
@@ -1471,7 +1474,7 @@
    "components": 27,
    "welds": 20,
    "supports": 23,
-   "lengthFt": 290,
+   "lengthFt": 293,
    "tier": 1
   },
   {
@@ -1539,10 +1542,10 @@
    "designP": 95,
    "designT": 165,
    "routed": true,
-   "components": 52,
-   "welds": 33,
-   "supports": 11,
-   "lengthFt": 251,
+   "components": 54,
+   "welds": 35,
+   "supports": 12,
+   "lengthFt": 254,
    "tier": 1,
    "station": "CS-1910",
    "controlValve": "piped"
@@ -1618,7 +1621,7 @@
    "components": 44,
    "welds": 25,
    "supports": 22,
-   "lengthFt": 241,
+   "lengthFt": 240,
    "tier": 3,
    "station": "CS-1912",
    "controlValve": "piped"
@@ -1694,7 +1697,7 @@
    "components": 38,
    "welds": 29,
    "supports": 13,
-   "lengthFt": 301,
+   "lengthFt": 298,
    "tier": 1
   },
   {
@@ -1711,8 +1714,8 @@
    "routed": true,
    "components": 32,
    "welds": 17,
-   "supports": 1,
-   "lengthFt": 23,
+   "supports": 0,
+   "lengthFt": 24,
    "station": "CS-1914",
    "controlValve": "piped"
   },
@@ -1746,10 +1749,10 @@
    "designP": 85,
    "designT": 150,
    "routed": true,
-   "components": 34,
-   "welds": 15,
+   "components": 36,
+   "welds": 17,
    "supports": 4,
-   "lengthFt": 75,
+   "lengthFt": 76,
    "tier": 1,
    "station": "CS-1915",
    "controlValve": "piped"
@@ -1787,7 +1790,7 @@
    "routed": true,
    "components": 48,
    "welds": 29,
-   "supports": 26,
+   "supports": 25,
    "lengthFt": 285,
    "tier": 2,
    "station": "CS-1916",
@@ -1808,7 +1811,7 @@
    "components": 20,
    "welds": 13,
    "supports": 4,
-   "lengthFt": 66,
+   "lengthFt": 68,
    "tier": 3,
    "station": "CS-1916"
   },
@@ -1824,10 +1827,10 @@
    "designP": 160,
    "designT": 150,
    "routed": true,
-   "components": 12,
-   "welds": 9,
+   "components": 14,
+   "welds": 11,
    "supports": 0,
-   "lengthFt": 20
+   "lengthFt": 21
   },
   {
    "no": "6\"-P300-P-19602",
@@ -1844,7 +1847,7 @@
    "components": 11,
    "welds": 8,
    "supports": 0,
-   "lengthFt": 15
+   "lengthFt": 16
   },
   {
    "no": "6\"-P300-P-19603",
@@ -1861,7 +1864,7 @@
    "components": 13,
    "welds": 10,
    "supports": 0,
-   "lengthFt": 16
+   "lengthFt": 19
   },
   {
    "no": "4\"-P1200-P-19604",
@@ -1878,7 +1881,7 @@
    "components": 12,
    "welds": 9,
    "supports": 0,
-   "lengthFt": 10
+   "lengthFt": 6
   },
   {
    "no": "4\"-P1200-P-19605",
@@ -1892,10 +1895,10 @@
    "designP": 1035,
    "designT": 300,
    "routed": true,
-   "components": 11,
-   "welds": 8,
+   "components": 9,
+   "welds": 6,
    "supports": 0,
-   "lengthFt": 10
+   "lengthFt": 9
   },
   {
    "no": "10\"-P1200-P-19606",
@@ -1909,10 +1912,10 @@
    "designP": 685,
    "designT": 700,
    "routed": true,
-   "components": 17,
-   "welds": 14,
+   "components": 11,
+   "welds": 8,
    "supports": 0,
-   "lengthFt": 19
+   "lengthFt": 7
   },
   {
    "no": "6\"-P1200-P-19607",
@@ -1963,7 +1966,7 @@
    "components": 11,
    "welds": 8,
    "supports": 0,
-   "lengthFt": 16
+   "lengthFt": 18
   },
   {
    "no": "4\"-P150-P-19610",
@@ -1977,10 +1980,10 @@
    "designP": 85,
    "designT": 150,
    "routed": true,
-   "components": 15,
-   "welds": 12,
-   "supports": 0,
-   "lengthFt": 22
+   "components": 11,
+   "welds": 8,
+   "supports": 1,
+   "lengthFt": 19
   },
   {
    "no": "12\"-P150-P-19301",
@@ -1994,10 +1997,10 @@
    "designP": 50,
    "designT": 150,
    "routed": true,
-   "components": 17,
-   "welds": 10,
+   "components": 21,
+   "welds": 14,
    "supports": 0,
-   "lengthFt": 12
+   "lengthFt": 18
   },
   {
    "no": "12\"-P150-P-19302",
@@ -2014,7 +2017,7 @@
    "components": 19,
    "welds": 12,
    "supports": 0,
-   "lengthFt": 19
+   "lengthFt": 22
   },
   {
    "no": "8\"-P300-P-19303",
@@ -2283,10 +2286,10 @@
    "designP": 50,
    "designT": 300,
    "routed": true,
-   "components": 19,
-   "welds": 12,
+   "components": 23,
+   "welds": 16,
    "supports": 0,
-   "lengthFt": 24
+   "lengthFt": 34
   },
   {
    "no": "8\"-P1200-P-19319",
@@ -2496,11 +2499,11 @@
  "counts": {
   "components": {
    "cap": 1,
-   "elbow": 475,
+   "elbow": 467,
    "flange": 326,
    "gasket": 520,
    "olet": 4,
-   "pipe": 803,
+   "pipe": 796,
    "reducer": 60,
    "spade": 14,
    "spectacle": 28,
@@ -2508,33 +2511,31 @@
    "valve": 232
   },
   "welds": {
-   "BW, field": 257,
-   "BW, shop": 1302,
+   "BW, field": 253,
+   "BW, shop": 1291,
    "FW, shop": 4
   },
   "supports": {
    "anchor": 42,
    "guide": 109,
-   "hanger": 42,
+   "hanger": 38,
    "shoe": 215,
    "stanchion": 64,
    "trapeze": 4,
-   "trunnion": 38
+   "trunnion": 39
   }
  },
  "notes": [
+  "the last run made again (SW-RPI-16): 12\"-P150-P-19301 with 12\"-P150-P-19002, 12\"-P150-P-19302 routed first; 12\"-P150-P-19301 through the body of its own valve B9 (SW-RPI-22), held as 3 solids of P-1901B while the first were routed; 1 findings before, 0 after",
   "1 header carried on in line to its block valve at the battery limit, the cap there left out (SW-RPI-15): 10\"-P150-LS-19401 from BL-1921-U, its first piece 181.3 in longer, a shoe at x 360",
-  "1 valves turned where their stem or handwheel struck (SW-RPI-19): 12\"-P150-P-19002/B9: struck 12\"-P150-P-19301; stem turned to -1,0,0; 1 with no clear direction, left: 10\"-P150-LS-19501/A3: strikes 10\"-P150-LS-19401 and has no clear direction",
-  "6 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 8\"-P150-P-19001/S4 (stanchion): its post through D-1901/pad; 6\"-P300-P-19004/S1 (hanger): its rod through 8\"-P300-P-19003; 4\"-P150-P-19704/S1 (hanger): its rod through rack-bay:3/strut; 4\"-P150-P-19705/S1 (hanger): its rod through rack-bay:1/strut; 3\"-P150-P-19041/S4 (hanger): its rod through rack-bay:19/strut; 3\"-P300-P-19045/S1 (trapeze): its post through 3\"-P300-P-19044",
-  "0 valves turned where their stem or handwheel struck (SW-RPI-19); 1 with no clear direction, left: 10\"-P150-LS-19501/A3: strikes 10\"-P150-LS-19401 and has no clear direction",
-  "34 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
-  "6 wafer valves bolted with one stud set through both flanges (SW-RPI-21)",
-  "3 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 8\"-P150-P-19001/S4 (stanchion): its base plate inside D-1901/pad; 3\"-P150-P-19055/S26 (stanchion): its base plate inside rack-stringer/beam; 10\"-P150-LS-19501/S1 (stanchion): its base plate inside rack-bay:1/strut",
-  "0 valves turned where their stem or handwheel struck (SW-RPI-19); 2 with no clear direction, left: 12\"-P150-P-19301/B9: strikes its own line 12\"-P150-P-19301 and has no clear direction; 10\"-P150-LS-19501/A3: strikes 10\"-P150-LS-19401 and has no clear direction",
-  "3 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 8\"-P150-P-19001/S4 (stanchion): its base plate inside D-1901/pad; 3\"-P150-P-19055/S26 (stanchion): its base plate inside rack-stringer/beam; 10\"-P150-LS-19501/S1 (stanchion): its base plate inside rack-bay:1/strut",
-  "0 valves turned where their stem or handwheel struck (SW-RPI-19); 2 with no clear direction, left: 12\"-P150-P-19301/B9: strikes its own line 12\"-P150-P-19301 and has no clear direction; 10\"-P150-LS-19501/A3: strikes 10\"-P150-LS-19401 and has no clear direction",
-  "3 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 8\"-P150-P-19001/S4 (stanchion): its base plate inside D-1901/pad; 3\"-P150-P-19055/S26 (stanchion): its base plate inside rack-stringer/beam; 10\"-P150-LS-19501/S1 (stanchion): its base plate inside rack-bay:1/strut",
-  "58 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 13 hangers from steel above, 6 stanchions on steel below, 20 stanchions and 16 support posts from the floor, and 3 pipe frames"
+  "12\"-P150-P-19002: still through itself (12\"-P150-P-19002/p22 (pipe) – 12\"-P150-P-19002/B9 (valve): 2.00 in; 12\"-P150-P-19002/T:12\"-P150-P-19301 (tee) – 12\"-P150-P-19002/B9 (valve): 3.30 in); no correction of SW-RPI-23 serves, and it is left as routed (SW-RPI-22 lists it in the unit's checks while it stays so)",
+  "4\"-P1200-P-19020: still through itself (4\"-P1200-P-19020/p7 (pipe) – 4\"-P1200-P-19020/p13 (pipe): 4.00 in); no correction of SW-RPI-23 serves, and it is left as routed (SW-RPI-22 lists it in the unit's checks while it stays so)",
+  "2 valves turned where their stem or handwheel struck (SW-RPI-19): 12\"-P150-P-19002/B9: struck 12\"-P150-P-19301; stem turned to -1,0,0; 3\"-P300-P-19044/A2: struck nozzle T-1903; stem turned to 1,0,0",
+  "504 butt welds set square to their joints (SW-RPI-24)",
+  "7 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 8\"-P150-P-19001/S4 (stanchion): its base plate inside D-1901/pad; 6\"-P300-P-19004/S1 (hanger): its part overlaps the support 8\"-P300-P-19003/S10; 4\"-P150-P-19704/S1 (hanger): its rod through rack-bay:3/strut; 3\"-P150-P-19041/S4 (hanger): its rod through rack-bay:19/strut; 4\"-P150-P-19042/S2 (hanger): its rod through rack-bay:19/strut; 3\"-P300-P-19044/S1 (trapeze): its top plate through yard-support/beam; 3\"-P300-P-19044/S20 (hanger): its top plate through rack-bay:20/bracing",
+  "46 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 12 hangers from steel above, 0 stanchions on steel below, 16 stanchions and 15 support posts from the floor, and 3 pipe frames",
+  "42 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
+  "6 wafer valves bolted with one stud set through both flanges (SW-RPI-21)"
  ],
  "frames": [
   {
@@ -2542,7 +2543,7 @@
    "at": [
     3174,
     276,
-    -474.61115
+    -477.8333333333333
    ],
    "u": [
     1,
@@ -2562,35 +2563,11 @@
    "rad": 4
   },
   {
-   "line": "3\"-P300-P-19044",
-   "at": [
-    4950,
-    150,
-    -460.06485
-   ],
-   "u": [
-    1,
-    0,
-    0
-   ],
-   "d": [
-    18,
-    18
-   ],
-   "floors": [
-    0,
-    0
-   ],
-   "top": 144.5,
-   "post": "W8x31",
-   "rad": 1.5
-  },
-  {
    "line": "4\"-P150-P-19704",
    "at": [
     954,
     246,
-    -177.694475
+    -177.69444444444446
    ],
    "u": [
     1,
@@ -2608,6 +2585,30 @@
    "top": 240,
    "post": "W8x31",
    "rad": 2
+  },
+  {
+   "line": "3\"-P300-P-19044",
+   "at": [
+    4950,
+    150,
+    -460.921875
+   ],
+   "u": [
+    1,
+    0,
+    0
+   ],
+   "d": [
+    18,
+    18
+   ],
+   "floors": [
+    0,
+    0
+   ],
+   "top": 144.5,
+   "post": "W8x31",
+   "rad": 1.5
   }
  ]
 }
