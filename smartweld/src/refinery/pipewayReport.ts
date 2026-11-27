@@ -45,7 +45,7 @@ export function shoesAtFirstBents(m: PipingModel, pw: Pick<Pipeway, 'units'>): n
     const zb = U.side * (360 + RACK.start - RACK.bent);
     for (const r of m.lines) for (const c of r.comps) {
       if (c.kind !== 'pipe' || Math.abs(c.a[0] - c.b[0]) > 1e-6 || Math.abs(c.a[1] - c.b[1]) > 1e-6 || Math.abs(c.a[0] - U.x) > U.half || (c.a[2] - zb) * (c.b[2] - zb) > 0 || Math.min(Math.abs(c.a[2] - zb), Math.abs(c.b[2] - zb)) < 6) continue;
-      const rad = pipeDims(c.NPS, c.cls as PipeClass).OD / 2, tier = RACK.tiers.find(t => c.a[1] - rad - t >= 4 - 1e-6 && c.a[1] - rad - t < 10); if (tier === undefined || r.supports.some(sp => Math.abs(sp.at[2] - zb) < 1 && Math.abs(sp.at[0] - c.a[0]) < 1)) continue;
+      const rad = pipeDims(c.NPS, c.cls as PipeClass).OD / 2, tier = RACK.tiers.find(t => c.a[1] - rad - t >= 4 - 1e-6 && c.a[1] - rad - t < 10); if (tier === undefined || r.supports.some(sp => Math.abs(sp.at[0] - c.a[0]) < 1 && (Math.abs(sp.at[2] - zb) < 1 || (['shoe', 'guide', 'anchor'].includes(sp.type) && Math.abs(sp.at[2] - zb) <= 6 + 1e-6)))) continue;   // (SW-RPI-28 as amended again: a shoe moved off a weld within 6 in, on the same beam, is the shoe there)
       const ids = new Set(r.supports.map(sp => sp.id)); let k = r.supports.length + 1; while (ids.has(`${r.no}/S${k}`)) k++;
       r.supports.push({ id: `${r.no}/S${k}`, line: r.no, type: 'shoe', at: [c.a[0], tier, zb], key: `SHOE|${c.NPS}|${c.cls}|shoe|${(c.a[1] - rad - tier).toFixed(3)}`, T: frameFromAxes([c.a[0], c.a[1] - rad, zb], [0, 1, 0], [0, 0, 1]) } as PipingModel['lines'][number]['supports'][number]); n++;
     }

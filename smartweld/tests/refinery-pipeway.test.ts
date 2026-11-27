@@ -314,10 +314,26 @@ describe('plant 3: the piped pipeway on disk', () => {
     const said = r.notes.find(x => /^\d+ posts? set on the top-tier beams of first bents/.test(x)); expect(said).toBeDefined(); if (!said) return;
     const hangers = Number(/and (\d+) hangers set/.exec(said)![1]); expect(posts).toBeGreaterThan(0); expect(said.startsWith(`${posts} `)).toBe(true); expect(hangers).toBeGreaterThan(0);
     // set once and the same again: with the posts and hangers the note names taken out of a copy of the saved model, the same are set again, and no shoe is missing
-    const where = /: (.+) \(SW-PWY-8\)\.$/.exec(said)![1].split('; ').map(s => /^(\S+) (?:(\d+) posts?)?(?: and )?(?:(\d+) hangers?)?$/.exec(s)!), copy = JSON.parse(JSON.stringify(m)) as PipingModel;
-    for (const w of where) { const run = copy.lines.find(l => l.no === w[1])!, n = Number(w[2] ?? 0) + Number(w[3] ?? 0); expect(n).toBeGreaterThan(0); run.supports.splice(run.supports.length - n, n); }
-    const again = supportsAtFirstBents(copy, pw); expect(again.shoes).toBe(0); expect(again.posts).toBe(posts); expect(again.hangers).toBe(hangers);
-    for (const run of copy.lines) expect(JSON.parse(JSON.stringify(run.supports)), run.no).toEqual(m.lines.find(l => l.no === run.no)!.supports);   // as saved: through JSON
+    // (which of a line's supports they are is found, not assumed: a later pass, SW-RPI-17, may have set others on the same line after them)
+    const where = /: (.+) \(SW-PWY-8\)\.$/.exec(said)![1].split('; ').map(s => /^(\S+) (?:(\d+) posts?)?(?: and )?(?:(\d+) hangers?)?$/.exec(s)!);
+    expect(supportsAtFirstBents(JSON.parse(JSON.stringify(m)) as PipingModel, pw).shoes, 'no shoe missing').toBe(0);
+    let posts2 = 0, hangers2 = 0;
+    for (const w of where) {
+      const n = Number(w[2] ?? 0) + Number(w[3] ?? 0), saved = m.lines.find(l => l.no === w[1])!.supports, cand = saved.filter(sp => sp.type === 'hanger' || sp.type === 'stanchion'); expect(n).toBeGreaterThan(0);
+      const subsets = (k: number, from: number): number[][] => (k === 0 ? [[]] : Array.from({ length: cand.length - from }, (_, i) => subsets(k - 1, from + i + 1).map(r => [from + i, ...r])).flat());
+      const found = subsets(n, 0).some(pick => {
+        // the line as SW-PWY-8 found it: those taken out, and with them what later passes set on the line after them (a higher number: SW-RPI-17's)
+        const num = (id: string) => Number(id.slice(id.lastIndexOf('/S') + 2)), last = Math.max(...pick.map(i => num(cand[i].id))), picked = new Set(pick.map(i => cand[i].id));
+        const copy = JSON.parse(JSON.stringify(m)) as PipingModel, run = copy.lines.find(l => l.no === w[1])!; run.supports = run.supports.filter(sp => !picked.has(sp.id) && num(sp.id) < last);
+        const before = new Set(run.supports.map(sp => sp.id)), again = supportsAtFirstBents(copy, pw); if (again.posts + again.hangers !== n) return false;
+        // set again as saved, through JSON: each in its place, of its type and size (a rod's length is the one SW-RPI-20 cut it to afterwards, at the steel's drawn underside)
+        const sig = (sp: (typeof saved)[number]) => JSON.stringify([sp.id, sp.type, sp.at.map(v => +v.toFixed(4)), sp.key.split('|').slice(0, sp.type === 'hanger' ? 3 : 4)]);
+        const set = (JSON.parse(JSON.stringify(run.supports)) as typeof saved).filter(sp => !before.has(sp.id)); if (set.length !== n || !pick.every(i => set.some(b => sig(b) === sig(cand[i])))) return false;
+        posts2 += again.posts; hangers2 += again.hangers; return true;
+      });
+      expect(found, `${w[1]}: its ${n} supports set again as saved`).toBe(true);
+    }
+    expect(posts2).toBe(posts); expect(hangers2).toBe(hangers);
     // every hanger hangs from steel over it: its rod ends at the underside the generator takes for a member, and no rod is longer than 20 ft
     for (const w of where) for (const sp of m.lines.find(l => l.no === w[1])!.supports.filter(q => q.type === 'hanger')) { const rod = Number(sp.key.split('|')[3]); expect(rod).toBeGreaterThan(6); expect(rod).toBeLessThanOrEqual(240); }
   }, 600_000);
