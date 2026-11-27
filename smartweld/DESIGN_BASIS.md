@@ -6049,7 +6049,10 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   - (e) A loop through its own leg (added the same day). Where two straight legs of a line's
     route cross, the loop between them is taken out and the line turns at the crossing,
     from the first leg onto the second, its pieces laid as the generator lays them and taken
-    only where every test above holds. Reason: routed again with its lanes moved, the
+    only where every test above holds; only the pieces between the elbow before the first
+    leg and the elbow after the second are laid again, the rest keep their places (laid
+    again whole, a short make-up pipe the generator had left at its end stack could not be
+    laid again at 2 in). Reason: routed again with its lanes moved, the
     utilities unit's 4 in feed ran 18 in past a corner, rose, came back and fell through its
     own first leg; none of (a) to (d) served.
   The corrections are plant 3's own (src/refinery/ownLine.ts), made in a unit's run and by

@@ -414,18 +414,21 @@ export function loopThroughLeg(m: PipingModel, up: Cx['up'], vb: Cx['vb'], only?
       const a = Q[i], b = Q[i + 1], c = Q[j], d = Q[j + 1], u = sub(b, a), v = sub(d, c), n = cross(u, v); if (len(n) < 1e-9) continue;
       const w = sub(c, a); if (Math.abs(dot(w, n)) / len(n) > 0.01) continue;   // not in one plane: they pass
       const t = dot(cross(w, v), n) / dot(n, n), q = dot(cross(w, u), n) / dot(n, n);
-      if (t > 1e-6 && t < 1 - 1e-6 && q > 1e-6 && q < 1 - 1e-6) cut = { i, j, P: [a[0] + u[0] * t, a[1] + u[1] * t, a[2] + u[2] * t] };
+      if (t > 1e-6 && t < 1 - 1e-6 && q > 1e-6 && q < 1 - 1e-6) cut = { i, j, P: [a[0] + u[0] * t, a[1] + u[1] * t, a[2] + u[2] * t].map(x => Math.round(x * 1000) / 1000) as V3 };   // to a thousandth, as the corners lie
     }
     if (!cut) continue;
-    const pts = [...Q.slice(0, cut.i + 1), cut.P, ...Q.slice(cut.j + 1)];
-    const laid = layPieces(r.NPS, r.cls, pts, [], endsOf(r.comps, i0, i1)); if (!laid) { notes.push(`${r.no}: its route crosses its own leg, but the line cannot be laid turning at the crossing (SW-RPI-23 (e))`); continue; }
-    const s = spliced(r, r.comps, i0, i1, laid.comps), nr = { ...r, comps: s.comps };
+    // only the stretch between the elbow before the crossing's first leg and the elbow after its second is laid again: the pieces beyond keep their places
+    const elbows = mid.filter(c => c.kind === 'elbow'), nQ = Q.length, e0 = cut.i >= 1 ? elbows[cut.i - 1] : undefined, e1 = cut.j + 1 <= nQ - 2 ? elbows[cut.j] : undefined;
+    const j0 = e0 ? r.comps.indexOf(e0) + 1 : i0, j1 = e1 ? r.comps.indexOf(e1) - 1 : i1;
+    const pts = [e0 ? e0.b : S, cut.P, e1 ? e1.a : E], ends0 = endsOf(r.comps, i0, i1), ends: [number, number] = [e0 ? (is45(e0) ? 45 : 90) : ends0[0], e1 ? (is45(e1) ? 45 : 90) : ends0[1]];
+    const laid = j1 >= j0 ? layPieces(r.NPS, r.cls, pts, [], ends) : undefined; if (!laid) { notes.push(`${r.no}: its route crosses its own leg, but the line cannot be laid turning at the crossing (SW-RPI-23 (e))`); continue; }
+    const s = spliced(r, r.comps, j0, j1, laid.comps), nr = { ...r, comps: s.comps };
     if (sleeveGone(r, s.gone)) continue;
     const why = refusal(cx, [nr], s.fresh, endZones(cx, r), s.fresh, r.path);
     if (why) { notes.push(`${r.no}: its route crosses its own leg at ${cut.P.map(Math.round).join(', ')}, but turning there is ${why} (SW-RPI-23 (e))`); continue; }
     // its path: its first point beyond its first stack where that lies on the first leg (else the first corner), the corners, and the same at its far end
-    const q = pts.length, P0 = r.path[0], Pn = r.path[r.path.length - 1];
-    const path = [segPt(P0, pts[0], pts[1]) < 0.01 ? P0 : pts[1], ...pts.slice(1, q - 1), segPt(Pn, pts[q - 2], pts[q - 1]) < 0.01 ? Pn : pts[q - 2]].filter((p, k, a) => !k || !same(p, a[k - 1]));
+    const full = [...Q.slice(0, cut.i + 1), cut.P, ...Q.slice(cut.j + 1)], q = full.length, P0 = r.path[0], Pn = r.path[r.path.length - 1];
+    const path = [segPt(P0, full[0], full[1]) < 0.01 ? P0 : full[1], ...full.slice(1, q - 1), segPt(Pn, full[q - 2], full[q - 1]) < 0.01 ? Pn : full[q - 2]].filter((p, k, a) => !k || !same(p, a[k - 1]));
     commit(cx, r, s.comps, s.gone, path);
     notes.push(`${r.no}: its route crossed its own leg; the ${cut.j - cut.i} corners of the loop taken out, the line turning at ${cut.P.map(Math.round).join(', ')} (SW-RPI-23 (e))`);
   }

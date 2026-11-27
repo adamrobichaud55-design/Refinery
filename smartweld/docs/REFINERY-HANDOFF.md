@@ -61,6 +61,38 @@ From fresh runs: unit 17, 222 of 222 lines, every check at zero but the listed s
 pipeway, 145 of 145, every check at zero. The eight units routed before compare identical to
 commit `b437c6f`.
 
+## Nothing through anything: 2026-11-27 (PROVENANCE P-95)
+
+The owner's rule: pipes and items can never pass through each other. Five clash detectors
+were written for it (`tools/refinery-audit/`, each its own method, none trusting the
+generator's checks), and every class they found was traced to its cause and put right by a
+rule written first:
+
+- supports (SW-RPI-17, -18, -20): each rod, post and leg tested on its own against every
+  line's true shapes, its own line's too, and against the steel, concrete and equipment as
+  drawn; base plates on, not in, what they stand on; no support's solids in another's; pipe
+  frames tested as supports are, their beams set by the catalogue's drawn depth; hanger
+  plates against the underside of the member over the plate;
+- valves (SW-RPI-19): a valve that strikes, judged by true shapes, turned about its run;
+- welds (SW-RPI-24, -25): each butt weld's bead square to its joint; a slip-on flange's
+  inside weld at the pipe's end, not standing out through the gasket;
+- lines through themselves (SW-RPI-22, -23): measured, and corrected on the result by five
+  corrections, (a) to (e);
+- the catalogue's own drawings, where two solids of one item met (the owner's decision, for
+  every plant): valve end flanges, pumps, air coolers, compressors, heaters' and boilers'
+  outlets, turbines, the deaerator's vent, the silo's ladder, the tank's and the ejector
+  deck's stairs;
+- units 17 and 19 routed again; unit 11 kept, the lines at its six raised pumps carried up
+  with them (SW-RPI-26); the pipeway and the mains routed again against them all.
+
+What was learned: the generator holds a member as a round about its axis, larger than the
+member, and a pipe as a round that reaches its radius past each end; a test written on
+those shapes finds clashes that are not there (88 trunnions, 26 hangers, 11 trapezes and
+four valves were found so and corrected before use). A support or valve is tested by true
+shapes (`shapesOf` in `ownLine.ts`, `trueSolids` in `supports.ts`). A fresh route of a unit
+can come out worse than the one it replaces, every route depending on the one before; where
+only an item's connections move, carry the lines up with them rather than route again.
+
 ## What is still to do
 
 **Next stage, the owner's choice: the flare and relief system** (relief valves on the items
