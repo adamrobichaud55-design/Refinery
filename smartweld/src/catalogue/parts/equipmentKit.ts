@@ -509,7 +509,9 @@ export function makeSilo(inp: SiloInput): PartSpec {
     for (let z = 12; z < zt + 36; z += 12) rungs.push(sweep([[lx, -8, z], [lx, 8, z]], 0.375, 8));
     for (let z = 60; z < zt; z += 120) rails.push(boxMesh(R - 0.1, -8.5, z, lx - 1.25, -7.5, z + 0.375), boxMesh(R - 0.1, 7.5, z, lx - 1.25, 8.5, z + 0.375));
     for (let z = 84; z <= zt + 36; z += 48) cage.push(sweep(Array.from({ length: 25 }, (_, i) => { const a = -2.0 + (4.0 * i) / 24; return [lx + 3 + 15 * Math.cos(a), 15 * Math.sin(a), z] as [number, number, number]; }), 0.1875, 6));   // SW-LD-2: hoops of 15 in radius round the climbing space
-    solids.push({ name: 'ladder rails and brackets', role: 'safety', mesh: mergeMeshes(rails) }, { name: 'ladder rungs RD3/4', role: 'safety', mesh: mergeMeshes(rungs) }, { name: 'ladder cage hoops', role: 'safety', mesh: mergeMeshes(cage) });
+    // SW-EQC-22 (amended 2026-11-27): a quarter turn from the skirt's opening (which faces +x), not in front of it
+    const turn = rotateZ(Math.PI / 2), off = (ms: MeshData[]) => transformMesh(mergeMeshes(ms), turn);
+    solids.push({ name: 'ladder rails and brackets', role: 'safety', mesh: off(rails) }, { name: 'ladder rungs RD3/4', role: 'safety', mesh: off(rungs) }, { name: 'ladder cage hoops', role: 'safety', mesh: off(cage) });
     const posts: MeshData[] = [], np = Math.max(8, Math.ceil((2 * Math.PI * (R - 3)) / 72));
     for (let i = 0; i < np; i++) { const a = (2 * Math.PI * (i + 0.5)) / np; posts.push(cylZ((R - 3) * Math.cos(a), (R - 3) * Math.sin(a), 0.95, zt + t, zt + t + 42, 10)); }
     solids.push({ name: 'roof handrail posts', role: 'safety', mesh: mergeMeshes(posts) }, { name: 'roof handrail rails', role: 'safety', mesh: mergeMeshes([sweep(ringPath(R - 3, zt + t + 42, 64), 0.95, 8, true), sweep(ringPath(R - 3, zt + t + 21, 64), 0.6, 8, true), at(extrude({ outer: circle(0, 0, R - 2, 64), inner: circle(0, 0, R - 2.25, 64) }, 4, 0), 0, 0, zt + t)]) });

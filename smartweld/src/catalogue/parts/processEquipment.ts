@@ -121,11 +121,14 @@ export function makeDesalter(inp: { tag: string; ID: number; L: number }): PartS
 // ---- SW-EQC-50: deaerator -------------------------------------------------------------------------------------------------------------
 export function makeDeaerator(inp: { tag: string; ID: number; L: number; centreline: number; /** a stated shell wall in place of the proportion (§72) */ t?: number }): PartSpec {
   const { ID, L, tag } = inp, t = inp.t ?? thk(ID, 96, 0.375), d = hDrum(ID, L, t, inp.centreline), R = d.R, s = d.s, rd = 0.25 * ID + t, Hd = 0.75 * ID, rn = 0.125 * ID + t, nS = seriesUp(Math.max(2, ID / 8));
-  const dome: Solid[] = [{ name: 'dome neck', mesh: tube(rn, t, 14 + 0.1 * R, -0.1 * R) }, ...lift(vesselSolids(rd, t, Hd, 'head', 'head').map(q => ({ ...q, name: `dome ${q.name}` })), 0, 0, 12 + rd / 2), ...lift(onShell(noz(`${tag}-WI`, 6, t, rd), rd, Math.PI / 2, 0.7 * Hd, 'water inlet nozzle'), 0, 0, 12 + rd / 2), ...pointUp(noz(`${tag}-V`, 2, t), 0, 0, 12 + rd + Hd - 0.3, 'vent')];
+  // SW-EQC-50 (amended 2026-11-27): the vent upright on the dome's head halfway out from its axis, opposite the water inlet, its neck set down to where the head
+  // stands under the neck's outer edge (and the 0.3 in the crown's vent was set in); the crown is left free for a plant's own connection
+  const rv = rd / 2, zV = 12 + rd / 2 + Hd + (rd / 2) * Math.sqrt(1 - ((rv + pipeDims(2, 'P150').OD / 2) / rd) ** 2) - 0.3;
+  const dome: Solid[] = [{ name: 'dome neck', mesh: tube(rn, t, 14 + 0.1 * R, -0.1 * R) }, ...lift(vesselSolids(rd, t, Hd, 'head', 'head').map(q => ({ ...q, name: `dome ${q.name}` })), 0, 0, 12 + rd / 2), ...lift(onShell(noz(`${tag}-WI`, 6, t, rd), rd, Math.PI / 2, 0.7 * Hd, 'water inlet nozzle'), 0, 0, 12 + rd / 2), ...pointUp(noz(`${tag}-V`, 2, t), 0, -rv, zV, 'vent')];
   s.push(...yUp(dome, 0, R, 0.5 * L), ...radialOn(noz(`${tag}-S`, nS, t, R), R, 0.2 * L, 0, 'steam inlet nozzle'), ...radialOn(noz(`${tag}-RV`, 4, t, R, { projection: 12 }), R, 0.8 * L, 0, 'relief nozzle'), ...radialOn(noz(`${tag}-O`, nS, t, R), R, 0.5 * L, Math.PI, 'outlet nozzle'),
     ...radialOn(makeManway(`${tag}-M1`, { D: manD(ID), cls: 'P150', shellT: t, shellR: R }), R, 0.85 * L, Math.PI / 2, 'manway'));
   for (const [k, phi] of [1.15, 1.95].entries()) s.push(...radialOn(noz(`${tag}-LG${k}`, 2, t, R, { blind: true }), R, 0.3 * L, phi, 'level connection'));
-  return equip(tag, 'VESSEL_H', `${tag} deaerator ${ID}" ID × ${(L / 12).toFixed(0)}' with dome`, { ID: drawing(ID, 'Storage inside diameter'), L: drawing(L, 'Tangent length'), centreline: drawing(inp.centreline, 'Centreline above grade'), t: inp.t ? drawing(t, 'Shell thickness (stated)') : rule(t, 'SW-EQC-45', 'Shell thickness (ID / 96, 3/8 least)'), domeD: rule(0.5 * ID, 'SW-EQC-50', 'Dome diameter (0.5 ID)'), domeH: rule(Hd, 'SW-EQC-50', 'Dome height (0.75 ID)'), neck: rule(0.25 * ID, 'SW-EQC-50', 'Neck diameter (0.25 ID)'), steam: rule(nS, 'SW-EQC-50', 'Steam inlet (ID / 8, to the series)') }, L + R, s, ['Trays and sprays in the dome are not drawn.']);
+  return equip(tag, 'VESSEL_H', `${tag} deaerator ${ID}" ID × ${(L / 12).toFixed(0)}' with dome`, { ID: drawing(ID, 'Storage inside diameter'), L: drawing(L, 'Tangent length'), centreline: drawing(inp.centreline, 'Centreline above grade'), t: inp.t ? drawing(t, 'Shell thickness (stated)') : rule(t, 'SW-EQC-45', 'Shell thickness (ID / 96, 3/8 least)'), domeD: rule(0.5 * ID, 'SW-EQC-50', 'Dome diameter (0.5 ID)'), domeH: rule(Hd, 'SW-EQC-50', 'Dome height (0.75 ID)'), neck: rule(0.25 * ID, 'SW-EQC-50', 'Neck diameter (0.25 ID)'), steam: rule(nS, 'SW-EQC-50', 'Steam inlet (ID / 8, to the series)'), ventOff: rule(rv, 'SW-EQC-50', 'Vent off the dome\'s axis (a quarter of its diameter)') }, L + R, s, ['Trays and sprays in the dome are not drawn.']);
 }
 // ---- SW-EQC-63: kettle reboiler -------------------------------------------------------------------------------------------------------
 export function makeKettleReboiler(inp: { tag: string; bundleD: number; tubeL: number }): PartSpec {
@@ -243,17 +246,30 @@ export function makeEjectorSet(inp: EjectorSetInput): PartSpec {
   }, zMax, s, ['Ejectors by SW-EQC-52 at the stated sizes; condensers by SW-DET-11. Valves, instruments and tubes are not drawn (SW-EQC-68).']);
 }
 // ---- SW-EQC-51: steam turbine driver --------------------------------------------------------------------------------------------------
-export function makeSteamTurbine(id: string, d: number): PartSpec {
+/** SW-EQC-51, -53 (amended 2026-11-27): the clearance a pedestal or a buckstay keeps from the rim of a connection's flange passing through it (SW-RPI-17's 1 in); a piece of it left thinner is left out */
+export const THROUGH_CLEAR = 1;
+/** SW-EQC-51 (amended 2026-11-27): an exhaust a plant states, in the turbine's frame (z along the shaft from the casing's coupling end, y up from the shaft): its size and class, its axis's height y (under the shaft: negative) and its place z; it leaves the casing's side toward −x */
+export interface TurbineExhaust { NPS: number; cls: PipeClass; y: number; z: number }
+export function makeSteamTurbine(id: string, d: number, exhaust?: TurbineExhaust): PartSpec {
   const nI = seriesUp(Math.max(2, d / 6)), nE = seriesUp(Math.max(3, d / 3)), yb = -0.9 * d, s: Solid[] = [], side = (p: PartSpec, x: number, y: number, z: number, sg: 1 | -1, label: string) => named(p, label, m => transformMesh(m, multiply(translate(x, y, z), rotateY((sg * Math.PI) / 2))));
   s.push({ name: 'casing', role: 'machine', mesh: cylZ(0, 0, 0.75 * d, 0, 0.8 * d, 64) }, { name: 'joint flange', role: 'machine', mesh: boxMesh(-0.75 * d - 3, -1, 0, 0.75 * d + 3, 1, 0.8 * d) }, { name: 'steam chest', role: 'machine', mesh: boxMesh(-0.25 * d, 0.7 * d, 0.2 * d, 0.25 * d, 1.1 * d, 0.6 * d) });
-  s.push(...side(noz(`${id}-I`, nI, 0.5, undefined, { projection: 6 }), 0.25 * d, 0.9 * d, 0.4 * d, 1, 'inlet nozzle'), ...side(noz(`${id}-E`, nE, 0.5, undefined, { projection: 6 }), -0.7 * d, -0.3 * d, 0.4 * d, -1, 'exhaust nozzle'));
+  // the exhaust: the item's own (d / 3 to the series, 0.3 d under the shaft at the casing's middle), or the plant's, drawn out of the casing's side where it is stated
+  const ex: TurbineExhaust = exhaust ?? { NPS: nE, cls: 'P150', y: -0.3 * d, z: 0.4 * d };
+  s.push(...side(noz(`${id}-I`, nI, 0.5, undefined, { projection: 6 }), 0.25 * d, 0.9 * d, 0.4 * d, 1, 'inlet nozzle'),
+    ...side(exhaust ? makeNozzle(`${id}-E`, { NPS: ex.NPS, cls: ex.cls, shellT: 0.5, projection: 6 }) : noz(`${id}-E`, nE, 0.5, undefined, { projection: 6 }), exhaust ? -Math.sqrt(Math.max((0.75 * d) ** 2 - ex.y ** 2, 0)) : -0.7 * d, ex.y, ex.z, -1, 'exhaust nozzle'));
   s.push({ name: 'bearing housings', role: 'machine', mesh: mergeMeshes([cylZ(0, 0, 0.225 * d, -0.4 * d, -0.05 * d, 40), cylZ(0, 0, 0.225 * d, 0.85 * d, 1.2 * d, 40)]) }, { name: 'shaft and coupling half', role: 'stem', mesh: mergeMeshes([cylZ(0, 0, d / 16, -0.7 * d, 1.2 * d, 24), cylZ(0, 0, 0.15 * d, -0.7 * d, -0.58 * d, 32)]) }, { name: 'governor housing', role: 'machine', mesh: mergeMeshes([cylZ(0, 0, 0.15 * d, 1.2 * d, 1.45 * d, 32), cylY(0, 1.32 * d, 0.06 * d, 0.1 * d, 0.3 * d, 16)]) });
-  s.push({ name: 'pedestals', role: 'steel', mesh: mergeMeshes([boxMesh(-0.2 * d, yb, -0.38 * d, 0.2 * d, -0.2 * d, -0.07 * d), boxMesh(-0.2 * d, yb, 0.87 * d, 0.2 * d, -0.2 * d, 1.18 * d), boxMesh(0.5 * d, yb, 0.1 * d, 0.75 * d + 3, -1, 0.7 * d), boxMesh(-0.75 * d - 3, yb, 0.1 * d, -0.5 * d, -1, 0.7 * d)]) }, { name: 'baseplate', role: 'steel', mesh: boxMesh(-0.65 * d, yb - 4, -0.75 * d, 0.65 * d, yb, 1.85 * d) });
-  return equip(id, 'PROCESS_UNIT', `Steam turbine driver, ${d}" wheel`, { d: drawing(d, 'Wheel diameter'), casingD: rule(1.5 * d, 'SW-EQC-51', 'Casing diameter (1.5 d)'), casingL: rule(0.8 * d, 'SW-EQC-51', 'Casing length (0.8 d)'), inlet: rule(nI, 'SW-EQC-51', 'Inlet (d / 6, to the series)'), exhaust: rule(nE, 'SW-EQC-51', 'Exhaust (d / 3, to the series)'), shaftH: rule(0.9 * d, 'SW-EQC-51', 'Shaft above the baseplate (0.9 d)'), baseL: rule(2.6 * d, 'SW-EQC-51', 'Baseplate length (2.6 d)') }, 2.6 * d, s);
+  // SW-EQC-51 (amended 2026-11-27): the side pedestal under the exhaust (x from −(0.75 d + 3) to −0.5 d) with a square window through it about the exhaust's axis, each side 1 in clear of
+  // the flange's rim: the pedestal below and above the window, and before and after it within the window's height; a piece thinner than 1 in left out
+  const hw = designFlange(ex.NPS, ex.cls).OD / 2 + THROUGH_CLEAR, [y0, y1, z0, z1] = [yb, -1, 0.1 * d, 0.7 * d], [wy0, wy1, wz0, wz1] = [ex.y - hw, ex.y + hw, ex.z - hw, ex.z + hw];
+  const pieces: [number, number, number, number][] = wy1 <= y0 || wy0 >= y1 || wz1 <= z0 || wz0 >= z1 ? [[y0, y1, z0, z1]]
+    : [[y0, Math.min(y1, wy0), z0, z1], [Math.max(y0, wy1), y1, z0, z1], [Math.max(y0, wy0), Math.min(y1, wy1), z0, Math.min(z1, wz0)], [Math.max(y0, wy0), Math.min(y1, wy1), Math.max(z0, wz1), z1]];
+  const exhaustSide = pieces.filter(([a, b, c, e]) => b - a >= THROUGH_CLEAR && e - c >= THROUGH_CLEAR).map(([a, b, c, e]) => boxMesh(-0.75 * d - 3, a, c, -0.5 * d, b, e));
+  s.push({ name: 'pedestals', role: 'steel', mesh: mergeMeshes([boxMesh(-0.2 * d, yb, -0.38 * d, 0.2 * d, -0.2 * d, -0.07 * d), boxMesh(-0.2 * d, yb, 0.87 * d, 0.2 * d, -0.2 * d, 1.18 * d), boxMesh(0.5 * d, yb, 0.1 * d, 0.75 * d + 3, -1, 0.7 * d), ...exhaustSide]) }, { name: 'baseplate', role: 'steel', mesh: boxMesh(-0.65 * d, yb - 4, -0.75 * d, 0.65 * d, yb, 1.85 * d) });
+  return equip(id, 'PROCESS_UNIT', `Steam turbine driver, ${d}" wheel`, { d: drawing(d, 'Wheel diameter'), casingD: rule(1.5 * d, 'SW-EQC-51', 'Casing diameter (1.5 d)'), casingL: rule(0.8 * d, 'SW-EQC-51', 'Casing length (0.8 d)'), inlet: rule(nI, 'SW-EQC-51', 'Inlet (d / 6, to the series)'), exhaust: exhaust ? drawing(ex.NPS, 'Exhaust (stated)') : rule(nE, 'SW-EQC-51', 'Exhaust (d / 3, to the series)'), shaftH: rule(0.9 * d, 'SW-EQC-51', 'Shaft above the baseplate (0.9 d)'), baseL: rule(2.6 * d, 'SW-EQC-51', 'Baseplate length (2.6 d)'), exhaustClear: rule(THROUGH_CLEAR, 'SW-EQC-51', 'Side pedestal clear of the rim of the exhaust\'s flange') }, 2.6 * d, s);
 }
 // ---- SW-EQC-66: turbine-driven centrifugal compressor package ----------------------------------------------------------------------------
-/** the compressor of SW-EQC-12 with a steam turbine (SW-EQC-51) in the motor's place; z along the shaft, y up from the skid's underside */
-export function makeTurbineCompressor(inp: { tag: string; skidW: number; skidL: number; casingD: number; wheelD: number }): PartSpec {
+/** the compressor of SW-EQC-12 with a steam turbine (SW-EQC-51) in the motor's place; z along the shaft, y up from the skid's underside. `exhaust`: the turbine's exhaust where a plant states it, in this frame (SW-EQC-51, amended 2026-11-27) */
+export function makeTurbineCompressor(inp: { tag: string; skidW: number; skidL: number; casingD: number; wheelD: number; exhaust?: TurbineExhaust }): PartSpec {
   const { tag, skidW, skidL, casingD: D, wheelD: d } = inp, cy = 1 + 0.9 * d + 4, zc = -skidL / 2 + 6, nN = seriesUp(Math.max(3, 0.3 * D)), zg = zc + 1.2 * D + 4, zT = zg + 0.8 * D + 4 + 0.7 * d, gt = Math.max(1 + 0.8 * D, cy + 0.4 * D), s: Solid[] = [];
   s.push({ name: 'skid PL1', role: 'steel', mesh: boxMesh(-skidW / 2, 0, -skidL / 2, skidW / 2, 1, skidL / 2) });
   s.push({ name: 'compressor casing', role: 'machine', mesh: cylZ(0, cy, D / 2, zc + 0.15 * D, zc + 1.05 * D, 64) }, { name: 'casing end covers', role: 'machine', mesh: mergeMeshes([cylZ(0, cy, D / 2 + 1.5, zc + 0.1 * D, zc + 0.15 * D, 64), cylZ(0, cy, D / 2 + 1.5, zc + 1.05 * D, zc + 1.1 * D, 64)]) },
@@ -261,7 +277,7 @@ export function makeTurbineCompressor(inp: { tag: string; skidW: number; skidL: 
   for (const [label, z] of [['suction', zc + 0.4 * D], ['discharge', zc + 0.8 * D]] as const) s.push(...named(makeNozzle(`${tag}-${label}`, { NPS: nN, cls: 'P300', shellT: 1, shellR: D / 2 }), `${label} nozzle`, m => transformMesh(m, multiply(translate(0, cy + D / 2, z), NOZZLE_UP))).map(q => ({ ...q, role: q.role ?? ('machine' as const) })));
   s.push({ name: 'gearbox', role: 'machine', mesh: boxMesh(-0.4 * D, 1, zg, 0.4 * D, gt, zg + 0.8 * D) }, { name: 'gearbox feet', role: 'machine', mesh: boxMesh(-0.5 * D, 1, zg + 2, 0.5 * D, 2.5, zg + 0.8 * D - 2) });
   s.push({ name: 'shafts', role: 'stem', mesh: mergeMeshes([cylZ(0, cy, 0.06 * D, zc + 1.2 * D, zg, 16), cylZ(0, cy, 0.06 * D, zg + 0.8 * D, zg + 0.8 * D + 4, 16)]) });
-  s.push(...partSolids(makeSteamTurbine(`${tag}-T`, d)).map(q => ({ ...q, name: `turbine: ${q.name}`, mesh: at(q.mesh, 0, cy, zT) })));
+  s.push(...partSolids(makeSteamTurbine(`${tag}-T`, d, inp.exhaust ? { ...inp.exhaust, y: inp.exhaust.y - cy, z: inp.exhaust.z - zT } : undefined)).map(q => ({ ...q, name: `turbine: ${q.name}`, mesh: at(q.mesh, 0, cy, zT) })));
   s.push({ name: 'lube console', role: 'steel', mesh: boxMesh(skidW / 2 + 6, 0, -24, skidW / 2 + 30, 48, 12) }, { name: 'lube oil piping', role: 'closure', mesh: sweep([[skidW / 2 + 18, 48, -6], [skidW / 2 + 18, cy + 0.3 * D, -6], [0.3 * D, cy + 0.3 * D, -6], [0.3 * D, cy + 0.3 * D, zc + 0.05 * D], [0, cy + 0.25 * D, zc + 0.05 * D]], 0.66, 10) });
   return equip(tag, 'COMPRESSOR', `${tag} centrifugal compressor package, turbine driven, ${skidW}" × ${skidL}" skid`, {
     skidW: drawing(skidW, 'Skid width'), skidL: drawing(skidL, 'Skid length'), casingD: drawing(D, 'Casing diameter'), wheelD: drawing(d, 'Turbine wheel diameter'),
@@ -399,13 +415,27 @@ export function makeCoolingTower(inp: { tag: string; cells: number; cellL: numbe
 // ---- SW-EQC-53: cabin heater ----------------------------------------------------------------------------------------------------------
 /** a trapezoid in the y–z plane (y0..y1 at z0 narrowing to ya..yb at z1) as a plate shell of thickness t along x from x0 to x1 */
 const hipShell = (y0: number, y1: number, z0: number, ya: number, yb: number, z1: number, x0: number, x1: number, t: number): MeshData => transformMesh(extrude({ outer: [{ x: y0, y: z0 }, { x: y1, y: z0 }, { x: yb, y: z1 }, { x: ya, y: z1 }], inner: [{ x: y0 + 2 * t, y: z0 + t }, { x: y1 - 2 * t, y: z0 + t }, { x: yb - 2 * t, y: z1 - t }, { x: ya + 2 * t, y: z1 - t }] }, x1 - x0, x0), SHAFT_X_UP_Z);
-export function makeCabinHeater(inp: { tag: string; L: number; W: number; H: number }): PartSpec {
+/** SW-EQC-53 (amended 2026-11-27): a connection a plant passes out through a long wall of the radiant box: where its axis meets the wall (x along the box, z above the base), the wall (1: the one at y = W, −1: at y = 0) and its flange's outside diameter */
+export interface CabinThrough { x: number; z: number; wall: 1 | -1; OD: number }
+export function makeCabinHeater(inp: { tag: string; L: number; W: number; H: number; through?: CabinThrough[] }): PartSpec {
   const { L, W: Wd, H, tag } = inp, zf = 84, zr = zf + H, zh = zr + 0.25 * Wd, zc = zh + 0.5 * H, t = 0.25, nb = Math.max(1, Math.round(L / (0.5 * Wd))), db = 0.12 * Wd, rs = 0.125 * Wd, Hs = 1.5 * H, nc = Math.ceil(L / 240), nk = Math.ceil(L / 96), s: Solid[] = [];
   const cols: MeshData[] = [], bases: MeshData[] = [], stays: MeshData[] = [], doors: MeshData[] = [];
   for (let i = 0; i <= nc; i++) for (const y of [4, Wd - 4]) { const x = Math.min(L - 4, Math.max(4, (L * i) / nc)); cols.push(member([x, y, 0.75], [x, y, zf - 8], P_W8, [0, 1, 0])); bases.push(boxMesh(x - 7, y - 7, 0, x + 7, y + 7, 0.75)); }
   for (const y of [4, Wd - 4]) cols.push(member([0, y, zf - 4], [L, y, zf - 4], P_W8, [0, 0, 1]));
   for (let i = 0; i <= nc; i++) { const x = Math.min(L - 4, Math.max(4, (L * i) / nc)); cols.push(member([x, 4, zf - 4.2], [x, Wd - 4, zf - 4.2], P_W8, [0, 0, 1])); }
-  for (let i = 0; i <= nk; i++) for (const [y, sg] of [[0, -1], [Wd, 1]] as const) stays.push(member([(L * i) / nk, y + sg * 3.2, zf], [(L * i) / nk, y + sg * 3.2, zr], W6, [0, 1, 0]));
+  // SW-EQC-53 (amended 2026-11-27): a buckstay stops where its nearer flange edge meets the circle 1 in outside the rim of a connection's flange through its wall,
+  // and goes on from the circle's far side; a piece shorter than 1 in is left out
+  const bf6 = proportionW(6, 10).bf, runs = (x: number, wall: 1 | -1): [number, number][] => {
+    let out: [number, number][] = [[zf, zr]];
+    for (const c of inp.through ?? []) {
+      if (c.wall !== wall) continue;
+      const rc = c.OD / 2 + THROUGH_CLEAR, dx = Math.max(0, Math.abs(x - c.x) - bf6 / 2); if (dx >= rc) continue;
+      const h = Math.sqrt(rc * rc - dx * dx), lo = c.z - h, hi = c.z + h;
+      out = out.flatMap(([a, b]): [number, number][] => [[a, Math.min(b, lo)], [Math.max(a, hi), b]]).filter(([a, b]) => b - a >= THROUGH_CLEAR);
+    }
+    return out;
+  };
+  for (let i = 0; i <= nk; i++) for (const [y, sg] of [[0, -1], [Wd, 1]] as const) for (const [za, zb] of runs((L * i) / nk, sg)) stays.push(member([(L * i) / nk, y + sg * 3.2, za], [(L * i) / nk, y + sg * 3.2, zb], W6, [0, 1, 0]));
   for (let i = 0; i < nk; i++) doors.push(boxMesh((L * (i + 0.5)) / nk - 5, -1.2, zf + 48, (L * (i + 0.5)) / nk + 5, 0, zf + 60));
   s.push({ name: 'support columns and floor beams W8', role: 'steel', mesh: mergeMeshes(cols) }, { name: 'column base plates', role: 'steel', mesh: mergeMeshes(bases) });
   s.push({ name: 'radiant box casing', mesh: mergeMeshes([at(extrude({ outer: rect(0, 0, L, Wd), inner: rect(t, t, L - t, Wd - t) }, H, 0), 0, 0, zf), boxMesh(0, 0, zf - t, L, Wd, zf)]) }, { name: 'buckstays W6', role: 'steel', mesh: mergeMeshes(stays) }, { name: 'peep doors', role: 'closure', mesh: mergeMeshes(doors) });
@@ -420,7 +450,8 @@ export function makeCabinHeater(inp: { tag: string; L: number; W: number; H: num
   for (let i = 0; i <= nk; i++) { const x = Math.min(L - 3, (L * i) / nk + 4); br.push(member([x, -6.5, zr - 1.55], [x, -40, zr - 1.55], P_L3, [0, 0, -1]), member([x, -36, zr - 4.6], [x, -6.5, zr - 34], P_L3, [1, 0, 0])); }
   s.push({ name: 'platform grating (SW-GR-1)', role: 'galv', mesh: mergeMeshes(bars) }, { name: 'platform brackets L3x3x1/4', role: 'steel', mesh: mergeMeshes(br) }, { name: 'platform handrail', role: 'safety', mesh: mergeMeshes([straightRail([0, -39, zr], [L, -39, zr]), straightRail([L, -39, zr], [L, -5, zr])]) });
   s.push(...towerAccess(-40, 120 - 4, 120, -Math.PI / 2, 0, zr).map(q => ({ ...q, name: `access: ${q.name}` })));
-  return equip(tag, 'HEATER', `${tag} cabin heater, radiant box ${(L / 12).toFixed(0)}' × ${(Wd / 12).toFixed(0)}' × ${(H / 12).toFixed(0)}'`, { L: drawing(L, 'Radiant box length'), W: drawing(Wd, 'Radiant box width'), H: drawing(H, 'Radiant box height'), floor: rule(zf, 'SW-EQC-53', 'Floor above grade'), burners: rule(nb, 'SW-EQC-53', 'Floor burners (spacing W / 2)', 'count'), throat: rule(db, 'SW-EQC-53', 'Burner throat (0.12 W)'), hip: rule(0.25 * Wd, 'SW-EQC-53', 'Hip height (0.25 W)'), convW: rule(0.4 * Wd, 'SW-EQC-53', 'Convection width (0.4 W)'), convH: rule(0.5 * H, 'SW-EQC-53', 'Convection height (0.5 H)'), stackD: rule(2 * rs, 'SW-EQC-53', 'Stack diameter (0.25 W)'), stackH: rule(Hs, 'SW-EQC-53', 'Stack height (1.5 H)') }, zc + 0.3 * Wd + Hs, s, ['Tubes and refractory are not drawn.']);
+  return equip(tag, 'HEATER', `${tag} cabin heater, radiant box ${(L / 12).toFixed(0)}' × ${(Wd / 12).toFixed(0)}' × ${(H / 12).toFixed(0)}'`, { L: drawing(L, 'Radiant box length'), W: drawing(Wd, 'Radiant box width'), H: drawing(H, 'Radiant box height'), floor: rule(zf, 'SW-EQC-53', 'Floor above grade'), burners: rule(nb, 'SW-EQC-53', 'Floor burners (spacing W / 2)', 'count'), throat: rule(db, 'SW-EQC-53', 'Burner throat (0.12 W)'), hip: rule(0.25 * Wd, 'SW-EQC-53', 'Hip height (0.25 W)'), convW: rule(0.4 * Wd, 'SW-EQC-53', 'Convection width (0.4 W)'), convH: rule(0.5 * H, 'SW-EQC-53', 'Convection height (0.5 H)'), stackD: rule(2 * rs, 'SW-EQC-53', 'Stack diameter (0.25 W)'), stackH: rule(Hs, 'SW-EQC-53', 'Stack height (1.5 H)'),
+    ...(inp.through?.length ? { throughClear: rule(THROUGH_CLEAR, 'SW-EQC-53', 'Buckstays clear of the rim of a connection\'s flange through the wall') } : {}) }, zc + 0.3 * Wd + Hs, s, ['Tubes and refractory are not drawn.']);
 }
 // ---- SW-EQC-54: reformer furnace ------------------------------------------------------------------------------------------------------
 export function makeReformer(inp: { tag: string; L: number; W: number; H: number }): PartSpec {

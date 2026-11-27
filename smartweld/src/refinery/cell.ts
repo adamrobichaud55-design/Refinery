@@ -330,7 +330,11 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
     case 'vessel': case 'filter': return tags(z.count).map(tag => vertical(tag, d.D, d.t, d.L, 60, false));
     case 'heater': return d.D
       ? [boxy(e.tag, 'heater', d.D + 48, d.D + 48, 96 + d.H * 1.9, (c, s) => { pad(c, s.x, s.z, d.D + 36, d.D + 36, e.tag); place(c, makeFiredHeater({ tag: e.tag, D: d.D, H: d.H, stackH: up(0.6 * d.H, 12) }), upright(s.x, PAD, s.z), e.tag); Object.assign(s, { shape: 'vv', R: d.D / 2, yb: PAD + 96, yt: PAD + 96 + d.H }); }, 240)]
-      : [boxy(e.tag, 'heater', d.W + 48, d.L + 48, 84 + 2.5 * d.H, (c, s) => { pad(c, s.x, s.z, d.W + 36, d.L + 36, e.tag); place(c, makeCabinHeater({ tag: e.tag, L: d.L, W: d.W, H: d.H }), multiply(translate(s.x + d.W / 2, PAD, s.z + d.L / 2), multiply(rotateY(Math.PI / 2), standUp())), e.tag); Object.assign(s, { shape: 'cabin', yb: PAD + 84, yt: PAD + 84 + d.H }); }, 240)];
+      : [boxy(e.tag, 'heater', d.W + 48, d.L + 48, 84 + 2.5 * d.H, (c, s) => {
+        // SW-CELL-4 (amended 2026-11-27): the coil outlet through the wall that faces the rack, where SW-RPI-2 sets it (2 ft above the floor to the grid, a quarter of the
+        // box's length to 6 in from its middle), given to the item with its flange's diameter so that its buckstays stand clear of it (SW-EQC-53)
+        const nO = z.nozzles.find(q => q.port === 'outlet'), through = nO ? [{ x: d.L / 2 - up(d.L / 4), z: up(PAD + 84 + 24) - PAD, wall: 1 as const, OD: designFlange(nO.NPS, nO.cls).OD }] : [];
+        pad(c, s.x, s.z, d.W + 36, d.L + 36, e.tag); place(c, makeCabinHeater({ tag: e.tag, L: d.L, W: d.W, H: d.H, ...(through.length ? { through } : {}) }), multiply(translate(s.x + d.W / 2, PAD, s.z + d.L / 2), multiply(rotateY(Math.PI / 2), standUp())), e.tag); Object.assign(s, { shape: 'cabin', yb: PAD + 84, yt: PAD + 84 + d.H }); }, 240)];
     case 'compressor': case 'blower': return tags(z.count).map(tag => {
       const casingD = Math.max(10, up(14 * Math.cbrt(d.gasHp / 100), 1)), motorD = Math.max(10, Math.round(d.motorFrame ?? d.wheel ?? 0.8 * casingD));
       if (e.kind === 'blower') { const wheelD = Math.max(12, up(casingD, 1)), baseL = 0.5 * wheelD + 24 + 2 * motorD; return boxy(tag, 'exchanger', 1.4 * wheelD + 24, baseL + 12, 1.6 * wheelD + 12, (c, s) => { place(c, bare(makeBlower({ tag, wheelD, motorD })), frameFromAxes([s.x, PUMP_PAD, s.z - s.side * (baseL / 2 - 6)], [0, 1, 0], [0, 0, s.side]), tag); }, 48, false, { solid: /^outlet flange$/, axes: 'xz' }); }
@@ -341,7 +345,15 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       const cy = wheel ? 1 + 0.9 * wheel + 4 : compressorShaftY(casingD, motorD), padH = up(12 + cy) - cy, mid = -skidL / 2 + 6 + 0.6 * casingD, dz = up(mid) - mid;
       return boxy(tag, 'exchanger', skidW + 24, skidL + 24, 2 * Math.max(casingD, motorD) + 24, (c, s) => {
         const zp = s.z + s.side * dz;
-        pad(c, s.x, zp, skidW + 24, skidL + 24, tag, padH, 'machine pad'); place(c, bare(wheel ? makeTurbineCompressor({ tag, skidW, skidL, casingD, wheelD: wheel }) : makeCompressorPackage({ tag, skidW, skidL, casingD, motorD })), frameFromAxes([s.x, padH, zp], [0, 1, 0], [0, 0, s.side]), tag);
+        // SW-CELL-4 (amended 2026-11-27): a turbine's exhaust where SW-RPI-2 sets it (its pipe's radius and 3 in under the shaft, to 6 in; at the casing's middle on the
+        // 6 in grid, the spot standing on that grid), given to the item so that the side pedestal under it is cut round it (SW-EQC-51)
+        const ex = wheel ? z.nozzles.find(q => q.port === 'turbine exhaust') : undefined, turbine = () => {
+          const plain = makeTurbineCompressor({ tag, skidW, skidL, casingD, wheelD: wheel }); if (!ex) return plain;
+          const cb = partBoxes(plain).find(q => q.name === 'turbine: casing'); if (!cb) throw new Error(`${tag}: the turbine has no casing`);
+          const zm = (cb.mn[2] + cb.mx[2]) / 2, zl = s.side * (near(zp + s.side * zm) - zp);
+          return makeTurbineCompressor({ tag, skidW, skidL, casingD, wheelD: wheel, exhaust: { NPS: ex.NPS, cls: ex.cls, y: cy - up(pipeDims(ex.NPS, ex.cls).OD / 2 + 3), z: zl } });
+        };
+        pad(c, s.x, zp, skidW + 24, skidL + 24, tag, padH, 'machine pad'); place(c, bare(wheel ? turbine() : makeCompressorPackage({ tag, skidW, skidL, casingD, motorD })), frameFromAxes([s.x, padH, zp], [0, 1, 0], [0, 0, s.side]), tag);
         Object.assign(s, { shape: 'machine', R: casingD / 2, yc: padH + cy, zc: zp + s.side * mid, zs: zp + s.side * (-skidL / 2 + 6), len: 0.9 * casingD });
       });
     });
@@ -363,7 +375,11 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       const { body, D, turned, duct } = scrubberBody(sh, e, z);
       return [boxy(e.tag, 'vessel', D + 96, D + 96, 8 * D, (c, s) => { place(c, body, upright(s.x, PAD, s.z, turned ? Math.PI : 0), e.tag); }, duct && !turned ? ductRoom(duct.NPS, duct.cls) : 96, false, duct ? { point: [0, 0, body.extra!.zInlet as number], axes: 'xyz', onLine: true } : undefined)];
     }
-    case 'furnace': return [boxy(e.tag, 'vessel', 420, 144, 144, (c, s) => { const og = z.nozzles.find(q => q.port === 'process gas'); place(c, bare(makeSulfurFurnace({ tag: e.tag, D: d.D, furnaceL: d.furnaceL, boilerL: d.boilerL, boilerT: d.boilerT, drumT: d.drumT, ...(og ? { outletOD: pipeDims(og.NPS, og.cls).OD } : {}) })), frameFromAxes([s.x - 190, PAD + 66, s.z], [0, 1, 0], [1, 0, 0]), e.tag); }, 48, false, { solid: /^furnace chamber$/, axes: 'y' })];
+    case 'furnace': return [boxy(e.tag, 'vessel', 420, 144, 144, (c, s) => {
+      // SW-CELL-4 (amended 2026-11-27): the steam outlet its boiler's drum is drawn with gives way to the plant's own connection, as the flue gas cooler's does (SW-RPI-2)
+      const og = z.nozzles.find(q => q.port === 'process gas'), drawn = bare(makeSulfurFurnace({ tag: e.tag, D: d.D, furnaceL: d.furnaceL, boilerL: d.boilerL, boilerT: d.boilerT, drumT: d.drumT, ...(og ? { outletOD: pipeDims(og.NPS, og.cls).OD } : {}) }));
+      const body: PartSpec = { ...drawn, extra: { ...drawn.extra, solids: (drawn.extra!.solids as { name: string }[]).filter(q => !/^waste heat boiler: steam drum steam outlet: /.test(q.name)) } };
+      place(c, body, frameFromAxes([s.x - 190, PAD + 66, s.z], [0, 1, 0], [1, 0, 0]), e.tag); }, 48, false, { solid: /^furnace chamber$/, axes: 'y' })];
     case 'incinerator': return [boxy(e.tag, 'heater', 420, 144, 1300, (c, s) => { place(c, bare(makeIncinerator({ tag: e.tag, D: 72, L: 240, stackH: 1200 })), upright(s.x - 190, PAD, s.z), e.tag); }, 240, false, { solid: /^chamber shell$/, axes: 'y' })];
     case 'psa': return tags(z.count).map(tag => vertical(tag, d.D, d.t, d.TT, 60, false));   // SW-CELL-4: each adsorber a vessel of its own, piped to the others by the generator
     case 'boiler': return [boxy(e.tag, 'vessel', 420, 420, 1200, (c, s) => { place(c, bare(makeWaterTubeBoiler({ tag: e.tag, steamID: d.steamID, L: d.L, centres: d.centres, stackD: 72, stackH: 1200, drumT: d.drumT })), upright(s.x - 60, PAD, s.z + 150), e.tag); }, 180)];

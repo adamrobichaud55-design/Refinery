@@ -193,27 +193,35 @@ const distTo = (p: V3, c: Comp) => { const q = centreLine(c); let d = Infinity; 
 /**
  * SW-RPI-23: the pieces of a route through `pts` (its two ends and its corners), laid as the generator lays them: at each corner an elbow
  * (45° where `angs` says so), with a pipe between; a pipe under 0.05 in is not laid. Undefined where a pipe would be under 2 in, run
- * backward, or a corner is not of its angle.
+ * backward, or a corner is not of its angle; and where a pipe not laid would leave two elbows welded back to back that are not a 45° pair
+ * (SW-RT-4, SW-RT-8): `ends` gives the angle of the elbow each end of the route is joined to, 0 for another piece.
  */
-function layPieces(NPS: number, cls: Comp['cls'], pts: V3[], angs: (45 | 90)[] = []): { comps: Comp[]; straights: number[] } | undefined {
+function layPieces(NPS: number, cls: Comp['cls'], pts: V3[], angs: (45 | 90)[] = [], ends: [number, number] = [0, 0]): { comps: Comp[]; straights: number[] } | undefined {
   const R = elbowRadius(pipeDims(NPS, cls).OD), R45 = R * Math.tan(Math.PI / 8), comps: Comp[] = [], straights: number[] = [];
-  const pipe = (from: V3, to: V3, w: V3): boolean => {
+  const pipe = (from: V3, to: V3, w: V3, left: number, right: number): boolean => {
     const d = sub(to, from), s = dot(d, w), L = len(d);
-    if (L < 0.05) return true;
+    if (L < 0.05) return !(left && right) || (left === 45 && right === 45);
     if (s < 0 || len(sub(d, [w[0] * s, w[1] * s, w[2] * s])) > 0.01 || L < 2 - 1e-6) return false;
     comps.push({ tag: '', kind: 'pipe', key: `PIPE|${NPS}|${cls}|${L.toFixed(3)}`, T: frameFromAxes(from, perp(w), w), a: from, b: to, NPS, cls, e1: 'BW', e2: 'BW' }); straights.push(L);
     return true;
   };
-  let cursor = pts[0];
+  let cursor = pts[0], before = ends[0];
   for (let i = 1; i < pts.length - 1; i++) {
     const a = unit(sub(pts[i], pts[i - 1])), b = unit(sub(pts[i + 1], pts[i])), ang = angs[i] ?? 90;
     if (Math.abs(dot(a, b) - Math.cos((ang * Math.PI) / 180)) > 1e-6) return undefined;
     const Lc = ang === 90 ? R : R45, ein = add(pts[i], a, -Lc), eout = add(pts[i], b, Lc);
-    if (!pipe(cursor, ein, a)) return undefined;
+    if (!pipe(cursor, ein, a, before, ang)) return undefined;
     comps.push({ tag: '', kind: 'elbow', key: `EL|${NPS}|${cls}|${ang}`, T: frameFromAxes(ein, cross(a, b), a), a: ein, b: eout, NPS, cls, e1: 'BW', e2: 'BW' });
-    cursor = eout;
+    cursor = eout; before = ang;
   }
-  return pipe(cursor, pts[pts.length - 1], unit(sub(pts[pts.length - 1], pts[pts.length - 2]))) ? { comps, straights } : undefined;
+  return pipe(cursor, pts[pts.length - 1], unit(sub(pts[pts.length - 1], pts[pts.length - 2])), before, ends[1]) ? { comps, straights } : undefined;
+}
+/** the angle of the elbow a stretch of a line's pieces (from index i0 to i1) is joined to at each end, 0 where it is joined to another piece; studs are passed over */
+function endsOf(comps: Comp[], i0: number, i1: number): [number, number] {
+  const ang = (c?: Comp) => (c?.kind === 'elbow' ? (is45(c) ? 45 : 90) : 0);
+  let p = i0 - 1; while (p >= 0 && comps[p].kind === 'studs') p--;
+  let q = i1 + 1; while (q < comps.length && comps[q].kind === 'studs') q++;
+  return [ang(comps[p]), ang(comps[q])];
 }
 /** a route from S leaving along d1 to E arriving along d2, with at most two elbows: its ends and corners, or undefined */
 function fewElbows(S: V3, d1: V3, E: V3, d2: V3): V3[] | undefined {
@@ -233,12 +241,14 @@ function spliced(r: LineRun, comps0: Comp[], i0: number, i1: number, laid: Comp[
   const old = comps0.slice(i0, i1 + 1), used = new Set<Comp>(), comps = comps0.slice(0, i0), fresh: Comp[] = [];
   const taken = new Set([...comps0.slice(0, i0), ...comps0.slice(i1 + 1)].map(c => c.tag));
   let top = Math.max(0, ...comps0.map(c => Number(/\/[a-z]+(\d+)$/.exec(c.tag)?.[1] ?? 0)));
-  for (const c of laid) {
-    const like = old.find(o => !used.has(o) && o.kind === c.kind && o.key === c.key && same(o.a, c.a) && same(o.b, c.b));
-    if (like) { used.add(like); comps.push(like); taken.add(like.tag); continue; }
+  // the pieces laid the same as one they replace are found first, and their tags held, so that no new piece takes one of them
+  const likes = laid.map(c => { const o = old.find(q => !used.has(q) && q.kind === c.kind && q.key === c.key && same(q.a, c.a) && same(q.b, c.b)); if (o) { used.add(o); taken.add(o.tag); } return o; });
+  for (const [i, c] of laid.entries()) {
+    const like = likes[i];
+    if (like) { comps.push(like); continue; }
     const kept = c.kind === 'pipe' ? old.find(o => !used.has(o) && o.kind === 'pipe' && !taken.has(o.tag) && (same(o.a, c.a) || same(o.b, c.b))) : undefined;
     let tag = kept?.tag; if (kept) used.add(kept);
-    if (!tag) { const pre = c.kind === 'elbow' ? 'el' : 'p'; tag = `${r.no}/${pre}${comps.length + 1}`; if (taken.has(tag)) tag = `${r.no}/${pre}${++top}`; }
+    if (!tag) { const pre = c.kind === 'elbow' ? 'el' : 'p'; tag = `${r.no}/${pre}${comps.length + 1}`; while (taken.has(tag)) tag = `${r.no}/${pre}${++top}`; }
     taken.add(tag); const n = { ...c, tag }; comps.push(n); fresh.push(n);
   }
   comps.push(...comps0.slice(i1 + 1));
@@ -369,7 +379,7 @@ export function offsetOverTakeOff(m: PipingModel, up: Cx['up'], vb: Cx['vb'], on
       for (const ol of olets) { const off1 = len(cross(sub(origin(ol.o), Q1), a)), off2 = len(cross(sub(origin(ol.o), Q2), a)), r0 = pipeDims(r.NPS, r.cls).OD / 2 + 1;
         if (off2 <= r0 && ol.s > along(Q2) - 1e-6) gaps.push({ tag: ol.o.tag, gap: ol.s - ol.half - along(e2.b) }); if (off1 <= r0 && ol.s < along(Q1) + 1e-6) gaps.push({ tag: ol.o.tag, gap: along(e1.a) - ol.s - ol.half }); }
       const hit = gaps.find(g => g.gap < 2 - 1e-6); if (!hit) continue;
-      const laid = layPieces(r.NPS, r.cls, [c[s0].a, P[j], P[j + 1], c[s1].b]); if (!laid) continue;
+      const laid = layPieces(r.NPS, r.cls, [c[s0].a, P[j], P[j + 1], c[s1].b], [], endsOf(c, s0, s1)); if (!laid) continue;
       const sp = spliced(r, c, s0, s1, laid.comps), nr = { ...r, comps: sp.comps };
       if (sleeveGone(r, sp.gone)) continue;
       const why = refusal(cx, [nr], sp.fresh, endZones(cx, r), sp.fresh, r.path);
@@ -395,7 +405,7 @@ export function straightBetweenStacks(m: PipingModel, up: Cx['up'], vb: Cx['vb']
     const [i0, i1] = sp, mid = r.comps.slice(i0, i1 + 1); if (mid.some(c => !['pipe', 'elbow', 'coupling'].includes(c.kind))) continue;
     const S = r.comps[i0].a, E = r.comps[i1].b, dS = unit(sub(r.path[0], S)), dE = unit(sub(r.path[r.path.length - 1], E)), D = sub(E, S), L = dot(D, dS);
     if (len(cross(D, dS)) > 0.01 || L < 2 - 1e-6 || Math.abs(dot(dS, dE) + 1) > 1e-6) continue;
-    const laid = layPieces(r.NPS, r.cls, [S, E]); if (!laid) continue;
+    const laid = layPieces(r.NPS, r.cls, [S, E], [], endsOf(r.comps, i0, i1)); if (!laid) continue;
     const s = spliced(r, r.comps, i0, i1, laid.comps), nr = { ...r, comps: s.comps };
     if (sleeveGone(r, s.gone)) continue;
     const why = refusal(cx, [nr], s.fresh, endZones(cx, r), s.fresh, r.path);
@@ -441,7 +451,7 @@ export function bareTurnAsOffset(m: PipingModel, up: Cx['up'], vb: Cx['vb'], onl
     const grating = st.gratings.find(gr => [Q1, Q2].some(q => Math.abs(gr.top - q[1]) < reach && q[0] >= gr.box[0][0] - reach && q[0] <= gr.box[1][0] + reach && q[2] >= gr.box[0][2] - reach && q[2] <= gr.box[1][2] + reach));
     const at = `${toEnd ? r.to : r.from}`;
     if (grating) { notes.push(`${r.no}: the turn-about at ${at} not laid as a 45° offset: an elbow would stand within 6 in of the grating ${grating.tag} (SW-RPI-23 (c))`); continue; }
-    const walk = [S, Q1, Q2, E], laid = layPieces(r.NPS, r.cls, toEnd ? walk : [...walk].reverse(), [90, 45, 45, 90]);
+    const walk = [S, Q1, Q2, E], laid = layPieces(r.NPS, r.cls, toEnd ? walk : [...walk].reverse(), [90, 45, 45, 90], endsOf(r.comps, i0, i1));
     if (!laid) { notes.push(`${r.no}: the turn-about at ${at} not laid as a 45° offset: the offset centred on the grid leaves a pipe under 2 in (SW-RPI-23 (c))`); continue; }
     // within the plan area of the pieces it replaces, and no lower than the lowest of them
     const was = gone0.flatMap(centreLine), lo: V3 = [0, 1, 2].map(q => Math.min(...was.map(p => p[q]))) as V3, hi: V3 = [0, 1, 2].map(q => Math.max(...was.map(p => p[q]))) as V3;
@@ -482,12 +492,22 @@ export function takeOffMoved(m: PipingModel, up: Cx['up'], vb: Cx['vb'], only?: 
     const psp = routedSpan(Pl); if (seg < 0 || !psp) continue;
     const a0 = pp[seg], ws = unit(sub(pp[seg + 1], a0)), L = len(sub(pp[seg + 1], a0)), Rp = elbowRadius(pipeDims(Pl.NPS, Pl.cls).OD);
     const dirA = unit(sub(pp[0], pc[psp[0]].a)), dirB = unit(sub(pp[pp.length - 1], pc[psp[1]].b));
-    const mA = Pl.kind === 'header' ? 6 : seg === 0 && same(dirA, ws, 1e-6) ? 3 - Rp : Rp + 3, mB = Pl.kind === 'header' ? 6 : seg === pp.length - 2 && same(dirB, neg(ws), 1e-6) ? 3 - Rp : Rp + 3;
+    // at a line's end the pipe runs straight on into its stack, or an elbow takes the corner; at a header's end its cap follows; at a corner within the path an elbow
+    const mA = seg !== 0 ? Rp + 3 : Pl.kind === 'header' ? 6 : same(dirA, ws, 1e-6) ? 3 - Rp : Rp + 3, mB = seg !== pp.length - 2 ? Rp + 3 : Pl.kind === 'header' ? 6 : same(dirB, neg(ws), 1e-6) ? 3 - Rp : Rp + 3;
     const sLo = Math.max(0, half + mA), sHi = Math.min(L, L - half - mB), sC = dot(sub(C0, a0), ws), step = -Math.sign(toward) * Math.sign(dot(w, ws)) * 6;
-    // the parent's other fittings: its tees and valve stations, and the olets its branches set on it
+    // the parent's other fittings: its tees, its valve stations (each by its whole stack, from flange to flange, about its middle, with the flange of the branch it
+    // serves) and the olets its branches set on it, each with its half-length and its branch's flange as the generator records a take-off
     const flr = designFlange(r.NPS, r.cls).OD / 2, child = (tag: string) => m.lines.find(q => q.no === tag.split('/T:')[1]);
+    const kids = m.lines.filter(q => q.no !== r.no && [q.from, q.to].includes(`tap ${pno}`) && !pc.some(c => c.tag === `${pno}/T:${q.no}`) && !q.comps.some(o => o.kind === 'olet' && o.onRun === pno));
+    const kidEnd = (q: LineRun) => { const cs = q.comps.filter(c => c.kind !== 'studs'); return q.from === `tap ${pno}` ? cs[0]?.a : cs[cs.length - 1]?.b; };
+    const stations = pc.filter(c => c.kind === 'valve' && /VLV\|(TWAY|FWAY)/.test(c.key)).map(v => {
+      const g = v.tag.split(':')[0], wv = unit(sub(v.b, v.a)), s = pc.filter(c => c.tag.split(':')[0] === g && c.kind !== 'studs').flatMap(c => [c.a, c.b]).map(p => dot(sub(p, v.a), wv)), lo = Math.min(...s), hi = Math.max(...s), at = add(v.a, wv, (lo + hi) / 2);
+      const kid = kids.map(q => ({ q, d: kidEnd(q) ? len(sub(kidEnd(q)!, at)) : Infinity })).sort((x, y) => x.d - y.d)[0];
+      return { at, half: (hi - lo) / 2, flR: kid && kid.d < Infinity ? designFlange(kid.q.NPS, kid.q.cls).OD / 2 : 0 };
+    });
     const used = [
-      ...pc.filter((c, i) => i !== ti && (c.kind === 'tee' || (c.kind === 'valve' && /VLV\|(TWAY|FWAY)/.test(c.key)))).map(c => { const ch = c.kind === 'tee' ? child(c.tag) : undefined; return { at: origin(c), half: len(sub(c.b, c.a)) / 2, flR: ch ? designFlange(ch.NPS, ch.cls).OD / 2 : 0 }; }),
+      ...pc.filter((c, i) => i !== ti && c.kind === 'tee').map(c => { const ch = child(c.tag); return { at: origin(c), half: len(sub(c.b, c.a)) / 2, flR: ch ? designFlange(ch.NPS, ch.cls).OD / 2 : 0 }; }),
+      ...stations,
       ...m.lines.flatMap(q => q.comps.filter(o => o.kind === 'olet' && o.onRun === pno)).map(o => ({ at: origin(o), half: smallBore(o.NPS, o.cls).OD / 2 + 2 * smallBore(o.NPS, o.cls).tf + 1, flR: designFlange(o.NPS, o.cls).OD / 2 })),
     ];
     const sp = routedSpan(r); if (!sp) continue;
@@ -507,7 +527,7 @@ export function takeOffMoved(m: PipingModel, up: Cx['up'], vb: Cx['vb'], only?: 
       const S = side === 'from' ? add(r.comps[i0].a, shift) : r.comps[i0].a, E = side === 'to' ? add(r.comps[i1].b, shift) : r.comps[i1].b;
       const d1 = side === 'from' ? out : unit(sub(r.path[0], S)), d2 = side === 'to' ? neg(out) : neg(unit(sub(r.path[last], E)));
       const pts = fewElbows(S, d1, E, d2); if (!pts) { why = 'no way out along the outlet into the far end\'s stack with at most two elbows'; continue; }
-      const laid = layPieces(r.NPS, r.cls, pts); if (!laid) { why = 'a pipe under 2 in at every place'; continue; }
+      const laid = layPieces(r.NPS, r.cls, pts, [], endsOf(comps0, i0, i1)); if (!laid) { why = 'a pipe under 2 in at every place'; continue; }
       const spl = spliced(r, comps0, i0, i1, laid.comps), nr = { ...r, comps: spl.comps }, np = { ...Pl, comps: pcomps };
       if (sleeveGone(r, spl.gone)) { why = 'a sleeve through a grating on the pieces it would lay again'; break; }
       const P1 = leadPoint(side === 'from' ? S : E, out, Rb), zones = [C1, P1, f, ...[endFace(cx, r, side === 'from' ? r.to : r.from)].filter((p): p is V3 => !!p)];

@@ -32,6 +32,7 @@ const units = process.argv.slice(2).map(Number); for (const u of units.length ? 
   r.checks = checks; r.notes.push(spanNote(s)); r.frames = was >= 0 ? s.frames : [...r.frames, ...s.frames];
   const count = (xs: string[]) => { const o: Record<string, number> = {}; for (const x of xs) o[x] = (o[x] ?? 0) + 1; return Object.fromEntries(Object.entries(o).sort()); };
   r.counts.supports = count(m.lines.flatMap(l => l.supports.map(q => q.type))); for (const l of r.lines) l.supports = m.lines.find(q => q.no === l.no)!.supports.length;
+  r.notes = [...new Set(r.notes)];   // a note made again by a later run of the same correction is kept once
   writeFileSync(`${dir}/unit-${u}.json`, serializePiping(m) + '\n'); writeFileSync(`${dir}/unit-${u}.report.json`, JSON.stringify(r, null, 1) + '\n');
   console.log(`unit ${u}: ${sw.length} welds squared (SW-RPI-24), ${fr.out.length} frames taken out, ${ht.length} hanger tops (SW-RPI-20), ${ws.length} wafer stud sets (SW-RPI-21), ${vt.turned.length} valves turned (SW-RPI-19), ${vt.stuck.length} left; ${struck.length} supports that strike taken out (SW-RPI-18); spans ${before} → ${checks.supports.length}; ${spanNote(s)}`);
 }

@@ -214,6 +214,34 @@ describe('further process equipment (SW-EQC-45..65)', () => {
     const p = makeInlinePump({ tag: 'P', NPS: 4, motorD: 14 }); expect(p.dims.casingD.value).toBeCloseTo(2.4 * pipeDims(4, 'P150').OD); expect(solidsOf(p).some(s => s.name === 'feet')).toBe(false);
     const f = makeSulfurFurnace({ tag: 'F', D: 84, furnaceL: 240, boilerL: 240 }); expect(f.dims.burner.value).toBeCloseTo(25.2); expect(solidsOf(f).some(s => s.name.includes('fire tubes'))).toBe(false); expect(solidsOf(f).some(s => s.name.includes('steam drum'))).toBe(true);
   });
+  it('SW-EQC-50, -51, -53 (amended 2026-11-27): a buckstay, a pedestal and a vent stand clear of a connection that passes them', () => {
+    // ray parity: is p inside the closed solid
+    const inside = (m: { positions: ArrayLike<number>; indices: ArrayLike<number> }, p: number[]) => {
+      const d = [0.5773, 0.5774, 0.5772], P = m.positions, I = m.indices, v = (k: number) => [P[3 * k], P[3 * k + 1], P[3 * k + 2]], sub = (a: number[], b: number[]) => a.map((x, i) => x - b[i]), dot = (a: number[], b: number[]) => a[0] * b[0] + a[1] * b[1] + a[2] * b[2], cr = (a: number[], b: number[]) => [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]];
+      let n = 0; for (let t = 0; t < I.length; t += 3) { const a = v(I[t]), e1 = sub(v(I[t + 1]), a), e2 = sub(v(I[t + 2]), a), h = cr(d, e2), det = dot(e1, h); if (Math.abs(det) < 1e-12) continue; const s = sub(p, a), u = dot(s, h) / det, q = cr(s, e1), w = dot(d, q) / det; if (u >= 0 && w >= 0 && u + w <= 1 && dot(e2, q) / det > 0) n++; }
+      return n % 2 === 1;
+    };
+    // a cabin heater given a 24 in outlet through its wall at y = W: no buckstay within 1 in of the flange's rim seen along the outlet's axis; the one in its way is cut in two, the rest as before
+    const OD = designFlange(24, 'P300').OD, inp = { tag: 'H', L: 708, W: 240, H: 480 }, plain = makeCabinHeater(inp), cut = makeCabinHeater({ ...inp, through: [{ x: 174, z: 108, wall: 1, OD }] });
+    const stays = (p: typeof plain) => solidsOf(p).find(s => s.name === 'buckstays W6')!.mesh.positions, P = stays(cut), Q = stays(plain);
+    const least = (X: ArrayLike<number>) => { let m = Infinity; for (let i = 0; i < X.length; i += 3) if (X[i + 1] > 240) m = Math.min(m, Math.hypot(X[i] - 174, X[i + 2] - 108)); return m; };
+    expect(least(P)).toBeCloseTo(OD / 2 + 1, 6);   // the nearest of a cut buckstay is the corner of its end on the circle expect(P.length / Q.length).toBeCloseTo(19 / 18, 9); expect(cut.dims.throughClear.value).toBe(1); expect(cut.weight.value).toBeLessThan(plain.weight.value);
+    // a turbine: the side pedestal under its exhaust, its own or a stated one, has a window 1 in clear of the flange's rim and stands on round it; a stated exhaust is drawn where it is stated
+    const own = { NPS: seriesUp(31 / 3), cls: 'P150' as const, y: -0.3 * 31, z: 0.4 * 31 }, stated = { NPS: 10, cls: 'P150' as const, y: -12, z: 14.5 };
+    for (const [t, ex] of [[makeSteamTurbine('ST', 31), own], [makeSteamTurbine('ST', 31, stated), stated]] as const) {
+      const ped = solidsOf(t).find(s => s.name === 'pedestals')!.mesh, hw = designFlange(ex.NPS, ex.cls).OD / 2 + 1, x = -0.625 * 31 - 1.5;   // mid-width of the pedestal on the exhaust's side
+      for (const [dy, dz] of [[0, 0], [hw - 0.01, 0], [0, hw - 0.01], [-(hw - 0.01), -(hw - 0.01)]]) expect(inside(ped, [x, ex.y + dy, ex.z + dz]), `${dy}, ${dz}`).toBe(false);
+      expect(inside(ped, [x, ex.y - hw - 1, ex.z])).toBe(true); expect(inside(ped, [-x, ex.y, ex.z])).toBe(true);   // under the window, and on the other side, it stands as before
+      const neck = solidsOf(t).find(s => s.name === 'exhaust nozzle: neck')!.mesh.positions; let y0 = Infinity, y1 = -Infinity, z0 = Infinity, z1 = -Infinity; for (let i = 0; i < neck.length; i += 3) { y0 = Math.min(y0, neck[i + 1]); y1 = Math.max(y1, neck[i + 1]); z0 = Math.min(z0, neck[i + 2]); z1 = Math.max(z1, neck[i + 2]); }
+      expect((y0 + y1) / 2).toBeCloseTo(ex.y, 6); expect((z0 + z1) / 2).toBeCloseTo(ex.z, 6);
+    }
+    expect(makeSteamTurbine('ST', 31, stated).dims.exhaust.basis.kind).toBe('drawing'); expect(makeSteamTurbine('ST', 31).dims.exhaustClear.value).toBe(1);
+    // a deaerator: its vent halfway out on the dome's head, opposite the water inlet; the crown free
+    const a = makeDeaerator({ tag: 'DA', ID: 108, L: 324, centreline: 72, t: 0.5 }), rd = 0.25 * 108 + 0.5;
+    let off = Infinity, side = 0; for (const s of solidsOf(a).filter(q => q.name.startsWith('vent: '))) for (let i = 0; i < s.mesh.positions.length; i += 3) { off = Math.min(off, Math.hypot(s.mesh.positions[i], s.mesh.positions[i + 2] - 162)); side += s.mesh.positions[i]; }
+    expect(a.dims.ventOff.value).toBeCloseTo(rd / 2, 9); expect(off).toBeCloseTo(rd / 2 - designFlange(2, 'P150').OD / 2, 6); expect(side).toBeLessThan(0);
+    let wi = 0; for (const s of solidsOf(a).filter(q => q.name.startsWith('water inlet nozzle: '))) for (let i = 0; i < s.mesh.positions.length; i += 3) wi += s.mesh.positions[i]; expect(wi).toBeGreaterThan(0);
+  });
 });
 
 describe('further civil items (SW-CIV-17..28)', () => {

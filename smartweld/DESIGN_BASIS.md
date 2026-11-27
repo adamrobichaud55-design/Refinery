@@ -2813,6 +2813,11 @@ Equipment items (each `make…` takes the stated dimensions; what is not stated 
   outlet of stated size, on a skirt as SW-EQ-1 reaching from the cone's outlet level to the base
   (so the outlet stands at the stated height), a top plate with a 20 in manway and a vent nozzle.
   Reason: a cone-bottom silo discharges by gravity; the skirt carries it as a vessel's does.
+  Its ladder (where it has one) stands a quarter turn from the skirt's opening, not in front of
+  it (amended 2026-11-27: in front of the opening, its rails touched the flange of the outlet
+  connection made through the opening and the valve bolted to it, by 0.03 in, at both
+  catalyst hoppers of the cracking unit, found by the plant's clash audit). Reason: the
+  opening is where the outlet's piping leaves the skirt; the ladder is climbed from the side.
 - `SW-EQC-23` Vertical sump pump: a motor (SW-EQC-8) on a mounting plate `PL1` of stated plan at
   grade, a column pipe of stated size and length down into the sump, a bowl cylinder of 2 × the
   column's diameter and 1.5 × its diameter long at the bottom, a discharge pipe elbowing up beside
@@ -3310,6 +3315,16 @@ catalogue's own entries are unchanged. Plant 3 states the wall of SW-PRC-14.
   the outlet underneath; saddles carrying the centreline at a stated height. Reason: water
   falls through steam in the dome and gives up its dissolved gas, which leaves by the vent;
   the drum below stores the stripped water high enough to feed the pumps.
+  Amended 2026-11-27 (owner's decision, P-95): the vent stands upright on the dome's head
+  halfway out from its axis to its rim (a quarter of the dome's diameter from the axis), on
+  the side opposite the water inlet, its neck set into the head as deep as the head falls
+  away under it; the crown is left free. Reason: a plant brings its largest water connection
+  in at the crown (SW-RPI-2, the deaerator), to spray it down through the steam; with the vent
+  on the crown as well the two stood one inside the other. An independent clash check of
+  plant 3 found V-1904's 6 in make-up connection round the drawn 2 in vent, 3.9 in into the
+  vent's flange (1.5 in by the checker's own measure). Halfway out the vent is still high on
+  the head, where the stripped gas gathers; on V-1904 its flange's rim stands 6.1 in clear,
+  in plan, of the rim of the 6 in connection at the crown.
 - `SW-EQC-51` Steam turbine driver: from a stated wheel diameter d. A casing split on the
   horizontal joint, 1.5 d in diameter and 0.8 d long, with a joint flange 2 in thick standing
   3 in proud; a steam chest 0.5 d × 0.4 d × 0.4 d on top with an inlet flange of d / 6 to the
@@ -3318,6 +3333,21 @@ catalogue's own entries are unchanged. Plant 3 states the wall of SW-PRC-14.
   with a coupling half at the drive end and a governor housing at the other; pedestals to a
   baseplate 1.3 d wide and 2.6 d long, the shaft 0.9 d above it. Reason: envelope of a
   single-stage driver; steam enters high and leaves low.
+  Amended 2026-11-27 (owner's decision, P-95): the side pedestal under the exhaust is cut round
+  it: a square window through the pedestal about the exhaust's axis, each side 1 in clear of
+  the flange's rim (half the flange's outside diameter and 1 in from the axis), leaving the
+  pedestal below, above and either side of the window; a piece left thinner than 1 in is left
+  out. The 1 in is the clearance of SW-RPI-17, as for the cabin heater's buckstays (SW-EQC-53).
+  The exhaust is the item's own (d / 3 to the series, 0.3 d under the shaft, at the casing's
+  middle) or, where a plant states it, the plant's: its size and class, its height under the
+  shaft and its place along the casing, and the exhaust is then drawn there, out of the
+  casing's side. The other pedestals and the casing are as before. Reason: a pipe cannot pass
+  through a pedestal, and the exhaust's flange is bolted from behind it. An independent clash
+  check of plant 3 found the exhaust necks of K-1401 (10 in) and K-1702 (14 in) through the
+  side pedestal, 5.0 in and 7.0 in in from the neck's wall (6.3 in and 5.8 in by the checker's
+  own measure); the item's own exhaust passed through it as well. On K-1401 the pedestal now
+  stands 7.6 in high under the window, 2.7 in over it and 3.1 in before it; on K-1702, whose
+  14 in flange is as long as the pedestal, 9.8 in high under it only.
 - `SW-EQC-52` Steam jet ejector: from the suction size (outside diameter OD). A suction
   chamber 1.6 OD in diameter and 2 OD long with the suction nozzle on its side; the motive
   steam nozzle on the axis at the back, a third of the suction size to the series, 1 in
@@ -3338,6 +3368,22 @@ catalogue's own entries are unchanged. Plant 3 states the wall of SW-PRC-14.
   at most; a platform 36 in wide along one long wall at the hip with a ladder. Tubes and
   refractory are not drawn. Reason: burners fire up between tube walls; the gas turns into
   the convection section above, where the remaining heat is taken, and leaves by the stack.
+  Amended 2026-11-27 (owner's decision, P-95): where a plant states a connection that passes
+  out through a long wall of the radiant box (the point where its axis meets the wall, and its
+  flange's outside diameter), no buckstay comes within 1 in of the flange's rim, seen along
+  the connection's axis: a buckstay that would stops where its nearer flange edge meets the
+  circle of half the flange's outside diameter and 1 in about the axis, and goes on from the
+  far side of that circle; a piece of it left shorter than 1 in is left out. The buckstays
+  keep their places, 8 ft apart at most, and no other buckstay changes. The 1 in is the
+  clearance a support's post or rod keeps from every line and solid (SW-RPI-17). Reason: a
+  pipe cannot pass through a member, and the flange is bolted from behind it, so its studs
+  and nuts must be reached round the whole rim. An independent clash check of plant 3 found
+  the coil outlets of H-1101 (24 in) and H-1201 (36 in), which leave the wall that faces the
+  rack 2 ft above the floor and a quarter of the box's length from its middle (SW-RPI-2), each
+  with a buckstay through its neck: 10.8 in and 18 in in from the neck's wall (6.3 in by the
+  checker's own measure). That buckstay of H-1101 now stops 92.0 in above the heater's base and
+  starts again at 124.0 in; that of H-1201 starts at 131.3 in (the 0.7 in left under the circle,
+  on the floor, is left out).
 - `SW-EQC-54` Reformer furnace, top fired: a box of stated length, width and height standing
   96 in above grade on `W10` columns. Catalyst tubes of 5 in outside diameter in
   round(width / 96 in) rows along the length at 12 in pitch, through the roof and the floor:
@@ -4688,9 +4734,20 @@ their own geometry rules, which are unchanged.
     hung from or resting on the deck, where it was.
   - Fired heaters: vertical cylinders (SW-EQC-15) with a stack 0.6 of the firebox height, and
     cabins (SW-EQC-53), at the sizes of SW-PRC-10.
+    Amended 2026-11-27 (owner's decision, P-95): a cabin is given its coil outlet as a
+    connection through its wall (SW-EQC-53, amended the same day), where SW-RPI-2 sets it: on
+    the wall that faces the rack, 2 ft above the floor (to the 6 in grid) and a quarter of the
+    box's length (to 6 in) from its middle, with the outlet's flange diameter, so that its
+    buckstays stand clear of it. Its other connections are above the hip, where it has no
+    buckstays, or under the floor. No connection and nothing else of the heater moves.
   - Compressors and blowers (SW-EQC-12, -14): casing diameter 14 in × (gas horsepower / 100)^(1/3),
     10 in least; driver of SW-PRC-5's frame diameter or SW-PRC-12's turbine wheel; a skid under
     both.
+    Amended 2026-11-27 (owner's decision, P-95): a turbine driver is given its exhaust
+    (SW-EQC-51, amended the same day) where SW-RPI-2 sets it: on the casing's side away from
+    the lube console, its pipe's radius and 3 in (to 6 in) under the shaft, at the casing's
+    middle on the 6 in grid, of its line's size and class, so that the side pedestal under it
+    is cut round it. No connection moves, and the package's footprint is as before.
   - Storage tanks (SW-EQC-44), spheres (SW-EQC-48) and bullets (SW-EQC-46) at the sizes of
     SW-PRC-13.
   - The cracker (SW-EQC-33): regenerator diameter for its flue gas rising at 3 ft/s, to 6 in,
@@ -4720,7 +4777,14 @@ their own geometry rules, which are unchanged.
     adsorbers are four vessels of 72 in × 20 ft between tangents; the sulfur furnace is 72 in
     with 15 ft of chamber and 15 ft of waste heat boiler; a boiler's steam drum is 54 in × 25 ft.
     The reaction furnace's boiler outlet duct is of its line's size, the plant's nozzle
-    standing on it; the sulfur loading station is SW-EQC-67 with an arm of its line's size,
+    standing on it. Amended 2026-11-27 (owner's decision, P-95): the steam outlet the waste heat
+    boiler's drum is drawn with gives way to the plant's own connection, as the flue gas
+    cooler's does. Reason: the plant's steam connection stands on the drum's top at its middle
+    on the grid (SW-RPI-2), 2 in along the drum from the drawn 8 in outlet, and an independent
+    clash check of plant 3 found the two 2.8 in into each other's flanges and the valve, gasket
+    and studs bolted at the plant's (line 4"-P1200-LS-18508) 0.4 to 0.6 in into the drawn one;
+    the drawn outlet was the catalogue's, which the plant's takes the place of. The sulfur
+    loading station is SW-EQC-67 with an arm of its line's size,
     its vehicle bay on the side away from the rack; the sulfur pit is 32 ft × 15 ft × 8 ft inside (15 ft, so that its steam
     coil has an even number of passes and both its ends stand at one end of the pit), its
     pump without the catalogue's discharge pipe. The pit stands in the ground, the top of
@@ -5830,6 +5894,11 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   lead, into their own butterfly valve's lever, on the inside of the bend); and no
   direction is stem down (SW-LL-5): the turn takes the first of up, +x, -x, +z and -z square
   to the valve's run, as SW-RPI-16's turn of an earlier run's valve does.
+  Amended 2026-11-27 (SW-RPI-18 as amended): whether a valve strikes is judged by the true
+  shapes, the plant's true solids and the other lines' pieces as they are (a pipe a
+  flat-ended cylinder, an elbow its arc's tube); held by the generator's rounds, four valves
+  of the cracking unit seemed to strike pipes of other lines they stood clear of, and were
+  listed as having no clear direction. The test of a direction to turn to is as before.
 - `SW-RPI-20` A hanger's top at the steel it hangs from (added 2026-11-26). The generator
   takes the underside of the member a rod hangs from as the member's centre less seven tenths
   of the round it holds it by, which for a wide-flange beam lies inside the beam: its top

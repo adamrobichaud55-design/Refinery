@@ -16,6 +16,7 @@ import { pipingDocument, cutLongPipes, lengthenShortPieces, removeValves, joinHe
 import * as K from '../src/generator/pipingCheck';
 import { makeValve, gateFaceToFace, globeFaceToFace, designFlange, pipeDims, elbowRadius } from '../src/catalogue';
 import { worldBox, type PipingModel } from '../src/generator/piping';
+import { buildGeometry } from '../src/geometry/partGeometry';
 
 const M = processModel(), Z = sizing(), U = 15, up = unitPiping(U), sh = M.sheet(U), z = Z.get(U)!;
 const basisDoc = readFileSync(new URL('../DESIGN_BASIS.md', import.meta.url), 'utf8');
@@ -315,6 +316,33 @@ describe('plant 3: what the generator is given for a unit (SW-RPI-1 to SW-RPI-5)
     const toTower = u19.spools.filter(q => [...tower].some(t => q.stream.startsWith(t))); expect(toTower.map(q => q.stream)).toEqual(['X-1903 make-up']); expect(u19.lines.some(l => l.def.no === toTower[0].line)).toBe(true);
     const own = sh19.lines.filter(l => touches(l) && ![l.from, l.to].some(e => e.k === 'tap' && !touches(sh19.lines[e.line]))); expect(own.length).toBeGreaterThan(3);
     expect(u19.lines.filter(l => l.origin === 'process').length).toBe(sh19.lines.length - own.length);
+  }, 240_000);
+  it('a connection passes clear of its own body\'s buckstays, pedestals and drawn nozzles (SW-CELL-4; SW-EQC-50, -51, -53 amended 2026-11-27)', () => {
+    // each connection a solid cylinder of its flange's radius from its root to its face; a triangle of a solid, clipped to that length along the axis, enters it where it comes nearer the axis than that
+    const least = (a: number[], u: number[], L: number, P: ArrayLike<number>, I: ArrayLike<number>) => {
+      const t0 = Math.abs(u[0]) < 0.9 ? [1, 0, 0] : [0, 1, 0], e1n = [t0[1] * u[2] - t0[2] * u[1], t0[2] * u[0] - t0[0] * u[2], t0[0] * u[1] - t0[1] * u[0]], l1 = Math.hypot(...e1n), e1 = e1n.map(v => v / l1), e2 = [u[1] * e1[2] - u[2] * e1[1], u[2] * e1[0] - u[0] * e1[2], u[0] * e1[1] - u[1] * e1[0]];
+      const loc = (k: number) => { const r = [P[3 * k] - a[0], P[3 * k + 1] - a[1], P[3 * k + 2] - a[2]], d = (v: number[]) => r[0] * v[0] + r[1] * v[1] + r[2] * v[2]; return [d(e1), d(e2), d(u)]; };
+      const clip = (p: number[][], t: number, above: boolean) => { const o: number[][] = []; p.forEach((q, i) => { const n = p[(i + 1) % p.length], iq = above ? q[2] >= t : q[2] <= t, inn = above ? n[2] >= t : n[2] <= t; if (iq) o.push(q); if (iq !== inn) { const s = (t - q[2]) / (n[2] - q[2]); o.push([q[0] + s * (n[0] - q[0]), q[1] + s * (n[1] - q[1]), t]); } }); return o; };
+      let best = Infinity;
+      for (let t = 0; t < I.length; t += 3) {
+        const p = clip(clip([loc(I[t]), loc(I[t + 1]), loc(I[t + 2])], 0, true), L, false); if (p.length < 2) continue;
+        let pos = 0, neg = 0; p.forEach((q, i) => { const n = p[(i + 1) % p.length], dx = n[0] - q[0], dy = n[1] - q[1], l2 = dx * dx + dy * dy, s = l2 > 0 ? Math.max(0, Math.min(1, -(q[0] * dx + q[1] * dy) / l2)) : 0; best = Math.min(best, Math.hypot(q[0] + s * dx, q[1] + s * dy)); const c = q[0] * n[1] - q[1] * n[0]; if (c > 1e-12) pos++; else if (c < -1e-12) neg++; });
+        if (p.length >= 3 && pos + neg > 0 && (pos === 0 || neg === 0)) best = 0;
+      }
+      return best;
+    };
+    const kinds = /^buckstays|^turbine: pedestals$|^vent: |steam drum steam outlet: /, seen = new Set<string>();
+    for (const u of [11, 12, 14, 17, 18, 19]) {
+      const q = unitPiping(u), parts = new Map(q.cell.interior.equipment.map(e => [e.tag, e]));
+      const solidsAt = new Map<string, { name: string; P: Float64Array; I: ArrayLike<number> }[]>();
+      for (const n of q.nozzles.values()) {
+        const b = parts.get(n.equip); if (!b) continue;
+        let ss = solidsAt.get(n.equip); if (!ss) { const T = b.transform; ss = buildGeometry(b.part).solids.filter(s => kinds.test(s.name)).map(s => { const P = s.mesh.positions, W = new Float64Array(P.length); for (let i = 0; i < P.length; i += 3) for (let k = 0; k < 3; k++) W[i + k] = T[k] * P[i] + T[4 + k] * P[i + 1] + T[8 + k] * P[i + 2] + T[12 + k]; return { name: s.name, P: W, I: s.mesh.indices }; }); solidsAt.set(n.equip, ss); }
+        for (const s of ss) { seen.add(`${n.equip} ${s.name.replace(/: .*$/, '')}`); expect(least(n.A, n.u, n.S, s.P, s.I) - designFlange(n.NPS, n.cls).OD / 2, `${n.id} against ${n.equip} ${s.name}`).toBeGreaterThan(0); }
+      }
+    }
+    for (const w of ['H-1101 buckstays W6', 'H-1201 buckstays W6', 'K-1401 turbine', 'K-1702 turbine', 'V-1904 vent']) expect(seen.has(w), w).toBe(true);
+    expect(bodySolids(unitPiping(18).cell, 'H-1801').some(b => /steam drum steam outlet: /.test(b.name))).toBe(false);   // the furnace's drawn steam outlet gives way to the plant's own, as the flue gas cooler's does
   }, 240_000);
   it('a valve at the limit too tall to stand under another tier stands on the top tier, in every unit (SW-RPI-4)', () => {
     for (const u of [11, 13, 14, 16, 18]) {

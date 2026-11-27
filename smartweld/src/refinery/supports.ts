@@ -225,7 +225,7 @@ const arcAt = (s: Extract<OwnShape, { k: 'arc' }>, th: number): V3 => [0, 1, 2].
 /** SW-RPI-18 (amended): whether a piece's true shape (SW-RPI-22's: a pipe a flat-ended cylinder, an elbow its arc's tube, a valve its part's solids) overlaps a box
  *  by more than e. A cylinder along an axis exactly; an oblique one, and an arc, by the round swept along it short of its ends by its radius, which lies
  *  within the piece (so near its ends a piece is held a little short of its true shape, where the piece joined to it is tested as well) */
-function shapeInBox(s: OwnShape, b: Box, e = 0.02): boolean {
+export function shapeInBox(s: OwnShape, b: Box, e = 0.02): boolean {
   if (s.k === 'box') return deep([s.mn, s.mx], b, e);
   if (s.k === 'cyl') {
     const d: V3 = [s.b[0] - s.a[0], s.b[1] - s.a[1], s.b[2] - s.a[2]], L = Math.hypot(d[0], d[1], d[2]); if (L < 1e-9) return false;
@@ -244,7 +244,7 @@ function shapeInBox(s: OwnShape, b: Box, e = 0.02): boolean {
   for (let it = 0; it < 40; it++) { const m1 = lo + (hi - lo) / 3, m2 = hi - (hi - lo) / 3; if (f(m1) < f(m2)) hi = m2; else lo = m1; }
   return Math.min(bv, f((lo + hi) / 2)) < s.r - e;
 }
-const shapeBox = (s: OwnShape): Box => {
+export const shapeBox = (s: OwnShape): Box => {
   if (s.k === 'box') return [s.mn, s.mx];
   if (s.k === 'cyl') return [[0, 1, 2].map(i => Math.min(s.a[i], s.b[i]) - s.r) as V3, [0, 1, 2].map(i => Math.max(s.a[i], s.b[i]) + s.r) as V3];
   const ps = Array.from({ length: 19 }, (_, i) => arcAt(s, (i * Math.PI) / 36)); return [[0, 1, 2].map(i => Math.min(...ps.map(p => p[i])) - s.r) as V3, [0, 1, 2].map(i => Math.max(...ps.map(p => p[i])) + s.r) as V3];
@@ -387,6 +387,7 @@ export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp)
     : { line: r.no, a: sh.a as V3, b: sh.b as V3, r: sh.r, box: [[0, 1, 2].map(k => Math.min(sh.a[k], sh.b[k]) - sh.r), [0, 1, 2].map(k => Math.max(sh.a[k], sh.b[k]) + sh.r)] as Box, kind: c.kind, isBox: false })));
   const near = (p: (typeof pieces)[number], b: Box, g: number) => ov(p.box, b, g) && (p.isBox || K.segBox(p.a, p.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < p.r);
   const sBox = statics.map(o => ({ o, box: (o.kind === 'box' ? [o.mn, o.mx] : [[0, 1, 2].map(k => Math.min(o.a[k], o.b[k]) - o.r), [0, 1, 2].map(k => Math.max(o.a[k], o.b[k]) + o.r)]) as Box }));
+  const truth = trueSolids(plant), truePieces = piecesOf(m);
   /** what one of a valve's solids, grown by g, overlaps: a solid of the plant or a pipe or fitting of another line (held by its axis and radius) */
   const hit = (no: string, b: Box, g: number) => sBox.find(q => ov(q.box, b, g) && (q.o.kind === 'box' || K.segBox(q.o.a, q.o.b, [b[0][0] - g, b[0][1] - g, b[0][2] - g], [b[1][0] + g, b[1][1] + g, b[1][2] + g]) < q.o.r))?.o.tag
     ?? pieces.find(q => q.line !== no && near(q, b, g - 0.02))?.line;
@@ -416,7 +417,8 @@ export function valvesThatStrike(m: PipingModel, plant: PlantDef, vb?: (c: Comp)
   for (const r of m.lines) for (const c of r.comps) {
     if (c.kind !== 'valve') continue;
     const own = ownOff(r, c);
-    const T = c.T as unknown as number[], first = solidsOf(c.key, T).map(b => hit(r.no, b, 0) ?? (ownHit(own, b, -0.02) ? `its own line ${r.no}` : undefined)).find(Boolean); if (!first) continue;
+    // SW-RPI-19 (amended 2026-11-27): whether it strikes, by the true shapes (SW-RPI-18's): the plant's true solids and the other lines' pieces as they are
+    const T = c.T as unknown as number[], first = solidsOf(c.key, T).map(b => truth.find(q => solidIn(q, b))?.tag ?? truePieces.find(q => q.line !== r.no && pieceIn(q, b))?.line ?? (ownHit(own, b, -0.02) ? `its own line ${r.no}` : undefined)).find(Boolean); if (!first) continue;
     const L = Math.hypot(c.b[0] - c.a[0], c.b[1] - c.a[1], c.b[2] - c.a[2]), f: V3 = [(c.b[0] - c.a[0]) / L, (c.b[1] - c.a[1]) / L, (c.b[2] - c.a[2]) / L], stem: V3 = [T[4], T[5], T[6]], at: V3 = [T[12], T[13], T[14]];
     // up, then +x, -x, +z and -z; never stem down (SW-LL-5; SW-RPI-19 as amended again)
     const dirs = ([[0, 1, 0], [1, 0, 0], [-1, 0, 0], [0, 0, 1], [0, 0, -1]] as V3[]).filter(d => Math.abs(d[0] * f[0] + d[1] * f[1] + d[2] * f[2]) < 1e-6 && Math.hypot(d[0] - stem[0], d[1] - stem[1], d[2] - stem[2]) > 1e-6);
