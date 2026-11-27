@@ -301,10 +301,13 @@ export function makeAirCooler(inp: AirCoolerInput): PartSpec {
   }, inp.L + 2 * hdr, solids, [], { zTop: zB + depth + 2 });
 }
 
+/** SW-EQC-12 (amended 2026-11-27): the shaft's height above the skid's underside: the motor's, or the casing's end covers' radius and 1 in over the skid's top where that is higher */
+export const compressorShaftY = (casingD: number, motorD: number) => 1 + Math.max(MOTOR_SHAFT(motorD), casingD / 2 + 1.5 + 1);
 export interface CompressorInput { tag: string; skidW: number; skidL: number; casingD: number; motorD: number }
 /** SW-EQC-12: centrifugal compressor package; z along the shaft, y up from the skid's underside */
 export function makeCompressorPackage(inp: CompressorInput): PartSpec {
-  const D = inp.casingD, cy = 1 + MOTOR_SHAFT(inp.motorD), solids: Solid[] = [{ name: 'skid PL1', role: 'steel', mesh: box(-inp.skidW / 2, 0, -inp.skidL / 2, inp.skidW / 2, 1, inp.skidL / 2) }];
+  // SW-EQC-12 (amended 2026-11-27): the shaft high enough for the casing's end covers, 1 in over the skid, as well as for the motor; the motor on a sole plate of the difference
+  const D = inp.casingD, cy = compressorShaftY(D, inp.motorD), sole = cy - 1 - MOTOR_SHAFT(inp.motorD), solids: Solid[] = [{ name: 'skid PL1', role: 'steel', mesh: box(-inp.skidW / 2, 0, -inp.skidL / 2, inp.skidW / 2, 1, inp.skidL / 2) }];
   const zc = -inp.skidL / 2 + 6, nN = seriesUp(Math.max(3, 0.3 * D));
   solids.push({ name: 'compressor casing', role: 'machine', mesh: cylZ(0, cy, D / 2, zc + 0.15 * D, zc + 1.05 * D, 64) }, { name: 'casing end covers', role: 'machine', mesh: mergeMeshes([cylZ(0, cy, D / 2 + 1.5, zc + 0.1 * D, zc + 0.15 * D, 64), cylZ(0, cy, D / 2 + 1.5, zc + 1.05 * D, zc + 1.1 * D, 64)]) },
     { name: 'bearing housings', role: 'machine', mesh: mergeMeshes([cylZ(0, cy, 0.25 * D, zc, zc + 0.1 * D, 32), cylZ(0, cy, 0.25 * D, zc + 1.1 * D, zc + 1.2 * D, 32)]) }, { name: 'casing pedestal', role: 'machine', mesh: box(-0.4 * D, 1, zc + 0.2 * D, 0.4 * D, cy - 0.3 * D, zc + D) });
@@ -313,7 +316,13 @@ export function makeCompressorPackage(inp: CompressorInput): PartSpec {
   const zg = zc + 1.2 * D + 4; solids.push({ name: 'gearbox', role: 'machine', mesh: box(-0.4 * D, 1, zg, 0.4 * D, 1 + 0.8 * D, zg + 0.8 * D) }, { name: 'gearbox feet', role: 'machine', mesh: box(-0.5 * D, 1, zg + 2, 0.5 * D, 2.5, zg + 0.8 * D - 2) });
   solids.push({ name: 'shafts', role: 'stem', mesh: mergeMeshes([cylZ(0, cy, 0.06 * D, zc + 1.2 * D, zg, 16), cylZ(0, cy, 0.06 * D, zg + 0.8 * D, zg + 0.8 * D + 4, 16)]) },
     { name: 'coupling guards', role: 'safety', mesh: mergeMeshes([at(extrude({ outer: annularSector(0.14 * D, 0.14 * D + 0.0625, -0.2, Math.PI + 0.2, 20) }, 4, 0), 0, cy, zc + 1.2 * D), at(extrude({ outer: annularSector(0.14 * D, 0.14 * D + 0.0625, -0.2, Math.PI + 0.2, 20) }, 4 + 0.4 * inp.motorD, 0), 0, cy, zg + 0.8 * D)]) });
-  for (const q of motorSolids(inp.motorD).solids) solids.push({ ...q, mesh: transformMesh(q.mesh, multiply(translate(0, 1, zg + 0.8 * D + 4 + 2 * inp.motorD), rotateY(Math.PI))) });
+  const motorAt = multiply(translate(0, 1 + sole, zg + 0.8 * D + 4 + 2 * inp.motorD), rotateY(Math.PI)), motor = motorSolids(inp.motorD).solids.map(q => ({ ...q, mesh: transformMesh(q.mesh, motorAt) }));
+  solids.push(...motor);
+  if (sole > 1e-6) {   // under the motor's feet: the plan of its lowest solids
+    let x0 = Infinity, x1 = -Infinity, z0 = Infinity, z1 = -Infinity; const lo = 1 + sole;
+    for (const q of motor) { const P = q.mesh.positions; for (let i = 0; i < P.length; i += 3) if (P[i + 1] <= lo + 0.01) { x0 = Math.min(x0, P[i]); x1 = Math.max(x1, P[i]); z0 = Math.min(z0, P[i + 2]); z1 = Math.max(z1, P[i + 2]); } }
+    if (Number.isFinite(x0)) solids.push({ name: 'motor sole plate', role: 'steel', mesh: box(x0, 1, z0, x1, lo, z1) });
+  }
   solids.push({ name: 'lube console', role: 'steel', mesh: box(inp.skidW / 2 + 6, 0, -24, inp.skidW / 2 + 30, 48, 12) }, { name: 'lube oil piping', role: 'closure', mesh: sweep([[inp.skidW / 2 + 18, 48, -6], [inp.skidW / 2 + 18, cy + 0.3 * D, -6], [0.3 * D, cy + 0.3 * D, -6], [0.3 * D, cy + 0.3 * D, zc + 0.05 * D], [0, cy + 0.25 * D, zc + 0.05 * D]], 0.66, 10) });
   return done(inp.tag, 'COMPRESSOR', `${inp.tag} centrifugal compressor package ${inp.skidW}" × ${inp.skidL}" skid`, {
     skidW: drawing(inp.skidW, 'Skid width'), skidL: drawing(inp.skidL, 'Skid length'), casingD: drawing(D, 'Casing diameter'), motorD: drawing(inp.motorD, 'Motor frame'),

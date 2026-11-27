@@ -6,7 +6,7 @@
  */
 import {
   makeVerticalVessel, makeHorizontalVessel, makeExchanger, makePump, pumpShaftY, makeAirCooler, makeFiredHeater, makeCompressorPackage, makeBlower,
-  makePlatformedColumn, makeSwagedTower, makeCabinHeater, makeConeRoofTank, makeCatCracker, makeWetScrubber, makeFlueGasCooler, makeSulfurFurnace,
+  compressorShaftY, makePlatformedColumn, makeSwagedTower, makeCabinHeater, makeConeRoofTank, makeCatCracker, makeWetScrubber, makeFlueGasCooler, makeSulfurFurnace,
   makeSulfurCondenser, makeIncinerator, makeWaterTubeBoiler, makeTurbineCompressor, makeLoadingStation, makeCoolingTower, makeSilo, makeDeaerator, makeEjector, makeSulfurPit, makeSeparatorBasin,
   makeEjectorSet, ejectorSetLayout, makeShellTubeExchanger, makeGrating, makeRod, GRATING, type EjectorSetInput, type Cut,
   MOTOR_SHAFT, designFlange, pipeDims, gateFaceToFace, globeFaceToFace, elbowRadius, makeWideFlange, proportionW, type PartSpec, type PipeClass,
@@ -338,7 +338,7 @@ function plansOf(sh: UnitSheet, e: Equip, z: EquipSize): Plan[] {
       const wheel = typeof d.wheel === 'number' ? Math.round(d.wheel) : 0;
       const skidW = up(1.5 * Math.max(casingD, wheel ? 1.5 * wheel : motorD) + 24, 6), skidL = wheel ? up(2 * casingD + 2.55 * wheel + 20, 6) : up(1.2 * casingD + 2.2 * motorD + 48, 6);
       // as a pump: the shaft and the casing's centre plane on the grid (the casing is 0.9 diameters long, 0.15 from the skid's end, SW-EQC-12)
-      const cy = wheel ? 1 + 0.9 * wheel + 4 : 1 + MOTOR_SHAFT(motorD), padH = up(12 + cy) - cy, mid = -skidL / 2 + 6 + 0.6 * casingD, dz = up(mid) - mid;
+      const cy = wheel ? 1 + 0.9 * wheel + 4 : compressorShaftY(casingD, motorD), padH = up(12 + cy) - cy, mid = -skidL / 2 + 6 + 0.6 * casingD, dz = up(mid) - mid;
       return boxy(tag, 'exchanger', skidW + 24, skidL + 24, 2 * Math.max(casingD, motorD) + 24, (c, s) => {
         const zp = s.z + s.side * dz;
         pad(c, s.x, zp, skidW + 24, skidL + 24, tag, padH, 'machine pad'); place(c, bare(wheel ? makeTurbineCompressor({ tag, skidW, skidL, casingD, wheelD: wheel }) : makeCompressorPackage({ tag, skidW, skidL, casingD, motorD })), frameFromAxes([s.x, padH, zp], [0, 1, 0], [0, 0, s.side]), tag);

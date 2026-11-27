@@ -2766,7 +2766,13 @@ Equipment items (each `make…` takes the stated dimensions; what is not stated 
 - `SW-EQC-12` Centrifugal compressor package: a skid `PL1` of stated plan on a 12 in pad (SW-CIV-5
   with 12 in height); the casing a cylinder of stated diameter D and length 1.2 D along the
   shaft; a gearbox box 0.8 D cube; the motor by SW-EQC-8 of stated frame; a lube console box
-  36 × 24 × 48 in beside the skid. Reason: envelope only.
+  36 × 24 × 48 in beside the skid. Reason: envelope only. The shaft stands high enough for the
+  casing as well as for the motor: no lower than the end covers' radius (D/2 + 1.5 in) and
+  1 in above the skid's top; where that is higher than the motor's own shaft height, the motor
+  stands on a sole plate of the difference, under its feet (amended 2026-11-27: with the
+  shaft set by the motor alone, a 34 in casing on a smaller motor stood with its end covers
+  through the skid and 0.76 in into the pad, found by the plant's clash audit; a casing no
+  larger than its motor's shaft height allows is drawn as before).
 - `SW-EQC-13` Reciprocating compressor: a frame box of stated length and 0.5 length wide, 0.6
   length high, with two horizontally opposed cylinders of stated bore B as cylinders of 2 B
   diameter and 3 B length, and a motor by SW-EQC-8 in line. Reason: envelope only.
@@ -5795,7 +5801,7 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   of the plant, a round bar by its own radius), the rods to their tops, but the member the
   support hangs from (the solid its top plate is in or bears against from below) (amended
   the same day: the generator holds a member by a round about its axis that reaches past its
-  flanges, so the rods' top 3 in were left out; eight hangers' top plates stood 0.37 in into a
+  flanges, so the rods' top 3 in were left out; twelve hangers' top plates stood 0.37 in into a
   rack bay's bracing rods, and rods passed up to 0.3 in into the girder beside the beam they
   hung from).
   SW-RPI-17 sets no support this test would take out (amended the same day): a stanchion on

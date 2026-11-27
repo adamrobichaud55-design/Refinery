@@ -149,7 +149,7 @@ function passOnce(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box, frames:
       };
       const placeSupport = (p: V3): boolean => {
         const top = steelOver(p, rad, r.no);
-        if (top !== undefined) { const key = `HANG|${r.NPS}|${r.cls}|${(top - p[1]).toFixed(2)}`, T = frameFromAxes(p, [0, 1, 0], w) as number[]; if (freeOf(key, T)) { push(key, T, 'hanger', p); out.hangers++; return true; } }
+        if (top !== undefined) { const key = `HANG|${r.NPS}|${r.cls}|${(top - p[1]).toFixed(2)}`, T = frameFromAxes(p, [0, 1, 0], w) as number[]; if (freeOf(key, T) && !strikes({ id: '', type: 'hanger', key, T }, r.no)) { push(key, T, 'hanger', p); out.hangers++; return true; } }
         // on steel directly below, at most 10 ft under the pipe: the highest member whose axis passes under it
         let sb = -Infinity, sm: Obstacle | undefined; for (const o of members) { const dx = o.b[0] - o.a[0], dz = o.b[2] - o.a[2], u = Math.max(0, Math.min(1, ((p[0] - o.a[0]) * dx + (p[2] - o.a[2]) * dz) / (dx * dx + dz * dz || 1))), q = [o.a[0] + dx * u, o.a[1] + (o.b[1] - o.a[1]) * u, o.a[2] + dz * u]; if (Math.hypot(q[0] - p[0], q[2] - p[2]) > o.r * 0.6) continue; const tp = q[1] + o.r * 0.7; if (tp < p[1] - rad - 6 && tp > sb) { sb = tp; sm = o; } }
         // the member's true top, from its own box, where one under p has its top within 3 in of the estimate (SW-RPI-18 as amended)

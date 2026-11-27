@@ -17,6 +17,8 @@ const count = (xs: string[]) => { const o: Record<string, number> = {}; for (con
 const units = process.argv.slice(2).map(Number); for (const u of units.length ? units : [11, 12, 13, 14, 15, 16, 17, 18]) {
   const t0 = Date.now(), m = JSON.parse(readFileSync(`${dir}/unit-${u}.json`, 'utf8')) as PipingModel, r = JSON.parse(readFileSync(`${dir}/unit-${u}.report.json`, 'utf8')) as PipedUnit, up = unitPiping(u);
   const own0 = ownClearance(m), was = new Map(m.lines.map(l => [l.no, JSON.stringify(l)] as const));
+  // SW-RPI-23 acts only on a line SW-RPI-22 reports: a unit with none is left as it is, its files not written
+  if (!own0.length) { console.log(`unit ${u}: SW-RPI-22 finds no line through itself; left as it is`); continue; }
   // SW-RPI-23: the lines through themselves corrected, then SW-RPI-10 on what they laid
   const fixed = selfCorrections(m, up, vb), cut = cutLongPipes(m);
   const changed = new Set(m.lines.filter(l => JSON.stringify(l) !== was.get(l.no)).map(l => l.no));
