@@ -6,7 +6,7 @@ import { readFileSync, writeFileSync } from 'node:fs';
 import { serializePiping, type PipingModel } from '../src/generator/piping';
 import { unitPiping } from '../src/refinery/unitPiping';
 import { unitChecks, valveBoxFn, spanNote, type PipedUnit } from '../src/refinery/pipingReport';
-import { supportsAlongSpans, supportsThatStrike, framesThatStrike, valvesThatStrike, hangerTops, waferStuds, withFrames, shoesOffWelds } from '../src/refinery/supports';
+import { supportsMeetDrawn, supportsAlongSpans, supportsThatStrike, framesThatStrike, valvesThatStrike, hangerTops, waferStuds, withFrames, shoesOffWelds } from '../src/refinery/supports';
 import { squareWelds, insideFillets, spadeHandles } from '../src/refinery/welds';
 import { necksToPlan } from '../src/refinery/necks';
 // PIPING_DIR: another folder of unit models to correct in place of the repository's (a copy, to try the correction on)
@@ -32,10 +32,17 @@ const units = process.argv.slice(2).map(Number); for (const u of units.length ? 
   if (vt.turned.length || vt.stuck.length) r.notes.push(`${vt.turned.length} valves turned where their stem or handwheel struck (SW-RPI-19)${vt.turned.length ? `: ${vt.turned.join('; ')}` : ''}${vt.stuck.length ? `; ${vt.stuck.length} with no clear direction, left: ${vt.stuck.join('; ')}` : ''}`);
   const ht0 = hangerTops(m, pf);   // SW-RPI-20 first (amended 2026-11-27), then again for what SW-RPI-17 sets
   const struck = supportsThatStrike(m, pf, vb);   // SW-RPI-18 first: supports whose rod, post or leg strikes are taken out
-  const before = r.checks.supports.length, s = supportsAlongSpans(m, pf, vb), ht = [...ht0, ...hangerTops(m, pf)], ws = waferStuds(m), aside: string[] = [], checks = unitChecks(m, up, aside);
+  const before = r.checks.supports.length, s = supportsAlongSpans(m, pf, vb), ht = [...ht0, ...hangerTops(m, pf)], ws = waferStuds(m), aside: string[] = [];
   const so = shoesOffWelds(m, pf); if (so.moved.length || so.left.length) r.notes.push(`${so.moved.length} shoes and guides moved along their runs, off the welds of the steel they stand on and wholly onto one straight pipe of their line (SW-RPI-28)${so.moved.length ? `: ${so.moved.join('; ')}` : ''}${so.left.length ? `; ${so.left.length} with no clear place, left: ${so.left.join('; ')}` : ''}`);
   { const htOut = ht.filter(x => x.startsWith('taken out')), htCut = ht.length - htOut.length; if (htCut) r.notes.push(`${htCut} hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)`); if (htOut.length) r.notes.push(`${htOut.length} hangers or trapezes taken out where their rods could not be cut to the steel's underside with 3 in of rod clear (SW-RPI-20, SW-RPI-18): ${htOut.map(x => x.slice(11)).join('; ')}`); } if (ws.length) r.notes.push(`${ws.length} wafer valves bolted with one stud set through both flanges (SW-RPI-21)`);
   if (struck.length) r.notes.push(`${struck.length} supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): ${struck.join('; ')}`);
+  // SW-RPI-18 (amended again 2026-11-27): a support an earlier pass listed as taken out for overlapping another, which stands in the model again (SW-RPI-17 set it
+  // back) and by the two parts' drawn surfaces overlaps nothing, is said so
+  { const listed = [...new Set(r.notes.filter(n => n.includes('(SW-RPI-18)')).flatMap(n => [...n.matchAll(/(\S+\/S\d+) \((\w+)\): its part overlaps the support (\S+?)(?=;|$)/g)].map(q => `${q[1]}|${q[3]}`)))];
+    const byId = new Map(m.lines.flatMap(l => l.supports.map(q => [q.id, q] as const))), clear = listed.filter(k => { const [a, b] = k.split('|'), A = byId.get(a), B = byId.get(b); return A && B && !supportsMeetDrawn(A as never, B as never, [[-1e9, -1e9, -1e9], [1e9, 1e9, 1e9]]); });
+    if (clear.length) r.notes.push(`${clear.length} supports listed by an earlier pass as taken out for overlapping another support stand in the model, set again by SW-RPI-17, and by the two parts' drawn surfaces overlap nothing (SW-RPI-18 as amended again): ${clear.map(k => k.replace('|', ' beside ')).join('; ')}`); }
+  // the generator's checks on the model as it now stands, after every correction above (SW-RPI-28's moves included)
+  const checks = unitChecks(m, up, aside);
   if (was >= 0) { s.hangers += num(/(\d+) hangers/); s.onSteel += num(/(\d+) stanchions on steel/); s.stanchions += num(/, (\d+) stanchions and/); s.posts += num(/(\d+) support posts/); s.frames = [...(r.frames ?? []), ...s.frames]; r.notes.splice(was, 1); }
   // SW-RPI-22's check too, where the report has it: no correction here may put a line through itself
   for (const k of ['continuity', 'joints', 'elbows', 'valves', 'lineClearance', 'staticClearance', 'ownClearance'] as const) { const had = r.checks[k]; if (had && checks[k].length > had.length) throw new Error(`unit ${u}: ${k} changed from ${had.length} to ${checks[k].length}: the correction must add supports only`); }

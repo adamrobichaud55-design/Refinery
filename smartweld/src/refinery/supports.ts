@@ -224,8 +224,43 @@ const baseOf = (key: string, T: number[]): Box[] => { const world = supportSolid
 const deep = (a: Box, b: Box, e = 0.02) => [0, 1, 2].every(k => Math.min(a[1][k], b[1][k]) - Math.max(a[0][k], b[0][k]) > e);
 const ovBox = (a: Box, b: Box) => [0, 1, 2].every(k => a[0][k] < b[1][k] && b[0][k] < a[1][k]);
 /** a support kept by SW-RPI-18: its line, its tall members and all its solids */
-export interface KeptSupport { line: string; id: string; tall: Box[]; solids: Box[] }
-export const keptOf = (sp: { id: string; key: string; T: unknown }, line: string): KeptSupport => ({ line, id: sp.id, tall: tallOf(sp.key, sp.T as number[]), solids: supportSolids(sp.key, sp.T as number[]) });
+export interface KeptSupport { line: string; id: string; tall: Box[]; solids: Box[]; key?: string; T?: number[] }
+export const keptOf = (sp: { id: string; key: string; T: unknown }, line: string): KeptSupport => ({ line, id: sp.id, tall: tallOf(sp.key, sp.T as number[]), solids: supportSolids(sp.key, sp.T as number[]), key: sp.key, T: sp.T as number[] });
+type WTri = { name: string; t: number[]; mn: number[]; mx: number[] };
+const drawnTris = new Map<string, WTri[]>();
+/** a support's drawn triangles in the plant's frame, by its key and transform */
+function trisOfSupport(key: string, T: number[]): WTri[] {
+  const k = `${key}|${T.join(',')}`; let out = drawnTris.get(k); if (out) return out; out = [];
+  for (const so of buildGeometry(partFromKey(key)).solids) { const P = (so.mesh as { positions: ArrayLike<number> }).positions, I = (so.mesh as { indices: ArrayLike<number> }).indices;
+    const w = (i: number) => [T[0] * P[3 * i] + T[4] * P[3 * i + 1] + T[8] * P[3 * i + 2] + T[12], T[1] * P[3 * i] + T[5] * P[3 * i + 1] + T[9] * P[3 * i + 2] + T[13], T[2] * P[3 * i] + T[6] * P[3 * i + 1] + T[10] * P[3 * i + 2] + T[14]];
+    for (let j = 0; j < I.length; j += 3) { const t = [...w(I[j]), ...w(I[j + 1]), ...w(I[j + 2])]; out.push({ name: so.name, t, mn: [0, 1, 2].map(a => Math.min(t[a], t[3 + a], t[6 + a])), mx: [0, 1, 2].map(a => Math.max(t[a], t[3 + a], t[6 + a])) }); } }
+  if (drawnTris.size > 4000) drawnTris.clear(); drawnTris.set(k, out); return out;
+}
+/** SW-RPI-18 (amended again 2026-11-27): whether two supports' drawn surfaces cross within a region (an edge of a triangle of one through the inside of a
+ *  triangle of the other, short of the edge's ends and the triangle's border by 1e-6), or a solid of one lies inside a solid of the other (ray parity) */
+export function supportsMeetDrawn(a: { key: string; T: number[] }, b: { key: string; T: number[] }, region: Box): boolean {
+  const near = (q: WTri) => [0, 1, 2].every(k => q.mn[k] <= region[1][k] + 1e-6 && q.mx[k] >= region[0][k] - 1e-6);
+  const A = trisOfSupport(a.key, a.T).filter(near), B = trisOfSupport(b.key, b.T).filter(near); if (!A.length || !B.length) return false;
+  const segTri = (p: number[], q: number[], t: number[]) => {
+    const d = [q[0] - p[0], q[1] - p[1], q[2] - p[2]], e1 = [t[3] - t[0], t[4] - t[1], t[5] - t[2]], e2 = [t[6] - t[0], t[7] - t[1], t[8] - t[2]];
+    const h = [d[1] * e2[2] - d[2] * e2[1], d[2] * e2[0] - d[0] * e2[2], d[0] * e2[1] - d[1] * e2[0]], det = e1[0] * h[0] + e1[1] * h[1] + e1[2] * h[2]; if (Math.abs(det) < 1e-12) return false;
+    const sv = [p[0] - t[0], p[1] - t[1], p[2] - t[2]], u = (sv[0] * h[0] + sv[1] * h[1] + sv[2] * h[2]) / det; if (u <= 1e-6 || u >= 1 - 1e-6) return false;
+    const qq = [sv[1] * e1[2] - sv[2] * e1[1], sv[2] * e1[0] - sv[0] * e1[2], sv[0] * e1[1] - sv[1] * e1[0]], v = (d[0] * qq[0] + d[1] * qq[1] + d[2] * qq[2]) / det; if (v <= 1e-6 || u + v >= 1 - 1e-6) return false;
+    const r = (e2[0] * qq[0] + e2[1] * qq[1] + e2[2] * qq[2]) / det; return r > 1e-6 && r < 1 - 1e-6;
+  };
+  const edges = (t: number[]) => [[0, 3], [3, 6], [6, 0]].map(([i, j]) => [t.slice(i, i + 3), t.slice(j, j + 3)]);
+  for (const x of A) for (const y of B) { if (![0, 1, 2].every(k => x.mn[k] <= y.mx[k] && x.mx[k] >= y.mn[k])) continue; if (edges(x.t).some(([p, q]) => segTri(p, q, y.t)) || edges(y.t).some(([p, q]) => segTri(p, q, x.t))) return true; }
+  // one inside the other: a point of each solid near the region, by the parity of a slightly skewed ray against each solid of the other
+  const inside = (p: number[], tris: WTri[]) => { const d = [1, 0.000123, 0.000457], odd = new Map<string, number>();
+    for (const { name, t: q } of tris) { const e1 = [q[3] - q[0], q[4] - q[1], q[5] - q[2]], e2 = [q[6] - q[0], q[7] - q[1], q[8] - q[2]], h = [d[1] * e2[2] - d[2] * e2[1], d[2] * e2[0] - d[0] * e2[2], d[0] * e2[1] - d[1] * e2[0]], det = e1[0] * h[0] + e1[1] * h[1] + e1[2] * h[2];
+      if (Math.abs(det) < 1e-12) continue; const w = [p[0] - q[0], p[1] - q[1], p[2] - q[2]], u = (w[0] * h[0] + w[1] * h[1] + w[2] * h[2]) / det; if (u < 0 || u > 1) continue;
+      const qq = [w[1] * e1[2] - w[2] * e1[1], w[2] * e1[0] - w[0] * e1[2], w[0] * e1[1] - w[1] * e1[0]], vv = (d[0] * qq[0] + d[1] * qq[1] + d[2] * qq[2]) / det; if (vv < 0 || u + vv > 1) continue;
+      if ((e2[0] * qq[0] + e2[1] * qq[1] + e2[2] * qq[2]) / det > 0) odd.set(name, (odd.get(name) ?? 0) + 1); }
+    return [...odd.values()].some(n => n % 2 === 1); };
+  const centroid = (t: number[]) => [(t[0] + t[3] + t[6]) / 3, (t[1] + t[4] + t[7]) / 3, (t[2] + t[5] + t[8]) / 3];
+  const allB = trisOfSupport(b.key, b.T), allA = trisOfSupport(a.key, a.T);
+  return [...new Set(A.map(x => x.name))].some(n => inside(centroid(A.find(x => x.name === n)!.t), allB)) || [...new Set(B.map(y => y.name))].some(n => inside(centroid(B.find(y => y.name === n)!.t), allA));
+}
 /** a point's distance to a box */
 const boxDist = (p: V3, b: Box) => Math.hypot(Math.max(b[0][0] - p[0], 0, p[0] - b[1][0]), Math.max(b[0][1] - p[1], 0, p[1] - b[1][1]), Math.max(b[0][2] - p[2], 0, p[2] - b[1][2]));
 /** an arc's point at angle th */
@@ -369,7 +404,10 @@ export function strikeTest(m: PipingModel, plant: PlantDef, vb: (c: Comp) => Box
   return (sp, no, kept = []) => {
     const T = sp.T as number[], me = keptOf(sp, no);
     // SW-RPI-18 (amended): no solid of it inside a solid of a support set before it, of its own line or another
-    for (const q of kept) if (q.id !== sp.id && q.solids.some(a => me.solids.some(b => deep(a, b)))) return `its part overlaps the support ${q.id}`;
+    // (amended again 2026-11-27): a pair that overlaps by boxes, measured again by the two parts' drawn surfaces where their boxes overlap
+    const ovr = (a: Box, b: Box): Box => [[0, 1, 2].map(k => Math.max(a[0][k], b[0][k])) as V3, [0, 1, 2].map(k => Math.min(a[1][k], b[1][k])) as V3];
+    for (const q of kept) { if (q.id === sp.id) continue; const pairs = q.solids.flatMap(a => me.solids.filter(b => deep(a, b)).map(b => ovr(a, b))); if (!pairs.length) continue;
+      if (!q.key || !q.T || pairs.some(r => supportsMeetDrawn({ key: q.key!, T: q.T! }, { key: sp.key, T }, r))) return `its part overlaps the support ${q.id}`; }
     if (TALL.has(sp.type)) {
       // its base plate (a stanchion's or a trunnion's) on a solid, not inside one by more than 0.05 in
       const bases = sp.type === 'stanchion' || sp.type === 'trunnion' ? baseOf(sp.key, T) : [];

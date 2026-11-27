@@ -30,10 +30,11 @@
   "staticClearance": [],
   "ownClearance": [],
   "supports": [
-   "16\"-P150-P-17038: unsupported span 301 in > 240 on run from 1362,300,-255",
+   "16\"-P150-P-17038: unsupported span 264 in > 240 on run from 1362,300,-255",
    "4\"-P300-P-17064: unsupported span 275 in > 240 on run from 1500,294,-893",
    "24\"-P150-V-17312: unsupported span 376 in > 240 on run from 1790,744,-198",
    "6\"-P300-P-17324: unsupported span 242 in > 240 on run from 900,300,-284",
+   "10\"-P300-LS-17407: unsupported span 241 in > 240 on run from 281,348,-72",
    "3\"-P150-CWS-17513: unsupported span 279 in > 180 on run from 1308,246,317",
    "8\"-P150-CWS-17515: unsupported span 331 in > 240 on run from 1422,318,381",
    "6\"-P150-CWS-17531: unsupported span 308 in > 240 on run from 2142,252,334"
@@ -1857,7 +1858,7 @@
    "routed": true,
    "components": 26,
    "welds": 17,
-   "supports": 5,
+   "supports": 6,
    "lengthFt": 113
   },
   {
@@ -4909,7 +4910,7 @@
    "anchor": 78,
    "guide": 201,
    "hanger": 163,
-   "shoe": 516,
+   "shoe": 517,
    "stanchion": 142,
    "trapeze": 2,
    "trunnion": 94
@@ -4973,7 +4974,7 @@
   "4 shoes and guides moved along their runs, off the welds of the steel they stand on and wholly onto one straight pipe of their line (SW-RPI-28): 10\"-P300-P-17017/S3 +3 in; 16\"-P150-P-17038/S5 -2 in; 10\"-P300-P-17054/S7 -3 in; 10\"-P300-LS-17407/S3 -1 in",
   "1 hangers' rods made to reach the underside of the steel they hang from (SW-RPI-20)",
   "1 supports taken out where their rod, post or leg struck another line, steel or another support (SW-RPI-18): 6\"-P150-CWS-17531/S5 (hanger): its part overlaps the support 3\"-P300-P-17101/S1",
-  "176 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 41 hangers from steel above, 0 stanchions on steel below, 38 stanchions and 64 support posts from the floor, and 33 pipe frames"
+  "178 supports set where the generator's stepping along a run had stopped (SW-RPI-17): 42 hangers from steel above, 0 stanchions on steel below, 38 stanchions and 64 support posts from the floor, and 34 pipe frames"
  ],
  "frames": [
   {
@@ -5767,6 +5768,30 @@
    "top": 293,
    "post": "W8x31",
    "rad": 3
+  },
+  {
+   "line": "16\"-P150-P-17038",
+   "at": [
+    1362,
+    300,
+    119.0625
+   ],
+   "u": [
+    -1,
+    0,
+    0
+   ],
+   "d": [
+    24,
+    0
+   ],
+   "floors": [
+    0,
+    0
+   ],
+   "top": 288,
+   "post": "W8x31",
+   "rad": 8
   }
  ]
 }

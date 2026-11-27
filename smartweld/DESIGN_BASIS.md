@@ -6220,6 +6220,13 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   flanges, so the rods' top 3 in were left out; twelve hangers' top plates stood 0.37 in into a
   rack bay's bracing rods, and rods passed up to 0.3 in into the girder beside the beam they
   hung from).
+  Amended again 2026-11-27 (P-95): where a solid of one support overlaps a solid of another
+  by their boxes, the two parts are measured again by their drawn surfaces, and the support
+  is taken out only where those surfaces cross or one lies inside the other. Reason: a part
+  holds a trapeze's two rods as one solid, whose box spans the space between them; another
+  line's hanger rod passing between the rods, clear of both, was taken out at each making
+  and set again by SW-RPI-17 at the next (one hanger in unit 14 and one in unit 17, each
+  measured at no crossing of their drawn surfaces).
   SW-RPI-17 sets no support this test would take out (amended the same day): a stanchion on
   steel stands on the member's true top, from its own box, not on the generator's estimate
   of it (the centre and seven tenths of the round it holds the member by, which for a 12 in
