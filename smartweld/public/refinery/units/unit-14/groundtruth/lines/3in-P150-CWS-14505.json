@@ -156,7 +156,7 @@
    "cls": "P150",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 11.4322,
+   "weight": 11.3123,
    "spool": "loose",
    "a": {
     "E": 1284,
@@ -1520,7 +1520,7 @@
    "cls": "P150",
    "material": "Grade 36 casting",
    "ends": "RF×RF",
-   "weight": 11.4322,
+   "weight": 11.3123,
    "spool": "loose",
    "a": {
     "E": 1284,
@@ -2359,26 +2359,6 @@
  ],
  "supports": [
   {
-   "tag": "3\"-P150-CWS-14505/S1",
-   "line": "3\"-P150-CWS-14505",
-   "lineClass": "W150",
-   "type": "stanchion",
-   "description": "STANCHION FOR 3\" LINE (STANCHION-3x94.5)",
-   "designation": "STANCHION-3x94.5",
-   "key": "STAN|3|P150|94.50",
-   "material": "Grade 36",
-   "weight": 138.3858,
-   "spool": "loose",
-   "at": {
-    "E": 1266,
-    "N": -342,
-    "EL": 1296
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
    "tag": "3\"-P150-CWS-14505/S2",
    "line": "3\"-P150-CWS-14505",
    "lineClass": "W150",
@@ -2398,6 +2378,46 @@
     "SW-FIT-1",
     "SW-PS-10",
     "SW-PS-4"
+   ]
+  },
+  {
+   "tag": "3\"-P150-CWS-14505/S3",
+   "line": "3\"-P150-CWS-14505",
+   "lineClass": "W150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x94.5)",
+   "designation": "STANCHION-3x94.5",
+   "key": "STAN|3|P150|94.50",
+   "material": "Grade 36",
+   "weight": 138.3858,
+   "spool": "loose",
+   "at": {
+    "E": 1266,
+    "N": -222,
+    "EL": 1296
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "3\"-P150-CWS-14505/S4",
+   "line": "3\"-P150-CWS-14505",
+   "lineClass": "W150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 3\" LINE (STANCHION-3x88.5)",
+   "designation": "STANCHION-3x88.5",
+   "key": "STAN|3|P150|88.50",
+   "material": "Grade 36",
+   "weight": 130.1292,
+   "spool": "loose",
+   "at": {
+    "E": 1266,
+    "N": -363.5,
+    "EL": 1296
+   },
+   "rules": [
+    "SW-PS-9"
    ]
   }
  ],
@@ -2503,7 +2523,7 @@
    "itemNo": 4,
    "description": "VALVE, BUTTERFLY, WAFER 3\" P150",
    "qty": 2,
-   "weight": 22.8645
+   "weight": 22.6247
   },
   {
    "itemNo": 5,
@@ -2918,8 +2938,8 @@
   "items": 39,
   "welds": 20,
   "fieldWelds": 2,
-  "supports": 2,
+  "supports": 3,
   "pipeLength": 820.2624,
-  "weight": 623.5402
+  "weight": 623.3004
  }
 }

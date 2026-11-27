@@ -2992,46 +2992,6 @@
  ],
  "supports": [
   {
-   "tag": "6\"-P150-P-11057/S1",
-   "line": "6\"-P150-P-11057",
-   "lineClass": "H150",
-   "type": "hanger",
-   "description": "HANGER FOR 6\" LINE (HANGER-6x139.0)",
-   "designation": "HANGER-6x139.0",
-   "key": "HANG|6|P150|139.02",
-   "material": "Grade 36",
-   "weight": 12.2966,
-   "spool": "loose",
-   "at": {
-    "E": 912,
-    "N": 420,
-    "EL": 1428
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
-   "tag": "6\"-P150-P-11057/S2",
-   "line": "6\"-P150-P-11057",
-   "lineClass": "H150",
-   "type": "hanger",
-   "description": "HANGER FOR 6\" LINE (HANGER-6x205.0)",
-   "designation": "HANGER-6x205.0",
-   "key": "HANG|6|P150|205.02",
-   "material": "Grade 36",
-   "weight": 15.9295,
-   "spool": "loose",
-   "at": {
-    "E": 912,
-    "N": 182,
-    "EL": 1428
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
    "tag": "6\"-P150-P-11057/S3",
    "line": "6\"-P150-P-11057",
    "lineClass": "H150",
@@ -3091,6 +3051,26 @@
     "SW-FIT-1",
     "SW-PS-10",
     "SW-PS-4"
+   ]
+  },
+  {
+   "tag": "6\"-P150-P-11057/S6",
+   "line": "6\"-P150-P-11057",
+   "lineClass": "H150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 6\" LINE (STANCHION-6x225.0)",
+   "designation": "STANCHION-6x225.0",
+   "key": "STAN|6|P150|225.00",
+   "material": "Grade 36",
+   "weight": 1796.18,
+   "spool": "loose",
+   "at": {
+    "E": 912,
+    "N": 420,
+    "EL": 1428
+   },
+   "rules": [
+    "SW-PS-9"
    ]
   }
  ],
@@ -3767,7 +3747,7 @@
   "items": 46,
   "welds": 30,
   "fieldWelds": 4,
-  "supports": 5,
+  "supports": 4,
   "pipeLength": 1558.3891,
   "weight": 2468.5457
  }

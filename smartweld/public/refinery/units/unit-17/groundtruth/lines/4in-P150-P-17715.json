@@ -2885,46 +2885,6 @@
    ]
   },
   {
-   "tag": "4\"-P150-P-17715/S2",
-   "line": "4\"-P150-P-17715",
-   "lineClass": "H150",
-   "type": "hanger",
-   "description": "HANGER FOR 4\" LINE (HANGER-4x139.0)",
-   "designation": "HANGER-4x139.0",
-   "key": "HANG|4|P150|139.02",
-   "material": "Grade 36",
-   "weight": 8.4774,
-   "spool": "loose",
-   "at": {
-    "E": 1920,
-    "N": 183,
-    "EL": 1494
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
-   "tag": "4\"-P150-P-17715/S3",
-   "line": "4\"-P150-P-17715",
-   "lineClass": "H150",
-   "type": "hanger",
-   "description": "HANGER FOR 4\" LINE (HANGER-4x73.0)",
-   "designation": "HANGER-4x73.0",
-   "key": "HANG|4|P150|73.02",
-   "material": "Grade 36",
-   "weight": 6.4339,
-   "spool": "loose",
-   "at": {
-    "E": 1920,
-    "N": 390,
-    "EL": 1494
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
    "tag": "4\"-P150-P-17715/S4",
    "line": "4\"-P150-P-17715",
    "lineClass": "H150",
@@ -2944,6 +2904,26 @@
     "SW-FIT-1",
     "SW-PS-10",
     "SW-PS-4"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-17715/S3",
+   "line": "4\"-P150-P-17715",
+   "lineClass": "H150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 4\" LINE (STANCHION-4x292.0)",
+   "designation": "STANCHION-4x292.0",
+   "key": "STAN|4|P150|292.00",
+   "material": "Grade 36",
+   "weight": 4127.2877,
+   "spool": "loose",
+   "at": {
+    "E": 1920,
+    "N": 231,
+    "EL": 1494
+   },
+   "rules": [
+    "SW-PS-9"
    ]
   }
  ],
@@ -3571,7 +3551,7 @@
   "items": 43,
   "welds": 30,
   "fieldWelds": 3,
-  "supports": 4,
+  "supports": 3,
   "pipeLength": 2110.2283,
   "weight": 1781.3042
  }

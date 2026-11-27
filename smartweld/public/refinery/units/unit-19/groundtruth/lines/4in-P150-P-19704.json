@@ -1564,26 +1564,6 @@
  ],
  "supports": [
   {
-   "tag": "4\"-P150-P-19704/S1",
-   "line": "4\"-P150-P-19704",
-   "lineClass": "H150",
-   "type": "hanger",
-   "description": "HANGER FOR 4\" LINE (HANGER-4x79.4)",
-   "designation": "HANGER-4x79.4",
-   "key": "HANG|4|P150|79.38",
-   "material": "Grade 36",
-   "weight": 6.6308,
-   "spool": "loose",
-   "at": {
-    "E": 954,
-    "N": 140.2222,
-    "EL": 1446
-   },
-   "rules": [
-    "SW-PS-9"
-   ]
-  },
-  {
    "tag": "4\"-P150-P-19704/S2",
    "line": "4\"-P150-P-19704",
    "lineClass": "H150",
@@ -1643,6 +1623,46 @@
    },
    "rules": [
     "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19704/S5",
+   "line": "4\"-P150-P-19704",
+   "lineClass": "H150",
+   "type": "stanchion",
+   "description": "STANCHION FOR 4\" LINE (STANCHION-4x244.0)",
+   "designation": "STANCHION-4x244.0",
+   "key": "STAN|4|P150|244.00",
+   "material": "Grade 36",
+   "weight": 3450.9072,
+   "spool": "loose",
+   "at": {
+    "E": 954,
+    "N": 312.7223,
+    "EL": 1446
+   },
+   "rules": [
+    "SW-PS-9"
+   ]
+  },
+  {
+   "tag": "4\"-P150-P-19704/S6",
+   "line": "4\"-P150-P-19704",
+   "lineClass": "H150",
+   "type": "shoe",
+   "description": "SHOE FOR 4\" LINE (SHOE-4)",
+   "designation": "SHOE-4",
+   "key": "SHOE|4|P150|shoe|4.000",
+   "material": "Grade 36",
+   "weight": 9.9212,
+   "spool": "loose",
+   "at": {
+    "E": 954,
+    "N": 177.6945,
+    "EL": 1440
+   },
+   "rules": [
+    "SW-PS-1"
    ]
   }
  ],
@@ -2010,7 +2030,7 @@
   "items": 26,
   "welds": 13,
   "fieldWelds": 2,
-  "supports": 4,
+  "supports": 5,
   "pipeLength": 773.7887,
   "weight": 870.6422
  }
