@@ -6534,7 +6534,11 @@ looked up; the arrangement and its round figures are SmartWeld's own, from the r
   line on the far side crosses under the whole rack to reach it); spacing by the same rule. The top tier is kept for the utility
   headers of the next stage (SW-PWY-10), as a unit's top tier is for its headers: a
   process line lies on it only where its spools leave it no other tier, or where the two
-  below cannot take it. A line over 10 in that comes onto the rack from a unit lies in
+  below cannot take it (amended 2026-11-27: that line alone, the two below loaded as far as
+  the tiers may be, 85 % of their lanes, every lane below, on either side, tried before any
+  on the top tier; where one line had found no lane below, every line had been let onto the
+  top tier and the tiers' load begun again from the least, and seven 3 in lines lay there
+  among the headers' branches). A line over 10 in that comes onto the rack from a unit lies in
   the outermost lane on that unit's side, and the lane of the tier below its spool's level
   is kept clear beneath where it comes in: so large a line does not cross over the lanes
   kept on the tier 2 ft below it (the generator holds a kept lane 9 in above its pipe,

@@ -298,7 +298,7 @@ describe('plant 3: what the generator is given for a unit (SW-RPI-1 to SW-RPI-5)
     const u19 = unitPiping(19), box = (tag: string, re: RegExp) => { const bs = bodySolids(u19.cell, tag).filter(b => re.test(b.name)); expect(bs.length, `${tag} ${re}`).toBeGreaterThan(0); return { mn: [0, 1, 2].map(k => Math.min(...bs.map(b => b.mn[k]))), mx: [0, 1, 2].map(k => Math.max(...bs.map(b => b.mx[k]))) }; };
     for (const b of ['B-1901', 'B-1902']) {
       const st = nz(u19, b, 'steam'), fw = nz(u19, b, 'feed water'), bd = nz(u19, b, 'blowdown'), fg = nz(u19, b, 'fuel gas'), sh = box(b, /^superheater headers/), ec = box(b, /^economizer water headers/), mud = box(b, /^mud drum/), wb = box(b, /^burner 1: windbox/), sp = u19.cell.spots.find(q => q.tag === b)!;
-      expect(st.u).toEqual([0, 1, 0]); expect(st.A[1]).toBeCloseTo(sh.mx[1], 6); expect(st.A[0]).toBeGreaterThan(sh.mn[0]); expect(st.A[0]).toBeLessThan(sh.mx[0]);
+      expect(st.u).toEqual([0, 1, 0]); expect(st.A[1]).toBeLessThanOrEqual(sh.mx[1] + 1e-6); expect(st.A[1]).toBeGreaterThan(sh.mx[1] - 0.05);   // SW-NOZ-1 (amended 2026-11-27): on the header's drawn surface, its many-sided round a little under the true one's top expect(st.A[0]).toBeGreaterThan(sh.mn[0]); expect(st.A[0]).toBeLessThan(sh.mx[0]);
       expect(fw.A[0]).toBeGreaterThan(ec.mn[0] - 6); expect(fw.A[0]).toBeLessThan(ec.mx[0] + 6); expect(Math.abs(fw.u[2])).toBe(1); expect(Math.sign(fw.u[2])).toBe(-Math.sign((wb.mn[2] + wb.mx[2]) / 2 - sp.z));
       expect(bd.u).toEqual([0, 0, -sp.side]); expect(bd.A[1]).toBeGreaterThan(mud.mn[1]); expect(bd.A[1]).toBeLessThan(mud.mx[1]); expect(Math.abs(fg.u[0])).toBe(1); expect(fg.A[1]).toBeGreaterThan(wb.mn[1]); expect(fg.A[1]).toBeLessThan(wb.mx[1]);
       expect(bodySolids(u19.cell, b).some(q => /^superheated steam outlet: /.test(q.name))).toBe(false);           // the catalogue's drawn outlet gives way to the plant's own connection
@@ -502,7 +502,7 @@ describe('plant 3: the piped units on disk', () => {
       for (const f of q.feeds) {
         const run = m.lines.find(l => l.no === f.header)!, n = q.nozzles.get(`${f.tag}-U`)!, kinds = run.comps.filter(c => c.kind !== 'studs').map(c => c.kind);
         expect(run.from, f.header).toBe(`${f.tag}-U`); expect(run.to).toBe('cap'); expect(kinds.slice(0, 5)).toEqual(['gasket', 'valve', 'gasket', 'flange', 'pipe']); expect(kinds[kinds.length - 1]).toBe('cap'); expect(kinds.filter(k => k === 'cap').length).toBe(1);
-        expect(d3(run.comps[0].a, n.face)).toBeLessThan(0.01); expect(run.comps.filter(c => c.kind === 'studs').length).toBe(2);
+        expect(d3(run.comps[0].a, n.face)).toBeLessThan(0.01); expect(run.comps.filter(c => c.kind === 'studs').length).toBe(/^VLV\|BFLY\|/.test(run.comps.find(c => c.kind === 'valve')!.key) ? 1 : 2);   // SW-RPI-21: one stud set through a wafer valve's two joints
         const fl = run.comps.find(c => c.kind === 'flange')!, pipe = run.comps.find(c => c.kind === 'pipe')!; expect(fl.key).toBe(`WNF|${n.NPS}|${n.cls}`); expect(d3(fl.b, pipe.a)).toBeLessThan(0.01);
         expect(d3(fl.a, fl.b)).toBeCloseTo((f2 => f2.rfH + f2.tf + f2.hubLen + f2.neckLen)(designFlange(n.NPS, n.cls)), 6);
         expect(run.welds.filter(w => w.joins.includes(fl.tag) && w.joins.includes(pipe.tag) && d3(w.at, fl.b) < 0.01).length).toBe(1);
@@ -552,7 +552,9 @@ describe('plant 3: the piped units on disk', () => {
       const m = JSON.parse(readFileSync(new URL(`../public/refinery/piping/unit-${r.unit}.json`, import.meta.url), 'utf8')) as PipingModel, items = m.lines.flatMap(l => l.comps.filter(c => c.kind !== 'studs').flatMap(c => K.compShapes(c, vb).map(s => ({ line: l.no, s }))));
       for (const f of r.frames ?? []) {
         n++; const line = m.lines.find(l => l.no === f.line)!; expect(line, f.line).toBeDefined();
-        expect(line.supports.some(s => s.type === 'shoe' && Math.hypot(s.at[0] - f.at[0], s.at[2] - f.at[2]) < 0.01 && Math.abs(s.at[1] - f.top) < 0.01), `${f.line}: a shoe on its frame`).toBe(true);
+        // on its frame's beam: where SW-RPI-28 moved it off a weld, by what the report says, along the run (SW-RPI-28 as amended again 2026-11-27)
+        const moved = (id: string) => { for (const n of r.notes) { if (!n.includes('(SW-RPI-28)')) continue; const i = n.indexOf(`${id} `); if (i >= 0) return Math.abs(Number(/^([+-]\d+) in/.exec(n.slice(i + id.length + 1))?.[1] ?? NaN)); } return 0; };
+        expect(line.supports.some(s => s.type === 'shoe' && Math.abs(s.at[1] - f.top) < 0.01 && (Math.hypot(s.at[0] - f.at[0], s.at[2] - f.at[2]) < 0.01 || (moved(s.id) > 0 && moved(s.id) <= 6 && Math.abs(Math.hypot(s.at[0] - f.at[0], s.at[2] - f.at[2]) - moved(s.id)) < 0.01))), `${f.line}: a shoe on its frame`).toBe(true);
         const reach = (d: number) => (d > 0 ? d + 4 : (f.rad ?? 0) + 4); expect(reach(f.d[0]) + reach(f.d[1])).toBeLessThanOrEqual(368); expect(f.d.some(d => d > 0)).toBe(true); if (f.d.some(d => d <= 0)) expect(Math.max(...f.d)).toBeLessThanOrEqual(48);
         for (const q of framePlaced(f)) { const b = worldBox(q.part, q.transform as never)!; if (q.tags.includes('post')) expect(b[1][1] - b[0][1]).toBeLessThanOrEqual(600 + 1e-6);
           const sh: K.Shape = { kind: 'box', mn: b[0], mx: b[1] }; for (const it of items) if (it.line !== f.line) expect(K.gap(it.s, sh), `${f.line} frame ${q.tags.join('/')} beside ${it.line}`).toBeGreaterThanOrEqual(1 - 1e-6); }

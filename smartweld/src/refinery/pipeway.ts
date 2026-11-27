@@ -284,7 +284,10 @@ export function pipeway(): Pipeway {
         const fits = (k: number) => { let m = 0; for (let i = i0; i <= i1; i++) m = Math.max(m, load[k][i]); return m + w <= room; };
         let got: RackLane | undefined, extra: RackLane[] = [], side2 = new Map<Conn, number>();
         // every lane on the side its parties stand on is tried, tier by tier, before any on the far side: a line on the far side crosses under the whole rack to reach it
-        const tiersOk = allowed(p, topToo).filter(fits), tries: [number, number][] = [...tiersOk.flatMap(t => zs.filter(c => !s || c * s >= 0).map(z => [t, z] as [number, number])), ...tiersOk.flatMap(t => zs.filter(c => s && c * s < 0).map(z => [t, z] as [number, number]))];
+        // SW-PWY-5 (amended 2026-11-27): with the top tier let in, every lane below, on either side, is tried before any on the top tier
+        const lower = allowed(p, false).filter(fits), upper = topToo ? allowed(p, true).filter(t => !lower.includes(t) && fits(t)) : [];
+        const bySide = (ts: number[]): [number, number][] => [...ts.flatMap(t => zs.filter(c => !s || c * s >= 0).map(z => [t, z] as [number, number])), ...ts.flatMap(t => zs.filter(c => s && c * s < 0).map(z => [t, z] as [number, number]))];
+        const tries: [number, number][] = [...bySide(lower), ...bySide(upper)];
         for (const [t, z] of tries) {
           {
             if (Math.abs(z) + v.OD / 2 > edge || Math.abs(z) > guideRoom || stringersBy(t).some(q => Math.abs(z - q) < v.OD / 2 + STRINGER) || !free(taken, t, z, v.OD, v.x0 - 36, v.x1 + 36)) continue;
@@ -313,7 +316,9 @@ export function pipeway(): Pipeway {
       return { taken, put, beside: besideOf };
     };
     let planned: ReturnType<typeof share>;
-    for (const topToo of [false, true]) { if (planned) break; for (tierRoom = 72; tierRoom <= most && !planned; tierRoom += 12) planned = share(tierRoom, topToo); }
+    for (tierRoom = 72; tierRoom <= most && !planned; tierRoom += 12) planned = share(tierRoom, false);
+    // SW-PWY-5 (amended 2026-11-27): where the two lower tiers cannot take a line, that line, and only what finds no lane below, lies on the top tier, the tiers below loaded as far as they may be
+    if (!planned) { const why = stuck; planned = share(most, true); tierRoom = most + 12; if (planned) notes.push(`The two lower tiers could not take ${why} within ${Math.round(most)} in of lanes: it, and only what then found no lane below, lie on the top tier (SW-PWY-5): ${[...planned.put].filter(([q, L]) => L.t === top && !allowed(q, false).includes(top)).map(([q]) => q.t.key).join(', ')}.`); }
     if (!planned) throw new Error(`the main pipeway: its lines do not fit ${PWY.tiers.length} tiers at ${Math.round(most)} in of lanes each: no lane for ${stuck}`);
     tierRoom -= 12;
     for (const [p, L] of planned.put) { tierOf.set(p, L.t); laneOf.set(p, L.z); }

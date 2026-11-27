@@ -140,7 +140,9 @@ describe('plant 3: what the generator is given for the main pipeway (SW-PWY-1 to
       const run = pw.runs[pw.runOf.get(a.no!)!]; expect(run.kind).toBe('rack'); expect(run.lines[0]).toBe(a.no); expect(run.lane).toEqual(a);
     }
     // the top tier is kept for the utility headers: only a line whose spools leave it no other lies there
-    for (const a of lanes.filter(q => q.t === PWY.tiers.length - 1)) expect(pipeDims(pw.lines.find(l => l.def.no === a.no)!.def.NPS, 'P150').OD).toBeGreaterThan(8);
+    // (SW-PWY-5 as amended 2026-11-27: or one the two tiers below could not take, which the notes name)
+    const pushedUp = pw.notes.filter(n => /^The two lower tiers could not take /.test(n)).flatMap(n => n.slice(n.lastIndexOf(': ') + 2).replace(/\.$/, '').split(', '));
+    for (const a of lanes.filter(q => q.t === PWY.tiers.length - 1)) { const d = pw.lines.find(l => l.def.no === a.no)!; if (!pushedUp.includes(pw.streams.find(st => st.main === a.no)?.stream ?? '')) expect(pipeDims(d.def.NPS, 'P150').OD, a.no).toBeGreaterThan(8); }
     expect(pw.runs[pw.runs.length - 1].kind).toBe('rest');
     for (const l of pw.lines) expect(pw.runOf.has(l.def.no), l.def.no).toBe(true);
     for (const s of pw.streams) for (const b of s.branches) expect(pw.runOf.get(b)).toBe(pw.runOf.get(s.main));
@@ -296,7 +298,9 @@ describe('plant 3: the piped pipeway on disk', () => {
       const zb = U.side * (PIPEWAY_HALF * 12 + RACK.start - RACK.bent);
       for (const run of m.lines) for (const c of run.comps) {
         if (c.kind !== 'pipe' || Math.abs(c.a[0] - c.b[0]) > 1e-6 || Math.abs(c.a[1] - c.b[1]) > 1e-6 || Math.abs(c.a[0] - U.x) > U.half || (c.a[2] - zb) * (c.b[2] - zb) > 0 || Math.min(Math.abs(c.a[2] - zb), Math.abs(c.b[2] - zb)) < 6) continue;
-        const bottom = c.a[1] - pipeDims(c.NPS, c.cls).OD / 2, tier = RACK.tiers.find(t => bottom - t >= 4 - 1e-6 && bottom - t < 10), here = run.supports.filter(sp => Math.abs(sp.at[2] - zb) < 1e-6 && Math.abs(sp.at[0] - c.a[0]) < 1e-6);
+        // a shoe SW-RPI-28 moved off a weld stands on the same beam within 6 in of its line, as the report says (SW-RPI-28 as amended again 2026-11-27)
+        const movedBy = (id: string) => { for (const n of r.notes) { const q = new RegExp(`${id.replace(/[.*+?^${}()|[\]\\"]/g, '\\$&')} ([+-]\\d+) in`).exec(n); if (q && n.includes('(SW-RPI-28)')) return Number(q[1]); } return 0; };
+        const bottom = c.a[1] - pipeDims(c.NPS, c.cls).OD / 2, tier = RACK.tiers.find(t => bottom - t >= 4 - 1e-6 && bottom - t < 10), here = run.supports.filter(sp => Math.abs(sp.at[0] - c.a[0]) < 1e-6 && (Math.abs(sp.at[2] - zb) < 1e-6 || (Math.abs(sp.at[2] - zb) <= 6 + 1e-6 && Math.abs(Math.abs(sp.at[2] - zb) - Math.abs(movedBy(sp.id))) < 1e-6)));
         if (tier !== undefined) {   // at the height a line of that tier lies at: a shoe on the beam, of the pipe's own size and class (a branch is reduced only at its spool)
           expect(here.map(sp => sp.type), `${run.no} at unit ${U.unit}`).toEqual(['shoe']); shoes++;
           expect(here[0].at[1]).toBe(tier); expect(here[0].key).toBe(`SHOE|${c.NPS}|${c.cls}|shoe|${(bottom - tier).toFixed(3)}`);
