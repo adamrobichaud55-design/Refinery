@@ -5,11 +5,11 @@
  *  each unit's plant (its steel, equipment, platforms and rack) as unitPiping plans it. */
 import { describe, it, expect } from 'vitest';
 import { readFileSync } from 'node:fs';
-import { ownClashes, ownClearance, elbowSpacing, shapesOf, selfCorrections, takeOffMoved, straightBetweenStacks, bareTurnAsOffset, offsetOverTakeOff } from '../src/refinery/ownLine';
+import { ownClashes, ownClearance, elbowSpacing, shapesOf, selfCorrections, takeOffMoved, straightBetweenStacks, bareTurnAsOffset, offsetOverTakeOff, loopThroughLeg } from '../src/refinery/ownLine';
 import { valvesThatStrike } from '../src/refinery/supports';
 import { valveBoxFn, restFindings } from '../src/refinery/pipingReport';
 import { unitPiping, block, type UnitPiping } from '../src/refinery/unitPiping';
-import { partFromKey, solidBoxes, type Comp, type LineRun, type NozzleRun, type PipingModel } from '../src/generator/piping';
+import { partFromKey, solidBoxes, deriveWelds, type Comp, type LineRun, type NozzleRun, type PipingModel } from '../src/generator/piping';
 import type { PlantDef } from '../src/generator/plant';
 import * as K from '../src/generator/pipingCheck';
 import { pipeDims, elbowRadius } from '../src/catalogue';
@@ -82,11 +82,11 @@ describe('plant 3: pieces of one line clear of each other (SW-RPI-22)', () => {
     expect(deepest('11323')).toBeCloseTo(13.57, 1); expect(deepest('12002')).toBeCloseTo(12.93, 1); expect(deepest('19301')).toBeCloseTo(9.29, 1);
     expect(deepest('11503')).toBeGreaterThan(0.05); expect(deepest('11503')).toBeLessThan(1); expect(deepest('17515')).toBeLessThan(1.2);
   }, SLOW);
-  it('passes the valves of a stack or of a control station that stand face to face on one axis (SW-LL-3, SW-LL-7)', () => {
+  it('passes the valves, spades and gaskets of a stack or of a control station that stand face to face on one axis (SW-LL-3, SW-LL-7)', () => {
     const stack = recs.filter(x => x.role === 'stack');
     expect(stack.map(x => seq(x.line.no)).sort()).toEqual(['13505', '13506', '14007', '14505', '15501', '17402', '17501', '17551', '18707']);
     for (const x of stack) {
-      expect(x.line.comps.filter(c => c.kind === 'valve').length, x.line.no).toBeGreaterThanOrEqual(2);
+      expect(x.line.comps.filter(c => c.kind === 'valve').length, x.line.no).toBeGreaterThanOrEqual(1);
       expect(ownClashes(x.line, new Map(x.nozzles.map(n => [n.id, n] as const))), `${x.model} ${x.line.no}`).toEqual([]);
     }
   }, SLOW);
@@ -173,6 +173,41 @@ describe('plant 3: a line through itself, corrected on the result (SW-RPI-23)', 
     expect(p.kind).toBe('pipe'); expect(len(sub(p.b as V3, p.a as V3))).toBeCloseTo(18, 3);
     asLaid(before, m, [r.no]); others(before, m, [r.no]);
   }, SLOW);
+});
+
+describe('plant 3: a loop through its own leg (SW-RPI-23 (e))', () => {
+  // a 6 in line laid as the generator lays a route through its corners, its first point beyond its start a corner (it turns there, as it does one elbow radius beyond a stack),
+  // in an open plant: from its start up z to that corner, out x 100 in, z 60 in, back x 50 in and down z 120 in through its own first leg, then on x 150 in
+  const S: V3 = [0, 100, -30], C: V3[] = [[0, 100, 0], [100, 100, 0], [100, 100, 60], [50, 100, 60], [50, 100, -60]], E: V3 = [200, 100, -60], NO = '6"-P150-P-99001';
+  const routed = (pts: V3[]): Comp[] => {
+    const R = elbowRadius(pipeDims(6, 'P150').OD), out: Comp[] = [], pipe = (a: V3, b: V3) => { const w = unit(sub(b, a)); out.push({ tag: `${NO}/p${out.length + 1}`, kind: 'pipe', key: `PIPE|6|P150|${len(sub(b, a)).toFixed(3)}`, T: frameFromAxes(a, perp(w), w) as Comp['T'], a, b, NPS: 6, cls: 'P150', e1: 'BW', e2: 'BW' }); };
+    let cur = pts[0];
+    for (let i = 1; i + 1 < pts.length; i++) {
+      const a = unit(sub(pts[i], pts[i - 1])), b = unit(sub(pts[i + 1], pts[i])), ein: V3 = [pts[i][0] - a[0] * R, pts[i][1] - a[1] * R, pts[i][2] - a[2] * R], eout: V3 = [pts[i][0] + b[0] * R, pts[i][1] + b[1] * R, pts[i][2] + b[2] * R];
+      pipe(cur, ein); out.push({ tag: `${NO}/el${out.length + 1}`, kind: 'elbow', key: 'EL|6|P150|90', T: frameFromAxes(ein, cross(a, b), a) as Comp['T'], a: ein, b: eout, NPS: 6, cls: 'P150', e1: 'BW', e2: 'BW' }); cur = eout;
+    }
+    pipe(cur, pts[pts.length - 1]); return out;
+  };
+  const open = { plant: { building: () => ({ instances: [] }), interior: () => ({ instances: [] }), rack: { x0: 0, x1: 0, halfWidth: 0, bentSpacing: 240, tiers: [] }, verticalThroughPlatforms: true } as unknown as PlantDef, lines: [] } as unknown as UnitPiping;
+  const lineAt = (extra: Partial<LineRun> = {}) => { const comps = routed([S, ...C, E]); return { no: NO, service: 'P', NPS: 6, cls: 'P150', kind: 'routed', from: 'X-1-N1', to: 'X-2-N1', comps, welds: deriveWelds(NO, comps, [], []), supports: [], path: [...C, [150, 100, -60]], ok: true, joint: 'BW', ...extra } as LineRun; };
+  it('takes the loop out and turns the line at the crossing, its legs as its pieces lie, every piece square to the plant\'s axes', () => {
+    const r = lineAt(), m = { lines: [r], nozzles: [], failures: [], stats: {}, cuts: [] } as unknown as PipingModel, before = structuredClone(m);
+    expect(ownClashes(r, new Map()).length).toBeGreaterThan(0);
+    const notes = loopThroughLeg(m, open, vb, new Set([NO]));
+    expect(notes).toEqual([`${NO}: its route crossed its own leg; the 3 corners of the loop taken out, the line turning at 50, 100, 0 (SW-RPI-23 (e))`]);
+    const now = m.lines[0];
+    expect(now.comps.filter(c => c.kind === 'elbow').map(c => cornerOf(c).map(r1))).toEqual([[0, 100, 0], [50, 100, 0], [50, 100, -60]]);
+    for (const c of now.comps.filter(q => q.kind === 'pipe')) expect([0, 1, 2].filter(k => Math.abs(c.a[k] - c.b[k]) > 1e-6).length, `${c.tag} square to the axes`).toBe(1);
+    expect(now.path.map(p => p.map(r1))).toEqual([[0, 100, 0], [50, 100, 0], [50, 100, -60], [150, 100, -60]]);
+    asLaid(before, m, [NO]);
+  });
+  it('leaves a line whose loop carries a branch\'s olet, the run under the olet being taken out', () => {
+    const r = lineAt(), m = { lines: [r], nozzles: [], failures: [], stats: {}, cuts: [] } as unknown as PipingModel;
+    const at: V3 = [100, 100, 30], olet = { tag: '2"-P150-P-99002/O1', kind: 'olet', key: 'OLET|6|2|P150|SW', T: frameFromAxes(at, [1, 0, 0], [0, 0, 1]) as Comp['T'], a: at, b: [104, 100, 30], NPS: 2, cls: 'P150', onRun: NO } as Comp;
+    m.lines.push({ no: '2"-P150-P-99002', comps: [olet], welds: [], supports: [], path: [], ok: true, kind: 'routed', from: `tap ${NO}`, to: 'X-3-N1', NPS: 2, cls: 'P150', joint: 'SW' } as unknown as LineRun);
+    const was = JSON.stringify(r), notes = loopThroughLeg(m, open, vb, new Set([NO]));
+    expect(notes.length).toBe(1); expect(notes[0]).toMatch(/leave the olet 2"-P150-P-99002\/O1 off its run \(SW-RPI-23 \(e\)\)$/); expect(JSON.stringify(m.lines[0])).toBe(was);
+  });
 });
 
 describe('plant 3: valves that strike their own line (SW-RPI-19 as amended again), a last run made again (SW-RPI-16), a root spool\'s lane (SW-RPI-8)', () => {

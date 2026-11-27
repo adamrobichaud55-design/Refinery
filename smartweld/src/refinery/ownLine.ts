@@ -316,6 +316,8 @@ function endFace(cx: Cx, r: LineRun, e: string): V3 | undefined {
 function refusal(cx: Cx, changed: LineRun[], fresh: Comp[], zones: V3[], room: Comp[], routed: V3[] = []): string | undefined {
   const isNew = new Set(fresh), tags = new Map(changed.map(r => [r.no, new Set(r.comps.filter(c => isNew.has(c)).map(c => c.tag))] as const)), freshTag = (no: string, tag: string) => !!tags.get(no)?.has(tag);
   for (const c of fresh) if (c.kind === 'pipe' && len(sub(c.b, c.a)) < 2 - 1e-6) return `a pipe ${len(sub(c.b, c.a)).toFixed(2)} in long (SW-RT-4)`;
+  // a branch's olet sits on its run (SW-SWT-6): the run under it stays, a pipe of the line through the olet's point on its axis
+  for (const r of changed) { const off = cx.m.lines.flatMap(q => q.comps.filter(o => o.kind === 'olet' && o.onRun === r.no)).find(o => !r.comps.some(c => c.kind === 'pipe' && segPt(origin(o), c.a, c.b) < 0.01)); if (off) return `a correction that would leave the olet ${off.tag} off its run`; }
   const [mn, mx] = boundsOf(fresh, cx.vb), near: Bounds = [mn.map(v => v - 12) as V3, mx.map(v => v + 12) as V3];
   const others = cx.m.lines.filter(r => r.comps.length && !changed.some(q => q.no === r.no) && K.boxGap(lineBounds(cx, r), near) < 1e-9);
   const byTag = new Map<string, Comp>(); for (const r of [...changed, ...others]) for (const c of r.comps) byTag.set(c.tag, c);
@@ -403,7 +405,9 @@ export function loopThroughLeg(m: PipingModel, up: Cx['up'], vb: Cx['vb'], only?
   for (const r of lines1(cx, only)) {
     const sp = routedSpan(r); if (!sp) continue;
     const [i0, i1] = sp, mid = r.comps.slice(i0, i1 + 1); if (mid.some(c => !['pipe', 'elbow', 'coupling'].includes(c.kind)) || mid.some(c => c.kind === 'elbow' && is45(c))) continue;
-    const S = r.comps[i0].a, E = r.comps[i1].b, Q: V3[] = [S, ...r.path.slice(1, -1), E];
+    // the route's legs as its pieces lie: from the first piece's start through each elbow's corner to the last piece's end (the path's first and last points, one
+    // elbow radius beyond the stacks, are corners where the route turns there, and lie on its first or last leg where it runs straight on)
+    const S = r.comps[i0].a, E = r.comps[i1].b, Q: V3[] = [S, ...mid.filter(c => c.kind === 'elbow').map(c => add(c.a, zAx(c), elbowRadius(pipeDims(c.NPS, c.cls).OD))), E];
     // the first crossing of two legs that are not neighbours: segment i and segment j > i + 1, meeting at a point inside both
     let cut: { i: number; j: number; P: V3 } | undefined;
     for (let i = 0; i + 1 < Q.length && !cut; i++) for (let j = i + 2; j + 1 < Q.length && !cut; j++) {
@@ -419,8 +423,11 @@ export function loopThroughLeg(m: PipingModel, up: Cx['up'], vb: Cx['vb'], only?
     if (sleeveGone(r, s.gone)) continue;
     const why = refusal(cx, [nr], s.fresh, endZones(cx, r), s.fresh, r.path);
     if (why) { notes.push(`${r.no}: its route crosses its own leg at ${cut.P.map(Math.round).join(', ')}, but turning there is ${why} (SW-RPI-23 (e))`); continue; }
-    commit(cx, r, s.comps, s.gone, [r.path[0], ...pts.slice(1, -1), r.path[r.path.length - 1]]);
-    notes.push(`${r.no}: its route crossed its own leg; the ${cut.j - cut.i - 1} corners of the loop taken out, the line turning at ${cut.P.map(Math.round).join(', ')} (SW-RPI-23 (e))`);
+    // its path: its first point beyond its first stack where that lies on the first leg (else the first corner), the corners, and the same at its far end
+    const q = pts.length, P0 = r.path[0], Pn = r.path[r.path.length - 1];
+    const path = [segPt(P0, pts[0], pts[1]) < 0.01 ? P0 : pts[1], ...pts.slice(1, q - 1), segPt(Pn, pts[q - 2], pts[q - 1]) < 0.01 ? Pn : pts[q - 2]].filter((p, k, a) => !k || !same(p, a[k - 1]));
+    commit(cx, r, s.comps, s.gone, path);
+    notes.push(`${r.no}: its route crossed its own leg; the ${cut.j - cut.i} corners of the loop taken out, the line turning at ${cut.P.map(Math.round).join(', ')} (SW-RPI-23 (e))`);
   }
   return notes;
 }
