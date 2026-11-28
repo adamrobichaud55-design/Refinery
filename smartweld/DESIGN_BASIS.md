@@ -5165,6 +5165,22 @@ their own geometry rules, which are unchanged.
     carried by the two rails. It reaches each from outside the ladder, so it stops against the
     rail's outer face; a solid bar cannot pass into a solid rail, and the rail, which carries
     the ladder, is never notched for it. Every hoop of plant 3 (76) stood 0.23 in in its rails.
+- `SW-CELL-9` Concrete below grade (added 2026-11-28, P-95; our own convention, written
+  without any published table, and put to the owner). Grade (y 0) and the soil are not drawn.
+  A foundation whose own rule gives its depth below grade is drawn to that depth, as already
+  done: a tank's ring wall (SW-CIV-8), a dike's footing (SW-CIV-14), a pipe sleeper (SW-CIV-22),
+  the sulfur pit (SW-CIV-26). Every other foundation in plant 3 that carries a drawn part (a pad,
+  pedestal or pier in a cell, under a structure, a stair or an item) is drawn from its top down
+  to 3 in (SW-CIV-2, concrete cast against earth) below the lowest drawn part held in it (an
+  anchor rod's embedded nut and plate washer, SW-AR-2), and at least down to grade; its plan
+  is the plan its own rule gives, carried down unchanged. The footing under it (SW-CIV-3) is not
+  drawn. Reason: the model is a true-scale visual reference, so every drawn part must be seen
+  carried and every drawn anchor seen held: a plate bearing on nothing drawn, or a rod's
+  embedded length lying in nothing, shows a part that could not stand. A footing carries nothing
+  drawn, and sizing one needs the column's load and the soil's bearing value, which plant 3
+  does not state for every foundation. So the footing is left out, and that is said here, not
+  guessed. The concrete drawn below grade is counted in each part's quantities (SW-CIV-15), as
+  the ring walls' already is.
 
 ## 79. Plant 3: piping of a unit (`SW-RPI-*`)
 
